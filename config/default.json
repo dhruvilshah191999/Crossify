@@ -1,0 +1,4 @@
+{
+    "mongoURI":"mongodb+srv://crossify:Crossify123@crossifty.7qg8t.mongodb.net/Crossify?retryWrites=true&w=majority",
+    "jwtSecret":"CrossifyKey"
+}
