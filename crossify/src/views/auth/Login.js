@@ -26,18 +26,18 @@ function Login() {
     setError(false);
   };
 
-  const FacebookLogin = async () => {
-    console.log("Hello");
-    // const config = {
-    //   method: "GET",
-    //   header: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   validateStatus: () => true,
-    // };
-    const res = await axios.get("http://192.168.0.104:5000/api/auth/facebook");
-    console.log(res.data);
-  };
+  // const FacebookLogin = async () => {
+  //   console.log("Hello");
+  //   // const config = {
+  //   //   method: "GET",
+  //   //   header: {
+  //   //     "Content-Type": "application/json",
+  //   //   },
+  //   //   validateStatus: () => true,
+  //   // };
+  //   const res = await axios.get("http://192.168.0.104:5000/api/auth/facebook");
+  //   console.log(res.data);
+  // };
 
   const onChange = (e) =>
     setData({ ...formData, [e.target.name]: e.target.value });
@@ -94,7 +94,7 @@ function Login() {
                 <button
                   className="bg-white active:bg-gray-100 text-gray-800 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                   type="button"
-                  onClick={FacebookLogin}
+                  // onClick={FacebookLogin}
                 >
                   <img alt="..." className="w-5 mr-1" src={Github} />
                   Github
