@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import UserContextProvider from "./context/usercontext";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
@@ -17,18 +18,20 @@ import Profile from "views/Profile.js";
 import Index from "views/Index.js";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      {/* add routes with layouts */}
-      <Route path="/admin" component={Admin} />
-      <Route path="/auth" component={Auth} />
-      {/* add routes without layouts */}
-      <Route path="/landing" exact component={Index} />
-      <Route path="/profile" exact component={Profile} />
-      <Route path="/" exact component={Landing} />
-      {/* add redirect for first page */}
-      <Redirect from="*" to="/" />
-    </Switch>
-  </BrowserRouter>,
+  <UserContextProvider>
+    <BrowserRouter>
+      <Switch>
+        {/* add routes with layouts */}
+        <Route path="/admin" component={Admin} />
+        <Route path="/auth" component={Auth} />
+        {/* add routes without layouts */}
+        <Route path="/landing" exact component={Index} />
+        <Route path="/profile" exact component={Profile} />
+        <Route path="/" exact component={Landing} />
+        {/* add redirect for first page */}
+        <Redirect from="*" to="/" />
+      </Switch>
+    </BrowserRouter>
+  </UserContextProvider>,
   document.getElementById("root")
 );

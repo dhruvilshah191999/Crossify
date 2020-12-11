@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "context/usercontext";
 import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
@@ -10,6 +11,7 @@ var vertical = "top";
 var horizontal = "center";
 
 function Login() {
+  const { users, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
     email: "",
     password: "",
@@ -57,13 +59,14 @@ function Login() {
         validateStatus: () => true,
       };
       const res = await axios.post("/api/login", Credentials, config);
-      console.log(res.data);
       if (res.data.is_error) {
         setError(true);
         setMessage(res.data.message);
       } else {
         setError(false);
         setMessage("");
+        localStorage.setItem("jwt", res.data.token);
+        dispatch({ type: "ADD_USER", payload: res.data.data });
       }
     } catch (error) {
       console.log(error);
