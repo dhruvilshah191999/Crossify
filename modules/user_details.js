@@ -6,11 +6,10 @@ var Schema = require("mongoose").Schema;
 var user_details = new Schema({
   uid: {
     type: String,
+    required: false,
   },
   username: {
     type: String,
-    required: false,
-    unique: true,
   },
   password: {
     type: String,
@@ -18,20 +17,15 @@ var user_details = new Schema({
   },
   fname: {
     type: String,
-    required: false,
+    required: true,
   },
   lname: {
     type: String,
-    required: false,
+    required: true,
   },
   email: {
     type: String,
-    required: false,
-    unique: false,
-  },
-  mobile_no: {
-    type: String,
-    required: false,
+    required: true,
   },
   address: {
     type: String,
@@ -53,17 +47,13 @@ var user_details = new Schema({
     type: Number,
     required: false,
   },
-  social_info: {
-    type: String,
-    required: false,
-  },
   interest_id: {
     type: Array,
     required: false,
   },
   profile_photo: {
     type: String,
-    required: false,
+    required: true,
   },
   date: {
     type: Date,
@@ -91,7 +81,7 @@ var user_details = new Schema({
   },
   is_active: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 

@@ -1,4 +1,5 @@
 var express = require("express");
+var bcrypt = require("bcryptjs");
 var category_details = require("../modules/interest_category");
 var user_details = require("../modules/user_details");
 const { check, validationResult } = require("express-validator");
@@ -21,7 +22,7 @@ router.post("/login", async function (req, res, next) {
     if (err) {
       var error = {
         is_error: true,
-        message: err,
+        message: err.message,
       };
       return res.status(400).send(error);
     } else {
@@ -44,19 +45,50 @@ router.post("/login", async function (req, res, next) {
   });
 });
 
-router.post("/category", async function (req, res, next) {
-  var { category_name, description } = req.body;
-  console.log("Hello");
-  try {
-    var category = new category_details({
-      category_name,
-      description,
-    });
-    await category.save();
-    return res.send("added");
-  } catch (err) {
-    return res.json(err);
-  }
+router.post("/signup", async function (req, res, next) {
+  var { fname, lname, password, email, photo } = req.body;
+  var check = user_details.findOne({ email: email, is_active: 1 });
+  await check.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(501).send(error);
+    } else if (data) {
+      var error = {
+        is_error: true,
+        message: "EmailID Exists.",
+      };
+      return res.status(502).send(error);
+    } else if (data == null || data.length == 0) {
+      password = bcrypt.hashSync(password, 10);
+      var user = new user_details({
+        email,
+        fname,
+        lname,
+        password,
+        profile_photo: photo,
+      });
+      user.save((err) => {
+        if (err) {
+          console.log(err);
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(503).send(error);
+        } else {
+          var finaldata = {
+            email,
+            message: "Signup Successfully",
+            is_error: false,
+          };
+          return res.send(finaldata);
+        }
+      });
+    }
+  });
 });
 
 module.exports = router;

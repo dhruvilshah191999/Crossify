@@ -63,8 +63,6 @@ function Login() {
         setError(true);
         setMessage(res.data.message);
       } else {
-        setError(false);
-        setMessage("");
         localStorage.setItem("jwt", res.data.token);
         dispatch({ type: "ADD_USER", payload: res.data.data });
       }

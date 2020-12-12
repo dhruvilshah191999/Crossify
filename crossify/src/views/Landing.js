@@ -27,25 +27,44 @@ export default function Landing() {
           <div className="container relative mx-auto">
             <div className="items-center flex flex-wrap">
               <div className="w-full lg:w-6/12 px-2 ml-auto mr-auto text-center">
-                  <h1 className="text-white font-semibold text-5xl">
-                    Seek Your Interest
-                  </h1>
+                <h1 className="text-white font-semibold text-5xl">
+                  Seek Your Interest
+                </h1>
               </div>
             </div>
-            <br/>
+            <br />
             <form>
               <div className="flex justify-center flex-wrap">
-                  <div style={{width:"60%"}}className="bg-white p-2 align-center">
-                      <input  style={{width:"65%",outline:"none",borderRight:"2px solid gray"}} className="p-2 text-lg" type="text" placeholder="Find your club"/>
-                      <input style={{width:'30%',outline:"none"}} className="p-2  text-lg" type="text" placeholder="Select Location"/>
-                  </div>
-                  <button style={{marginLeft:"10px"}} className="bg-red-400 hover:bg-red-300 rounded text-white p-2 pl-4 pr-4">
-                              <p className="font-semibold text-md">Search</p>
-                  </button>
+                <div
+                  style={{ width: "60%" }}
+                  className="bg-white p-2 align-center"
+                >
+                  <input
+                    style={{
+                      width: "65%",
+                      outline: "none",
+                      borderRight: "2px solid gray",
+                    }}
+                    className="p-2 text-lg"
+                    type="text"
+                    placeholder="Find your club"
+                  />
+                  <input
+                    style={{ width: "30%", outline: "none" }}
+                    className="p-2  text-lg"
+                    type="text"
+                    placeholder="Select Location"
+                  />
+                </div>
+                <button
+                  style={{ marginLeft: "10px" }}
+                  className="bg-red-400 hover:bg-red-300 rounded text-white p-2 pl-4 pr-4"
+                >
+                  <p className="font-semibold text-md">Search</p>
+                </button>
               </div>
-              </form>
-            </div>
-      
+            </form>
+          </div>
           <div
             className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
             style={{ transform: "translateZ(0)" }}
