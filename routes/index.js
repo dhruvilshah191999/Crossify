@@ -5,7 +5,6 @@ var user_details = require("../modules/user_details");
 const { check, validationResult } = require("express-validator");
 var router = express.Router();
 
-/* GET home page. */
 router.post("/login", async function (req, res, next) {
   let { login_username, password } = req.body;
   var check = user_details.findOne({
@@ -132,5 +131,4 @@ router.post("/socialsignup", async function (req, res, next) {
     }
   });
 });
-
 module.exports = router;

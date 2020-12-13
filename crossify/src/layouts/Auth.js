@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Navbar from "components/Navbars/AuthNavbar.js";
 import Login from "views/auth/Login.js";
 import Background from "assets/img/register_bg_2.png";
-import Register from "views/auth/Register.js";
+import Register from "views/auth/Register2.js";
 
 export default function Auth() {
   return (
@@ -17,7 +17,7 @@ export default function Auth() {
           <div
             className="absolute top-0 w-full h-full bg-gray-900 bg-no-repeat bg-full"
             style={{
-              backgroundImage:`url(${Background})`
+              backgroundImage: `url(${Background})`,
             }}
           ></div>
           <Switch>

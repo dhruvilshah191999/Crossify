@@ -7,12 +7,11 @@ const connectDB = require("./db/db");
 // var user_details = require("./modules/user_details");
 //var category_details = require("./modules/interest_category");
 //var club_details = require("./modules/club_details");
-//var member_details = require("./modules/members_details");
+//var member_details = require("./modules/members_details")
 //var event_details = require("./modules/event_details");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var facebook = require("./routes/facebook");
 
 var app = express();
 
