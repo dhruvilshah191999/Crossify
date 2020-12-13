@@ -11,6 +11,7 @@ var vertical = "top";
 var horizontal = "center";
 
 function Login() {
+  const { users, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
     email: "",
     password: "",
@@ -63,6 +64,7 @@ function Login() {
         setMessage(res.data.message);
       } else {
         localStorage.setItem("jwt", res.data.token);
+        dispatch({ type: "ADD_USER", payload: res.data.data });
       }
     } catch (error) {
       console.log(error);
