@@ -1,0 +1,5 @@
+build-css : tailwindcss build src/styles.css -o public/style.css
+leading-tight : Used as className in tailwind to adjust space in line while writing 
+tracking-wide: Used as className in tailwind to adjust space in between character while writing 
+overflow-hidded : used in img in card to stay as rounded and not overflow from the card
+truncate : Used as className in h1 or something which deals with words (where we can limited the words in line and remaining words will be discrabed as ...)
