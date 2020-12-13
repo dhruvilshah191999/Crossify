@@ -35,35 +35,36 @@ export default function Register() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
-    var path = "User_Profile/" + fname;
-    var data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", "crossify-project");
-    data.append("public_id", path);
-    const config = {
-      headers: { "X-Requested-With": "XMLHttpRequest" },
-    };
-    axios
-      .post(url, data, config)
-      .then(async (res) => {
-        if (
-          fname.trim() === "" ||
-          lname.trim() === "" ||
-          email.trim() === "" ||
-          password.trim() === "" ||
-          repassword.trim() === "" ||
-          image === ""
-        ) {
-          setError(true);
-          setMessage("Please Enter Your Details");
-        } else if (!checked) {
-          setError(true);
-          setMessage("Please Accept the Privacy Policy");
-        } else if (password !== repassword) {
-          setError(true);
-          setMessage("Password and Re-Type Password Are Not Matched");
-        } else {
+    if (
+      fname.trim() === "" ||
+      lname.trim() === "" ||
+      email.trim() === "" ||
+      password.trim() === "" ||
+      repassword.trim() === "" ||
+      image === ""
+    ) {
+      setError(true);
+      setMessage("Please Enter Your Details");
+    } else if (!checked) {
+      setError(true);
+      setMessage("Please Accept the Privacy Policy");
+    } else if (password !== repassword) {
+      setError(true);
+      setMessage("Password and Re-Type Password Are Not Matched");
+    } else {
+      var emailname = email.split("@");
+      var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
+      var path = "User_Profile/" + emailname[0];
+      var data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "crossify-project");
+      data.append("public_id", path);
+      const config = {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      };
+      axios
+        .post(url, data, config)
+        .then(async (res) => {
           const userdata = {
             fname,
             lname,
@@ -89,9 +90,9 @@ export default function Register() {
           } catch (err) {
             console.log(err);
           }
-        }
-      })
-      .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    }
   };
   return (
     <>
@@ -115,7 +116,7 @@ export default function Register() {
                     Sign Up With
                   </h6>
                 </div>
-                <div className="btn-wrapper text-center">
+                <div className="btn-wrapper text-center ">
                   <Google />
                   <Facebook />
                 </div>

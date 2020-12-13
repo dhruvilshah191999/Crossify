@@ -6,10 +6,6 @@ const { check, validationResult } = require("express-validator");
 var router = express.Router();
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
-});
-
 router.post("/login", async function (req, res, next) {
   let { login_username, password } = req.body;
   var check = user_details.findOne({
@@ -58,9 +54,9 @@ router.post("/signup", async function (req, res, next) {
     } else if (data) {
       var error = {
         is_error: true,
-        message: "EmailID Exists.",
+        message: "This EmailId Already Exists.",
       };
-      return res.status(502).send(error);
+      return res.status(500).send(error);
     } else if (data == null || data.length == 0) {
       password = bcrypt.hashSync(password, 10);
       var user = new user_details({
@@ -72,12 +68,58 @@ router.post("/signup", async function (req, res, next) {
       });
       user.save((err) => {
         if (err) {
-          console.log(err);
           var error = {
             is_error: true,
             message: err.message,
           };
-          return res.status(503).send(error);
+          return res.status(500).send(error);
+        } else {
+          var finaldata = {
+            email,
+            message: "Signup Successfully",
+            is_error: false,
+          };
+          return res.send(finaldata);
+        }
+      });
+    }
+  });
+});
+
+router.post("/socialsignup", async function (req, res, next) {
+  var { socialId, fname, lname, photo, email } = req.body;
+  var check = user_details.findOne({
+    $or: [{ email: email }, { socialId: socialId }],
+    is_active: 1,
+  });
+  await check.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else if (data) {
+      var error = {
+        is_error: true,
+        message: "This Account Already Exists.",
+      };
+      return res.status(500).send(error);
+    } else if (data == null || data.length == 0) {
+      var user = new user_details({
+        socialId,
+        email,
+        fname,
+        lname,
+        profile_photo: photo,
+      });
+      user.save((err) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(500).send(error);
         } else {
           var finaldata = {
             email,

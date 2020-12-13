@@ -12,6 +12,7 @@
     "@tailwindcss/custom-forms": "0.2.1",
     "axios": "^0.21.0",
     "chart.js": "2.9.4",
+    "crypto-random-string": "^3.3.0",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
     "http-proxy-middleware": "^1.0.6",

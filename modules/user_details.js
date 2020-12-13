@@ -4,12 +4,13 @@ const config = require("config");
 var Schema = require("mongoose").Schema;
 
 var user_details = new Schema({
-  uid: {
+  socialId: {
     type: String,
     required: false,
   },
   username: {
     type: String,
+    required: false,
   },
   password: {
     type: String,
