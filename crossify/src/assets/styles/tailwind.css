@@ -1,3 +1,96 @@
+<<<<<<< HEAD
+/*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+
+/*
+Document
+========
+*/
+
+/**
+Use a better box model (opinionated).
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+Use a more readable tab size (opinionated).
+*/
+
+:root {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+/**
+1. Correct the line height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+*/
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/*
+Sections
+========
+*/
+
+/**
+Remove the margin in all browsers.
+*/
+
+body {
+  margin: 0;
+}
+
+/**
+Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+*/
+
+body {
+  font-family: system-ui, -apple-system,
+    /* Firefox supports this but not yet `system-ui` */ "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/*
+Grouping content
+================
+*/
+
+/**
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+}
+
+/*
+Text-level semantics
+====================
+*/
+
+/**
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr[title] {
+  -webkit-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+}
+
+/**
+Add the correct font weight in Edge and Safari.
+*/
+=======
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -107,6 +200,7 @@ abbr[title] {
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.
  */
+>>>>>>> golu
 
 b,
 strong {
@@ -114,6 +208,18 @@ strong {
 }
 
 /**
+<<<<<<< HEAD
+1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+2. Correct the odd 'em' font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo,
+    monospace; /* 1 */
+=======
  * 1. Correct the inheritance and scaling of font size in all browsers.
  * 2. Correct the odd `em` font sizing in all browsers.
  */
@@ -122,21 +228,32 @@ code,
 kbd,
 samp {
   font-family: monospace, monospace; /* 1 */
+>>>>>>> golu
   font-size: 1em; /* 2 */
 }
 
 /**
+<<<<<<< HEAD
+Add the correct font size in all browsers.
+*/
+=======
  * Add the correct font size in all browsers.
  */
+>>>>>>> golu
 
 small {
   font-size: 80%;
 }
 
 /**
+<<<<<<< HEAD
+Prevent 'sub' and 'sup' elements from affecting the line height in all browsers.
+*/
+=======
  * Prevent `sub` and `sup` elements from affecting the line height in
  * all browsers.
  */
+>>>>>>> golu
 
 sub,
 sup {
@@ -154,6 +271,32 @@ sup {
   top: -0.5em;
 }
 
+<<<<<<< HEAD
+/*
+Tabular data
+============
+*/
+
+/**
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+}
+
+/*
+Forms
+=====
+*/
+
+/**
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+*/
+=======
 /* Embedded content
    ========================================================================== */
 
@@ -172,6 +315,7 @@ img {
  * 1. Change the font styles in all browsers.
  * 2. Remove the margin in Firefox and Safari.
  */
+>>>>>>> golu
 
 button,
 input,
@@ -185,6 +329,11 @@ textarea {
 }
 
 /**
+<<<<<<< HEAD
+Remove the inheritance of text transform in Edge and Firefox.
+1. Remove the inheritance of text transform in Firefox.
+*/
+=======
  * Show the overflow in IE.
  * 1. Show the overflow in Edge.
  */
@@ -199,6 +348,7 @@ input {
  * Remove the inheritance of text transform in Edge, Firefox, and IE.
  * 1. Remove the inheritance of text transform in Firefox.
  */
+>>>>>>> golu
 
 button,
 select {
@@ -207,15 +357,49 @@ select {
 }
 
 /**
+<<<<<<< HEAD
+Correct the inability to style clickable types in iOS and Safari.
+*/
+
+button,
+[type="button"],
+[type="submit"] {
+=======
  * Correct the inability to style clickable types in iOS and Safari.
  */
 
 button,
 [type="button"] {
+>>>>>>> golu
   -webkit-appearance: button;
 }
 
 /**
+<<<<<<< HEAD
+Remove the inner border and padding in Firefox.
+*/
+
+/**
+Restore the focus styles unset by the previous rule.
+*/
+
+/**
+Remove the additional ':invalid' styles in Firefox.
+See: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737
+*/
+
+/**
+Remove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.
+*/
+
+legend {
+  padding: 0;
+}
+
+/**
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+=======
  * Remove the inner border and padding in Firefox.
  */
 
@@ -261,12 +445,40 @@ legend {
 /**
  * Add the correct vertical alignment in Chrome, Firefox, and Opera.
  */
+>>>>>>> golu
 
 progress {
   vertical-align: baseline;
 }
 
 /**
+<<<<<<< HEAD
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+/**
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+/**
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+/**
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to 'inherit' in Safari.
+*/
+
+/*
+Interactive
+===========
+*/
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+=======
  * Remove the default vertical scrollbar in IE 10+.
  */
 
@@ -321,11 +533,14 @@ details {
 /*
  * Add the correct display in all browsers.
  */
+>>>>>>> golu
 
 summary {
   display: list-item;
 }
 
+<<<<<<< HEAD
+=======
 /* Misc
    ========================================================================== */
 
@@ -345,6 +560,7 @@ template {
   display: none;
 }
 
+>>>>>>> golu
 /**
  * Manually forked from SUIT CSS Base: https://github.com/suitcss/base
  * A thin layer on top of normalize.css that provides a starting point more
@@ -410,13 +626,32 @@ ul {
  */
 
 html {
+<<<<<<< HEAD
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+=======
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+>>>>>>> golu
   line-height: 1.5; /* 2 */
 }
 
 /**
+<<<<<<< HEAD
+ * Inherit font-family and line-height from `html` so users can set them as
+ * a class directly on the `html` element.
+ */
+
+body {
+  font-family: inherit;
+  line-height: inherit;
+}
+
+/**
+=======
+>>>>>>> golu
  * 1. Prevent padding and border from affecting element width.
  *
  *    We used to set this in the html element and inherit from
@@ -448,7 +683,11 @@ html {
   box-sizing: border-box; /* 1 */
   border-width: 0; /* 2 */
   border-style: solid; /* 2 */
+<<<<<<< HEAD
+  border-color: #e5e7eb; /* 2 */
+=======
   border-color: #e2e8f0; /* 2 */
+>>>>>>> golu
 }
 
 /*
@@ -479,22 +718,38 @@ textarea {
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
+<<<<<<< HEAD
+  color: #9ca3af;
+=======
   color: #a0aec0;
+>>>>>>> golu
 }
 
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
+<<<<<<< HEAD
+  color: #9ca3af;
+=======
   color: #a0aec0;
+>>>>>>> golu
 }
 
 input::-ms-input-placeholder,
 textarea::-ms-input-placeholder {
+<<<<<<< HEAD
+  color: #9ca3af;
+=======
   color: #a0aec0;
+>>>>>>> golu
 }
 
 input::placeholder,
 textarea::placeholder {
+<<<<<<< HEAD
+  color: #9ca3af;
+=======
   color: #a0aec0;
+>>>>>>> golu
 }
 
 button,
@@ -555,8 +810,13 @@ pre,
 code,
 kbd,
 samp {
+<<<<<<< HEAD
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+=======
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
+>>>>>>> golu
 }
 
 /**
@@ -576,7 +836,10 @@ iframe,
 embed,
 object {
   display: block;
+<<<<<<< HEAD
+=======
   vertical-align: middle;
+>>>>>>> golu
 }
 
 /**
@@ -620,6 +883,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -644,6 +916,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -668,6 +949,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -692,6 +982,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -716,6 +1015,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -740,6 +1048,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -764,6 +1081,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -788,6 +1114,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -812,6 +1147,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -836,6 +1180,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -860,6 +1213,15 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+=======
+>>>>>>> golu
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
@@ -884,6 +1246,11 @@ video {
   }
 }
 
+<<<<<<< HEAD
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+=======
 .form-checkbox:checked {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
   border-color: transparent;
@@ -900,6 +1267,7 @@ video {
     background: inherit;
     border-color: inherit;
     border-radius: inherit;
+>>>>>>> golu
   }
 }
 
@@ -918,17 +1286,44 @@ video {
   flex-shrink: 0;
   height: 1em;
   width: 1em;
+<<<<<<< HEAD
+  color: #3b82f6;
+  background-color: #fff;
+}
+
+.form-checkbox:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
+  border-color: transparent;
+  background-color: currentColor;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media not print {
+  .form-checkbox::-ms-check {
+    color: transparent;
+    background: inherit;
+    border-color: inherit;
+    border-radius: inherit;
+  }
+=======
   color: #4299e1;
   background-color: #fff;
   border-color: #e2e8f0;
   border-width: 1px;
   border-radius: 0.25rem;
+>>>>>>> golu
 }
 
 .form-checkbox:focus {
   outline: none;
+<<<<<<< HEAD
+  border-color: #60a5fa;
+=======
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
   border-color: #63b3ed;
+>>>>>>> golu
 }
 
 .bg-transparent {
@@ -936,6 +1331,175 @@ video {
 }
 
 .bg-black {
+<<<<<<< HEAD
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+}
+
+.bg-gray-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+}
+
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(209, 213, 219, var(--tw-bg-opacity));
+}
+
+.bg-gray-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+}
+
+.bg-gray-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(31, 41, 55, var(--tw-bg-opacity));
+}
+
+.bg-gray-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+}
+
+.bg-red-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(254, 202, 202, var(--tw-bg-opacity));
+}
+
+.bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
+}
+
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(220, 38, 38, var(--tw-bg-opacity));
+}
+
+.bg-red-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(185, 28, 28, var(--tw-bg-opacity));
+}
+
+.bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(245, 158, 11, var(--tw-bg-opacity));
+}
+
+.bg-green-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(167, 243, 208, var(--tw-bg-opacity));
+}
+
+.bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(52, 211, 153, var(--tw-bg-opacity));
+}
+
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+}
+
+.bg-blue-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(191, 219, 254, var(--tw-bg-opacity));
+}
+
+.bg-blue-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(147, 197, 253, var(--tw-bg-opacity));
+}
+
+.bg-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(96, 165, 250, var(--tw-bg-opacity));
+}
+
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
+}
+
+.bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(37, 99, 235, var(--tw-bg-opacity));
+}
+
+.bg-blue-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(30, 64, 175, var(--tw-bg-opacity));
+}
+
+.bg-blue-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(30, 58, 138, var(--tw-bg-opacity));
+}
+
+.bg-indigo-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(99, 102, 241, var(--tw-bg-opacity));
+}
+
+.bg-purple-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(221, 214, 254, var(--tw-bg-opacity));
+}
+
+.bg-purple-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(139, 92, 246, var(--tw-bg-opacity));
+}
+
+.bg-pink-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(236, 72, 153, var(--tw-bg-opacity));
+}
+
+.bg-prim {
+  --tw-bg-opacity: 1;
+  background-color: rgba(17, 100, 102, var(--tw-bg-opacity));
+}
+
+.hover\:bg-red-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(252, 165, 165, var(--tw-bg-opacity));
+}
+
+.active\:bg-gray-100:active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+}
+
+.active\:bg-gray-700:active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+}
+
+.active\:bg-blue-600:active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(37, 99, 235, var(--tw-bg-opacity));
+}
+
+.active\:bg-indigo-600:active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(79, 70, 229, var(--tw-bg-opacity));
+=======
   --bg-opacity: 1;
   background-color: #000;
   background-color: rgba(0, 0, 0, var(--bg-opacity));
@@ -1149,6 +1713,7 @@ video {
   --bg-opacity: 1;
   background-color: #5a67d8;
   background-color: rgba(90, 103, 216, var(--bg-opacity));
+>>>>>>> golu
 }
 
 .bg-center {
@@ -1164,7 +1729,11 @@ video {
 }
 
 .bg-full {
+<<<<<<< HEAD
+  background-size: 100%;
+=======
   background-size: 100;
+>>>>>>> golu
 }
 
 .border-collapse {
@@ -1176,6 +1745,40 @@ video {
 }
 
 .border-gray-100 {
+<<<<<<< HEAD
+  --tw-border-opacity: 1;
+  border-color: rgba(243, 244, 246, var(--tw-border-opacity));
+}
+
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgba(229, 231, 235, var(--tw-border-opacity));
+}
+
+.border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgba(209, 213, 219, var(--tw-border-opacity));
+}
+
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgba(156, 163, 175, var(--tw-border-opacity));
+}
+
+.border-gray-600 {
+  --tw-border-opacity: 1;
+  border-color: rgba(75, 85, 99, var(--tw-border-opacity));
+}
+
+.border-gray-700 {
+  --tw-border-opacity: 1;
+  border-color: rgba(55, 65, 81, var(--tw-border-opacity));
+}
+
+.border-blue-700 {
+  --tw-border-opacity: 1;
+  border-color: rgba(29, 78, 216, var(--tw-border-opacity));
+=======
   --border-opacity: 1;
   border-color: #f7fafc;
   border-color: rgba(247, 250, 252, var(--border-opacity));
@@ -1215,6 +1818,7 @@ video {
   --border-opacity: 1;
   border-color: #2b6cb0;
   border-color: rgba(43, 108, 176, var(--border-opacity));
+>>>>>>> golu
 }
 
 .rounded {
@@ -1248,7 +1852,11 @@ video {
 }
 
 .border-0 {
+<<<<<<< HEAD
+  border-width: 0px;
+=======
   border-width: 0;
+>>>>>>> golu
 }
 
 .border-2 {
@@ -1260,6 +1868,17 @@ video {
 }
 
 .border-t-0 {
+<<<<<<< HEAD
+  border-top-width: 0px;
+}
+
+.border-r-0 {
+  border-right-width: 0px;
+}
+
+.border-l-0 {
+  border-left-width: 0px;
+=======
   border-top-width: 0;
 }
 
@@ -1269,6 +1888,7 @@ video {
 
 .border-l-0 {
   border-left-width: 0;
+>>>>>>> golu
 }
 
 .border-t {
@@ -1380,7 +2000,11 @@ video {
 }
 
 .h-0 {
+<<<<<<< HEAD
+  height: 0px;
+=======
   height: 0;
+>>>>>>> golu
 }
 
 .h-2 {
@@ -1449,38 +2073,74 @@ video {
 
 .text-xs {
   font-size: 0.75rem;
+<<<<<<< HEAD
+  line-height: 1rem;
+=======
+>>>>>>> golu
 }
 
 .text-sm {
   font-size: 0.875rem;
+<<<<<<< HEAD
+  line-height: 1.25rem;
+=======
+>>>>>>> golu
 }
 
 .text-base {
   font-size: 1rem;
+<<<<<<< HEAD
+  line-height: 1.5rem;
+=======
+>>>>>>> golu
 }
 
 .text-lg {
   font-size: 1.125rem;
+<<<<<<< HEAD
+  line-height: 1.75rem;
+=======
+>>>>>>> golu
 }
 
 .text-xl {
   font-size: 1.25rem;
+<<<<<<< HEAD
+  line-height: 1.75rem;
+=======
+>>>>>>> golu
 }
 
 .text-2xl {
   font-size: 1.5rem;
+<<<<<<< HEAD
+  line-height: 2rem;
+=======
+>>>>>>> golu
 }
 
 .text-3xl {
   font-size: 1.875rem;
+<<<<<<< HEAD
+  line-height: 2.25rem;
+=======
+>>>>>>> golu
 }
 
 .text-4xl {
   font-size: 2.25rem;
+<<<<<<< HEAD
+  line-height: 2.5rem;
+=======
+>>>>>>> golu
 }
 
 .text-5xl {
   font-size: 3rem;
+<<<<<<< HEAD
+  line-height: 1;
+=======
+>>>>>>> golu
 }
 
 .leading-none {
@@ -1545,6 +2205,17 @@ video {
 }
 
 .mt-0 {
+<<<<<<< HEAD
+  margin-top: 0px;
+}
+
+.mr-0 {
+  margin-right: 0px;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+=======
   margin-top: 0;
 }
 
@@ -1554,6 +2225,7 @@ video {
 
 .mb-0 {
   margin-bottom: 0;
+>>>>>>> golu
 }
 
 .mt-1 {
@@ -1713,7 +2385,11 @@ video {
 }
 
 .last\:mr-0:last-child {
+<<<<<<< HEAD
+  margin-right: 0px;
+=======
   margin-right: 0;
+>>>>>>> golu
 }
 
 .hover\:-mt-4:hover {
@@ -1765,7 +2441,11 @@ video {
 }
 
 .min-w-0 {
+<<<<<<< HEAD
+  min-width: 0px;
+=======
   min-width: 0;
+>>>>>>> golu
 }
 
 .min-w-48 {
@@ -1789,11 +2469,21 @@ video {
 }
 
 .outline-none {
+<<<<<<< HEAD
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+=======
   outline: 0;
 }
 
 .focus\:outline-none:focus {
   outline: 0;
+>>>>>>> golu
 }
 
 .overflow-hidden {
@@ -1833,8 +2523,13 @@ video {
 }
 
 .px-0 {
+<<<<<<< HEAD
+  padding-left: 0px;
+  padding-right: 0px;
+=======
   padding-left: 0;
   padding-right: 0;
+>>>>>>> golu
 }
 
 .py-1 {
@@ -1918,11 +2613,19 @@ video {
 }
 
 .pt-0 {
+<<<<<<< HEAD
+  padding-top: 0px;
+}
+
+.pb-0 {
+  padding-bottom: 0px;
+=======
   padding-top: 0;
 }
 
 .pb-0 {
   padding-bottom: 0;
+>>>>>>> golu
 }
 
 .pt-1 {
@@ -1973,10 +2676,13 @@ video {
   padding-top: 3rem;
 }
 
+<<<<<<< HEAD
+=======
 .pr-12 {
   padding-right: 3rem;
 }
 
+>>>>>>> golu
 .pt-16 {
   padding-top: 4rem;
 }
@@ -2022,6 +2728,25 @@ video {
 }
 
 .placeholder-gray-400::-webkit-input-placeholder {
+<<<<<<< HEAD
+  --tw-placeholder-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-placeholder-opacity));
+}
+
+.placeholder-gray-400:-ms-input-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-placeholder-opacity));
+}
+
+.placeholder-gray-400::-ms-input-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-placeholder-opacity));
+}
+
+.placeholder-gray-400::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-placeholder-opacity));
+=======
   --placeholder-opacity: 1;
   color: #cbd5e0;
   color: rgba(203, 213, 224, var(--placeholder-opacity));
@@ -2043,6 +2768,7 @@ video {
   --placeholder-opacity: 1;
   color: #cbd5e0;
   color: rgba(203, 213, 224, var(--placeholder-opacity));
+>>>>>>> golu
 }
 
 .pointer-events-none {
@@ -2062,6 +2788,21 @@ video {
 }
 
 .top-0 {
+<<<<<<< HEAD
+  top: 0px;
+}
+
+.right-0 {
+  right: 0px;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
+.left-0 {
+  left: 0px;
+=======
   top: 0;
 }
 
@@ -2075,6 +2816,7 @@ video {
 
 .left-0 {
   left: 0;
+>>>>>>> golu
 }
 
 .top-auto {
@@ -2149,6 +2891,72 @@ video {
   left: 260px;
 }
 
+<<<<<<< HEAD
+* {
+  --tw-shadow: 0 0 #0000;
+}
+
+.shadow {
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-lg {
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-none {
+  --tw-shadow: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.hover\:shadow-md:hover {
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.hover\:shadow-lg:hover {
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+* {
+  --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgba(59, 130, 246, 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+=======
 .shadow {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
@@ -2188,6 +2996,7 @@ video {
 
 .focus\:shadow-outline:focus {
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+>>>>>>> golu
 }
 
 .fill-current {
@@ -2207,6 +3016,120 @@ video {
 }
 
 .text-black {
+<<<<<<< HEAD
+  --tw-text-opacity: 1;
+  color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgba(229, 231, 235, var(--tw-text-opacity));
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgba(209, 213, 219, var(--tw-text-opacity));
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity));
+}
+
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgba(107, 114, 128, var(--tw-text-opacity));
+}
+
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgba(75, 85, 99, var(--tw-text-opacity));
+}
+
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgba(55, 65, 81, var(--tw-text-opacity));
+}
+
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgba(31, 41, 55, var(--tw-text-opacity));
+}
+
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgba(17, 24, 39, var(--tw-text-opacity));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
+.text-green-500 {
+  --tw-text-opacity: 1;
+  color: rgba(16, 185, 129, var(--tw-text-opacity));
+}
+
+.text-blue-300 {
+  --tw-text-opacity: 1;
+  color: rgba(147, 197, 253, var(--tw-text-opacity));
+}
+
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgba(96, 165, 250, var(--tw-text-opacity));
+}
+
+.text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgba(59, 130, 246, var(--tw-text-opacity));
+}
+
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgba(37, 99, 235, var(--tw-text-opacity));
+}
+
+.text-pink-400 {
+  --tw-text-opacity: 1;
+  color: rgba(244, 114, 182, var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.hover\:text-gray-400:hover {
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity));
+}
+
+.hover\:text-gray-600:hover {
+  --tw-text-opacity: 1;
+  color: rgba(75, 85, 99, var(--tw-text-opacity));
+}
+
+.hover\:text-gray-800:hover {
+  --tw-text-opacity: 1;
+  color: rgba(31, 41, 55, var(--tw-text-opacity));
+}
+
+.hover\:text-gray-900:hover {
+  --tw-text-opacity: 1;
+  color: rgba(17, 24, 39, var(--tw-text-opacity));
+}
+
+.hover\:text-blue-600:hover {
+  --tw-text-opacity: 1;
+  color: rgba(37, 99, 235, var(--tw-text-opacity));
+=======
   --text-opacity: 1;
   color: #000;
   color: rgba(0, 0, 0, var(--text-opacity));
@@ -2348,6 +3271,7 @@ video {
   --text-opacity: 1;
   color: #3182ce;
   color: rgba(49, 130, 206, var(--text-opacity));
+>>>>>>> golu
 }
 
 .uppercase {
@@ -2363,6 +3287,13 @@ video {
   -moz-osx-font-smoothing: grayscale;
 }
 
+<<<<<<< HEAD
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+
+=======
+>>>>>>> golu
 .tracking-wide {
   letter-spacing: 0.025em;
 }
@@ -2371,7 +3302,11 @@ video {
   vertical-align: middle;
 }
 
+<<<<<<< HEAD
+.whitespace-nowrap {
+=======
 .whitespace-no-wrap {
+>>>>>>> golu
   white-space: nowrap;
 }
 
@@ -2440,6 +3375,18 @@ video {
 }
 
 .transform {
+<<<<<<< HEAD
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y))
+    rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+    scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+=======
   --transform-translate-x: 0;
   --transform-translate-y: 0;
   --transform-rotate: 0;
@@ -2451,10 +3398,16 @@ video {
     translateY(var(--transform-translate-y)) rotate(var(--transform-rotate))
     skewX(var(--transform-skew-x)) skewY(var(--transform-skew-y))
     scaleX(var(--transform-scale-x)) scaleY(var(--transform-scale-y));
+>>>>>>> golu
 }
 
 .transition-all {
   transition-property: all;
+<<<<<<< HEAD
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+=======
+>>>>>>> golu
 }
 
 .ease-linear {
@@ -2541,7 +3494,15 @@ video {
   }
 
   .sm\:mt-0 {
+<<<<<<< HEAD
+    margin-top: 0px;
+  }
+
+  .sm\:mb-0 {
+    margin-bottom: 0px;
+=======
     margin-top: 0;
+>>>>>>> golu
   }
 
   .sm\:ml-1 {
@@ -2553,7 +3514,16 @@ video {
   }
 
   .sm\:pt-0 {
+<<<<<<< HEAD
+    padding-top: 0px;
+  }
+
+  .sm\:text-gray-400 {
+    --tw-text-opacity: 1;
+    color: rgba(156, 163, 175, var(--tw-text-opacity));
+=======
     padding-top: 0;
+>>>>>>> golu
   }
 
   .sm\:w-6\/12 {
@@ -2582,10 +3552,13 @@ video {
     flex-direction: column;
   }
 
+<<<<<<< HEAD
+=======
   .md\:flex-no-wrap {
     flex-wrap: nowrap;
   }
 
+>>>>>>> golu
   .md\:items-stretch {
     align-items: stretch;
   }
@@ -2603,7 +3576,11 @@ video {
   }
 
   .md\:mt-0 {
+<<<<<<< HEAD
+    margin-top: 0px;
+=======
     margin-top: 0;
+>>>>>>> golu
   }
 
   .md\:mt-4 {
@@ -2657,7 +3634,11 @@ video {
   }
 
   .md\:pt-0 {
+<<<<<<< HEAD
+    padding-top: 0px;
+=======
     padding-top: 0;
+>>>>>>> golu
   }
 
   .md\:pb-2 {
@@ -2681,6 +3662,23 @@ video {
   }
 
   .md\:top-0 {
+<<<<<<< HEAD
+    top: 0px;
+  }
+
+  .md\:bottom-0 {
+    bottom: 0px;
+  }
+
+  .md\:left-0 {
+    left: 0px;
+  }
+
+  .md\:shadow-none {
+    --tw-shadow: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+=======
     top: 0;
   }
 
@@ -2694,12 +3692,21 @@ video {
 
   .md\:shadow-none {
     box-shadow: none;
+>>>>>>> golu
   }
 
   .md\:text-left {
     text-align: left;
   }
 
+<<<<<<< HEAD
+  .md\:text-gray-400 {
+    --tw-text-opacity: 1;
+    color: rgba(156, 163, 175, var(--tw-text-opacity));
+  }
+
+=======
+>>>>>>> golu
   .md\:w-64 {
     width: 16rem;
   }
@@ -2767,7 +3774,11 @@ video {
   }
 
   .lg\:mb-0 {
+<<<<<<< HEAD
+    margin-bottom: 0px;
+=======
     margin-bottom: 0;
+>>>>>>> golu
   }
 
   .lg\:mr-1 {
@@ -2809,7 +3820,11 @@ video {
   }
 
   .lg\:pt-0 {
+<<<<<<< HEAD
+    padding-top: 0px;
+=======
     padding-top: 0;
+>>>>>>> golu
   }
 
   .lg\:pt-4 {
@@ -2833,7 +3848,13 @@ video {
   }
 
   .lg\:shadow-none {
+<<<<<<< HEAD
+    --tw-shadow: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+=======
     box-shadow: none;
+>>>>>>> golu
   }
 
   .lg\:text-left {
@@ -2845,6 +3866,15 @@ video {
   }
 
   .lg\:text-white {
+<<<<<<< HEAD
+    --tw-text-opacity: 1;
+    color: rgba(255, 255, 255, var(--tw-text-opacity));
+  }
+
+  .lg\:hover\:text-gray-300:hover {
+    --tw-text-opacity: 1;
+    color: rgba(209, 213, 219, var(--tw-text-opacity));
+=======
     --text-opacity: 1;
     color: #fff;
     color: rgba(255, 255, 255, var(--text-opacity));
@@ -2860,6 +3890,7 @@ video {
     --text-opacity: 1;
     color: #e2e8f0;
     color: rgba(226, 232, 240, var(--text-opacity));
+>>>>>>> golu
   }
 
   .lg\:w-auto {
@@ -2889,7 +3920,11 @@ video {
 
 @media (min-width: 1280px) {
   .xl\:mb-0 {
+<<<<<<< HEAD
+    margin-bottom: 0px;
+=======
     margin-bottom: 0;
+>>>>>>> golu
   }
 
   .xl\:w-3\/12 {
@@ -2908,3 +3943,9 @@ video {
     width: 66.666667%;
   }
 }
+<<<<<<< HEAD
+
+@media (min-width: 1536px) {
+}
+=======
+>>>>>>> golu

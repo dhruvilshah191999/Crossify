@@ -4,10 +4,17 @@ import { Link } from "react-router-dom";
 // components
 // this needs to have state when user is loged in 
 // Logged In things requires multiple components in the navbar
+<<<<<<< HEAD
+// import IndexDropdown from "components/Dropdowns/IndexDropdown.js"; This will be used once user is logged in 
+import logo from "../../assets/logos/logo_final.png"
+export default function Navbar(props) {
+  
+=======
 import IndexDropdown from "components/Dropdowns/IndexDropdown.js";
 import logo from "../../assets/logos/logo_final.png"
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+>>>>>>> golu
   return (
     <>
       <nav className="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white shadow">
@@ -25,9 +32,13 @@ export default function Navbar(props) {
             }
             id="example-navbar-warning"
           >
+<<<<<<< HEAD
+          
+=======
             <ul className="flex flex-col lg:flex-row list-none mr-auto">
              
             </ul>
+>>>>>>> golu
            
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
         
