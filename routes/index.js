@@ -1,8 +1,13 @@
 var express = require("express");
 var bcrypt = require("bcryptjs");
+var auth = require("../middleware/auth");
 var category_details = require("../modules/interest_category");
 var user_details = require("../modules/user_details");
 const { check, validationResult } = require("express-validator");
+var CryptoJS = require("crypto-js");
+const config = require("config");
+const secret = config.get("Secret");
+
 var router = express.Router();
 
 router.post("/login", async function (req, res, next) {
@@ -28,13 +33,27 @@ router.post("/login", async function (req, res, next) {
         };
         return res.status(500).send(error);
       } else {
-        let token = data.generateAuthToken();
-        var finaldata = {
-          data: data,
-          token: token,
-          is_error: false,
-        };
-        return res.send(finaldata);
+        var check_pass = data.password;
+        if (bcrypt.compareSync(password, check_pass)) {
+          let token = data.generateAuthToken();
+          var ciphertext = CryptoJS.AES.encrypt(
+            JSON.stringify(token),
+            secret
+          ).toString();
+          var finaldata = {
+            data: data,
+            token: ciphertext,
+            is_error: false,
+            message: "Signin Successfully",
+          };
+          return res.send(finaldata);
+        } else {
+          var error = {
+            is_error: true,
+            message: "Username or Password invalid",
+          };
+          return res.status(500).send(error);
+        }
       }
     }
   });
@@ -131,4 +150,129 @@ router.post("/socialsignup", async function (req, res, next) {
     }
   });
 });
+
+router.post("/socialstep2", async function (req, res, next) {
+  var {
+    email,
+    username,
+    password,
+    city,
+    state,
+    pincode,
+    address,
+    lat,
+    long,
+  } = req.body;
+  var check = user_details.findOne({ username: username, is_active: 1 });
+  await check.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else if (data) {
+      var error = {
+        is_error: true,
+        message: "This Username Already Exists.",
+      };
+      return res.status(500).send(error);
+    } else if (data == null || data.length == 0) {
+      password = bcrypt.hashSync(password, 10);
+      var update = user_details.findOneAndUpdate(
+        { email: email, is_active: 1 },
+        {
+          username: username,
+          password: password,
+          address: address,
+          city: city,
+          state: state,
+          pincode: pincode,
+          latitude: lat,
+          longitude: long,
+        }
+      );
+      update.exec((err, ans) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(500).send(error);
+        } else if (!ans) {
+          var error = {
+            is_error: true,
+            message: "Please First Complete Registration Step 1",
+          };
+          return res.status(500).send(error);
+        } else {
+          var finaldata = {
+            is_error: false,
+            message: "User Data Updated",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+  });
+});
+
+router.post("/step2", async function (req, res, next) {
+  var { email, username, city, state, pincode, address, lat, long } = req.body;
+  var check = user_details.findOne({ username: username, is_active: 1 });
+  await check.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else if (data) {
+      var error = {
+        is_error: true,
+        message: "This Username Already Exists.",
+      };
+      return res.status(500).send(error);
+    } else if (data == null || data.length == 0) {
+      var update = user_details.findOneAndUpdate(
+        { email: email, is_active: 1 },
+        {
+          username: username,
+          address: address,
+          city: city,
+          state: state,
+          pincode: pincode,
+          latitude: lat,
+          longitude: long,
+        }
+      );
+      update.exec((err, ans) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(500).send(error);
+        } else if (!ans) {
+          var error = {
+            is_error: true,
+            message: "Please First Complete Registration Step 1",
+          };
+          return res.status(500).send(error);
+        } else {
+          var finaldata = {
+            is_error: false,
+            message: "User Data Updated",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+  });
+});
+
+router.post("/auth", auth, async function (req, res, next) {
+  return res.send(req.user);
+});
+
 module.exports = router;

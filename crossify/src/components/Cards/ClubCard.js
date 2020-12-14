@@ -38,7 +38,7 @@ const ClubCard = (props) => {
           <div className="text-xs text-gray-600 flex flex-row mt-1">
             <div>
               {" "}
-              <i class="fas fa-user-lock"></i> : {props.privacy}
+              <i className="fas fa-user-lock"></i> : {props.privacy}
             </div>
             <div className="ml-auto">
               {" "}
@@ -48,7 +48,7 @@ const ClubCard = (props) => {
           <div className="text-xs text-gray-600 flex flex-row mt-1 mb-1">
             <div>
               {" "}
-              <i class="fas fa-compass"></i> : {props.location}
+              <i className="fas fa-compass"></i> : {props.location}
             </div>
             <div className="ml-auto">
               {" "}
@@ -70,7 +70,7 @@ const ClubCard = (props) => {
               className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
             >
-              <i class="fas fa-share-alt"></i>
+              <i className="fas fa-share-alt"></i>
             </button>
           </div>
         </div>

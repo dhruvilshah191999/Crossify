@@ -8,7 +8,7 @@ import Alert from "@material-ui/lab/Alert";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
 
-export default function Register2() {
+export default function SocialRegister2() {
   var vertical = "top";
   var horizontal = "center";
   let history = useHistory();
@@ -28,6 +28,8 @@ export default function Register2() {
     username: "",
     address: "",
     pincode: "",
+    password: "",
+    repassword: "",
   });
   var decryptedData;
   var localemail = localStorage.getItem("email");
@@ -38,7 +40,7 @@ export default function Register2() {
     history.push("/auth/register");
   }
 
-  var { username, address, pincode } = formData;
+  var { username, address, pincode, password, repassword } = formData;
   const onChange = (e) =>
     setformData({ ...formData, [e.target.name]: e.target.value });
 
@@ -54,7 +56,14 @@ export default function Register2() {
       longitude = 0;
       latitude = 0;
     }
-    if (username === "" || pincode === "" || address === "") {
+
+    if (
+      username === "" ||
+      password === "" ||
+      repassword === "" ||
+      pincode === "" ||
+      address === ""
+    ) {
       setError(true);
       setMessage("Please Enter Your Details");
     } else if (
@@ -65,9 +74,13 @@ export default function Register2() {
     ) {
       setError(true);
       setMessage("Please Select the State,City");
+    } else if (password !== repassword) {
+      setError(true);
+      setMessage("Password and Re-type Password Not Matched");
     } else {
       var data = {
         username,
+        password,
         address,
         pincode,
         city: cityname,
@@ -84,7 +97,7 @@ export default function Register2() {
           },
           validateStatus: () => true,
         };
-        const finaldata = await axios.post("/api/step2", data, config);
+        const finaldata = await axios.post("/api/socialstep2", data, config);
         if (finaldata.data.is_error) {
           setError(true);
           setMessage(finaldata.data.message);
@@ -141,6 +154,42 @@ export default function Register2() {
                       placeholder="Enter Username"
                       required
                     />
+                  </div>
+
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="reg-password"
+                    >
+                      Password
+                    </label>
+                    <input
+                      id="reg-password"
+                      type="password"
+                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      placeholder="Password"
+                      name="password"
+                      value={password}
+                      onChange={(e) => onChange(e)}
+                    ></input>
+                  </div>
+
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="reg-re-password"
+                    >
+                      Re-Type Password
+                    </label>
+                    <input
+                      id="reg-re-password"
+                      type="password"
+                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      placeholder="Re-Type Password"
+                      name="repassword"
+                      value={repassword}
+                      onChange={(e) => onChange(e)}
+                    ></input>
                   </div>
 
                   <div className="relative w-full mb-3">

@@ -1,33 +1,25 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { GoogleLogin } from "react-google-login";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import Key from "config/default.json";
+import CryptoJS from "crypto-js";
 
-var vertical = "top";
-var horizontal = "center";
-export default class Google extends Component {
-  state = {
-    error: false,
-    message: "",
-  };
-
-  changeState = (message) => {
-    this.setState({
-      error: true,
-      message,
-    });
-  };
-
-  handleClose = (event, reason) => {
+export default function Google() {
+  var vertical = "top";
+  var horizontal = "center";
+  let history = useHistory();
+  const [errorStatus, setError] = useState(false);
+  const [message, setMessage] = useState("");
+  const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    this.setState({ error: false });
+    setError(false);
   };
-
-  responseFacebook = async (response) => {
-    //console.log(response.profileObj);
+  var responseGoogle = async (response) => {
     const data = {
       socialId: response.googleId,
       email: response.profileObj.email,
@@ -44,55 +36,58 @@ export default class Google extends Component {
     };
     const finaldata = await axios.post("/api/socialsignup", data, config);
     if (finaldata.data.is_error) {
-      this.changeState(finaldata.data.message);
+      setError(true);
+      setMessage(finaldata.data.message);
     } else {
-      console.log(finaldata.data);
+      var ciphertext = CryptoJS.AES.encrypt(
+        JSON.stringify(finaldata.data),
+        Key.Secret
+      ).toString();
+      localStorage.setItem("email", ciphertext);
+      history.push("/auth/register/socialstep2");
     }
   };
-
-  render() {
-    let googleContent;
-    googleContent = (
-      <GoogleLogin
-        clientId="368003567815-p9au9e07ev68n06bbjddv77dn4oftbjs.apps.googleusercontent.com"
-        render={(renderProps) => (
-          <button
-            onClick={renderProps.onClick}
-            style={{
-              background: "white",
-              border: " 0px transparent",
-              width: "107px",
-              height: "42px",
-              textAlign: "center",
-              borderRadius: "4px",
-              marginTop: "3px",
-              marginBottom: "3px",
-              paddingBottom: "2px",
-              fontWeight: "500",
-            }}
-          >
-            <i className="fab fa-google"></i> &nbsp;&nbsp;Google
-          </button>
-        )}
-        onSuccess={this.responseFacebook}
-        onFailure={this.responseFacebook}
-        cookiePolicy={"single_host_origin"}
-      />
-    );
-    return (
-      <div className="inline-block mr-2">
-        <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
-          open={this.state.error}
-          autoHideDuration={2000}
-          onClose={this.handleClose}
+  let googleContent;
+  googleContent = (
+    <GoogleLogin
+      clientId="368003567815-p9au9e07ev68n06bbjddv77dn4oftbjs.apps.googleusercontent.com"
+      render={(renderProps) => (
+        <button
+          onClick={renderProps.onClick}
+          style={{
+            background: "white",
+            border: " 0px transparent",
+            width: "107px",
+            height: "42px",
+            textAlign: "center",
+            borderRadius: "4px",
+            marginTop: "3px",
+            marginBottom: "3px",
+            paddingBottom: "2px",
+            fontWeight: "500",
+          }}
         >
-          <Alert severity="error" onClose={this.handleClose}>
-            {this.state.message}
-          </Alert>
-        </Snackbar>
-        {googleContent}
-      </div>
-    );
-  }
+          <i className="fab fa-google"></i> &nbsp;&nbsp;Google
+        </button>
+      )}
+      onSuccess={responseGoogle}
+      onFailure={responseGoogle}
+      cookiePolicy={"single_host_origin"}
+    />
+  );
+  return (
+    <div className="inline-block mr-2">
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={errorStatus}
+        autoHideDuration={2000}
+        onClose={handleClose}
+      >
+        <Alert severity="error" onClose={handleClose}>
+          {message}
+        </Alert>
+      </Snackbar>
+      {googleContent}
+    </div>
+  );
 }

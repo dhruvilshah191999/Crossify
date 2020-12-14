@@ -1,6 +1,12 @@
 {
    "states":[
       {
+         "state":"Select Option",
+         "districts":[
+            "Select Option"
+         ]
+      },
+      {
          "state":"Andhra Pradesh",
          "districts":[
             "Select Option",

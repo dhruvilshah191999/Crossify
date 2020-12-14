@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Facebook from "./Facebook";
 import Google from "./Google";
+import Key from "config/default.json";
+import CryptoJS from "crypto-js";
 
 var vertical = "top";
 var horizontal = "center";
 
 export default function Register() {
+  let history = useHistory();
   const [image, setImage] = useState("");
   const [formData, SetFormData] = useState({
     email: "",
@@ -85,7 +89,12 @@ export default function Register() {
               setError(true);
               setMessage(finaldata.data.message);
             } else {
-              console.log(finaldata.data);
+              var ciphertext = CryptoJS.AES.encrypt(
+                JSON.stringify(finaldata.data),
+                Key.Secret
+              ).toString();
+              localStorage.setItem("email", ciphertext);
+              history.push("/auth/register/step2");
             }
           } catch (err) {
             console.log(err);

@@ -1,34 +1,26 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import FacebookLogin from "react-facebook-login";
 import "assets/styles/facebookbutton.css";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import Key from "config/default.json";
+import CryptoJS from "crypto-js";
 
-var vertical = "top";
-var horizontal = "center";
-
-export default class Facebook extends Component {
-  state = {
-    error: false,
-    message: "",
-  };
-
-  changeState = (message) => {
-    this.setState({
-      error: true,
-      message,
-    });
-  };
-
-  handleClose = (event, reason) => {
+export default function Facebook() {
+  var vertical = "top";
+  var horizontal = "center";
+  let history = useHistory();
+  const [errorStatus, setError] = useState(false);
+  const [message, setMessage] = useState("");
+  const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    this.setState({ error: false });
+    setError(false);
   };
-
-  responseFacebook = async (response) => {
+  var responseFacebook = async (response) => {
     var splitname = response.name.split(" ");
     var fname, lname;
     if (splitname.length === 2) {
@@ -54,39 +46,42 @@ export default class Facebook extends Component {
     };
     const finaldata = await axios.post("/api/socialsignup", data, config);
     if (finaldata.data.is_error) {
-      this.changeState(finaldata.data.message);
+      setError(true);
+      setMessage(finaldata.data.message);
     } else {
-      console.log(finaldata.data);
+      var ciphertext = CryptoJS.AES.encrypt(
+        JSON.stringify(finaldata.data),
+        Key.Secret
+      ).toString();
+      localStorage.setItem("email", ciphertext);
+      history.push("/auth/register/socialstep2");
     }
   };
-
-  render() {
-    let fbContent;
-    fbContent = (
-      <FacebookLogin
-        cssClass="btnFacebook"
-        appId="393912875359725"
-        autoLoad={false}
-        fields="name,email,picture"
-        callback={this.responseFacebook}
-        icon={<i className="fab fa-facebook-f"> </i>}
-        textButton="&nbsp;&nbsp;Facebook"
-      />
-    );
-    return (
-      <div className="inline-block">
-        <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
-          open={this.state.error}
-          autoHideDuration={2000}
-          onClose={this.handleClose}
-        >
-          <Alert severity="error" onClose={this.handleClose}>
-            {this.state.message}
-          </Alert>
-        </Snackbar>
-        {fbContent}
-      </div>
-    );
-  }
+  let fbContent;
+  fbContent = (
+    <FacebookLogin
+      cssClass="btnFacebook"
+      appId="393912875359725"
+      autoLoad={false}
+      fields="name,email,picture"
+      callback={responseFacebook}
+      icon={<i className="fab fa-facebook-f"> </i>}
+      textButton="&nbsp;&nbsp;Facebook"
+    />
+  );
+  return (
+    <div className="inline-block">
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={errorStatus}
+        autoHideDuration={2000}
+        onClose={handleClose}
+      >
+        <Alert severity="error" onClose={handleClose}>
+          {message}
+        </Alert>
+      </Snackbar>
+      {fbContent}
+    </div>
+  );
 }

@@ -14,7 +14,7 @@ const EventCard = (props) => {
         />
         <div className="px-2 py-1">
           <div className="text-xs text-gray-600 font-semibold">
-            <i class="fas fa-user-shield"></i> : {props.eventHost}
+            <i className="fas fa-user-shield"></i> : {props.eventHost}
           </div>
           <div className="text-xl  mt-1 font-semibold truncate leading-snug">
             {props.eventName}
@@ -61,7 +61,7 @@ const EventCard = (props) => {
               className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
             >
-              <i class="fas fa-share-alt"></i>
+              <i className="fas fa-share-alt"></i>
             </button>
           </div>
         </div>

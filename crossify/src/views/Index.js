@@ -91,7 +91,7 @@ export default function Landing() {
                 </h4>
                 <button className="text-blue-600 ml-auto pr-2">
                   {" "}
-                  Load More <i class="fas fa-angle-double-right"></i>{" "}
+                  Load More <i className="fas fa-angle-double-right"></i>{" "}
                 </button>
               </div>
             </div>
