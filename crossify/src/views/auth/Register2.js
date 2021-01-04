@@ -89,7 +89,7 @@ export default function Register2() {
           setError(true);
           setMessage(finaldata.data.message);
         } else {
-          console.log(finaldata.data);
+          history.push("/auth/register/step3");
         }
       } catch (err) {
         console.log(err);

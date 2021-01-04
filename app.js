@@ -11,6 +11,7 @@ const connectDB = require("./db/db");
 //var event_details = require("./modules/event_details");
 
 var indexRouter = require("./routes/index");
+var eventsRouter = require("./routes/events");
 var usersRouter = require("./routes/users");
 
 var app = express();
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api", indexRouter);
+app.use("/api/events", eventsRouter);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler

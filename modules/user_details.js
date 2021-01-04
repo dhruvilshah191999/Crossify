@@ -88,7 +88,14 @@ var user_details = new Schema({
 
 user_details.methods.generateAuthToken = function () {
   return jwt.sign(
-    { _id: this._id, username: this.username, email: this.email },
+    {
+      _id: this._id,
+      username: this.username,
+      email: this.email,
+      city: this.city,
+      latitude: this.latitude,
+      longitude: this.longitude,
+    },
     config.get("jwtSecret")
   );
 };

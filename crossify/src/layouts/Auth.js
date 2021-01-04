@@ -9,6 +9,7 @@ import Background from "assets/img/register_bg_2.png";
 import Register from "views/auth/Register.js";
 import Register2 from "views/auth/Register2";
 import SocialRegister2 from "views/auth/SocialRegister2";
+import Register3 from "views/auth/Register3";
 
 export default function Auth() {
   return (
@@ -26,6 +27,7 @@ export default function Auth() {
             <Route path="/auth/login" exact component={Login} />
             <Route path="/auth/register" exact component={Register} />
             <Route path="/auth/register/step2" exact component={Register2} />
+            <Route path="/auth/register/step3" exact component={Register3} />
             <Route
               path="/auth/register/socialstep2"
               exact

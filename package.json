@@ -20,6 +20,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-validator": "^6.7.0",
+    "geolib": "^3.3.1",
     "http-errors": "~1.6.3",
     "http-proxy-middleware": "^1.0.6",
     "jsonwebtoken": "^8.5.1",

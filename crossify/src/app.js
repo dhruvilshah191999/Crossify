@@ -1,11 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
@@ -22,13 +16,6 @@ import Index from "views/Index.js";
 import SearchPage from "views/SearchPage";
 
 const Routing = () => {
-  const history = useHistory();
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (!token) {
-      history.push("/auth");
-    }
-  }, []);
   return (
     <Switch>
       {/* add routes with layouts */}

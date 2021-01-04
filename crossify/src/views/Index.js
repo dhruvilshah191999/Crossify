@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 // components
@@ -8,6 +9,29 @@ import Footer from "components/Footers/Footer.js";
 import EventCard from "components/Cards/EventCard";
 import ClubCard from "components/Cards/ClubCard";
 export default function Landing() {
+  const [eventState, setEventstate] = useState([]);
+  useEffect(async () => {
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      try {
+        const config = {
+          method: "GET",
+          header: {
+            "Content-Type": "application/json",
+          },
+        };
+        const finaldata = await axios.get("/api/events/get-event", config);
+        if (finaldata.data.is_error) {
+          console.log(finaldata.data.message);
+        } else {
+          setEventstate(finaldata.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    console.clear();
+  }, []);
   return (
     <>
       <Navbar transparent />
@@ -84,10 +108,30 @@ export default function Landing() {
         </div>
         <section className="bg-white block m-6 ">
           <div className="container p-8 mx-auto">
-            <div className="mx-auto px-12 py-12 my-auto">
+            <div className="ml-3 mb-5">
               <div className="flex flex-row">
                 <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-yellow-800">
                   Check out what's going on in your Area
+                </h4>
+                <button className="text-blue-600 ml-auto">
+                  {" "}
+                  Load More <i className="fas fa-angle-double-right"></i>{" "}
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-wrap">
+              {eventState.map((data) => (
+                <EventCard data={data}></EventCard>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="bg-white block m-6 ">
+          <div className="container p-8 mx-auto">
+            <div className="mx-auto px-12 py-12 my-auto">
+              <div className="flex flex-row">
+                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-yellow-800">
+                  Check out which club in your Area
                 </h4>
                 <button className="text-blue-600 ml-auto pr-2">
                   {" "}
@@ -96,7 +140,6 @@ export default function Landing() {
               </div>
             </div>
             <div className="flex flex-wrap" style={{ padding: "25px" }}>
-              <EventCard></EventCard>
               <ClubCard></ClubCard>
             </div>
           </div>
