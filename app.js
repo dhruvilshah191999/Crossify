@@ -12,6 +12,7 @@ const connectDB = require("./db/db");
 
 var indexRouter = require("./routes/index");
 var eventsRouter = require("./routes/events");
+var filterRouter = require("./routes/filter");
 var usersRouter = require("./routes/users");
 
 var app = express();
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api", indexRouter);
 app.use("/api/events", eventsRouter);
+app.use("/api/filter", filterRouter);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler

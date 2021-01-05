@@ -86,69 +86,92 @@ router.get("/get-event", async function (req, res, next) {
 
 router.post("/get-event-byuser", auth, async function (req, res, next) {
   var { latitude, longitude } = req.user;
-  var records = event_details.find({ is_active: true });
-  let distancearray = [];
-  let idstring = "";
-  await records.exec(async (err, data) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err,
-      };
-      return res.status(500).send(error);
-    } else {
-      data.forEach((d) => {
-        let distancevalue = distance(
-          d.latitude,
-          latitude,
-          d.longitude,
-          longitude,
-          "K"
-        );
-        let object = {
-          id: d._id,
-          distance: distancevalue,
+  if (latitude !== 0 && longitude !== 0) {
+    var records = event_details.find({ is_active: true });
+    let distancearray = [];
+    let idstring = "";
+    await records.exec(async (err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err,
         };
-        if (distancearray.length < 4) {
-          distancearray.push(object);
-        } else {
-          let maxdistance = Math.max(...getYs(distancearray));
-          if (distancevalue < maxdistance) {
-            distancearray = distancearray.filter(
-              (d) => d.distance !== maxdistance
-            );
+        return res.status(500).send(error);
+      } else {
+        data.forEach((d) => {
+          let distancevalue = distance(
+            d.latitude,
+            d.longitude,
+            latitude,
+            longitude,
+            "K"
+          );
+          let object = {
+            id: d._id,
+            distance: distancevalue,
+          };
+          if (distancearray.length < 4) {
             distancearray.push(object);
+          } else {
+            let maxdistance = Math.max(...getYs(distancearray));
+            if (distancevalue < maxdistance) {
+              distancearray = distancearray.filter(
+                (d) => d.distance !== maxdistance
+              );
+              distancearray.push(object);
+            }
           }
-        }
-      });
-      var eventsrecords = event_details.find({
-        _id: {
-          $in: [
-            ObjectId(distancearray[0].id),
-            ObjectId(distancearray[1].id),
-            ObjectId(distancearray[2].id),
-            ObjectId(distancearray[3].id),
-          ],
-        },
-      });
-      await eventsrecords.exec((err, data2) => {
-        if (err) {
-          var error = {
-            is_error: true,
-            message: err,
-          };
-          return res.status(500).send(error);
-        } else {
-          var finaldata = {
-            data: data2,
-            is_error: false,
-            message: "Data Send",
-          };
-          return res.status(200).send(finaldata);
-        }
-      });
-    }
-  });
+        });
+        var eventsrecords = event_details.find({
+          _id: {
+            $in: [
+              ObjectId(distancearray[0].id),
+              ObjectId(distancearray[1].id),
+              ObjectId(distancearray[2].id),
+              ObjectId(distancearray[3].id),
+            ],
+          },
+        });
+        await eventsrecords.exec((err, data2) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err,
+            };
+            return res.status(500).send(error);
+          } else {
+            var finaldata = {
+              data: data2,
+              is_error: false,
+              message: "Data Send",
+            };
+            return res.status(200).send(finaldata);
+          }
+        });
+      }
+    });
+  } else {
+    var records = event_details
+      .find({ is_active: true })
+      .sort({ date: -1 })
+      .limit(4);
+    await records.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err,
+        };
+        return res.status(500).send(error);
+      } else {
+        var finaldata = {
+          data: data,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+  }
 });
 
 router.post("/add-interest", async function (req, res, next) {

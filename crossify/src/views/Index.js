@@ -29,6 +29,30 @@ export default function Landing() {
       } catch (err) {
         console.log(err);
       }
+    } else {
+      try {
+        const config = {
+          method: "POST",
+          header: {
+            "Content-Type": "application/json",
+          },
+        };
+        var object = {
+          token: token,
+        };
+        const finaldata = await axios.post(
+          "/api/events/get-event-byuser",
+          object,
+          config
+        );
+        if (finaldata.data.is_error) {
+          console.log(finaldata.data.message);
+        } else {
+          setEventstate(finaldata.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
     console.clear();
   }, []);
@@ -83,7 +107,7 @@ export default function Landing() {
                 </div>
                 <button
                   style={{ marginLeft: "10px" }}
-                  className="bg-red-400 hover:bg-red-300 rounded text-white p-2 pl-4 pr-4"
+                  className="bg-alpha hover:bg-alpha hover:shadow-md rounded text-white p-2 pl-4 pr-4"
                 >
                   <p className="font-semibold text-md">Search</p>
                 </button>
@@ -106,11 +130,11 @@ export default function Landing() {
             ></svg>
           </div>
         </div>
-        <section className="bg-white block m-6 ">
+        <section className="bg-white block m-2 ">
           <div className="container p-8 mx-auto">
             <div className="ml-3 mb-5">
               <div className="flex flex-row">
-                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-yellow-800">
+                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-gray">
                   Check out what's going on in your Area
                 </h4>
                 <button className="text-blue-600 ml-auto">
@@ -121,7 +145,7 @@ export default function Landing() {
             </div>
             <div className="flex flex-wrap">
               {eventState.map((data) => (
-                <EventCard data={data}></EventCard>
+                <EventCard key={data._id} data={data}></EventCard>
               ))}
             </div>
           </div>
