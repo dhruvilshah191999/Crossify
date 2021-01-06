@@ -31,10 +31,10 @@ const UserDropdown = () => {
       >
         <a className="text-gray-600 block" href="#pablo" ref={btnDropdownRef}>
           <div className="items-center flex ">
-            <span className="w-12 h-10 text-sm text-white border-white bg-gray-300 inline-flex items-center justify-center rounded-full  overflow-hidden">
+            <span className="w-10 h-10 text-sm text-white border-white bg-gray-300 inline-flex items-center justify-center rounded-full  overflow-hidden">
               <img
                 alt="..."
-                className="w-12 h-10 rounded-full border-none shadow-lg "
+                className="w-10 h-10 rounded-full border-none shadow-lg "
                 src={users.profile_photo}
               />
             </span>

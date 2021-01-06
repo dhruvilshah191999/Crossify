@@ -8,7 +8,7 @@ const ResultWindow = ({ getevent, loading }) => {
   return (
     <div style={{ marginLeft: 300 }}>
       {getevent.map((data) => (
-        <BigEventCard data={data} />
+        <BigEventCard key={data._id} data={data} />
       ))}
     </div>
   );
