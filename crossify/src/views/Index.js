@@ -134,42 +134,43 @@ export default function Landing() {
         </div>
         <section className="bg-white block m-2 ">
           <div className="container p-8 mx-auto">
-            <div className="ml-3 mb-5">
-              <div className="flex flex-row">
-                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-gray">
+            <div className="ml-2  mb-6">
+              <div className="flex flex-row px-2">
+                <h4 className="text-3xl font-normal leading-normal mt-0 ml-2 mb-2 text-gray">
                   Check out what's going on in your Area
                 </h4>
-                <button className="text-blue-600 ml-auto">
+                <button className="text-blue-600 ml-auto mr-2">
                   {" "}
                   Load More <i className="fas fa-angle-double-right"></i>{" "}
                 </button>
               </div>
             </div>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap ml-1">
               {eventState.map((data) => (
                 <EventCard key={data._id} data={data}></EventCard>
               ))}
             </div>
           </div>
         </section>
-        <section className="bg-white block m-6 ">
-          <div className="container p-8 mx-auto">
-            <div className="mx-auto px-12 py-12 my-auto">
-              <div className="flex flex-row">
-                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-yellow-800">
-                  Check out which club in your Area
+        <section className="bg-white block m-2 ">
+          <div className="container p-8">
+            <div className="ml-3 mb-6">
+              <div className="flex flex-row px-2">
+                <h4 className="text-3xl font-normal leading-normal mt-0 ml-2 mb-2 text-gray">
+                  Check out what's going on in your Area
                 </h4>
-                <button className="text-blue-600 ml-auto pr-2">
+                <button className="text-blue-600 ml-auto mr-2">
                   {" "}
                   Load More <i className="fas fa-angle-double-right"></i>{" "}
                 </button>
               </div>
             </div>
-            <div className="flex flex-wrap" style={{ padding: "25px" }}>
+            <div className="flex flex-wrap ml-1">
               <ClubCard></ClubCard>
             </div>
           </div>
         </section>
+
         <section className="pb-20 bg-gray-300 ">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap">

@@ -2,7 +2,10 @@ import { Component } from "materialize-css";
 import React from "react";
 import defImg from "../../assets/img/event_1.jpeg";
 
+// todo : Need to fix pre rendering component (the props has to be processed to determine what to render)
+// ! EARLY RENDERING
 class ClubCard extends React.Component {
+  state = { line: null };
   getCategoriesLine = (categoryArray) => {
     var lastElement = categoryArray.pop();
     var line = "";
@@ -14,6 +17,11 @@ class ClubCard extends React.Component {
     }
     return line;
   };
+
+  componentDidMount() {
+    const lineOfCat = this.getCategoriesLine(this.props.categories);
+    this.setState({ line: lineOfCat });
+  }
 
   render() {
     return (
@@ -27,14 +35,15 @@ class ClubCard extends React.Component {
             className="w-full object-cover"
             alt="eventPic"
           />
+
           <div className="px-2 py-1">
             <div className="text-xs text-gray-600 font-semibold">
-              {this.getCategoriesLine(this.props.categories)}
+              {() => this.getCategoriesLine(this.props.categories)}
+              {this.state.line}
             </div>
             <div className="text-lg mt-1 font-semibold truncate leading-snug">
               {this.props.name}
             </div>
-
             <div className="text-xs text-gray-600 flex flex-row mt-1">
               <div>
                 {" "}
@@ -56,6 +65,7 @@ class ClubCard extends React.Component {
                 {this.props.eventCompoleted}
               </div>
             </div>
+
             <div
               className="absolute top-0 right-0"
               style={{ marginTop: "195px", marginRight: "20px" }}
@@ -82,7 +92,8 @@ class ClubCard extends React.Component {
 ClubCard.defaultProps = {
   imgPath: defImg,
   categories: ["Tech", "Sports"],
-  name: "GreyHat Magic",
+  test: "hahhahah",
+  name: "GreyHat BadAngles",
   privacy: "Public",
   location: "Ahmedabad,IN",
   members: 69,
