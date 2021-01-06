@@ -36,7 +36,7 @@ const Routing = () => {
 };
 
 export default function App() {
-  const { islogin_dispatch, dispatch } = useContext(UserContext);
+  const { islogin_dispatch, dispatch, users } = useContext(UserContext);
 
   useEffect(() => {
     async function checkLogin() {

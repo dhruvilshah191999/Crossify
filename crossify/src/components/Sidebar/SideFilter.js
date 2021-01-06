@@ -1,16 +1,14 @@
 /*eslint-disable*/
-import React, { useContext } from "react";
+import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { usePosition } from "use-position";
-import { UserContext } from "context/usercontext";
+
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import Pagination from "components/ResultWindow/Pagination";
 import ResultWindow from "components/ResultWindow";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import RangeInput from "components/RangeSlider";
 export default function Sidebar() {
-  const { isLogin, users } = useContext(UserContext);
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const [loading, setLoading] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -22,6 +20,9 @@ export default function Sidebar() {
   const [showCategory, setCategory] = React.useState(false);
   const [startDate, SetstartDate] = React.useState(new Date());
   const [endDate, SetendDate] = React.useState(new Date());
+  if (distance === "") {
+    Setdistance(0);
+  }
 
   React.useEffect(() => {
     console.clear();
@@ -68,58 +69,6 @@ export default function Sidebar() {
   const indexofFirstPost = indexofLastPost - postPerPage;
   const currentEvents = getevent.slice(indexofFirstPost, indexofLastPost);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    let array = [];
-    var latitude, longitude;
-    await interestState.map((data) => {
-      if (data.select === true) {
-        array.push(data.id);
-      }
-    });
-    if (eventShow) {
-      if (isLogin) {
-        latitude = users.latitude;
-        longitude = users.longitude;
-      } else {
-        latitude = usePosition(watch);
-        longitude = usePosition(watch);
-      }
-
-      if (latitude === undefined || longitude === undefined) {
-        longitude = 0;
-        latitude = 0;
-      }
-      try {
-        var data = {
-          latitude,
-          longitude,
-          interestarray: array,
-          distance,
-          startdate: startDate,
-          enddate: endDate,
-        };
-        const config = {
-          method: "POST",
-          header: {
-            "Content-Type": "application/json",
-          },
-          validateStatus: () => true,
-        };
-        const finaldata = await axios.post("/api/filter/", data, config);
-        if (finaldata.data.is_error) {
-          setError(true);
-          setMessage(finaldata.data.message);
-        } else {
-          console.log(finaldata);
-          setEvent(finaldata.data.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
 
   return (
     <>
@@ -383,7 +332,7 @@ export default function Sidebar() {
             <button
               className="bg-alpha text-white active:bg-gray-700 text-md   px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
               type="button"
-              onClick={(e) => onSubmit(e)}
+              // onClick={(e) => onSubmit(e)}
             >
               Apply Filter
             </button>

@@ -11,7 +11,7 @@ const Pagination = ({ postPerPage, totalPosts, paginate }) => {
       <nav className="block">
         <ul className="flex pl-0 rounded list-none flex-wrap">
           {pageNumbers.map((number) => (
-            <li key={number}>
+            <li>
               <a
                 href="#"
                 onClick={() => paginate(number)}

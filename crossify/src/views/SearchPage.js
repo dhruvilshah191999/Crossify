@@ -1,7 +1,8 @@
 import React from "react";
 import SearchNavbar from "components/Navbars/SearchNavbar";
 import SideFilter from "components/Sidebar/SideFilter";
-const SearchPage = () => {
+import ResultWindow from "components/ResultWindow";
+const SearchPage = (props) => {
   return (
     <div>
       <SearchNavbar />
