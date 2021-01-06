@@ -1,16 +1,14 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
 
-const NotificationDropdown = () => {
+const NotificationDropdown = (props) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
   const openDropdownPopover = () => {
     console.log("hey");
-    createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-start",
-    });
+    createPopper(btnDropdownRef.current, popoverDropdownRef.current);
     setDropdownPopoverShow(true);
   };
   const closeDropdownPopover = () => {
@@ -18,61 +16,68 @@ const NotificationDropdown = () => {
   };
   return (
     <>
-      <a
-        className="text-gray-600 block py-1 px-3"
-        href="#pablo"
-        ref={btnDropdownRef}
-        onClick={(e) => {
+      <div
+        onMouseEnter={(e) => {
           e.preventDefault();
-          dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
+          openDropdownPopover();
+        }}
+        onMouseLeave={(e) => {
+          e.preventDefault();
+          closeDropdownPopover();
         }}
       >
-        <i className="fas fa-bell"></i>
-      </a>
-      <div
-        ref={popoverDropdownRef}
-        className={
-          (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
-        }
-      >
         <a
+          className="hover:text-yellow text-yellow px-3 py-4 lg:py-2 flex items-center"
           href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
-          }
-          onClick={(e) => e.preventDefault()}
+          ref={btnDropdownRef}
         >
-          Action
+          <i className="fas fa-bell rounded-full text-xl leading-lg mr-2" />{" "}
         </a>
-        <a
-          href="#pablo"
+        <div
+          ref={popoverDropdownRef}
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+            (dropdownPopoverShow ? "block " : "hidden ") +
+            "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
           }
-          onClick={(e) => e.preventDefault()}
         >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
-        <div className="h-0 my-2 border border-solid border-gray-200" />
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Seprated link
-        </a>
+          <a
+            href="#pablo"
+            className={
+              "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+            }
+            onClick={(e) => e.preventDefault()}
+          >
+            Messages
+          </a>
+          <a
+            href="#pablo"
+            className={
+              "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+            }
+            onClick={(e) => e.preventDefault()}
+          >
+            Another action
+          </a>
+          <a
+            href="#pablo"
+            className={
+              "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+            }
+            onClick={(e) => e.preventDefault()}
+          >
+            Something else here
+          </a>
+          <div className="h-0 my-2 border border-solid border-gray-200" />
+          <a
+            href="#pablo"
+            className={
+              "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+            }
+            onClick={(e) => e.preventDefault()}
+          >
+            Seprated link
+          </a>
+        </div>
       </div>
     </>
   );

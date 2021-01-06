@@ -271,4 +271,8 @@ router.post("/step2", async function (req, res, next) {
   });
 });
 
+router.post("/auth", auth, async function (req, res, next) {
+  return res.status(200).send(req.user);
+});
+
 module.exports = router;

@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { Link } from "react-router-dom";
+import { UserContext } from "context/usercontext";
 
 var vertical = "top";
 var horizontal = "center";
 
 function Login() {
   let history = useHistory();
+  const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
     email: "",
     password: "",
@@ -49,6 +51,8 @@ function Login() {
         setMessage(res.data.message);
       } else {
         localStorage.setItem("jwt", res.data.token);
+        islogin_dispatch({ type: "Login-Status", status: true });
+        dispatch({ type: "ADD_USER", payload: res.data.data });
         history.push("/");
       }
     } catch (error) {

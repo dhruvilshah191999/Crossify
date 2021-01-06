@@ -27,4 +27,29 @@ router.get("/get-event", async function (req, res, next) {
   });
 });
 
+router.post("/get-tags", async function (req, res, nex) {
+  var { interest } = req.body;
+  let tag = [];
+  var tags = category_details.find({ _id: { $in: interest } }, { tags: 1 });
+  await tags.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else {
+      data.forEach((element) => {
+        tag.push.apply(tag, element.tags);
+      });
+      const finaldata = {
+        data: tag,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 module.exports = router;

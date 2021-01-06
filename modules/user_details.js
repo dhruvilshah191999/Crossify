@@ -92,7 +92,7 @@ user_details.methods.generateAuthToken = function () {
       _id: this._id,
       username: this.username,
       email: this.email,
-      city: this.city,
+      profile_photo: this.profile_photo,
       latitude: this.latitude,
       longitude: this.longitude,
     },

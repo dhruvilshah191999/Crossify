@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -15,6 +16,7 @@ import Landing from "views/Landing.js";
 import Profile from "views/Profile.js";
 import Index from "views/Index.js";
 import SearchPage from "views/SearchPage";
+import { UserContext } from "context/usercontext";
 
 const Routing = () => {
   return (
@@ -34,6 +36,34 @@ const Routing = () => {
 };
 
 export default function App() {
+  const { islogin_dispatch, dispatch, users } = useContext(UserContext);
+
+  useEffect(() => {
+    async function checkLogin() {
+      var token = localStorage.getItem("jwt");
+      if (!token) {
+        islogin_dispatch({ type: "Login-Status", status: false });
+      } else {
+        islogin_dispatch({ type: "Login-Status", status: true });
+        try {
+          const data = {
+            token: token,
+          };
+          const config = {
+            method: "POST",
+            header: {
+              "Content-Type": "application/json",
+            },
+          };
+          const res = await axios.post("/api/auth", data, config);
+          dispatch({ type: "ADD_USER", payload: res.data });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    checkLogin();
+  }, []);
   return (
     <BrowserRouter>
       <Routing />

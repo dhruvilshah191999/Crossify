@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { UserContext } from "context/usercontext";
 
 // components
 
@@ -9,6 +10,7 @@ import Footer from "components/Footers/Footer.js";
 import EventCard from "components/Cards/EventCard";
 import ClubCard from "components/Cards/ClubCard";
 export default function Landing() {
+  const { isLogin } = useContext(UserContext);
   const [eventState, setEventstate] = useState([]);
   useEffect(async () => {
     const token = localStorage.getItem("jwt");
@@ -54,7 +56,7 @@ export default function Landing() {
         console.log(err);
       }
     }
-    console.clear();
+    //console.clear();
   }, []);
   return (
     <>
