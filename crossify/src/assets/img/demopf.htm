@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+    <link rel="shortcut icon" href="https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/favicon.ico" />
+		<link href="https://plus.google.com/117025574764707275013" rel="publisher" />  	
+    <script>
+	(function(d) {var config = {kitId: 'ssg8zig', scriptTimeout: 3000, async: false},
+	h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+	})(document);
+	</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script>
+(function(Modernizr){
+
+  // Here are all the values we will test. If you want to use just one or two, comment out the lines of test you don't need.
+  var tests = [
+    //{ name: 'svg', value: 'url(#test)' }, // False positive in IE, supports SVG clip-path, but not on HTML element
+    //{ name: 'inset', value: 'inset(10px 20px 30px 40px)' },
+    //{ name: 'circle', value: 'circle(60px at center)' },
+    //{ name: 'ellipse', value: 'ellipse(50% 50% at 50% 50%)' },
+    { name: 'polygon', value: 'polygon(50% 0%, 0% 100%, 100% 100%)' }
+  ];
+
+  var t = 0, name, value, prop;
+
+  for (; t < tests.length; t++) {
+    name = tests[t].name;
+    value = tests[t].value;
+    Modernizr.addTest('cssclippath' + name, function(){
+      // Try using window.CSS.supports
+      if ( 'CSS' in window && 'supports' in window.CSS ) {
+        for (var i = 0; i < Modernizr._prefixes.length; i++) {
+          prop = Modernizr._prefixes[i] + 'clip-path'
+          
+          if ( window.CSS.supports(prop,value) ) { return true; }
+        }
+        return false;
+      }
+      // Otherwise, use Modernizr.testStyles and examine the property manually
+      return Modernizr.testStyles('#modernizr { '+Modernizr._prefixes.join('clip-path:'+value+'; ')+' }',function(elem, rule) {
+        var style = getComputedStyle(elem),
+            clip = style.clipPath;
+
+        if ( !clip || clip == "none" ) {
+          clip = false;
+
+          for (var i = 0; i < Modernizr._domPrefixes.length; i++) {
+            test = Modernizr._domPrefixes[i] + 'ClipPath';
+            if ( style[test] && style[test] !== "none" ) {
+              clip = true;
+              break;
+            }
+          }
+        }
+
+        return Modernizr.testProp('clipPath') && clip;
+      });
+    });
+
+  }
+
+})(Modernizr);
+
+</script>
+	
+	<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>Hacker Motives: Red Flags and Prevention | Varonis</title>
+
+<!-- This site is optimized with the Yoast SEO Premium plugin v11.7 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Hacker are motivated by different things to compromise your data. See what patterns hackers have been following and how you can keep your company safe."/>
+<link rel="canonical" href="https://www.varonis.com/blog/hacker-motives/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Hacker Motives: Red Flags and Prevention | Varonis" />
+<meta property="og:description" content="Hacker are motivated by different things to compromise your data. See what patterns hackers have been following and how you can keep your company safe." />
+<meta property="og:url" content="https://www.varonis.com/blog/hacker-motives/" />
+<meta property="og:site_name" content="Inside Out Security" />
+<meta property="article:tag" content="infosec" />
+<meta property="article:section" content="Data Security" />
+<meta property="article:published_time" content="2019-02-04T17:33:03-05:00" />
+<meta property="article:modified_time" content="2020-03-29T21:48:58-04:00" />
+<meta property="og:updated_time" content="2020-03-29T21:48:58-04:00" />
+<meta property="og:image" content="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero.png" />
+<meta property="og:image:secure_url" content="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero.png" />
+<meta property="og:image:width" content="1500" />
+<meta property="og:image:height" content="500" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Hacker are motivated by different things to compromise your data. See what patterns hackers have been following and how you can keep your company safe." />
+<meta name="twitter:title" content="Hacker Motives: Red Flags and Prevention | Varonis" />
+<meta name="twitter:site" content="@varonis" />
+<meta name="twitter:image" content="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero.png" />
+<meta name="twitter:creator" content="@varonis" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.varonis.com/blog/#website","url":"https://www.varonis.com/blog/","name":"Inside Out Security","potentialAction":{"@type":"SearchAction","target":"https://www.varonis.com/blog/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"ImageObject","@id":"https://www.varonis.com/blog/hacker-motives/#primaryimage","url":"https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero.png","width":1500,"height":500,"caption":"hacker motives hero"},{"@type":"WebPage","@id":"https://www.varonis.com/blog/hacker-motives/#webpage","url":"https://www.varonis.com/blog/hacker-motives/","inLanguage":"en-US","name":"Hacker Motives: Red Flags and Prevention | Varonis","isPartOf":{"@id":"https://www.varonis.com/blog/#website"},"primaryImageOfPage":{"@id":"https://www.varonis.com/blog/hacker-motives/#primaryimage"},"datePublished":"2019-02-04T17:33:03-05:00","dateModified":"2020-03-29T21:48:58-04:00","author":{"@id":"https://www.varonis.com/blog/#/schema/person/4024cdec44e3bba1ae24778124575492"},"description":"Hacker are motivated by different things to compromise your data. See what patterns hackers have been following and how you can keep your company safe.","breadcrumb":{"@id":"https://www.varonis.com/blog/hacker-motives/#breadcrumb"}},{"@type":"BreadcrumbList","@id":"https://www.varonis.com/blog/hacker-motives/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https://www.varonis.com/blog/","url":"https://www.varonis.com/blog/","name":"Inside Out Security Blog"}},{"@type":"ListItem","position":2,"item":{"@type":"WebPage","@id":"https://www.varonis.com/blog/category/data_security/","url":"https://www.varonis.com/blog/category/data_security/","name":"Data Security"}},{"@type":"ListItem","position":3,"item":{"@type":"WebPage","@id":"https://www.varonis.com/blog/hacker-motives/","url":"https://www.varonis.com/blog/hacker-motives/","name":"Hacker Motives: Red Flags and Prevention"}}]},{"@type":["Person"],"@id":"https://www.varonis.com/blog/#/schema/person/4024cdec44e3bba1ae24778124575492","name":"Sarah Hospelhorn","image":{"@type":"ImageObject","@id":"https://www.varonis.com/blog/#authorlogo","url":"https://secure.gravatar.com/avatar/53c5cabdf6158e38012633a98e261364?s=96&d=wp_user_avatar&r=g","caption":"Sarah Hospelhorn"},"description":"Based in Brooklyn, NY, Sarah focuses on the strategy behind solving problems in data security. She\u2019s been in tech for over 20 years, with experience in software, hardware, and cryptography.","sameAs":[]}]}</script>
+<!-- / Yoast SEO Premium plugin. -->
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Inside Out Security &raquo; Feed" href="https://www.varonis.com/blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Inside Out Security &raquo; Comments Feed" href="https://www.varonis.com/blog/comments/feed/" />
+<link rel='stylesheet' id='bcct_style-css'  href='https://blogvaronis2.wpengine.com/wp-content/plugins/better-click-to-tweet/assets/css/styles.css?ver=3.0' type='text/css' media='all' />
+<link rel='stylesheet' id='YoutubeShortcodeMargenn-css'  href='https://blogvaronis2.wpengine.com/wp-content/plugins/youtube-shortcode/youtube-shortcode.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/genericons/genericons.css?ver=3.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='twentysixteen-fa-css'  href='https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/css/font-awesome.css?ver=4.7.0' type='text/css' media='all' />
+<link rel='stylesheet' id='twentysixteen-styles-css'  href='https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/style.css?ver=4.7.0' type='text/css' media='all' />
+<link rel='stylesheet' id='enlighter-local-css'  href='https://blogvaronis2.wpengine.com/wp-content/plugins/enlighter/resources/EnlighterJS.min.css?ver=3.10.0' type='text/css' media='all' />
+<script>if (document.location.protocol != "https:") {document.location = document.URL.replace(/^http:/i, "https:");}</script><script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/assets/js/varonis.min.js?ver=5.5.3' id='varonis-js'></script>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/plugins/varonis_customcode/js/varonis_scripts.js?ver=1.0' id='varonis_scripts-js'></script>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/plugins/vr_rwdimagemaps/js/jquery.rwdImageMaps.min.js?ver=5.5.3' id='sm_rwdimagemaps_plug-js'></script>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/plugins/vr_rwdimagemaps/js/rwdimagemaps.js?ver=5.5.3' id='sm_rwdimagemaps_js-js'></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/js/html5.js?ver=3.7.3' id='twentysixteen-html5-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="https://www.varonis.com/blog/wp-json/" /><link rel="alternate" type="application/json" href="https://www.varonis.com/blog/wp-json/wp/v2/posts/11746" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogvaronis2.wpengine.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogvaronis2.wpengine.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='shortlink' href='https://www.varonis.com/blog/?p=11746' />
+<link rel="alternate" type="application/json+oembed" href="https://www.varonis.com/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.varonis.com%2Fblog%2Fhacker-motives%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.varonis.com/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.varonis.com%2Fblog%2Fhacker-motives%2F&#038;format=xml" />
+<meta name="twitter:partner" content="tfwp"><link rel="icon" href="https://blogvaronis2.wpengine.com/wp-content/uploads/2015/10/cropped-cropped-Varonis_Horizontal-300x300-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://blogvaronis2.wpengine.com/wp-content/uploads/2015/10/cropped-cropped-Varonis_Horizontal-300x300-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://blogvaronis2.wpengine.com/wp-content/uploads/2015/10/cropped-cropped-Varonis_Horizontal-300x300-180x180.png" />
+<meta name="msapplication-TileImage" content="https://blogvaronis2.wpengine.com/wp-content/uploads/2015/10/cropped-cropped-Varonis_Horizontal-300x300-270x270.png" />
+
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Hacker Motives: Red Flags and Prevention"><meta name="twitter:description" content="Hackers are getting savvier. They’re constantly finding new ways to abuse system vulnerabilities and sneak into our networks. The worst part? The likelihood of a cyber attack is now higher&hellip;"><meta name="twitter:image" content="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero.png"><meta name="twitter:image:alt" content="hacker motives hero">
+		<style type="text/css" id="wp-custom-css">
+			ol.EnlighterJS, ul.EnlighterJS {
+  text-indent: 0;
+  padding: 20px 20px 10px 45px;
+	font-family: Menlo,Consolas,Monaco,monospace;
+}
+
+@media(max-width: 490px) {
+	ol.EnlighterJS,
+  ul.EnlighterJS {
+		padding: 20px 20px 10px 45px;	
+	}
+}
+
+.atomicEnlighterJSWrapper pre, ol.atomicEnlighterJS, ul.atomicEnlighterJS {
+	background-color: #212234;
+}
+
+ol.atomicEnlighterJS li,
+ul.atomicEnlighterJS li {
+	font-size: 15px !important;
+    color: #888;
+	margin-bottom: 8px !important;
+	list-style-position: outside;	
+	line-height: 1.5;
+	padding-left: 0 !important;
+}
+
+.atomicEnlighterJS span {
+	color: #f7f8fc;
+	font-size: 15px;
+}
+
+.atomicEnlighterJS .kw4 {
+    color: #4a90e2;
+}
+
+.atomicEnlighterJS .st0 {
+    color: 
+    #00B188 
+}
+.atomicEnlighterJS .st1 {
+    color: 
+    #00B188 
+}
+
+.atomicEnlighterJS .co1 {
+	color: #00ECE0;
+}
+
+.atomicEnlighterJS, .atomicEnlighterJSTabPane, .atomicEnlighterJSWrapper {
+    font-family: Menlo,Consolas,Monaco,monospace;
+}
+
+.atomicEnlighterJSWrapper pre {
+	padding: 20px 30px 20px 35px;
+    font-size: 15px;
+    color: #fff;
+}		</style>
+		</head>
+
+<body data-rsssl=1 class="post-template-default single single-post postid-11746 single-format-standard group-blog">
+
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+		            <div class="topad-wrap">
+            <div class="pcenter">
+            <p> <strong>Live Cyber Attack Lab</strong> 🎯 Watch our IR team detect & respond to a rogue insider trying to steal data!            <a href="/cyber-workshop?ref=topbar"> Choose a Session</a> <i class="fa fa-caret-right" aria-hidden="true"></i>
+            </p>
+            <span class="close-topad">X</span>
+            </div>
+            </div>
+                        
+
+		<header id="masthead" class="site-header" role="banner">
+        
+            <div id="searchForm" class="search-form-wrap">
+            <div class="pcenter">
+            	<span id="closeSearchForm" class="closeSFormBtn"><i class="fa fa-times" aria-hidden="true"></i>
+</span>
+            	
+<form role="search" method="get" class="search-form" action="https://www.varonis.com/blog/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="What can we help you find?" value="" name="s" />
+	</label>
+	<button type="submit" class="search-submit"><span class="screen-reader-text">Search</span></button>
+</form>
+            </div>
+            </div>
+        
+			<div class="site-header-main">
+            
+            <div class="top-menu-wrap">
+            <div class="pcenter">
+            <div class="menu-top-menu-container"><ul id="menu-top-menu" class="top-menu"><li id="menu-item-11989" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11989"><a href="https://www.varonis.com/support/">Support</a></li>
+<li id="menu-item-11990" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11990"><a href="https://help.varonis.com/s/">Community</a></li>
+<li id="menu-item-11991" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11991"><a href="https://www.varonis.com/services/">Services</a></li>
+<li id="menu-item-11992" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11992"><a href="tel:18772928767">1-877-292-8767</a></li>
+</ul></div>                        <span class="searchFormBtn">Search</span>     
+            </div>
+            </div>
+            
+            <div class="site-header-content">
+            <div class="pcenter">
+				<div class="site-branding">
+                    <p class="site-title">
+                    <a href="https://www.varonis.com/" rel="home">
+					<img alt="Varonis.com" title="Varonis.com" src="https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/images/varonis_Logo.svg" />                    </a>
+                    </p>
+				</div><!-- .site-branding -->
+
+									<button id="menu-toggle" class="menu-toggle">Menu</button>
+
+					<div id="site-header-menu" class="site-header-menu">
+						
+							<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+								<div class="menu-header-right-container"><ul id="menu-header-right" class="primary-menu"><li id="menu-item-11984" class="mega menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-11984"><a href="https://www.varonis.com/solutions/">Solutions</a>
+<ul class="sub-menu">
+	<li id="menu-item-11985" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-11985"><a>Use Cases</a>
+	<ul class="sub-menu">
+		<li id="menu-item-13786" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13786"><a href="https://www.varonis.com/help">Remote Work</a></li>
+		<li id="menu-item-11987" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11987"><a href="https://www.varonis.com/solutions/data-protection/">Data Protection</a></li>
+		<li id="menu-item-11988" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11988"><a href="https://www.varonis.com/solutions/threat-detection-response/">Threat Detection</a></li>
+		<li id="menu-item-11993" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11993"><a href="https://www.varonis.com/solutions/compliance/">Privacy &#038; Compliance</a></li>
+		<li id="menu-item-11994" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11994"><a href="https://www.varonis.com/solutions/ransomware/">Ransomware</a></li>
+		<li id="menu-item-11995" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11995"><a href="https://info.varonis.com/insider-threats">Insider Threats</a></li>
+		<li id="menu-item-11996" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11996"><a href="https://www.varonis.com/products/edge">External Threats</a></li>
+	</ul>
+</li>
+	<li id="menu-item-11997" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-11997"><a>Industries</a>
+	<ul class="sub-menu">
+		<li id="menu-item-11998" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11998"><a href="https://www.varonis.com/solutions/financial-services/">Finance</a></li>
+		<li id="menu-item-11999" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11999"><a href="https://www.varonis.com/solutions/federal-government/">Federal Government</a></li>
+		<li id="menu-item-12000" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12000"><a href="https://blog.varonis.com/hipaa-compliance/">Healthcare</a></li>
+		<li id="menu-item-12001" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12001"><a href="https://www.varonis.com/case-study/loyola-university-maryland/">Education</a></li>
+		<li id="menu-item-12002" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12002"><a href="https://www.varonis.com/products/data-security-platform/">Enterprise</a></li>
+	</ul>
+</li>
+	<li id="menu-item-12003" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12003"><a>Compliance</a>
+	<ul class="sub-menu">
+		<li id="menu-item-12004" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12004"><a href="https://www.varonis.com/solutions/gdpr-compliance/">GDPR</a></li>
+		<li id="menu-item-13753" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13753"><a href="https://www.varonis.com/solutions/ccpa">CCPA</a></li>
+		<li id="menu-item-12005" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12005"><a href="https://blog.varonis.com/hipaa-compliance/">HIPAA</a></li>
+		<li id="menu-item-12006" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12006"><a href="https://info.varonis.com/varonis-and-sox-compliance">SOX</a></li>
+		<li id="menu-item-12007" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12007"><a href="https://www.varonis.com/solutions/financial-services/">PCI DSS</a></li>
+		<li id="menu-item-12008" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12008"><a href="https://www.varonis.com/solutions/iso-27001-compliance/">ISO 27001</a></li>
+	</ul>
+</li>
+	<li id="menu-item-12009" class="tri whitepaper menu-item menu-item-type-custom menu-item-object-custom menu-item-12009"><a href="#">Insight</a></li>
+	<li id="menu-item-12010" class="cta cta-dra menu-item menu-item-type-custom menu-item-object-custom menu-item-12010"><a href="https://info.varonis.com/start">See How you Rank<span class="menu-item-description"><span class="strong">Data Risk Assessment</span>
+<span class="notes">Non-intrusive, hassle-free.</span><span class="btn c-white">Learn More</span></span></span></a></li>
+</ul>
+</li>
+<li id="menu-item-12011" class="mega menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12011"><a href="#">Platform</a>
+<ul class="sub-menu">
+	<li id="menu-item-12012" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12012"><a>Learn More</a>
+	<ul class="sub-menu">
+		<li id="menu-item-11986" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11986"><a href="https://www.varonis.com/how-it-works/">How It Works</a></li>
+		<li id="menu-item-12013" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12013"><a href="https://www.varonis.com/partners/technology-partners/">Integrations</a></li>
+		<li id="menu-item-12014" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12014"><a href="https://info.varonis.com/buy">How to Buy</a></li>
+		<li id="menu-item-12015" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12015"><a href="https://www.varonis.com/results/">Real Results</a></li>
+		<li id="menu-item-12016" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12016"><a href="https://www.varonis.com/operational-journey/">Take the Journey</a></li>
+	</ul>
+</li>
+	<li id="menu-item-12017" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12017"><a>Products</a>
+	<ul class="sub-menu">
+		<li id="menu-item-12018" class="flash semibold menu-item menu-item-type-custom menu-item-object-custom menu-item-12018"><a href="https://www.varonis.com/products/data-security-platform/">Data Security Platform<span class="menu-item-description">Product Suite Overview</span></a></li>
+		<li id="menu-item-12019" class="underline semibold menu-item menu-item-type-custom menu-item-object-custom menu-item-12019"><a href="https://www.varonis.com/products/data-classification-engine/">Data Classification Engine<span class="menu-item-description">Sensitive Data Discovery</span></a></li>
+		<li id="menu-item-12020" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12020"><a href="https://www.varonis.com/products/dataprivilege/">DataPrivilege</a></li>
+		<li id="menu-item-12021" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12021"><a href="https://www.varonis.com/products/data-transport-engine/">Data Transport Engine</a></li>
+		<li id="menu-item-12022" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12022"><a href="https://www.varonis.com/products/automation-engine/">Automation Engine</a></li>
+	</ul>
+</li>
+	<li id="menu-item-12023" class="product2 menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12023"><a href="#">Products</a>
+	<ul class="sub-menu">
+		<li id="menu-item-12024" class="semibold menu-item menu-item-type-custom menu-item-object-custom menu-item-12024"><a href="https://www.varonis.com/products/datadvantage/">DatAdvantage<span class="menu-item-description">Data Audit &#038; Protection</span></a></li>
+		<li id="menu-item-12025" class="underline semibold menu-item menu-item-type-custom menu-item-object-custom menu-item-12025"><a href="https://www.varonis.com/products/datalert/">DatAlert<span class="menu-item-description">Security Analytics</span></a></li>
+		<li id="menu-item-12026" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12026"><a href="https://www.varonis.com/products/datanswers/">DatAnswers</a></li>
+		<li id="menu-item-12027" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12027"><a href="https://www.varonis.com/products/edge/">Edge</a></li>
+		<li id="menu-item-12028" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12028"><a href="https://www.varonis.com/products/policy-pack/">Policy Pack</a></li>
+	</ul>
+</li>
+	<li id="menu-item-12029" class="tri demo menu-item menu-item-type-custom menu-item-object-custom menu-item-12029"><a href="#">Demo</a></li>
+	<li id="menu-item-12030" class="cta cta-demo menu-item menu-item-type-custom menu-item-object-custom menu-item-12030"><a href="#">Get a Personalized<span class="menu-item-description"><span class="strong">Varonis Demo</span>
+<span class="notes">(In-Person or Online)</span>
+<span class="btn c-white">Schedule Now</span></span></a></li>
+</ul>
+</li>
+<li id="menu-item-12031" class="simple menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12031"><a href="https://www.varonis.com/company/">Company</a>
+<ul class="sub-menu">
+	<li id="menu-item-12032" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12032"><a href="https://www.varonis.com/company/">About Varonis</a></li>
+	<li id="menu-item-12033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12033"><a href="https://www.varonis.com/company/varonis-life/">Varonis Life</a></li>
+	<li id="menu-item-12034" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12034"><a href="https://info.varonis.com/careers">Careers</a></li>
+	<li id="menu-item-12035" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12035"><a href="https://www.varonis.com/customers/">Customers</a></li>
+	<li id="menu-item-12036" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12036"><a href="http://ir.varonis.com/">Investor Relations</a></li>
+	<li id="menu-item-12037" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12037"><a href="https://www.varonis.com/company/press/">Press</a></li>
+	<li id="menu-item-12038" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12038"><a href="https://brand.varonis.com">Brand</a></li>
+	<li id="menu-item-12039" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12039"><a href="https://www.varonis.com/company/contact-us/">Contact Us</a></li>
+</ul>
+</li>
+<li id="menu-item-12040" class="mega menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12040"><a href="https://www.varonis.com/resources/">Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-12041" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12041"><a href="#">Research</a>
+	<ul class="sub-menu">
+		<li id="menu-item-12042" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12042"><a href="https://www.varonis.com/research/">Analyst Reports</a></li>
+		<li id="menu-item-12043" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12043"><a href="https://www.varonis.com/whitepapers/">Whitepapers</a></li>
+		<li id="menu-item-12044" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12044"><a href="https://www.varonis.com/datasheets/">Datasheets</a></li>
+		<li id="menu-item-12045" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12045"><a href="https://www.varonis.com/customers/">Case Studies</a></li>
+		<li id="menu-item-12046" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12046"><a href="https://www.varonis.com/2018-data-risk-report/">2018 Data Risk Report</a></li>
+	</ul>
+</li>
+	<li id="menu-item-12047" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12047"><a href="#">Education</a>
+	<ul class="sub-menu">
+		<li id="menu-item-12457" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12457"><a href="https://www.varonis.com/how-to-videos/">How-To Videos</a></li>
+		<li id="menu-item-12048" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12048"><a href="https://www.varonis.com/free-security-training/">Free Security Training</a></li>
+		<li id="menu-item-12049" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-12049"><a href="https://www.varonis.com/blog">Blog</a></li>
+		<li id="menu-item-12050" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12050"><a href="https://soundcloud.com/inside-out-security">Podcast</a></li>
+		<li id="menu-item-12051" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12051"><a href="https://www.varonis.com/guides/">Guides</a></li>
+		<li id="menu-item-12052" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12052"><a href="https://www.varonis.com/videos/">Videos</a></li>
+	</ul>
+</li>
+	<li id="menu-item-12053" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12053"><a href="https://www.varonis.com/events/">Events</a>
+	<ul class="sub-menu">
+		<li id="menu-item-12054" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12054"><a href="https://www.varonis.com/webinars/">Webinars</a></li>
+		<li id="menu-item-12055" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12055"><a href="https://www.varonis.com/events/">Conferences</a></li>
+	</ul>
+</li>
+	<li id="menu-item-12056" class="tri webinars menu-item menu-item-type-custom menu-item-object-custom menu-item-12056"><a href="https://www.varonis.com/webinars/">Webinars</a></li>
+	<li id="menu-item-12057" class="cta cta-webinar menu-item menu-item-type-custom menu-item-object-custom menu-item-12057"><a href="https://www.varonis.com/webinars/">Featured Webinar<span class="menu-item-description"><span class="title"><span class="br"><span class="strong">DatAlert</span> Master Class</span></span>
+<span class="notes">On Demand</span>
+<span class="btn c-white">Watch Now</span></span></a></li>
+</ul>
+</li>
+<li id="menu-item-12058" class="simple menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12058"><a href="#">Partners</a>
+<ul class="sub-menu">
+	<li id="menu-item-12059" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12059"><a href="https://www.varonis.com/partners/technology-partners/">Technology Partners</a></li>
+	<li id="menu-item-12060" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12060"><a href="https://www.varonis.com/partners/channel-partners/">Channel Partners</a></li>
+	<li id="menu-item-12061" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12061"><a href="https://www.varonis.com/service-providers/">Service Providers</a></li>
+	<li id="menu-item-12062" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12062"><a href="https://partnercommunity.varonis.com/s/">Partner Portal</a></li>
+</ul>
+</li>
+<li id="menu-item-12063" class="demo menu-item menu-item-type-custom menu-item-object-custom menu-item-12063"><a href="https://info.varonis.com/demo">Request a Demo</a></li>
+</ul></div>							</nav><!-- .main-navigation -->
+					
+
+					</div><!-- .site-header-menu -->
+							</div>
+            </div>
+            </div><!-- .site-header-main -->
+
+		</header><!-- .site-header -->
+
+		<div id="content" class="site-content">
+
+
+<div id="primary" class="content-area generic-page">
+
+					<div class="hero inner-hero c-white " style="background:url(https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/images/bg/blog-hero-bg.png) center center no-repeat; background-size:cover;">
+		<div class="pcenter">
+		
+				<div class="hero-content ta-center">
+				
+						<h1 class="hero-title">Hacker Motives: Red Flags and Prevention</h1>
+						<p class="category-list"><a href="https://www.varonis.com/blog/category/data_security/" rel="category tag">Data Security</a></p>
+																			</div>
+				
+				
+		</div>
+	</div>
+
+    
+    
+        <main id="main" class="site-main" role="main">
+
+		<div class="pcenter">	
+
+
+			
+			<div class="right-col">
+			
+
+
+
+					<p id="breadcrumbs"><span><span><a href="https://www.varonis.com/blog/" >Inside Out Security Blog</a> » <span><a href="https://www.varonis.com/blog/category/data_security/" >Data Security</a> » <span class="breadcrumb_last" aria-current="page">Hacker Motives: Red Flags and Prevention</span></span></span></span></p>
+					<div class="g-anchor-nav ta-center"></div><div class="glossary-list"></div>
+					
+<article id="post-11746" class="post-11746 post type-post status-publish format-standard has-post-thumbnail hentry category-data_security tag-infosec">
+
+	<div class="entry-content">
+		<div class='single-thumbnail' style='background-image:url(https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero.png);'><img width="1500" height="500" src="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero.png" class="attachment-full size-full wp-post-image" alt="hacker motives hero" loading="lazy" srcset="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero.png 1500w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero-300x100.png 300w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero-768x256.png 768w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero-1024x341.png 1024w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero-1260x420.png 1260w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero-960x320.png 960w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero-787x262.png 787w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero-400x133.png 400w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-hero-750x250.png 750w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /></div>		<div class="author-area byline">
+			<p class="author-name">By </p><img src="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/03/sarah-hospelhorn-200x200-150x150.jpg" width="30" height="30" alt="Sarah Hospelhorn" class="avatar avatar-30 wp-user-avatar wp-user-avatar-30 alignnone photo" /><p class="author-name co-author-number-1"><a href="https://www.varonis.com/blog/author/shospelhorn/">Sarah Hospelhorn</a></p>	
+
+			<p class="last-update">Updated: <time class="last-updated" id="last-updated" datetime="2020-03-29T17:48:58-04:00" itemprop="dateModified">3/29/2020</time></p>
+			
+			<!--BEGIN .share-bar-->
+			<div class="share-bar" data-url="https://www.varonis.com/blog/hacker-motives/" data-media="" data-description="Hacker Motives: Red Flags and Prevention">
+				<span class="share-links">
+					<a href="https://twitter.com/intent/tweet?text=Hacker Motives: Red Flags and Prevention&amp;url=https://www.varonis.com/blog/hacker-motives/&amp;via=varonis" class="share-link fa fa-twitter" target="_blank"></a>
+					<a href="http://www.facebook.com/sharer.php?u=https://www.varonis.com/blog/hacker-motives/" class="share-link fa fa-facebook" target="_blank"></a>
+					<a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.varonis.com/blog/hacker-motives/" class="share-link fa fa-linkedin" target="_blank"></a>
+				</span>
+				<a class="fa fa-envelope-o share-link" href="mailto:?subject=Hacker Motives: Red Flags and Prevention&body=https://www.varonis.com/blog/hacker-motives/"></a>
+				<!--END .share-bar-->
+			</div>				
+		</div>
+<div id="mobileToc"></div>
+<div class="post-content">
+				<p>Hackers are getting savvier. They’re constantly finding new ways to abuse system vulnerabilities and sneak into our networks. The worst part? The <a href="https://www.varonis.com/blog/likelihood-of-a-cyber-attack/" target="_blank" rel="noopener noreferrer">likelihood of a cyber attack</a> is now higher than a home invasion. Most people don’t notice when their data has been compromised until it’s too late. The silver lining is that the rise in attacks allows us to analyze the patterns hackers follow and strengthen our defenses.</p>
+<p><a href="https://www.varonis.com/blog/events-that-changed-cybersecurity/" target="_blank" rel="noopener noreferrer">Major cybersecurity attacks</a> of the past have taught us hard lessons, including the need for CSOs to embrace data-centric security. Massive breaches like the Marriott data breach also taught us the importance of <a href="https://www.varonis.com/blog/12-ways-varonis-mergers-and-acquisitions/" target="_blank" rel="noopener noreferrer">effectively managing mergers and acquisitions</a>, especially when the company you’re acquiring has a recent history of breaches and hacks.</p>
+<p>We took a look at hacks in the past years and identified the most important trends you should watch to ensure your business’s safety. We’ve also included a few tips to make sure your company doesn’t become another victim.</p>
+<p><img loading="lazy" class="aligncenter size-full wp-image-11747" style="padding-top: 15px; padding-bottom: 15px;" src="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-ig.png" alt="hacker motives and tips infographic" width="1500" height="7540" srcset="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-ig.png 1500w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-ig-768x3860.png 768w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-ig-204x1024.png 204w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-ig-1260x6334.png 1260w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-ig-960x4826.png 960w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-ig-787x3956.png 787w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /></p>
+<p>Every company has data to protect. Whether you’re a multi-million dollar enterprise or a 6-month-old startup, each business has its own set of vulnerabilities. Larger companies have complex systems and lots of data to monitor, thus making it easier for hackers to infiltrate and persist for long periods of time while staying undetected. Small businesses, on the other hand, are likely less prepared to handle a cyber attack due to a lack of resources or staff. Take a look at some of our tips below to see what you can do to stay ahead of these hacker trends.</p>
+<p><a href="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-in-post.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" class="aligncenter size-full wp-image-11748" style="padding-top: 15px; padding-bottom: 15px;" src="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view.png" alt="click to view tips to defend against hacker motive trends" width="1500" height="200" srcset="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view.png 1500w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view-300x40.png 300w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view-768x102.png 768w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view-1024x137.png 1024w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view-1260x168.png 1260w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view-960x128.png 960w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view-787x105.png 787w, https://blogvaronis2.wpengine.com/wp-content/uploads/2019/01/varonis-hacker-motives-red-flags-and-prevention-click-to-view-400x53.png 400w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /></a></p>
+<p>Preparation and a quick response time are essentials for any security team. It’s smart to start with engage in effective <a href="https://www.varonis.com/blog/threat-modeling/" target="_blank" rel="noopener noreferrer">threat modeling</a> and create a comprehensive <a href="https://www.varonis.com/blog/incident-response-plan/" target="_blank" rel="noopener noreferrer">incident response plan</a> to keep your team vigilant and ready for threats. Taking advice from other professionals through <a href="https://www.varonis.com/blog/cybersecurity-ted-talks/" target="_blank" rel="noopener noreferrer">cybersecurity TED talks</a> or podcasts can also jump start your security planning to see what threats and solutions are top-of-mind for others in the industry. To get started, take our <a href="https://info.varonis.com/risk-assessment" target="_blank" rel="noopener noreferrer">data risk assessment</a> to see where your vulnerabilities lie and what steps you need to take to keep your company safe.</p>
+<p><strong>Sources:</strong> <a href="https://enterprise.verizon.com/resources/reports/dbir/" target="_blank" rel="noopener noreferrer">Verizon</a> | <a href="https://www.hackerone.com/sites/default/files/2018-01/2018_Hacker_Report.pdf" target="_blank" rel="noopener noreferrer">HackerOne</a> | <a href="https://www.ibm.com/security/data-breach" target="_blank" rel="noopener noreferrer">IBM</a></p>
+<p>&nbsp;</p>
+<!-- AI CONTENT END 1 -->
+</div>
+	
+<div class="author-area bottom"><img src="https://blogvaronis2.wpengine.com/wp-content/uploads/2019/03/sarah-hospelhorn-200x200-150x150.jpg" width="80" height="80" alt="Sarah Hospelhorn" class="avatar avatar-80 wp-user-avatar wp-user-avatar-80 alignnone photo" /><div class="right-col"><p class="author-name">Sarah Hospelhorn</p><p class="author-description">Based in Brooklyn, NY, Sarah focuses on the strategy behind solving problems in data security. She’s been in tech for over 20 years, with experience in software, hardware, and cryptography.</p></div><div>
+			</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+<aside>
+</aside>
+
+
+				<a id="anchor-up" class="anchor-up bg-dark" href="#main"><i class="fa fa-chevron-up c-white"></i></a>
+
+				<!--BEGIN .share-bar-->
+				<!--
+				<div class="share-bar" style="opacity: 0;" data-url="" data-media="" data-description="">
+				<span class="share-links">
+					<a href="https://twitter.com/intent/tweet?text=&amp;url=&amp;via=varonis" class="share-link fa fa-twitter" target="_blank"></a>
+					<a href="http://www.facebook.com/sharer.php?u=" class="share-link fa fa-facebook" target="_blank"></a>
+					<a href="https://www.linkedin.com/shareArticle?mini=true&url=" class="share-link fa fa-linkedin" target="_blank"></a>
+				</span>
+				<a class="fa fa-envelope-o share-link" href="mailto:?subject=&body="></a>
+
+				END .share-bar
+				</div>				-->
+
+
+			</div><!-- .right-col -->
+		
+		</div>	
+
+
+	</main><!-- .site-main -->
+		
+		
+		
+				
+
+
+					
+		<!-- BLOG POSTS GRID -->
+		<div class="related-gray">
+		<section id="related-posts-header" class="pcenter">
+			<p><span>———</span> RELATED POSTS <span>———</span></p>
+		</section>
+			<section id="related-posts" class="pcenter">
+				<!-- Related Posts -->
+									<div rel="article" class="related-post-card">
+						<a href="https://www.varonis.com/blog/network-segmentation/" class="post-card-content">
+						<div class="post-image" style="background:url(https://blogvaronis2.wpengine.com/wp-content/uploads/2020/12/what-is-network-segmentation-hero-1.png) center center no-repeat; background-size:cover;"></div>
+						<p class="post-category"><a href="https://www.varonis.com/blog/category/data_security/" rel="category tag">Data Security</a></p>
+						<p class="post-title"><a href="https://www.varonis.com/blog/network-segmentation/">What Is Network Segmentation?</a></p>
+						</a>
+					</div>
+										<div rel="article" class="related-post-card">
+						<a href="https://www.varonis.com/blog/phishing-attacks/" class="post-card-content">
+						<div class="post-image" style="background:url(https://blogvaronis2.wpengine.com/wp-content/uploads/2020/12/Large-Blog_CompleteGuidetoPhishingAttacks_202012_FNL.jpg) center center no-repeat; background-size:cover;"></div>
+						<p class="post-category"><a href="https://www.varonis.com/blog/category/data_security/" rel="category tag">Data Security</a></p>
+						<p class="post-title"><a href="https://www.varonis.com/blog/phishing-attacks/">The Complete Guide to Phishing Attacks</a></p>
+						</a>
+					</div>
+										<div rel="article" class="related-post-card">
+						<a href="https://www.varonis.com/blog/ciso-budget-2021/" class="post-card-content">
+						<div class="post-image" style="background:url(https://blogvaronis2.wpengine.com/wp-content/uploads/2020/12/Blog_GenericVariant-2.png) center center no-repeat; background-size:cover;"></div>
+						<p class="post-category"><a href="https://www.varonis.com/blog/category/compliance_and_regulation/" rel="category tag">Compliance &amp; Regulation</a>, <a href="https://www.varonis.com/blog/category/data_security/" rel="category tag">Data Security</a>, <a href="https://www.varonis.com/blog/category/it_pros/" rel="category tag">IT Pros</a></p>
+						<p class="post-title"><a href="https://www.varonis.com/blog/ciso-budget-2021/">5 Priorities for the CISO Budget In 2021</a></p>
+						</a>
+					</div>
+										<div rel="article" class="related-post-card">
+						<a href="https://www.varonis.com/blog/watch-varonis-reconnect-automated-risk-reduction/" class="post-card-content">
+						<div class="post-image" style="background:url(https://blogvaronis2.wpengine.com/wp-content/uploads/2020/08/varonis-RBAC-hero.png) center center no-repeat; background-size:cover;"></div>
+						<p class="post-category"><a href="https://www.varonis.com/blog/category/data_security/" rel="category tag">Data Security</a></p>
+						<p class="post-title"><a href="https://www.varonis.com/blog/watch-varonis-reconnect-automated-risk-reduction/">Watch: Varonis ReConnect! Automated Risk Reduction</a></p>
+						</a>
+					</div>
+								</section>
+		</div>
+		
+	</div><!-- .content-area -->
+
+
+	
+	<script>
+	( function($){
+
+	$(document).ready(function() {
+		
+	});
+
+	$(function() {
+	$('a[href*=#]:not([href=#])').click(function(){
+		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+		var target = $(this.hash);
+		target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+		
+		
+		if (target.length) {
+			var scrollOffset = target.offset().top;
+			/*
+			if (navigator.userAgent.match(/iPad|iPhone|iPod|Android|Windows Phone/i)) { 
+					$('html').animate({ scrollTop: $("body").offset().top }, 1000);
+									
+			}else{
+				$('html,body').animate({ scrollTop: scrollOffset }, 1000);
+				return false;
+			}
+			*/
+			
+			
+			$('html,body').animate({ scrollTop: scrollOffset }, 1000);
+			return false;
+		
+			
+		}
+		
+		}
+	});
+	});
+
+	$(window).scroll(function(e) {
+		var topOfWindow = $(window).scrollTop();
+		var mainOffset = $('#main').offset().top + 300;
+		
+		if( mainOffset < topOfWindow){
+			$('#anchor-up').addClass('active');
+		}else{
+			$('#anchor-up').removeClass('active');
+		}
+	});
+
+	})(jQuery);
+	</script>
+
+
+<section class="section sybersecurity ta-right c-white hs-bg">
+<span class="section-bg to-left" style="background: url(https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/images/bg-rainbow.jpg) center top no-repeat; background-size:cover;">&nbsp;</span>
+<div class="pcenter">
+    <div class="entry">
+        <h3 class="m-title">Does your <strong>cybersecurity</strong> start at the heart?</h3>
+        <div class="intro">Get a highly customized data risk assessment run by engineers who are obsessed with data security. </div>
+        <div class="btn-wrap"><a class="btn c-white demo-btn" title="Schedule now" href="https://info.varonis.com/start">Schedule now</a></div></div>
+    </div>
+</section>
+
+
+
+		</div><!-- .site-content -->
+	</div><!-- .site-inner -->
+
+    <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="pcenter">
+        <div class="site-info">
+            
+            <span class="site-title footer-logo">
+            <a href="https://www.varonis.com/blog/" rel="home">
+			<img alt="Inside Out Security" title="Inside Out Security" src="https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/images/varonis_Logo.svg" />            </a>
+            </span>
+            
+            <div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-12064" class="varonis menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12064"><a href="https://www.varonis.com/">Varonis</a>
+<ul class="sub-menu">
+	<li id="menu-item-12065" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12065"><a href="https://sites.varonis.com/fr">Français</a></li>
+	<li id="menu-item-12066" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12066"><a href="https://sites.varonis.com/de">Deutsch</a></li>
+	<li id="menu-item-12067" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12067"><a href="http://jp.varonis.com/">日本語</a></li>
+	<li id="menu-item-12068" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12068"><a href="https://sites.varonis.com/ru">Pусский</a></li>
+	<li id="menu-item-12069" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12069"><a href="https://sites.varonis.com/pt-br">Português</a></li>
+</ul>
+</li>
+<li id="menu-item-12070" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12070"><a href="https://www.varonis.com/#">Solutions</a>
+<ul class="sub-menu">
+	<li id="menu-item-12071" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12071"><a href="https://www.varonis.com/products/datadvantage/">Remediation &#038; Governance</a></li>
+	<li id="menu-item-12072" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12072"><a href="https://www.varonis.com/products/datalert">Security Analytics</a></li>
+	<li id="menu-item-12073" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12073"><a href="https://www.varonis.com/products/data-classification-engine/">Data Classification</a></li>
+	<li id="menu-item-12074" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12074"><a href="https://www.varonis.com/solutions/ransomware/">Ransomware</a></li>
+	<li id="menu-item-12075" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12075"><a href="https://info.varonis.com/insider-threats">Insider Threats</a></li>
+	<li id="menu-item-12076" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12076"><a href="https://www.varonis.com/products/edge/">External Threats</a></li>
+</ul>
+</li>
+<li id="menu-item-12077" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12077"><a href="https://www.varonis.com/products/data-security-platform/">Platform</a>
+<ul class="sub-menu">
+	<li id="menu-item-12078" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12078"><a href="https://www.varonis.com/how-it-works/">How It Works</a></li>
+	<li id="menu-item-12079" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12079"><a href="http://info.varonis.com/buy">How to Buy</a></li>
+	<li id="menu-item-12080" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12080"><a href="https://www.varonis.com/operational-journey/">How to Use It</a></li>
+	<li id="menu-item-12081" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12081"><a href="https://www.varonis.com/results/">Real Results</a></li>
+	<li id="menu-item-12082" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12082"><a href="https://info.varonis.com/forrester-tei-study">ROI</a></li>
+	<li id="menu-item-12083" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12083"><a href="https://www.varonis.com/partners/technology-partners/">Integrations</a></li>
+</ul>
+</li>
+<li id="menu-item-12084" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12084"><a href="https://www.varonis.com/company/">Company</a>
+<ul class="sub-menu">
+	<li id="menu-item-12085" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12085"><a href="https://www.varonis.com/company/">About Varonis</a></li>
+	<li id="menu-item-12086" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12086"><a href="https://www.varonis.com/company/varonis-life/">Varonis Life</a></li>
+	<li id="menu-item-12087" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12087"><a href="https://info.varonis.com/careers">Careers</a></li>
+	<li id="menu-item-12088" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12088"><a href="https://www.varonis.com/customers/">Customers</a></li>
+	<li id="menu-item-12089" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12089"><a href="http://ir.varonis.com/">Investor Relations</a></li>
+	<li id="menu-item-13785" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13785"><a href="https://brand.varonis.com">Brand</a></li>
+	<li id="menu-item-12090" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12090"><a href="https://www.varonis.com/company/contact-us/">Contact Us</a></li>
+</ul>
+</li>
+<li id="menu-item-12091" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12091"><a href="https://www.varonis.com/resources/guides/">Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-12092" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12092"><a href="https://www.varonis.com/free-security-training/">Free Security Training</a></li>
+	<li id="menu-item-12093" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12093"><a href="https://www.varonis.com/resources/research/">Analyst Reports</a></li>
+	<li id="menu-item-12094" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12094"><a href="https://www.varonis.com/resources/whitepapers">Whitepapers</a></li>
+	<li id="menu-item-12095" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12095"><a href="https://www.varonis.com/resources/guides/">Guides</a></li>
+	<li id="menu-item-12096" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12096"><a href="https://www.varonis.com/resources/videos/">Videos</a></li>
+	<li id="menu-item-12097" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12097"><a href="https://www.varonis.com/events/">Events</a></li>
+</ul>
+</li>
+<li id="menu-item-12098" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12098"><a href="https://www.varonis.com/partners/channel-partners/">Partners</a>
+<ul class="sub-menu">
+	<li id="menu-item-12099" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12099"><a href="https://www.varonis.com/partners/technology-partners/">Technology Partners</a></li>
+	<li id="menu-item-12100" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12100"><a href="https://www.varonis.com/partners/channel-partners/">Channel Partners</a></li>
+	<li id="menu-item-12101" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12101"><a href="https://partnercommunity.varonis.com/s/">Partner Portal</a></li>
+</ul>
+</li>
+</ul></div>            
+        </div><!-- .site-info -->
+        
+        <div class="copyrights-media">
+			<p class="copyrights">&copy; 2021 Inside Out Security<span class="divider">&nbsp;|&nbsp;</span><a href="https://www.varonis.com/blog/policies">Policies</a><span class="divider">&nbsp;|&nbsp;</span><a href="https://www.varonis.com/blog/iso-27001-certification">Certifications</a></p>
+            
+                
+        </div>
+        
+    </div>
+    </footer><!-- .site-footer -->
+	
+</div><!-- .site -->
+
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/js/skip-link-focus-fix.js?ver=20160412' id='twentysixteen-skip-link-focus-fix-js'></script>
+<script type='text/javascript' id='twentysixteen-script-js-extra'>
+/* <![CDATA[ */
+var screenReaderText = {"expand":"expand child menu","collapse":"collapse child menu"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/themes/varonis-2019/js/functions3.js?ver=20160412' id='twentysixteen-script-js'></script>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/plugins/enlighter/resources/mootools-core-yc.js?ver=3.10.0' id='mootools-local-js'></script>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-content/plugins/enlighter/resources/EnlighterJS.min.js?ver=3.10.0' id='enlighter-local-js'></script>
+<script type='text/javascript' src='https://blogvaronis2.wpengine.com/wp-includes/js/wp-embed.min.js?ver=5.5.3' id='wp-embed-js'></script>
+<script type="text/javascript">/* <![CDATA[ */EnlighterJS_Config = {"selector":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"language":"shell","theme":"atomic","indent":2,"hover":"hoverEnabled","showLinenumbers":true,"rawButton":true,"infoButton":false,"windowButton":false,"rawcodeDoubleclick":false,"grouping":true,"cryptex":{"enabled":false,"email":"mail@example.tld"}};!function(){var a=function(a){var b="Enlighter Error: ";console.error?console.error(b+a):console.log&&console.log(b+a)};return window.addEvent?"undefined"==typeof EnlighterJS?void a("Javascript Resources not loaded yet!"):"undefined"==typeof EnlighterJS_Config?void a("Configuration not loaded yet!"):void window.addEvent("domready",function(){EnlighterJS.Util.Init(EnlighterJS_Config.selector.block,EnlighterJS_Config.selector.inline,EnlighterJS_Config)}):void a("MooTools Framework not loaded yet!")}();;/* ]]> */</script>
+<script type="text/javascript">
+    
+    function downloadJSAtOnload() {
+        var element = document.createElement("script");
+        element.src = "https://www.varonis.com/vanalytics.js";
+        document.body.appendChild(element);
+    }
+
+    if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+    else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+    else window.onload = downloadJSAtOnload;
+
+</script>
+<div id='cookie_consent_container'></div>
+<script async type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=202368653"></script>
+</body>
+</html>

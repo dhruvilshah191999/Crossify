@@ -16,6 +16,7 @@ import Landing from "views/Landing.js";
 import Profile from "views/Profile.js";
 import Index from "views/Index.js";
 import SearchPage from "views/SearchPage";
+import ClubPage from "views/ClubPage";
 import { UserContext } from "context/usercontext";
 
 const Routing = () => {
@@ -29,6 +30,7 @@ const Routing = () => {
       <Route path="/profile" exact component={Profile} />
       <Route path="/" exact component={Index} />
       <Route path="/search" exact component={SearchPage} />
+      <Route path="/club" exact component={ClubPage} />
       {/* add redirect for first page */}
       <Redirect from="*" to="/" />
     </Switch>

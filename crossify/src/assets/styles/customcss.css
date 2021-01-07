@@ -69,6 +69,39 @@
   color: #c2c2c2;
 }
 
+.text-alpha {
+  color: rgb(199, 36, 71);
+}
+
 .text-beta {
   color: #00838f;
+}
+
+.bg-back {
+  color: #750c0c;
+}
+
+.club-bg {
+  width: 840px;
+  height: 410px;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.bg-lightbeta {
+  background-color: #a4eef5;
+}
+
+.content-end {
+  align-content: flex-end;
+}
+
+.max-w-370-px {
+  max-width: 370px;
+}
+
+.leading-wide {
+  line-height: 1.8;
 }
