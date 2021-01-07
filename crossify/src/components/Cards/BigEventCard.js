@@ -1,38 +1,8 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import axios from "axios";
 const ResultWindow = (props) => {
   let count = 0;
   const start = moment().format("LT");
-  const [tags, settags] = useState([]);
-  useEffect(() => {
-    async function getData() {
-      try {
-        const data = {
-          interest: props.data.category_list,
-        };
-        const config = {
-          method: "POST",
-          header: {
-            "Content-Type": "application/json",
-          },
-        };
-        const finaldata = await axios.post(
-          "/api/filter/get-tags",
-          data,
-          config
-        );
-        if (finaldata.data.is_error) {
-          console.log(finaldata.data.message);
-        } else {
-          settags(finaldata.data.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getData();
-  }, []);
   return (
     <div
       className="h-custom rounded-lg shadow p-4 flex w-full mt-2 hover:shadow-lg"
@@ -69,7 +39,7 @@ const ResultWindow = (props) => {
             {props.data.description}
           </div>
           <div className="mt-2">
-            {tags.map((data) => (
+            {props.data.tags.map((data) => (
               <span
                 key={count++}
                 className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 mr-1 "

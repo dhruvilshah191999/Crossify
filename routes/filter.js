@@ -196,4 +196,106 @@ router.post("/", async function (req, res, nex) {
   });
 });
 
+router.post("/search", async function (req, res, nex) {
+  var { search, location } = req.body;
+  let categoryarray = [];
+
+  async function getids() {
+    var ids = category_details.find(
+      {
+        $or: [
+          { category_name: { $regex: ".*" + search + ".*", $options: "i" } },
+          { description: { $regex: ".*" + search + ".*", $options: "i" } },
+        ],
+      },
+      { _id: 1 }
+    );
+
+    await ids.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err,
+        };
+        return res.status(500).send(error);
+      } else {
+        data.forEach((d) => {
+          categoryarray.push(ObjectId(d._id));
+        });
+      }
+    });
+
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("done!"), 1000);
+    });
+    let result = await promise;
+  }
+
+  getids().then(async (err) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else {
+      var tags;
+      if (location.trim() === "") {
+        tags = event_details.find({
+          $or: [
+            {
+              event_name: {
+                $regex: ".*" + search + ".*",
+                $options: "i",
+              },
+            },
+            { description: { $regex: ".*" + search + ".*", $options: "i" } },
+            { category_list: { $in: categoryarray } },
+          ],
+        });
+      } else if (search.trim() === "" && location.trim() !== "") {
+        tags = event_details.find({
+          $or: [
+            { location: { $regex: ".*" + location + ".*", $options: "i" } },
+            { city: { $regex: ".*" + location + ".*", $options: "i" } },
+            { state: { $regex: ".*" + location + ".*", $options: "i" } },
+          ],
+        });
+      } else {
+        tags = event_details.find({
+          $or: [
+            {
+              event_name: {
+                $regex: ".*" + search + ".*",
+                $options: "i",
+              },
+            },
+            { description: { $regex: ".*" + search + ".*", $options: "i" } },
+            { location: { $regex: ".*" + location + ".*", $options: "i" } },
+            { city: { $regex: ".*" + location + ".*", $options: "i" } },
+            { state: { $regex: ".*" + location + ".*", $options: "i" } },
+            { category_list: { $in: categoryarray } },
+          ],
+        });
+      }
+      await tags.exec((err, data) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err,
+          };
+          return res.status(500).send(error);
+        } else {
+          var finaldata = {
+            data: data,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+  });
+});
+
 module.exports = router;

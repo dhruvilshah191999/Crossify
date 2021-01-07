@@ -1,11 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../assets/logos/logo_final.png";
 import { Link } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
 import { UserContext } from "context/usercontext";
 const SearchNavbar = (props) => {
-  const { isLogin } = useContext(UserContext);
+  const [changing, setchanging] = useState(false);
+  const [search, setSearch] = useState("");
+  const [location, setlocation] = useState("");
+  const { isLogin, search_dispatch } = useContext(UserContext);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    var object = {
+      search,
+      location,
+    };
+    search_dispatch({ type: "Add-Search", add: object });
+    setchanging(!changing);
+    props.change(changing);
+  };
+
   return (
     <nav className="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between p-2 navbar-expand-lg bg-white border">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -25,30 +39,37 @@ const SearchNavbar = (props) => {
           id="example-navbar-warning"
         >
           <div className="flex-auto ml-auto" style={{ marginLeft: "100px" }}>
-            <form>
-              <div className="bg-white p-2 align-center">
-                <input
-                  style={{
-                    width: "50%",
-                    outline: "none",
-                    borderRight: "2px solid #C8C8C8",
-                  }}
-                  className="px-3 py-2 text-lg shadow-lg"
-                  type="text"
-                  placeholder="Find your club"
-                />
-                <input
-                  style={{ width: "30%", outline: "none" }}
-                  className="px-3 py-2  text-lg shadow-lg"
-                  type="text"
-                  placeholder="Select Location"
-                />
+            <div className="bg-white p-2 align-center">
+              <input
+                style={{
+                  width: "50%",
+                  outline: "none",
+                  borderRight: "2px solid #C8C8C8",
+                }}
+                className="px-3 py-2 text-lg shadow-lg"
+                type="text"
+                name="search"
+                onChange={(e) => setSearch(e.target.value)}
+                value={search}
+                placeholder="Find your club,events"
+              />
+              <input
+                style={{ width: "30%", outline: "none" }}
+                className="px-3 py-2  text-lg shadow-lg"
+                type="text"
+                name="location"
+                onChange={(e) => setlocation(e.target.value)}
+                value={location}
+                placeholder="Select Location"
+              />
 
-                <button className="bg-alpha shadow-lg text-lg hover:bg-alpha rounded text-white p-2 pl-4 pr-4">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
-            </form>
+              <button
+                className="bg-alpha shadow-lg text-lg hover:bg-alpha rounded text-white p-2 pl-4 pr-4"
+                onClick={(e) => onSubmit(e)}
+              >
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
           </div>
           <ul className="flex flex-row list-none lg:ml-auto">
             <li className={isLogin ? "hidden " : " " + "flex items-center"}>

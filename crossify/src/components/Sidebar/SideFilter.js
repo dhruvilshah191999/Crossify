@@ -9,10 +9,13 @@ import Pagination from "components/ResultWindow/Pagination";
 import ResultWindow from "components/ResultWindow";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import RangeInput from "components/RangeSlider";
-export default function Sidebar() {
-  const { isLogin, users } = useContext(UserContext);
+export default function Sidebar(props) {
+  const { isLogin, users, searchResult, search_dispatch } = useContext(
+    UserContext
+  );
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const [loading, setLoading] = React.useState(false);
+  const [SearchChange, SetSearchChange] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage] = React.useState(5);
   const [eventShow, setEventShow] = React.useState(true);
@@ -64,6 +67,36 @@ export default function Sidebar() {
     fetchEvent();
   }, []);
 
+  React.useEffect(() => {
+    async function getsearchobjecy() {
+      try {
+        const config = {
+          method: "POST",
+          header: {
+            "Content-Type": "application/json",
+          },
+          validateStatus: () => true,
+        };
+        const finaldata3 = await axios.post(
+          "/api/filter/search",
+          searchResult,
+          config
+        );
+        if (finaldata3.data.is_error) {
+        } else {
+          setEvent(finaldata3.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (Object.keys(searchResult).length !== 0 && eventShow) {
+      getsearchobjecy().then(() => {
+        search_dispatch({ type: "Remove-Search" });
+      });
+    }
+  }, [props.change]);
+
   const indexofLastPost = currentPage * postPerPage;
   const indexofFirstPost = indexofLastPost - postPerPage;
   const currentEvents = getevent.slice(indexofFirstPost, indexofLastPost);
@@ -109,10 +142,9 @@ export default function Sidebar() {
         };
         const finaldata = await axios.post("/api/filter/", data, config);
         if (finaldata.data.is_error) {
-          setError(true);
-          setMessage(finaldata.data.message);
+          console.log(finaldata.data.message);
         } else {
-          console.log(finaldata);
+          setEvent(finaldata.data.data);
           setEvent(finaldata.data.data);
         }
       } catch (err) {
@@ -391,7 +423,12 @@ export default function Sidebar() {
         </div>
       </nav>
       <div style={{ marginTop: "100px" }}>
-        <ResultWindow getevent={currentEvents} loading={loading} />
+        {eventShow ? (
+          <ResultWindow getevent={currentEvents} loading={loading} />
+        ) : (
+          ""
+        )}
+
         <Pagination
           postPerPage={postPerPage}
           totalPosts={getevent.length}

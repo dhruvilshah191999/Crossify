@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { UserContext } from "context/usercontext";
+import { Redirect } from "react-router-dom";
 
 // components
 
@@ -140,8 +141,10 @@ export default function Landing() {
                   Check out what's going on in your Area
                 </h4>
                 <button className="text-blue-600 ml-auto mr-2">
-                  {" "}
-                  Load More <i className="fas fa-angle-double-right"></i>{" "}
+                  <Link to="/search">
+                    {" "}
+                    Load More <i className="fas fa-angle-double-right"></i>{" "}
+                  </Link>
                 </button>
               </div>
             </div>
