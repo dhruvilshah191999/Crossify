@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "components/Navbars/ClubNavbar";
+import TabsBar from "components/TabsBar/TabsBar";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
 class ClubPage extends React.Component {
@@ -17,7 +18,10 @@ class ClubPage extends React.Component {
                   src={this.props.bgImage}
                 />
               </div>
-              <div className="bg-white rounded  mx-2 my-2 p-6 border leading-relaxed max-w-370-px">
+              <div
+                className="bg-white rounded  mx-2 my-2 p-6 border leading-relaxed max-w-370-px"
+                style={{ width: 370 }}
+              >
                 <div className="text-3xl font-bold">{this.props.clubName}</div>
                 <div className="text-md mt-2 text-gray-600 ml-2">
                   &nbsp;<i class="fas fa-map-marker-alt text-sm"></i>
@@ -86,7 +90,12 @@ class ClubPage extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded">{this.props.description}</div>
+            <div
+              className="bg-white rounded border ml-4 mt-2 p-2"
+              style={{ width: 1225 }}
+            >
+              <TabsBar />
+            </div>
           </div>
         </div>
       </>
