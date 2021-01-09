@@ -22,8 +22,8 @@ module.exports = {
   },
   theme: {
     colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
+      transparent: "transparent",
+      current: "currentColor",
 
       black: colors.black,
       white: colors.white,
@@ -35,10 +35,24 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
-      primary: 'var(--color-primary)',
-      secondary: 'var(--color-secondary)',
-      charlie: 'var(--color-charlie)',
-      offwhite: 'var(--color-offwhite)',
+      redColor: "#c8163d",
+      lightRed: "#e82953",
+      beta: "#00838f",
+      primary: "var(--color-primary)",
+      secondary: "var(--color-secondary)",
+      charlie: "var(--color-charlie)",
+      offwhite: "var(--color-offwhite)",
+    },
+    textColor: {
+      redColor: "#c8163d",
+      lightRed: "#e82953",
+      beta: "#00838f",
+    },
+    borderColor: {
+      redColor: "#c8163d",
+      lightRed: "#e82953",
+      bgColor: "#e9aba0",
+      beta: "#00838f",
     },
     extend: {
       letterSpacing: {
@@ -65,7 +79,7 @@ module.exports = {
         9: "2.25rem",
         10: "2.5rem",
       },
-     
+
       minHeight: {
         "screen-75": "75vh",
       },

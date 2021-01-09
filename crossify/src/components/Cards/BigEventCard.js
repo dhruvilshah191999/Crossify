@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import Key from "config/default.json";
+import CryptoJS from "crypto-js";
 import moment from "moment";
 const ResultWindow = (props) => {
+  let history = useHistory();
   let count = 0;
   const start = moment().format("LT");
+
+  const showEvents = (event_id) => {
+    var ciphertext = CryptoJS.AES.encrypt(event_id, Key.Secret).toString();
+    history.push("/events/event=" + ciphertext);
+  };
   return (
     <div
       className="h-custom rounded-lg shadow p-4 flex w-full mt-2 hover:shadow-lg"
-      style={{ width: "95%" }}
+      style={{ width: "95%", cursor: "pointer" }}
+      onClick={() => showEvents(props.data._id)}
     >
       <div className="eventPhoto">
         <img

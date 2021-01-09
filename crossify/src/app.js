@@ -14,6 +14,7 @@ import Auth from "layouts/Auth.js";
 
 import Landing from "views/Landing.js";
 import Profile from "views/Profile.js";
+import EventPage from "views/EventPage";
 import Index from "views/Index.js";
 import SearchPage from "views/SearchPage";
 import ClubPage from "views/ClubPage";
@@ -29,6 +30,7 @@ const Routing = () => {
       <Route path="/landing" exact component={Landing} />
       <Route path="/profile" exact component={Profile} />
       <Route path="/" exact component={Index} />
+      <Route path="/events/event=:id" component={EventPage} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/club" exact component={ClubPage} />
       {/* add redirect for first page */}

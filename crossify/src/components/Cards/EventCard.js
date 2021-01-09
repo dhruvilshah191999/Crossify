@@ -6,13 +6,17 @@ const EventCard = (props) => {
     <div
       className="relative px-4 mb-4 flex-grow-0 "
       style={{
-        width: 355,
+        width: 353,
 
         minHeight: "auto",
       }}
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
-        <img src={props.data.photo} className="object-cover" alt="eventPic" />
+        <img
+          src={props.data.photo}
+          style={{ height: "210px", width: "355px" }}
+          alt="eventPic"
+        />
         <div className="px-2 py-1">
           <div className="text-xs text-gray-600 font-semibold">
             <i className="fas fa-user-shield"></i> : {"The Dark Group"}
