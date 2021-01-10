@@ -84,6 +84,7 @@ export default function Sidebar(props) {
           config
         );
         if (finaldata3.data.is_error) {
+          console.log(finaldata3.data.message);
         } else {
           setEvent(finaldata3.data.data);
           setCurrentPage(1);

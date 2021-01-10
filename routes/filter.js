@@ -115,6 +115,7 @@ router.post("/", async function (req, res, nex) {
     interest_array = interestarray.map((s) => mongoose.Types.ObjectId(s));
     if (startingDate !== today && endingDate !== today) {
       query = event_details.find({
+        is_active: true,
         category_list: {
           $in: interest_array,
         },
@@ -122,6 +123,7 @@ router.post("/", async function (req, res, nex) {
       });
     } else if (startingDate === today && endingDate !== today) {
       query = event_details.find({
+        is_active: true,
         category_list: {
           $in: interest_array,
         },
@@ -129,6 +131,7 @@ router.post("/", async function (req, res, nex) {
       });
     } else if (startingDate !== today && endingDate === today) {
       query = event_details.find({
+        is_active: true,
         category_list: {
           $in: interest_array,
         },
@@ -136,6 +139,7 @@ router.post("/", async function (req, res, nex) {
       });
     } else {
       query = event_details.find({
+        is_active: true,
         category_list: {
           $in: interest_array,
         },
@@ -145,13 +149,20 @@ router.post("/", async function (req, res, nex) {
     if (startingDate !== today && endingDate !== today) {
       query = event_details.find({
         date: { $gt: startingDate, $lt: endingDate },
+        is_active: true,
       });
     } else if (startingDate === today && endingDate !== today) {
-      query = event_details.find({ date: { $lt: endingDate } });
+      query = event_details.find({
+        date: { $lt: endingDate },
+        is_active: true,
+      });
     } else if (startingDate !== today && endingDate === today) {
-      query = event_details.find({ date: { $gt: startingDate } });
+      query = event_details.find({
+        date: { $gt: startingDate },
+        is_active: true,
+      });
     } else {
-      query = event_details.find({});
+      query = event_details.find({ is_active: true });
     }
   }
   query.exec((err, data) => {
@@ -252,6 +263,7 @@ router.post("/search", async function (req, res, nex) {
             { description: { $regex: ".*" + search + ".*", $options: "i" } },
             { category_list: { $in: categoryarray } },
           ],
+          is_active: true,
         });
       } else if (search.trim() === "" && location.trim() !== "") {
         tags = event_details.find({
@@ -260,6 +272,7 @@ router.post("/search", async function (req, res, nex) {
             { city: { $regex: ".*" + location + ".*", $options: "i" } },
             { state: { $regex: ".*" + location + ".*", $options: "i" } },
           ],
+          is_active: true,
         });
       } else {
         tags = event_details.find({
@@ -276,6 +289,7 @@ router.post("/search", async function (req, res, nex) {
             { state: { $regex: ".*" + location + ".*", $options: "i" } },
             { category_list: { $in: categoryarray } },
           ],
+          is_active: true,
         });
       }
       await tags.exec((err, data) => {

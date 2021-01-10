@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import Key from "config/default.json";
-import CryptoJS from "crypto-js";
 import moment from "moment";
 const ResultWindow = (props) => {
   let history = useHistory();
@@ -9,8 +7,7 @@ const ResultWindow = (props) => {
   const start = moment().format("LT");
 
   const showEvents = (event_id) => {
-    var ciphertext = CryptoJS.AES.encrypt(event_id, Key.Secret).toString();
-    history.push("/events/event=" + ciphertext);
+    history.push("/events/event=" + event_id);
   };
   return (
     <div
