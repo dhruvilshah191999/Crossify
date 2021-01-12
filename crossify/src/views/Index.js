@@ -134,8 +134,8 @@ export default function Landing() {
           </div>
         </div>
         <section className="bg-white block m-2 ">
-          <div className="container p-8 mx-auto">
-            <div className="ml-2  mb-6">
+          <div className="p-8 mx-auto">
+            <div className="ml-2 mb-6">
               <div className="flex flex-row px-2">
                 <h4 className="text-3xl font-normal leading-normal mt-0 ml-2 mb-2 text-gray">
                   Check out what's going on in your Area

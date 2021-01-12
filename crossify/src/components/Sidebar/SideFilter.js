@@ -9,13 +9,14 @@ import Pagination from "components/ResultWindow/Pagination";
 import ResultWindow from "components/ResultWindow";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import RangeInput from "components/RangeSlider";
+
 export default function Sidebar(props) {
+  const watch = true;
   const { isLogin, users, searchResult, search_dispatch } = useContext(
     UserContext
   );
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const [loading, setLoading] = React.useState(false);
-  const [SearchChange, SetSearchChange] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage] = React.useState(5);
   const [eventShow, setEventShow] = React.useState(true);
@@ -83,8 +84,10 @@ export default function Sidebar(props) {
           config
         );
         if (finaldata3.data.is_error) {
+          console.log(finaldata3.data.message);
         } else {
           setEvent(finaldata3.data.data);
+          setCurrentPage(1);
         }
       } catch (error) {
         console.log(error);
@@ -101,11 +104,11 @@ export default function Sidebar(props) {
   const indexofFirstPost = indexofLastPost - postPerPage;
   const currentEvents = getevent.slice(indexofFirstPost, indexofLastPost);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  let { latitude, longitude } = usePosition(watch);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     let array = [];
-    var latitude, longitude;
     await interestState.map((data) => {
       if (data.select === true) {
         array.push(data.id);
@@ -115,9 +118,6 @@ export default function Sidebar(props) {
       if (isLogin) {
         latitude = users.latitude;
         longitude = users.longitude;
-      } else {
-        latitude = usePosition(watch);
-        longitude = usePosition(watch);
       }
 
       if (latitude === undefined || longitude === undefined) {
@@ -145,7 +145,7 @@ export default function Sidebar(props) {
           console.log(finaldata.data.message);
         } else {
           setEvent(finaldata.data.data);
-          setEvent(finaldata.data.data);
+          setCurrentPage(1);
         }
       } catch (err) {
         console.log(err);

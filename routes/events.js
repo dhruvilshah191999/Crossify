@@ -206,4 +206,68 @@ router.post("/add-interest", async function (req, res, next) {
   });
 });
 
+router.post("/event-details", async function (req, res, next) {
+  let { event_id } = req.body;
+  console.log(req.body);
+  let userphoto = [];
+  var events = event_details.findOne({ _id: event_id, is_active: true });
+  await events.exec(async (err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(error);
+    } else {
+      async function getphoto() {
+        var user_photo = user_details.find(
+          {
+            $or: [
+              { _id: { $in: data.participants_list } },
+              { _id: data.oragnizer_id },
+            ],
+            is_active: true,
+          },
+          { profile_photo: 1 }
+        );
+        await user_photo.exec((err, data2) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(600).send(error);
+          } else {
+            userphoto = data2;
+          }
+        });
+        let promise = new Promise((resolve, reject) => {
+          setTimeout(() => resolve("done!"), 1000);
+        });
+        let result = await promise;
+      }
+
+      if (data.participants_list.length !== 0) {
+        getphoto().then((err) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(700).send(error);
+          } else {
+            var finaldata = {
+              event_data: data,
+              userphoto: userphoto,
+              is_error: false,
+              message: "Data Send",
+            };
+            return res.status(200).send(finaldata);
+          }
+        });
+      }
+    }
+  });
+});
+
 module.exports = router;

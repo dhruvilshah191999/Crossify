@@ -35,15 +35,19 @@ var event_details = new Schema({
     type: Array,
     required: true,
   },
-  oragnizer_info: {
-    type: String,
+  oragnizer_id: {
+    type: ObjectId,
     required: true,
   },
-  date: {
-    type: Date,
+  club_id: {
+    type: ObjectId,
+    required: true,
+  },
+  url: {
+    type: String,
     required: false,
   },
-  time: {
+  date: {
     type: Date,
     required: false,
   },
@@ -75,17 +79,21 @@ var event_details = new Schema({
     type: Date,
     required: false,
   },
-  broadcast_date: {
-    type: Date,
+  city: {
+    type: String,
     required: false,
   },
-  broadcast: {
-    type: Array,
+  state: {
+    type: String,
     required: false,
   },
   is_active: {
     type: Boolean,
     default: true,
+  },
+  likes: {
+    type: Array,
+    require: false,
   },
 });
 

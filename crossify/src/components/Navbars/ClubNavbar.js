@@ -5,7 +5,7 @@ import UserDropdown from "components/Dropdowns/UserDropdown.js";
 // components
 
 import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
-import logo from "../../assets/logos/logo_light.png";
+import logo from "../../assets/logos/logo_final.png";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
 import { UserContext } from "context/usercontext";
 

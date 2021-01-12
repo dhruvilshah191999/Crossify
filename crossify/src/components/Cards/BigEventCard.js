@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import moment from "moment";
 const ResultWindow = (props) => {
+  let history = useHistory();
   let count = 0;
   const start = moment().format("LT");
+
+  const showEvents = (event_id) => {
+    history.push("/events/event=" + event_id);
+  };
   return (
     <div
       className="h-custom rounded-lg shadow p-4 flex w-full mt-2 hover:shadow-lg"
-      style={{ width: "95%" }}
+      style={{ width: "95%", cursor: "pointer" }}
+      onClick={() => showEvents(props.data._id)}
     >
       <div className="eventPhoto">
         <img
