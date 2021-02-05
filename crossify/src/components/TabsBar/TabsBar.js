@@ -31,7 +31,7 @@ const Tabs = () => {
                 href="#link1"
                 role="tablist"
               >
-                <i className="fas fa-space-shuttle text-base mr-1"></i> Profile
+                <i class="fas fa-info-circle text-base mr-1"></i> Profile
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -50,7 +50,7 @@ const Tabs = () => {
                 href="#link2"
                 role="tablist"
               >
-                <i className="fas fa-space-shuttle text-base mr-1"></i> Events
+                <i class="fas fa-calendar-alt text-base mr-1"></i> Events
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -69,7 +69,7 @@ const Tabs = () => {
                 href="#link3"
                 role="tablist"
               >
-                <i className="fas fa-briefcase text-base mr-1"></i> Rooms
+                <i class="fas fa-comments text-base mr-1"></i> Rooms
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -88,7 +88,7 @@ const Tabs = () => {
                 href="#link4"
                 role="tablist"
               >
-                <i className="fas fa-cog text-base mr-1"></i> Members
+                <i class="fas fa-sitemap text-base mr-1"></i> Members
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -107,7 +107,8 @@ const Tabs = () => {
                 href="#link5"
                 role="tablist"
               >
-                <i className="fas fa-briefcase text-base mr-1"></i> Photos
+                <i class="fas fa-images text-base mr-1"></i>
+                Photos
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
