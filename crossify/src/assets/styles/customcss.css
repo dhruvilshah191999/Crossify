@@ -51,9 +51,20 @@
 .hover\:bg-alpha:hover {
   background-color: #e82953;
 }
+.hover\:bg-beta:hover {
+  background-color: #00838f;
+}
 
 .hover\:bg-offwhite:hover {
   background-color: #f5f5f5;
+}
+
+.active\:bg-lightbeta:active {
+  background-color: #68d6e0;
+}
+
+.active\:bg-lightalpha:active {
+  background-color: #cc536e;
 }
 
 .text-gray {
@@ -161,6 +172,11 @@
   width: 75%;
 }
 
+.mx-12 {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+
 table,
 th,
 td {
@@ -188,7 +204,6 @@ tbody tr td:nth-child(1) {
   color: #e82953;
   text-align: center;
 }
-
 
 /* .hover\:.bg-gray-200:hover {
   background-color:#e5e7eb;

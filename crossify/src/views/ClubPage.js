@@ -3,6 +3,7 @@ import Navbar from "components/Navbars/ClubNavbar";
 import TabsBar from "components/TabsBar/TabsBar";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
+import Modal from "components/Modals/modal";
 class ClubPage extends React.Component {
   render() {
     return (
@@ -81,16 +82,11 @@ class ClubPage extends React.Component {
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <button
-                    className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-beta text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <i class="fas fa-pen-alt"></i> Apply for Event
-                  </button>
+                  <Modal></Modal>
                 </div>
                 <div className="flex justify-center">
                   <button
-                    className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                   >
                     <i class="fas fa-user-plus"></i> Join

@@ -1655,6 +1655,10 @@ video {
   margin-left: 1rem;
   margin-right: 1rem;
 }
+.mx-12 {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
 
 .my-6 {
   margin-top: 1.5rem;
