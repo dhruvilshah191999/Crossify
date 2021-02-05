@@ -19,6 +19,7 @@
     "gulp-append-prepend": "1.0.8",
     "http-proxy-middleware": "^1.0.6",
     "materialize-css": "^1.0.0-rc.2",
+    "mdbreact": "^5.0.1",
     "react": "17.0.1",
     "react-crypt-gsm": "^1.0.4",
     "react-dom": "17.0.1",
