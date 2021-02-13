@@ -12,7 +12,7 @@ class ClubPage extends React.Component {
         <div style={{ marginTop: 70, backgroundColor: "#fafafa" }}>
           <div className="flex flex-col items-center flex-wrap">
             <div className="flex flex-row flex-wrap ">
-              <div className="club-bg mx-4 my-2 ">
+              <div className="club-bg mx-4 my-2">
                 <img
                   className="w-full h-full overflow-hidden object-contain rounded-lg"
                   alt="club_background_photo"
@@ -84,6 +84,7 @@ class ClubPage extends React.Component {
                 <div className="flex justify-center">
                   <Modal></Modal>
                 </div>
+
                 <div className="flex justify-center">
                   <button
                     className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
