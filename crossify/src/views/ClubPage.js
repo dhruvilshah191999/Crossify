@@ -3,8 +3,12 @@ import Navbar from "components/Navbars/ClubNavbar";
 import TabsBar from "components/TabsBar/TabsBar";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
-import Modal from "components/Modals/modal";
+import MyModal from "components/Modals/AdoptedModal";
+import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 class ClubPage extends React.Component {
+  openModal() {
+    ModalManager.open(<MyModal onRequestClose={() => true} />);
+  }
   render() {
     return (
       <>
@@ -82,7 +86,15 @@ class ClubPage extends React.Component {
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <Modal></Modal>
+                  <div>
+                    <button
+                      className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-beta text-white active:bg-lightbeta font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={this.openModal.bind(this)}
+                    >
+                      <i className="fas fa-pen-alt"></i> Apply for Event
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex justify-center">
