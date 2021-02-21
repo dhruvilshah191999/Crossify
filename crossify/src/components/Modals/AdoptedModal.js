@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import MultiSelect from "../Forms/MultiSelect";
+import "./style.css";
+import { InputTagsContainer } from "react-input-tags";
+import TagsInput from "components/Inputs/TagsInput";
 Modal.defaultStyles = {};
+
+const Tag = (props) => <span className="tag" {...props} />;
+const Delete = (props) => <button className="delete" {...props} />;
+const Help = (props) => <span className="help" {...props} />;
 
 var customModalStyles = {
   content: {
@@ -14,8 +21,16 @@ var customModalStyles = {
 };
 
 class MyModal extends Component {
+  state = {
+    tags: [],
+  };
+
+  handleUpdateTags = (tags) => {
+    this.setState({ tags });
+  };
   render() {
     const { onRequestClose } = this.props;
+
     return (
       <Modal
         onRequestClose={onRequestClose}
@@ -44,11 +59,6 @@ class MyModal extends Component {
               <div className="mb-3 pt-0">
                 <label className="ml-1"> Categories</label>
                 <MultiSelect></MultiSelect>
-                {/* <select
-                  type="location"
-                  placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
-                /> */}
               </div>
               <div className="mb-3 pt-0">
                 <label className="ml-1"> Location</label>
@@ -120,10 +130,9 @@ class MyModal extends Component {
               </div>
               <div className="mb-3 pt-0">
                 <label className="ml-1"> Tags</label>
-                <input
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
-                  type="text"
-                  placeholder="Tags..."
+                <InputTagsContainer
+                  tags={this.state.tags}
+                  handleUpdateTags={this.handleUpdateTags}
                 />
               </div>
               <div className="mb-3 pt-0">
