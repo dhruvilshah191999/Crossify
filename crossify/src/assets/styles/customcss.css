@@ -1,0 +1,210 @@
+.hover\:bg-red-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+
+:root {
+  --color-primary: #fc5185;
+  --color-secondary: #3fc1c9;
+  --color-charlie: #364f6b;
+  --color-offwhite: #f5f5f5;
+}
+
+.bg-primary {
+  background-color: #fc5185;
+}
+
+.bg-secondary {
+  background-color: #3fc1c9;
+}
+
+.bg-charlie {
+  background-color: #364f6b;
+}
+
+.bg-offwhite {
+  background-color: #f5f5f5;
+}
+
+.bg-gamma {
+  background-color: #f43939;
+}
+
+.bg-beta {
+  background-color: #00838f;
+}
+
+.bg-lightalpha {
+  background-color: #e82953;
+}
+
+.bg-footer {
+  background-color: #343840;
+}
+
+/* changed rgb(199, 36, 71); to #e82953*/
+
+.bg-alpha {
+  background-color: #e82953;
+}
+
+.hover\:bg-alpha:hover {
+  background-color: #e82953;
+}
+.hover\:bg-beta:hover {
+  background-color: #00838f;
+}
+
+.hover\:bg-offwhite:hover {
+  background-color: #f5f5f5;
+}
+
+.active\:bg-lightbeta:active {
+  background-color: #68d6e0;
+}
+
+.active\:bg-lightalpha:active {
+  background-color: #cc536e;
+}
+
+.text-gray {
+  color: #343840;
+}
+
+.text-yellow {
+  color: rgb(226, 226, 83);
+}
+
+.hover\:text-yellow:hover {
+  color: rgb(226, 226, 83);
+}
+
+.hover\:text-offwhite:hover {
+  color: #f5f5f5;
+}
+
+.hover\:text-lightwhite:hover {
+  color: #c2c2c2;
+}
+
+.text-alpha {
+  color: rgb(199, 36, 71);
+}
+
+.text-beta {
+  color: #00838f;
+}
+
+.bg-back {
+  color: #750c0c;
+}
+
+.club-bg {
+  width: 840px;
+  height: 410px;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.bg-lightbeta {
+  background-color: #a4eef5;
+}
+
+.content-end {
+  align-content: flex-end;
+}
+
+.max-w-370-px {
+  max-width: 370px;
+}
+
+.leading-wide {
+  line-height: 1.8;
+}
+
+.border-alpha {
+  border-color: rgb(199, 36, 71);
+}
+
+.bg-light-alpha {
+  background-color: #ec98aa;
+}
+
+.text-gray-300 {
+  color: white;
+}
+
+.bg-overlay {
+  background-color: rgba(14, 14, 17, 0.7);
+}
+
+.top-1 {
+  top: 70%;
+}
+
+.border-l {
+  border-left: 1px solid;
+}
+
+.h-28 {
+  height: 500px;
+}
+
+.w-25 {
+  width: 25%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+.mx-12 {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+
+table,
+th,
+td {
+  border: 2px solid #ccc;
+  line-height: 3;
+  color: black;
+}
+
+table {
+  text-align: center;
+  width: 100%;
+}
+
+tbody tr td {
+  line-height: 3.5;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+tbody tr:hover {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+tbody tr td:nth-child(1) {
+  color: #e82953;
+  text-align: center;
+}
+
+/* .hover\:.bg-gray-200:hover {
+  background-color:#e5e7eb;
+} */
