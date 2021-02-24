@@ -17,6 +17,7 @@ import Profile from "views/Profile.js";
 import EventPage from "views/EventPage";
 import Index from "views/Index.js";
 import SearchPage from "views/SearchPage";
+import ClubSearchPage from "views/ClubSearchPage";
 import PlayGround from "views/PlayGround";
 import ClubPage from "views/ClubPage";
 import { UserContext } from "context/usercontext";
@@ -33,6 +34,7 @@ const Routing = () => {
       <Route path="/" exact component={Index} />
       <Route path="/events/event=:id" component={EventPage} />
       <Route path="/search" exact component={SearchPage} />
+      <Route path="/clubsearch" exact component={ClubSearchPage} />
       <Route path="/club" exact component={ClubPage} />
       <Route path="/playground" exact component={PlayGround} />
       {/* add redirect for first page */}

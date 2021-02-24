@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var category_details = require("../modules/interest_category");
 var event_details = require("../modules/event_details");
 var user_details = require("../modules/user_details");
+var club_details = require("../modules/club_details");
 const { ObjectID, ObjectId } = require("bson");
 var router = express.Router();
 
@@ -63,6 +64,29 @@ router.get("/get-interest", async function (req, res, next) {
 
 router.get("/get-event", async function (req, res, next) {
   var records = event_details
+    .find({ is_active: true })
+    .sort({ date: -1 })
+    .limit(4);
+  await records.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else {
+      var finaldata = {
+        data: data,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.get("/get-club", async function (req, res, next) {
+  var records = club_details
     .find({ is_active: true })
     .sort({ date: -1 })
     .limit(4);
@@ -174,6 +198,97 @@ router.post("/get-event-byuser", auth, async function (req, res, next) {
   }
 });
 
+
+router.post("/get-club-byuser", auth, async function (req, res, next) {
+  var { latitude, longitude } = req.user;
+  if (latitude !== 0 && longitude !== 0) {
+    var records = club_details.find({ is_active: true });
+    let distancearray = [];
+    let idstring = "";
+    await records.exec(async (err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err,
+        };
+        return res.status(500).send(error);
+      } else {
+        data.forEach((d) => {
+          let distancevalue = distance(
+            d.latitude,
+            d.longitude,
+            latitude,
+            longitude,
+            "K"
+          );
+          let object = {
+            id: d._id,
+            distance: distancevalue,
+          };
+          if (distancearray.length < 4) {
+            distancearray.push(object);
+          } else {
+            let maxdistance = Math.max(...getYs(distancearray));
+            if (distancevalue < maxdistance) {
+              distancearray = distancearray.filter(
+                (d) => d.distance !== maxdistance
+              );
+              distancearray.push(object);
+            }
+          }
+        });
+        var eventsrecords = club_details.find({
+          _id: {
+            $in: [
+              ObjectId(distancearray[0].id),
+              ObjectId(distancearray[1].id),
+              ObjectId(distancearray[2].id),
+              ObjectId(distancearray[3].id),
+            ],
+          },
+        });
+        await eventsrecords.exec((err, data2) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err,
+            };
+            return res.status(500).send(error);
+          } else {
+            var finaldata = {
+              data: data2,
+              is_error: false,
+              message: "Data Send",
+            };
+            return res.status(200).send(finaldata);
+          }
+        });
+      }
+    });
+  } else {
+    var records = club_details
+      .find({ is_active: true })
+      .sort({ date: -1 })
+      .limit(4);
+    await records.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err,
+        };
+        return res.status(500).send(error);
+      } else {
+        var finaldata = {
+          data: data,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+  }
+});
+
 router.post("/add-interest", async function (req, res, next) {
   var { email, interest_array } = req.body;
   let objectIdArray = interest_array.map((s) => mongoose.Types.ObjectId(s));
@@ -208,7 +323,6 @@ router.post("/add-interest", async function (req, res, next) {
 
 router.post("/event-details", async function (req, res, next) {
   let { event_id } = req.body;
-  console.log(req.body);
   let userphoto = [];
   var events = event_details.findOne({ _id: event_id, is_active: true });
   await events.exec(async (err, data) => {
@@ -266,6 +380,97 @@ router.post("/event-details", async function (req, res, next) {
           }
         });
       }
+    }
+  });
+});
+
+router.post("/checklikes", auth, async function (req, res, next) {
+  let { event_id } = req.body;
+  var checks = event_details.find({
+    _id: event_id,
+    likes: ObjectId(req.user._id),
+    is_active: 1,
+  });
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if(data2.length!=0){
+      var finaldata = {
+        Like:true,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+    else {
+      var finaldata = {
+        Like: false,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/addlikes", auth, async function (req, res, next) {
+  let { event_id } = req.body;
+  var checks = event_details.update(
+    {
+      _id: event_id,
+      is_active: 1,
+    },
+    {
+      $push: { likes: ObjectId(req.user._id)}
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        Like: true,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/deletelikes", auth, async function (req, res, next) {
+  let { event_id } = req.body;
+  var checks = event_details.update(
+    {
+      _id: event_id,
+      is_active: 1,
+    },
+    {
+      $pull: { likes: ObjectId(req.user._id) },
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        Like: true,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
     }
   });
 });

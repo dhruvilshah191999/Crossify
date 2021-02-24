@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var category_details = require("../modules/interest_category");
 var event_details = require("../modules/event_details");
 var user_details = require("../modules/user_details");
+var club_details = require("../modules/club_details");
 const { ObjectID, ObjectId } = require("bson");
 var router = express.Router();
 
@@ -36,6 +37,26 @@ function getdistance(lat1, lon1, lat2, lon2, unit) {
 
 router.get("/get-event", async function (req, res, next) {
   var records = event_details.find({ is_active: true }).sort({ date: -1 });
+  await records.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else {
+      var finaldata = {
+        data: data,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.get("/get-club", async function (req, res, next) {
+  var records = club_details.find({ is_active: true }).sort({ date: -1 });
   await records.exec((err, data) => {
     if (err) {
       var error = {

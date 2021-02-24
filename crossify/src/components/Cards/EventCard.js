@@ -1,12 +1,43 @@
 import Moment from "react-moment";
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect, useContext } from "react";
 
 const EventCard = (props) => {
+  const [loginstate, setLogin] = useState(false);
+  const [like, setLike] = useState(false);
+
+  useEffect(() => {
+    //console.clear();
+    const token = localStorage.getItem("jwt");
+    async function fetchData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        }
+      };
+      var object = {
+        token: token,
+        event_id:props.data._id
+      }
+      const finaldata = await axios.post("/api/events/checklikes",object,config);
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setLike(finaldata.data.Like);
+        console.log(like);
+      }
+    }
+    if (token) {
+      setLogin(true);
+      fetchData();
+    }
+  })
   return (
     <div
-      className="relative px-4 mb-4 flex-grow-0 "
+      className="relative px-2 mb-4 flex-grow-0 "
       style={{
-        width: 353,
+        width: 310,
 
         minHeight: "auto",
       }}
@@ -44,26 +75,26 @@ const EventCard = (props) => {
           <div
             className="absolute top-0 right-0 pl-4"
             style={{ paddingRight: "20px", paddingTop: "5px" }}
-          >
-            <span className=" text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200  last:mr-0">
-              {"Today"}
-            </span>
-          </div>
+          ></div>
           <div
             className="absolute top-0 right-0"
             style={{ marginTop: "195px", marginRight: "20px" }}
           >
             <button
-              className="text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="text-red-500 bg-white shadow border border-solid border-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
+              style={loginstate ? {} : { cursor: "not-allowed" }}
             >
-              <i className="fas fa-heart"></i>
+              <i
+                className={like ? "fas fa-heart-broken" : "fas fa-heart"}
+                style={{ fontSize: "14px" }}
+              ></i>
             </button>
             <button
               className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
               type="button"
             >
-              <i class="fas fa-share-alt"></i>
+              <i class="fas fa-share-alt" style={{ fontSize: "14px" }}></i>
             </button>
           </div>
         </div>

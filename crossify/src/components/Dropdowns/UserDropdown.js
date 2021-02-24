@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
+import { useHistory, Link } from "react-router-dom";
 import { createPopper } from "@popperjs/core";
-import demoPhoto from "assets/img/avatar.jpg";
 import { UserContext } from "context/usercontext";
-import { styled } from "@material-ui/core";
 const UserDropdown = () => {
   // dropdown props
   const { users } = useContext(UserContext);
@@ -16,6 +15,10 @@ const UserDropdown = () => {
   };
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
+  };
+  const Logout = async (e) => {
+    window.localStorage.removeItem("jwt");
+    window.location.reload();
   };
   return (
     <>
@@ -75,15 +78,15 @@ const UserDropdown = () => {
             My Clubs
           </a>
           <div className="h-0 my-2 border border-solid border-gray-200" />
-          <a
-            href="#pablo"
+          <Link
+            to="/"
             className={
               "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
             }
-            onClick={(e) => e.preventDefault()}
+            onClick={(e) => Logout(e)}
           >
             Log Out
-          </a>
+          </Link>
         </div>
       </div>
     </>

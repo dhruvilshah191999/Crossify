@@ -13,6 +13,8 @@ import ClubCard from "components/Cards/ClubCard";
 export default function Landing() {
   const { isLogin } = useContext(UserContext);
   const [eventState, setEventstate] = useState([]);
+  const [clubState, setClubstate] = useState([]);
+  
   useEffect(async () => {
     const token = localStorage.getItem("jwt");
     if (!token) {
@@ -28,6 +30,13 @@ export default function Landing() {
           console.log(finaldata.data.message);
         } else {
           setEventstate(finaldata.data.data);
+        }
+
+        const finaldata2 = await axios.get("/api/events/get-club", config);
+        if (finaldata2.data.is_error) {
+          console.log(finaldata2.data.message);
+        } else {
+          setClubstate(finaldata2.data.data);
         }
       } catch (err) {
         console.log(err);
@@ -52,6 +61,17 @@ export default function Landing() {
           console.log(finaldata.data.message);
         } else {
           setEventstate(finaldata.data.data);
+        }
+
+        const finaldata2 = await axios.post(
+          "/api/events/get-club-byuser",
+          object,
+          config
+        );
+        if (finaldata2.data.is_error) {
+          console.log(finaldata2.data.message);
+        } else {
+          setClubstate(finaldata2.data.data);
         }
       } catch (err) {
         console.log(err);
@@ -155,11 +175,14 @@ export default function Landing() {
             </div>
           </div>
         </section>
-        <section className="bg-white block m-2 ">
-          <div className="container p-8">
-            <div className="ml-3 mb-6">
+        <section
+          className="bg-white block m-2"
+          style={{ marginBottom: "60px" }}
+        >
+          <div className="p-8 mx-auto">
+            <div className="ml-2 mb-6">
               <div className="flex flex-row px-2">
-                <h4 className="text-3xl font-normal leading-normal mt-0 ml-2 mb-2 text-gray">
+                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-gray">
                   Check out what's going on in your Area
                 </h4>
                 <button className="text-blue-600 ml-auto mr-2">
@@ -169,7 +192,9 @@ export default function Landing() {
               </div>
             </div>
             <div className="flex flex-wrap ml-1">
-              <ClubCard></ClubCard>
+              {clubState.map((data) => (
+                <ClubCard key={data._id} data={data}></ClubCard>
+              ))}
             </div>
           </div>
         </section>
