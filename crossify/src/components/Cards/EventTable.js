@@ -295,13 +295,13 @@ export default function App() {
         accessor: "actions", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
           <div className="flex flex-row  justify-evenly">
-            <button>
+            <button title="Approve">
               <i class="fas fa-vote-yea text-green-500 text-lg focus:outline-none"></i>
             </button>
-            <button className="ml-2">
+            <button className="ml-2" title="Reject">
               <i class="fas fa-window-close text-red-500 text-lg"></i>
             </button>
-            <button className="ml-2">
+            <button className="ml-2" title="More">
               <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
             </button>
           </div>
