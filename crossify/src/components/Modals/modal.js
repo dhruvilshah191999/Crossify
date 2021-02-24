@@ -10,15 +10,23 @@ export default function Modal() {
         type="button"
         onClick={() => setShowModal(true)}
       >
+<<<<<<< HEAD
         <i class="fas fa-pen-alt"></i> Apply for Event
+=======
+        <i className="fas fa-pen-alt"></i> Apply for Event
+>>>>>>> d7d5bcde551e909da1570813f5f528017cd10ec9
       </button>
 
       {showModal ? (
         <>
+<<<<<<< HEAD
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
             onClick={() => setShowModal(false)}
           >
+=======
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+>>>>>>> d7d5bcde551e909da1570813f5f528017cd10ec9
             <div className="relative w-auto my-6 mx-12 max-w-6xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -36,6 +44,7 @@ export default function Modal() {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
+<<<<<<< HEAD
                   <p className="my-4 text-gray-600 text-lg leading-relaxed">
                     I always felt like I could do anything. That’s the main
                     thing people are controlled by! Thoughts- their perception
@@ -49,6 +58,77 @@ export default function Modal() {
                     won’t do anything. I was taught I could do everything.
                   </p>
                   <EventForm></EventForm>
+=======
+                  <form>
+                    <div className="flex flex-col">
+                      <div className="mb-3 pt-0">
+                        <label className="ml-1"> Event Name</label>
+                        <input
+                          type="text"
+                          placeholder="Event Name"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                        />
+                      </div>
+                      <div className="mb-3 pt-0">
+                        <label className="ml-1"> Location</label>
+                        <input
+                          type="text"
+                          placeholder="Event Name"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                        />
+                      </div>
+
+                      <div className="mb-3 pt-0">
+                        <label className="ml-1"> City</label>
+                        <input
+                          type="text"
+                          placeholder="Event Name"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                        />
+                      </div>
+                      <div className="mb-3 pt-0">
+                        <label className="ml-1"> State</label>
+                        <input
+                          type="text"
+                          placeholder="Event Name"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                        />
+                      </div>
+                      <div className="mb-3 pt-0">
+                        <label className="ml-1"> Eligibility</label>
+                        <textarea
+                          rows="4"
+                          placeholder="Event Name"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                        />
+                      </div>
+                      <div className="mb-3 pt-0">
+                        <label className="ml-1"> Description</label>
+                        <textarea
+                          rows="4"
+                          placeholder="Event Name"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                        />
+                      </div>
+                      <div className="mb-3 pt-0">
+                        <label className="ml-1"> Event Date</label>
+                        <input
+                          type="date"
+                          placeholder="Event Name"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                        />
+                      </div>
+                      <div className="mb-3 pt-0">
+                        <label className="ml-1"> Last Registeration Date</label>
+                        <input
+                          type="date"
+                          placeholder="Event Name"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                        />
+                      </div>
+                    </div>
+                  </form>
+>>>>>>> d7d5bcde551e909da1570813f5f528017cd10ec9
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">

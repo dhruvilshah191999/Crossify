@@ -1,7 +1,9 @@
-/* 
+ 
         .dataTables_wrapper {
             padding-top: 0.25rem;
-            padding-bottom: 0.25rem
+            padding-bottom: 0.25rem;
+            margin-left:1rem;
+            margin-right: 1rem;
         }
 
         table.dataTable.no-footer {
@@ -49,7 +51,7 @@
         }
 
         table.dataTable thead tr th {
-            background-color: #edf2f7;
+            background-color: #e4e9ee;
             border-bottom-width: 2px;
             border-top-width: 1px;
             border-color: #d2d6dc
@@ -102,4 +104,4 @@
 
         .dataTables_length {
             padding-top: 1.25rem;
-        } */
+        } 

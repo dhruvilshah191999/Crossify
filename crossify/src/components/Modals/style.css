@@ -1,0 +1,46 @@
+.react-input-tags-tag {
+  background-color: #68d6e0;
+  color: #00838f;
+  cursor: pointer;
+
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  margin: 0.25rem;
+}
+
+span.react-input-tags-tag > button {
+  color: rgb(238, 238, 238);
+  padding: 0.25rem;
+}
+
+.focus\:.react-input-tags-input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.react-input-tags-input {
+  width: 200px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0.25rem;
+  border-color: rgba(156, 163, 175);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-width: 1px;
+  color: rgba(55, 65, 81);
+}
+input.react-input-tags-input {
+  width: 200px !important;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}

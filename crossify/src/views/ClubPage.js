@@ -3,8 +3,13 @@ import Navbar from "components/Navbars/ClubNavbar";
 import TabsBar from "components/TabsBar/TabsBar";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
-import Modal from "components/Modals/modal";
+import MyModal from "components/Modals/AdoptedModal";
+import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+
 class ClubPage extends React.Component {
+  openModal() {
+    ModalManager.open(<MyModal onRequestClose={() => true} />);
+  }
   render() {
     return (
       <>
@@ -12,7 +17,7 @@ class ClubPage extends React.Component {
         <div style={{ marginTop: 70, backgroundColor: "#fafafa" }}>
           <div className="flex flex-col items-center flex-wrap">
             <div className="flex flex-row flex-wrap ">
-              <div className="club-bg mx-4 my-2 ">
+              <div className="club-bg mx-4 my-2">
                 <img
                   className="w-full h-full overflow-hidden object-contain rounded-lg"
                   alt="club_background_photo"
@@ -23,7 +28,12 @@ class ClubPage extends React.Component {
                 className="bg-white rounded  mx-2 my-2 p-6 border leading-relaxed max-w-370-px"
                 style={{ width: 370 }}
               >
-                <div className="text-3xl font-bold">{this.props.clubName}</div>
+                <div className="text-3xl font-bold">
+                  {this.props.clubName}
+                  <button className="float-right text-lg">
+                    <i className=" text-md text-gray-700 fas fa-cog"></i>
+                  </button>
+                </div>
                 <div className="text-md mt-2 text-gray-600 ml-2">
                   &nbsp;<i class="fas fa-map-marker-alt text-sm"></i>
                   &nbsp;&nbsp;&nbsp; {this.props.loc} <br />
@@ -82,8 +92,15 @@ class ClubPage extends React.Component {
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <Modal></Modal>
+                  <button
+                    className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-beta text-white active:bg-lightbeta font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={this.openModal.bind(this)}
+                  >
+                    <i className="fas fa-pen-alt"></i> Apply for Event
+                  </button>
                 </div>
+
                 <div className="flex justify-center">
                   <button
                     className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

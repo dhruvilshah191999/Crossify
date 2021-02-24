@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
-import Datatab from "components/Tables/TableData";
 import health_cat from "../assets/img/health_cat.jpg";
 import dance_cat from "../assets/img/dance_cat.jpg";
 
@@ -10,7 +9,6 @@ export default function EventPage() {
   const { id } = useParams();
   const [loading, setloading] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
-  
   useEffect(() => {
     async function event_details() {
       const config = {
@@ -240,7 +238,6 @@ export default function EventPage() {
             </div>
           </div>
         </div>
-        <Datatab></Datatab>
         <br></br>
         <br></br>
         <br></br>
