@@ -177,7 +177,7 @@
   margin-right: 4rem;
 }
 
-table,
+/* table,
 th,
 td {
   border: 2px solid #ccc;
@@ -203,7 +203,7 @@ tbody tr:hover {
 tbody tr td:nth-child(1) {
   color: #e82953;
   text-align: center;
-}
+} */
 
 /* .hover\:.bg-gray-200:hover {
   background-color:#e5e7eb;

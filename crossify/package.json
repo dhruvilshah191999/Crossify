@@ -21,6 +21,7 @@
     "http-proxy-middleware": "^1.0.6",
     "materialize-css": "^1.0.0-rc.2",
     "mdbreact": "^5.0.1",
+    "namor": "^2.0.2",
     "react": "17.0.1",
     "react-crypt-gsm": "^1.0.4",
     "react-dom": "17.0.1",
@@ -31,7 +32,10 @@
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.1",
+    "react-table": "^7.6.3",
+    "react-table-6": "^6.11.0",
     "react-tag-input": "^6.5.2",
+    "styled-components": "^5.2.1",
     "sweetalert": "^2.1.2",
     "tailwindcss": "2.0.1",
     "use-position": "0.0.8"
@@ -64,5 +68,8 @@
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "17.0.0",
     "typescript": "4.1.2"
-  }
+  },"peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+ }
 }

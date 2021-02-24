@@ -28,7 +28,12 @@ class ClubPage extends React.Component {
                 className="bg-white rounded  mx-2 my-2 p-6 border leading-relaxed max-w-370-px"
                 style={{ width: 370 }}
               >
-                <div className="text-3xl font-bold">{this.props.clubName}</div>
+                <div className="text-3xl font-bold">
+                  {this.props.clubName}
+                  <button className="float-right text-lg">
+                    <i className=" text-md text-gray-700 fas fa-cog"></i>
+                  </button>
+                </div>
                 <div className="text-md mt-2 text-gray-600 ml-2">
                   &nbsp;<i class="fas fa-map-marker-alt text-sm"></i>
                   &nbsp;&nbsp;&nbsp; {this.props.loc} <br />
