@@ -490,6 +490,7 @@ export default function App() {
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">
+              Show entries : &nbsp;&nbsp;
               <select
                 value={pageSize}
                 onChange={(e) => {
@@ -499,7 +500,7 @@ export default function App() {
               >
                 {[10, 20, 30, 40, 50].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>
-                    Show {pageSize}
+                    {pageSize}
                   </option>
                 ))}
               </select>
