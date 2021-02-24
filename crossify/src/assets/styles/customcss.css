@@ -116,6 +116,14 @@
   align-content: flex-end;
 }
 
+.self-start {
+  align-self: flex-start;
+}
+
+.self-end {
+  align-self: flex-end;
+}
+
 .max-w-370-px {
   max-width: 370px;
 }
@@ -177,6 +185,9 @@
   margin-right: 4rem;
 }
 
+.text-xsm {
+  font-size: 0.81rem;
+}
 /* table,
 th,
 td {
