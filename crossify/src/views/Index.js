@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "context/usercontext";
 import { Redirect } from "react-router-dom";
 
@@ -11,10 +11,13 @@ import Footer from "components/Footers/Footer.js";
 import EventCard from "components/Cards/EventCard";
 import ClubCard from "components/Cards/ClubCard";
 export default function Landing() {
-  const { isLogin } = useContext(UserContext);
+  let history = useHistory();
+  const { isLogin, search_dispatch } = useContext(UserContext);
   const [eventState, setEventstate] = useState([]);
   const [clubState, setClubstate] = useState([]);
-  
+  const [search, setSearch] = useState("");
+  const [location, setlocation] = useState("");
+
   useEffect(async () => {
     const token = localStorage.getItem("jwt");
     if (!token) {
@@ -79,6 +82,17 @@ export default function Landing() {
     }
     //console.clear();
   }, []);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    var object = {
+      search,
+      location,
+    };
+    search_dispatch({ type: "Add-Search", add: object });
+    history.push("/clubsearch");
+  };
+
   return (
     <>
       <Navbar transparent />
@@ -119,18 +133,25 @@ export default function Landing() {
                     }}
                     className="p-2 text-lg"
                     type="text"
+                    name="search"
+                    onChange={(e) => setSearch(e.target.value)}
+                    value={search}
                     placeholder="Find your club"
                   />
                   <input
                     style={{ width: "30%", outline: "none" }}
                     className="p-2  text-lg"
                     type="text"
+                    name="location"
+                    onChange={(e) => setlocation(e.target.value)}
+                    value={location}
                     placeholder="Select Location"
                   />
                 </div>
                 <button
                   style={{ marginLeft: "10px" }}
                   className="bg-alpha hover:bg-alpha hover:shadow-md rounded text-white p-2 pl-4 pr-4"
+                  onClick={(e) => onSubmit(e)}
                 >
                   <p className="font-semibold text-md">Search</p>
                 </button>
@@ -186,8 +207,10 @@ export default function Landing() {
                   Check out what's going on in your Area
                 </h4>
                 <button className="text-blue-600 ml-auto mr-2">
-                  {" "}
-                  Load More <i className="fas fa-angle-double-right"></i>{" "}
+                  <Link to="/clubsearch">
+                    {" "}
+                    Load More <i className="fas fa-angle-double-right"></i>{" "}
+                  </Link>
                 </button>
               </div>
             </div>

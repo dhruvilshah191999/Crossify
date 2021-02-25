@@ -24,7 +24,7 @@ export default function Sidebar(props) {
   const [getclub, setClub] = React.useState([]);
   const [distance, Setdistance] = React.useState(0);
   const [showCategory, setCategory] = React.useState(false);
-  const [member, setMember] = React.useState([20, 37]);
+  const [member, setMember] = React.useState([0, 50]);
 
   React.useEffect(() => {
     console.clear();
@@ -78,7 +78,7 @@ export default function Sidebar(props) {
           validateStatus: () => true,
         };
         const finaldata3 = await axios.post(
-          "/api/filter/search",
+          "/api/filter/searchclub",
           searchResult,
           config
         );
@@ -110,49 +110,51 @@ export default function Sidebar(props) {
   };
 
   const onSubmit = async (e) => {
-      e.preventDefault();
-     console.log(member);
-    // let array = [];
-    // await interestState.map((data) => {
-    //   if (data.select === true) {
-    //     array.push(data.id);
-    //   }
-    // });
-    // if (eventShow) {
-    //   if (isLogin) {
-    //     latitude = users.latitude;
-    //     longitude = users.longitude;
-    //   }
+    e.preventDefault();
+    console.log(member);
+    let array = [];
+    await interestState.map((data) => {
+      if (data.select === true) {
+        array.push(data.id);
+      }
+    });
+    if (eventShow) {
+      if (isLogin) {
+        latitude = users.latitude;
+        longitude = users.longitude;
+      }
 
-    //   if (latitude === undefined || longitude === undefined) {
-    //     longitude = 0;
-    //     latitude = 0;
-    //   }
-    //   try {
-    //     var data = {
-    //       latitude,
-    //       longitude,
-    //       interestarray: array,
-    //       distance,
-    //     };
-    //     const config = {
-    //       method: "POST",
-    //       header: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       validateStatus: () => true,
-    //     };
-    //     const finaldata = await axios.post("/api/filter/", data, config);
-    //     if (finaldata.data.is_error) {
-    //       console.log(finaldata.data.message);
-    //     } else {
-    //       setClub(finaldata.data.data);
-    //       setCurrentPage(1);
-    //     }
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
+      if (latitude === undefined || longitude === undefined) {
+        longitude = 0;
+        latitude = 0;
+      }
+      try {
+        var data = {
+          latitude,
+          longitude,
+          interestarray: array,
+          distance,
+          member:member
+        };
+        const config = {
+          method: "POST",
+          header: {
+            "Content-Type": "application/json",
+          },
+          validateStatus: () => true,
+        };
+        const finaldata = await axios.post("/api/filter/club", data, config);
+        if (finaldata.data.is_error) {
+          console.log(finaldata.data.message);
+        } else {
+          console.log(finaldata);
+          setClub(finaldata.data.data);
+          setCurrentPage(1);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   return (

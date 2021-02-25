@@ -5,7 +5,9 @@ var category_details = require("../modules/interest_category");
 var event_details = require("../modules/event_details");
 var user_details = require("../modules/user_details");
 var club_details = require("../modules/club_details");
+var member_details = require("../modules/members_details");
 const { ObjectID, ObjectId } = require("bson");
+const c = require("config");
 var router = express.Router();
 
 function getdistance(lat1, lon1, lat2, lon2, unit) {
@@ -330,6 +332,232 @@ router.post("/search", async function (req, res, nex) {
         }
       });
     }
+  });
+});
+
+router.post("/searchclub", async function (req, res, nex) {
+  var { search, location } = req.body;
+  let categoryarray = [];
+
+  async function getids() {
+    var ids = category_details.find(
+      {
+        $or: [
+          { category_name: { $regex: ".*" + search + ".*", $options: "i" } },
+          { description: { $regex: ".*" + search + ".*", $options: "i" } },
+        ],
+      },
+      { _id: 1 }
+    );
+
+    await ids.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err,
+        };
+        return res.status(500).send(error);
+      } else {
+        data.forEach((d) => {
+          categoryarray.push(ObjectId(d._id));
+        });
+      }
+    });
+
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("done!"), 1000);
+    });
+    let result = await promise;
+  }
+
+  getids().then(async (err) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else {
+      var tags;
+      if (location.trim() === "") {
+        tags = club_details.find({
+          $or: [
+            {
+              club_name: {
+                $regex: ".*" + search + ".*",
+                $options: "i",
+              },
+            },
+            { description: { $regex: ".*" + search + ".*", $options: "i" } },
+            { category_list: { $in: categoryarray } },
+          ],
+          is_active: true,
+        });
+      } else if (search.trim() === "" && location.trim() !== "") {
+        tags = club_details.find({
+          $or: [
+            { location: { $regex: ".*" + location + ".*", $options: "i" } },
+            { city: { $regex: ".*" + location + ".*", $options: "i" } },
+            { state: { $regex: ".*" + location + ".*", $options: "i" } },
+          ],
+          is_active: true,
+        });
+      } else {
+        tags = club_details.find({
+          $or: [
+            {
+              club_name: {
+                $regex: ".*" + search + ".*",
+                $options: "i",
+              },
+            },
+            { description: { $regex: ".*" + search + ".*", $options: "i" } },
+            { location: { $regex: ".*" + location + ".*", $options: "i" } },
+            { city: { $regex: ".*" + location + ".*", $options: "i" } },
+            { state: { $regex: ".*" + location + ".*", $options: "i" } },
+            { category_list: { $in: categoryarray } },
+          ],
+          is_active: true,
+        });
+      }
+      await tags.exec((err, data) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err,
+          };
+          return res.status(500).send(error);
+        } else {
+          var finaldata = {
+            data: data,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+  });
+});
+
+router.post("/club", async function (req, res, nex) {
+  var {
+    interestarray,
+    distance,
+    latitude,
+    longitude,
+    member
+  } = req.body;
+  var query;
+  var distancearray = [];
+  var memberarray = [];
+
+  async function getids() {
+    var get_member = member_details.find({ is_active: 1 });
+    get_member.exec((err, data) => {
+      data.forEach((e) => {
+        if (
+          e.member_list.length >= member[0] &&
+          e.member_list.length <= member[1]
+        ) {
+          memberarray.push(e.club_id);
+        }
+      })
+    })
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("done!"), 1000);
+    });
+    let result = await promise;
+  }
+
+  getids().then(async (err) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else {
+      if (interestarray.length !== 0) {
+        interest_array = interestarray.map((s) => mongoose.Types.ObjectId(s));
+        if (memberarray.length !== 0) {
+          memberarray = memberarray.map((s) => mongoose.Types.ObjectId(s));
+          query = club_details.find({
+            is_active: true,
+            category_list: {
+              $in: interest_array,
+            },
+            _id: {
+              $in:memberarray
+            }
+          });
+        }
+        else {
+          query = club_details.find({
+            is_active: true,
+            category_list: {
+              $in: interest_array,
+            }
+          });
+        }
+      }
+      else {
+        if (memberarray.length !== 0) {
+          memberarray = memberarray.map((s) => mongoose.Types.ObjectId(s));
+          query = club_details.find({
+            is_active: true,
+            _id: {
+              $in: memberarray,
+            },
+          });
+        } else {
+          query = club_details.find({
+            is_active: true,
+          });
+        }
+      }
+    }
+
+    query.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err,
+        };
+        return res.status(500).send(error);
+      } else if (distance === 0 || distance === "" || distance === "") {
+        var finaldata = {
+          data: data,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      } else if (latitude === 0 || longitude === 0) {
+        var finaldata = {
+          data: data,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      } else {
+        data.forEach((d) => {
+          let distancevalue = getdistance(
+            latitude,
+            longitude,
+            d.latitude,
+            d.longitude,
+            "K"
+          );
+          if (distancevalue <= distance) distancearray.push(d);
+        });
+        var finaldata = {
+          data: distancearray,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
   });
 });
 

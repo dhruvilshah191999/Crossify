@@ -475,4 +475,31 @@ router.post("/deletelikes", auth, async function (req, res, next) {
   });
 });
 
+router.post("/getclub", async function (req, res, next) {
+  let { club_id } = req.body;
+  console.log(club_id);
+  var checks = club_details.findOne(
+    {
+      _id: ObjectId(club_id),
+      is_active: 1,
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        data:data2,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 module.exports = router;

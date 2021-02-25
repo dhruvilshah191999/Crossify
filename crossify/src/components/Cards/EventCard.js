@@ -1,14 +1,16 @@
 import Moment from "react-moment";
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const EventCard = (props) => {
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
+  const [clubname, Setclub] = useState("");
+  const token = localStorage.getItem("jwt");
 
   useEffect(() => {
     //console.clear();
-    const token = localStorage.getItem("jwt");
     async function fetchData() {
       const config = {
         method: "POST",
@@ -25,14 +27,84 @@ const EventCard = (props) => {
         console.log(finaldata.data.message);
       } else {
         setLike(finaldata.data.Like);
-        console.log(like);
       }
     }
+
+    async function fetchclub() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        }
+      };
+      var object = {
+        club_id:props.data.club_id
+      }
+      const finaldata = await axios.post("/api/events/getclub", object, config);
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        if (finaldata.data.data!=null)
+            Setclub(finaldata.data.data.club_name);
+      }
+    }
+
     if (token) {
       setLogin(true);
       fetchData();
     }
-  })
+    fetchclub();
+  }, [])
+
+  const addlike = async (e) => {
+    if (loginstate) {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+        event_id: props.data._id
+      }
+      const finaldata = await axios.post(
+        "/api/events/addlikes",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setLike(true);
+      }
+    }
+  };
+
+  const deletelike = async (e) => {
+    if (loginstate) {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+        event_id: props.data._id,
+      };
+      const finaldata = await axios.post(
+        "/api/events/deletelikes",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setLike(false);
+      }
+    }
+  };
   return (
     <div
       className="relative px-2 mb-4 flex-grow-0 "
@@ -50,7 +122,7 @@ const EventCard = (props) => {
         />
         <div className="px-2 py-1">
           <div className="text-xs text-gray-600 font-semibold">
-            <i className="fas fa-user-shield"></i> : {"The Dark Group"}
+            <i className="fas fa-user-shield"></i> : {clubname}
           </div>
           <div className="text-xl  mt-1 font-semibold truncate leading-snug">
             {props.data.event_name}
@@ -84,18 +156,21 @@ const EventCard = (props) => {
               className="text-red-500 bg-white shadow border border-solid border-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
               style={loginstate ? {} : { cursor: "not-allowed" }}
+              onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
             >
               <i
                 className={like ? "fas fa-heart-broken" : "fas fa-heart"}
                 style={{ fontSize: "14px" }}
               ></i>
             </button>
-            <button
-              className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-              type="button"
-            >
-              <i class="fas fa-share-alt" style={{ fontSize: "14px" }}></i>
-            </button>
+            <CopyToClipboard text={window.location.href+"events/event="+props.data._id}>
+              <button
+                className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                type="button"
+              >
+                <i class="fas fa-share-alt" style={{ fontSize: "14px" }}></i>
+              </button>
+            </CopyToClipboard>
           </div>
         </div>
       </div>
