@@ -63,6 +63,10 @@
   background-color: #68d6e0;
 }
 
+.hover\:bg-lightbeta:hover {
+  background-color: #50b5be;
+}
+
 .active\:bg-lightalpha:active {
   background-color: #cc536e;
 }
@@ -201,8 +205,145 @@
   width: 33%;
 }
 
-ul.nav li.selected {
-  background-color: red;
+.event-image {
+  width: 850px;
+  height: 420px;
+}
+
+.mx-16 {
+  margin-left: 5.5rem;
+  margin-right: 5.5rem;
+}
+
+.mx-6 {
+  margin-left: 2.6rem;
+  margin-right: 2.6rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
+}
+.ml-4 {
+  margin-left: 1rem;
+}
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
+.mini-club-image {
+  width: 60px;
+  height: 60px;
+}
+.content-end {
+  align-content: flex-end;
+}
+
+.event-side-container {
+  min-width: 100px;
+  max-width: 400px;
+  width: 330px;
+}
+
+.text-md {
+  font-size: 1.1rem;
+}
+.event-container {
+  margin-left: 7rem;
+  margin-right: 5.5rem;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.w-1\/4 {
+  width: 27%;
+}
+.w-3\/4 {
+  width: 77%;
+}
+/* 
+details {
+  user-select: none;
+}
+details[open] summary svg {
+  transform: rotate(-90deg);
+}
+summary {
+  cursor: pointer;
+}
+svg {
+  transition: all 0.3s;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+:focus {
+  outline: none;
+} */
+
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
+
+details {
+  position: relative;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjM0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIzNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOC41OSAxNi4zNGw0LjU4LTQuNTktNC41OC00LjU5TDEwIDUuNzVsNiA2LTYgNnoiLz48L3N2Zz4=")
+    no-repeat 50% 50% / 1em 1em;
+  width: 1.5em;
+  height: 1.5em;
+  transition: transform 0.1s linear;
+}
+
+summary {
+  width: 100%;
+  padding: 20px;
+  padding-left: 25px;
+  border-bottom: 1px solid #ccc;
+}
+
+summary:hover {
+  color: #a8a8a8;
+}
+
+summary:focus {
+  outline: none;
+}
+
+details[open] summary:before {
+  transform: rotate(90deg);
+}
+
+details[open] > summary {
+  color: ;
+}
+
+details[open] > summary ~ * {
+  animation: open 1s ease;
+}
+
+p.source {
+  padding-top: 50px;
+  font-size: 0.75em;
+  text-align: center;
+}
+
+@keyframes open {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /* table,

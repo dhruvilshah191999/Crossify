@@ -2780,7 +2780,13 @@ video {
   .lg\:ml-auto {
     margin-left: auto;
   }
+  .lg\:mb-6 {
+    margin-bottom: 1.5rem;
+  }
 
+  .lg\:mt-auto {
+    margin-top: auto;
+  }
   .lg\:-ml-16 {
     margin-left: -4rem;
   }

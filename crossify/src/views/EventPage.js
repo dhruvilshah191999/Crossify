@@ -3,9 +3,13 @@ import axios from "axios";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
 import health_cat from "../assets/img/health_cat.jpg";
-import dance_cat from "../assets/img/dance_cat.jpg";
+import dance_cat from "../assets/img/travel_cat.jpg";
+import MapContainer from "MapCode";
 
-export default function EventPage() {
+// todo MapContainer has to changed because we only want Map which shows the Event latitude and Longitute
+// todo Make List of user which are registered
+
+export default function EventPage(props) {
   const { id } = useParams();
   const [loading, setloading] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
@@ -41,216 +45,188 @@ export default function EventPage() {
     return (
       <>
         <Navbar />
-        <div
-          onLoadStart={(e) => setTimeout(10000)}
-          className="flex flex-wrap mt-24 bg-white justify-center items-start"
-        >
-          <div className="w-full md:w-6/12 px-4 py-4 text-black bg-gray-100 rounded-md border-2 border-gray-600">
-            <img
-              src={eventdetails.photo}
-              className="w-full align-middle rounded-lg mt-2"
-              alt="event_pic"
-              style={{
-                height: "250px",
-              }}
-            />
-            <h1
-              className="mt-2 font-semibold text-3xl text-center bg-gray-300 rounded-full"
-              style={{ textTransform: "capitalize" }}
-            >
-              {eventdetails.event_name}
-            </h1>
-            <h1 className="mt-2 text-xl">
-              {" "}
-              <span className="font-semibold text-xl"> Place : </span> Nikol ,
-              Ahmedabad , Gujarat
-            </h1>
-            <h2 className="mt-2 text-xl">
-              {" "}
-              <span className="font-semibold text-xl"> Date & Time :</span>{" "}
-              14/01/2021 , 10:00 IST{" "}
-            </h2>
-            <h2 className="mt-2">
-              <span className="font-semibold text-xl"> Organized By :</span>
-              <i className="fas fa-user-friends text-md text-black p-3 border border-gray-900 text-center shadow-lg rounded-full bg-gray-100 mx-4"></i>
-            </h2>
-            {/* category */}
-            <div className="mt-2 font-normal text-xl text-black">
-              <span className="bg-gray-300 border-2 border-gray-600 rounded-full px-2 mr-2">
-                Business
-              </span>
-              <span className="bg-gray-300 border-2 border-gray-600 rounded-full px-2 mr-2">
-                Entertainment
-              </span>
-              <span className="bg-gray-300 border-2 border-gray-600 rounded-full px-2 mr-2">
-                Food
-              </span>
-              <span className="bg-gray-300 border-2 border-gray-600 rounded-full px-2 mr-2">
-                Travel
-              </span>
-            </div>
-
-            {/* tags */}
-            <div className="mt-2 font-normal text-xl text-black">
-              <span className="bg-gray-300 border-2 border-gray-600 rounded-full px-2 mr-2">
-                Cricket
-              </span>
-              <span className="bg-gray-300 border-2 border-gray-600 rounded-full px-2 mr-2">
-                Football
-              </span>
-              <span className="bg-gray-300 border-2 border-gray-600 rounded-full px-2 mr-2">
-                Java
-              </span>
-              <span className="bg-gray-300 border-2 border-gray-600 rounded-full px-2 mr-2">
-                C++
-              </span>
-            </div>
-            <div className="mt-2 font-semibold text-xl">Description :</div>
-            <div className="mt-1 text-xl">
-              This is an online networking event to connect travellers in
-              Ahmedabad with whom you can plan a trip on your own if you are
-              comfortable once connected and get to know each other.
-            </div>
-            <div className="mt-2 font-semibold text-xl">Eligibility :</div>
-            <div className="mt-1 text-xl">
-              Minimin age of person shoul be 18 years old.
-            </div>
-          </div>
-
-          <div className="w-full md:w-4/12 px-4 py-4 text-black">
-            <h1 className="mt-2 text-3xl">GROUP :</h1>
-            <div className="w-full flex justify-between items-start">
+        <div className="flex flex-col  container  event-container">
+          <div
+            onLoadStart={(e) => setTimeout(10000)}
+            className="flex flex-row flex-wrap mt-20 justify-center items-start"
+          >
+            <div className=" mr-6  text-black bg-white rounded-md ">
               <img
-                src={dance_cat}
-                className="rounded-lg mr-2"
-                alt="group_pic"
-                style={{
-                  height: "150px",
-                }}
+                src={eventdetails.photo}
+                className="event-image align-middle rounded-md mt-2"
+                alt="event_pic"
               />
-              <p className="flex flex-col">
-                <span className="text-lg text-xl font-semibold">
-                  Nikol Sports Group
-                </span>{" "}
-                <span className="text-lg text-black bg-gray-300 text-center rounded-md">
-                  PUBLIC
-                </span>
-              </p>
             </div>
 
-            <div className="flex flex-row justify-center my-2">
-              <div className="w-6/12">
-                <button
-                  className="w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-redColor hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  <i className="fas fa-heart"></i> Like
-                </button>
-              </div>
-              &nbsp;
-              <div className="w-6/12 self-end">
-                <button
-                  className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  <i class="fas fa-share-alt"></i> Share
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-4">
-              <div className="flex justify-between items-center">
-                <h1 className="text-xl font-semibold">Joined People :</h1>
-                <a
-                  href=""
-                  className="font-semibold border border-lightRed hover:border-redColor text-white px-4 py-1 rounded bg-lightRed hover:bg-redColor"
-                >
-                  <i class="far fa-user-circle"></i> SEE MORE ...
-                </a>
-              </div>
-              <div className="rounded-md border-2 border-gray-600 mt-2 bg-gray-100 flex justify-between">
-                <i className="fas fa-user-friends text-lg text-black p-3 border border-gray-900 text-center shadow-lg h-12 w-12 inline-flex items-center justify-center rounded-full bg-gray-100 mx-4 my-4"></i>
-                <i className="fas fa-user-friends text-lg text-black p-3 border border-gray-900 text-center shadow-lg h-12 w-12 inline-flex items-center justify-center rounded-full bg-gray-100 mx-4 my-4"></i>
-                <i className="fas fa-user-friends text-lg text-black p-3 border border-gray-900 text-center shadow-lg h-12 w-12 inline-flex items-center justify-center rounded-full bg-gray-100 mx-4 my-4"></i>
-                <i className="fas fa-user-friends text-lg text-black p-3 border border-gray-900 text-center shadow-lg h-12 w-12 inline-flex items-center justify-center rounded-full bg-gray-100 mx-4 my-4"></i>
-                <i className="fas fa-user-friends text-lg text-black p-3 border border-gray-900 text-center shadow-lg h-12 w-12 inline-flex items-center justify-center rounded-full bg-gray-100 mx-4 my-4"></i>
-              </div>
-            </div>
-            <div className="mt-4">
-              <div className="flex justify-between items-center">
-                <h1 className="text-xl font-semibold">Reviews :</h1>
-
-                <a
-                  href=""
-                  className="font-semibold border border-lightRed hover:border-redColor text-white px-4 py-1 rounded bg-lightRed hover:bg-redColor"
-                >
-                  <i class="fas fa-users"></i> SEE MORE ...
-                </a>
-              </div>
-              <div className="flex justify-between rounded-md border-2 border-gray-600 bg-gray-100 items-center rounded p-4 mt-2">
-                <i className="fas fa-user-friends border border-gray-900 text-md text-black p-3 text-center shadow-lg h-12 w-12 inline-flex items-center justify-center rounded-full bg-gray-100 mx-4"></i>
-                <span className="text-md">
-                  it Xeeders AI algorithm will connect you to right people in
-                  Ahmedabad based on your interests and request. also respond to
-                  others in the club.
-                </span>
-              </div>
-            </div>
-            <div className="mt-4">
-              <div className="flex items-center">
-                <h1 className="w-1/3 text-xl font-semibold">FAQs :</h1>
-                <div className="w-2/3 flex justify-end">
-                  <a
-                    href=""
-                    className="font-semibold border border-beta hover:border-beta text-white px-4 py-1 rounded bg-beta"
+            <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container">
+              <div className="flex flex-row">
+                <div className="flex flex-col justify-center">
+                  <div className="text-alpha text-xl font-semibold  pt-2">
+                    {props.month}
+                  </div>
+                  <div className=" text-3xl ">{props.day}</div>
+                </div>
+                <div>
+                  <h1
+                    className="mt-3 font-semibold text-2xl text-center ml-6"
+                    style={{ textTransform: "capitalize" }}
                   >
-                    <i class="fas fa-user-plus"></i> Ask Question
-                  </a>
-                  <a
-                    href=""
-                    className="font-semibold border border-lightRed hover:border-redColor text-white px-4 py-1 ml-2 rounded bg-lightRed hover:bg-redColor"
-                  >
-                    <i class="fas fa-user-tag"></i> SEE MORE ...
-                  </a>
+                    {eventdetails.event_name}
+                  </h1>
                 </div>
               </div>
-              {/* FAQ01 */}
-              <details class="mt-2">
-                <summary class="text-md rounded-md border-2 border-gray-600 bg-gray-100 rounded py-2 px-4">
-                  How Long is this site live?
-                </summary>
-                <span>
-                  Laboris qui labore cillum culpa in sunt quis sint veniam.
-                  Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
-                  minim velit nostrud pariatur culpa magna in aute.
-                </span>
-              </details>
-              {/* FAQ02 */}
-              <details class="mt-2">
-                <summary className="text-md rounded-md border-2 border-gray-600 bg-gray-100 rounded py-2 px-4">
-                  How Long is this site live?
-                </summary>
-                <span>
-                  Laboris qui labore cillum culpa in sunt quis sint veniam.
-                  Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
-                  minim velit nostrud pariatur culpa magna in aute.
-                </span>
-              </details>
+              <div className="flex flex-col mt-4 text-md text-gray-700 ">
+                {" "}
+                <div>
+                  <i class="fas fa-map-marker-alt text-lg "></i>
+                  <span className="ml-2"> {props.eventLocation}</span>
+                </div>
+                <div className="mt-2">
+                  {" "}
+                  <i class="fas fa-clock"></i>
+                  <span className="ml-2"> {props.dateAndTime}</span>
+                </div>
+                <div className="mt-6">
+                  <div className="flex flex-col">
+                    <div>
+                      <span className="font-semibold"> Hosted By :</span>
+                    </div>
+                    <div className="flex flex-row">
+                      <div>
+                        <img
+                          src={props.hostedByImg}
+                          alt="HostedClubImage"
+                          className="rounded mini-club-image mr-4"
+                        />
+                      </div>
+                      <div className="flex flex-col justify-center">
+                        <div className="font-semibold">{props.hostedBy}</div>
+                        <div className="text-sm">
+                          {props.hostedByPrivacy} Club
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-row  mt-2 lg:mt-auto ">
+                <div className="w-6/12">
+                  <button
+                    className="w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                  >
+                    <i className="fas fa-heart"></i> Like
+                  </button>
+                </div>
+                &nbsp;
+                <div className="w-6/12 self-end">
+                  <button
+                    className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                  >
+                    <i class="fas fa-share-alt"></i> Share
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-center mt-2">
+                <button
+                  className=" w-full h-12 hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  <i class="fas fa-user-plus "></i> Attend
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="mx-6 my-4">
+            <div className="flex flex-col">
+              <div className="flex flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+                  Description
+                </div>
+                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
+                  {props.description}
+                </div>
+              </div>
+              <div className="flex flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+                  Eligibility
+                </div>
+                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
+                  {props.eligibility}
+                </div>
+              </div>
+              <div className="flex flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+                  People going
+                </div>
+                <div className="mt-1 text-lg text-gray-800 font-semibold w-3/4 leading-relaxed">
+                  {props.peopleGoing} booked so far
+                </div>
+              </div>
+              <div className="flex flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+                  FAQs <br />
+                  <button className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta">
+                    <i class="fas fa-user-plus"></i> Ask
+                  </button>
+                </div>
+                <div className="mt-1 text-lg  w-3/4 leading-relaxed">
+                  <details>
+                    <summary className="pt-0">{props.questions[0]}</summary>
+                    <p>{props.answers[0]}</p>
+                  </details>
+                  <details>
+                    <summary>{props.questions[1]}</summary>
+                    <p>{props.answers[1]}</p>
+                  </details>
+                  <details>
+                    <summary>{props.questions[2]}</summary>
+                    <p>{props.answers[2]}</p>
+                  </details>
+                </div>
+              </div>
+              <div className="flex flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+                  Location
+                </div>
+                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
+                  <MapContainer />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
+        <br />
+        <br />
       </>
     );
   } else {
     return <></>;
   }
 }
+
+EventPage.defaultProps = {
+  eventName: "Exhibition Hack",
+  eventLocation: "Ghatlodia, Ahmedabad",
+  dateAndTime: "Saturday  Feb 14 13:45 (IST)",
+  hostedBy: "GreyHat Badshahs",
+  hostedByPrivacy: "Public",
+  hostedByImg: dance_cat,
+  eligibility: " Minimin age of person shoul be 18 years old.",
+  peopleGoing: 34,
+  description:
+    "My house is a super cozy and eclectically decorated craftsman style home with a fenced in backyard for pooches. Its situated in the historic Observatory Hill neighborhood of Pittsburgh.Its 100% a short term rental and no one lives there full time so its perfect for small get togethers, meetings and photo shoots.  Ive hosted a number of shoots and video productions as well as small intimate parties and meetings.  There is a stocked coffee station and plenty of parking on the street. I've spent years collecting decorations and furniture to create an inviting fun space. It's in a unique location that is just 4 miles from downtown and 2 miles to the stadiums. I’ve found that I can get anywhere in the area quickly from this spot. There are always plenty of Ubers/Lyfts available in minutes.",
+  day: 27,
+  month: "FEB",
+  questions: [
+    "What special about this ?",
+    "Is there any fees required ?",
+    "How much people should I expect ?",
+  ],
+  answers: [
+    "Nothing",
+    "No It's Free for all. Enjoy",
+    "around 40-50 people usually present in this type of event.",
+  ],
+};
