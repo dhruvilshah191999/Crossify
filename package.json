@@ -35,7 +35,9 @@
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
+    "react-copy-to-clipboard": "^5.0.3",
     "react-dynamic-modal": "^1.1.1",
+    "react-geocode": "^0.2.3",
     "react-input-tags": "^3.0.3",
     "react-table": "^7.6.3",
     "react-tagsinput": "^3.19.0",
@@ -44,5 +46,5 @@
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
- }
+  }
 }

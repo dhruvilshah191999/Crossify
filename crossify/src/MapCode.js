@@ -44,9 +44,12 @@ class App extends React.Component {
     );
     return (
       <div>
-        <p>
-          {this.state.lat} == {this.state.lng}
-        </p>
+        <div className="text-gray-700 ml-1 mt-2">
+          latitude &nbsp;&nbsp; : {this.state.lat}
+        </div>
+        <div className="text-gray-700 ml-1 mb-2 ">
+          longitude : {this.state.lng}
+        </div>
 
         <MapWithAMarker
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc&libraries=places"
