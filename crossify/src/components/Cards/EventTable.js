@@ -8,8 +8,6 @@ import {
   usePagination,
 } from "react-table";
 
-import { matchSorter } from "match-sorter";
-
 function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
