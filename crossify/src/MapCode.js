@@ -1,49 +1,65 @@
-import React, { Component } from "react";
-import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
+import React from "react";
+import {
+  withGoogleMap,
+  GoogleMap,
+  withScriptjs,
+  InfoWindow,
+  Marker,
+} from "react-google-maps";
+import Geocode from "react-geocode";
 
-import CurrentLocation from "./Map";
-
-export class MapContainer extends Component {
+Geocode.setApiKey("AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc");
+Geocode.enableDebug();
+class App extends React.Component {
   state = {
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {},
+    lat: 23.066481,
+    lng: 72.527077,
   };
 
-  onMarkerClick = (props, marker, e) =>
+  onMarkerDragEnd = (event) => {
+    let newLat = event.latLng.lat();
+    let newLng = event.latLng.lng();
     this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true,
+      lat: newLat,
+      lng: newLng,
     });
-
-  onClose = (props) => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
-      });
-    }
   };
 
   render() {
-    return (
-      <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
-        <Marker onClick={this.onMarkerClick} name={"Current Location"} />
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}
+    console.log(this.state);
+    const MapWithAMarker = withScriptjs(
+      withGoogleMap((props) => (
+        <GoogleMap
+          defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
+          defaultZoom={13}
+          onDblClick={this.onMarkerDragEnd}
         >
-          <div>
-            <h4>{this.state.selectedPlace.name}</h4>
-          </div>
-        </InfoWindow>
-      </CurrentLocation>
+          <Marker
+            draggable={true}
+            onDragEnd={this.onMarkerDragEnd}
+            position={{ lat: this.state.lat, lng: this.state.lng }}
+          />
+        </GoogleMap>
+      ))
+    );
+    return (
+      <div>
+        <div className="text-gray-700 ml-1 mt-2">
+          latitude &nbsp;&nbsp; : {this.state.lat}
+        </div>
+        <div className="text-gray-700 ml-1 mb-2 ">
+          longitude : {this.state.lng}
+        </div>
+
+        <MapWithAMarker
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc&libraries=places"
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div style={{ height: `400px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+        />
+      </div>
     );
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyAR5P_ajLBMYbiKUYMMuY_SaZFldxBbyrI",
-})(MapContainer);
+export default App;
