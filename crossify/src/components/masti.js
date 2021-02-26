@@ -5,6 +5,7 @@ import {
   useFilters,
   useGlobalFilter,
   useAsyncDebounce,
+  useSortBy,
 } from "react-table";
 // A great library for fuzzy filtering/sorting items
 import { matchSorter } from "match-sorter";
@@ -268,6 +269,7 @@ function Table({ columns, data }) {
       data,
       defaultColumn, // Be sure to pass the defaultColumn option
       filterTypes,
+      useSortBy,
     },
     useFilters, // useFilters!
     useGlobalFilter // useGlobalFilter!
@@ -284,8 +286,15 @@ function Table({ columns, data }) {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? " 🔽"
+                        : " 🔼"
+                      : ""}
+                  </span>
                   {/* Render the columns filter UI */}
                   <div>{column.canFilter ? column.render("Filter") : null}</div>
                 </th>
@@ -405,7 +414,6 @@ function App(props) {
       <Table columns={columns} data={data} />
     </Styles>
   );
-  return props.render(props);
 }
 
 export default App;
