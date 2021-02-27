@@ -8,6 +8,10 @@
   --color-secondary: #3fc1c9;
   --color-charlie: #364f6b;
   --color-offwhite: #f5f5f5;
+  --color-alpha: #e82953;
+  --color-beta: #00838f;
+  --color-lightalpha: #e82953;
+  --color-lightbeta: a4eef5;
 }
 
 .bg-primary {
@@ -34,8 +38,12 @@
   background-color: #00838f;
 }
 
+.bg-lightbeta {
+  background-color: #a4eef5;
+}
+
 .bg-lightalpha {
-  background-color: #e82953;
+  background-color: #e05a77;
 }
 
 .bg-footer {
@@ -205,6 +213,10 @@
   width: 33%;
 }
 
+.w-24 {
+  width: 13.5rem;
+}
+
 .event-image {
   width: 850px;
   height: 420px;
@@ -262,6 +274,59 @@
 .w-3\/4 {
   width: 77%;
 }
+
+.btn.btn-lg.btn-primary {
+  background: var(--color-alpha);
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  color: white;
+  border-radius: 0.25rem;
+  margin-left: 0.5rem;
+  box-shadow: none !important;
+  border-color: var(--color-alpha);
+}
+
+.btn.btn-lg.btn-danger {
+  background: var(--color-alpha);
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  color: white;
+  border-radius: 0.25rem;
+  margin-left: 0.5rem;
+  box-shadow: none !important;
+  border-color: var(--color-alpha);
+}
+
+.sweet-alert > h2 {
+  font-size: 2rem !important;
+}
+
+.form-control {
+  padding: 0.75em;
+  color: #4a5568;
+
+  position: relative;
+  background-color: white;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+
+  outline: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  width: 100%;
+  padding-left: 2rem;
+  margin-top: 1rem;
+}
+.focus\:form-control :focus {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  outline: 0;
+}
+
+.max-h-300-px {
+  max-height: 300px;
+}
+
+.overwrite-success-btn {
+  background-color: #26ac62 !important;
+}
+
 /* 
 details {
   user-select: none;
@@ -323,7 +388,7 @@ details[open] summary:before {
 }
 
 details[open] > summary {
-  color: ;
+  color: var(--color-lightbeta);
 }
 
 details[open] > summary ~ * {
@@ -346,7 +411,9 @@ p.source {
   }
 }
 
-/* table,
+/* File Page 
+
+table,
 th,
 td {
   border: 2px solid #ccc;

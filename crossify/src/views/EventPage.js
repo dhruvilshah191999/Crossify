@@ -5,9 +5,19 @@ import Navbar from "components/Navbars/ClubNavbar";
 import health_cat from "../assets/img/health_cat.jpg";
 import dance_cat from "../assets/img/travel_cat.jpg";
 import MapContainer from "MapCode";
+import SweetAlertModal from "../components/Modals/SweetAlertModal";
+import RegisteredMember from "../components/Cards/RegisteredMembers";
+import JoinEventButton from "../components/Modals/JoinEventButton";
 
-// todo MapContainer has to changed because we only want Map which shows the Event latitude and Longitute
-// todo Make List of user which are registered
+// todo For Golu : MapContainer has to changed because we only want Map which shows the Event latitude and Longitute
+
+const Tag = (props) => {
+  return (
+    <span className="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta uppercase last:mr-0 mr-2">
+      {props.name}
+    </span>
+  );
+};
 
 export default function EventPage(props) {
   const { id } = useParams();
@@ -129,18 +139,13 @@ export default function EventPage(props) {
                 </div>
               </div>
               <div className="flex justify-center mt-2">
-                <button
-                  className=" w-full h-12 hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  <i class="fas fa-user-plus "></i> Attend
-                </button>
+                <JoinEventButton></JoinEventButton>
               </div>
             </div>
           </div>
           <div className="mx-6 my-4">
             <div className="flex flex-col">
-              <div className="flex flex-row py-4">
+              <div className="flex  flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl w-1/4">
                   Description
                 </div>
@@ -158,32 +163,46 @@ export default function EventPage(props) {
               </div>
               <div className="flex flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl w-1/4">
-                  People going
+                  Tags
                 </div>
-                <div className="mt-1 text-lg text-gray-800 font-semibold w-3/4 leading-relaxed">
-                  {props.peopleGoing} booked so far
+                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
+                  {props.tags.map((el) => (
+                    <Tag name={el}></Tag>
+                  ))}
                 </div>
               </div>
               <div className="flex flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl w-1/4">
+                  People going
+                </div>
+                <RegisteredMember></RegisteredMember>
+              </div>
+
+              <div className="flex flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl w-1/4">
                   FAQs <br />
-                  <button className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta">
+                  <SweetAlertModal></SweetAlertModal>
+                  {/* <button className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta">
                     <i class="fas fa-user-plus"></i> Ask
-                  </button>
+                  </button> */}
                 </div>
                 <div className="mt-1 text-lg  w-3/4 leading-relaxed">
-                  <details>
-                    <summary className="pt-0">{props.questions[0]}</summary>
-                    <p>{props.answers[0]}</p>
-                  </details>
-                  <details>
-                    <summary>{props.questions[1]}</summary>
-                    <p>{props.answers[1]}</p>
-                  </details>
-                  <details>
-                    <summary>{props.questions[2]}</summary>
-                    <p>{props.answers[2]}</p>
-                  </details>
+                  {props.qna.map((el, i) => {
+                    if (i == 0) {
+                      return (
+                        <details>
+                          <summary className="pt-0">{el.question}</summary>
+                          <p>{el.answer}</p>
+                        </details>
+                      );
+                    }
+                    return (
+                      <details>
+                        <summary>{el.question}</summary>
+                        <p>{el.answer}</p>
+                      </details>
+                    );
+                  })}
                 </div>
               </div>
               <div className="flex flex-row py-4">
@@ -219,14 +238,27 @@ EventPage.defaultProps = {
     "My house is a super cozy and eclectically decorated craftsman style home with a fenced in backyard for pooches. Its situated in the historic Observatory Hill neighborhood of Pittsburgh.Its 100% a short term rental and no one lives there full time so its perfect for small get togethers, meetings and photo shoots.  Ive hosted a number of shoots and video productions as well as small intimate parties and meetings.  There is a stocked coffee station and plenty of parking on the street. I've spent years collecting decorations and furniture to create an inviting fun space. It's in a unique location that is just 4 miles from downtown and 2 miles to the stadiums. I’ve found that I can get anywhere in the area quickly from this spot. There are always plenty of Ubers/Lyfts available in minutes.",
   day: 27,
   month: "FEB",
-  questions: [
-    "What special about this ?",
-    "Is there any fees required ?",
-    "How much people should I expect ?",
+  qna: [
+    {
+      question: "What special about this ?",
+      answer: "Nothing",
+    },
+    {
+      question: "Is there any fees required ?",
+      answer: "No It's Free for all. Enjoy",
+    },
+    {
+      question: "How much people should I expect ?",
+      answer: "around 40-50 people usually present in this type of event.",
+    },
   ],
-  answers: [
-    "Nothing",
-    "No It's Free for all. Enjoy",
-    "around 40-50 people usually present in this type of event.",
+  tags: [
+    "Sports",
+    "Tech",
+    "Science",
+    "Computers",
+    "Programming",
+    "Coding",
+    "Hacking",
   ],
 };

@@ -2551,6 +2551,10 @@ video {
     padding-top: 0;
   }
 
+  .sm\:flex-col {
+    flex-direction: column;
+  }
+
   .sm\:w-6\/12 {
     width: 50%;
   }
