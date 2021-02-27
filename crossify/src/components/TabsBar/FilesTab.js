@@ -1,5 +1,5 @@
 import React from "react";
-import TableData from "components/tables/tableData.js";
+import TableData from "components/Tables/TableData.js";
 
 export default function FilesTab() {
   return (

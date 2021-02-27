@@ -5,6 +5,7 @@ var category_details = require("../modules/interest_category");
 var user_details = require("../modules/user_details");
 const { check, validationResult } = require("express-validator");
 var CryptoJS = require("crypto-js");
+const { ObjectID, ObjectId } = require("bson");
 const config = require("config");
 const secret = config.get("Secret");
 
@@ -216,7 +217,79 @@ router.post("/socialstep2", async function (req, res, next) {
     }
   });
 });
-
+router.post("/change-password",async function(req,res,next){
+  let { user_id,oldPassword,newPassword} = req.body;
+  var check = user_details.findOneAndUpdate({
+    $and: [
+      { _id: ObjectId(user_id) },
+      { is_active: true },
+    ],
+  });
+  await check.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(400).send(error);
+    } else {
+      if (data == null || data.length == 0) {
+        var error = {
+          is_error: true,
+          message: "Password invalid",
+        };
+        return res.status(500).send(error);
+      } else {
+        var check_pass = data.password;
+        if (bcrypt.compareSync(oldPassword, check_pass)) {
+          let token = data.generateAuthToken();
+          var ciphertext = CryptoJS.AES.encrypt(
+            JSON.stringify(token),
+            secret
+          ).toString();
+          var finaldata = {
+            data: data,
+            token: ciphertext,
+            is_error: false,
+            message: "Password is valid",
+          };  
+          if(!finaldata.is_error){
+            password = bcrypt.hashSync(newPassword, 10);
+            var update = user_details.findOneAndUpdate(
+            { _id: ObjectId(user_id) },
+            {
+              password: password
+            }
+            );
+            update.exec((err,ans)=>{
+              if (err) {
+                var error = {
+                  is_error: true,
+                  message: err.message,
+                };
+                return res.status(500).send(error);
+              } else {
+                var finaldata2 = {
+                  password: password,
+                  message: "Password changed successfully",
+                  is_error: false,
+                };
+                return res.status(200).send(finaldata2);
+              }
+            });
+           }
+        } else {
+          var error = {
+            is_error: true,
+            message: "Password invalid",
+          };
+          return res.status(500).send(error);
+        }
+      }
+      
+    }
+  });
+});
 router.post("/step2", async function (req, res, next) {
   var { email, username, city, state, pincode, address, lat, long } = req.body;
   var check = user_details.findOne({ username: username, is_active: 1 });
