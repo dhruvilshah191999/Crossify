@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect} from "react";
 import logo from "../../assets/logos/logo_final.png";
 import { Link } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
@@ -8,7 +8,14 @@ const SearchNavbar = (props) => {
   const [changing, setchanging] = useState(false);
   const [search, setSearch] = useState("");
   const [location, setlocation] = useState("");
-  const { isLogin, search_dispatch } = useContext(UserContext);
+  const { isLogin, search_dispatch, searchResult } = useContext(UserContext);
+
+  useEffect(() => {
+    if (searchResult != null) {
+      setSearch(searchResult.search);
+      setlocation(searchResult.location);
+    }
+  }, [])
   const onSubmit = async (e) => {
     e.preventDefault();
     var object = {
@@ -23,17 +30,18 @@ const SearchNavbar = (props) => {
   return (
     <nav className="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between p-2 navbar-expand-lg bg-white border">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-        <div className="mt-1 ml-3 mr-4 sm:mb-0 flex flex-row content-center">
-          <img
-            className="brand-name"
-            src={logo}
-            style={{ width: "30px", height: "35px" }}
-          />
-          <span className="font text-xl tracking-tight px-3 pt-1">
-            CROSSIFY
-          </span>
-        </div>
-
+        <Link to="/">
+          <div className="mt-1 ml-3 mr-4 sm:mb-0 flex flex-row content-center">
+            <img
+              className="brand-name"
+              src={logo}
+              style={{ width: "30px", height: "35px" }}
+            />
+            <span className="font text-xl tracking-tight px-3 pt-1">
+              CROSSIFY
+            </span>
+          </div>
+        </Link>
         <div
           className="lg:flex flex-grow flex-row items-center bg-white lg:bg-transparent lg:shadow-none block"
           id="example-navbar-warning"

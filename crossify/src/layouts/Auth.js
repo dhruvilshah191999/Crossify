@@ -10,6 +10,7 @@ import Register from "views/auth/Register.js";
 import Register2 from "views/auth/Register2";
 import SocialRegister2 from "views/auth/SocialRegister2";
 import Register3 from "views/auth/Register3";
+import ChangePassword from "views/auth/ChangePassword";
 
 export default function Auth() {
   return (
@@ -28,6 +29,11 @@ export default function Auth() {
             <Route path="/auth/register" exact component={Register} />
             <Route path="/auth/register/step2" exact component={Register2} />
             <Route path="/auth/register/step3" exact component={Register3} />
+            <Route
+              path="/auth/changepassword"
+              exact
+              component={ChangePassword}
+            />
             <Route
               path="/auth/register/socialstep2"
               exact

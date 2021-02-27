@@ -14,6 +14,7 @@ import Dashboard from "views/admin/Dashboard.js";
 import Maps from "views/admin/Maps.js";
 import Settings from "views/admin/Settings.js";
 import Tables from "views/admin/Tables.js";
+import MemberList from "views/admin/MemberList";
 
 export default function Admin() {
   return (

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import MultiSelect from "../Forms/MultiSelect";
+import MapContainer from "../../MapCode";
 import "./style.css";
 import { InputTagsContainer } from "react-input-tags";
 import TagsInput from "components/Inputs/TagsInput";
@@ -70,7 +71,7 @@ class MyModal extends Component {
               </div>
               <div className="w-full flex flex-row">
                 <div className="mb-3 w-6/12 pt-0 mr-2 ">
-                  <label className="ml-1"> City</label>
+                  <label className="ml-1"> State</label>
                   <input
                     type="text"
                     placeholder="Event Name"
@@ -78,7 +79,7 @@ class MyModal extends Component {
                   />
                 </div>
                 <div className="mb-3 w-6/12 pt-0">
-                  <label className="ml-1"> State</label>
+                  <label className="ml-1"> City</label>
                   <input
                     type="text"
                     placeholder="Event Name"
@@ -137,11 +138,9 @@ class MyModal extends Component {
               </div>
               <div className="mb-3 pt-0">
                 <label className="ml-1"> Maps</label>
-                <input
-                  type="location"
-                  placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
-                />
+                <div>
+                  <MapContainer></MapContainer>
+                </div>
               </div>
             </div>
             <div className="flex items-center justify-end">

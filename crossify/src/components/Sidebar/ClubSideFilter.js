@@ -6,7 +6,7 @@ import { usePosition } from "use-position";
 import { UserContext } from "context/usercontext";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import Pagination from "components/ResultWindow/Pagination";
-import ResultWindow from "components/ResultWindow";
+import ResultWindow from "components/ResultWindow/ClubIndex";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import RangeInput from "components/RangeSlider";
 
@@ -21,11 +21,10 @@ export default function Sidebar(props) {
   const [postPerPage] = React.useState(5);
   const [eventShow, setEventShow] = React.useState(true);
   const [interestState, setInterestState] = React.useState([]);
-  const [getevent, setEvent] = React.useState([]);
+  const [getclub, setClub] = React.useState([]);
   const [distance, Setdistance] = React.useState(0);
   const [showCategory, setCategory] = React.useState(false);
-  const [startDate, SetstartDate] = React.useState(new Date());
-  const [endDate, SetendDate] = React.useState(new Date());
+  const [member, setMember] = React.useState([0, 50]);
 
   React.useEffect(() => {
     console.clear();
@@ -54,11 +53,11 @@ export default function Sidebar(props) {
 
     async function fetchEvent() {
       try {
-        const finaldata2 = await axios.get("/api/filter/get-event");
+        const finaldata2 = await axios.get("/api/filter/get-club");
         if (finaldata2.data.is_error) {
           console.log(finaldata2.data.message);
         } else {
-          setEvent(finaldata2.data.data);
+          setClub(finaldata2.data.data);
         }
       } catch (err) {
         console.log(err);
@@ -79,14 +78,14 @@ export default function Sidebar(props) {
           validateStatus: () => true,
         };
         const finaldata3 = await axios.post(
-          "/api/filter/search",
+          "/api/filter/searchclub",
           searchResult,
           config
         );
         if (finaldata3.data.is_error) {
           console.log(finaldata3.data.message);
         } else {
-          setEvent(finaldata3.data.data);
+          setClub(finaldata3.data.data);
           setCurrentPage(1);
         }
       } catch (error) {
@@ -102,12 +101,17 @@ export default function Sidebar(props) {
 
   const indexofLastPost = currentPage * postPerPage;
   const indexofFirstPost = indexofLastPost - postPerPage;
-  const currentEvents = getevent.slice(indexofFirstPost, indexofLastPost);
+  const currentEvents = getclub.slice(indexofFirstPost, indexofLastPost);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   let { latitude, longitude } = usePosition(watch);
 
+  const callbackFunction = (childData) => {
+      setMember(childData);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
+    console.log(member);
     let array = [];
     await interestState.map((data) => {
       if (data.select === true) {
@@ -130,8 +134,7 @@ export default function Sidebar(props) {
           longitude,
           interestarray: array,
           distance,
-          startdate: startDate,
-          enddate: endDate,
+          member:member
         };
         const config = {
           method: "POST",
@@ -140,11 +143,12 @@ export default function Sidebar(props) {
           },
           validateStatus: () => true,
         };
-        const finaldata = await axios.post("/api/filter/", data, config);
+        const finaldata = await axios.post("/api/filter/club", data, config);
         if (finaldata.data.is_error) {
           console.log(finaldata.data.message);
         } else {
-          setEvent(finaldata.data.data);
+          console.log(finaldata);
+          setClub(finaldata.data.data);
           setCurrentPage(1);
         }
       } catch (err) {
@@ -321,38 +325,7 @@ export default function Sidebar(props) {
               </li>
             </ul>
 
-            {/* if club is selected then show member size and if event is selected show starting and ending date */}
-            <div className={eventShow ? "" : "hidden"}>
-              <hr className="my-4 md:min-w-full" />
-              {/* Heading */}
-              <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-                Custom Dates
-              </h6>
-              {/* Navigation */}
-              <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-                <li>
-                  <label className=" items-center">
-                    <span className="mr-2  font-semibold text-red-500 text-sm">
-                      Start
-                    </span>
-                    <input
-                      type="date"
-                      onChange={(e) => SetstartDate(e.target.value)}
-                    />
-                  </label>
-                  <label className="block items-center">
-                    <span className="mr-2  font-semibold text-red-500 text-sm">
-                      End{"   "}
-                    </span>
-                    <input
-                      type="date"
-                      onChange={(e) => SetendDate(e.target.value)}
-                    />
-                  </label>
-                </li>
-              </ul>
-            </div>
-            <div className={eventShow ? "hidden" : ""}>
+            <div>
               <hr className="my-4 md:min-w-full" />
               {/* Heading */}
               <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
@@ -361,7 +334,7 @@ export default function Sidebar(props) {
               {/* Navigation */}
               <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
                 <li className="mt-5" style={{ marginLeft: "15px" }}>
-                  <RangeInput></RangeInput>
+                  <RangeInput getData={callbackFunction}></RangeInput>
                 </li>
               </ul>
             </div>
@@ -378,15 +351,10 @@ export default function Sidebar(props) {
         </div>
       </nav>
       <div style={{ marginTop: "100px" }}>
-        {eventShow ? (
-          <ResultWindow getevent={currentEvents} loading={loading} />
-        ) : (
-          ""
-        )}
-
+        <ResultWindow getclub={currentEvents} loading={loading} data="Club" />
         <Pagination
           postPerPage={postPerPage}
-          totalPosts={getevent.length}
+          totalPosts={getclub.length}
           paginate={paginate}
         />
       </div>
