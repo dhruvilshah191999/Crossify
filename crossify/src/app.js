@@ -12,14 +12,14 @@ import Admin from "layouts/Admin.js";
 import Auth from "layouts/Auth.js";
 // views without layouts
 
-import Landing from "views/Landing.js";
-import Profile from "views/Profile.js";
-import EventPage from "views/EventPage";
+import Landing from "views/trash/Landing.js";
+import Profile from "views/trash/Profile.js";
+import EventPage from "views/explore/EventPage";
 import Index from "views/Index.js";
-import SearchPage from "views/SearchPage";
-import ClubSearchPage from "views/ClubSearchPage";
-import PlayGround from "views/PlayGround";
-import ClubPage from "views/ClubPage";
+import SearchPage from "views/searchPages/SearchPage";
+import ClubSearchPage from "views/searchPages/ClubSearchPage";
+import PlayGround from "views/demo/PlayGround";
+import ClubPage from "views/explore/ClubPage";
 import { UserContext } from "context/usercontext";
 
 const Routing = () => {

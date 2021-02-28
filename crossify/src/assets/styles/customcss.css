@@ -71,6 +71,15 @@
   background-color: #68d6e0;
 }
 
+.active\:bg-superlightbeta:active {
+  background-color: #97dde4;
+  color: white !important;
+}
+
+.active\:text-white:active {
+  color: white;
+}
+
 .hover\:bg-lightbeta:hover {
   background-color: #50b5be;
 }
@@ -99,10 +108,31 @@
   color: #f5f5f5;
 }
 
+.hover\:text-lightbeta:hover {
+  color: #50b5be;
+}
+.hover\:text-extrabeta:hover {
+  color: #33b4c0;
+}
+
+.text-offwhite {
+  color: rgb(243, 235, 235);
+}
+
 .hover\:text-lightwhite:hover {
   color: #c2c2c2;
 }
+.hover\:text-beta:hover {
+  color: var(--color-beta);
+}
 
+.hover\:border-lightbeta:hover {
+  border: 1px solid #50b5be !important;
+}
+
+.focus\:border-lightbeta:focus {
+  border-color: #50b5be;
+}
 .text-alpha {
   color: rgb(199, 36, 71);
 }
@@ -327,26 +357,6 @@
   background-color: #26ac62 !important;
 }
 
-/* 
-details {
-  user-select: none;
-}
-details[open] summary svg {
-  transform: rotate(-90deg);
-}
-summary {
-  cursor: pointer;
-}
-svg {
-  transition: all 0.3s;
-}
-summary::-webkit-details-marker {
-  display: none;
-}
-:focus {
-  outline: none;
-} */
-
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
 
 details {
@@ -409,6 +419,45 @@ p.source {
   100% {
     opacity: 1;
   }
+}
+
+.category-container {
+  width: 250px;
+  background-color: white;
+  border: 1px solid #a7d5da;
+  color: var(--color-beta);
+}
+
+.mx-5 {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+
+.bg-linkedin {
+  background-color: #2867b2;
+}
+
+.bg-instagram {
+  background: linear-gradient(
+    45deg,
+    #405de6,
+    #5851db,
+    #833ab4,
+    #c13584,
+    #e1306c,
+    #fd1d1d
+  );
+}
+.bg-github {
+  background-color: #24293e;
+}
+
+.category-list-header {
+  color: rgb(104, 93, 93);
+}
+
+.category-list-container {
+  color: #f8f9fa;
 }
 
 /* File Page 

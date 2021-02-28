@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
-import health_cat from "../assets/img/health_cat.jpg";
-import dance_cat from "../assets/img/travel_cat.jpg";
-import MapContainer from "MapCode";
-import SweetAlertModal from "../components/Modals/SweetAlertModal";
-import RegisteredMember from "../components/Cards/RegisteredMembers";
-import JoinEventButton from "../components/Modals/JoinEventButton";
+import health_cat from "../../assets/img/travel_cat.jpg";
+import dance_cat from "../../assets/img/travel_cat.jpg";
+import MapContainer from "../../components/Maps/MapCode";
+import SweetAlertModal from "../../components/Modals/SweetAlertModal";
+import RegisteredMember from "../../components/Cards/RegisteredMembers";
+import JoinEventButton from "../../components/Modals/JoinEventButton";
 
 // todo For Golu : MapContainer has to changed because we only want Map which shows the Event latitude and Longitute
 

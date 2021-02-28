@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import MultiSelect from "../Forms/MultiSelect";
-import MapContainer from "../../MapCode";
+import MapContainer from "../../components/Maps/MapCode";
 import "./style.css";
 import { InputTagsContainer } from "react-input-tags";
 import TagsInput from "components/Inputs/TagsInput";
