@@ -1,5 +1,5 @@
 import React from "react";
-import TableData from "components/Tables/TableData.js";
+//import TableData from "components/Tables/TableData.js";
 
 export default function FilesTab() {
   return (
@@ -17,7 +17,7 @@ export default function FilesTab() {
           <i class="fas fa-file-upload"></i> &nbsp;Upload File
         </label>
       </div>
-      <TableData />
+      {/* <TableData /> */}
     </>
   );
 }

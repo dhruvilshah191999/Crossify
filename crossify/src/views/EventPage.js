@@ -3,11 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
 import health_cat from "../assets/img/health_cat.jpg";
-<<<<<<< HEAD
-import dance_cat from "../assets/img/dance_cat.jpg";
-import TableData from "../components/Tables/TableData";
-export default function EventPage() {
-=======
 import dance_cat from "../assets/img/travel_cat.jpg";
 import MapContainer from "MapCode";
 
@@ -15,7 +10,6 @@ import MapContainer from "MapCode";
 // todo Make List of user which are registered
 
 export default function EventPage(props) {
->>>>>>> main
   const { id } = useParams();
   const [loading, setloading] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
