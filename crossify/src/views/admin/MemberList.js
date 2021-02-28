@@ -1,6 +1,6 @@
 import MemberDropdown from "components/Dropdowns/MemberDropdown";
-import { white } from "tailwindcss/colors";
-import "./MemberList.css";
+//import { white } from "tailwindcss/colors";
+//import "./MemberList.css";
 var React = require("react");
 let CONTACTS = [
   {
