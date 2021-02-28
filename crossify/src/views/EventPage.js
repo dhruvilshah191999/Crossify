@@ -3,11 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
 import health_cat from "../assets/img/health_cat.jpg";
-<<<<<<< HEAD
-import dance_cat from "../assets/img/dance_cat.jpg";
-import TableData from "../components/Tables/TableData";
-export default function EventPage() {
-=======
 import dance_cat from "../assets/img/travel_cat.jpg";
 import MapContainer from "MapCode";
 import SweetAlertModal from "../components/Modals/SweetAlertModal";
@@ -25,7 +20,6 @@ const Tag = (props) => {
 };
 
 export default function EventPage(props) {
->>>>>>> main
   const { id } = useParams();
   const [loading, setloading] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
@@ -150,7 +144,7 @@ export default function EventPage(props) {
           </div>
           <div className="mx-6 my-4">
             <div className="flex flex-col">
-              <div className="flex  flex-row py-4">
+              <div className="flex  flex-row lg:flex-col py-4">
                 <div className="font-semibold text-gray-800 text-2xl w-1/4">
                   Description
                 </div>
