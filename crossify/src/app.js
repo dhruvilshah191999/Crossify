@@ -20,6 +20,7 @@ import SearchPage from "views/searchPages/SearchPage";
 import ClubSearchPage from "views/searchPages/ClubSearchPage";
 import PlayGround from "views/demo/PlayGround";
 import ClubPage from "views/explore/ClubPage";
+import CreateClub from "views/create/CreateClub";
 import { UserContext } from "context/usercontext";
 
 const Routing = () => {
@@ -37,6 +38,7 @@ const Routing = () => {
       <Route path="/clubsearch" exact component={ClubSearchPage} />
       <Route path="/club" exact component={ClubPage} />
       <Route path="/playground" exact component={PlayGround} />
+      <Route path="/createclub" exact component={CreateClub} />
       {/* add redirect for first page */}
       <Redirect from="*" to="/" />
     </Switch>

@@ -11,7 +11,7 @@
   --color-alpha: #e82953;
   --color-beta: #00838f;
   --color-lightalpha: #e82953;
-  --color-lightbeta: a4eef5;
+  --color-lightbeta: #a4eef5;
 }
 
 .bg-primary {
@@ -78,6 +78,10 @@
 
 .active\:text-white:active {
   color: white;
+}
+
+.active\:bg-offwhite:active {
+  background-color: var(--color-offwhite);
 }
 
 .hover\:bg-lightbeta:hover {
@@ -458,6 +462,98 @@ p.source {
 
 .category-list-container {
   color: #f8f9fa;
+}
+
+.search-wrapper {
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: none !important;
+}
+
+.search-wrapper > span {
+  background-color: var(--color-lightbeta);
+  color: var(--color-beta);
+  font-weight: 500;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.search-wrapper > span > i {
+  color: white;
+}
+
+.searchBox {
+  padding: 0.4rem;
+}
+
+/* Tags style*/
+
+.react-input-tags-tag {
+  /* background-color: var(--color-lightbeta);
+  color: var(--color-beta);
+  cursor: pointer;
+
+  font-size: 1rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  margin: 0.25rem; */
+  background-color: var(--color-lightbeta);
+  color: var(--color-beta);
+  font-weight: 500;
+  margin-left: 10px;
+  font-size: 15px;
+
+  padding: 4px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+span.react-input-tags-tag > button {
+  color: rgb(255, 255, 255);
+  padding: 0.25rem;
+}
+
+.focus\:.react-input-tags-input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.react-input-tags-input {
+  width: 200px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0.25rem;
+  border-color: rgba(156, 163, 175);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-width: 1px;
+  color: rgba(55, 65, 81);
+}
+input.react-input-tags-input {
+  width: 200px !important;
+  padding-left: 0.9rem;
+  padding-right: 0.75rem;
+}
+
+.py-2half {
+  padding-top: 0.58rem;
+  padding-bottom: 0.58rem;
+}
+.flex-row-reverse {
+  flex-direction: row-reverse;
 }
 
 /* File Page 
