@@ -21,12 +21,12 @@ export default class CreateClub extends React.Component {
       <>
         <Navbar></Navbar>
         <div
-          className="flex flex-row justify-center"
-          style={{ backgroundColor: "#F7FAFC" }}
+          className="flex flex-row justify-center "
+          style={{ backgroundColor: "#F7FAFC", marginTop: "4.1rem" }}
         >
-          <div className="pt-20 mx-4 container">
+          <div className="py-4 mx-4 container">
             <div
-              className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg  border-0"
+              className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg  border-0"
               style={{ backgroundColor: "#F7FAFC" }}
             >
               <div className="rounded-t bg-white mb-0 px-6 py-6">
@@ -66,8 +66,9 @@ export default class CreateClub extends React.Component {
                           Privacy
                         </label>
                         <select
-                          class="block shadow  appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded"
+                          class="block shadow focus:shadow-outline  appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded"
                           id="grid-state"
+                          placeholder="Select your relevant Categories"
                           style={{ outline: "none" }}
                         >
                           <option>Public</option>
@@ -84,7 +85,7 @@ export default class CreateClub extends React.Component {
                         >
                           Categories
                         </label>
-                        <MultiSelect></MultiSelect>
+                        <MultiSelect placeholder="Select your relevant Categories"></MultiSelect>
                       </div>
                     </div>
                     <div className="w-full lg:w-12/12 px-4">

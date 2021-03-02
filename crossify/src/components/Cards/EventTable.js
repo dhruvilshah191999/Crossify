@@ -242,7 +242,7 @@ export default function App() {
         accessor: "eventName", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
-          return <span className="font-bold text-md">{value}</span>;
+          return <span className="font-semibold text-sm">{value}</span>;
         },
       },
       {

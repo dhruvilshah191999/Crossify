@@ -10,10 +10,11 @@ import "assets/styles/customcss.css";
 
 import Admin from "layouts/Admin.js";
 import Auth from "layouts/Auth.js";
+import Profile from "layouts/Profile.js";
 // views without layouts
 
 import Landing from "views/trash/Landing.js";
-import Profile from "views/trash/Profile.js";
+// import Profile from "views/trash/Profile.js";
 import EventPage from "views/explore/EventPage";
 import Index from "views/Index.js";
 import SearchPage from "views/searchPages/SearchPage";
@@ -29,9 +30,10 @@ const Routing = () => {
       {/* add routes with layouts */}
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
+      <Route path="/profile" component={Profile} />
       {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
-      <Route path="/profile" exact component={Profile} />
+      {/* <Route path="/profile" exact component={Profile} /> */}
       <Route path="/" exact component={Index} />
       <Route path="/events/event=:id" component={EventPage} />
       <Route path="/search" exact component={SearchPage} />

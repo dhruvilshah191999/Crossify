@@ -10,7 +10,7 @@
   --color-offwhite: #f5f5f5;
   --color-alpha: #e82953;
   --color-beta: #00838f;
-  --color-lightalpha: #e82953;
+  --color-lightalpha: #e05a77;
   --color-lightbeta: #a4eef5;
 }
 
@@ -233,6 +233,10 @@
 .mx-12 {
   margin-left: 4rem;
   margin-right: 4rem;
+}
+
+.mt-36 {
+  margin-top: 12rem;
 }
 
 .text-xsm {
