@@ -1,48 +1,92 @@
-import React from "react";
+import React, { useState } from "react";
 
 // components
 
-import CardTable from "components/Cards/EventTable.js";
-import Test from "components/masti";
+import ProfileClubCard from "components/Cards/ProfileClubCard";
 
-export default function Tables() {
+export default function MyClubs() {
+  const [tabIndex, toggleTabIndex] = useState(1);
+  const [likedClubs, setLikedClubs] = useState([
+    {
+      club_name: "Think Less Act More",
+      place: "Punjab",
+      tags: ["Magic", "Entertainment"],
+    },
+    {
+      club_name: "Golfanatics",
+      place: "Japan",
+      tags: ["Sports", "Competition"],
+    },
+    {
+      club_name: "Gamers Louge",
+      place: "Rajkot",
+      tags: ["Gaming", "Streaming"],
+    },
+  ]);
+  const [joinedClubs, setJoinedClubs] = useState([
+    {
+      club_name: "Act Less Think More",
+      place: "Kerala",
+      tags: ["Stoicism", "Realist"],
+    },
+    {
+      club_name: "Table Truckers",
+      place: "California",
+      tags: ["Friendly"],
+    },
+    {
+      club_name: "Gamers Louge",
+      place: "Rajkot",
+      tags: ["Gaming", "Streaming"],
+    },
+  ]);
+
   return (
     <>
-      <div className="flex flex-wrap mt-4 z-2 relative">
-        <nav class="bg-white px-8 pt-2 shadow-md">
-          <div class="-mb-px flex justify-center">
-            <a
-              class="no-underline text-beta border-b-2 border-teal-dark uppercase tracking-wide font-bold text-xs py-3 mr-8"
-              href="#"
-            >
-              Home
-            </a>
-            <a
-              class="no-underline text-grey-dark border-b-2 border-transparent uppercase tracking-wide font-bold text-xs py-3 mr-8"
-              href="#"
-            >
-              Products
-            </a>
-            <a
-              class="no-underline text-grey-dark border-b-2 border-transparent uppercase tracking-wide font-bold text-xs py-3 mr-8"
-              href="#"
-            >
-              Discounts
-            </a>
-            <a
-              class="no-underline text-grey-dark border-b-2 border-transparent uppercase tracking-wide font-bold text-xs py-3"
-              href="#"
-            >
-              Customers
-            </a>
-          </div>
-        </nav>
-        <div className="w-full mb-12 px-4">
-          {/* <CardTable /> */}
-          <CardTable />
+      <div className="relative flex justify-center  text-sm -mt-20">
+        <div>
+          <button
+            className={
+              tabIndex === 0
+                ? "bg-lightalpha rounded-full py-2 px-4 text-white mr-2 outline-none "
+                : "rounded-full py-2 px-4 text-white mr-2 outline-none hover:text-offwhite"
+            }
+            onClick={() => toggleTabIndex(0)}
+          >
+            {" "}
+            <i class="fas fa-heart hover:text-offwhite "></i> Liked
+          </button>
         </div>
-        <div className="w-full mb-12 px-4">
-          {/* <CardTable color="dark" /> */}
+        <div>
+          <button
+            className={
+              tabIndex === 1
+                ? "bg-lightalpha rounded-full py-2 px-4 text-white mr-2 outline-none"
+                : "rounded-full py-2 px-4 text-white mr-2 outline-none"
+            }
+            onClick={() => toggleTabIndex(1)}
+          >
+            <i class="fab fa-fort-awesome"></i>&nbsp; Joined
+          </button>
+        </div>
+      </div>
+      <div>
+        <div class="ml-4 mt-10 bg-gray-200 flex flex-col flex-wrap lg:flex-row">
+          {tabIndex === 1
+            ? likedClubs.map((el) => (
+                <ProfileClubCard
+                  club_name={el.club_name}
+                  place={el.place}
+                  tags={el.tags}
+                ></ProfileClubCard>
+              ))
+            : joinedClubs.map((el) => (
+                <ProfileClubCard
+                  club_name={el.club_name}
+                  place={el.place}
+                  tags={el.tags}
+                ></ProfileClubCard>
+              ))}
         </div>
       </div>
     </>

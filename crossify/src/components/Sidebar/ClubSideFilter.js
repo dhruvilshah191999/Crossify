@@ -106,7 +106,7 @@ export default function Sidebar(props) {
   let { latitude, longitude } = usePosition(watch);
 
   const callbackFunction = (childData) => {
-      setMember(childData);
+    setMember(childData);
   };
 
   const onSubmit = async (e) => {
@@ -134,7 +134,7 @@ export default function Sidebar(props) {
           longitude,
           interestarray: array,
           distance,
-          member:member
+          member: member,
         };
         const config = {
           method: "POST",
@@ -227,7 +227,7 @@ export default function Sidebar(props) {
             {/* Divider */}
 
             {/* Heading */}
-            <h6 className="md:min-w-full mt-2 text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full mt-2 text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
               Distance
             </h6>
             {/* Navigation */}
@@ -256,7 +256,7 @@ export default function Sidebar(props) {
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
-            <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
               Categories
             </h6>
             {/* Navigation */}
@@ -315,7 +315,7 @@ export default function Sidebar(props) {
                   ))}
                 </div>
                 <button
-                  className="text-blue-600 font-semibold block background-transparent  text-sm outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  className="text-beta font-semibold block background-transparent  text-sm outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="button"
                   style={{ marginTop: "20px" }}
                   onClick={(e) => setCategory(!showCategory)}
@@ -328,7 +328,7 @@ export default function Sidebar(props) {
             <div>
               <hr className="my-4 md:min-w-full" />
               {/* Heading */}
-              <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+              <h6 className="md:min-w-full text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
                 Club Members
               </h6>
               {/* Navigation */}
@@ -341,7 +341,7 @@ export default function Sidebar(props) {
 
             <hr className="my-4 md:min-w-full" />
             <button
-              className="bg-alpha text-white active:bg-gray-700 text-md   px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+              className="bg-alpha text-white active:bg-gray-700 text-sm font-semibold uppercase  px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
               type="button"
               onClick={(e) => onSubmit(e)}
             >

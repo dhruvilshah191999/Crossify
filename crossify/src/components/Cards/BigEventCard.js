@@ -24,32 +24,32 @@ const ResultWindow = (props) => {
       </div>
       <div style={{ minWidth: "85%" }}>
         <div className="leading-3" style={{ marginLeft: "1.25rem" }}>
-          <div className="text-xl font-bold">
+          <div className="text-xl font-bold ">
             {props.data.event_name}{" "}
             <div
-              className="inline-block text-sm font-normal ml-1 text-gray-600"
+              className="inline-block text-sm font-semibold ml-1 text-gray-600"
               style={{ float: "right" }}
             >
               {" "}
-              <i className="fas fa-map-marker-alt"></i> {props.data.location},
-              {props.data.city},{props.data.state}
+              <i className="fas fa-map-marker-alt"></i> {props.data.location}
+              {/* {props.data.city},{props.data.state} */}
             </div>
           </div>
-          <div className="text-sm font-semibold text-gray-600 tracking-wider">
+          <div className="text-base font-semibold text-gray-600 tracking-wider">
             {moment(props.data.date).format("LLL")}
           </div>
 
-          <div className="mt-1">
+          <div className="mt-1 text-gray-700 text-sm ">
             <i className="fas fa-users"></i> {props.ownerGroup}
           </div>
-          <div className="mt-1 tracking-tight text-sm">
+          <div className="mt-1 tracking-tight text-sm  text-gray-600 ">
             {props.data.description}
           </div>
           <div className="mt-2">
             {props.data.tags.map((data) => (
               <span
                 key={count++}
-                className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 mr-1 "
+                className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta mr-1 "
               >
                 {data}
               </span>

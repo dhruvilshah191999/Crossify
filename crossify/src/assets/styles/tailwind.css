@@ -1771,11 +1771,14 @@ video {
 .opacity-80 {
   opacity: 0.8;
 }
-
+/* 
 .outline-none {
   outline: 0;
+} */
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
-
 .focus\:outline-none:focus {
   outline: 0;
 }
@@ -2881,6 +2884,10 @@ video {
 
   .lg\:w-6\/12 {
     width: 50%;
+  }
+
+  .lg\:w-1by3 {
+    width: 30%;
   }
 
   .lg\:w-8\/12 {

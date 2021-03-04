@@ -54,7 +54,7 @@ class MyModal extends Component {
                 <input
                   type="text"
                   placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 />
               </div>
               <div className="mb-3 pt-0">
@@ -66,7 +66,7 @@ class MyModal extends Component {
                 <input
                   type="text"
                   placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 />
               </div>
               <div className="w-full flex flex-row">
@@ -75,7 +75,7 @@ class MyModal extends Component {
                   <input
                     type="text"
                     placeholder="Event Name"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
                 <div className="mb-3 w-6/12 pt-0">
@@ -83,7 +83,7 @@ class MyModal extends Component {
                   <input
                     type="text"
                     placeholder="Event Name"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
               </div>
@@ -92,7 +92,7 @@ class MyModal extends Component {
                 <textarea
                   rows="4"
                   placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 />
               </div>
               <div className="mb-3 pt-0">
@@ -100,7 +100,7 @@ class MyModal extends Component {
                 <textarea
                   rows="4"
                   placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 />
               </div>
 
@@ -110,7 +110,7 @@ class MyModal extends Component {
                   <input
                     type="date"
                     placeholder="Event Name"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
                 <div className="mb-3 w-6/12 pt-0  ">
@@ -118,14 +118,14 @@ class MyModal extends Component {
                   <input
                     type="date"
                     placeholder="Event Name"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
               </div>
               <div className="mb-3 pt-0">
                 <label className="ml-1"> Photo</label>
                 <input
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   type="file"
                 />
               </div>
