@@ -90,7 +90,7 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              My Preferences
+              Management
             </h6>
             {/* Navigation */}
 
@@ -113,7 +113,28 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Profile
+                  General
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/profile/myprofile") !== -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to="/profile/myprofile"
+                >
+                  <i
+                    className={
+                      "fas fa-user-circle mr-2 text-sm " +
+                      (window.location.href.indexOf("/profile/myprofile") !== -1
+                        ? "opacity-75"
+                        : "text-gray-400")
+                    }
+                  ></i>{" "}
+                  details
                 </Link>
               </li>
               <li className="items-center">
@@ -156,7 +177,51 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Clubs
+                  Registeration
+                </Link>
+              </li>
+
+              {/* Optional */}
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/profile/myprofile") !== -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to="/profile/myprofile"
+                >
+                  <i
+                    className={
+                      "fas fa-user-circle mr-2 text-sm " +
+                      (window.location.href.indexOf("/profile/myprofile") !== -1
+                        ? "opacity-75"
+                        : "text-gray-400")
+                    }
+                  ></i>{" "}
+                  Broadcast
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/profile/myprofile") !== -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to="/profile/myprofile"
+                >
+                  <i
+                    className={
+                      "fas fa-user-circle mr-2 text-sm " +
+                      (window.location.href.indexOf("/profile/myprofile") !== -1
+                        ? "opacity-75"
+                        : "text-gray-400")
+                    }
+                  ></i>{" "}
+                  Status
                 </Link>
               </li>
               <li className="items-center">
@@ -177,7 +242,7 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Events
+                  QnA
                 </Link>
               </li>
             </ul>

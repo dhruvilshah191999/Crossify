@@ -11,6 +11,7 @@ import "assets/styles/customcss.css";
 import Admin from "layouts/Admin.js";
 import Auth from "layouts/Auth.js";
 import Profile from "layouts/Profile.js";
+import ManageEvent from "layouts/ManageEvent.js";
 // views without layouts
 
 import Landing from "views/trash/Landing.js";
@@ -31,6 +32,7 @@ const Routing = () => {
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
       <Route path="/profile" component={Profile} />
+      <Route path="/manage/event" exact component={ManageEvent} />
       {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
       {/* <Route path="/profile" exact component={Profile} /> */}
@@ -41,6 +43,7 @@ const Routing = () => {
       <Route path="/club" exact component={ClubPage} />
       <Route path="/playground" exact component={PlayGround} />
       <Route path="/createclub" exact component={CreateClub} />
+
       {/* add redirect for first page */}
       <Redirect from="*" to="/" />
     </Switch>

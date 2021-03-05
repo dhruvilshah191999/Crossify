@@ -38,15 +38,18 @@ class MyModal extends Component {
         effect={Effect.RotateFromBottom3D}
         style={customModalStyles}
       >
-        <div className="flex items-start justify-between p-5 ml-1 border-b border-solid border-gray-300 rounded-t">
+        <div className="flex items-start justify-between p-5 ml-1 border-b border-solid bg-gray-600 border-gray-300 rounded-t">
           <h3 className="text-2xl font-semibold">Apply for a Event</h3>
-          <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+          <button
+            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+            onClick={ModalManager.close}
+          >
             <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
               ×
             </span>
           </button>
         </div>
-        <div className="px-6 py-4">
+        <div className="px-6 py-4 bg-gray-200">
           <form>
             <div className="flex flex-col">
               <div className="mb-3 pt-0">
