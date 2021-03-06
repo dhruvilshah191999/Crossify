@@ -32,7 +32,7 @@ const Routing = () => {
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
       <Route path="/profile" component={Profile} />
-      <Route path="/manageevent" exact component={ManageEvent} />
+      <Route path="/manage/event" component={ManageEvent} />
       {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
       {/* <Route path="/profile" exact component={Profile} /> */}

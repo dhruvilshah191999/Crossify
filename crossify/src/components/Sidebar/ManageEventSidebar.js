@@ -100,16 +100,17 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/manageevent/general") !== -1
+                    (window.location.href.indexOf("/manage/event/general") !==
+                    -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manageevent/general"
+                  to="/manage/event/general"
                 >
                   <i
                     className={
                       "fas fa-tools mr-2 text-sm " +
-                      (window.location.href.indexOf("/manageevent/general") !==
+                      (window.location.href.indexOf("/manage/event/general") !==
                       -1
                         ? "opacity-7"
                         : "text-gray-400")
@@ -122,16 +123,17 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/manageevent/details") !== -1
+                    (window.location.href.indexOf("/manage/event/details") !==
+                    -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manageevent/details"
+                  to="/manage/event/details"
                 >
                   <i
                     className={
                       "fas fa-info-circle mr-2 text-sm " +
-                      (window.location.href.indexOf("/manageevent/details") !==
+                      (window.location.href.indexOf("/manage/event/details") !==
                       -1
                         ? "opacity-75"
                         : "text-gray-400")
@@ -145,18 +147,18 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/manageevent/attendees") !==
+                    (window.location.href.indexOf("/manage/event/attendees") !==
                     -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manageevent/attendees"
+                  to="/manage/event/attendees"
                 >
                   <i
                     className={
                       "fas fa-users mr-2 text-sm " +
                       (window.location.href.indexOf(
-                        "/manageevent/attendees"
+                        "/manage/event/attendees"
                       ) !== -1
                         ? "opacity-75"
                         : "text-gray-400")
@@ -171,18 +173,18 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/manageevent/broadcast") !==
+                    (window.location.href.indexOf("/manage/event/broadcast") !==
                     -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manageevent/broadcast"
+                  to="/manage/event/broadcast"
                 >
                   <i
                     className={
                       "fas fa-bullhorn mr-2 text-sm " +
                       (window.location.href.indexOf(
-                        "/manageevent/broadcast"
+                        "/manage/event/broadcast"
                       ) !== -1
                         ? "opacity-75"
                         : "text-gray-400")
@@ -195,16 +197,16 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/manageevent/status") !== -1
+                    (window.location.href.indexOf("/manage/event/status") !== -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manageevent/status"
+                  to="/manage/event/status"
                 >
                   <i
                     className={
                       "fas fa-desktop mr-2 text-sm " +
-                      (window.location.href.indexOf("/manageevent/status") !==
+                      (window.location.href.indexOf("/manage/event/status") !==
                       -1
                         ? "opacity-75"
                         : "text-gray-400")
@@ -217,16 +219,17 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/profile/qna") !== -1
+                    (window.location.href.indexOf("/manage/event/qanda") !== -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/profile/qna"
+                  to="/manage/event/qanda"
                 >
                   <i
                     className={
                       "fas fa-comments mr-2 text-sm " +
-                      (window.location.href.indexOf("/profile/qna") !== -1
+                      (window.location.href.indexOf("/manage/event/qanda") !==
+                      -1
                         ? "opacity-75"
                         : "text-gray-400")
                     }

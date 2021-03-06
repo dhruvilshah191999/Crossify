@@ -12,10 +12,13 @@ import FooterAdmin from "components/Footers/FooterAdmin.js";
 
 import BroadcastSettings from "views/eventMangement/BroadcastSettings";
 import Status from "views/eventMangement/StatusSettings";
-import QnA from "views/eventMangement/QnASettings";
+import QnASettings from "views/eventMangement/QnASettings";
 import General from "views/eventMangement/GeneralSettings";
 import Details from "views/eventMangement/DetailsSettings";
 import Attendees from "views/eventMangement/AttendeesSettings";
+
+// import Tables from "views/admin/Tables.js";
+// import MemberList from "views/admin/MemberList";
 
 export default function Admin() {
   return (
@@ -28,17 +31,17 @@ export default function Admin() {
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           <Switch>
             <Route
-              path="/manageevent/broadcast"
+              path="/manage/event/broadcast"
               exact
               component={BroadcastSettings}
             />
-            <Route path="/manageevent/status" exact component={Status} />
-            <Route path="/manageevent/general" exact component={General} />
-            <Route path="/manageevent/details" exact component={Details} />
-            <Route path="/manageevent/attendees" exact component={Attendees} />
-            <Route path="/manageevent/qna" exact component={QnA} />
+            <Route path="/manage/event/status" exact component={Status} />
+            <Route path="/manage/event/general" exact component={General} />
+            <Route path="/manage/event/details" exact component={Details} />
+            <Route path="/manage/event/attendees" exact component={Attendees} />
+            <Route path="/manage/event/qanda" exact component={QnASettings} />
 
-            {/* <Redirect from="/manage/event" to="/manage/event/general" /> */}
+            <Redirect from="/manage/event" to="/manage/event/general" />
           </Switch>
           <FooterAdmin />
         </div>
