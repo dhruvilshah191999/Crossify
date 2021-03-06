@@ -10,20 +10,12 @@ import FooterAdmin from "components/Footers/FooterAdmin.js";
 
 // views
 
-import MyClubs from "views/profile/MyClubs.js";
-import MyEvents from "views/profile/MyEvents.js";
-import MyProfile from "views/profile/MyProfile.js";
-import ChangePassword from "views/auth/ChangePassword";
-
-import ManageEvents from "views/profile/ManageEvents";
-import EditPrivacy from "views/profile/EditPrivacy";
-import EditProfile from "views/profile/EditProfile";
-import EditSocialMedia from "views/profile/EditSocialMedia";
-
-// import Maps from "views/admin/Maps.js";
-// import Settings from "views/admin/Settings.js";
-// import Tables from "views/admin/Tables.js";
-// import MemberList from "views/admin/MemberList";
+import BroadcastSettings from "views/eventMangement/BroadcastSettings";
+import Status from "views/eventMangement/StatusSettings";
+import QnA from "views/eventMangement/QnASettings";
+import General from "views/eventMangement/GeneralSettings";
+import Details from "views/eventMangement/DetailsSettings";
+import Attendees from "views/eventMangement/AttendeesSettings";
 
 export default function Admin() {
   return (
@@ -35,33 +27,18 @@ export default function Admin() {
         <HeaderStats />
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           <Switch>
-            <Route path="/profile/myclubs" exact component={MyClubs} />
-            <Route path="/profile/myevents" exact component={MyEvents} />
-            <Route path="/profile/myprofile" exact component={MyProfile} />
+            <Route
+              path="/manageevent/broadcast"
+              exact
+              component={BroadcastSettings}
+            />
+            <Route path="/manageevent/status" exact component={Status} />
+            <Route path="/manageevent/general" exact component={General} />
+            <Route path="/manageevent/details" exact component={Details} />
+            <Route path="/manageevent/attendees" exact component={Attendees} />
+            <Route path="/manageevent/qna" exact component={QnA} />
 
-            <Route
-              path="/profile/manage/events"
-              exact
-              component={ManageEvents}
-            />
-            <Route
-              path="/profile/edit/myprofile"
-              exact
-              component={EditProfile}
-            />
-            <Route
-              path="/profile/edit/password"
-              exact
-              component={ChangePassword}
-            />
-            <Route
-              path="/profile/edit/socialmedia"
-              exact
-              component={EditSocialMedia}
-            />
-            <Route path="/profile/edit/privacy" exact component={EditPrivacy} />
-
-            <Redirect from="/profile" to="/profile/myprofile" />
+            {/* <Redirect from="/manage/event" to="/manage/event/general" /> */}
           </Switch>
           <FooterAdmin />
         </div>
