@@ -11,7 +11,7 @@ import FooterAdmin from "components/Footers/FooterAdmin.js";
 // views
 
 import BroadcastSettings from "views/eventMangement/BroadcastSettings";
-import Status from "views/eventMangement/StatusSettings";
+import Preview from "views/eventMangement/PreviewSettings";
 import QnASettings from "views/eventMangement/QnASettings";
 import General from "views/eventMangement/GeneralSettings";
 import Details from "views/eventMangement/DetailsSettings";
@@ -35,7 +35,7 @@ export default function Admin() {
               exact
               component={BroadcastSettings}
             />
-            <Route path="/manage/event/status" exact component={Status} />
+            <Route path="/manage/event/preview" exact component={Preview} />
             <Route path="/manage/event/general" exact component={General} />
             <Route path="/manage/event/details" exact component={Details} />
             <Route path="/manage/event/attendees" exact component={Attendees} />

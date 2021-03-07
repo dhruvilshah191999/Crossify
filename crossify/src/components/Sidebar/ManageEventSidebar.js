@@ -168,51 +168,27 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              {/* Optional */}
               <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/manage/event/broadcast") !==
+                    (window.location.href.indexOf("/manage/event/preview") !==
                     -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manage/event/broadcast"
-                >
-                  <i
-                    className={
-                      "fas fa-bullhorn mr-2 text-sm " +
-                      (window.location.href.indexOf(
-                        "/manage/event/broadcast"
-                      ) !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
-                  Broadcast
-                </Link>
-              </li>
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/manage/event/status") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/manage/event/status"
+                  to="/manage/event/preview"
                 >
                   <i
                     className={
                       "fas fa-desktop mr-2 text-sm " +
-                      (window.location.href.indexOf("/manage/event/status") !==
+                      (window.location.href.indexOf("/manage/event/preview") !==
                       -1
                         ? "opacity-75"
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Status
+                  Preview
                 </Link>
               </li>
               <li className="items-center">

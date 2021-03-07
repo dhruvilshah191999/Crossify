@@ -2,14 +2,14 @@ import React from "react";
 
 // components
 
-import CardProfileSettings from "components/Cards/CardProfileSettings.js";
+import QnATable from "components/Cards/QnATable.js";
 
 export default function Settings() {
   return (
     <>
       <div className="flex flex-wrap">
         <div className="w-full  px-4">
-          <CardProfileSettings />
+          <QnATable />
         </div>
       </div>
     </>
