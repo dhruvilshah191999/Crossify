@@ -22,7 +22,7 @@ export default class SweetAlertModal extends Component {
   onRecievedInput = () => {
     const updatedQ = this.state.question;
     const updatedA = this.state.answer;
-    //todo we have question and answer in state you just make any axios request to update the current value
+    //todo GOLU we have question and answer in state you just make any axios request to update the current value
     this.setState({
       alert: null,
       question: null,
