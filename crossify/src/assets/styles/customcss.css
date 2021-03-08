@@ -48,6 +48,10 @@
   background-color: #e82953;
 }
 
+.float-right {
+  float: right;
+}
+
 .hover\:bg-alpha:hover {
   background-color: #e82953;
 }

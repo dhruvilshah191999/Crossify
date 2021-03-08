@@ -31,7 +31,7 @@ class ClubPage extends React.Component {
                 <div className="text-3xl font-bold">
                   {this.props.clubName}
                   <button className="float-right text-lg">
-                    <i className=" text-md text-gray-700 fas fa-cog"></i>
+                    <i className="ml-auto text-md text-gray-700 fas fa-cog"></i>
                   </button>
                 </div>
                 <div className="text-md mt-2 text-gray-600 ml-2">
