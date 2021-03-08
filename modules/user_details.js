@@ -79,6 +79,14 @@ var user_details = new Schema({
   inbox: {
     type: Array,
     required: false,
+  },   
+  clubs: {
+    type: Array,
+    required:false
+  },
+  events: {
+    type: Array,
+    required:false
   },
   is_active: {
     type: Boolean,

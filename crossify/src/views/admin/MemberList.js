@@ -1,6 +1,6 @@
 import MemberDropdown from "components/Dropdowns/MemberDropdown";
-import { white } from "tailwindcss/colors";
-import "./MemberList.css";
+//import { white } from "tailwindcss/colors";
+//import "./MemberList.css";
 var React = require("react");
 let CONTACTS = [
   {
@@ -125,7 +125,7 @@ class ContactList extends React.Component {
           </div>
           <hr class="-mx-6" />
           <div class="relative flex w-full flex-wrap items-stretch mb-2">
-            <span class="z-10 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+            <span class=" h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
               <i class="fas fa-search"></i>
             </span>
             <input

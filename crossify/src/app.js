@@ -10,16 +10,19 @@ import "assets/styles/customcss.css";
 
 import Admin from "layouts/Admin.js";
 import Auth from "layouts/Auth.js";
+import Profile from "layouts/Profile.js";
+import ManageEvent from "layouts/ManageEvent.js";
 // views without layouts
 
-import Landing from "views/Landing.js";
-import Profile from "views/Profile.js";
-import EventPage from "views/EventPage";
+import Landing from "views/trash/Landing.js";
+// import Profile from "views/trash/Profile.js";
+import EventPage from "views/explore/EventPage";
 import Index from "views/Index.js";
-import SearchPage from "views/SearchPage";
-import ClubSearchPage from "views/ClubSearchPage";
-import PlayGround from "views/PlayGround";
-import ClubPage from "views/ClubPage";
+import SearchPage from "views/searchPages/SearchPage";
+import ClubSearchPage from "views/searchPages/ClubSearchPage";
+import PlayGround from "views/demo/PlayGround";
+import ClubPage from "views/explore/ClubPage";
+import CreateClub from "views/create/CreateClub";
 import { UserContext } from "context/usercontext";
 
 const Routing = () => {
@@ -28,15 +31,19 @@ const Routing = () => {
       {/* add routes with layouts */}
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
+      <Route path="/profile" component={Profile} />
+      <Route path="/manage/event" component={ManageEvent} />
       {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
-      <Route path="/profile" exact component={Profile} />
+      {/* <Route path="/profile" exact component={Profile} /> */}
       <Route path="/" exact component={Index} />
       <Route path="/events/event=:id" component={EventPage} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/clubsearch" exact component={ClubSearchPage} />
       <Route path="/club" exact component={ClubPage} />
       <Route path="/playground" exact component={PlayGround} />
+      <Route path="/createclub" exact component={CreateClub} />
+
       {/* add redirect for first page */}
       <Redirect from="*" to="/" />
     </Switch>

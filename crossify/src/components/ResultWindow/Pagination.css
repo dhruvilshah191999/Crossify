@@ -31,11 +31,11 @@
   width: 30px;
 }
 .pagination li a:hover {
-  background-color: #ff8c00;
+  background-color: #e82953;
   color: #ffffff;
 }
 .pagination li.active a {
-  background-color: #ff8c00;
+  background-color: #e82953;
   color: #ffffff;
 }
 .pagination li.active a:hover {

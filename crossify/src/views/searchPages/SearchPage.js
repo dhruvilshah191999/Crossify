@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import SearchNavbar from "components/Navbars/SearchNavbar";
 import SideFilter from "components/Sidebar/SideFilter";
 const SearchPage = () => {
-  const [checking, Setchange] = useState(false);
+  const [checking, setChange] = useState(false);
   var change = (check) => {
-    Setchange(!checking);
+    setChange(!checking);
   };
   return (
     <div>

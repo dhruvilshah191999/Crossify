@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import MultiSelect from "../Forms/MultiSelect";
-import MapContainer from "../../MapCode";
+import MapContainer from "../../components/Maps/MapCode";
 import "./style.css";
 import { InputTagsContainer } from "react-input-tags";
 import TagsInput from "components/Inputs/TagsInput";
@@ -38,15 +38,18 @@ class MyModal extends Component {
         effect={Effect.RotateFromBottom3D}
         style={customModalStyles}
       >
-        <div className="flex items-start justify-between p-5 ml-1 border-b border-solid border-gray-300 rounded-t">
+        <div className="flex items-start justify-between p-5 ml-1 border-b border-solid bg-gray-600 border-gray-300 rounded-t">
           <h3 className="text-2xl font-semibold">Apply for a Event</h3>
-          <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+          <button
+            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+            onClick={ModalManager.close}
+          >
             <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
               ×
             </span>
           </button>
         </div>
-        <div className="px-6 py-4">
+        <div className="px-6 py-4 bg-gray-200">
           <form>
             <div className="flex flex-col">
               <div className="mb-3 pt-0">
@@ -54,7 +57,7 @@ class MyModal extends Component {
                 <input
                   type="text"
                   placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 />
               </div>
               <div className="mb-3 pt-0">
@@ -66,7 +69,7 @@ class MyModal extends Component {
                 <input
                   type="text"
                   placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 />
               </div>
               <div className="w-full flex flex-row">
@@ -75,7 +78,7 @@ class MyModal extends Component {
                   <input
                     type="text"
                     placeholder="Event Name"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
                 <div className="mb-3 w-6/12 pt-0">
@@ -83,7 +86,7 @@ class MyModal extends Component {
                   <input
                     type="text"
                     placeholder="Event Name"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
               </div>
@@ -92,7 +95,7 @@ class MyModal extends Component {
                 <textarea
                   rows="4"
                   placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 />
               </div>
               <div className="mb-3 pt-0">
@@ -100,7 +103,7 @@ class MyModal extends Component {
                 <textarea
                   rows="4"
                   placeholder="Event Name"
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                 />
               </div>
 
@@ -110,7 +113,7 @@ class MyModal extends Component {
                   <input
                     type="date"
                     placeholder="Event Name"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
                 <div className="mb-3 w-6/12 pt-0  ">
@@ -118,14 +121,14 @@ class MyModal extends Component {
                   <input
                     type="date"
                     placeholder="Event Name"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
               </div>
               <div className="mb-3 pt-0">
                 <label className="ml-1"> Photo</label>
                 <input
-                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   type="file"
                 />
               </div>
@@ -166,58 +169,3 @@ class MyModal extends Component {
 }
 
 export default MyModal;
-// import React from "react";
-// class Test extends React.Component {
-//   state = {};
-//   render() {
-//     return <h2>Hello</h2>;
-//   }
-// }
-
-// export default Test;
-
-// import Forhellom, {
-//   Input,
-//   TextArea,
-//   ImageUpload,
-//   MultiSelect,
-//   FormActions,
-//   FormButton,
-// } from "react-standalone-form";
-
-// const BlogPostForm = () => (
-//   <Form
-//     fields={["title", "content", "image", "date", "tags"]}
-//     required={["title", "content"]}
-//   >
-//     <Input name="title" label="Title" inlineLabel />
-//     <TextArea name="content" label="Content" inlineLabel />
-//     <ImageUpload name="image" label="Featured image" inlineLabel />
-//     <Input name="date" type="date" label="Publication date" inlineLabel />
-//     <MultiSelect
-//       name="tags"
-//       label="Categories"
-//       options={["Lifestyle", "Nature", "Technology"]}
-//       inlineLabel
-//     />
-//     <FormActions>
-//       <FormButton reset>Reset</FormButton>
-//       <FormButton callback={(fields) => console.log(fields)}>Submit</FormButton>
-//     </FormActions>
-//   </Form>
-// );
-// const Masti = () => {
-//   return (
-//     <>
-//       {swal(
-//         <div>
-//           <h1>Hello world!</h1>
-//           <p>This is now rendered with JSX!</p>
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-// import swal from "@sweetalert/with-react";
-
-// export default Masti;

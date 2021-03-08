@@ -9,6 +9,9 @@
     "dev": "concurrently \"npm run nodemon\" \"npm run crossify\" "
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@popperjs/core": "^2.8.3",
     "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
     "check": "^1.0.0",
@@ -25,7 +28,10 @@
     "http-errors": "~1.6.3",
     "http-proxy-middleware": "^1.0.6",
     "jsonwebtoken": "^8.5.1",
+    "mapbox-gl": "^2.1.1",
     "match-sorter": "^6.3.0",
+    "materialize-css": "^1.0.0",
+    "materializecss": "^1.0.11",
     "mdbreact": "^5.0.1",
     "moment": "^2.29.1",
     "mongoose": "^5.11.2",
@@ -35,16 +41,22 @@
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
+    "postcss-import": "^14.0.0",
+    "react-bootstrap-sweetalert": "^5.2.0",
     "react-copy-to-clipboard": "^5.0.3",
     "react-dynamic-modal": "^1.1.1",
+    "react-facebook-login": "^4.1.1",
     "react-geocode": "^0.2.3",
+    "react-google-login": "^5.2.2",
+    "react-google-maps": "^9.4.5",
     "react-input-tags": "^3.0.3",
+    "react-map-gl": "^6.1.10",
+    "react-moment": "^1.1.1",
+    "react-scripts": "^4.0.3",
     "react-table": "^7.6.3",
     "react-tagsinput": "^3.19.0",
-    "sweetalert": "^2.1.2"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "styled-components": "^5.2.1",
+    "sweetalert": "^2.1.2",
+    "use-position": "0.0.8"
   }
 }

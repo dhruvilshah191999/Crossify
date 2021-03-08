@@ -223,7 +223,7 @@ export default function Sidebar(props) {
             {/* Divider */}
 
             {/* Heading */}
-            <h6 className="md:min-w-full mt-2 text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full mt-2 text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
               Distance
             </h6>
             {/* Navigation */}
@@ -252,7 +252,7 @@ export default function Sidebar(props) {
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
-            <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
               Categories
             </h6>
             {/* Navigation */}
@@ -311,7 +311,7 @@ export default function Sidebar(props) {
                   ))}
                 </div>
                 <button
-                  className="text-blue-600 font-semibold block background-transparent  text-sm outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  className="text-beta font-semibold block background-transparent  text-sm outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="button"
                   style={{ marginTop: "20px" }}
                   onClick={(e) => setCategory(!showCategory)}
@@ -325,14 +325,14 @@ export default function Sidebar(props) {
             <div className={eventShow ? "" : "hidden"}>
               <hr className="my-4 md:min-w-full" />
               {/* Heading */}
-              <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+              <h6 className="md:min-w-full text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
                 Custom Dates
               </h6>
               {/* Navigation */}
               <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
                 <li>
                   <label className=" items-center">
-                    <span className="mr-2  font-semibold text-red-500 text-sm">
+                    <span className="mr-2  font-semibold text-beta text-sm">
                       Start
                     </span>
                     <input
@@ -341,11 +341,12 @@ export default function Sidebar(props) {
                     />
                   </label>
                   <label className="block items-center">
-                    <span className="mr-2  font-semibold text-red-500 text-sm">
-                      End{"   "}
+                    <span className="mr-2  font-semibold text-beta  text-sm">
+                      End
                     </span>
                     <input
                       type="date"
+                      style={{ paddingLeft: 6 }}
                       onChange={(e) => SetendDate(e.target.value)}
                     />
                   </label>
@@ -355,7 +356,7 @@ export default function Sidebar(props) {
             <div className={eventShow ? "hidden" : ""}>
               <hr className="my-4 md:min-w-full" />
               {/* Heading */}
-              <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+              <h6 className="md:min-w-full text-gray-700 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
                 Club Members
               </h6>
               {/* Navigation */}

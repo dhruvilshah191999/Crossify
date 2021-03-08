@@ -474,7 +474,98 @@ router.post("/deletelikes", auth, async function (req, res, next) {
     }
   });
 });
-
+router.post("/participate-event",auth,async function(req,res,next){
+  let { event_id } = req.body;
+  var checks = event_details.update(
+    {
+      _id: event_id,
+      is_active: 1,
+    },
+    {
+      $push: { participants_list: ObjectId(req.user._id) },
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } 
+    else {
+      var check2= user_details.findOneAndUpdate({
+        _id:ObjectId(req.user._id),
+        is_active:true
+      },{
+        $push: {events:ObjectId(event_id)}
+      })
+      check2.exec((err)=>{
+        if(err){
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        }
+        else{
+          var finaldata = {
+            participated: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+     
+    }
+  });
+})
+router.post("/undo-participation-event",auth,async function(req,res,next){
+  let { event_id } = req.body;
+  var checks = event_details.update(
+    {
+      _id: event_id,
+      is_active: 1,
+    },
+    {
+      $pull: { participants_list: ObjectId(req.user._id) },
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var check2= user_details.findOneAndUpdate({
+        _id:ObjectId(req.user._id),
+        is_active:true
+      },{
+        $pull: {events:ObjectId(event_id)}
+      })
+      check2.exec((err)=>{
+        if(err){
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        }
+        else{
+          var finaldata = {
+            participated: false,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+  });
+})
 router.post("/getclub", async function (req, res, next) {
   let { club_id } = req.body;
   console.log(club_id);

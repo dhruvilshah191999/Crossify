@@ -4,6 +4,7 @@ import TabsBar from "components/TabsBar/TabsBar";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/AdoptedModal";
+import MyTag from "components/Tag";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 
 class ClubPage extends React.Component {
@@ -14,9 +15,9 @@ class ClubPage extends React.Component {
     return (
       <>
         <Navbar />
-        <div style={{ marginTop: 70, backgroundColor: "#fafafa" }}>
+        <div style={{ marginTop: 65, backgroundColor: "#fafafa" }}>
           <div className="flex flex-col items-center flex-wrap">
-            <div className="flex flex-row flex-wrap ">
+            <div className="flex flex-row flex-wrap mt-2 ">
               <div className="club-bg mx-4 my-2">
                 <img
                   className="w-full h-full overflow-hidden object-contain rounded-lg"
@@ -31,10 +32,10 @@ class ClubPage extends React.Component {
                 <div className="text-3xl font-bold">
                   {this.props.clubName}
                   <button className="float-right text-lg">
-                    <i className="ml-auto text-md text-gray-700 fas fa-cog"></i>
+                    <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
                   </button>
                 </div>
-                <div className="text-md mt-2 text-gray-600 ml-2">
+                <div className="text-base mt-2 text-gray-600 ml-2">
                   &nbsp;<i class="fas fa-map-marker-alt text-sm"></i>
                   &nbsp;&nbsp;&nbsp; {this.props.loc} <br />
                   <i class="fas fa-users text-sm"></i> &nbsp;&nbsp;
@@ -50,27 +51,10 @@ class ClubPage extends React.Component {
                   <i class="fas fa-calendar-day text-sm"></i>&nbsp;&nbsp;&nbsp;
                   {this.props.createdAt}
                 </div>
-                <div className="p-1 leading-wide">
-                  {" "}
-                  {/* // todo make this dynamic and load it in */}
-                  <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta uppercase last:mr-0 mr-1">
-                    {this.props.categories[0]}
-                  </span>
-                  <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta uppercase last:mr-0 mr-1">
-                    {this.props.categories[1]}
-                  </span>
-                  <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta uppercase last:mr-0 mr-1">
-                    {this.props.categories[2]}
-                  </span>
-                  <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta uppercase last:mr-0 mr-1">
-                    {this.props.categories[0]}
-                  </span>
-                  <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta uppercase last:mr-0 mr-1">
-                    {this.props.categories[1]}
-                  </span>
-                  <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta uppercase last:mr-0 mr-1">
-                    {this.props.categories[2]}
-                  </span>
+                <div className="p-1 my-2 leading-wide">
+                  {this.props.categories.map((el) => (
+                    <MyTag data={el}></MyTag>
+                  ))}
                 </div>
                 <div className="flex flex-row justify-center my-2">
                   <div className="w-6/12">

@@ -19,7 +19,7 @@ var memberSchema = new Schema({
 
 var member_exports = mongoose.model('member_details', memberSchema);
 // var member = new member_exports({
-//     club_id: '5fc8b84fa1a02c1e4811ee24',
+//     club_id: ObjectId('5ff41a96a04b22d9c9ff9ecc'),
 //     member_list: [
 //         {
 //             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
@@ -27,10 +27,138 @@ var member_exports = mongoose.model('member_details', memberSchema);
 //         },
 //         {
 //             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fc8afd3f90e0f10f05a29bc'),
+//             level:"Admin"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5fd5ad0a3438823d4c2602c8'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5ff2f049e08aee26107d2d2a'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5ff2f049e08aee26107d2d2a'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5ff2f049e08aee26107d2d2a'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5ff2f049e08aee26107d2d2a'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5ff2f049e08aee26107d2d2a'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5ff2f049e08aee26107d2d2a'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5ff2f049e08aee26107d2d2a'),
+//             level:"Member"
+//         },
+//         {
+//             user_id: ObjectId('5ff2f049e08aee26107d2d2a'),
+//             level:"Admin"
+//         },
+//         {
+//             user_id: ObjectId('5fd5acbe3438823d4c2602c6'),
 //             level:"Admin"
 //         }
 //     ]
 // });
-// member.save();
-module.exports = member_exports;
+//member.save();
+//module.exports = member_exports;
 
