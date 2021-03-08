@@ -11,10 +11,10 @@ import FooterAdmin from "components/Footers/FooterAdmin.js";
 // views
 
 import MyClubs from "views/profile/MyClubs.js";
-import MyEvents from "views/profile/MyEvent.js";
+import MyEvents from "views/profile/MyEvents.js";
 import MyProfile from "views/profile/MyProfile.js";
 import ChangePassword from "views/auth/ChangePassword";
-import ManageClubs from "views/profile/ManageClubs";
+
 import ManageEvents from "views/profile/ManageEvents";
 import EditPrivacy from "views/profile/EditPrivacy";
 import EditProfile from "views/profile/EditProfile";
@@ -38,7 +38,7 @@ export default function Admin() {
             <Route path="/profile/myclubs" exact component={MyClubs} />
             <Route path="/profile/myevents" exact component={MyEvents} />
             <Route path="/profile/myprofile" exact component={MyProfile} />
-            <Route path="/profile/manage/clubs" exact component={ManageClubs} />
+
             <Route
               path="/profile/manage/events"
               exact

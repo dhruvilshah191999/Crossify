@@ -1,4 +1,5 @@
 /*eslint-disable*/
+
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -51,7 +52,7 @@ export default function Sidebar() {
             {/* Collapse header */}
             <div className="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-gray-300">
               <div className="flex flex-wrap">
-                <div className="w-6/12">
+                <div className="w-6/12 text-2xl">
                   <Link
                     className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
                     to="/"
@@ -90,7 +91,7 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              My Preferences
+              Management
             </h6>
             {/* Navigation */}
 
@@ -99,148 +100,19 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/profile/myprofile") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/profile/myprofile"
-                >
-                  <i
-                    className={
-                      "fas fa-user-circle mr-2 text-sm " +
-                      (window.location.href.indexOf("/profile/myprofile") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
-                  Profile
-                </Link>
-              </li>
-              <li className="items-center">
-                {/* <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/dashboard") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/admin/dashboard"
-                >
-                  <i
-                    className={
-                      "fas fa-tv mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/dashboard") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
-                  Dashboard
-                </Link> */}
-              </li>
-
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/profile/myclubs") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/profile/myclubs"
-                >
-                  <i
-                    className={
-                      "fas fa-users mr-2 text-sm " +
-                      (window.location.href.indexOf("/profile/myclubs") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
-                  Clubs
-                </Link>
-              </li>
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/profile/myevents") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/profile/myevents"
-                >
-                  <i
-                    className={
-                      "fas fa-calendar-day mr-2 text-sm " +
-                      (window.location.href.indexOf("/profile/myevents") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
-                  Events
-                </Link>
-              </li>
-            </ul>
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Management
-            </h6>
-            {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/profile/manage/events") !==
+                    (window.location.href.indexOf("/manage/event/general") !==
                     -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/profile/manage/events"
-                >
-                  <i
-                    className={
-                      "fas fa-calendar-plus mr-2 text-sm " +
-                      (window.location.href.indexOf(
-                        "/profile/manage/events"
-                      ) !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
-                  My Events
-                </Link>
-              </li>
-            </ul>
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Settings
-            </h6>
-            {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/profile/edit/myprofile") !==
-                    -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/profile/edit/myprofile"
+                  to="/manage/event/general"
                 >
                   <i
                     className={
                       "fas fa-tools mr-2 text-sm " +
-                      (window.location.href.indexOf(
-                        "/profile/edit/myprofile"
-                      ) !== -1
-                        ? "opacity-75"
+                      (window.location.href.indexOf("/manage/event/general") !==
+                      -1
+                        ? "opacity-7"
                         : "text-gray-400")
                     }
                   ></i>{" "}
@@ -251,24 +123,23 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/profile/edit/password") !==
+                    (window.location.href.indexOf("/manage/event/details") !==
                     -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/profile/edit/password"
+                  to="/manage/event/details"
                 >
                   <i
                     className={
-                      "fas fa-fingerprint text-gray-500 mr-2 text-sm" +
-                      (window.location.href.indexOf(
-                        "/profile/edit/password"
-                      ) !== -1
+                      "fas fa-info-circle mr-2 text-sm " +
+                      (window.location.href.indexOf("/manage/event/details") !==
+                      -1
                         ? "opacity-75"
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Change Password
+                  details
                 </Link>
               </li>
 
@@ -276,51 +147,75 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf(
-                      "/profile/edit/socialmedia"
-                    ) !== -1
+                    (window.location.href.indexOf("/manage/event/attendees") !==
+                    -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/profile/edit/socialmedia"
+                  to="/manage/event/attendees"
                 >
                   <i
                     className={
-                      "fas fa-network-wired text-gray-500 mr-2 text-sm" +
+                      "fas fa-users mr-2 text-sm " +
                       (window.location.href.indexOf(
-                        "/profile/edit/socialmedia"
+                        "/manage/event/attendees"
                       ) !== -1
                         ? "opacity-75"
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Social Media
+                  Registeration
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/manage/event/preview") !==
+                    -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to="/manage/event/preview"
+                >
+                  <i
+                    className={
+                      "fas fa-desktop mr-2 text-sm " +
+                      (window.location.href.indexOf("/manage/event/preview") !==
+                      -1
+                        ? "opacity-75"
+                        : "text-gray-400")
+                    }
+                  ></i>{" "}
+                  Preview
                 </Link>
               </li>
               <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/profile/edit/privacy") !==
-                    -1
+                    (window.location.href.indexOf("/manage/event/qanda") !== -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/profile/edit/privacy"
+                  to="/manage/event/qanda"
                 >
                   <i
                     className={
-                      "fas fa-user-shield mr-2 text-sm " +
-                      (window.location.href.indexOf("/profile/edit/privacy") !==
+                      "fas fa-comments mr-2 text-sm " +
+                      (window.location.href.indexOf("/manage/event/qanda") !==
                       -1
                         ? "opacity-75"
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Privacy
+                  QnA
                 </Link>
               </li>
             </ul>
+            <hr className="my-4 md:min-w-full" />
+            {/* Heading */}
 
             {/* Divider */}
 
