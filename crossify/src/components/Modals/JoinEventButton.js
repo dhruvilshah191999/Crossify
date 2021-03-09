@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       alert: null,
       question: null,
-      isRegistered: false,
+      isRegistered: this.props.check,
+      event_id:this.props.eventid
     };
   }
 
@@ -28,12 +29,55 @@ export default class SweetAlertModal extends Component {
     });
   };
 
-  onJoining = () => {
-    this.setState({ alert: null, isRegistered: true });
+  onJoining = async () => {
+    const token = localStorage.getItem("jwt");
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      token,
+      event_id: this.state.event_id,
+    };
+    console.log(send_data);
+    const finaldata = await axios.post(
+      "/api/events/participate-event",
+      send_data,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      this.setState({ alert: null, isRegistered: finaldata.data.participated });
+    }
   };
-  removeThisMember = () => {
-    //do all the query to remove the user from event
-    this.setState({ alert: null, isRegistered: false });
+  removeThisMember = async () => {
+    const token = localStorage.getItem("jwt");
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      token,
+      event_id: this.state.event_id,
+    };
+    console.log(send_data);
+    const finaldata = await axios.post(
+      "/api/events/undo-participation-event",
+      send_data,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      this.setState({ alert: null, isRegistered: finaldata.data.participated });
+    }
   };
   successJoined() {
     const getAlert = () => (
@@ -80,34 +124,7 @@ export default class SweetAlertModal extends Component {
       alert: getAlert(),
     });
   }
-  deleteThisGoal() {
-    const getAlert = () => (
-      <SweetAlert
-        input
-        showCancel
-        confirmBtnText="Submit"
-        confirmBtnCssClass="text-base rounded px-4 px-2"
-        confirmBtnStyle={{ color: "white" }}
-        cancelBtnCssClass="text-base"
-        cancelBtnBsStyle="default"
-        confirmBtnBsStyle="primary"
-        title="Ask Question"
-        closeAnim={{ name: "hideSweetAlert", duration: 300 }}
-        placeHolder="Write something"
-        onConfirm={this.onRecieveInput}
-        onCancel={this.hideAlert}
-      >
-        Write the questions you have:
-      </SweetAlert>
-      //   <SweetAlert success title="Woot!" onConfirm={() => this.hideAlert()}>
-      //     Hello world!
-      //   </SweetAlert>
-    );
 
-    this.setState({
-      alert: getAlert(),
-    });
-  }
   render() {
     return (
       <div className="w-full">
@@ -134,80 +151,3 @@ export default class SweetAlertModal extends Component {
     );
   }
 }
-
-{
-  /* <button
-                  className=" w-full h-12 hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  <i class="fas fa-user-plus "></i> Attend
-                </button> */
-}
-{
-  /* */
-}
-{
-  /* <button
-                  className=" w-full h-12 hover:text-alpha hover:bg-white shadow border border-solid  bg-lightalpha  text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  <i class="fas fa-file-signature"></i> Joined
-                </button> */
-}
-
-// import React, { Component } from "react";
-// import ReactDOM from "react-dom";
-// import swal from "sweetalert";
-
-// const DEFAULT_INPUT_TEXT = "Thating";
-
-// export default class MyInput extends Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-//       text: DEFAULT_INPUT_TEXT,
-//     };
-//   }
-
-//   changeText(e) {
-//     let text = e.target.value;
-
-//     this.setState({
-//       text,
-//     });
-
-//     /*
-//      * This will update the value that the confirm
-//      * button resolves to:
-//      */
-//     swal.setActionValue(text);
-//   }
-
-//   render() {
-//     return (
-//       <input value={this.state.text} onChange={this.changeText.bind(this)} />
-//     );
-//   }
-// }
-
-// // We want to retrieve MyInput as a pure DOM node:
-// let wrapper = document.createElement("div");
-// ReactDOM.render(<MyInput />, wrapper);
-// let el = wrapper.firstChild;
-
-// swal({
-//   text: "Write something here:",
-//   content: el,
-//   buttons: {
-//     confirm: {
-//       /*
-//        * We need to initialize the value of the button to
-//        * an empty string instead of "true":
-//        */
-//       value: DEFAULT_INPUT_TEXT,
-//     },
-//   },
-// }).then((value) => {
-//   swal(`You typed: ${value}`);
-// });

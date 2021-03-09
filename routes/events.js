@@ -474,6 +474,7 @@ router.post("/deletelikes", auth, async function (req, res, next) {
     }
   });
 });
+
 router.post("/participate-event",auth,async function(req,res,next){
   let { event_id } = req.body;
   var checks = event_details.update(
@@ -492,7 +493,7 @@ router.post("/participate-event",auth,async function(req,res,next){
         message: err.message,
       };
       return res.status(600).send(error);
-    } 
+    }
     else {
       var check2= user_details.findOneAndUpdate({
         _id:ObjectId(req.user._id),
@@ -517,10 +518,10 @@ router.post("/participate-event",auth,async function(req,res,next){
           return res.status(200).send(finaldata);
         }
       });
-     
     }
   });
 })
+
 router.post("/undo-participation-event",auth,async function(req,res,next){
   let { event_id } = req.body;
   var checks = event_details.update(
@@ -585,6 +586,39 @@ router.post("/getclub", async function (req, res, next) {
     } else {
       var finaldata = {
         data:data2,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/checkevent", auth, async function (req, res, next) {
+  let { event_id } = req.body;
+  var checks = event_details.find({
+    _id: event_id,
+    participants_list: ObjectId(req.user._id),
+    is_active: 1,
+  });
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if(data2.length!=0){
+      var finaldata = {
+        attend:true,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+    else {
+      var finaldata = {
+        attend: false,
         is_error: false,
         message: "Data Send",
       };

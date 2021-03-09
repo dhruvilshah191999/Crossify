@@ -11,10 +11,13 @@ import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc");
 Geocode.enableDebug();
 class App extends React.Component {
-  state = {
-    lat: 23.066481,
-    lng: 72.527077,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      lat: this.props.lat,
+      lng: this.props.long,
+    };
+  }
 
   onMarkerDragEnd = (event) => {
     let newLat = event.latLng.lat();
@@ -26,7 +29,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     const MapWithAMarker = withScriptjs(
       withGoogleMap((props) => (
         <GoogleMap
