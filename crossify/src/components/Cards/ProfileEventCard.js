@@ -3,7 +3,7 @@ import MyTag from "components/Tag";
 
 function ProfileClubCard(props) {
   return (
-    <div className="relative bg-white hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-4 mb-2 rounded shadow lg:w-1by3">
+    <div className="relative bg-white hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-4 mb-4 rounded shadow lg:w-1by3">
       <img
         src="https://images.unsplash.com/photo-1573748240263-a4e9c57a7fcd"
         alt="People"

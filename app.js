@@ -14,6 +14,7 @@ var indexRouter = require("./routes/index");
 var eventsRouter = require("./routes/events");
 var filterRouter = require("./routes/filter");
 var usersRouter = require("./routes/users");
+var clubRouter = require("./routes/clubs");
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use("/api", indexRouter);
 app.use("/api/events", eventsRouter);
 app.use("/api/filter", filterRouter);
 app.use("/users", usersRouter);
+app.use("/club", clubRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
