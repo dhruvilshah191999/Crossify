@@ -49,14 +49,21 @@
     "react-geocode": "^0.2.3",
     "react-google-login": "^5.2.2",
     "react-google-maps": "^9.4.5",
+    "react-images": "^1.0.0",
     "react-input-tags": "^3.0.3",
+    "react-lightbox-component": "^1.2.1",
     "react-map-gl": "^6.1.10",
     "react-moment": "^1.1.1",
+    "react-photo-gallery": "^8.0.0",
+    "react-photoswipe-gallery": "^1.3.4",
     "react-scripts": "^4.0.3",
     "react-table": "^7.6.3",
     "react-tagsinput": "^3.19.0",
     "styled-components": "^5.2.1",
     "sweetalert": "^2.1.2",
     "use-position": "0.0.8"
+  },
+  "devDependencies": {
+    "fslightbox-react": "^1.6.2"
   }
 }

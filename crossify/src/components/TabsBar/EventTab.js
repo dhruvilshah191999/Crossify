@@ -1,7 +1,6 @@
 import { withMobileDialog } from "@material-ui/core";
 import React, { useState } from "react";
 import Photo from "../../assets/img/team-4-470x470.png";
-import Event_card from "../../components/Cards/ProfileEventCard";
 import ProfileEventClub from "../../components/Cards/ProfileEventCard";
 
 //khatar banayu bhai harshil
@@ -278,7 +277,7 @@ export default function EventTab() {
       {/* pagination. maximum 6 items should be on 1 page. */}
       <div className="py-2 justify-center flex">
         <div className="block">
-          <ul className="flex pl-0 rounded list-none flex-wrap">
+          <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
             {tabIndex == 0 ? renderPageNumbers : renderPageNumbers2}
           </ul>
         </div>

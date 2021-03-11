@@ -1,63 +1,178 @@
-import React from "react";
-import Photo from "../../assets/img/team-4-470x470.png";
+// import React, { Component } from "react";
+// import Lightbox from "lightbox-react";
+// import "lightbox-react/style.css"; // This only needs to be imported once in your app
 
-export default class PhotosTab extends React.Component {
+// import VideoIframe from "components/video";
+
+// const images = [
+//   VideoIframe,
+//   "//placekitten.com/1500/500",
+//   "//placekitten.com/4000/3000",
+//   "//placekitten.com/800/1200",
+//   "//placekitten.com/1500/1500",
+// ];
+
+// export default class LightboxExample extends Component {
+//   constructor(props) {
+//     super(props);
+
+//     this.state = {
+//       photoIndex: 0,
+//       isOpen: false,
+//     };
+//   }
+
+//   render() {
+//     const { photoIndex, isOpen } = this.state;
+
+//     return (
+//       <div>
+//         <button type="button" onClick={() => this.setState({ isOpen: true })}>
+//           Open Lightbox
+//         </button>
+
+//         {isOpen && (
+//           <Lightbox
+//             mainSrc={images[photoIndex]}
+//             nextSrc={images[(photoIndex + 1) % images.length]}
+//             prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+//             onCloseRequest={() => this.setState({ isOpen: false })}
+//             onMovePrevRequest={() =>
+//               this.setState({
+//                 photoIndex: (photoIndex + images.length - 1) % images.length,
+//               })
+//             }
+//             onMoveNextRequest={() =>
+//               this.setState({
+//                 photoIndex: (photoIndex + 1) % images.length,
+//               })
+//             }
+//           />
+//         )}
+//       </div>
+//     );
+//   }
+// }
+
+// export default LightboxExample;
+
+// import React, { useState } from "react";
+// import FsLightbox from "fslightbox-react";
+
+// function App() {
+//   // if toggler is updated when lightbox is closed it will open it
+//   // if toggler is updated when lightbox is opened it will close it
+//   const [toggler, setToggler] = useState(false);
+
+//   return (
+//     <>
+//       <button onClick={() => setToggler(!toggler)}>Toggle Lightbox</button>
+//       <FsLightbox
+//         toggler={toggler}
+//         sources={[
+//           "https://i.imgur.com/fsyrScY.jpg",
+//           "https://www.youtube.com/watch?v=xshEZzpS4CQ",
+//           "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+//         ]}
+//       />
+//     </>
+//   );
+// }
+
+// export default App;
+
+import React, { Component } from "react";
+import Lightbox from "fslightbox-react";
+import Gallery from "react-photo-gallery";
+import MyGallery from "components/sections/PhotoGallery";
+
+const images = [
+  {
+    id: 1,
+    url: "https://source.unsplash.com/2ShvY8Lf6l0/800x599",
+    description: "nice photo bro",
+  },
+  {
+    id: 2,
+    url: "https://source.unsplash.com/Dm-qxdynoEc/800x799",
+    description: "nice photo bro",
+  },
+  {
+    id: 3,
+    url: "https://source.unsplash.com/qDkso9nvCg0/600x799",
+
+    description: "nice photo bro",
+  },
+  {
+    id: 4,
+    url: "https://source.unsplash.com/iecJiKe_RNg/600x799",
+
+    description: "nice photo bro",
+  },
+  {
+    id: 5,
+    url: "https://source.unsplash.com/epcsn8Ed8kY/600x799",
+
+    description: "nice photo bro",
+  },
+  {
+    id: 6,
+    url: "https://source.unsplash.com/NQSWvyVRIJk/800x599",
+
+    description: "nice photo bro",
+  },
+  {
+    id: 7,
+    url: "https://source.unsplash.com/zh7GEuORbUw/600x799",
+
+    description: "nice photo bro",
+  },
+  {
+    id: 8,
+    url: "https://source.unsplash.com/PpOHJezOalU/800x599",
+
+    description: "nice photo bro",
+  },
+  {
+    id: 9,
+    url: "https://source.unsplash.com/I1ASdgphUH4/800x599",
+
+    description: "nice photo bro",
+  },
+];
+export default class GridGallery extends Component {
+  state = {
+    isVisible: false,
+    slide: 0,
+    photos: [],
+  };
+  componentDidMount() {
+    this.setState({ photos: images });
+  }
+  showSlide = (slide) => {
+    this.setState({
+      isVisible: !this.state.isVisible,
+      slide: slide,
+    });
+  };
+
+  getSources = (images) => {
+    return images.map((el) => el.url);
+  };
+
   render() {
     return (
-      <>
-    <div className="container px-4">
-  <div className="flex flex-wrap">
-  <div className="lg:w-4/12 my-3 p-3">
-      <img
-                  className="rounded-lg"
-                  alt="club_background_photo"
-                  src={this.props.bgImage}
-                />
-
-                <h1 className="mt-2 text-black">{this.props.photoText}</h1>
-    </div>
-    <div className="lg:w-4/12 my-3 p-3">
-      <img
-                  className="rounded-lg"
-                  alt="club_background_photo"
-                  src={this.props.bgImage}
-                />
-
-<h1 className="mt-2 text-black">{this.props.photoText}</h1>
-    </div>
-    <div className="lg:w-4/12 my-3 p-3">
-      <img
-                  className="rounded-lg"
-                  alt="club_background_photo"
-                  src={this.props.bgImage}
-                />
-
-<h1 className="mt-2 text-black">{this.props.photoText}</h1>
-    </div>
- 
-    <div className="lg:w-4/12 my-3 p-3">
-      <img
-                  className="rounded-lg"
-                  alt="club_background_photo"
-                  src={this.props.bgImage}
-                />
-
-<h1 className="mt-2 text-black">{this.props.photoText}</h1>
-    </div>
-                
-
-  </div>
-</div>
-
-
-
-</>
-    );  
+      <div>
+        <Lightbox
+          toggler={this.state.isVisible}
+          slide={this.state.slide}
+          sources={this.state.photos.map((el) => el.url)}
+        />
+        <MyGallery
+          images={this.state.photos}
+          handleClick={this.showSlide}
+        ></MyGallery>
+      </div>
+    );
   }
 }
-
-
-PhotosTab.defaultProps = {
-  bgImage: Photo,
-  photoText:"This is the photo of nikol group where we enjoyed party a lot",
-};
