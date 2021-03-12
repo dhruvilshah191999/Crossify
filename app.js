@@ -15,6 +15,7 @@ var eventsRouter = require("./routes/events");
 var filterRouter = require("./routes/filter");
 var usersRouter = require("./routes/users");
 var clubRouter = require("./routes/clubs");
+var profileRouter = require("./routes/profile");
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api", indexRouter);
 app.use("/api/events", eventsRouter);
 app.use("/api/filter", filterRouter);
+app.use("/api/profile", profileRouter);
 app.use("/users", usersRouter);
 app.use("/club", clubRouter);
 

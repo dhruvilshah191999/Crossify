@@ -10,7 +10,7 @@ const EventCard = (props) => {
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
-    //console.clear();
+    console.clear();
     async function fetchData() {
       const config = {
         method: "POST",

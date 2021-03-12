@@ -79,7 +79,7 @@ var user_details = new Schema({
   inbox: {
     type: Array,
     required: false,
-  },   
+  },
   clubs: {
     type: Array,
     required:false
@@ -92,6 +92,14 @@ var user_details = new Schema({
     type: Boolean,
     default: true,
   },
+  about_me: {
+    type: String,
+    required:false
+  },
+  social_media: {
+    type: Object,
+    required:false
+  }
 });
 
 user_details.methods.generateAuthToken = function () {

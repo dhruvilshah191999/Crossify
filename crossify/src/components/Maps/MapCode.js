@@ -63,5 +63,9 @@ class App extends React.Component {
     );
   }
 }
-
+App.defaultProps = {
+  lat: 23.106517,
+  long: 72.594820,
+};
 export default App;
+

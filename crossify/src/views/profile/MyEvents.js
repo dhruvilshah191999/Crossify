@@ -1,45 +1,88 @@
-import React, { useState } from "react";
-
-// components
-
+import React, { useState,useEffect } from "react";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
+import axios from "axios";
 
 export default function MyClubs() {
+  const token = localStorage.getItem("jwt");
   const [tabIndex, toggleTabIndex] = useState(1);
-  const [likedClubs, setLikedClubs] = useState([
-    {
-      club_name: "Think Less Act More",
-      place: "Punjab",
-      tags: ["Magic", "Entertainment"],
-    },
-    {
-      club_name: "Golfanatics",
-      place: "Japan",
-      tags: ["Sports", "Competition"],
-    },
-    {
-      club_name: "Gamers Louge",
-      place: "Rajkot",
-      tags: ["Gaming", "Streaming"],
-    },
-  ]);
-  const [joinedClubs, setJoinedClubs] = useState([
-    {
-      club_name: "Act Less Think More",
-      place: "Kerala",
-      tags: ["Stoicism", "Realist"],
-    },
-    {
-      club_name: "Table Truckers",
-      place: "California",
-      tags: ["Friendly"],
-    },
-    {
-      club_name: "Gamers Louge",
-      place: "Rajkot",
-      tags: ["Gaming", "Streaming"],
-    },
-  ]);
+  const [likedevents, setLikedevents] = useState([]);
+  const [backevents, setbackevents] = useState([]);
+
+  const [upcoming, setupcoming] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+      };
+      const finaldata = await axios.post(
+        "/api/profile/get-upcoming-event",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setupcoming(finaldata.data.data);
+      }
+    }
+
+    async function getlikedata() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+      };
+      const finaldata = await axios.post(
+        "/api/profile/get-like-event",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setLikedevents(finaldata.data.data);
+      }
+    }
+
+    async function getpastdata() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+      };
+      const finaldata = await axios.post(
+        "/api/profile/get-past-event",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setbackevents(finaldata.data.data);
+      }
+    }
+
+    getData();
+    getlikedata();
+    getpastdata();
+
+  },[])
+
 
   return (
     <>
@@ -83,20 +126,16 @@ export default function MyClubs() {
       </div>
       <div>
         <div class="ml-4 mt-10 bg-gray-200 flex flex-col flex-wrap lg:flex-row">
-          {tabIndex === 1
-            ? likedClubs.map((el) => (
-                <ProfileEventClub
-                  club_name={el.club_name}
-                  place={el.place}
-                  tags={el.tags}
-                ></ProfileEventClub>
+          {tabIndex === 2
+            ? upcoming.map((el) => (
+                <ProfileEventClub data={el} key={el._id}></ProfileEventClub>
               ))
-            : joinedClubs.map((el) => (
-                <ProfileEventClub
-                  club_name={el.club_name}
-                  place={el.place}
-                  tags={el.tags}
-                ></ProfileEventClub>
+            : tabIndex === 1
+            ? likedevents.map((el) => (
+                <ProfileEventClub data={el} key={el._id}></ProfileEventClub>
+              ))
+            : backevents.map((el) => (
+                <ProfileEventClub data={el} key={el._id}></ProfileEventClub>
               ))}
         </div>
       </div>
