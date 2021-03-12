@@ -274,19 +274,8 @@
 //   }
 // }
 
-// MemberTab.defaultProps = {
-//   bgImage: Photo,
-//   photoFname: "Sagar",
-//   photoLname: "Solanki",
-//   photoPlace: "Nikol",
-//   number1: "100",
-//   number2: "20",
-//   number3: "30",
-//   number4: "50",
-// };
 import MemberUserDropdown from "components/Dropdowns/MemberUserDropdown";
-//import { white } from "tailwindcss/colors";
-//import "./MemberList.css";
+
 var React = require("react");
 let CONTACTS = [
   {
@@ -323,35 +312,35 @@ let CONTACTS = [
       "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
   },
   {
-    id: 5,
+    id: 6,
     name: "Ashvattha",
     designation: "Member",
     image:
       "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
   },
   {
-    id: 5,
+    id: 7,
     name: "Ashvattha",
     designation: "Member",
     image:
       "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
   },
   {
-    id: 5,
+    id: 8,
     name: "Ashvattha",
     designation: "Member",
     image:
       "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
   },
   {
-    id: 5,
+    id: 9,
     name: "Ashvattha",
     designation: "Member",
     image:
       "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
   },
   {
-    id: 5,
+    id: 10,
     name: "Ashvattha",
     designation: "Member",
     image:
@@ -389,7 +378,7 @@ class ContactList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayedContacts: CONTACTS,
+      displayedContacts: [],
       currentTab: 0,
       members: [],
       moderator: [],
@@ -404,9 +393,11 @@ class ContactList extends React.Component {
     );
     const mymembers = CONTACTS.filter((el) => el.designation === "Member");
     this.setState({
+      displayedContacts: CONTACTS,
       members: mymembers,
       moderator: mymoderator,
     });
+    console.log(this.state);
   }
   searchHandler = (event) => {
     let searcjQery = event.target.value.toLowerCase(),
@@ -435,25 +426,26 @@ class ContactList extends React.Component {
 
     return section.map((el, index) => {
       return (
-        <li
-          className={
-            this.state.currentTab === index
-              ? "p-4  bg-beta text-white  hover:bg-lightbeta w-full rounded-lg pointer mb-2"
-              : "p-4 text-gray-900 hover:text-white hover:bg-lightbeta w-full rounded-lg pointer mb-2 "
-          }
+        <a
+          onClick={() => {
+            this.setState({
+              currentTab: index,
+              displayedContacts: el.val,
+            });
+          }}
         >
-          <a
-            onClick={() => {
-              this.setState({
-                currentTab: index,
-                displayedContacts: el.val,
-              });
-            }}
-            className="flex items-center justify-between"
+          <li
+            className={
+              this.state.currentTab === index
+                ? "p-2 m-2  bg-beta text-white   rounded-lg pointer mb-2"
+                : "p-2 m-2 text-gray-900 hover:text-white hover:bg-lightbeta  rounded-lg pointer mb-2 "
+            }
           >
-            <span>{el.name}</span> <span>{el.val.length}</span>
-          </a>
-        </li>
+            <a className="flex items-center justify-between mx-3">
+              <span>{el.name}</span> <span>{el.val.length}</span>
+            </a>
+          </li>
+        </a>
       );
     });
   }
@@ -462,62 +454,19 @@ class ContactList extends React.Component {
 
     return (
       <div className="relative flex flex-row min-w-0 break-words w-full mb-6  rounded-lg  border-0">
-        <div class="bg-white w-1/3  px-6 mr-auto">
-          <div class="border-l-4 -ml-6 pl-6 justify-between my-4">
-            <ul className=" rounded-lg">
-              {this.renderSideMenu()}
-              {/* <li className="p-4 text-gray-900 hover:text-white hover:bg-alpha w-full rounded-lg pointer">
-                <a
-                  onClick={() => this.setState({ currentTab: 0 })}
-                  className="flex items-center justify-between"
-                >
-                  <span>All Members</span> <span>50</span>
-                </a>
-              </li>
-              <li className="p-4 text-gray-900 hover:text-white hover:bg-alpha  rounded-lg pointer">
-                <a
-                  onClick={() => this.setState({ currentTab: 1 })}
-                  className="flex items-center justify-between"
-                >
-                  <span>Admin</span> <span> 2</span>
-                </a>
-              </li>
-              <li className="p-4 text-gray-900 hover:text-white hover:bg-alpha  rounded-lg pointer">
-                <a
-                  onClick={() => this.setState({ currentTab: 2 })}
-                  className="flex items-center justify-between"
-                >
-                  <span>Moderators</span> <span> 10</span>
-                </a>
-              </li>
-              <li className="p-4 text-gray-900 hover:text-white hover:bg-alpha  rounded-lg pointer">
-                <a
-                  onClick={() => this.setState({ currentTab: 3 })}
-                  className="flex items-center justify-between"
-                >
-                  <span>Members</span> <span> 100</span>
-                </a>
-              </li> */}
-            </ul>
-          </div>
+        <div className="w-1/3">
+          <ul className="ml-4 mr-4 rounded-lg ">
+            <div className="p-4 font-semibold text-lg mx-3 border-b">
+              Category
+            </div>
+            {this.renderSideMenu()}
+          </ul>
         </div>
         <div class="bg-white w-2/3 rounded px-6 shadow ml-auto">
           <div class="border-l-4 border-red-400 -ml-6 pl-6 flex items-center justify-between my-4">
             <div class="font-semibold text-gray-800">Member List</div>
           </div>
-          {/* <hr class="-mx-6" /> */}
-          {/* <div class="relative flex w-full flex-wrap items-stretch mb-2">
-            <span class=" h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-              <i class="fas fa-eye"></i>
-            </span>
-            <input
-              type="text"
-              placeholder="Search here..."
-              class="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
-              classNAme="search"
-              onChange={this.searchHandler}
-            />
-          </div> */}
+
           <div class="bg-white w-full shadow  ml-auto mr-8 flex border border-beta rounded-lg my-2">
             <span class="w-auto flex justify-end items-center text-gray-500 p-2">
               <i className="fas fa-search text-beta"></i>
@@ -525,7 +474,7 @@ class ContactList extends React.Component {
             <input
               class="w-full rounded-lg py-2"
               type="text"
-              placeholder="Search Event..."
+              placeholder="Search Club Stakeholders"
               onChange={this.searchHandler}
             />
           </div>

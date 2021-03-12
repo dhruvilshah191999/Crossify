@@ -77,7 +77,7 @@ class ClubPage extends React.Component {
                 </div>
                 <div className="flex justify-center">
                   <button
-                    className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-beta text-white active:bg-lightbeta font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className=" w-full  hover:bg-lightbeta shadow border border-solid  bg-beta text-white active:bg-lightbeta font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={this.openModal.bind(this)}
                   >
@@ -87,7 +87,7 @@ class ClubPage extends React.Component {
 
                 <div className="flex justify-center">
                   <button
-                    className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className=" w-full  hover:bg-lightalpha shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                   >
                     <i class="fas fa-user-plus"></i> Join

@@ -51,6 +51,7 @@
     "react-google-maps": "^9.4.5",
     "react-images": "^1.0.0",
     "react-input-tags": "^3.0.3",
+    "react-keyed-file-browser": "^1.10.0",
     "react-lightbox-component": "^1.2.1",
     "react-map-gl": "^6.1.10",
     "react-moment": "^1.1.1",
