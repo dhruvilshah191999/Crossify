@@ -324,7 +324,7 @@ router.post("/add-interest", async function (req, res, next) {
 router.post("/event-details", async function (req, res, next) {
   let { event_id } = req.body;
   let userphoto = [];
-  var events = event_details.findOne({ _id: event_id, is_active: true });
+  var events = event_details.findOne({ _id: ObjectId(event_id), is_active: true });
   await events.exec(async (err, data) => {
     if (err) {
       var error = {
@@ -333,53 +333,12 @@ router.post("/event-details", async function (req, res, next) {
       };
       return res.status(500).send(error);
     } else {
-      async function getphoto() {
-        var user_photo = user_details.find(
-          {
-            $or: [
-              { _id: { $in: data.participants_list } },
-              { _id: data.oragnizer_id },
-            ],
-            is_active: true,
-          },
-          { profile_photo: 1 }
-        );
-        await user_photo.exec((err, data2) => {
-          if (err) {
-            var error = {
-              is_error: true,
-              message: err.message,
-            };
-            return res.status(600).send(error);
-          } else {
-            userphoto = data2;
-          }
-        });
-        let promise = new Promise((resolve, reject) => {
-          setTimeout(() => resolve("done!"), 1000);
-        });
-        let result = await promise;
-      }
-
-      if (data.participants_list.length !== 0) {
-        getphoto().then((err) => {
-          if (err) {
-            var error = {
-              is_error: true,
-              message: err.message,
-            };
-            return res.status(700).send(error);
-          } else {
-            var finaldata = {
-              event_data: data,
-              userphoto: userphoto,
-              is_error: false,
-              message: "Data Send",
-            };
-            return res.status(200).send(finaldata);
-          }
-        });
-      }
+      var finaldata = {
+        event_data: data,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
     }
   });
 });
@@ -436,12 +395,32 @@ router.post("/addlikes", auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else {
-      var finaldata = {
-        Like: true,
-        is_error: false,
-        message: "Data Send",
-      };
-      return res.status(200).send(finaldata);
+      var add = user_details.update(
+        {
+          _id: req.user._id,
+          is_active: 1,
+        },
+        {
+          $push: { fav_event: ObjectId(event_id) },
+        }
+      );
+      add.exec((err, data) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        }
+        else {
+          var finaldata = {
+            Like: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      })
     }
   });
 });
@@ -465,25 +444,49 @@ router.post("/deletelikes", auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else {
-      var finaldata = {
-        Like: true,
-        is_error: false,
-        message: "Data Send",
-      };
-      return res.status(200).send(finaldata);
+      var remove = user_details.update(
+        {
+          _id: req.user._id,
+          is_active: 1,
+        },
+        {
+          $pull: { fav_event: ObjectId(event_id) },
+        }
+      );
+      remove.exec((err, data) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        } else {
+          var finaldata = {
+            Like: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
     }
   });
 });
 
 router.post("/participate-event",auth,async function(req,res,next){
   let { event_id } = req.body;
+  var object = {
+    user: ObjectId(req.user._id),
+    date: new Date(),
+    status:"coming"
+  };
   var checks = event_details.update(
     {
       _id: event_id,
       is_active: 1,
     },
     {
-      $push: { participants_list: ObjectId(req.user._id) },
+      $push: { participants_list: object },
     }
   );
   await checks.exec((err, data2) => {
@@ -530,7 +533,7 @@ router.post("/undo-participation-event",auth,async function(req,res,next){
       is_active: 1,
     },
     {
-      $pull: { participants_list: ObjectId(req.user._id) },
+      $pull: { participants_list: { user: ObjectId(req.user._id) } },
     }
   );
   await checks.exec((err, data2) => {
@@ -567,6 +570,7 @@ router.post("/undo-participation-event",auth,async function(req,res,next){
     }
   });
 })
+
 router.post("/getclub", async function (req, res, next) {
   let { club_id } = req.body;
   console.log(club_id);
@@ -598,7 +602,7 @@ router.post("/checkevent", auth, async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.find({
     _id: event_id,
-    participants_list: ObjectId(req.user._id),
+    "participants_list.user":ObjectId(req.user._id),
     is_active: 1,
   });
   await checks.exec((err, data2) => {

@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import axios from "axios";
 
 import MyModal from "components/Modals/AdoptedModal";
 import {
@@ -89,165 +90,36 @@ function SelectColumnFilter({
   );
 }
 const openModal = () => {
-  ModalManager.open(<MyModal onRequestClose={() => true} />);
+  window.location = "/auth";
 };
-// Just making things ready for usage
-export default function App() {
+export default function App(props) {
   const color = "light";
-  //Data is Entries which consists data in row manner (accesor must match with the property)
+  console.log(props.finaldata);
   const data = React.useMemo(
-    () => [
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 60,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 60,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 60,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 60,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Gaming Party",
-        registerations: 330,
-        date: "11/2/2000",
-        location: "USA",
-        status: "completed",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 60,
-        date: "11/5/2040",
-        location: "Surat",
-        status: "reject",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 60,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        registerations: 33,
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "rejected",
-        actions: " ",
-      },
-    ],
+    () => props.finaldata,
     []
   );
 
-  //META DATA of table
   const columns = React.useMemo(
     () => [
+      {
+        Header: "",
+        accessor: "photo", // accessor is the "key" in the data
+        disableFilters: true,
+        disableSortBy: true,
+        // todo GOLU : if you can grab a image from eventId then add it at this place as see does it look good if not then remove it and just make it look like simple one
+        Cell: ({ value }) => {
+          return (
+            <div className="flex items-center">
+              <img
+                src={value}
+                alt="eventPhoto"
+                className="w-12 border h-10 mr-2"
+              ></img>
+            </div>
+          );
+        },
+      },
       {
         Header: "Event Name",
         accessor: "eventName", // accessor is the "key" in the data
@@ -256,11 +128,6 @@ export default function App() {
         Cell: ({ value }) => {
           return (
             <div className="flex items-center">
-              <img
-                src="https://source.unsplash.com/random"
-                alt="eventPhoto"
-                className="w-12 border h-10 mr-2"
-              ></img>
               <span className="font-semibold text-sm">{value}</span>
             </div>
           );
@@ -337,7 +204,7 @@ export default function App() {
                 </div>
             */}
             <button className="ml-2" title="More" onClick={openModal}>
-              <i class="fas fa-edit text-blue-500 text-lg"></i>
+              <i class="fas fa-cog text-blue-500 text-lg"></i>
             </button>
           </div>
         ),

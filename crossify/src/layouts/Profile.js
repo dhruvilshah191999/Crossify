@@ -20,11 +20,6 @@ import EditPrivacy from "views/profile/EditPrivacy";
 import EditProfile from "views/profile/EditProfile";
 import EditSocialMedia from "views/profile/EditSocialMedia";
 
-// import Maps from "views/admin/Maps.js";
-// import Settings from "views/admin/Settings.js";
-// import Tables from "views/admin/Tables.js";
-// import MemberList from "views/admin/MemberList";
-
 export default function Admin() {
   return (
     <>
@@ -44,11 +39,7 @@ export default function Admin() {
               exact
               component={ManageEvents}
             />
-            <Route
-              path="/profile/edit/myprofile"
-              exact
-              component={EditProfile}
-            />
+            <Route path="/profile/edit/myprofile" component={EditProfile} />
             <Route
               path="/profile/edit/password"
               exact
@@ -61,7 +52,7 @@ export default function Admin() {
             />
             <Route path="/profile/edit/privacy" exact component={EditPrivacy} />
 
-            <Redirect from="/profile" to="/profile/myprofile" />
+            <Redirect from="/profile" to="/profile/edit/myprofile" />
           </Switch>
           <FooterAdmin />
         </div>

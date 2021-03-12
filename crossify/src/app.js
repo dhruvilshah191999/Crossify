@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
@@ -25,13 +25,43 @@ import ClubPage from "views/explore/ClubPage";
 import CreateClub from "views/create/CreateClub";
 import { UserContext } from "context/usercontext";
 
+function PrivateRoute({ component: Component, authed, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        authed === true ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: "/auth", state: { from: props.location } }}
+          />
+        )
+      }
+    />
+  );
+}
+
 const Routing = () => {
+  var token = localStorage.getItem("jwt");
   return (
     <Switch>
       {/* add routes with layouts */}
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
-      <Route path="/profile" component={Profile} />
+      {!token ? (
+        <PrivateRoute
+          authed={false}
+          path="/profile"
+          component={Profile}
+        />
+      ) : (
+        <PrivateRoute
+          authed={true}
+          path="/profile"
+          component={Profile}
+        />
+      )}
       <Route path="/manage/event" component={ManageEvent} />
       {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
@@ -49,6 +79,7 @@ const Routing = () => {
     </Switch>
   );
 };
+
 
 export default function App() {
   const { islogin_dispatch, dispatch } = useContext(UserContext);
@@ -81,7 +112,7 @@ export default function App() {
   }, []);
   return (
     <BrowserRouter>
-      <Routing />
+      <Routing/>
     </BrowserRouter>
   );
 }

@@ -1,22 +1,52 @@
-import React from "react";
-
-// components
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import ManageEventsTable from "components/Cards/ManageEvents";
-import Test from "components/masti";
-
 export default function Tables() {
-  return (
-    <>
-      <div className="flex flex-wrap mt-4">
-        <div className="w-full mb-12 px-4">
-          {/* <CardTable /> */}
-          <ManageEventsTable />
-        </div>
-        <div className="w-full mb-12 px-4">
-          {/* <CardTable color="dark" /> */}
-        </div>
-      </div>
-    </>
-  );
+  const token = localStorage.getItem("jwt");
+  const [data, setdata] = useState([]);
+  const [loding, setloding] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+      };
+      const finaldata = await axios.post(
+        "/api/profile/get-all-event",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setdata(finaldata.data.data);
+        setTimeout(setloding(true), 1000);
+      }
+    }
+
+    fetchData();
+  }, []);
+  if (loding) {
+    return (
+      console.log(data),
+      (
+        <>
+          <div className="flex flex-wrap mt-4">
+            <div className="w-full mb-12 px-4">
+              <ManageEventsTable finaldata={data} />
+            </div>
+            <div className="w-full mb-12 px-4"></div>
+          </div>
+        </>
+      )
+    );
+  }
+  else {
+    return<></>
+  }
 }
