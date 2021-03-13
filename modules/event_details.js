@@ -95,6 +95,10 @@ var event_details = new Schema({
     type: Array,
     require: false,
   },
+  startdate: {
+    type: Date,
+    required: false,
+  },
 });
 
 var event_exports = mongoose.model("event_details", event_details);

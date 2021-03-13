@@ -1,14 +1,42 @@
-/*eslint-disable*/
-
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import logo from "assets/logos/logo_final.png";
 
 export default function Sidebar() {
+  const { id } = useParams();
   const [collapseShow, setCollapseShow] = React.useState("hidden");
+  const token = localStorage.getItem("jwt");
+  useEffect(() => {
+    async function fetchData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        }
+      };
+      var object = {
+        token: token,
+        event_id: id
+      }
+      const finaldata = await axios.post(
+        "/api/profile/check-event",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        window.location = "/";
+      } else {
+        if (!finaldata.data.check) {
+          window.location = "/";
+        }
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -101,11 +129,11 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/manage/event/general") !==
-                    -1
+                      -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manage/event/general"
+                  to={"/manage/event/general/" +id}
                 >
                   <i
                     className={
@@ -124,11 +152,11 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/manage/event/details") !==
-                    -1
+                      -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manage/event/details"
+                  to={"/manage/event/details/" + id}
                 >
                   <i
                     className={
@@ -148,11 +176,11 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/manage/event/attendees") !==
-                    -1
+                      -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manage/event/attendees"
+                  to={"/manage/event/attendees/" + id}
                 >
                   <i
                     className={
@@ -173,11 +201,11 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/manage/event/preview") !==
-                    -1
+                      -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manage/event/preview"
+                  to={"/manage/event/preview/" + id}
                 >
                   <i
                     className={
@@ -199,7 +227,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/manage/event/qanda"
+                  to={"/manage/event/qanda/"+id}
                 >
                   <i
                     className={

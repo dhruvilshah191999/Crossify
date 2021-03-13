@@ -7,7 +7,7 @@ const ClubCard = (props) => {
     <div
       className="relative px-2 mb-4 flex-grow-0 "
       style={{
-        width: 310,
+        width: 350,
 
         minHeight: "auto",
       }}

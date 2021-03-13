@@ -1,22 +1,141 @@
 import React from "react";
+import axios from "axios";
 import UploadPic from "components/Inputs/UploadPic";
-import MapContainer from "components/Maps/MapCode";
+import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import dummyPF from "assets/img/demopf.png";
 import { InputTagsContainer } from "react-input-tags";
 import { render } from "react-dom";
 // components
 
 export default class DetailsSettings extends React.Component {
-  state = {
-    tags: ["dd"],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      tags: [],
+      photo: null,
+      description: "",
+      eligibility: "",
+      event_data:null
+    };
+  }
+
+  async componentDidMount() {
+    const { id } = this.props.match.params;
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      event_id: id,
+    };
+    const finaldata = await axios.post(
+      "/api/events/event-details",
+      send_data,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      this.setState({
+        description: finaldata.data.event_data.description,
+        eligibility: finaldata.data.event_data.eligibility,
+        tags: finaldata.data.event_data.tags,
+        event_data:id
+      });
+    }
+  }
+
+  onChange = (e) =>
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
 
   handleUpdateTags = (tags) => {
     this.setState({ tags });
   };
+
+  handleCallback = (childData) => {
+    this.setState({ photo: childData });
+  };
+
+  onSubmit = async (e) => {
+    e.preventDefault();
+    if (this.state.photo != null) {
+      var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
+      var path = "Event/" + this.state.photo.name;
+      var data = new FormData();
+      data.append("file", this.state.photo);
+      data.append("upload_preset", "crossify-project");
+      data.append("public_id", path);
+      const config = {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      };
+      axios
+        .post(url, data, config)
+        .then(async (res) => {
+          const userdata = {
+            description:this.state.description,
+            eligibility:this.state.eligibility,
+            tags:this.state.tags,
+            photo: res.data.url,
+            event_id:this.state.event_data
+          };
+          try {
+            const config = {
+              method: "POST",
+              header: {
+                "Content-Type": "application/json",
+              },
+              validateStatus: () => true,
+            };
+            const finaldata = await axios.post(
+              "/api/manage/details-update",
+              userdata,
+              config
+            );
+            if (finaldata.data.is_error) {
+              console.log(finaldata.data.message);
+            } else {
+              window.location.reload();
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    else {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      var send_data = {
+        description:this.state.description,
+        eligibility:this.state.eligibility,
+        tags:this.state.tags,
+        photo: this.state.photo,
+        event_id:this.state.event_data
+      };
+      const finaldata = await axios.post(
+        "/api/manage/details-update",
+        send_data,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        window.location.reload();
+      }
+    }
+  };
   render() {
     return (
       <>
+        <Sidebar />
         <div className="flex flex-wrap">
           <div className="w-full  px-4">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">
@@ -28,8 +147,9 @@ export default class DetailsSettings extends React.Component {
                   <button
                     className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="button"
+                    onClick={this.onSubmit}
                   >
-                    Go to Club
+                    Save
                   </button>
                 </div>
               </div>
@@ -47,7 +167,9 @@ export default class DetailsSettings extends React.Component {
                         >
                           Profile Photo
                         </label>
-                        <UploadPic></UploadPic>
+                        <UploadPic
+                          parentCallback={this.handleCallback}
+                        ></UploadPic>
                       </div>
                     </div>
                   </div>
@@ -69,8 +191,10 @@ export default class DetailsSettings extends React.Component {
                         <textarea
                           type="text"
                           className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                          defaultValue={this.props.description}
                           rows="6"
+                          name="description"
+                          onChange={this.onChange}
+                          value={this.state.description}
                         ></textarea>
                       </div>
                     </div>
@@ -85,8 +209,10 @@ export default class DetailsSettings extends React.Component {
                         <textarea
                           type="text"
                           className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                          defaultValue={this.props.joining_criteria}
                           rows="6"
+                          name="eligibility"
+                          onChange={this.onChange}
+                          value={this.state.eligibility}
                         ></textarea>
                       </div>
                     </div>
@@ -101,6 +227,8 @@ export default class DetailsSettings extends React.Component {
                         <InputTagsContainer
                           tags={this.state.tags}
                           handleUpdateTags={this.handleUpdateTags}
+                          onChange={this.onChange}
+                          name="tags"
                         />
                       </div>
                     </div>

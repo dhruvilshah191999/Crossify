@@ -50,19 +50,11 @@ const Routing = () => {
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
       {!token ? (
-        <PrivateRoute
-          authed={false}
-          path="/profile"
-          component={Profile}
-        />
+        <PrivateRoute authed={false} path="/profile" component={Profile} />
       ) : (
-        <PrivateRoute
-          authed={true}
-          path="/profile"
-          component={Profile}
-        />
+        <PrivateRoute authed={true} path="/profile" component={Profile} />
       )}
-      <Route path="/manage/event" component={ManageEvent} />
+      <Route path="/manage/event/:id" component={ManageEvent} />
       {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
       {/* <Route path="/profile" exact component={Profile} /> */}

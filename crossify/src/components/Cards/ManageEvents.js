@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import axios from "axios";
 
 import MyModal from "components/Modals/AdoptedModal";
 import {
@@ -89,8 +88,8 @@ function SelectColumnFilter({
     </select>
   );
 }
-const openModal = () => {
-  window.location = "/auth";
+const redirect = (value) => {
+  window.location = "/manage/event/" + value;
 };
 export default function App(props) {
   const color = "light";
@@ -183,7 +182,7 @@ export default function App(props) {
 
       {
         Header: "More",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
+        accessor: "id", // here add _id of event request so easy to attach with the buttons
         //Cell provides custom design for the cell value (value = the value is set in the data)
         Cell: ({ value }) => (
           <div>
@@ -203,7 +202,7 @@ export default function App(props) {
                   </button>
                 </div>
             */}
-            <button className="ml-2" title="More" onClick={openModal}>
+            <button className="ml-2" title="More" onClick={()=>redirect(value)}>
               <i class="fas fa-cog text-blue-500 text-lg"></i>
             </button>
           </div>

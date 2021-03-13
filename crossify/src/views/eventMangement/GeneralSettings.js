@@ -1,10 +1,14 @@
 import React from "react";
 import UploadPic from "components/Inputs/UploadPic";
+import { useParams } from "react-router";
+import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import MapContainer from "components/Maps/MapCode";
 import dummyPF from "assets/img/demopf.png";
 export default function GeneralSettings(props) {
+
   return (
     <>
+      <Sidebar />
       <div className="flex flex-wrap">
         <div className="w-full  px-4">
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">

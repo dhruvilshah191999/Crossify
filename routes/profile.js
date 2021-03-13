@@ -293,5 +293,55 @@ router.post("/get-all-event", auth, async function (req, res, next) {
   });
 });
 
+router.post("/check-event", auth, async function (req, res, next) {
+  var { event_id } = req.body;
+  if (event_id.length != 24) {
+    var error = {
+      check: false,
+      is_error: true,
+      message: "User Not Found",
+    };
+    return res.status(200).send(error);
+  }
+  else {
+    var result = event_details.findOne({
+      _id: ObjectId(event_id),
+      is_active: 1,
+    });
+    await result.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(600).send(error);
+      } else if (data == null || data.length == 0) {
+        var error = {
+          check: false,
+          is_error: true,
+          message: "User Not Found",
+        };
+        return res.status(200).send(error);
+      } else {
+        if (data.oragnizer_id != req.user._id) {
+          var error = {
+            check: false,
+            is_error: true,
+            message: "User Not Found",
+          };
+          return res.status(200).send(error);
+        }
+        else {
+          var finaldata = {
+            check: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      }
+    });
+  }
+});
 
 module.exports = router;
