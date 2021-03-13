@@ -5,6 +5,7 @@ import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/AdoptedModal";
 import MyTag from "components/Tag";
+import JoinClubButton from "components/Modals/JoinClubButton";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 
 class ClubPage extends React.Component {
@@ -31,6 +32,8 @@ class ClubPage extends React.Component {
               >
                 <div className="text-3xl font-bold">
                   {this.props.clubName}
+                  {/* //todo GOLU just redirect to the /admin page for control or
+                  manage this club (ONLY IF HE IS MOD OR CREATOR OF THE CLUB) */}
                   <button className="float-right text-lg">
                     <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
                   </button>
@@ -86,12 +89,16 @@ class ClubPage extends React.Component {
                 </div>
 
                 <div className="flex justify-center">
-                  <button
+                  {/* <button
                     className=" w-full  hover:bg-lightalpha shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                   >
                     <i class="fas fa-user-plus"></i> Join
-                  </button>
+                  </button> */}
+                  <JoinClubButton
+                    clubName={this.props.clubName}
+                    designation="Member"
+                  />{" "}
                 </div>
               </div>
             </div>
