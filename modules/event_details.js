@@ -51,10 +51,14 @@ var event_details = new Schema({
     type: Date,
     required: false,
   },
-  faq: {
-    type: Array,
-    required: false,
-  },
+  faq: [
+    {
+      question: String,
+      date: {type:Date,default:Date.now},
+      askedby : ObjectId,
+      status: String
+    }
+  ],
   volunteers_list: {
     type: Array,
     required: false,
@@ -67,10 +71,13 @@ var event_details = new Schema({
     type: String,
     required: true,
   },
-  participants_list: {
-    type: Array,
-    required: false,
-  },
+  participants_list: [
+    {
+    user : ObjectId,
+    status: String
+
+    }
+  ],
   feedbacks: {
     type: Array,
     required: false,
