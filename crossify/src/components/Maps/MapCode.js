@@ -26,6 +26,7 @@ class App extends React.Component {
       lat: newLat,
       lng: newLng,
     });
+    this.props.parentCallback(this.state);
   };
 
   render() {
@@ -63,9 +64,10 @@ class App extends React.Component {
     );
   }
 }
+export default App;
 App.defaultProps = {
   lat: 23.106517,
   long: 72.594820,
 };
-export default App;
+
 

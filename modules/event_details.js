@@ -99,6 +99,10 @@ var event_details = new Schema({
     type: Date,
     required: false,
   },
+  pincode: {
+    type: Number,
+    required: false,
+  },
 });
 
 var event_exports = mongoose.model("event_details", event_details);

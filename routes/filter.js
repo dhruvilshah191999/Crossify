@@ -274,7 +274,7 @@ router.post("/search", async function (req, res, nex) {
       return res.status(500).send(error);
     } else {
       var tags;
-      if (location.trim() === "") {
+      if (location === "") {
         tags = event_details.find({
           $or: [
             {
@@ -288,7 +288,7 @@ router.post("/search", async function (req, res, nex) {
           ],
           is_active: true,
         });
-      } else if (search.trim() === "" && location.trim() !== "") {
+      } else if (search === "" && location !== "") {
         tags = event_details.find({
           $or: [
             { location: { $regex: ".*" + location + ".*", $options: "i" } },
@@ -379,7 +379,7 @@ router.post("/searchclub", async function (req, res, nex) {
       return res.status(500).send(error);
     } else {
       var tags;
-      if (location.trim() === "") {
+      if (location === "") {
         tags = club_details.find({
           $or: [
             {
@@ -393,7 +393,7 @@ router.post("/searchclub", async function (req, res, nex) {
           ],
           is_active: true,
         });
-      } else if (search.trim() === "" && location.trim() !== "") {
+      } else if (search === "" && location !== "") {
         tags = club_details.find({
           $or: [
             { location: { $regex: ".*" + location + ".*", $options: "i" } },
