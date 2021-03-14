@@ -68,6 +68,48 @@
   background-color: #e82953;
 }
 
+.bg-orange-200 {
+  background-color: #feebc8;
+}
+
+.bg-green-200 {
+  background-color: #a7f3d0;
+}
+
+.bg-red-200 {
+  background-color: #fecaca;
+}
+
+.bg-blue-200 {
+  background-color: #bfdbfe;
+}
+
+.opacity-50 {
+  opacity: 50%;
+}
+
+.text-green-900 {
+  color: #064e3b;
+}
+
+.text-blue-900 {
+  color: #1e3a8a;
+}
+
+.text-orange-900 {
+  color: #7b341e;
+}
+
+.inset-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.text-red-900 {
+  color: #7f1d1d;
+}
 .hover\:bg-alpha:hover {
   background-color: #e82953;
 }
@@ -726,8 +768,11 @@ input.react-input-tags-input {
 }
 
 .py-2half {
-  padding-top: 0.58rem;
-  padding-bottom: 0.58rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+.pt-4 {
+  padding-top: 1rem;
 }
 
 .flex-row-reverse {

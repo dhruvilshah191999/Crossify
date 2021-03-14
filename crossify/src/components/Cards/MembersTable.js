@@ -7,8 +7,12 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
+
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import RequestForEvent from "components/Modals/RequestForEvent";
+import ViewProfile from "components/Modals/ViewProfile";
+import PromoteMemberButton from "components/Modals/PromoteMemberButton";
+import DemoteMemberButton from "components/Modals/DemoteMemberButton";
+import KickMemberButton from "components/Modals/KickMemberButton";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -86,154 +90,191 @@ function SelectColumnFilter({
 }
 
 export default function App() {
+  //todo GOLU pass name here too I don't know how if you cant do it then just remove it view button (NOT REQUIRED)
   const openModal = () => {
-    ModalManager.open(<RequestForEvent onRequestClose={() => true} />);
+    ModalManager.open(<ViewProfile onRequestClose={() => true} />);
   };
   const color = "light";
   const data = React.useMemo(
     () => [
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "approved",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "approved",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "approved",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "approved",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "completed",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "approved",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "rejected",
+        role: "Admin",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
       {
         eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
         actions: " ",
       },
     ],
@@ -243,57 +284,59 @@ export default function App() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Event Name",
-        accessor: "eventName", // accessor is the "key" in the data
+        Header: "Name",
+        accessor: "name", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
         },
       },
+
       {
-        Header: "Organizer",
-        accessor: "organizerName",
-        disableFilters: true,
-      },
-      {
-        Header: "Date",
-        accessor: "date", // accessor is the "key" in the data
+        Header: "Joined At",
+        accessor: "joinedDate", // accessor is the "key" in the data
 
         disableFilters: true,
       },
       {
-        Header: "Status",
-        accessor: "status", // accessor is the "key" in the data
+        Header: "Location",
+        accessor: "location", // accessor is the "key" in the data
+
+        disableFilters: true,
+      },
+      {
+        Header: "role",
+        accessor: "role", // accessor is the "key" in the data
         Filter: SelectColumnFilter,
         filter: "includes",
         Cell: ({ value }) => {
           var myColor = "red";
-          if (value === "pending") {
+          if (value === "Member") {
             myColor = "orange";
-          } else if (value === "approved") {
+          } else if (value === "Moderator") {
             myColor = "green";
-          } else if (value === "completed") {
+          } else if (value === "Admin") {
             myColor = "blue";
           }
-          // return (
-          //   <span
-          //     class={
-          //       "relative inline-block px-3 py-1 font-semibold text-" +
-          //       myColor +
-          //       "-900 leading-tight"
-          //     }
-          //   >
-          //     <span
-          //       aria-hidden
-          //       class={
-          //         "absolute inset-0 bg-" +
-          //         myColor +
-          //         "-200 opacity-50 rounded-full"
-          //       }
-          //     ></span>
-          //     <span class="relative">{value}</span>
-          //   </span>
-          // );
+          return (
+            <span
+              class={
+                "relative inline-block px-3 py-1 font-semibold text-" +
+                myColor +
+                "-900 leading-tight"
+              }
+            >
+              <span
+                aria-hidden
+                class={
+                  "absolute inset-0 bg-" +
+                  myColor +
+                  "-200 opacity-50 rounded-full"
+                }
+              ></span>
+              <span class="relative">{value}</span>
+            </span>
+          );
           return (
             <>
               <i
@@ -307,9 +350,16 @@ export default function App() {
         },
         disableFilters: true,
       },
+
       {
-        Header: "Location",
-        accessor: "location", // accessor is the "key" in the data
+        Header: "Events",
+        accessor: "eventOrganized", // accessor is the "key" in the data
+
+        disableFilters: true,
+      },
+      {
+        Header: "Reports",
+        accessor: "reports", // accessor is the "key" in the data
 
         disableFilters: true,
       },
@@ -319,14 +369,25 @@ export default function App() {
         accessor: "actions", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
           <div className="flex flex-row  justify-evenly">
-            <button title="Approve">
-              <i class="fas fa-vote-yea text-green-500 text-lg focus:outline-none"></i>
-            </button>
-            <button className="ml-2" title="Reject">
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
-            </button>
-            <button className="ml-2" title="More" onClick={openModal}>
-              <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
+            <PromoteMemberButton
+              name="Harshil Patel"
+              promoteMember={() => console.log("Get id and promote him")}
+            />
+            <DemoteMemberButton
+              name="Harhsil Patel"
+              demoteMember={() => console.log("Get id and demote him")}
+            />
+            <KickMemberButton
+              name="Harshil Patel"
+              kickMember={() =>
+                console.log(
+                  "pass name or username of the member and id to remove him from the club"
+                )
+              }
+            />
+
+            <button className="" title="View" onClick={openModal}>
+              <i class="fas fa-eye text-blue-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -403,7 +464,7 @@ export default function App() {
 
   // useEffect(() => {
   //   // This will now use our custom filter for age
-  //   setFilter("status", SelectColumnFilter);
+  //   setFilter("role", SelectColumnFilter);
   // }, [SelectColumnFilter]);
 
   return (
@@ -426,33 +487,22 @@ export default function App() {
                       (color === "light" ? "text-gray-800" : "text-white")
                     }
                   >
-                    Events Table
+                    Member List
                   </h3>
                 </div>
                 <div className="ml-auto">
-                  <button
-                    className="bg-green-500 text-white  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-4 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => openModal()}
-                  >
-                    <i class="fas fa-plus"></i>&nbsp; Create Event
-                  </button>
-
                   <i class="fas fa-filter mr-4 text-gray-700 "></i>
                   <select
                     className="border bg-white rounded px-3 py-1 outline-none text-sm"
                     onChange={(e) => {
-                      setFilter("status", e.target.value || undefined);
+                      setFilter("role", e.target.value || undefined);
                     }}
                   >
                     <option value="">All</option>
-                    <option value="pending">
-                      {/* <i className="fas fa-circle text-orange-500 mr-2"></i>{" "}  maybe later we can add that*/}
-                      Pending
-                    </option>
-                    <option value="approved">Apporved</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="completed">Completed</option>
+
+                    <option value="Member">Member</option>
+                    <option value="Moderator">Moderator</option>
+                    <option value="Admin">Admin</option>
                   </select>
                   <span className="ml-2 "></span>
                   <GlobalFilter

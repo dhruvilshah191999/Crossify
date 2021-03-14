@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 
-import MyModal from "components/Modals/AdoptedModal";
+import MyModal from "components/Modals/RequestForEvent";
 import {
   useTable,
   useFilters,
@@ -94,10 +94,7 @@ const redirect = (value) => {
 export default function App(props) {
   const color = "light";
   console.log(props.finaldata);
-  const data = React.useMemo(
-    () => props.finaldata,
-    []
-  );
+  const data = React.useMemo(() => props.finaldata, []);
 
   const columns = React.useMemo(
     () => [
@@ -202,7 +199,11 @@ export default function App(props) {
                   </button>
                 </div>
             */}
-            <button className="ml-2" title="More" onClick={()=>redirect(value)}>
+            <button
+              className="ml-2"
+              title="More"
+              onClick={() => redirect(value)}
+            >
               <i class="fas fa-cog text-blue-500 text-lg"></i>
             </button>
           </div>

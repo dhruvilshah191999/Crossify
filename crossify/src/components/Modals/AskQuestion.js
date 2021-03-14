@@ -55,6 +55,7 @@ export default class SweetAlertModal extends Component {
     return (
       <div className="sweet-alert-container">
         <button
+          type="button"
           onClick={() => this.deleteThisGoal()}
           className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta"
         >

@@ -3,11 +3,11 @@ import axios from "axios";
 import Moment from "moment";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
-import dance_cat from "../../assets/img/travel_cat.jpg";
-import MapContainer from "../../components/Maps/MapCode";
-import SweetAlertModal from "../../components/Modals/SweetAlertModal";
-import RegisteredMember from "../../components/Cards/RegisteredMembers";
-import JoinEventButton from "../../components/Modals/JoinEventButton";
+import dance_cat from "assets/img/travel_cat.jpg";
+import MapContainer from "components/Maps/MapCode";
+import AskQuestion from "components/Modals/AskQuestion";
+import RegisteredMember from "components/Cards/RegisteredMembers";
+import JoinEventButton from "components/Modals/JoinEventButton";
 
 // todo For Golu : MapContainer has to changed because we only want Map which shows the Event latitude and Longitute
 
@@ -60,7 +60,7 @@ export default function EventPage(props) {
       };
       var send_data = {
         event_id: id,
-        token
+        token,
       };
       const finaldata = await axios.post(
         "/api/events/checkevent",
@@ -220,7 +220,7 @@ export default function EventPage(props) {
               <div className="flex flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl w-1/4">
                   FAQs <br />
-                  <SweetAlertModal></SweetAlertModal>
+                  <AskQuestion></AskQuestion>
                   {/* <button className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta">
                     <i class="fas fa-user-plus"></i> Ask
                   </button> */}

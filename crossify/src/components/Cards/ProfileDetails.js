@@ -46,11 +46,14 @@ class ProfileDetails extends Component {
               <div className="text-4xl font-semibold ">
                 {this.props.fname} {this.props.lname}
               </div>
+              <div className="text-xl ml-2 pt-4 text-gray-700">
+                as <span className="text-alpha">{this.props.username}</span>
+              </div>
 
               {/* </div> */}
             </div>
             <div className="text-gray-600 text-lg">
-              {this.props.smallbio}&nbsp; | &nbsp;Joined{" "}
+              {this.props.occupation}&nbsp; | &nbsp;Joined{" "}
               {this.props.joining_date}
             </div>
             <div className="text-gray-600 mt-1 text-lg">
@@ -141,7 +144,8 @@ class ProfileDetails extends Component {
 ProfileDetails.defaultProps = {
   fname: "Harshil",
   lname: "Patel",
-  smallbio: "Software Engineer",
+  username: "hackershil",
+  occupation: "Software Engineer",
   joining_date: "Apr 2020",
   tags: ["Football", "Fitness", "Sports", "Coding"],
   clubs: [

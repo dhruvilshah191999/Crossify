@@ -3,7 +3,7 @@ import Navbar from "components/Navbars/ClubNavbar";
 import TabsBar from "components/TabsBar/TabsBar";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
-import MyModal from "components/Modals/AdoptedModal";
+import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
 import JoinClubButton from "components/Modals/JoinClubButton";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";

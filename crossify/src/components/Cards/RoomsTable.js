@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   useTable,
   useFilters,
@@ -7,8 +7,9 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import RequestForEvent from "components/Modals/RequestForEvent";
+import RemoveRoomButton from "components/Modals/RemoveRoomButton";
+import RoomUpdation from "components/Modals/RoomUpdation";
+import CreateRoomButton from "components/Modals/CreateRoom";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -26,7 +27,7 @@ function GlobalFilter({
       {/* Search:{" "} */}
       <i class="fas fa-search mr-4 text-gray-700"></i>
       <input
-        className="px-2 py-1  placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline ease-linear transition-all duration-150"
+        className="px-2 py-1  placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline ease-linear transition-All duration-150"
         value={value || ""}
         onChange={(e) => {
           setValue(e.target.value);
@@ -86,154 +87,152 @@ function SelectColumnFilter({
 }
 
 export default function App() {
-  const openModal = () => {
-    ModalManager.open(<RequestForEvent onRequestClose={() => true} />);
-  };
   const color = "light";
   const data = React.useMemo(
     () => [
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "All",
+        writable: "All",
         location: "Ahmedabad",
-        status: "approved",
+        description: "approved",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "All",
+        writable: "All",
         location: "Ahmedabad",
-        status: "approved",
+        description: "approved",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "All",
+        writable: "All",
         location: "Ahmedabad",
-        status: "approved",
+        description: "approved",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "All",
+        writable: "All",
         location: "Ahmedabad",
-        status: "approved",
+        description: "approved",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "completed",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "All",
+        writable: "All",
         location: "Ahmedabad",
-        status: "approved",
+        description: "approved",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "All",
+        writable: "All",
         location: "Ahmedabad",
-        status: "rejected",
+        description: "approved",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
+        roomName: "Cricket Tournament",
+        readable: "Moderator",
+        writable: "All",
         location: "Ahmedabad",
-        status: "pending",
+        description:
+          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
         actions: " ",
       },
     ],
@@ -243,74 +242,32 @@ export default function App() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Event Name",
-        accessor: "eventName", // accessor is the "key" in the data
+        Header: "Name",
+        accessor: "roomName", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
         },
       },
       {
-        Header: "Organizer",
-        accessor: "organizerName",
+        Header: "Readable",
+        accessor: "readable",
         disableFilters: true,
       },
       {
-        Header: "Date",
-        accessor: "date", // accessor is the "key" in the data
+        Header: "Writable",
+        accessor: "writable", // accessor is the "key" in the data
 
         disableFilters: true,
       },
       {
-        Header: "Status",
-        accessor: "status", // accessor is the "key" in the data
-        Filter: SelectColumnFilter,
-        filter: "includes",
-        Cell: ({ value }) => {
-          var myColor = "red";
-          if (value === "pending") {
-            myColor = "orange";
-          } else if (value === "approved") {
-            myColor = "green";
-          } else if (value === "completed") {
-            myColor = "blue";
-          }
-          // return (
-          //   <span
-          //     class={
-          //       "relative inline-block px-3 py-1 font-semibold text-" +
-          //       myColor +
-          //       "-900 leading-tight"
-          //     }
-          //   >
-          //     <span
-          //       aria-hidden
-          //       class={
-          //         "absolute inset-0 bg-" +
-          //         myColor +
-          //         "-200 opacity-50 rounded-full"
-          //       }
-          //     ></span>
-          //     <span class="relative">{value}</span>
-          //   </span>
-          // );
-          return (
-            <>
-              <i
-                className={
-                  "fas fa-circle text-xs text-" + myColor + "-500 mr-2"
-                }
-              ></i>{" "}
-              {value}
-            </>
-          );
-        },
-        disableFilters: true,
-      },
-      {
-        Header: "Location",
-        accessor: "location", // accessor is the "key" in the data
-
+        Header: "Description",
+        accessor: "description", // accessor is the "key" in the data
+        Cell: ({ value }) => (
+          <div className="break-words max-w-210-px overflow-hidden">
+            {value}
+          </div>
+        ),
         disableFilters: true,
       },
 
@@ -318,16 +275,23 @@ export default function App() {
         Header: "Actions",
         accessor: "actions", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
-          <div className="flex flex-row  justify-evenly">
-            <button title="Approve">
-              <i class="fas fa-vote-yea text-green-500 text-lg focus:outline-none"></i>
-            </button>
-            <button className="ml-2" title="Reject">
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
-            </button>
-            <button className="ml-2" title="More" onClick={openModal}>
-              <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
-            </button>
+          <div className="flex ">
+            <RoomUpdation
+              updateRoom={() =>
+                console.log("pass id to update info in the modal")
+              }
+              name="insert here"
+              description="insert here"
+              readable="Moderator"
+              writable="Moderator"
+            />
+            <RemoveRoomButton
+              removeRoom={() =>
+                console.log(
+                  "GOLU MAKE THIS function to remove current clicked room"
+                )
+              }
+            ></RemoveRoomButton>
           </div>
         ),
         disableFilters: true,
@@ -338,17 +302,12 @@ export default function App() {
   );
   const defaultColumn = React.useMemo(
     () => ({
-      // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
   );
   const filterTypes = React.useMemo(
     () => ({
-      // Add a new fuzzyTextFilterFn filter type.
-
-      // Or, override the default text filter to use
-      // "startWith"
       text: (rows, id, filterValue) => {
         return rows.filter((row) => {
           const rowValue = row.values[id];
@@ -366,17 +325,14 @@ export default function App() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+
     prepareRow,
     state,
-    visibleColumns,
+
     preGlobalFilteredRows,
     setGlobalFilter,
-    setFilter,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
 
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -384,8 +340,8 @@ export default function App() {
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
+    setPagereadable,
+    state: { pageIndex, pagereadable },
   } = useTable(
     {
       columns,
@@ -401,16 +357,11 @@ export default function App() {
     usePagination
   );
 
-  // useEffect(() => {
-  //   // This will now use our custom filter for age
-  //   setFilter("status", SelectColumnFilter);
-  // }, [SelectColumnFilter]);
-
   return (
     <>
       <div
         className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
+          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow rounded " +
           (color === "light" ? "bg-white" : "bg-blue-900 text-white")
         }
       >
@@ -426,34 +377,13 @@ export default function App() {
                       (color === "light" ? "text-gray-800" : "text-white")
                     }
                   >
-                    Events Table
+                    Rooms Info
                   </h3>
                 </div>
                 <div className="ml-auto">
-                  <button
-                    className="bg-green-500 text-white  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-4 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => openModal()}
-                  >
-                    <i class="fas fa-plus"></i>&nbsp; Create Event
-                  </button>
-
-                  <i class="fas fa-filter mr-4 text-gray-700 "></i>
-                  <select
-                    className="border bg-white rounded px-3 py-1 outline-none text-sm"
-                    onChange={(e) => {
-                      setFilter("status", e.target.value || undefined);
-                    }}
-                  >
-                    <option value="">All</option>
-                    <option value="pending">
-                      {/* <i className="fas fa-circle text-orange-500 mr-2"></i>{" "}  maybe later we can add that*/}
-                      Pending
-                    </option>
-                    <option value="approved">Apporved</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="completed">Completed</option>
-                  </select>
+                  <div className="inline-block">
+                    <CreateRoomButton />
+                  </div>
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     preGlobalFilteredRows={preGlobalFilteredRows}
@@ -525,15 +455,15 @@ export default function App() {
             <div className="mr-auto pl-4">
               Show entries : &nbsp;&nbsp;
               <select
-                value={pageSize}
+                value={pagereadable}
                 onChange={(e) => {
-                  setPageSize(Number(e.target.value));
+                  setPagereadable(Number(e.target.value));
                 }}
                 className="border bg-white rounded px-3 py-1 outline-none text-sm"
               >
-                {[10, 20, 30, 40, 50].map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    {pageSize}
+                {[10, 20, 30, 40, 50].map((pagereadable) => (
+                  <option key={pagereadable} value={pagereadable}>
+                    {pagereadable}
                   </option>
                 ))}
               </select>
@@ -575,7 +505,7 @@ export default function App() {
               <span>
                 Go to page:{" "}
                 <input
-                  className="px-2 py-1 mr-2 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline ease-linear transition-all duration-150"
+                  className="px-2 py-1 mr-2 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline ease-linear transition-All duration-150"
                   type="number"
                   defaultValue={pageIndex + 1}
                   onChange={(e) => {
