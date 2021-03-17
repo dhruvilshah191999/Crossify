@@ -2648,6 +2648,17 @@ video {
     overflow-y: auto;
   }
 
+  .md\:mx-6 {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+  .md\:my-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+
+
   .md\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -2869,11 +2880,25 @@ video {
     color: #e2e8f0;
     color: rgba(226, 232, 240, var(--text-opacity));
   }
+  .lg\:mx-6 {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+  .lg\:my-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 
   .lg\:w-auto {
     width: auto;
   }
 
+  .lg\:w-1\/4{
+    width: 25%;
+  }
+  .lg\:w-3\/4{
+    width: 75%;
+  }
   .lg\:w-3\/12 {
     width: 25%;
   }

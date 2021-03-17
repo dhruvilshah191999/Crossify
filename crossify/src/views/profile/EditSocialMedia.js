@@ -6,15 +6,10 @@ function EditSocialMedia() {
     facebook: "",
     linkedin: "",
     twitter: "",
-    instagram:""
+    instagram: "",
   });
 
-  const {
-    facebook,
-    linkedin,
-    twitter,
-    instagram,
-  } = SformData;
+  const { facebook, linkedin, twitter, instagram } = SformData;
 
   const onChange = (e) =>
     SetSformData({ ...SformData, [e.target.name]: e.target.value });
@@ -77,7 +72,7 @@ function EditSocialMedia() {
     } else {
       window.location.reload();
     }
-  }
+  };
 
   return (
     <div>
@@ -109,12 +104,12 @@ function EditSocialMedia() {
                 </label>
                 <div className="relative flex w-full flex-wrap items-stretch">
                   <span className="z-10 h-full leading-snug font-normal absolute text-center  absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                    <i className="fab fa-linkedin text-linkedin text-lg"></i>
+                    <i className="fab fa-linkedin text-linkedin text-2xl"></i>
                   </span>
                   <input
                     type="text"
                     placeholder="Example : www.linkedin.com/in/hackershil"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
+                    className="px-4 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
                     name="linkedin"
                     value={linkedin}
                     onChange={(e) => onChange(e)}
@@ -130,12 +125,12 @@ function EditSocialMedia() {
                 </label>
                 <div className="relative flex w-full flex-wrap items-stretch">
                   <span className="z-10 h-full leading-snug font-normal absolute text-center text-blue-600 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                    <i className="fab fa-facebook-square text-lg"></i>
+                    <i className="fab fa-facebook-square text-2xl"></i>
                   </span>
                   <input
                     type="text"
                     placeholder="Example : www.facebook.com/harshil.y.patel"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
+                    className="px-4 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
                     name="facebook"
                     value={facebook}
                     onChange={(e) => onChange(e)}
@@ -151,12 +146,12 @@ function EditSocialMedia() {
                 </label>
                 <div className="relative flex w-full flex-wrap items-stretch">
                   <span className="z-10 h-full leading-snug font-normal absolute text-center text-blue-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                    <i className="fab fa-twitter text-lg"></i>
+                    <i className="fab fa-twitter text-2xl"></i>
                   </span>
                   <input
                     type="text"
                     placeholder="Example : www.twitter.com/hackershil"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
+                    className="px-4 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
                     name="twitter"
                     value={twitter}
                     onChange={(e) => onChange(e)}
@@ -173,14 +168,14 @@ function EditSocialMedia() {
                 <div className="relative flex w-full flex-wrap items-stretch">
                   <span className="z-10 h-full leading-snug font-normal absolute text-center  absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
                     <i
-                      className="fab fa-instagram text-pink-500 text-lg"
+                      className="fab fa-instagram text-pink-500 text-2xl"
                       style={{ color: "#bc2a8d" }}
                     ></i>
                   </span>
                   <input
                     type="text"
                     placeholder="Example : www.instagram.com/hackershil"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
+                    className="px-4 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
                     name="instagram"
                     value={instagram}
                     onChange={(e) => onChange(e)}

@@ -5,6 +5,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { Link } from "react-router-dom";
 import { UserContext } from "context/usercontext";
+import { store } from "react-notifications-component";
 
 var vertical = "top";
 var horizontal = "center";
@@ -54,6 +55,20 @@ function Login() {
         islogin_dispatch({ type: "Login-Status", status: true });
         dispatch({ type: "ADD_USER", payload: res.data.data });
         history.push("/");
+        const name = res.data.data.fname + " " + res.data.data.lname;
+        store.addNotification({
+          title: "Succesfully Logged In",
+          message: "Welcome " + name + " !",
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+            onScreen: true,
+          },
+        });
       }
     } catch (error) {
       console.log(error);

@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import ReactNotification from "react-notifications-component";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
 import "assets/styles/customcss.css";
+import "react-notifications-component/dist/theme.css";
+import "../node_modules/animate.css/animate.min.css";
 //import MapContainer from "./app";
 // layouts
 
@@ -72,7 +75,6 @@ const Routing = () => {
   );
 };
 
-
 export default function App() {
   const { islogin_dispatch, dispatch } = useContext(UserContext);
 
@@ -104,7 +106,8 @@ export default function App() {
   }, []);
   return (
     <BrowserRouter>
-      <Routing/>
+      <ReactNotification />
+      <Routing />
     </BrowserRouter>
   );
 }

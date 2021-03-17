@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "context/usercontext";
 import { Redirect } from "react-router-dom";
 import hobbyImg from "assets/img/hobbyImg.jpg";
+import { store } from "react-notifications-component";
 // components
 
 import Navbar from "components/Navbars/AuthNavbar.js";
@@ -204,14 +205,14 @@ export default function Landing() {
             ></svg>
           </div>
         </div>
-        <section className="bg-white block m-2 ">
-          <div className="p-8 mx-auto">
+        <section className="bg-white block m-4 ">
+          <div className="p-8 mx-4">
             <div className="mb-6">
-              <div className="flex flex-row px-2">
-                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-gray">
+              <div className="flex flex-row px-4">
+                <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
                   Check out what's going on in your Area
                 </h4>
-                <button className="text-beta font-semibold ml-auto mr-2">
+                <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
                   <Link to="/search">
                     {" "}
                     Load More <i className="fas fa-angle-double-right"></i>{" "}
@@ -227,16 +228,16 @@ export default function Landing() {
           </div>
         </section>
         <section
-          className="bg-white block m-2"
+          className="bg-white block m-4"
           style={{ marginBottom: "20px" }}
         >
-          <div className="p-8 mx-auto">
+          <div className="p-8 mx-4">
             <div className="mb-6">
-              <div className="flex flex-row px-2">
-                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-gray">
+              <div className="flex flex-row px-4">
+                <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
                   Check out what's going on in your Area
                 </h4>
-                <button className="text-beta font-semibold ml-auto mr-2">
+                <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
                   <Link to="/clubsearch">
                     {" "}
                     Load More <i className="fas fa-angle-double-right"></i>{" "}
@@ -253,16 +254,16 @@ export default function Landing() {
         </section>
         {insterestState.map((el) => (
           <section
-            className="bg-white block m-2"
+            className="bg-white block m-4"
             style={{ marginBottom: "0px" }}
           >
-            <div className="p-8 mx-auto">
+            <div className="p-8 mx-4">
               <div className="ml-2 mb-6">
                 <div className="flex flex-row px-2">
-                  <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-gray">
+                  <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     {el.category}
                   </h4>
-                  <button className="text-beta font-semibold ml-auto mr-2">
+                  <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
                     <Link to="/eventsearch">
                       {" "}
                       Load More <i className="fas fa-angle-double-right"></i>{" "}

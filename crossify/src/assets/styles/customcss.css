@@ -210,6 +210,11 @@
   color: rgb(226, 226, 83);
 }
 
+.hover\:text-red-500:hover {
+  color: #f56565;
+}
+
+
 .hover\:text-black:hover {
   color: black;
 }
@@ -404,7 +409,14 @@
   width: 850px;
   height: 420px;
 }
+.border-red-500{
+border-color: #f56565;
+}
 
+.event-image-preview {
+  width: 700px;
+  height: 400px;
+}
 .mx-16 {
   margin-left: 5.5rem;
   margin-right: 5.5rem;
@@ -466,7 +478,10 @@
   margin-left: 7rem;
   margin-right: 5.5rem;
 }
-
+.event-photo-preview-container {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
 .mt-auto {
   margin-top: auto;
 }

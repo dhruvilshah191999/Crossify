@@ -41,6 +41,7 @@ router.post("/login", async function (req, res, next) {
             JSON.stringify(token),
             secret
           ).toString();
+          console.log(data);
           var finaldata = {
             data: data,
             token: ciphertext,
@@ -217,13 +218,10 @@ router.post("/socialstep2", async function (req, res, next) {
     }
   });
 });
-router.post("/change-password",async function(req,res,next){
-  let { user_id,oldPassword,newPassword} = req.body;
+router.post("/change-password", async function (req, res, next) {
+  let { user_id, oldPassword, newPassword } = req.body;
   var check = user_details.findOneAndUpdate({
-    $and: [
-      { _id: ObjectId(user_id) },
-      { is_active: true },
-    ],
+    $and: [{ _id: ObjectId(user_id) }, { is_active: true }],
   });
   await check.exec((err, data) => {
     if (err) {
@@ -252,16 +250,16 @@ router.post("/change-password",async function(req,res,next){
             token: ciphertext,
             is_error: false,
             message: "Password is valid",
-          };  
-          if(!finaldata.is_error){
+          };
+          if (!finaldata.is_error) {
             password = bcrypt.hashSync(newPassword, 10);
             var update = user_details.findOneAndUpdate(
-            { _id: ObjectId(user_id) },
-            {
-              password: password
-            }
+              { _id: ObjectId(user_id) },
+              {
+                password: password,
+              }
             );
-            update.exec((err,ans)=>{
+            update.exec((err, ans) => {
               if (err) {
                 var error = {
                   is_error: true,
@@ -277,7 +275,7 @@ router.post("/change-password",async function(req,res,next){
                 return res.status(200).send(finaldata2);
               }
             });
-           }
+          }
         } else {
           var error = {
             is_error: true,
@@ -286,7 +284,6 @@ router.post("/change-password",async function(req,res,next){
           return res.status(500).send(error);
         }
       }
-      
     }
   });
 });

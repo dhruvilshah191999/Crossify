@@ -2,6 +2,7 @@ import Moment from "react-moment";
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { store } from "react-notifications-component";
 
 const EventCard = (props) => {
   const [loginstate, setLogin] = useState(false);
@@ -16,13 +17,17 @@ const EventCard = (props) => {
         method: "POST",
         header: {
           "Content-Type": "application/json",
-        }
+        },
       };
       var object = {
         token: token,
-        event_id:props.data._id
-      }
-      const finaldata = await axios.post("/api/events/checklikes",object,config);
+        event_id: props.data._id,
+      };
+      const finaldata = await axios.post(
+        "/api/events/checklikes",
+        object,
+        config
+      );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
@@ -35,17 +40,16 @@ const EventCard = (props) => {
         method: "POST",
         header: {
           "Content-Type": "application/json",
-        }
+        },
       };
       var object = {
-        club_id:props.data.club_id
-      }
+        club_id: props.data.club_id,
+      };
       const finaldata = await axios.post("/api/events/getclub", object, config);
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        if (finaldata.data.data!=null)
-            Setclub(finaldata.data.data.club_name);
+        if (finaldata.data.data != null) Setclub(finaldata.data.data.club_name);
       }
     }
 
@@ -54,7 +58,23 @@ const EventCard = (props) => {
       fetchData();
     }
     fetchclub();
-  }, [])
+  }, []);
+
+  const notifyCopied = () => {
+    store.addNotification({
+      title: "Succesfully Copied to Clipboard",
+      message: "Share the event with your friends ! ",
+      type: "info",
+      insert: "top",
+      container: "bottom-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 3000,
+        // onScreen: true,
+      },
+    });
+  };
 
   const addlike = async (e) => {
     if (loginstate) {
@@ -66,8 +86,8 @@ const EventCard = (props) => {
       };
       var object = {
         token: token,
-        event_id: props.data._id
-      }
+        event_id: props.data._id,
+      };
       const finaldata = await axios.post(
         "/api/events/addlikes",
         object,
@@ -75,7 +95,33 @@ const EventCard = (props) => {
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
+        store.addNotification({
+          title: "Something went wrong",
+          message: "Cannot add to favourite",
+          type: "danger",
+          insert: "top",
+          container: "bottom-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 3000,
+            // onScreen: true,
+          },
+        });
       } else {
+        store.addNotification({
+          title: "Added to Favourites !",
+          message: "You can access with ease in your profile.",
+          type: "danger",
+          insert: "top",
+          container: "bottom-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 3000,
+            // onScreen: true,
+          },
+        });
         setLike(true);
       }
     }
@@ -107,9 +153,9 @@ const EventCard = (props) => {
   };
   return (
     <div
-      className="relative px-2 mb-4 flex-grow-0 "
+      className="relative px-4 mb-4 flex-grow-0 "
       style={{
-        width: 350,
+        width: 345,
         minHeight: "auto",
       }}
     >
@@ -152,14 +198,18 @@ const EventCard = (props) => {
             style={{ marginTop: "195px", marginRight: "20px" }}
           >
             <button
-              className="text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className={
+                !like
+                  ? "text-red-500 bg-white shadow border border-solid  hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  : "text-white bg-red-500 shadow  hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              }
               type="button"
               style={loginstate ? {} : { cursor: "not-allowed" }}
               onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
             >
               <i
-                className={like ? "fas fa-heart-broken" : "fas fa-heart"}
-                style={{ fontSize: "14px" }}
+                className="fas fa-heart"
+                // style={{ fontSize: "14px" }}
               ></i>
             </button>
             <CopyToClipboard
@@ -168,8 +218,12 @@ const EventCard = (props) => {
               <button
                 className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                 type="button"
+                onClick={notifyCopied}
               >
-                <i class="fas fa-share-alt" style={{ fontSize: "14px" }}></i>
+                <i
+                  class="fas fa-share-alt"
+                  // style={{ fontSize: "14px" }}
+                ></i>
               </button>
             </CopyToClipboard>
           </div>

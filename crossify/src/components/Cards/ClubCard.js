@@ -5,9 +5,9 @@ import defImg from "../../assets/img/event_1.jpeg";
 const ClubCard = (props) => {
   return (
     <div
-      className="relative px-2 mb-4 flex-grow-0 "
+      className="relative px-4 mb-4 flex-grow-0 "
       style={{
-        width: 350,
+        width: 345,
 
         minHeight: "auto",
       }}
