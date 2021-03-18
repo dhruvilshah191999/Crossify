@@ -257,6 +257,9 @@
 .border-b {
   border-bottom: 1px solid #edf2f7;
 }
+.border-b2 {
+  border-bottom: 1px solid #e2e8f0;
+}
 
 .border-l {
   border-left: 1px solid;
@@ -477,6 +480,10 @@
   font-size: 1.1rem;
 }
 
+.text-muted {
+  color: #8898aa;
+}
+
 .event-container {
   margin-left: 7rem;
   margin-right: 5.5rem;
@@ -548,6 +555,9 @@
 
 .max-h-300-px {
   max-height: 300px;
+}
+.max-h-400vh {
+  max-height: 400vh;
 }
 
 .overwrite-success-btn {

@@ -50,33 +50,31 @@ const UserDropdown = () => {
             "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
           }
         >
-          <a
-            href="#pablo"
-            className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
-            }
-            onClick={(e) => e.preventDefault()}
+          <Link
+            to="/profile"
+            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
           >
             Settings
-          </a>
-          <a
-            href="#pablo"
-            className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
-            }
-            onClick={(e) => e.preventDefault()}
-          >
-            My Groups
-          </a>
-          <a
-            href="#pablo"
-            className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
-            }
-            onClick={(e) => e.preventDefault()}
+          </Link>
+          <Link
+            to="/profile/myclubs"
+            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
           >
             My Clubs
-          </a>
+          </Link>
+          <Link
+            to="/profile/myevents"
+            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+          >
+            My Events
+          </Link>
+          <Link
+            to="/profile/manage/events"
+            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+          >
+            Manage Events
+          </Link>
+
           <div className="h-0 my-2 border border-solid border-gray-200" />
           <Link
             to="/"
