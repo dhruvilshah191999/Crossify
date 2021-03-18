@@ -214,7 +214,6 @@
   color: #f56565;
 }
 
-
 .hover\:text-black:hover {
   color: black;
 }
@@ -245,6 +244,10 @@
 
 .border-black {
   border-color: #000;
+}
+
+.border-blue-500 {
+  border-color: #4299e1;
 }
 
 .border-white {
@@ -409,8 +412,8 @@
   width: 850px;
   height: 420px;
 }
-.border-red-500{
-border-color: #f56565;
+.border-red-500 {
+  border-color: #f56565;
 }
 
 .event-image-preview {
@@ -552,7 +555,7 @@ border-color: #f56565;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
-
+/* 
 details {
   position: relative;
 }
@@ -576,6 +579,68 @@ summary {
   width: 100%;
   padding: 20px;
   padding-left: 25px;
+  border-bottom: 1px solid #ccc;
+}
+
+summary:hover {
+  color: #a8a8a8;
+}
+
+summary:focus {
+  outline: none;
+}
+
+details[open] summary:before {
+  transform: rotate(90deg);
+}
+
+details[open] > summary {
+  color: var(--color-lightbeta);
+}
+
+details[open] > summary ~ * {
+  animation: open 1s ease;
+}
+
+p.source {
+  padding-top: 50px;
+  font-size: 0.75em;
+  text-align: center;
+}
+
+@keyframes open {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+} */
+details {
+  position: relative;
+}
+
+details summary::-webkit-details-marker {
+  display: none !important;
+}
+
+details summary::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjM0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIzNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOC41OSAxNi4zNGw0LjU4LTQuNTktNC41OC00LjU5TDEwIDUuNzVsNiA2LTYgNnoiLz48L3N2Zz4=")
+    no-repeat 50% 50% / 1em 1em;
+  width: 1.5em;
+  height: 1.5em;
+  transition: transform 0.1s linear;
+}
+
+summary {
+  width: 100%;
+  padding: 20px;
+  padding-left: 30px;
+
   border-bottom: 1px solid #ccc;
 }
 

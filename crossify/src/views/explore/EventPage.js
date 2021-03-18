@@ -97,7 +97,7 @@ export default function EventPage(props) {
             <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container">
               <div className="flex flex-row">
                 <div className="flex flex-col justify-center">
-                  <div className="text-alpha text-xl font-semibold  pt-2">
+                  <div className="text-alpha text-xl font-semibold uppercase pl-1  pt-2">
                     {Moment(eventdetails.date).format("MMM")}
                   </div>
                   <div className=" text-3xl ">
@@ -184,24 +184,24 @@ export default function EventPage(props) {
           </div>
           <div className="mx-6 my-4">
             <div className="flex flex-col">
-              <div className="flex  flex-row lg:flex-col py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Description
                 </div>
-                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
+                <div className="mt-1 text-lg text-gray-700 lg:w-3/4 leading-relaxed">
                   {eventdetails.description}
                 </div>
               </div>
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Eligibility
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
                   {eventdetails.eligibility}
                 </div>
               </div>
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Tags
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
@@ -210,15 +210,15 @@ export default function EventPage(props) {
                   ))}
                 </div>
               </div>
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   People going
                 </div>
                 <RegisteredMember></RegisteredMember>
               </div>
 
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   FAQs <br />
                   <AskQuestion></AskQuestion>
                   {/* <button className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta">
@@ -249,8 +249,8 @@ export default function EventPage(props) {
                   })}
                 </div>
               </div>
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Location
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">

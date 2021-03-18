@@ -308,7 +308,7 @@ details {
    */
 
 summary {
-  display: list-item;
+  display: block;
 }
 
 /* Misc
@@ -2657,8 +2657,6 @@ video {
     margin-bottom: 1rem;
   }
 
-
-
   .md\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -2893,11 +2891,11 @@ video {
     width: auto;
   }
 
-  .lg\:w-1\/4{
-    width: 25%;
+  .lg\:w-1\/4 {
+    width: 27%;
   }
-  .lg\:w-3\/4{
-    width: 75%;
+  .lg\:w-3\/4 {
+    width: 77%;
   }
   .lg\:w-3\/12 {
     width: 25%;
