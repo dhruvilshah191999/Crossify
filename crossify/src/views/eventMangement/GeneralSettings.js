@@ -1,8 +1,8 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import UploadPic from "components/Inputs/UploadPic";
 import { useParams } from "react-router";
 import Moment from "moment";
-import City from '../auth/states-and-districts.json';
+import City from "../auth/states-and-districts.json";
 import axios from "axios";
 import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import MapContainer from "components/Maps/MapCode";
@@ -23,7 +23,7 @@ export default function GeneralSettings(props) {
     starting_date: null,
     ending_date: null,
     starting_time: null,
-    ending_time:null
+    ending_time: null,
   });
 
   const {
@@ -40,13 +40,11 @@ export default function GeneralSettings(props) {
   const onChange = (e) =>
     SetformData({ ...formData, [e.target.name]: e.target.value });
 
-
   var districts = [];
   if (statename !== "") {
     const citylist = City.states.find((city) => city.state === statename);
     districts = citylist.districts;
   }
-
 
   useEffect(() => {
     async function fetchData() {
@@ -57,7 +55,7 @@ export default function GeneralSettings(props) {
         },
       };
       var object = {
-        event_id:id
+        event_id: id,
       };
       const finaldata = await axios.post(
         "/api/events/event-details",
@@ -87,7 +85,9 @@ export default function GeneralSettings(props) {
         setlongitude(finaldata.data.event_data.longitude);
         setStateName(finaldata.data.event_data.state);
         setCityName(finaldata.data.event_data.city);
-        setTimeout(() => { setloading(true) }, 100);
+        setTimeout(() => {
+          setloading(true);
+        }, 100);
       }
     }
     fetchData();
@@ -108,7 +108,7 @@ export default function GeneralSettings(props) {
       address,
       city: cityname,
       state: statename,
-      pincode:postalcode,
+      pincode: postalcode,
       latitude,
       longitude,
       starting_date,
@@ -134,7 +134,7 @@ export default function GeneralSettings(props) {
     } else {
       window.location.reload();
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -189,13 +189,10 @@ export default function GeneralSettings(props) {
                           Privacy
                         </label>
                         <select
-                          class="block shadow focus:shadow-outline  appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded"
+                          class="block shadow focus:shadow-outline pr-2  text-sm appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded ease-linear transition-all duration-150"
                           id="grid-state"
                           placeholder="Select your relevant Categories"
                           style={{ outline: "none" }}
-                          name="privacy"
-                          value={privacy}
-                          onChange={(e) => onChange(e)}
                         >
                           <option>Public</option>
                           <option>Private</option>
@@ -392,9 +389,8 @@ export default function GeneralSettings(props) {
         </div>
       </>
     );
-  }
-  else {
-    return <></>
+  } else {
+    return <></>;
   }
 }
 GeneralSettings.defaultProps = {

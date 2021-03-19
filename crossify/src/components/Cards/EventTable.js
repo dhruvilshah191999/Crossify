@@ -8,7 +8,7 @@ import {
   usePagination,
 } from "react-table";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import RequestForEvent from "components/Modals/RequestForEvent";
+import EventReview from "components/Modals/EventReview";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -87,7 +87,7 @@ function SelectColumnFilter({
 
 export default function App() {
   const openModal = () => {
-    ModalManager.open(<RequestForEvent onRequestClose={() => true} />);
+    ModalManager.open(<EventReview onRequestClose={() => true} />);
   };
   const color = "light";
   const data = React.useMemo(

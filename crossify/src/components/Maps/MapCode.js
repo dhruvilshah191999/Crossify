@@ -46,18 +46,18 @@ class App extends React.Component {
       ))
     );
     return (
-      <div>
-        <div className="text-gray-700 ml-1 mt-2">
+      <div className="rounded overflow-hidden">
+        {/* <div className="text-gray-700 ml-1 mt-2">
           latitude &nbsp;&nbsp; : {this.state.lat}
         </div>
         <div className="text-gray-700 ml-1 mb-2 ">
           longitude : {this.state.lng}
-        </div>
+        </div> */}
 
         <MapWithAMarker
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc&libraries=places"
           loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `400px` }} />}
+          containerElement={<div style={{ height: `500px` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
       </div>
@@ -67,7 +67,5 @@ class App extends React.Component {
 export default App;
 App.defaultProps = {
   lat: 23.106517,
-  long: 72.594820,
+  long: 72.59482,
 };
-
-

@@ -108,7 +108,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
 export default function App(props) {
   const { id } = useParams();
-  const getSelectedAndArrived =async (e) => {
+  const getSelectedAndArrived = async (e) => {
     const IDlist = selectedFlatRows.map((el) => el.values.id);
     const config = {
       method: "POST",
@@ -118,7 +118,7 @@ export default function App(props) {
     };
     var object = {
       event_id: id,
-      userIds:IDlist
+      userIds: IDlist,
     };
     const finaldata = await axios.post("/api/manage/arrived", object, config);
     if (finaldata.data.is_error) {
@@ -139,7 +139,7 @@ export default function App(props) {
   const columns = React.useMemo(
     () => [
       {
-        Header: "",
+        Header: "Profile",
         accessor: "photo", // accessor is the "key" in the data
         disableFilters: true,
         disableSortBy: true,
@@ -150,7 +150,7 @@ export default function App(props) {
               <img
                 src={value}
                 alt="eventPhoto"
-                className="w-12 border h-10 mr-2"
+                className="w-10 border h-10 rounded-full"
               ></img>
             </div>
           );

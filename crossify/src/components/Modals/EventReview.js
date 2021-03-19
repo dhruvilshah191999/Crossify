@@ -13,10 +13,10 @@ const Help = (props) => <span className="help" {...props} />;
 
 var customModalStyles = {
   content: {
-    width: "70%",
+    width: "80%",
     marginTop: "20px",
     transform: "translate(-50%, -50%)",
-    height: "650px", // <-- This sets the height
+    height: "680px", // <-- This sets the height
     overlfow: "scroll", // <-- This tells the modal to scrol
   },
 };

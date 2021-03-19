@@ -8,7 +8,7 @@ export default class SweetAlertModal extends Component {
     this.state = {
       alert: null,
       question: null,
-      answer:null,
+      answer: null,
       event_id: null,
     };
   }
@@ -55,7 +55,7 @@ export default class SweetAlertModal extends Component {
         confirmBtnBsStyle="success"
         title="Are you sure?"
         focusCancelBtn
-        confirmBtnCssClass="text-base rounded px-4 py-2 bg-green-500"
+        confirmBtnCssClass="text-base rounded px-4 py-2 bg-blue-500"
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
@@ -120,7 +120,7 @@ export default class SweetAlertModal extends Component {
     return (
       <>
         <button title="Arrived" onClick={() => this.confirmArrival()}>
-          <i class="fas fa-edit text-green-500 text-lg focus:outline-none"></i>
+          <i class="fas fa-edit text-blue-500 text-lg focus:outline-none"></i>
         </button>
 
         {this.state.alert}
