@@ -89,7 +89,7 @@ export default function EventPage(props) {
             <div className=" mr-6  text-black bg-white rounded-md ">
               <img
                 src={eventdetails.photo}
-                className="event-image align-middle rounded-md mt-2"
+                className="event-image align-middle rounded mt-2"
                 alt="event_pic"
               />
             </div>

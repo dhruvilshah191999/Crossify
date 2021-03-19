@@ -16,12 +16,12 @@ export default function Sidebar() {
         method: "POST",
         header: {
           "Content-Type": "application/json",
-        }
+        },
       };
       var object = {
         token: token,
-        event_id: id
-      }
+        event_id: id,
+      };
       const finaldata = await axios.post(
         "/api/profile/check-event",
         object,
@@ -54,13 +54,18 @@ export default function Sidebar() {
             className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
             to="/"
           >
-            <div className="flex flex-row ">
-              <img className="w-8 ml-4 inline-block pt-4" src={logo} />
-              <span className="font-semibold text-xl tracking-tight text-gray-600 px-2 ml-2">
-                CROSSIFY
-              </span>
+            <div className="flex flex-row items-center ">
+              <div>
+                <img className="w-8 ml-4 inline-block pt-2 " src={logo} />
+              </div>
+              <div>
+                <span className="font-semibold text-xl tracking-tight text-gray-600 px-2 ml-2">
+                  CROSSIFY
+                </span>
+              </div>
             </div>
           </Link>
+
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
             <li className="inline-block relative">
@@ -129,11 +134,11 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/manage/event/general") !==
-                      -1
+                    -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/manage/event/general/" +id}
+                  to={"/manage/event/general/" + id}
                 >
                   <i
                     className={
@@ -152,7 +157,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/manage/event/details") !==
-                      -1
+                    -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
@@ -176,7 +181,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/manage/event/attendees") !==
-                      -1
+                    -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
@@ -201,7 +206,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/manage/event/preview") !==
-                      -1
+                    -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
@@ -227,7 +232,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/manage/event/qanda/"+id}
+                  to={"/manage/event/qanda/" + id}
                 >
                   <i
                     className={
