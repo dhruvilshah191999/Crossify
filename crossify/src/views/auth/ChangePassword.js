@@ -3,24 +3,21 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import { Link } from "react-router-dom";
-import { UserContext } from "context/usercontext";
 
 var vertical = "top";
 var horizontal = "center";
 
 function ChangePassword() {
-  let history = useHistory();
-  const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
     email: "",
     password: "",
+    new_password: "",
+    confirm_new_password:""
   });
 
   const [errorStatus, setError] = useState(false);
   const [message, setMessage] = useState("");
   const { email, password, new_password, confirm_new_password } = formData;
-
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -33,30 +30,33 @@ function ChangePassword() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const Credentials = {
-      login_username: email,
-      password,
-    };
-    try {
+    if (new_password != confirm_new_password) {
+      setError(true);
+      setMessage("New Passoword Not Matched to Confirm Password");
+    }
+    else {
+      var object = {
+        email,
+        password,
+        new_password
+      }
       const config = {
         method: "POST",
         header: {
           "Content-Type": "application/json",
         },
-        validateStatus: () => true,
       };
-      const res = await axios.post("/api/login", Credentials, config);
-      if (res.data.is_error) {
+      const finaldata = await axios.post(
+        "/api/profile/update-password",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
         setError(true);
-        setMessage(res.data.message);
+        setMessage(finaldata.data.message);
       } else {
-        localStorage.setItem("jwt", res.data.token);
-        islogin_dispatch({ type: "Login-Status", status: true });
-        dispatch({ type: "ADD_USER", payload: res.data.data });
-        history.push("/");
+        window.location.reload();
       }
-    } catch (error) {
-      console.log(error);
     }
   };
   return (
@@ -64,6 +64,7 @@ function ChangePassword() {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={errorStatus}
+        style={{marginLeft:"120px"}}
         autoHideDuration={2000}
         onClose={handleClose}
       >
@@ -87,18 +88,6 @@ function ChangePassword() {
             </div>
           </div>
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0 mt-2">
-            {/*          
-      <div className="flex content-center items-center justify-center h-full">
-        <div className="w-full lg:w-4/12 px-4">
-          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
-            <div className="rounded-t mb-0 px-6 py-6">
-              <div className="text-center">
-                <h6 className="text-gray-600 text-sm font-bold">
-                  Change Password
-                </h6>
-              </div>
-            </div>
-            <div className="flex-auto px-4 lg:px-10 py-10 pt-0"> */}
             <form onSubmit={(e) => onSubmit(e)}>
               <div className="relative w-full mb-3">
                 <label

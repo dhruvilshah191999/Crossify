@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import axios from "axios";
-
-import MyModal from "components/Modals/AdoptedModal";
+import React from "react";
 import {
   useTable,
   useFilters,
@@ -12,7 +8,6 @@ import {
   usePagination,
 } from "react-table";
 
-// This is the Global(which can go through all column for searching) Filter style and which algorithm to evaulate/filter
 function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
@@ -41,7 +36,6 @@ function GlobalFilter({
   );
 }
 
-//Default Column FIlter no need here but i kept it because it may cause error if i delete it
 function DefaultColumnFilter({
   column: { filterValue, preFilteredRows, setFilter },
 }) {
@@ -58,7 +52,6 @@ function DefaultColumnFilter({
   );
 }
 
-// Filter of OPTIONS where we can do filters of pending , approved , rejected values like this (Set) and it is not currently hard coded (THIS IS NOT USED CURRENTLY)
 function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
 }) {
@@ -89,122 +82,202 @@ function SelectColumnFilter({
     </select>
   );
 }
-const openModal = () => {
-  window.location = "/auth";
-};
-export default function App(props) {
+
+export default function App() {
   const color = "light";
-  console.log(props.finaldata);
   const data = React.useMemo(
-    () => props.finaldata,
+    () => [
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        fileName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description:
+          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
+        actions: " ",
+      },
+    ],
     []
   );
 
   const columns = React.useMemo(
     () => [
       {
-        Header: "",
-        accessor: "photo", // accessor is the "key" in the data
+        Header: "File",
+        accessor: "fileName", // accessor is the "key" in the data
         disableFilters: true,
-        disableSortBy: true,
-        // todo GOLU : if you can grab a image from eventId then add it at this place as see does it look good if not then remove it and just make it look like simple one
         Cell: ({ value }) => {
-          return (
-            <div className="flex items-center">
-              <img
-                src={value}
-                alt="eventPhoto"
-                className="w-12 border h-10 mr-2"
-              ></img>
-            </div>
-          );
+          return <span className="font-semibold text-sm">{value}</span>;
         },
       },
       {
-        Header: "Event Name",
-        accessor: "eventName", // accessor is the "key" in the data
+        Header: "Size",
+        accessor: "size",
         disableFilters: true,
-        // todo GOLU : if you can grab a image from eventId then add it at this place as see does it look good if not then remove it and just make it look like simple one
-        Cell: ({ value }) => {
-          return (
-            <div className="flex items-center">
-              <span className="font-semibold text-sm">{value}</span>
-            </div>
-          );
-        },
       },
-
       {
-        Header: "Date",
+        Header: "Last Modified",
         accessor: "date", // accessor is the "key" in the data
-        disableFilters: true,
-      },
-      {
-        Header: "Location",
-        accessor: "location", // accessor is the "key" in the data
 
         disableFilters: true,
       },
       {
-        Header: "Status",
-        accessor: "status", // accessor is the "key" in the data
-        Filter: SelectColumnFilter,
-        filter: "includes",
-        Cell: ({ value }) => {
-          var myColor = "red";
-          if (value === "pending") {
-            myColor = "orange";
-          } else if (value === "approved") {
-            myColor = "green";
-          } else if (value === "completed") {
-            myColor = "blue";
-          }
-          return (
-            <>
-              <i
-                className={
-                  "fas fa-circle text-xs text-" + myColor + "-500 mr-2"
-                }
-              ></i>{" "}
-              {value}
-            </>
-          );
-        },
-        disableFilters: true,
-      },
-      {
-        Header: "Entries",
-        accessor: "registerations",
-        disableFilters: true,
-        Cell: ({ value }) => {
-          return <div>&nbsp;&nbsp;{value}</div>;
-        },
-      },
-
-      {
-        Header: "More",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
-        //Cell provides custom design for the cell value (value = the value is set in the data)
+        Header: "Description",
+        accessor: "description", // accessor is the "key" in the data
         Cell: ({ value }) => (
-          <div>
-            {/* <button title="Approve">
-              <i class="fas fa-vote-yea text-green-500 text-lg focus:outline-none"></i>
+          <div className="break-words max-w-210-px overflow-hidden">
+            {value}
+          </div>
+        ),
+        disableFilters: true,
+      },
+
+      {
+        Header: "Actions",
+        accessor: "actions", // here add _id of event request so easy to attach with the buttons
+        Cell: ({ value }) => (
+          <div className="flex ">
+            <button title="Download rounded-full shadow bg-gray-200 ml-4">
+              <i class="fas fa-download text-green-500  focus:outline-none mr-4 "></i>
             </button>
-            <button className="ml-2" title="Reject">
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
-            </button> 
-             <div className="flex justify-center">
-                  <button
-                    className=" w-full hover:text-alpha hover:bg-white shadow border border-solid  bg-beta text-white active:bg-lightbeta font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={this.openModal.bind(this)}
-                  >
-                    <i className="fas fa-pen-alt"></i> Apply for Event
-                  </button>
-                </div>
-            */}
-            <button className="ml-2" title="More" onClick={openModal}>
-              <i class="fas fa-cog text-blue-500 text-lg"></i>
+            <button className="ml-2" title="Report">
+              <i class="fas fa-flag text-red-500 "></i>
             </button>
           </div>
         ),
@@ -239,17 +312,14 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+
     prepareRow,
     state,
-    visibleColumns,
+
     preGlobalFilteredRows,
     setGlobalFilter,
-    setFilter,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
 
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -274,12 +344,11 @@ export default function App(props) {
     usePagination
   );
 
-  //real UI of Table
   return (
     <>
       <div
         className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
+          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow rounded " +
           (color === "light" ? "bg-white" : "bg-blue-900 text-white")
         }
       >
@@ -295,23 +364,10 @@ export default function App(props) {
                       (color === "light" ? "text-gray-800" : "text-white")
                     }
                   >
-                    Events Table
+                    File List
                   </h3>
                 </div>
                 <div className="ml-auto">
-                  <i class="fas fa-filter mr-4 text-gray-700 "></i>
-                  <select
-                    className="border bg-white rounded px-3 py-1 outline-none text-sm"
-                    onChange={(e) => {
-                      setFilter("status", e.target.value || undefined);
-                    }}
-                  >
-                    <option value="">All</option>
-                    <option value="pending">Pending</option>
-                    <option value="approved">Approved</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="completed">Completed</option>
-                  </select>
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     preGlobalFilteredRows={preGlobalFilteredRows}
@@ -379,7 +435,6 @@ export default function App(props) {
               })}
             </tbody>
           </table>
-          {/* PAGINATION START FROM HERE and some other facilities as well like jump to page x*/}
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">
               Show entries : &nbsp;&nbsp;
@@ -397,7 +452,6 @@ export default function App(props) {
                 ))}
               </select>
             </div>
-
             <div>
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"

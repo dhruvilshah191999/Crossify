@@ -288,7 +288,6 @@ router.post('/get-club-byuser', auth, async function (req, res, next) {
     });
   }
 });
-
 router.post('/add-interest', async function (req, res, next) {
   var { email, interest_array } = req.body;
   let objectIdArray = interest_array.map((s) => mongoose.Types.ObjectId(s));
@@ -324,7 +323,7 @@ router.post('/add-interest', async function (req, res, next) {
 router.post('/event-details', async function (req, res, next) {
   let { event_id } = req.body;
   let userphoto = [];
-  var events = event_details.findOne({ _id: event_id, is_active: true });
+  var events = event_details.findOne({ _id: ObjectId(event_id), is_active: true });
   await events.exec(async (err, data) => {
     if (err) {
       var error = {
@@ -333,54 +332,12 @@ router.post('/event-details', async function (req, res, next) {
       };
       return res.status(500).send(error);
     } else {
-      
-      async function getphoto() {
-        var user_photo = user_details.find(
-          {
-            $or: [
-              { _id: { $in: data.participants_list } },
-              { _id: data.oragnizer_id },
-            ],
-            is_active: true,
-          },
-          { profile_photo: 1 }
-        );
-        await user_photo.exec((err, data2) => {
-          if (err) {
-            var error = {
-              is_error: true,
-              message: err.message,
-            };
-            return res.status(600).send(error);
-          } else {
-            userphoto = data2;
-          }
-        });
-        let promise = new Promise((resolve, reject) => {
-          setTimeout(() => resolve('done!'), 1000);
-        });
-        let result = await promise;
-      }
-
-      if (data.participants_list.length !== 0) {
-        getphoto().then((err) => {
-          if (err) {
-            var error = {
-              is_error: true,
-              message: err.message,
-            };
-            return res.status(700).send(error);
-          } else {
-            var finaldata = {
-              event_data: data,
-              userphoto: userphoto,
-              is_error: false,
-              message: 'Data Send',
-            };
-            return res.status(200).send(finaldata);
-          }
-        });
-      }
+      var finaldata = {
+        event_data: data,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
     }
   });
 });
@@ -436,12 +393,32 @@ router.post('/addlikes', auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else {
-      var finaldata = {
-        Like: true,
-        is_error: false,
-        message: 'Data Send',
-      };
-      return res.status(200).send(finaldata);
+      var add = user_details.update(
+        {
+          _id: req.user._id,
+          is_active: 1,
+        },
+        {
+          $push: { fav_event: ObjectId(event_id) },
+        }
+      );
+      add.exec((err, data) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        }
+        else {
+          var finaldata = {
+            Like: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      })
     }
   });
 });
@@ -465,24 +442,49 @@ router.post('/deletelikes', auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else {
-      var finaldata = {
-        Like: true,
-        is_error: false,
-        message: 'Data Send',
-      };
-      return res.status(200).send(finaldata);
+      var remove = user_details.update(
+        {
+          _id: req.user._id,
+          is_active: 1,
+        },
+        {
+          $pull: { fav_event: ObjectId(event_id) },
+        }
+      );
+      remove.exec((err, data) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        } else {
+          var finaldata = {
+            Like: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
     }
   });
 });
-router.post('/participate-event', auth, async function (req, res, next) {
+
+router.post("/participate-event",auth,async function(req,res,next){
   let { event_id } = req.body;
+  var object = {
+    user: ObjectId(req.user._id),
+    date: new Date(),
+    status:"coming"
+  };
   var checks = event_details.update(
     {
       _id: event_id,
       is_active: 1,
     },
     {
-      $push: { participants_list: ObjectId(req.user._id) },
+      $push: { participants_list: object },
     }
   );
   await checks.exec((err, data2) => {
@@ -492,18 +494,16 @@ router.post('/participate-event', auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else {
-      var check2 = user_details.findOneAndUpdate(
-        {
-          _id: ObjectId(req.user._id),
-          is_active: true,
-        },
-        {
-          $push: { events: ObjectId(event_id) },
-        }
-      );
-      check2.exec((err) => {
-        if (err) {
+    }
+    else {
+      var check2= user_details.findOneAndUpdate({
+        _id:ObjectId(req.user._id),
+        is_active:true
+      },{
+        $push: {events:ObjectId(event_id)}
+      })
+      check2.exec((err)=>{
+        if(err){
           var error = {
             is_error: true,
             message: err.message,
@@ -520,8 +520,9 @@ router.post('/participate-event', auth, async function (req, res, next) {
       });
     }
   });
-});
-router.post('/undo-participation-event', auth, async function (req, res, next) {
+})
+
+router.post("/undo-participation-event",auth,async function(req,res,next){
   let { event_id } = req.body;
   var checks = event_details.update(
     {
@@ -529,7 +530,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
       is_active: 1,
     },
     {
-      $pull: { participants_list: ObjectId(req.user._id) },
+      $pull: { participants_list: { user: ObjectId(req.user._id) } },
     }
   );
   await checks.exec((err, data2) => {
@@ -567,79 +568,9 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
       });
     }
   });
-});
-// router.get('/getparticipants', async function (req, res, next) {
-//   var { event_id } = req.body;
-//   var check = event_details.findOne(
-//     {
-//       _id: ObjectId(event_id),
-//       is_active: 1,
-//     }
-//   );
-//   await check.exec((error, data) => {
-//     if (error) {
-//       var error = {
-//         is_error: true,
-//         message: error,
-//       };
-//       return res.status(500).send(error);
-//     } else if (data) {
-//        console.log(data);
-//       var participants_list = data.participants_list;
+})
 
-//        console.log(participants_list);
-//       var finaldata = [
-//         {
-//           is_error: false,
-//         },
-//       ];
-//       participants_list.forEach((Element) => {
-//         //console.log(Object.keys(Element))
-//         console.log((JSON.stringify(Element._doc.id)).toString())
-//         //var id = JSON.parse(Element.id.toString('utf8'));
-//         //console.log(id);
-//         // var id = Element.id
-//         // console.log(id);
-//         //   var check2 = user_details.findOne({
-//         //     _id: ObjectId(id),
-//         //     is_active: true
-//         //   })
-//         // check2.exec((error, data2) => {
-//         // if (error) {
-//         //   var error = {
-//         //     is_error: true,
-//         //     messgae: error
-//         //   }
-//         //   return res.status(500).send(error);
-//         // }
-//         // else if (data2) {
-//         //   console.log(data2);
-//         //   var tempdata = {
-//         //     name: data2.user_name,
-//         //     photo: data2.photo
-//         //   };
-//         //   finaldata.push(tempdata);
-//         // }
-//         // else {
-//         //   var error = {
-//         //     is_error: true,
-//         //     messgae: "user doesn't exists"
-//         //   }
-//         //   return res.status(404).send(error);
-//         // }
-//         // })
-//       });
-//       return res.status(200).send(finaldata);
-//     } else {
-//       var error = {
-//         is_error: true,
-//         messgae: 'Invalid event',
-//       };
-//       return res.status(404).send(error);
-//     }
-//   });
-// });
-router.post('/getclub', async function (req, res, next) {
+router.post("/getclub", async function (req, res, next) {
   let { club_id } = req.body;
   console.log(club_id);
   var checks = club_details.findOne({
@@ -658,6 +589,39 @@ router.post('/getclub', async function (req, res, next) {
         data: data2,
         is_error: false,
         message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/checkevent", auth, async function (req, res, next) {
+  let { event_id } = req.body;
+  var checks = event_details.find({
+    _id: event_id,
+    "participants_list.user":ObjectId(req.user._id),
+    is_active: 1,
+  });
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if(data2.length!=0){
+      var finaldata = {
+        attend:true,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+    else {
+      var finaldata = {
+        attend: false,
+        is_error: false,
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Moment from "moment";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
-import health_cat from "../../assets/img/travel_cat.jpg";
 import dance_cat from "../../assets/img/travel_cat.jpg";
 import MapContainer from "../../components/Maps/MapCode";
 import SweetAlertModal from "../../components/Modals/SweetAlertModal";
@@ -23,7 +23,9 @@ export default function EventPage(props) {
   const { id } = useParams();
   const [loading, setloading] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
+  const [checkevent, setevent] = useState(false);
   useEffect(() => {
+    const token = localStorage.getItem("jwt");
     async function event_details() {
       const config = {
         method: "POST",
@@ -48,6 +50,31 @@ export default function EventPage(props) {
       }
     }
 
+    async function CheckEvent() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      var send_data = {
+        event_id: id,
+        token
+      };
+      const finaldata = await axios.post(
+        "/api/events/checkevent",
+        send_data,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setevent(finaldata.data.attend);
+      }
+    }
+
+    CheckEvent();
     event_details();
   }, []);
   if (loading) {
@@ -71,9 +98,11 @@ export default function EventPage(props) {
               <div className="flex flex-row">
                 <div className="flex flex-col justify-center">
                   <div className="text-alpha text-xl font-semibold  pt-2">
-                    {props.month}
+                    {Moment(eventdetails.date).format("MMM")}
                   </div>
-                  <div className=" text-3xl ">{props.day}</div>
+                  <div className=" text-3xl ">
+                    {Moment(eventdetails.date).format("DD")}
+                  </div>
                 </div>
                 <div>
                   <h1
@@ -88,12 +117,20 @@ export default function EventPage(props) {
                 {" "}
                 <div>
                   <i class="fas fa-map-marker-alt text-lg "></i>
-                  <span className="ml-2"> {props.eventLocation}</span>
+                  <span className="ml-2">
+                    {" "}
+                    {eventdetails.location},{eventdetails.city}
+                  </span>
                 </div>
                 <div className="mt-2">
                   {" "}
                   <i class="fas fa-clock"></i>
-                  <span className="ml-2"> {props.dateAndTime}</span>
+                  <span className="ml-2">
+                    {" "}
+                    {Moment(eventdetails.date).format(
+                      "MMMM Do YYYY, h:mm:ss a"
+                    )}
+                  </span>
                 </div>
                 <div className="mt-6">
                   <div className="flex flex-col">
@@ -138,7 +175,10 @@ export default function EventPage(props) {
                 </div>
               </div>
               <div className="flex justify-center mt-2">
-                <JoinEventButton></JoinEventButton>
+                <JoinEventButton
+                  eventid={eventdetails._id}
+                  check={checkevent}
+                ></JoinEventButton>
               </div>
             </div>
           </div>
@@ -149,7 +189,7 @@ export default function EventPage(props) {
                   Description
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
-                  {props.description}
+                  {eventdetails.description}
                 </div>
               </div>
               <div className="flex flex-row py-4">
@@ -157,7 +197,7 @@ export default function EventPage(props) {
                   Eligibility
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
-                  {props.eligibility}
+                  {eventdetails.eligibility}
                 </div>
               </div>
               <div className="flex flex-row py-4">
@@ -165,7 +205,7 @@ export default function EventPage(props) {
                   Tags
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
-                  {props.tags.map((el) => (
+                  {eventdetails.tags.map((el) => (
                     <Tag name={el}></Tag>
                   ))}
                 </div>
@@ -185,22 +225,27 @@ export default function EventPage(props) {
                     <i class="fas fa-user-plus"></i> Ask
                   </button> */}
                 </div>
-                <div className="mt-1 text-lg  w-3/4 leading-relaxed">
-                  {props.qna.map((el, i) => {
-                    if (i == 0) {
+                <div
+                  className="mt-1 text-lg  w-3/4 leading-relaxed"
+                  style={{ overflowY: "auto", maxHeight: "400px" }}
+                >
+                  {eventdetails.faq.map((el, i) => {
+                    if (el.answer != null && el.answer != "") {
+                      if (i == 0) {
+                        return (
+                          <details>
+                            <summary className="pt-0">{el.question}</summary>
+                            <p>{el.answer}</p>
+                          </details>
+                        );
+                      }
                       return (
                         <details>
-                          <summary className="pt-0">{el.question}</summary>
+                          <summary>{el.question}</summary>
                           <p>{el.answer}</p>
                         </details>
                       );
                     }
-                    return (
-                      <details>
-                        <summary>{el.question}</summary>
-                        <p>{el.answer}</p>
-                      </details>
-                    );
                   })}
                 </div>
               </div>
@@ -209,7 +254,10 @@ export default function EventPage(props) {
                   Location
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
-                  <MapContainer />
+                  <MapContainer
+                    lat={eventdetails.latitude}
+                    long={eventdetails.longitude}
+                  />
                 </div>
               </div>
             </div>

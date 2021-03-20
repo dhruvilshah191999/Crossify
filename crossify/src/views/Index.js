@@ -206,9 +206,9 @@ export default function Landing() {
         </div>
         <section className="bg-white block m-2 ">
           <div className="p-8 mx-auto">
-            <div className="ml-2 mb-6">
+            <div className="mb-6">
               <div className="flex flex-row px-2">
-                <h4 className="text-3xl font-normal leading-normal mt-0 ml-2 mb-2 text-gray">
+                <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-gray">
                   Check out what's going on in your Area
                 </h4>
                 <button className="text-beta font-semibold ml-auto mr-2">
@@ -231,7 +231,7 @@ export default function Landing() {
           style={{ marginBottom: "20px" }}
         >
           <div className="p-8 mx-auto">
-            <div className="ml-2 mb-6">
+            <div className="mb-6">
               <div className="flex flex-row px-2">
                 <h4 className="text-3xl font-normal leading-normal mt-0 mb-2 text-gray">
                   Check out what's going on in your Area

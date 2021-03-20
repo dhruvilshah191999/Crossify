@@ -45,9 +45,6 @@ export default class SweetAlertModal extends Component {
       >
         Write the questions you have:
       </SweetAlert>
-      //   <SweetAlert success title="Woot!" onConfirm={() => this.hideAlert()}>
-      //     Hello world!
-      //   </SweetAlert>
     );
 
     this.setState({
