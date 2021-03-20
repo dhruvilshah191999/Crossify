@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
+import { store } from "react-notifications-component";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
@@ -7,7 +8,7 @@ export default class SweetAlertModal extends Component {
 
     this.state = {
       alert: null,
-      question: null,
+      complain: null,
     };
   }
 
@@ -22,28 +23,42 @@ export default class SweetAlertModal extends Component {
     inputValue = inputValue.trim();
     this.setState({
       alert: null,
-      question: inputValue,
+      complain: inputValue,
+    });
+    //todo GOLU process the this thing and if succecess run this
+    store.addNotification({
+      title: "Event Reported  !",
+      message: "Event Owner and Club Moderator can see your complain",
+      type: "danger",
+      insert: "top",
+      container: "bottom-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 5000,
+        // onScreen: true,
+      },
     });
   };
 
-  deleteThisGoal() {
+  reportThisEvent() {
     const getAlert = () => (
       <SweetAlert
         input
         showCancel
-        confirmBtnText="Submit"
+        confirmBtnText="Report"
         confirmBtnCssClass="text-base rounded px-4 px-2"
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
         confirmBtnBsStyle="primary"
-        title="Ask Question"
+        title="Report the Event"
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
         placeHolder="Write something"
         onConfirm={this.onRecieveInput}
         onCancel={this.hideAlert}
       >
-        Write the questions you have:
+        Explain reason for Report :
       </SweetAlert>
     );
 
@@ -53,13 +68,13 @@ export default class SweetAlertModal extends Component {
   }
   render() {
     return (
-      <div className="sweet-alert-container ">
+      <div className="sweet-alert-container inline-block">
         <button
-          type="button"
-          onClick={() => this.deleteThisGoal()}
-          className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta"
+          className="ml-2"
+          title="Report this Event"
+          onClick={() => this.reportThisEvent()}
         >
-          <i class="fas fa-user-plus"></i> Ask
+          <i className="fas fa-flag text-sm text-gray-500" />
         </button>
 
         {this.state.alert}

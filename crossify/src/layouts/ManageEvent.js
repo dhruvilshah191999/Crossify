@@ -14,6 +14,7 @@ import Preview from "views/eventMangement/PreviewSettings";
 import QnASettings from "views/eventMangement/QnASettings";
 import General from "views/eventMangement/GeneralSettings";
 import Details from "views/eventMangement/DetailsSettings";
+import Reports from "views/eventMangement/ReportSettings";
 import Attendees from "views/eventMangement/AttendeesSettings";
 
 // import Tables from "views/admin/Tables.js";
@@ -36,6 +37,7 @@ export default function Admin() {
             <Route path="/manage/event/preview/:id" exact component={Preview} />
             <Route path="/manage/event/general/:id" exact component={General} />
             <Route path="/manage/event/details/:id" exact component={Details} />
+            <Route path="/manage/event/reports/:id" exact component={Reports} />
             <Route
               path="/manage/event/attendees/:id"
               exact
@@ -47,10 +49,7 @@ export default function Admin() {
               component={QnASettings}
             />
 
-            <Redirect
-              from="/manage/event/:id"
-              to="/manage/event/general/:id"
-            />
+            <Redirect from="/manage/event/:id" to="/manage/event/general/:id" />
           </Switch>
           <FooterAdmin />
         </div>

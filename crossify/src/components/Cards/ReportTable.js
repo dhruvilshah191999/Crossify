@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   useTable,
   useFilters,
@@ -7,9 +7,9 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
+
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import EventReview from "components/Modals/EventReview";
-import RequestForEvent from "components/Modals/RequestForEvent";
+import ViewReport from "components/Modals/ViewReport";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -88,156 +88,154 @@ function SelectColumnFilter({
 
 export default function App() {
   const openModal = () => {
-    ModalManager.open(<EventReview onRequestClose={() => true} />);
-  };
-  const openModal2 = () => {
-    ModalManager.open(<RequestForEvent onRequestClose={() => true} />);
+    ModalManager.open(<ViewReport onRequestClose={() => true} />);
   };
   const color = "light";
   const data = React.useMemo(
     () => [
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
+        userName: "Cricket Tournament",
         status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
+        userName: "Cricket Tournament",
+        status: "replied",
         date: "11/2/2000",
         location: "Ahmedabad",
-        status: "approved",
+        description: "approved",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
+        userName: "Cricket Tournament",
         status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
+        userName: "Cricket Tournament",
         status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
+        userName: "Cricket Tournament",
+        status: "replied",
         date: "11/2/2000",
         location: "Ahmedabad",
-        status: "approved",
+        description: "approved",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "completed",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
+        userName: "Cricket Tournament",
         status: "rejected",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
         actions: " ",
       },
       {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
+        userName: "Cricket Tournament",
+        status: "rejected",
         date: "11/2/2000",
         location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "replied",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "rejected",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
         status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "replied",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "replied",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "replied",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        userName: "Cricket Tournament",
+        status: "pending",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description:
+          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
         actions: " ",
       },
     ],
@@ -247,37 +245,40 @@ export default function App() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Event Name",
-        accessor: "eventName", // accessor is the "key" in the data
+        Header: "Issued By",
+        accessor: "userName", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
         },
       },
+
       {
-        Header: "Organizer",
-        accessor: "organizerName",
+        Header: "Description",
+        accessor: "description", // accessor is the "key" in the data
+        Cell: ({ value }) => (
+          <div className="break-words max-w-210-px overflow-hidden">
+            {value}
+          </div>
+        ),
         disableFilters: true,
       },
       {
-        Header: "Date",
+        Header: "Issue Date",
         accessor: "date", // accessor is the "key" in the data
 
         disableFilters: true,
       },
       {
         Header: "Status",
-        accessor: "status", // accessor is the "key" in the data
-        Filter: SelectColumnFilter,
-        filter: "includes",
+        accessor: "status",
+        disableFilters: true,
         Cell: ({ value }) => {
           var myColor = "red";
           if (value === "pending") {
             myColor = "orange";
-          } else if (value === "approved") {
+          } else if (value === "replied") {
             myColor = "green";
-          } else if (value === "completed") {
-            myColor = "blue";
           }
           // return (
           //   <span
@@ -309,28 +310,18 @@ export default function App() {
             </>
           );
         },
-        disableFilters: true,
       },
-      {
-        Header: "Location",
-        accessor: "location", // accessor is the "key" in the data
-
-        disableFilters: true,
-      },
-
       {
         Header: "Actions",
         accessor: "actions", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
-          <div className="flex flex-row  justify-evenly">
-            <button title="Approve">
-              <i class="fas fa-vote-yea text-green-500 text-lg focus:outline-none"></i>
+          <div className="flex ">
+            <button title="Reply" className="ml-4 mr-2" onClick={openModal}>
+              <i class="fas fa-reply text-blue-500  focus:outline-none text-lg "></i>
             </button>
-            <button className="ml-2" title="Reject">
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
-            </button>
-            <button className="ml-2" title="More" onClick={openModal}>
-              <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
+
+            <button className="ml-4" title="Delete">
+              <i class="fas fa-trash text-red-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -342,17 +333,12 @@ export default function App() {
   );
   const defaultColumn = React.useMemo(
     () => ({
-      // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
   );
   const filterTypes = React.useMemo(
     () => ({
-      // Add a new fuzzyTextFilterFn filter type.
-
-      // Or, override the default text filter to use
-      // "startWith"
       text: (rows, id, filterValue) => {
         return rows.filter((row) => {
           const rowValue = row.values[id];
@@ -370,17 +356,14 @@ export default function App() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+
     prepareRow,
     state,
-    visibleColumns,
+
     preGlobalFilteredRows,
     setGlobalFilter,
     setFilter,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
-
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -388,8 +371,8 @@ export default function App() {
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
+    setPagestatus,
+    state: { pageIndex, pagestatus },
   } = useTable(
     {
       columns,
@@ -405,16 +388,11 @@ export default function App() {
     usePagination
   );
 
-  // useEffect(() => {
-  //   // This will now use our custom filter for age
-  //   setFilter("status", SelectColumnFilter);
-  // }, [SelectColumnFilter]);
-
   return (
     <>
       <div
         className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
+          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow rounded " +
           (color === "light" ? "bg-white" : "bg-blue-900 text-white")
         }
       >
@@ -430,18 +408,10 @@ export default function App() {
                       (color === "light" ? "text-gray-800" : "text-white")
                     }
                   >
-                    Events Table
+                    Reports
                   </h3>
                 </div>
                 <div className="ml-auto">
-                  <button
-                    className="bg-green-500 text-white  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-4 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => openModal2()}
-                  >
-                    <i class="fas fa-plus"></i>&nbsp; Create Event
-                  </button>
-
                   <i class="fas fa-filter mr-4 text-gray-700 "></i>
                   <select
                     className="border bg-white rounded px-3 py-1 outline-none text-sm"
@@ -454,10 +424,10 @@ export default function App() {
                       {/* <i className="fas fa-circle text-orange-500 mr-2"></i>{" "}  maybe later we can add that*/}
                       Pending
                     </option>
-                    <option value="approved">Apporved</option>
+                    <option value="replied">Replied</option>
                     <option value="rejected">Rejected</option>
-                    <option value="completed">Completed</option>
                   </select>
+                  <span className="ml-2 "></span>
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     preGlobalFilteredRows={preGlobalFilteredRows}
@@ -529,15 +499,15 @@ export default function App() {
             <div className="mr-auto pl-4">
               Show entries : &nbsp;&nbsp;
               <select
-                value={pageSize}
+                value={pagestatus}
                 onChange={(e) => {
-                  setPageSize(Number(e.target.value));
+                  setPagestatus(Number(e.target.value));
                 }}
                 className="border bg-white rounded px-3 py-1 outline-none text-sm"
               >
-                {[10, 20, 30, 40, 50].map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    {pageSize}
+                {[10, 20, 30, 40, 50].map((pagestatus) => (
+                  <option key={pagestatus} value={pagestatus}>
+                    {pagestatus}
                   </option>
                 ))}
               </select>

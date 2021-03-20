@@ -8,6 +8,8 @@ import MapContainer from "components/Maps/MapCode";
 import AskQuestion from "components/Modals/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/Modals/JoinEventButton";
+import ReportEventButton from "components/Modals/ReportEventButton";
+import { store } from "react-notifications-component";
 
 // todo For Golu : MapContainer has to changed because we only want Map which shows the Event latitude and Longitute
 
@@ -110,6 +112,10 @@ export default function EventPage(props) {
                     style={{ textTransform: "capitalize" }}
                   >
                     {eventdetails.event_name}
+                    <span>
+                      {" "}
+                      <ReportEventButton></ReportEventButton>
+                    </span>
                   </h1>
                 </div>
               </div>

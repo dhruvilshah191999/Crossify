@@ -344,6 +344,9 @@
 .max-w-370-px {
   max-width: 370px;
 }
+.w-800px {
+  width: 800px !important;
+}
 
 .leading-wide {
   line-height: 1.8;
