@@ -3,8 +3,10 @@ import React from "react";
 import Navbar from "components/Navbars/AuthNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import ProfileDetails from "components/Cards/ProfileDetails";
-
 export default function Profile() {
+  const onreturn = () => {
+    window.location.href = "/profile/edit/myprofile";
+  }
   return (
     <>
       <main className="profile-page">
@@ -15,7 +17,7 @@ export default function Profile() {
                 <button
                   className=" float-right mt-6 mr-8 hover:bg-blue-300 bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="button"
-                  // onClick={(e) => onSubmit(e)}
+                  onClick={()=>onreturn()}
                 >
                   Edit &nbsp; <i className="fas fa-edit"></i>
                 </button>

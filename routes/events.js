@@ -323,24 +323,38 @@ router.post("/add-interest", async function (req, res, next) {
 
 router.post("/event-details", async function (req, res, next) {
   let { event_id } = req.body;
-  let userphoto = [];
-  var events = event_details.findOne({ _id: ObjectId(event_id), is_active: true });
-  await events.exec(async (err, data) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(500).send(error);
-    } else {
-      var finaldata = {
-        event_data: data,
-        is_error: false,
-        message: "Data Send",
-      };
-      return res.status(200).send(finaldata);
-    }
-  });
+  event_details.aggregate([
+      {
+        $lookup: {
+          from: "club_details",
+          localField: "club_id",
+          foreignField: "_id",
+          as: "club_details",
+        },
+      },
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(event_id),
+          is_active: true,
+        },
+      },
+    ])
+    .exec(async (err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else {
+        var finaldata = {
+          event_data: data[0],
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
 });
 
 router.post("/checklikes", auth, async function (req, res, next) {
@@ -631,4 +645,98 @@ router.post("/checkevent", auth, async function (req, res, next) {
   });
 });
 
+router.post("/get-profiles-of-events", async function (req, res, next) {
+  let { event_id } = req.body;
+  event_details
+    .aggregate([
+      {
+        $lookup: {
+          from: "user_details",
+          localField: "participants_list.user",
+          foreignField: "_id",
+          as: "user_details",
+        },
+      },
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(event_id),
+          is_active: true,
+        },
+      },
+      {
+        $project: {
+          "user_details.profile_photo": 1,
+          "user_details.fname": 1,
+          "user_details.lname": 1,
+        },
+      },
+    ])
+    .exec(async (err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else {
+        var array = [];
+        data[0].user_details.forEach((e) => {
+          var name = e.fname + " " + e.lname;
+          var object = {
+            profile_photo: e.profile_photo,
+            name
+          }
+          array.push(object);
+        });
+        var finaldata = {
+          event_data: array,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+});
+
+router.post("/ask-question",auth, async function (req, res, next) {
+  var { event_id, question } = req.body;
+
+  try {
+    var user_name = await user_details
+      .findById({ _id: ObjectId(req.user._id) })
+      .then(function (data) {
+        return data.fname+" "+data.lname;
+      });
+  } catch (e) {
+    console.log(e);
+  }
+  var object = {
+    question: question,
+    askedby: user_name,
+    date: new Date(),
+    status: "pending",
+    privacy: "public",
+  };
+  var update = event_details.findOneAndUpdate(
+    { _id: ObjectId(event_id) },
+    {
+      $push: { faq: object },
+    }
+  );
+  await update.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(error);
+    } else {
+      var finaldata = {
+        is_error: false,
+        message: "Data Updated",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
 module.exports = router;

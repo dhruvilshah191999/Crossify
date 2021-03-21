@@ -445,9 +445,9 @@ router.post("/userarrived", async function (req, res, next) {
     user_id
   } = req.body;
 
-  var check = event_details.findOneAndUpdate(
+  var check = event_details.update(
     { _id: ObjectId(event_id), "participants_list.user": ObjectId(user_id) },
-    { $set: { "participants_list.$.status": "Arrived" } }
+    { $set: { "participants_list.$.status": "coming" } }
   )
 
   await check.exec((err, data) => {
@@ -475,4 +475,33 @@ router.post("/userarrived", async function (req, res, next) {
   });
 });
 
+router.post("/Cancelled", async function (req, res, next) {
+  var { event_id, user_id } = req.body;
+  var check = event_details.update(
+    { _id: ObjectId(event_id), "participants_list.user": ObjectId(user_id) },
+    { $set: { "participants_list.$.status": "Cancelled" } }
+  );
+
+  await check.exec((err, data) => {
+    if (err) {
+      var err = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(err);
+    } else if (data) {
+      var finaldata = {
+        is_error: false,
+        message: "value updated succesfully",
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var err = {
+        is_error: true,
+        message: "wrong event id or you may not have access to update ",
+      };
+      return res.status(404).send(err);
+    }
+  });
+});
 module.exports = router;

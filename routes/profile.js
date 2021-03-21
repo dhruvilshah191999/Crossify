@@ -10,46 +10,7 @@ const { ObjectID, ObjectId } = require("bson");
 var router = express.Router();
 
 router.post("/get-user", auth, async function (req, res, next) {
-    var result = user_details.findOne({ _id: req.user._id, is_active: 1 });
-    await result.exec((err, data) => {
-        if (err) {
-          var error = {
-            is_error: true,
-            message: err.message,
-          };
-          return res.status(600).send(error);
-        }
-        else if (result == null) {
-            var error = {
-              is_error: true,
-              message: "User Not Found",
-            };
-            return res.status(600).send(error);
-        }
-        else {
-            var finaldata = {
-              data:data,
-              is_error: false,
-              message: "Data Send",
-            };
-            return res.status(200).send(finaldata);
-        }
-    })
-});
-
-router.post("/update-user", auth, async function (req, res, next) {
-  var { username, email, fname, lname, address, state, city, about_me, pincode } = req.body;
-  var result = user_details.update({ _id: req.user._id, is_active: 1 }, {
-    username,
-    email,
-    fname,
-    lname,
-    address,
-    city,
-    state,
-    about_me,
-    pincode
-  });
+  var result = user_details.findOne({ _id: req.user._id, is_active: 1 });
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -65,7 +26,59 @@ router.post("/update-user", auth, async function (req, res, next) {
       return res.status(600).send(error);
     } else {
       var finaldata = {
-        update:true,
+        data: data,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/update-user", auth, async function (req, res, next) {
+  var {
+    username,
+    email,
+    fname,
+    lname,
+    address,
+    state,
+    city,
+    about_me,
+    pincode,
+    occupation,
+  } = req.body;
+  var result = user_details.update(
+    { _id: req.user._id, is_active: 1 },
+    {
+      username,
+      email,
+      fname,
+      lname,
+      address,
+      city,
+      state,
+      about_me,
+      pincode,
+      occupation,
+    }
+  );
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (result == null) {
+      var error = {
+        is_error: true,
+        message: "User Not Found",
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        update: true,
         is_error: false,
         message: "Data Send",
       };
@@ -75,14 +88,8 @@ router.post("/update-user", auth, async function (req, res, next) {
 });
 
 router.post("/update-password", async function (req, res, next) {
-  var {
-    email,
-    password,
-    new_password
-  } = req.body;
-  var result = user_details.findOne(
-    { email, is_active: 1 }
-  );
+  var { email, password, new_password } = req.body;
+  var result = user_details.findOne({ email, is_active: 1 });
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -99,7 +106,10 @@ router.post("/update-password", async function (req, res, next) {
     } else {
       if (bcrypt.compareSync(password, data.password)) {
         new_password = bcrypt.hashSync(new_password, 10);
-        var final = user_details.update({ email, is_active: 1 }, { password:new_password });
+        var final = user_details.update(
+          { email, is_active: 1 },
+          { password: new_password }
+        );
         final.exec((err, data) => {
           if (err) {
             var error = {
@@ -107,8 +117,7 @@ router.post("/update-password", async function (req, res, next) {
               message: err.message,
             };
             return res.status(600).send(error);
-          }
-          else {
+          } else {
             var finaldata = {
               update: true,
               is_error: false,
@@ -116,9 +125,8 @@ router.post("/update-password", async function (req, res, next) {
             };
             return res.status(200).send(finaldata);
           }
-        })
-      }
-      else {
+        });
+      } else {
         var error = {
           is_error: true,
           message: "Old Password Not Matched",
@@ -130,24 +138,19 @@ router.post("/update-password", async function (req, res, next) {
 });
 
 router.post("/update-social", auth, async function (req, res, next) {
-  var {
-    facebook,
-    linkedin,
-    twitter,
-    instagram,
-  } = req.body;
+  var { facebook, linkedin, twitter, instagram } = req.body;
 
   var object = {
     facebook,
     linkedin,
     twitter,
-    instagram
-  }
+    instagram,
+  };
 
   var result = user_details.update(
     { _id: req.user._id, is_active: 1 },
     {
-      social_media:object
+      social_media: object,
     }
   );
   await result.exec((err, data) => {
@@ -177,8 +180,8 @@ router.post("/update-social", auth, async function (req, res, next) {
 router.post("/get-upcoming-event", auth, async function (req, res, next) {
   var result = event_details.find({
     "participants_list.user": ObjectId(req.user._id),
-    date:{$gt: new Date()},
-    is_active: 1
+    date: { $gt: new Date() },
+    is_active: 1,
   });
   await result.exec((err, data) => {
     if (err) {
@@ -187,7 +190,7 @@ router.post("/get-upcoming-event", auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    }else {
+    } else {
       var finaldata = {
         data: data,
         is_error: false,
@@ -273,7 +276,7 @@ router.post("/get-all-event", auth, async function (req, res, next) {
           status = "completed";
         }
         var object = {
-          photo:e.photo,
+          photo: e.photo,
           eventName: e.event_name,
           registerations: e.participants_list.length,
           date: e.date,
@@ -302,8 +305,7 @@ router.post("/check-event", auth, async function (req, res, next) {
       message: "User Not Found",
     };
     return res.status(200).send(error);
-  }
-  else {
+  } else {
     var result = event_details.findOne({
       _id: ObjectId(event_id),
       is_active: 1,
@@ -330,8 +332,7 @@ router.post("/check-event", auth, async function (req, res, next) {
             message: "User Not Found",
           };
           return res.status(200).send(error);
-        }
-        else {
+        } else {
           var finaldata = {
             check: true,
             is_error: false,
@@ -344,4 +345,89 @@ router.post("/check-event", auth, async function (req, res, next) {
   }
 });
 
+router.post("/MyProfile", auth, async function (req, res, next) {
+  var check = user_details.findOne(
+    { _id: ObjectId(req.user._id) },
+    {
+      _id: 0,
+      fav_club: 0,
+      fav_event: 0,
+      inbox: 0,
+      clubs: 0,
+      events: 0,
+      password: 0,
+    }
+  );
+
+  await check.exec(async (err, data) => {
+    if (err) {
+      var err = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(err);
+    } else if (data==null && data.length==0) {
+      var err = {
+        is_error: true,
+        message: "wrong event id or you may not have access to update ",
+      };
+      return res.status(404).send(err);
+    } else {
+      let tag = [];
+      var tags = category_details.find({ _id: { $in: data.interest_id } }, { tags: 1 });
+      await tags.exec((err, data2) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err,
+          };
+          return res.status(500).send(error);
+        } else {
+          data2.forEach((element) => {
+            tag.push.apply(tag, element.tags);
+          });
+          var finaldata = {
+            data: data,
+            tag:tag,
+            is_error: false,
+            message: "value send succesfully",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+  });
+});
+
+router.post("/get-photo-name", auth, async function (req, res, next) {
+  var result = club_details.find({
+    creator_id: ObjectId(req.user._id),
+  });
+  await result.exec((err, data) => {
+    console.log(req.user._id);
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data == null || data.length == 0) {
+      var error = {
+        check: false,
+        is_error: true,
+        message: "You hasn't created any club",
+      };
+      return res.status(200).send(error);
+    } else {
+      var finaldata = { message: [], is_error: false };
+      data.forEach((element) => {
+        finaldata.message.push({
+          profile_photo: element.profile_photo,
+          club_name: element.club_name,
+        });
+      });
+      return res.status(200).send(finaldata);
+    }
+  });
+});
 module.exports = router;
