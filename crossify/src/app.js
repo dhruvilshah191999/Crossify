@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import ReactNotification from "react-notifications-component";
+import { store as notify } from "react-notifications-component";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
 import "assets/styles/customcss.css";
 import "react-notifications-component/dist/theme.css";
+import "assets/styles/mediaqueries.css";
 import "../node_modules/animate.css/animate.min.css";
 //import MapContainer from "./app";
 // layouts
@@ -106,7 +108,6 @@ export default function App() {
   }, []);
   return (
     <BrowserRouter>
-      <ReactNotification />
       <Routing />
     </BrowserRouter>
   );

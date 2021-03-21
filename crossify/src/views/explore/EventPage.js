@@ -83,7 +83,7 @@ export default function EventPage(props) {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col  container  event-container">
+        <div className="flex flex-col   lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
             className="flex flex-row flex-wrap mt-20 justify-center items-start"
@@ -232,7 +232,7 @@ export default function EventPage(props) {
                   </button> */}
                 </div>
                 <div
-                  className="mt-1 text-lg  w-3/4 leading-relaxed"
+                  className="mt-1 text-lg  lg:w-3/4 leading-relaxed"
                   style={{ overflowY: "auto", maxHeight: "400px" }}
                 >
                   {eventdetails.faq.map((el, i) => {
@@ -259,7 +259,7 @@ export default function EventPage(props) {
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Location
                 </div>
-                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
+                <div className="mt-1 text-lg text-gray-700 lg:w-3/4 leading-relaxed">
                   <MapContainer
                     lat={eventdetails.latitude}
                     long={eventdetails.longitude}
