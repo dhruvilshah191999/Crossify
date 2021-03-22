@@ -5,6 +5,7 @@ var category_details = require("../modules/interest_category");
 var event_details = require("../modules/event_details");
 var user_details = require("../modules/user_details");
 var club_details = require("../modules/club_details");
+var reports_details = require("../modules/reports_details");
 const { ObjectID, ObjectId } = require("bson");
 var router = express.Router();
 
@@ -857,4 +858,69 @@ router.post("/ask-question",auth, async function (req, res, next) {
     }
   });
 });
+
+router.post("/reports", auth, async function (req, res, next) {
+  var { event_id, description } = req.body;
+  var object = {
+    report: description,
+    date: new Date(),
+    status:"pending"
+  }
+  var check = reports_details.find({ user_id: ObjectId(req.user._id), event_id: ObjectId(event_id), is_active: true });
+  await check.exec(async (err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    }
+    else if (data.length!=0) {
+      var add = reports_details.update(
+        {
+          user_id: ObjectId(req.user._id),
+          event_id: ObjectId(event_id),
+          is_active: true,
+        },
+        {
+          $push: {
+            reports: object
+          },
+        }
+      );
+      await add.exec((err, data2) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        }
+        else {
+          var finaldata = {
+            is_error: false,
+            message: "Data Added",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+    else {
+      var array = [];
+      array.push(object);
+      var reports = new reports_details({
+        event_id: ObjectId(event_id),
+        user_id: ObjectId(req.user._id),
+        reports:array
+      })
+      reports.save();
+      var finaldata = {
+        is_error: false,
+        message: "Data Added",
+      };
+      return res.status(200).send(finaldata);
+    }
+  })
+});
+
 module.exports = router;

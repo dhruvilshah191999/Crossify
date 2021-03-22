@@ -228,7 +228,7 @@ export default function EventPage(props) {
                     {eventdetails.event_name}
                     <span>
                       {" "}
-                      <ReportEventButton></ReportEventButton>
+                      <ReportEventButton event_id={id}></ReportEventButton>
                     </span>
                   </h1>
                 </div>

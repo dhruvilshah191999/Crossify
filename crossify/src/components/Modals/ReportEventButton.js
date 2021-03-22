@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { store } from "react-notifications-component";
+import axios from "axios";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class SweetAlertModal extends Component {
     this.state = {
       alert: null,
       complain: null,
+      event_id:this.props.event_id
     };
   }
 
@@ -19,26 +21,42 @@ export default class SweetAlertModal extends Component {
     });
   };
 
-  onRecieveInput = (inputValue) => {
+  onRecieveInput = async (inputValue) => {
+    const token = localStorage.getItem("jwt");
     inputValue = inputValue.trim();
-    this.setState({
-      alert: null,
-      complain: inputValue,
-    });
-    //todo GOLU process the this thing and if succecess run this
-    store.addNotification({
-      title: "Event Reported  !",
-      message: "Event Owner and Club Moderator can see your complain",
-      type: "danger",
-      insert: "top",
-      container: "bottom-right",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      dismiss: {
-        duration: 5000,
-        // onScreen: true,
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
       },
-    });
+    };
+    var object = {
+      event_id: this.state.event_id,
+      token,
+      description:inputValue
+    };
+    const finaldata = await axios.post("/api/events/reports", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      store.addNotification({
+        title: "Event Reported  !",
+        message: "Event Owner and Club Moderator can see your complain",
+        type: "danger",
+        insert: "top",
+        container: "bottom-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+          // onScreen: true,
+        },
+      });
+      this.setState({
+        alert: null,
+        complain: inputValue,
+      });
+    }
   };
 
   reportThisEvent() {
@@ -82,60 +100,3 @@ export default class SweetAlertModal extends Component {
     );
   }
 }
-
-// import React, { Component } from "react";
-// import ReactDOM from "react-dom";
-// import swal from "sweetalert";
-
-// const DEFAULT_INPUT_TEXT = "Thating";
-
-// export default class MyInput extends Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-//       text: DEFAULT_INPUT_TEXT,
-//     };
-//   }
-
-//   changeText(e) {
-//     let text = e.target.value;
-
-//     this.setState({
-//       text,
-//     });
-
-//     /*
-//      * This will update the value that the confirm
-//      * button resolves to:
-//      */
-//     swal.setActionValue(text);
-//   }
-
-//   render() {
-//     return (
-//       <input value={this.state.text} onChange={this.changeText.bind(this)} />
-//     );
-//   }
-// }
-
-// // We want to retrieve MyInput as a pure DOM node:
-// let wrapper = document.createElement("div");
-// ReactDOM.render(<MyInput />, wrapper);
-// let el = wrapper.firstChild;
-
-// swal({
-//   text: "Write something here:",
-//   content: el,
-//   buttons: {
-//     confirm: {
-//       /*
-//        * We need to initialize the value of the button to
-//        * an empty string instead of "true":
-//        */
-//       value: DEFAULT_INPUT_TEXT,
-//     },
-//   },
-// }).then((value) => {
-//   swal(`You typed: ${value}`);
-// });
