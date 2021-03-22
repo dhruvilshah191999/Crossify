@@ -488,7 +488,9 @@ router.post("/deletelikes", auth, async function (req, res, next) {
 });
 
 router.post("/participate-event",auth,async function(req,res,next){
-  let { event_id } = req.body;
+  let { event_id, current_participants } = req.body;
+  current_participants += 1;
+  console.log(current_participants);
   var object = {
     user: ObjectId(req.user._id),
     date: new Date(),
@@ -496,7 +498,61 @@ router.post("/participate-event",auth,async function(req,res,next){
   };
   var checks = event_details.update(
     {
-      _id: event_id,
+      _id: ObjectId(event_id),
+      is_active: 1,
+    },
+    {
+      $push: { participants_list: object },
+      current_participants: current_participants,
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    }
+    else {
+      var check2= user_details.findOneAndUpdate({
+        _id:ObjectId(req.user._id),
+        is_active:true
+      },{
+        $push: {events:ObjectId(event_id)}
+      })
+      check2.exec((err)=>{
+        if(err){
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        }
+        else{
+          var finaldata = {
+            participated: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+  });
+})
+
+router.post("/participate-event2",auth,async function(req,res,next){
+  let { event_id, current_participants } = req.body;
+  console.log(current_participants);
+  var object = {
+    user: ObjectId(req.user._id),
+    date: new Date(),
+    status:"waiting"
+  };
+  var checks = event_details.update(
+    {
+      _id: ObjectId(event_id),
       is_active: 1,
     },
     {
@@ -540,49 +596,111 @@ router.post("/participate-event",auth,async function(req,res,next){
 })
 
 router.post("/undo-participation-event",auth,async function(req,res,next){
-  let { event_id } = req.body;
-  var checks = event_details.update(
-    {
-      _id: event_id,
-      is_active: 1,
-    },
-    {
-      $pull: { participants_list: { user: ObjectId(req.user._id) } },
-    }
-  );
-  await checks.exec((err, data2) => {
+  let { event_id, current_participants } = req.body;
+  var check = event_details.findOne({
+    _id: ObjectId(event_id),
+    "participants_list": { $elemMatch: { user: ObjectId(req.user._id), status: "waiting" } },
+    is_active: 1,
+  });
+  check.exec(async(err, data) => {
     if (err) {
       var error = {
         is_error: true,
         message: err.message,
       };
       return res.status(600).send(error);
-    } else {
-      var check2= user_details.findOneAndUpdate({
-        _id:ObjectId(req.user._id),
-        is_active:true
-      },{
-        $pull: {events:ObjectId(event_id)}
-      })
-      check2.exec((err)=>{
-        if(err){
+    }
+    else if (data != null) {
+      var checks = event_details.update(
+      {
+        _id: ObjectId(event_id),
+        is_active: 1,
+      },
+      {
+        $pull: { participants_list: { user: ObjectId(req.user._id) } },
+      }
+      );
+      await checks.exec((err, data2) => {
+        if (err) {
           var error = {
             is_error: true,
             message: err.message,
           };
           return res.status(600).send(error);
-        }
-        else{
-          var finaldata = {
-            participated: false,
-            is_error: false,
-            message: "Data Send",
-          };
-          return res.status(200).send(finaldata);
+        } else {
+          var check2 = user_details.findOneAndUpdate({
+            _id: ObjectId(req.user._id),
+            is_active: true
+          }, {
+            $pull: { events: ObjectId(event_id) }
+          })
+          check2.exec((err) => {
+            if (err) {
+              var error = {
+                is_error: true,
+                message: err.message,
+              };
+              return res.status(600).send(error);
+            }
+            else {
+              var finaldata = {
+                participated: false,
+                is_error: false,
+                message: "Data Send",
+              };
+              return res.status(200).send(finaldata);
+            }
+          });
         }
       });
     }
-  });
+    else {
+      current_participants -= 1;
+      var checks = event_details.update(
+      {
+        _id: ObjectId(event_id),
+        is_active: 1,
+      },
+      {
+        $pull: { participants_list: { user: ObjectId(req.user._id) } },
+        current_participants,
+      }
+      );
+      await checks.exec((err, data2) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        } else {
+          var check2 = user_details.findOneAndUpdate({
+            _id: ObjectId(req.user._id),
+            is_active: true
+          }, {
+            $pull: { events: ObjectId(event_id) }
+          })
+          check2.exec((err) => {
+            if (err) {
+              var error = {
+                is_error: true,
+                message: err.message,
+              };
+              return res.status(600).send(error);
+            }
+            else {
+              var finaldata = {
+                participated: false,
+                is_error: false,
+                message: "Data Send",
+              };
+              return res.status(200).send(finaldata);
+            }
+          });
+        }
+      });
+    }
+  })
 })
 
 router.post("/getclub", async function (req, res, next) {

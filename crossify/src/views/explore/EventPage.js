@@ -21,7 +21,7 @@ const Tag = (props) => {
 };
 
 export default function EventPage(props) {
-  const { id } = useParams();
+  var { id } = useParams();
   const [loading, setloading] = useState(false);
   const [like, setLike] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
@@ -307,6 +307,8 @@ export default function EventPage(props) {
               <div className="flex justify-center mt-2">
                 <JoinEventButton
                   eventid={eventdetails._id}
+                  current={eventdetails.current_participants}
+                  max={eventdetails.maximum_participants}
                   check={checkevent}
                 ></JoinEventButton>
               </div>
