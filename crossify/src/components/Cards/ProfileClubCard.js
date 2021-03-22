@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-
+import { notifyCopied, notifyLiked } from "notify";
+//this notification is not working
 function ProfileClubCard(props) {
+  console.log(props.data);
   return (
     <div className="relative bg-white overflow-hidden border-b-4 border-blue-500 mx-4 mb-2 rounded shadow lg:w-1by3">
       <img
@@ -22,12 +24,14 @@ function ProfileClubCard(props) {
           <button
             className="text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
+            onClick={() => notifyLiked()}
           >
             <i className="fas fa-heart"></i>
           </button>
           <button
             className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
+            onClick={() => notifyCopied()}
           >
             <i class="fas fa-share-alt"></i>
           </button>

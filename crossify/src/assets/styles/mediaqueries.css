@@ -8,6 +8,15 @@
   .md\:test {
     width: 33%;
   }
+  .md\:ml-50 {
+    margin-left: 16.5rem;
+  }
+  .md\:show {
+    display: block;
+  }
+  .md\:mt-10 {
+    margin-top: 4.8rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -15,10 +24,36 @@
     margin-left: 7rem;
     margin-right: 5.5rem;
   }
+  .lg\:ml-50 {
+    margin-left: 16.5rem;
+  }
+  .lg\:show {
+    display: block;
+  }
+  .lg\:mx-16 {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+  .lg\:ml-2 {
+    margin-top: 0.5rem;
+  }
+  .lg\:ml-0 {
+    margin-left: 0rem;
+  }
+
+  .lg\:mb-0 {
+    margin-bottom: 0rem;
+  }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1300px) {
   .xl\:test {
     width: 33%;
+  }
+  .xl2\:mt-4 {
+    margin-top: 1rem;
+  }
+  .xl2\:ml-2 {
+    margin-left: 0.5rem;
   }
 }

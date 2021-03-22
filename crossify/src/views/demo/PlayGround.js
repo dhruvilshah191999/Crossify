@@ -76,14 +76,10 @@
 
 // export default Map;
 import React, { Component } from "react";
-import MarkerMap from "components/Maps/ClickableMarkers";
+// import MarkerMap from "components/Maps/ClickableMarkers";
 class PlayGround extends Component {
   render() {
-    return (
-      <div>
-        <MarkerMap></MarkerMap>
-      </div>
-    );
+    return <div>{/* <MarkerMap></MarkerMap> */}</div>;
   }
 }
 

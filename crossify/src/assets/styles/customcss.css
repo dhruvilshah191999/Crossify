@@ -393,6 +393,10 @@
   margin-left: 4rem;
   margin-right: 4rem;
 }
+.mx-8 {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
 
 .mt-36 {
   margin-top: 12rem;
@@ -955,4 +959,22 @@ body::-webkit-scrollbar-thumb {
   /* roundness of the scroll thumb */
   border: 3px solid white;
   /* creates padding around scroll thumb */
+}
+
+div.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  right: 0;
+}
+
+.map {
+  position: fixed !important;
+}
+
+.view-map {
+  position: relative !important;
+}
+
+.z-51 {
+  z-index: 51;
 }

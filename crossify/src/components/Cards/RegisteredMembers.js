@@ -1,21 +1,25 @@
 import React, { Component, useState } from "react";
+import { Link } from "react-router-dom";
 import demoImg1 from "../../assets/img/pp1.jpg";
 import demoImg2 from "../../assets/img/pp3.jpg";
 import demoImg3 from "../../assets/img/pp4.jpg";
 
 const Member = (props) => {
   return (
-    <div class="flex items-center justify-between my-4 w-24">
-      <div class="w-16">
-        <img class="w-16 h-16 rounded-full" src={props.image} alt="img" />
-      </div>
-      <div class="flex-1 pl-4">
-        <div class="text-gray-700 font-semibold">{props.name}</div>
-        <div class="text-gray-600 font-normal text-base">
-          {props.designation}
+    //todo GOLU set profile link in this one
+    <Link to="\">
+      <div class="flex items-center justify-between my-4 w-24 hover:bg-gray-200 rounded-lg">
+        <div class="w-16">
+          <img class="w-16 h-16 rounded-full" src={props.image} alt="img" />
+        </div>
+        <div class="flex-1 pl-4">
+          <div class="text-gray-700 font-semibold">{props.name}</div>
+          <div class="text-gray-600 font-normal text-base">
+            {props.designation}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -40,7 +44,7 @@ class RegisteredMembers extends Component {
   };
   render() {
     return (
-      <div className="mt-1 text-lg text-gray-800 font-semibold w-3/4 leading-relaxed">
+      <div className="mt-1 text-lg text-gray-800 font-semibold lg:w-3/4 leading-relaxed">
         <div className="flex flex-row">
           <div className="mt-2">{this.props.peopleGoing} booked so far</div>
           <div class="relative flex w-1/2 flex-wrap items-stretch mb-2 ml-auto">

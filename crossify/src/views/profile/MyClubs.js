@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ProfileEventClub from "components/Cards/ProfileEventCard";
+import ProfileClubCard from "components/Cards/ProfileClubCard";
 import axios from "axios";
 
 const getSegment = (totalEvents, curIndex, eventPerPage) => {
@@ -10,23 +10,23 @@ const getSegment = (totalEvents, curIndex, eventPerPage) => {
 export default function MyClubs() {
   const token = localStorage.getItem("jwt");
   const [tabIndex, toggleTabIndex] = useState(1);
-  const [likedClubs, setlikedClubs] = useState([]);
-  const [joinedClubs, setjoinedClubs] = useState([]);
-  const [managingClubs, setmanagingClubs] = useState([]);
+  const [likedClubs, setLikedClubs] = useState([]);
+  const [manageClubs, setManageClubs] = useState([]);
+  const [joinedClubs, setJoinedClubs] = useState([]);
   const [likedIndex, setLikedIndex] = useState(1);
-  const [backIndex, setBackIndex] = useState(1);
-  const [managingIndex, setmanagingIndex] = useState(1);
+  const [manageIndex, setManageIndex] = useState(1);
+  const [joinedIndex, setJoinedIndex] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const eventPerPage = 6;
   const handleClickLiked = (event) => {
     setLikedIndex(Number(event.target.id));
   };
-  const handleClickUpcoming = (event) => {
-    setmanagingIndex(Number(event.target.id));
+  const handleClickJoined = (event) => {
+    setJoinedIndex(Number(event.target.id));
   };
 
-  const handleClickBack = (event) => {
-    setBackIndex(Number(event.target.id));
+  const handleClickManage = (event) => {
+    setManageIndex(Number(event.target.id));
   };
   const searchHandler = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
@@ -37,7 +37,7 @@ export default function MyClubs() {
     }
     return false;
   };
-  const pastEvents = joinedClubs.filter((el) => {
+  const filteredManageClubs = manageClubs.filter((el) => {
     let search1 = el.event_name.toLowerCase();
     let search2 = el.location.toLowerCase();
     let search3 = el.tags;
@@ -51,7 +51,7 @@ export default function MyClubs() {
 
     return false;
   });
-  const newEvents = managingClubs.filter((el) => {
+  const filteredJoinedClubs = joinedClubs.filter((el) => {
     let search1 = el.event_name.toLowerCase();
     let search2 = el.location.toLowerCase();
     let search3 = el.tags;
@@ -65,49 +65,58 @@ export default function MyClubs() {
 
     return false;
   });
-  const likeEvents = likedClubs.filter((el) => {
+  const filteredLikedClubs = likedClubs.filter((el) => {
     let search1 = el.event_name.toLowerCase();
     let search2 = el.location.toLowerCase();
     let search3 = el.tags;
-    if (
+    return (
       search1.indexOf(searchQuery) !== -1 ||
       search2.indexOf(searchQuery) !== -1 ||
       search3.some(isPresent)
-    ) {
-      return true;
-    }
-
-    return false;
+    );
   });
-
-  const currentPastEvents = getSegment(pastEvents, backIndex, eventPerPage);
-  const currentmanagingClubs = getSegment(
-    newEvents,
-    managingIndex,
+  const currentfilteredManageClubs = getSegment(
+    filteredManageClubs,
+    manageIndex,
     eventPerPage
   );
-  const currentlikedClubs = getSegment(likeEvents, likedIndex, eventPerPage);
+  const currentjoinedClubs = getSegment(
+    filteredJoinedClubs,
+    joinedIndex,
+    eventPerPage
+  );
+  const currentlikedClubs = getSegment(
+    filteredLikedClubs,
+    likedIndex,
+    eventPerPage
+  );
 
-  const rendermanagingClubs = currentmanagingClubs.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
+  const renderjoinedClubs = currentjoinedClubs.map((el, index) => {
+    return <ProfileClubCard data={el} key={el._id}></ProfileClubCard>;
   });
-  const renderPastEvents = currentPastEvents.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
-  });
+  const renderfilteredManageClubs = currentfilteredManageClubs.map(
+    (el, index) => {
+      return <ProfileClubCard data={el} key={el._id}></ProfileClubCard>;
+    }
+  );
   const renderlikedClubs = currentlikedClubs.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
+    return <ProfileClubCard data={el} key={el._id}></ProfileClubCard>;
   });
 
   // Logic for displaying page numbers
-  const pageNumbersOld = [];
-  for (let i = 1; i <= Math.ceil(pastEvents.length / eventPerPage); i++) {
-    pageNumbersOld.push(i);
+  const pagesManage = [];
+  for (
+    let i = 1;
+    i <= Math.ceil(filteredManageClubs.length / eventPerPage);
+    i++
+  ) {
+    pagesManage.push(i);
   }
 
-  var renderPageNumbersOld = pageNumbersOld.map((number) => {
+  var renderpagesManage = pagesManage.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == backIndex) {
+    if (number == manageIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -115,22 +124,26 @@ export default function MyClubs() {
       <li
         key={number}
         id={number}
-        onClick={handleClickBack}
+        onClick={handleClickManage}
         className={classNames}
       >
         {number}
       </li>
     );
   });
-  const pageNumbersNew = [];
-  for (let i = 1; i <= Math.ceil(newEvents.length / eventPerPage); i++) {
-    pageNumbersNew.push(i);
+  const pagesJoined = [];
+  for (
+    let i = 1;
+    i <= Math.ceil(filteredJoinedClubs.length / eventPerPage);
+    i++
+  ) {
+    pagesJoined.push(i);
   }
 
-  var renderPageNumbersNew = pageNumbersNew.map((number) => {
+  var renderpagesJoined = pagesJoined.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == managingIndex) {
+    if (number == joinedIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -138,19 +151,23 @@ export default function MyClubs() {
       <li
         key={number}
         id={number}
-        onClick={handleClickUpcoming}
+        onClick={handleClickJoined}
         className={classNames}
       >
         {number}
       </li>
     );
   });
-  const pageNumbersLiked = [];
-  for (let i = 1; i <= Math.ceil(likeEvents.length / eventPerPage); i++) {
-    pageNumbersLiked.push(i);
+  const pagesLiked = [];
+  for (
+    let i = 1;
+    i <= Math.ceil(filteredLikedClubs.length / eventPerPage);
+    i++
+  ) {
+    pagesLiked.push(i);
   }
 
-  var renderPageNumbersLiked = pageNumbersLiked.map((number) => {
+  var renderpagesLiked = pagesLiked.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
     if (number == likedIndex) {
@@ -169,8 +186,8 @@ export default function MyClubs() {
     );
   });
 
-  if (pageNumbersOld.length == 0) {
-    renderPageNumbersOld = (
+  if (pagesManage.length == 0) {
+    renderpagesManage = (
       <div
         className="flex justify-center content-center"
         style={{ height: 400 }}
@@ -194,8 +211,8 @@ export default function MyClubs() {
       </div>
     );
   }
-  if (pageNumbersLiked.length == 0) {
-    renderPageNumbersLiked = (
+  if (pagesLiked.length == 0) {
+    renderpagesLiked = (
       <div
         className="flex justify-center content-center"
         style={{ height: 400 }}
@@ -219,8 +236,8 @@ export default function MyClubs() {
       </div>
     );
   }
-  if (pageNumbersNew.length == 0) {
-    renderPageNumbersNew = (
+  if (pagesJoined.length == 0) {
+    renderpagesJoined = (
       <div
         className="flex justify-center content-center"
         style={{ height: 400 }}
@@ -263,7 +280,7 @@ export default function MyClubs() {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        setmanagingClubs(finaldata.data.data);
+        setJoinedClubs(finaldata.data.data);
       }
     }
 
@@ -286,7 +303,7 @@ export default function MyClubs() {
         console.log(finaldata.data.message);
       } else {
         console.log(finaldata.data.data);
-        setlikedClubs(finaldata.data.data);
+        setLikedClubs(finaldata.data.data);
       }
     }
 
@@ -308,7 +325,7 @@ export default function MyClubs() {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        setjoinedClubs(finaldata.data.data);
+        setManageClubs(finaldata.data.data);
       }
     }
 
@@ -320,7 +337,7 @@ export default function MyClubs() {
   return (
     <>
       <div className="relative flex justify-center  text-sm -mt-20">
-        <div>
+        <div className="ml-6">
           <button
             className={
               tabIndex === 0
@@ -329,7 +346,8 @@ export default function MyClubs() {
             }
             onClick={() => toggleTabIndex(0)}
           >
-            <i class="fas fa-history hover:text-white"></i>&nbsp; Past Events
+            <i class="fas fa-heart hover:text-offwhite hover:text-offwhite"></i>
+            &nbsp; Liked
           </button>
           <button
             className={
@@ -340,7 +358,7 @@ export default function MyClubs() {
             onClick={() => toggleTabIndex(1)}
           >
             {" "}
-            <i class="fas fa-heart hover:text-offwhite "></i>&nbsp; Liked
+            <i class="fas fa-sliders-h hover:text-offwhite"></i>&nbsp; Managing
           </button>
 
           <button
@@ -352,28 +370,38 @@ export default function MyClubs() {
             onClick={() => toggleTabIndex(2)}
           >
             {" "}
-            <i class="fas fa-glass-cheers hover:text-offwhite"></i>&nbsp;
-            Upcoming
+            <i class="fab fa-fort-awesome hover:text-offwhite"></i>&nbsp; Joined
           </button>
+        </div>
+        <div class="bg-white shadow  ml-auto mr-8 flex border border-beta rounded-lg">
+          <span class="w-auto flex justify-end items-center text-gray-500 p-2">
+            <i className="fas fa-search text-beta"></i>
+          </span>
+          <input
+            class="w-full rounded-lg py-2"
+            type="text"
+            placeholder="Search Event..."
+            onChange={searchHandler}
+          />
         </div>
       </div>
       <div>
-        <div class="ml-4 mt-10 bg-gray-200 flex flex-col flex-wrap lg:flex-row">
+        <div class="ml-4 mt-10 bg-gray-200 flex flex-wrap flex-row">
           {tabIndex === 2
-            ? rendermanagingClubs
-            : tabIndex === 1
+            ? renderjoinedClubs
+            : tabIndex === 0
             ? renderlikedClubs
-            : renderPastEvents}
+            : renderfilteredManageClubs}
         </div>
       </div>
       <div className="py-2 justify-center flex">
         <div className="block">
           <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
-            {tabIndex == 0
-              ? renderPageNumbersOld
-              : tabIndex == 1
-              ? renderPageNumbersLiked
-              : renderPageNumbersNew}
+            {tabIndex == 1
+              ? renderpagesManage
+              : tabIndex == 0
+              ? renderpagesLiked
+              : renderpagesJoined}
           </ul>
         </div>
       </div>

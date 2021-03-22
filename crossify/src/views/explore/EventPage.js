@@ -4,7 +4,7 @@ import Moment from "moment";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
 import dance_cat from "assets/img/travel_cat.jpg";
-import MapContainer from "components/Maps/MapCode";
+import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/Modals/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/Modals/JoinEventButton";
@@ -260,10 +260,7 @@ export default function EventPage(props) {
                   Location
                 </div>
                 <div className="mt-1 text-lg text-gray-700 lg:w-3/4 leading-relaxed">
-                  <MapContainer
-                    lat={eventdetails.latitude}
-                    long={eventdetails.longitude}
-                  />
+                  <MapContainer data={eventdetails} />
                 </div>
               </div>
             </div>

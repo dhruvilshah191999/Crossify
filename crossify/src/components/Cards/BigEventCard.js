@@ -1,6 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
+
+const bookedSeats = 12;
+const totalSeats = 30;
+
 const ResultWindow = (props) => {
   let history = useHistory();
   let count = 0;
@@ -11,40 +15,37 @@ const ResultWindow = (props) => {
   };
   return (
     <div
-      className="h-custom rounded-lg shadow p-4 flex w-full mt-2 hover:shadow-lg"
-      style={{ width: "95%", cursor: "pointer" }}
+      className="h-custom rounded-lg shadow p-4 flex mx-2 mt-4 mr-4 ml-2 hover:shadow-lg"
+      style={{ width: "97%", cursor: "pointer" }}
       onClick={() => showEvents(props.data._id)}
     >
-      <div className="eventPhoto">
+      <div className="eventPhoto flex-shrink-0">
         <img
           className="card-image rounded-lg"
           src={props.data.photo}
-          style={{ width: "160px", height: "160px" }}
+          style={{ width: "200px", height: "140px" }}
         ></img>
       </div>
-      <div style={{ minWidth: "85%" }}>
+      <div style={{ minWidth: "75%" }}>
         <div className="leading-3" style={{ marginLeft: "1.25rem" }}>
-          <div className="text-xl font-bold ">
-            {props.data.event_name}{" "}
-            <div
-              className="inline-block text-sm font-semibold ml-1 text-gray-600"
-              style={{ float: "right" }}
-            >
-              {" "}
-              <i className="fas fa-map-marker-alt"></i> {props.data.location}
-              {/* {props.data.city},{props.data.state} */}
-            </div>
-          </div>
+          <div className="text-xl font-bold ">{props.data.event_name} </div>
           <div className="text-base font-semibold text-gray-600 tracking-wider">
+            {" "}
             {moment(props.data.date).format("LLL")}
           </div>
-
+          <div className="mt-1 tracking-tight text-sm font-semibold text-alpha ">
+            <i className="fas fa-map-marker-alt text-sm"></i>{" "}
+            {props.data.location}{" "}
+            <span className="text-gray-800 font-semibold">&bull;</span>
+            <span className="text-beta font-semibold">
+              {"  "}
+              <i class="fas fa-glass-cheers"></i> : {bookedSeats} / {totalSeats}
+            </span>
+          </div>
           <div className="mt-1 text-gray-700 text-sm ">
             <i className="fas fa-users"></i> {props.ownerGroup}
           </div>
-          <div className="mt-1 tracking-tight text-sm  text-gray-600 ">
-            {props.data.description}
-          </div>
+
           <div className="mt-2">
             {props.data.tags.map((data) => (
               <span
