@@ -46,7 +46,7 @@
   }
 }
 
-@media (min-width: 1300px) {
+@media (min-width: 1450px) {
   .xl\:test {
     width: 33%;
   }
@@ -55,5 +55,9 @@
   }
   .xl2\:ml-2 {
     margin-left: 0.5rem;
+  }
+  .event-image {
+    width: 850px !important;
+    height: 65vh !important;
   }
 }

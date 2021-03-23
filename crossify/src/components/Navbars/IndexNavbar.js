@@ -46,7 +46,7 @@ export default function Navbar(props) {
 
               <li className="flex items-center">
                 <button
-                  className="bg-gray-700 text-white active:bg-blue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-2  lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                  className="bg-gray-700 text-white active:bg-blue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-4  lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                   type="button"
                 >
                   <i className="fas fa-sign-in-alt"></i> Log In
