@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
+import { motion } from "framer-motion";
 
 // Guideline you can now make variable depeding on database
 // isRegistered : Memeber is alerady in confirmed or waiting list
@@ -129,6 +130,7 @@ export default class SweetAlertModal extends Component {
   successJoined() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         success
         title="Woot!"
         confirmBtnText="Got It !"
@@ -150,6 +152,7 @@ export default class SweetAlertModal extends Component {
   successWaiting() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         info
         title="Added in Waiting List"
         confirmBtnText="Okay"
@@ -169,6 +172,7 @@ export default class SweetAlertModal extends Component {
   removeRegisteration() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         danger
         showCancel
         confirmBtnText="Yes, Remove me!"
@@ -195,6 +199,7 @@ export default class SweetAlertModal extends Component {
   removeWaiting() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         danger
         showCancel
         confirmBtnText="Yes, Remove me!"
@@ -251,13 +256,15 @@ export default class SweetAlertModal extends Component {
               <i class="fas fa-user-clock"></i> &nbsp;Join Waiting List
             </button>
           ) : (
-            <button
+            <motion.button
               className="w-full h-12 hover:text-white hover:bg-lightalpha shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
               onClick={this.state.readonly ? "" : () => this.successJoined()}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.9 }}
             >
               <i class="fas fa-user-plus "></i> Attend
-            </button>
+            </motion.button>
           )}
 
           {this.state.alert}

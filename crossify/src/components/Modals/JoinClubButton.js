@@ -76,6 +76,7 @@ export default class SweetAlertModal extends Component {
   successJoined() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         success
         title={"Welcome to the club !"}
         confirmBtnText="Got It !"
@@ -98,6 +99,7 @@ export default class SweetAlertModal extends Component {
   removeRegisteration() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         warning
         showCancel
         confirmBtnText="Leave"

@@ -1,6 +1,7 @@
 import { Component } from "materialize-css";
 import React from "react";
 import defImg from "../../assets/img/event_1.jpeg";
+import { motion } from "framer-motion";
 
 const ClubCard = (props) => {
   return (
@@ -50,18 +51,22 @@ const ClubCard = (props) => {
             className="absolute top-0 right-0"
             style={{ marginTop: "195px", marginRight: "20px" }}
           >
-            <button
+            <motion.button
               className="text-red-500 bg-white shadow border border-solid  hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
               <i className="fas fa-heart"></i>
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               className="text-blue-500 bg-white shadow border border-solid  hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
               <i class="fas fa-share-alt"></i>
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>

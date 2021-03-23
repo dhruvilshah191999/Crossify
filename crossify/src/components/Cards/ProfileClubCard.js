@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { notifyCopied, notifyLiked } from "notify";
+import { motion } from "framer-motion";
 //this notification is not working
 function ProfileClubCard(props) {
   console.log(props.data);
   return (
-    <div className="relative bg-white overflow-hidden border-b-4 border-blue-500 mx-4 mb-2 rounded shadow lg:w-1by3">
+    <motion.div
+      className="relative bg-white flex-shrink-0 hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-2 mb-4 rounded shadow "
+      style={{ width: 320, marginLeft: "0.5rem", marginRight: "0.5rem" }}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.9 }}
+    >
       <img
         src="https://images.unsplash.com/photo-1573748240263-a4e9c57a7fcd"
         alt="People"
@@ -21,20 +27,24 @@ function ProfileClubCard(props) {
         </p>
 
         <div className="float-right">
-          <button
+          <motion.button
             className="text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             onClick={() => notifyLiked()}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
             <i className="fas fa-heart"></i>
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             onClick={() => notifyCopied()}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
             <i class="fas fa-share-alt"></i>
-          </button>
+          </motion.button>
         </div>
         <h3 className="font-semibold mb-2 text-xl leading-tight sm:leading-normal">
           {props.club_name}
@@ -44,7 +54,7 @@ function ProfileClubCard(props) {
           <p className="leading-none"> {props.place}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

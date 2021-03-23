@@ -4,8 +4,10 @@ import ManageFilesTable from "components/Cards/ManageFilesTable";
 class FilesManager extends Component {
   render() {
     return (
-      <div>
-        <ManageFilesTable></ManageFilesTable>
+      <div className="flex flex-wrap">
+        <div className="w-full px-4">
+          <ManageFilesTable></ManageFilesTable>
+        </div>
       </div>
     );
   }

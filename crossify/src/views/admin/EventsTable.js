@@ -7,11 +7,10 @@ import Test from "components/masti";
 
 export default function Tables() {
   return (
-    <>
-      <div>
-        {/* <CardTable /> */}
+    <div className="flex flex-wrap">
+      <div className="w-full px-4">
         <CardTable />
       </div>
-    </>
+    </div>
   );
 }

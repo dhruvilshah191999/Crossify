@@ -7,6 +7,7 @@ import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
 import JoinClubButton from "components/Modals/JoinClubButton";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import { motion } from "framer-motion";
 
 class ClubPage extends React.Component {
   openModal() {
@@ -61,21 +62,25 @@ class ClubPage extends React.Component {
                 </div>
                 <div className="flex flex-row justify-center my-2">
                   <div className="w-6/12">
-                    <button
+                    <motion.button
                       className="w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <i className="fas fa-heart"></i> Like
-                    </button>
+                    </motion.button>
                   </div>
                   &nbsp;
                   <div className="w-6/12 self-end">
-                    <button
+                    <motion.button
                       className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <i class="fas fa-share-alt"></i> Share
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
                 <div className="flex justify-center">

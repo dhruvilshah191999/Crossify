@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const getSegment = (totalEvents, curIndex, eventPerPage) => {
   const end = curIndex * eventPerPage;
@@ -108,14 +109,16 @@ export default function MyClubs() {
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
     return (
-      <li
+      <motion.li
         key={number}
         id={number}
         onClick={handleClickBack}
         className={classNames}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.9 }}
       >
         {number}
-      </li>
+      </motion.li>
     );
   });
   const pageNumbersNew = [];
@@ -131,14 +134,16 @@ export default function MyClubs() {
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
     return (
-      <li
+      <motion.li
         key={number}
         id={number}
         onClick={handleClickUpcoming}
         className={classNames}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.9 }}
       >
         {number}
-      </li>
+      </motion.li>
     );
   });
   const pageNumbersLiked = [];
@@ -154,14 +159,16 @@ export default function MyClubs() {
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
     return (
-      <li
+      <motion.li
         key={number}
         id={number}
         onClick={handleClickLiked}
         className={classNames}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.9 }}
       >
         {number}
-      </li>
+      </motion.li>
     );
   });
 
@@ -336,7 +343,8 @@ export default function MyClubs() {
             onClick={() => toggleTabIndex(1)}
           >
             {" "}
-            <i class="fas fa-heart hover:text-offwhite "></i>&nbsp; Liked
+            <i class="fas fa-heart hover:text-offwhite hover:text-offwhite"></i>{" "}
+            Liked
           </button>
 
           <button

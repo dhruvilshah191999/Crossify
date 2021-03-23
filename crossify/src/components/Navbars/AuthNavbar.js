@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
+import { motion } from "framer-motion";
 // components
 
 import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
@@ -73,22 +74,26 @@ export default function Navbar(props) {
 
               <li className={isLogin ? "hidden " : " " + "flex items-center"}>
                 <Link to="/auth/login">
-                  <button
-                    className="bg-white hover:bg-offwhite text-gray-800 ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                  <motion.button
+                    className="bg-white hover:bg-offwhite text-gray-800 ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-2 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                     type="button"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <i className="fas fa-sign-in-alt"></i> Log In
-                  </button>
+                  </motion.button>
                 </Link>
               </li>
               <li className={isLogin ? "hidden " : " " + "flex items-center"}>
                 <Link to="/auth/register">
-                  <button
+                  <motion.button
                     className="bg-alpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                     type="button"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <i className="fas fa-user-plus"></i> Sign Up
-                  </button>
+                  </motion.button>
                 </Link>
               </li>
 

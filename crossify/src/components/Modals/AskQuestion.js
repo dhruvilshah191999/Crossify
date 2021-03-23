@@ -10,7 +10,7 @@ export default class SweetAlertModal extends Component {
     this.state = {
       alert: null,
       question: null,
-      event_id:this.props.event_id
+      event_id: this.props.event_id,
     };
   }
 
@@ -33,7 +33,7 @@ export default class SweetAlertModal extends Component {
     var object = {
       event_id: this.state.event_id,
       question: inputValue,
-      token
+      token,
     };
     const finaldata = await axios.post(
       "/api/events/ask-question",
@@ -66,6 +66,7 @@ export default class SweetAlertModal extends Component {
   deleteThisGoal() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         input
         showCancel
         confirmBtnText="Submit"

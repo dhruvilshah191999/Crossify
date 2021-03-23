@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ManageEventsTable from "components/Cards/ManageEvents";
+import ManageEventsTable from "components/Cards/ManageEventsTable";
 export default function Tables() {
   const token = localStorage.getItem("jwt");
   const [data, setdata] = useState([]);
@@ -45,8 +45,7 @@ export default function Tables() {
         </>
       )
     );
-  }
-  else {
-    return<></>
+  } else {
+    return <></>;
   }
 }

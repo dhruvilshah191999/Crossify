@@ -9,6 +9,7 @@ import AskQuestion from "components/Modals/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/Modals/JoinEventButton";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 export default function EventPreview(props) {
   var { id } = useParams();
@@ -140,23 +141,27 @@ export default function EventPreview(props) {
                 </div>
                 <div className="flex flex-col lg:flex-row  mt-3 md:mt-auto ">
                   <div className="w-6/12">
-                    <button
+                    <motion.button
                       className="w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       style={{ cursor: "not-allowed" }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <i className="fas fa-heart"></i> Like
-                    </button>
+                    </motion.button>
                   </div>
                   &nbsp;
                   <div className="w-6/12 self-end">
-                    <button
+                    <motion.button
                       className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       style={{ cursor: "not-allowed" }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <i class="fas fa-share-alt"></i> Share
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
                 <div className="flex justify-center mt-2">
@@ -256,8 +261,7 @@ export default function EventPreview(props) {
         </div>
       </>
     );
-  }
-  else {
+  } else {
     return <></>;
   }
 }

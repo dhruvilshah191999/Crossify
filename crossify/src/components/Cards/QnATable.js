@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import {
@@ -13,6 +13,7 @@ import {
 import RejectButton from "components/Modals/RejectButton";
 import PrivateButton from "components/Modals/PrivateButton";
 import PublishButton from "components/Modals/PublishButton";
+import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 
 import dataTable from "./demoQnA";
 import QnAModal from "components/Modals/QnAModal";
@@ -21,6 +22,7 @@ function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
+  isLight,
 }) {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = React.useState(globalFilter);
@@ -31,7 +33,13 @@ function GlobalFilter({
   return (
     <span className="text-gray-700 font-normal ml-2 ">
       {/* Search:{" "} */}
-      <i class="fas fa-search mr-4 text-gray-700"></i>
+      <i
+        class={
+          isLight
+            ? "fas fa-search mr-4 text-gray-700"
+            : "fas fa-search mr-4 text-white"
+        }
+      ></i>
       <input
         className="px-2 py-1  placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline ease-linear transition-all duration-150"
         value={value || ""}
@@ -121,7 +129,7 @@ export default function App(props) {
     };
     var object = {
       event_id: id,
-      questions:IDlist
+      questions: IDlist,
     };
     const finaldata = await axios.post("/api/manage/reject", object, config);
     if (finaldata.data.is_error) {
@@ -130,7 +138,7 @@ export default function App(props) {
       window.location.reload();
     }
   };
-  const getSelectedAndPublish = async(e) => {
+  const getSelectedAndPublish = async (e) => {
     const IDlist = selectedFlatRows.map((el) => el.values.que);
     const config = {
       method: "POST",
@@ -140,7 +148,7 @@ export default function App(props) {
     };
     var object = {
       event_id: id,
-      questions:IDlist
+      questions: IDlist,
     };
     const finaldata = await axios.post("/api/manage/publish", object, config);
     if (finaldata.data.is_error) {
@@ -150,7 +158,7 @@ export default function App(props) {
     }
   };
   const getSelectedAndPrivate = async (e) => {
-   const IDlist = selectedFlatRows.map((el) => el.values.que);
+    const IDlist = selectedFlatRows.map((el) => el.values.que);
     const config = {
       method: "POST",
       header: {
@@ -159,7 +167,7 @@ export default function App(props) {
     };
     var object = {
       event_id: id,
-      questions:IDlist
+      questions: IDlist,
     };
     const finaldata = await axios.post("/api/manage/privatise", object, config);
     if (finaldata.data.is_error) {
@@ -169,7 +177,7 @@ export default function App(props) {
     }
   };
 
-  const color = "light";
+  const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(() => props.finaldata, []);
   const columns = React.useMemo(
     () => [
@@ -342,7 +350,7 @@ export default function App(props) {
       <div
         className={
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
-          (color === "light" ? "bg-white" : "bg-blue-900 text-white")
+          (isLight ? "bg-white" : "bg-blue-900 text-white")
         }
       >
         <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -355,10 +363,26 @@ export default function App(props) {
                   <PrivateButton handlePrivate={getSelectedAndPrivate} />
                   <RejectButton handleRejection={getSelectedAndReject} />
                 </div>
+                <div className="inline-block ml-2">
+                  <ToggleDarkMode
+                    isOn={!isLight}
+                    onClick={() => setIsLight(!isLight)}
+                  />
+                </div>
                 <div className="ml-auto">
-                  <i class="fas fa-filter mr-4 text-gray-700 "></i>
+                  <i
+                    class={
+                      isLight
+                        ? "fas fa-filter mr-4 text-gray-700"
+                        : "fas fa-filter mr-4 text-white"
+                    }
+                  ></i>
                   <select
-                    className="border bg-white rounded px-3 py-1 outline-none text-sm"
+                    className={
+                      isLight
+                        ? "border bg-white rounded px-3 py-1 outline-none text-sm"
+                        : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
+                    }
                     onChange={(e) => {
                       setFilter("status", e.target.value || undefined);
                     }}
@@ -370,7 +394,11 @@ export default function App(props) {
                   </select>
                   <span className="ml-2 "></span>
                   <select
-                    className="border bg-white rounded px-3 py-1 outline-none text-sm"
+                    className={
+                      isLight
+                        ? "border bg-white rounded px-3 py-1 outline-none text-sm"
+                        : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
+                    }
                     onChange={(e) => {
                       setFilter("privacy", e.target.value || undefined);
                     }}
@@ -381,6 +409,7 @@ export default function App(props) {
                   </select>
                   <span className="ml-2 "></span>
                   <GlobalFilter
+                    isLight={isLight}
                     preGlobalFilteredRows={preGlobalFilteredRows}
                     globalFilter={state.globalFilter}
                     setGlobalFilter={setGlobalFilter}
@@ -403,7 +432,7 @@ export default function App(props) {
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                       className={
                         "px-6 align-middle border border-solid py-3 text-xs  uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
-                        (color === "light"
+                        (isLight
                           ? "bg-gray-100 text-gray-600 border-gray-200"
                           : "bg-blue-800 text-blue-300 border-blue-700")
                       }
@@ -454,7 +483,11 @@ export default function App(props) {
                 onChange={(e) => {
                   setPageSize(Number(e.target.value));
                 }}
-                className="border bg-white rounded px-3 py-1 outline-none text-sm"
+                className={
+                  isLight
+                    ? "border bg-white rounded px-3 py-1 outline-none text-sm"
+                    : "border bg-white rounded px-3 py-1 outline-none text-sm text-black"
+                }
               >
                 {[10, 20, 30, 40, 50].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>

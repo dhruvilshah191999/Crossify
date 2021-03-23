@@ -4,8 +4,10 @@ import ManageMediaTable from "components/Cards/ManageMediaTable";
 class MediaManager extends Component {
   render() {
     return (
-      <div>
-        <ManageMediaTable></ManageMediaTable>
+      <div className="flex flex-wrap">
+        <div className="w-full px-4">
+          <ManageMediaTable></ManageMediaTable>
+        </div>
       </div>
     );
   }

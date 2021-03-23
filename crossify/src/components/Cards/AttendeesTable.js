@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import {
@@ -13,11 +13,13 @@ import {
 import BroadcastButton from "components/Modals/BroadcastButton";
 import ArrivedButton from "components/Modals/ArrivedButton";
 import dataTable from "./demoTableData";
+import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 
 function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
+  isLight,
 }) {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = React.useState(globalFilter);
@@ -28,7 +30,13 @@ function GlobalFilter({
   return (
     <span className="text-gray-700 font-normal ml-2 ">
       {/* Search:{" "} */}
-      <i class="fas fa-search mr-4 text-gray-700"></i>
+      <i
+        class={
+          isLight
+            ? "fas fa-search mr-4 text-gray-700"
+            : "fas fa-search mr-4 text-white"
+        }
+      ></i>
       <input
         className="px-2 py-1  placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline ease-linear transition-all duration-150"
         value={value || ""}
@@ -174,9 +182,9 @@ export default function App(props) {
     } else {
       window.location.reload();
     }
-  }
+  };
 
-  const color = "light";
+  const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(() => props.finaldata, []);
   const columns = React.useMemo(
     () => [
@@ -364,7 +372,7 @@ export default function App(props) {
       <div
         className={
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
-          (color === "light" ? "bg-white" : "bg-blue-900 text-white")
+          (isLight ? "bg-white" : "bg-blue-900 text-white")
         }
       >
         <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -380,11 +388,27 @@ export default function App(props) {
                     handleArriving={getSelectedAndArrived}
                   ></ArrivedButton>
                 </div>
+                <div className="inline-block ml-2">
+                  <ToggleDarkMode
+                    isOn={!isLight}
+                    onClick={() => setIsLight(!isLight)}
+                  />
+                </div>
                 <div className="ml-auto">
-                  <i class="fas fa-filter mr-4 text-gray-700 "></i>
+                  <i
+                    class={
+                      isLight
+                        ? "fas fa-filter mr-4 text-gray-700"
+                        : "fas fa-filter mr-4 text-white"
+                    }
+                  ></i>
                   <span className="ml-2 "></span>
                   <select
-                    className="border bg-white rounded px-3 py-1 outline-none text-sm"
+                    className={
+                      isLight
+                        ? "border bg-white rounded px-3 py-1 outline-none text-sm"
+                        : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
+                    }
                     onChange={(e) => {
                       setFilter("status", e.target.value || undefined);
                     }}
@@ -399,6 +423,7 @@ export default function App(props) {
                   </select>
                   <span className="ml-2 "></span>
                   <GlobalFilter
+                    isLight={isLight}
                     preGlobalFilteredRows={preGlobalFilteredRows}
                     globalFilter={state.globalFilter}
                     setGlobalFilter={setGlobalFilter}
@@ -421,7 +446,7 @@ export default function App(props) {
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                       className={
                         "px-6 align-middle border border-solid py-3 text-xs  uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
-                        (color === "light"
+                        (isLight
                           ? "bg-gray-100 text-gray-600 border-gray-200"
                           : "bg-blue-800 text-blue-300 border-blue-700")
                       }
@@ -472,7 +497,11 @@ export default function App(props) {
                 onChange={(e) => {
                   setPageSize(Number(e.target.value));
                 }}
-                className="border bg-white rounded px-3 py-1 outline-none text-sm"
+                className={
+                  isLight
+                    ? "border bg-white rounded px-3 py-1 outline-none text-sm"
+                    : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
+                }
               >
                 {[10, 20, 30, 40, 50].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>

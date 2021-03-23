@@ -28,6 +28,7 @@ export default class SweetAlertModal extends Component {
   BroadcastMessage() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         input
         showCancel
         confirmBtnText="Submit"

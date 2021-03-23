@@ -5,6 +5,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { store } from "react-notifications-component";
 import { notifyCopied } from "notify";
 import { notifyLiked } from "notify";
+import { motion } from "framer-motion";
+
 const EventCard = (props) => {
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
@@ -171,7 +173,7 @@ const EventCard = (props) => {
             className="absolute top-0 right-0"
             style={{ marginTop: "195px", marginRight: "20px" }}
           >
-            <button
+            <motion.button
               className={
                 !like
                   ? "text-red-500 bg-white shadow border border-solid  hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -180,25 +182,29 @@ const EventCard = (props) => {
               type="button"
               style={loginstate ? {} : { cursor: "not-allowed" }}
               onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
               <i
                 className="fas fa-heart"
                 // style={{ fontSize: "14px" }}
               ></i>
-            </button>
+            </motion.button>
             <CopyToClipboard
               text={window.location.href + "events/event=" + props.data._id}
             >
-              <button
+              <motion.button
                 className="text-blue-500 bg-white shadow border border-solid  hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                 type="button"
                 onClick={notifyCopied}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
                 <i
                   class="fas fa-share-alt"
                   // style={{ fontSize: "14px" }}
                 ></i>
-              </button>
+              </motion.button>
             </CopyToClipboard>
           </div>
         </div>

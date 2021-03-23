@@ -3,8 +3,10 @@ import RoomsTable from "components/Cards/RoomsTable";
 class ManageRooms extends Component {
   render() {
     return (
-      <div>
-        <RoomsTable></RoomsTable>
+      <div className="flex flex-wrap">
+        <div className="w-full px-4">
+          <RoomsTable></RoomsTable>
+        </div>
       </div>
     );
   }

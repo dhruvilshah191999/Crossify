@@ -169,7 +169,7 @@ export default function GeneralSettings(props) {
                     type="button"
                     onClick={(e) => onSubmit(e)}
                   >
-                    Save
+                    Save &nbsp; <i className="fas fa-save"></i>
                   </button>
                 </div>
               </div>
