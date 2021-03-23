@@ -17,7 +17,7 @@ function ProfileClubCard(props) {
       <div className="p-4 md:p-6">
         <p className="text-alpha">
           <span className="text-sm font-semibold text-alpha mr-2">
-            {moment(props.data.date).format("LLL")}
+            {(props.date)}
           </span>
         </p>
         <div className="float-right">
@@ -35,14 +35,14 @@ function ProfileClubCard(props) {
           </button>
         </div>
         <h3 className="font-semibold mb-2 text-xl leading-tight sm:leading-normal">
-          {props.data.event_name}
+          {props.event_name}
         </h3>
         <div className="text-sm flex items-center">
           <i class="fas fa-map-marker-alt text-sm mr-2"></i>
           <p className="leading-none"> {props.place}</p>
         </div>
         <p className="text-blue-500 font-semibold text-xs mb-1 leading-none mt-4">
-          {props.data.tags.map((el, i) => (
+          {props.tags.map((el, i) => (
             <MyTag data={el}></MyTag>
           ))}
         </p>

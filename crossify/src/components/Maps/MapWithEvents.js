@@ -69,7 +69,7 @@ export class MapContainer extends Component {
         style={{ height: "88vh", width: "27%" }}
         zoom={13}
         initialCenter={this.props.center}
-        // bounds={bounds}
+        bounds={bounds}
       >
         <Marker
           position={this.state.currentLocation}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Moment from "moment";
 import { useParams } from "react-router";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import Navbar from "components/Navbars/ClubNavbar";
 import dance_cat from "assets/img/travel_cat.jpg";
 import MapContainer from "components/Maps/ViewOnlyMap";

@@ -17,7 +17,7 @@ var customModalStyles = {
     width: "70%",
     marginTop: "20px",
     transform: "translate(-50%, -50%)",
-    height: "650px", // <-- This sets the height
+    height: "550px", // <-- This sets the height
     overlfow: "scroll", // <-- This tells the modal to scrol
   },
 };
