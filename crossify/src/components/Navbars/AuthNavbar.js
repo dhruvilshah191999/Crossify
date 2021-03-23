@@ -18,13 +18,21 @@ export default function Navbar(props) {
     <>
       <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-6 py-3 navbar-expand-lg bg-transparent">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between bg-transparent">
-          <img style={{ height: "25px", width: "30px" }} src={logo} />
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
               className="text-white text-sm font-bold leading-relaxed inline-block mr-4 ml-3 py-2 whitespace-no-wrap uppercase"
               to="/"
             >
-              Crossify
+              <div className="flex ">
+                <div>
+                  <img
+                    style={{ height: "25px", width: "30px" }}
+                    className="inline-block"
+                    src={logo}
+                  />
+                </div>
+                <div className="ml-3">Crossify</div>
+              </div>
             </Link>
             <button
               className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
@@ -46,18 +54,18 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link to="/search">
                   <a
-                    className="hover:text-lightwhite text-white md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
+                    className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                     href="#"
                   >
-                    <i className="text-white far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
+                    <i className="text-gray-700 lg:text-white  far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
                     Events
                   </a>
                 </Link>
               </li>
               <li className="flex items-center">
                 <Link to="/clubsearch">
-                  <div className="hover:text-lightwhite text-white px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
-                    <i className="text-white  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
+                  <div className="hover:text-lightwhite text-gray-700 lg:text-white  ml-2 lg:ml-0  px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
+                    <i className="text-gray-700 lg:text-white  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
                     Clubs
                   </div>
                 </Link>
@@ -66,7 +74,7 @@ export default function Navbar(props) {
               <li className={isLogin ? "hidden " : " " + "flex items-center"}>
                 <Link to="/auth/login">
                   <button
-                    className="bg-white hover:bg-offwhite text-gray-800 active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                    className="bg-white hover:bg-offwhite text-gray-800 ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                     type="button"
                   >
                     <i className="fas fa-sign-in-alt"></i> Log In
@@ -76,7 +84,7 @@ export default function Navbar(props) {
               <li className={isLogin ? "hidden " : " " + "flex items-center"}>
                 <Link to="/auth/register">
                   <button
-                    className="bg-alpha hover:bg-alpha text-white active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                    className="bg-alpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                     type="button"
                   >
                     <i className="fas fa-user-plus"></i> Sign Up
@@ -84,12 +92,20 @@ export default function Navbar(props) {
                 </Link>
               </li>
 
-              <li className={isLogin ? " " : "hidden " + "flex items-center"}>
-                <NotificationDropdown />
+              <li className={isLogin ? " " : "hidden " + "flex items-center "}>
+                <div className=" ml-2 lg:ml-0 ">
+                  <NotificationDropdown />
+                </div>
               </li>
 
-              <li className={isLogin ? " " : "hidden " + "flex items-center"}>
-                <UserDropdown />
+              <li
+                className={
+                  isLogin ? " " : "hidden " + "flex items-center ml-2 lg:ml-0 "
+                }
+              >
+                <div className=" ml-3 mb-2 lg:ml-0 lg:mb-0  ">
+                  <UserDropdown />
+                </div>
               </li>
             </ul>
           </div>

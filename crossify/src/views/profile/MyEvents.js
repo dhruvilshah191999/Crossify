@@ -69,17 +69,13 @@ export default function MyClubs() {
     let search1 = el.event_name.toLowerCase();
     let search2 = el.location.toLowerCase();
     let search3 = el.tags;
-    if (
+    return (
       search1.indexOf(searchQuery) !== -1 ||
       search2.indexOf(searchQuery) !== -1 ||
       search3.some(isPresent)
-    ) {
-      return true;
-    }
-
-    return false;
+    );
   });
-
+  console.log(likeEvents);
   const currentPastEvents = getSegment(pastEvents, backIndex, eventPerPage);
   const currentUpcomingEvents = getSegment(
     newEvents,
@@ -320,7 +316,7 @@ export default function MyClubs() {
   return (
     <>
       <div className="relative flex justify-center  text-sm -mt-20">
-        <div>
+        <div className="ml-6">
           <button
             className={
               tabIndex === 0
@@ -356,9 +352,20 @@ export default function MyClubs() {
             Upcoming
           </button>
         </div>
+        <div class="bg-white shadow  ml-auto mr-8 flex border border-beta rounded-lg">
+          <span class="w-auto flex justify-end items-center text-gray-500 p-2">
+            <i className="fas fa-search text-beta"></i>
+          </span>
+          <input
+            class="w-full rounded-lg py-2"
+            type="text"
+            placeholder="Search Event..."
+            onChange={searchHandler}
+          />
+        </div>
       </div>
       <div>
-        <div class="ml-4 mt-10 bg-gray-200 flex flex-col flex-wrap lg:flex-row">
+        <div class="ml-4 mt-10 bg-gray-200 flex flex-wrap flex-row">
           {tabIndex === 2
             ? renderUpcomingEvents
             : tabIndex === 1

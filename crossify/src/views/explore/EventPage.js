@@ -4,8 +4,7 @@ import Moment from "moment";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
 import dance_cat from "assets/img/travel_cat.jpg";
-import MapContainer from "components/Maps/MapShow";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/Modals/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/Modals/JoinEventButton";
@@ -197,7 +196,7 @@ export default function EventPage(props) {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col  container  event-container">
+        <div className="flex flex-col   lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
             className="flex flex-row flex-wrap mt-20 justify-center items-start"
@@ -366,7 +365,7 @@ export default function EventPage(props) {
                   <AskQuestion event_id={id}></AskQuestion>
                 </div>
                 <div
-                  className="mt-1 text-lg  w-3/4 leading-relaxed"
+                  className="mt-1 text-lg  lg:w-3/4 leading-relaxed"
                   style={{ overflowY: "auto", maxHeight: "400px" }}
                 >
                   {eventdetails.faq.map((el, i) => {
@@ -393,11 +392,8 @@ export default function EventPage(props) {
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Location
                 </div>
-                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
-                  <MapContainer
-                    lat={eventdetails.latitude}
-                    long={eventdetails.longitude}
-                  />
+                <div className="mt-1 text-lg text-gray-700 lg:w-3/4 leading-relaxed">
+                  <MapContainer data={eventdetails} />
                 </div>
               </div>
             </div>

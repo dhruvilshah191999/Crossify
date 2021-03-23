@@ -3,7 +3,8 @@ import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { store } from "react-notifications-component";
-
+import { notifyCopied } from "notify";
+import { notifyLiked } from "notify";
 const EventCard = (props) => {
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
@@ -60,22 +61,6 @@ const EventCard = (props) => {
     fetchclub();
   }, []);
 
-  const notifyCopied = () => {
-    store.addNotification({
-      title: "Succesfully Copied to Clipboard",
-      message: "Share the event with your friends ! ",
-      type: "info",
-      insert: "top",
-      container: "bottom-right",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      dismiss: {
-        duration: 3000,
-        // onScreen: true,
-      },
-    });
-  };
-
   const addlike = async (e) => {
     if (loginstate) {
       const config = {
@@ -109,19 +94,7 @@ const EventCard = (props) => {
           },
         });
       } else {
-        store.addNotification({
-          title: "Added to Favourites !",
-          message: "You can access with ease in your profile.",
-          type: "danger",
-          insert: "top",
-          container: "bottom-right",
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          dismiss: {
-            duration: 3000,
-            // onScreen: true,
-          },
-        });
+        notifyLiked();
         setLike(true);
       }
     }
@@ -151,18 +124,19 @@ const EventCard = (props) => {
       }
     }
   };
+  // 311 for normal screen 345 for larger screen
   return (
     <div
-      className="relative px-4 mb-4 flex-grow-0 "
+      className="relative px-2 mb-4 flex-grow-0 "
       style={{
-        width: 345,
+        width: 311,
         minHeight: "auto",
       }}
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
         <img
           src={props.data.photo}
-          style={{ height: "210px", width: "355px" }}
+          style={{ height: "210px", width: "310px" }}
           alt="eventPic"
         />
         <div className="px-2 py-1">

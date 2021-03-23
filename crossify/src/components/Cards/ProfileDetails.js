@@ -79,53 +79,38 @@ class ProfileDetails extends Component {
 
   render() {
     return (
-      <div className="flex flex-col mx-16 mt-2 ">
-        <div className="flex p-4">
-          <div className="mr-8">
+      <div className="flex flex-col mx-8 lg:mx-16 mt-2 ">
+        <div className="flex p-4 flex-wrap">
+          <div className="mr-8 flex-shrink-0">
             <img
               className="profile-image rounded-full border"
               alt="profilepic"
               src={this.state.profile.profile_photo}
             ></img>
           </div>
-          <div className="flex-col ml-6">
-            <div className=" relative w-100 flex flex-row mt-2">
-              <div className="text-4xl font-semibold ">
-                {this.state.profile.fname} {this.state.profile.lname}
+          <div className="flex-col w-1/2 ml-6">
+            <div className=" relative w-100 flex flex-row flex-wrap mt-2">
+              <div className="text-4xl flex-shrink-0 font-semibold ">
+                {this.props.fullname}
               </div>
-              <div className="text-xl ml-2 pt-4 text-gray-700">
-                as{" "}
-                <span className="text-alpha">
-                  {this.state.profile.username}
-                </span>
+              <div className="text-xl  flex-shrink-0 text-gray-700 xl2:mt-4 xl2:ml-2">
+                as <span className="text-alpha">{this.props.username}</span>
               </div>
 
               {/* </div> */}
             </div>
-            <div
-              className="text-gray-600 text-lg"
-              style={
-                this.state.profile.occupation
-                  ? { display: "" }
-                  : { display: "none" }
-              }
-            >
-              {this.state.profile.occupation}&nbsp; | &nbsp;Joined{" "}
-              {Moment(this.state.profile.date).format("MMM YYYY")}
+            <div className="flex flex-wrap">
+              <div className="text-gray-600 text-lg flex-shrink-0">
+                {this.props.occupation}&nbsp; | &nbsp;
+              </div>
+              <div className="text-gray-600 text-lg flex-shrink-0">
+                Joined {this.props.joining_date}
+              </div>
             </div>
-            <div
-              className="text-gray-600 text-lg"
-              style={
-                this.state.profile.occupation
-                  ? { display: "none" }
-                  : { display: "" }
-              }
-            >
-              Joined {Moment(this.state.profile.date).format("MMM YYYY")}
-            </div>
-            <div className="text-gray-600 mt-1 text-lg">
-              <i class="fas fa-map-marker-alt  "></i> {this.state.profile.city}{" "}
-              , {this.state.profile.state}
+            <div className="flex">
+              <div className="text-gray-600 mt-1 inline-block text-lg flex-shrink-0">
+                <i class="fas fa-map-marker-alt  "></i> {this.props.place}
+              </div>
             </div>
             <div
               className=" mt-4 "
@@ -236,8 +221,7 @@ class ProfileDetails extends Component {
 }
 
 ProfileDetails.defaultProps = {
-  fname: "Harshil",
-  lname: "Patel",
+  fullname: "Harshil Patel",
   username: "hackershil",
   occupation: "Software Engineer",
   joining_date: "Apr 2020",

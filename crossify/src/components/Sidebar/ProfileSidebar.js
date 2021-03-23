@@ -118,7 +118,7 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Profile
+                  &nbsp;Profile
                 </Link>
               </li>
               <li className="items-center">
@@ -182,7 +182,7 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Events
+                  &nbsp; Events
                 </Link>
               </li>
             </ul>
@@ -215,7 +215,7 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  My Events
+                  &nbsp;My Events
                 </Link>
               </li>
             </ul>
@@ -273,7 +273,7 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Change Password
+                  &nbsp;Change Password
                 </Link>
               </li>
 

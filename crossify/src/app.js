@@ -7,6 +7,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
 import "assets/styles/customcss.css";
 import "react-notifications-component/dist/theme.css";
+import "assets/styles/mediaqueries.css";
 import "../node_modules/animate.css/animate.min.css";
 //import MapContainer from "./app";
 // layouts
@@ -106,7 +107,6 @@ export default function App() {
   }, []);
   return (
     <BrowserRouter>
-      <ReactNotification />
       <Routing />
     </BrowserRouter>
   );

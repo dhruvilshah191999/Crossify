@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { store } from "react-notifications-component";
 import City from "../../views/auth/states-and-districts.json";
 export default function CardSettings() {
   const token = localStorage.getItem("jwt");
@@ -104,6 +105,19 @@ export default function CardSettings() {
       console.log(finaldata.data.message);
     } else {
       window.location.reload();
+      store.addNotification({
+        title: "Succesfully Copied to Clipboard",
+        message: "Share the event with your friends ! ",
+        type: "info",
+        insert: "top",
+        container: "bottom-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          // onScreen: true,
+        },
+      });
     }
   };
   return (

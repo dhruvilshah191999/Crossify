@@ -259,8 +259,8 @@ export default function Landing() {
           >
             <div className="p-8 mx-4 pt-0">
               <div className="ml-2 mb-6">
-                <div className="flex flex-row px-4">
-                  <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
+                <div className="flex flex-row px-2">
+                  <h4 className="text-3xl  font-semibold leading-normal mt-0 mb-2 text-alpha">
                     {el.category}
                   </h4>
                   <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
