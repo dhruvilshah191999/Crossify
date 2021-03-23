@@ -42,6 +42,10 @@
   background-color: #00838f;
 }
 
+.bg-semibeta {
+  background-color: #67afb6;
+}
+
 .bg-lightbeta {
   background-color: #a4eef5;
 }
@@ -66,6 +70,18 @@
 
 .bg-alpha {
   background-color: #e82953;
+}
+
+.bg-yellow-400 {
+  background-color: #fbbf24;
+}
+
+.hover\:bg-yellow-300:hover {
+  background-color: #fcd34d;
+}
+
+.active\:bg-yellow-300:active {
+  background-color: #fcd34d;
 }
 
 .bg-orange-200 {
@@ -398,6 +414,10 @@
   margin-right: 2rem;
 }
 
+.mt-18 {
+  margin-top: 4.5rem;
+}
+
 .mt-36 {
   margin-top: 12rem;
 }
@@ -417,9 +437,9 @@
 .w-24 {
   width: 13.5rem;
 }
-
+/* 850 for gaming scrren */
 .event-image {
-  width: 850px;
+  width: 750px;
   height: 420px;
 }
 .border-red-500 {
@@ -570,6 +590,10 @@
 
 .overwrite-success-btn {
   background-color: #26ac62 !important;
+}
+
+.overwrite-info-btn {
+  background-color: #46b8da !important;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
