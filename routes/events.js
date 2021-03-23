@@ -876,7 +876,12 @@ router.post("/reports", auth, async function (req, res, next) {
     date: new Date(),
     status:"pending"
   }
-  var check = reports_details.find({ user_id: ObjectId(req.user._id), event_id: ObjectId(event_id), is_active: true });
+  console.log(req.user._id);
+  var check = reports_details.find({
+    event_id: ObjectId(event_id),
+    user_id: ObjectId(req.user._id),
+    is_active: true,
+  });
   await check.exec(async (err, data) => {
     if (err) {
       var error = {
@@ -885,7 +890,7 @@ router.post("/reports", auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     }
-    else if (data.length!=0) {
+    else if (data.length != 0) {
       var add = reports_details.update(
         {
           user_id: ObjectId(req.user._id),

@@ -24,6 +24,8 @@ export default function EventPage(props) {
   var { id } = useParams();
   const [loading, setloading] = useState(false);
   const [like, setLike] = useState(false);
+  const [isInWaiting, SetisInWaiting] = useState(false);
+  const [IsFull, SetIsFull] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
@@ -49,7 +51,13 @@ export default function EventPage(props) {
         console.log(finaldata.data.message);
       } else {
         Seteventsdetails(finaldata.data.event_data);
-        setTimeout(setloading(true), 1000);
+        if (
+          finaldata.data.event_data.current_participants >=
+          finaldata.data.event_data.maximum_participants
+        ) {
+          SetIsFull(true);
+        }
+        setTimeout(setloading(true), 1500);
       }
     }
 
@@ -74,6 +82,7 @@ export default function EventPage(props) {
         console.log(finaldata.data.message);
       } else {
         setevent(finaldata.data.attend);
+        SetisInWaiting(finaldata.data.waiting);
       }
     }
 
@@ -307,6 +316,8 @@ export default function EventPage(props) {
                   current={eventdetails.current_participants}
                   max={eventdetails.maximum_participants}
                   check={checkevent}
+                  isInWaiting={isInWaiting}
+                  isFull={IsFull}
                 ></JoinEventButton>
               </div>
             </div>
@@ -351,7 +362,7 @@ export default function EventPage(props) {
                   People going
                 </div>
                 {eventdetails.participants_list.length !== 0 ? (
-                  <RegisteredMember eventid={id}></RegisteredMember>
+                  <RegisteredMember eventid={id} capacity={eventdetails.maximum_participants}></RegisteredMember>
                 ) : (
                   ""
                 )}

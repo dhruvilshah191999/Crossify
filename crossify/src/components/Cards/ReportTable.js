@@ -7,7 +7,7 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-
+import Moment from "moment";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import ViewReport from "components/Modals/ViewReport";
 
@@ -86,159 +86,13 @@ function SelectColumnFilter({
   );
 }
 
-export default function App() {
-  const openModal = () => {
-    ModalManager.open(<ViewReport onRequestClose={() => true} />);
+export default function App(props) {
+  const openModal = (value) => {
+    ModalManager.open(<ViewReport onRequestClose={() => true} data={value} />);
   };
   const color = "light";
   const data = React.useMemo(
-    () => [
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "replied",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "replied",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "rejected",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "rejected",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "replied",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "rejected",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "replied",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "replied",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "replied",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        userName: "Cricket Tournament",
-        status: "pending",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description:
-          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
-        actions: " ",
-      },
-    ],
+    () =>props.finaldata,
     []
   );
 
@@ -246,7 +100,7 @@ export default function App() {
     () => [
       {
         Header: "Issued By",
-        accessor: "userName", // accessor is the "key" in the data
+        accessor: "name", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
@@ -266,7 +120,9 @@ export default function App() {
       {
         Header: "Issue Date",
         accessor: "date", // accessor is the "key" in the data
-
+        Cell: ({ value }) => (
+          <div>{Moment(value).format("DD-MM-YYYY")}</div>
+        ),
         disableFilters: true,
       },
       {
@@ -313,10 +169,10 @@ export default function App() {
       },
       {
         Header: "Actions",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
+        accessor: "record", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
           <div className="flex ">
-            <button title="Reply" className="ml-4 mr-2" onClick={openModal}>
+            <button title="Reply" className="ml-4 mr-2" onClick={()=>openModal(value)}>
               <i class="fas fa-reply text-blue-500  focus:outline-none text-lg "></i>
             </button>
 

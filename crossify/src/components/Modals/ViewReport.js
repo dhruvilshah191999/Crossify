@@ -5,10 +5,6 @@ import ChatMessage from "components/Cards/ChatMessage";
 
 Modal.defaultStyles = {};
 
-const Tag = (props) => <span className="tag" {...props} />;
-const Delete = (props) => <button className="delete" {...props} />;
-const Help = (props) => <span className="help" {...props} />;
-
 var customModalStyles = {
   content: {
     width: "50%",
@@ -20,9 +16,12 @@ var customModalStyles = {
 };
 
 class MyModal extends Component {
-  state = {
-    tags: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: this.props.data
+    };
+  }
 
   handleUpdateTags = (tags) => {
     this.setState({ tags });
@@ -38,7 +37,11 @@ class MyModal extends Component {
       >
         <div className="flex items-start justify-between p-5 ml-1 border-b border-solid bg-gray-600 border-gray-300 rounded-t">
           <h3 className="text-2xl">
-            Report by <span className="font-semibold">hackershil</span>
+            Report by{" "}
+            <span className="font-semibold">
+              {this.state.data.user_data[0].fname}{" "}
+              {this.state.data.user_data[0].lname}
+            </span>
             {/* {this.props.username} */}
           </h3>
           <button
@@ -55,12 +58,12 @@ class MyModal extends Component {
             className="overflow-y"
             style={{ maxHeight: 320, overflowY: "scroll" }}
           >
-            {this.props.chats.map((el) => (
+            {this.state.data.reports.map((el) => (
               <ChatMessage
-                message={el.msg}
-                time={el.time}
-                username={el.owner}
-                profilePic={el.photo}
+                message={el.report}
+                time={el.date}
+                username={this.state.data.user_data[0]}
+                profilePic={this.state.data.user_data[0].profile_photo}
               />
             ))}
           </div>

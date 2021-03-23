@@ -5,6 +5,7 @@ var category_details = require("../modules/interest_category");
 var event_details = require("../modules/event_details");
 var user_details = require("../modules/user_details");
 var club_details = require("../modules/club_details");
+var reports_details = require("../modules/reports_details");
 const { ObjectID, ObjectId } = require("bson");
 const { json } = require("express");
 var router = express.Router();
@@ -507,6 +508,73 @@ router.post("/Cancelled", async function (req, res, next) {
 
 router.post("/get-all-reports",auth, async function (req, res, next) {
   const { event_id } = req.body;
+  reports_details
+    .aggregate([
+      {
+        $lookup: {
+          from: "user_details",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user_data",
+        },
+      },
+      {
+        $match: {
+          event_id: ObjectId(event_id),
+          is_active: true,
+        },
+      },
+      {
+        $project: {
+          "event_id": 1,
+          "_id": 1,
+          "user_id": 1,
+          "reports": 1,
+          "user_data.profile_photo": 1,
+          "user_data.fname": 1,
+          "user_data.lname": 1,
+        },
+      },
+    ])
+    .exec(async (err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data.length != 0) {
+        var array = [];
+        data.forEach(e => {
+          var object = {
+            event_id: e.event_id,
+            user_id: e.user_id,
+            description: e.reports[e.reports.length - 1].report,
+            date: e.reports[e.reports.length - 1].date,
+            reports: e.reports,
+            status: e.reports[e.reports.length - 1].status,
+            id: e._id,
+            name: e.user_data[0].fname + " " + e.user_data[0].lname,
+            record:e,
+          };
+          array.push(object);
+        })
+        var finaldata = {
+          data: array,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+      else {
+        var finaldata = {
+          data: null,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
 });
 
 module.exports = router;

@@ -326,9 +326,37 @@ export default function GeneralSettings(props) {
                   <hr className="mt-6 border-b-1 border-gray-400" />
 
                   <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
-                    Timing
+                    Capacity & Timing
                   </h6>
                   <div className="flex flex-wrap">
+                    <div className="w-full lg:w-6/12 px-4">
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Total Slots (Capacity)
+                        </label>
+                        <input
+                          type="number"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full lg:w-6/12 px-4">
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Last Registraiton Date
+                        </label>
+                        <input
+                          type="date"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                        />
+                      </div>
+                    </div>
                     <div className="w-full lg:w-6/12 px-4">
                       <div className="relative w-full mb-3">
                         <label

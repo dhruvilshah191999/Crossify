@@ -46,6 +46,7 @@ class RegisteredMembers extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
+      console.log(finaldata.data.event_data);
       this.setState({
         Members: finaldata.data.event_data,
         final: finaldata.data.event_data,
@@ -71,7 +72,7 @@ class RegisteredMembers extends Component {
     return (
       <div className="mt-1 text-lg text-gray-800 font-semibold lg:w-3/4 leading-relaxed">
         <div className="flex flex-row">
-          <div className="mt-2">{this.state.Members.length} booked so far</div>
+          <div className="mt-2">{this.state.Members.length +"/"+ this.props.capacity} slots booked so far</div>
           <div class="relative flex w-1/2 flex-wrap items-stretch mb-2 ml-auto">
             <span class=" h-full leading-snug font-normal z-2 text-center text-gray-700 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
               <i class="fas fa-search"></i>

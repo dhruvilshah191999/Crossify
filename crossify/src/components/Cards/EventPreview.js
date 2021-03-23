@@ -78,7 +78,7 @@ export default function EventPreview(props) {
               <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container ">
                 <div className="flex flex-col lg:flex-row">
                   <div className="flex flex-col justify-center">
-                    <div className="text-alpha text-xl font-semibold  pt-2">
+                    <div className="text-alpha text-xl font-semibold uppercase pt-2">
                       {Moment(eventdetails.date).format("MMM")}
                     </div>
                     <div className=" text-3xl ">

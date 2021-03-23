@@ -12,13 +12,13 @@ export default class SweetAlertModal extends Component {
     this.state = {
       alert: null,
       question: null,
-      isRegistered: this.props.check || 1,
+      isRegistered: this.props.check,
       eventid: this.props.eventid,
       current: this.props.current,
       max: this.props.max,
       readonly: this.props.readonly,
-      isFull: this.props.isFull || 1,
-      isInWaiting: this.props.isInWaiting || 0,
+      isFull: this.props.isFull,
+      isInWaiting: this.props.isInWaiting,
     };
   }
 
@@ -80,7 +80,7 @@ export default class SweetAlertModal extends Component {
         this.setState({
           alert: null,
           isRegistered: finaldata.data.participated,
-          waiting:true,
+          isInWaiting: true,
         });
       }
     }
@@ -155,7 +155,7 @@ export default class SweetAlertModal extends Component {
         confirmBtnText="Okay"
         confirmBtnCssClass="text-base rounded px-4 px-2 overwrite-info-btn"
         // confirmBtnStyle={{ backgroundColor: "##28a745" }}
-        onConfirm={this.pushOnQueue}
+        onConfirm={this.onJoining}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
         You are in queue. We will let you know if you got the slot.
@@ -207,7 +207,7 @@ export default class SweetAlertModal extends Component {
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
-        onConfirm={this.popFromQueue}
+        onConfirm={this.removeThisMember}
         onCancel={this.hideAlert}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
