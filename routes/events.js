@@ -733,8 +733,8 @@ router.post("/getclub", async function (req, res, next) {
 
 router.post("/checkevent", auth, async function (req, res, next) {
   let { event_id } = req.body;
-  var checks = event_details.find({
-    _id: event_id,
+  var checks = event_details.findOne({
+    _id: ObjectId(event_id),
     "participants_list.user":ObjectId(req.user._id),
     is_active: 1,
   });
@@ -745,8 +745,17 @@ router.post("/checkevent", auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if(data2.length!=0){
+    } else if (data2 != null) {
+      var waiting = false;
+      data2.participants_list.forEach((e) => {
+        if (e.user == req.user._id) {
+          if (e.status == "waiting") {
+            waiting = true;
+          }
+        }
+      });
       var finaldata = {
+        waiting,
         attend:true,
         is_error: false,
         message: "Data Send",
@@ -755,6 +764,7 @@ router.post("/checkevent", auth, async function (req, res, next) {
     }
     else {
       var finaldata = {
+        waiting:false,
         attend: false,
         is_error: false,
         message: "Data Send",

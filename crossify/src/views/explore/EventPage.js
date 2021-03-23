@@ -132,11 +132,7 @@ export default function EventPage(props) {
       token: token,
       event_id: id,
     };
-    const finaldata = await axios.post(
-      "/api/events/addlikes",
-      object,
-      config
-    );
+    const finaldata = await axios.post("/api/events/addlikes", object, config);
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
       store.addNotification({
@@ -197,15 +193,16 @@ export default function EventPage(props) {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col   lg:mx-28">
+        <div className="flex flex-col justify-start lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
-            className="flex flex-row flex-wrap mt-20 justify-center items-start"
+            style={{ minHeight: "55vh" }}
+            className="flex flex-row flex-wrap mt-16 justify-center items-start flex-shrink-0"
           >
-            <div className=" mr-6  text-black bg-white rounded-md ">
+            <div className=" mr-6  text-black bg-white rounded-md">
               <img
                 src={eventdetails.photo}
-                className="event-image align-middle rounded mt-2"
+                className="event-image  rounded mt-2"
                 alt="event_pic"
               />
             </div>
@@ -235,14 +232,14 @@ export default function EventPage(props) {
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">
                 {" "}
-                <div>
+                <div className="ml-2">
                   <i class="fas fa-map-marker-alt text-lg "></i>
                   <span className="ml-2">
                     {" "}
                     {eventdetails.location},{eventdetails.city}
                   </span>
                 </div>
-                <div className="mt-2">
+                <div className="mt-2 ml-2">
                   {" "}
                   <i class="fas fa-clock"></i>
                   <span className="ml-2">
@@ -253,11 +250,11 @@ export default function EventPage(props) {
                   </span>
                 </div>
                 <div className="mt-6">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ml-1">
                     <div>
-                      <span className="font-semibold"> Hosted By :</span>
+                      <span className="font-semibold "> Hosted By :</span>
                     </div>
-                    <div className="flex flex-row">
+                    <div className="flex flex-row mt-1">
                       <div>
                         <img
                           src={eventdetails.club_details[0].profile_photo}

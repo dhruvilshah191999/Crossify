@@ -4,7 +4,7 @@ import Tag from "components/Tag";
 import { useParams } from "react-router";
 import dance_cat from "assets/img/travel_cat.jpg";
 import demopf from "assets/img/demopf.png";
-import MapContainer from "components/Maps/MapShow";
+import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/Modals/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/Modals/JoinEventButton";
@@ -247,7 +247,7 @@ export default function EventPreview(props) {
                     Location
                   </div>
                   <div className="mt-1 text-lg text-gray-700 w-full lg:w-3/4 leading-relaxed">
-                    <MapContainer lat={props.latitude} long={props.longitude} />
+                    <MapContainer data={eventdetails} />
                   </div>
                 </div>
               </div>

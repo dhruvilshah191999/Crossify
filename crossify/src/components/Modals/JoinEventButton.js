@@ -12,7 +12,8 @@ export default class SweetAlertModal extends Component {
       eventid: this.props.eventid,
       current: this.props.current,
       max: this.props.max,
-      readonly:this.props.readonly
+      readonly: this.props.readonly,
+      waiting: this.props.waiting
     };
   }
 
@@ -74,6 +75,7 @@ export default class SweetAlertModal extends Component {
         this.setState({
           alert: null,
           isRegistered: finaldata.data.participated,
+          waiting:true,
         });
       }
     }
@@ -157,13 +159,18 @@ export default class SweetAlertModal extends Component {
         <div className="w-full">
           {this.state.isRegistered ? (
             <button
-              className=" w-full h-12 hover:text-white hover:bg-alpha shadow border border-solid  bg-lightalpha  text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className={
+                this.state.waiting
+                  ? "w-full h-12 hover:text-white hover:bg-yellow shadow border border-solid  bg-lightalpha  text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  : " w-full h-12 hover:text-white hover:bg-alpha shadow border border-solid  bg-lightalpha  text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              }
               type="button"
               onClick={
                 this.state.readonly ? "" : () => this.removeRegisteration()
               }
             >
-              <i class="fas fa-file-signature"></i> Joined
+              <i class="fas fa-file-signature"></i>{" "}
+              {this.state.waiting ? "Waiting List" : "Joined"}
             </button>
           ) : (
             <button

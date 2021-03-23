@@ -504,4 +504,9 @@ router.post("/Cancelled", async function (req, res, next) {
     }
   });
 });
+
+router.post("/get-all-reports",auth, async function (req, res, next) {
+  const { event_id } = req.body;
+});
+
 module.exports = router;
