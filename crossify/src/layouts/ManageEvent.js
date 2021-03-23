@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-
 // components
 
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
@@ -23,7 +22,6 @@ import Attendees from "views/eventMangement/AttendeesSettings";
 export default function Admin() {
   return (
     <>
-      <Sidebar />
       <div className="relative md:ml-64 bg-gray-200">
         <AdminNavbar />
         {/* Header */}
@@ -31,17 +29,28 @@ export default function Admin() {
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           <Switch>
             <Route
-              path="/manage/event/broadcast"
+              path="/manage/event/broadcast/:id"
               exact
               component={BroadcastSettings}
             />
-            <Route path="/manage/event/preview" exact component={Preview} />
-            <Route path="/manage/event/general" exact component={General} />
-            <Route path="/manage/event/details" exact component={Details} />
-            <Route path="/manage/event/attendees" exact component={Attendees} />
-            <Route path="/manage/event/qanda" exact component={QnASettings} />
+            <Route path="/manage/event/preview/:id" exact component={Preview} />
+            <Route path="/manage/event/general/:id" exact component={General} />
+            <Route path="/manage/event/details/:id" exact component={Details} />
+            <Route
+              path="/manage/event/attendees/:id"
+              exact
+              component={Attendees}
+            />
+            <Route
+              path="/manage/event/qanda/:id"
+              exact
+              component={QnASettings}
+            />
 
-            <Redirect from="/manage/event" to="/manage/event/general" />
+            <Redirect
+              from="/manage/event/:id"
+              to="/manage/event/general/:id"
+            />
           </Switch>
           <FooterAdmin />
         </div>

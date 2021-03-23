@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useParams } from "react-router";
+import axios from "axios";
 import {
   useTable,
   useFilters,
@@ -104,12 +106,26 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 );
 
-export default function App() {
-  const getSelectedAndArrived = (e) => {
-    const IDlist = selectedFlatRows.map((el) => el.values);
-    //now do whatever you want to do
-    //todo GOLU Get the id or whatever uniquely identified thing and change the status to arriving to all the IDlist
-    console.log(IDlist);
+export default function App(props) {
+  const { id } = useParams();
+  const getSelectedAndArrived = async (e) => {
+    const IDlist = selectedFlatRows.map((el) => el.values.id);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      userIds: IDlist,
+    };
+    const finaldata = await axios.post("/api/manage/arrived", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
   };
   const getSelectedAndBroadcast = (broadcastMessage) => {
     console.log(broadcastMessage);
@@ -119,13 +135,26 @@ export default function App() {
   };
 
   const color = "light";
-  const data = React.useMemo(() => dataTable, []);
+  const data = React.useMemo(() => props.finaldata, []);
   const columns = React.useMemo(
     () => [
       {
-        Header: "ID",
-        accessor: "id",
+        Header: "Profile",
+        accessor: "photo", // accessor is the "key" in the data
         disableFilters: true,
+        disableSortBy: true,
+        // todo GOLU : if you can grab a image from eventId then add it at this place as see does it look good if not then remove it and just make it look like simple one
+        Cell: ({ value }) => {
+          return (
+            <div className="flex items-center">
+              <img
+                src={value}
+                alt="eventPhoto"
+                className="w-10 border h-10 rounded-full"
+              ></img>
+            </div>
+          );
+        },
       },
       {
         Header: "Name",
@@ -136,11 +165,6 @@ export default function App() {
         Header: "Date",
         accessor: "date", // accessor is the "key" in the data
 
-        disableFilters: true,
-      },
-      {
-        Header: "position",
-        accessor: "position",
         disableFilters: true,
       },
       {
@@ -177,17 +201,14 @@ export default function App() {
 
       {
         Header: "Actions",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
+        accessor: "id", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
-          <div className="flex flex-row  justify-evenly">
+          <div className="flex flex-row">
             <button title="Arrived">
               <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
             </button>
-            <button className="ml-2" title="Remove">
+            <button className="ml-4" title="Remove">
               <i class="fas fa-window-close text-red-500 text-lg"></i>
-            </button>
-            <button className="ml-2" title="More">
-              <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -315,17 +336,6 @@ export default function App() {
                 </div>
                 <div className="ml-auto">
                   <i class="fas fa-filter mr-4 text-gray-700 "></i>
-                  <select
-                    className="border bg-white rounded px-3 py-1 outline-none text-sm"
-                    onChange={(e) => {
-                      setFilter("id:1,position", e.target.value || undefined);
-                    }}
-                  >
-                    <option value="">All</option>
-                    <option value="User">User</option>
-                    <option value="Member">Member</option>
-                    <option value="Moderator">Moderator</option>
-                  </select>
                   <span className="ml-2 "></span>
                   <select
                     className="border bg-white rounded px-3 py-1 outline-none text-sm"

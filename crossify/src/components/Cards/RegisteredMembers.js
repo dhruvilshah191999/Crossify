@@ -56,8 +56,8 @@ class RegisteredMembers extends Component {
             />
           </div>
         </div>
-        <br />
-        <div className="flex flex-row flex-wrap overflow-x-auto max-h-300-px">
+
+        <div className="flex flex-row flex-wrap overflow-x-auto max-h-300-px mt-2">
           {this.state.Members.map((el) => {
             return (
               <Member

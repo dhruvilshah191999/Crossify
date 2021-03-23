@@ -160,5 +160,5 @@ var member_exports = mongoose.model('member_details', memberSchema);
 //     ]
 // });
 //member.save();
-//module.exports = member_exports;
+module.exports = member_exports;
 

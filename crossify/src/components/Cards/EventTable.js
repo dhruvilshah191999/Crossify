@@ -7,6 +7,8 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
+import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import EventReview from "components/Modals/EventReview";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -84,6 +86,9 @@ function SelectColumnFilter({
 }
 
 export default function App() {
+  const openModal = () => {
+    ModalManager.open(<EventReview onRequestClose={() => true} />);
+  };
   const color = "light";
   const data = React.useMemo(
     () => [
@@ -188,7 +193,7 @@ export default function App() {
         organizerName: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
-        status: "pending",
+        status: "completed",
         actions: " ",
       },
       {
@@ -220,7 +225,7 @@ export default function App() {
         organizerName: "arshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
-        status: "approved",
+        status: "rejected",
         actions: " ",
       },
       {
@@ -267,7 +272,28 @@ export default function App() {
             myColor = "orange";
           } else if (value === "approved") {
             myColor = "green";
+          } else if (value === "completed") {
+            myColor = "blue";
           }
+          // return (
+          //   <span
+          //     class={
+          //       "relative inline-block px-3 py-1 font-semibold text-" +
+          //       myColor +
+          //       "-900 leading-tight"
+          //     }
+          //   >
+          //     <span
+          //       aria-hidden
+          //       class={
+          //         "absolute inset-0 bg-" +
+          //         myColor +
+          //         "-200 opacity-50 rounded-full"
+          //       }
+          //     ></span>
+          //     <span class="relative">{value}</span>
+          //   </span>
+          // );
           return (
             <>
               <i
@@ -299,7 +325,7 @@ export default function App() {
             <button className="ml-2" title="Reject">
               <i class="fas fa-window-close text-red-500 text-lg"></i>
             </button>
-            <button className="ml-2" title="More">
+            <button className="ml-2" title="More" onClick={openModal}>
               <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
             </button>
           </div>
@@ -404,6 +430,14 @@ export default function App() {
                   </h3>
                 </div>
                 <div className="ml-auto">
+                  <button
+                    className="bg-green-500 text-white  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-4 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => openModal()}
+                  >
+                    <i class="fas fa-plus"></i>&nbsp; Create Event
+                  </button>
+
                   <i class="fas fa-filter mr-4 text-gray-700 "></i>
                   <select
                     className="border bg-white rounded px-3 py-1 outline-none text-sm"
@@ -414,10 +448,11 @@ export default function App() {
                     <option value="">All</option>
                     <option value="pending">
                       {/* <i className="fas fa-circle text-orange-500 mr-2"></i>{" "}  maybe later we can add that*/}
-                      pending
+                      Pending
                     </option>
-                    <option value="approved">approved</option>
-                    <option value="Rejected">Rejected</option>
+                    <option value="approved">Apporved</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="completed">Completed</option>
                   </select>
                   <span className="ml-2 "></span>
                   <GlobalFilter

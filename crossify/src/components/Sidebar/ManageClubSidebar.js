@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import logo from "assets/logos/logo_final.png";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
@@ -24,7 +25,16 @@ export default function Sidebar() {
             className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
             to="/"
           >
-            Notus React
+            <div className="flex flex-row items-center ">
+              <div>
+                <img className="w-8 ml-4 inline-block pt-2 " src={logo} />
+              </div>
+              <div>
+                <span className="font-semibold text-xl tracking-tight text-gray-600 px-2 ml-2">
+                  CROSSIFY
+                </span>
+              </div>
+            </div>
           </Link>
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
@@ -132,21 +142,21 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/tables") !== -1
+                    (window.location.href.indexOf("/admin/events") !== -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/tables"
+                  to="/admin/events"
                 >
                   <i
                     className={
-                      "fas fa-table mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/tables") !== -1
+                      "fas fa-calendar-alt mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin/events") !== -1
                         ? "opacity-75"
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Tables
+                  Events
                 </Link>
               </li>
               <li className="items-center">
@@ -189,6 +199,48 @@ export default function Sidebar() {
                     }
                   ></i>{" "}
                   Maps
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin/rooms") !== -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to="/admin/rooms"
+                >
+                  <i
+                    className={
+                      "fas fa-comments mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin/rooms") !== -1
+                        ? "opacity-75"
+                        : "text-gray-400")
+                    }
+                  ></i>{" "}
+                  Rooms
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin/files") !== -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to="/admin/files"
+                >
+                  <i
+                    className={
+                      "fas fa-folder-open mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin/files") !== -1
+                        ? "opacity-75"
+                        : "text-gray-400")
+                    }
+                  ></i>{" "}
+                  Files
                 </Link>
               </li>
             </ul>

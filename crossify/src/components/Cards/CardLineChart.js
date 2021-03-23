@@ -16,18 +16,18 @@ export default function CardLineChart() {
           "July",
         ],
         datasets: [
-          {
-            label: new Date().getFullYear(),
-            backgroundColor: "#4c51bf",
-            borderColor: "#4c51bf",
-            data: [65, 78, 66, 44, 56, 67, 75],
-            fill: false,
-          },
+          // {
+          //   label: new Date().getFullYear(),
+          //   backgroundColor: "#4c51bf",
+          //   borderColor: "#4c51bf",
+          //   data: [65, 78, 66, 44, 56, 67, 75],
+          //   fill: false,
+          // },
           {
             label: new Date().getFullYear() - 1,
             fill: false,
-            backgroundColor: "#fff",
-            borderColor: "#fff",
+            borderColor: "#ed64a6",
+            backgroundColor: "white",
             data: [40, 68, 86, 74, 56, 60, 87],
           },
         ],
@@ -115,7 +115,7 @@ export default function CardLineChart() {
               <h6 className="uppercase text-gray-200 mb-1 text-xs font-semibold">
                 Overview
               </h6>
-              <h2 className="text-white text-xl font-semibold">Sales value</h2>
+              <h2 className="text-white text-xl font-semibold">Community</h2>
             </div>
           </div>
         </div>

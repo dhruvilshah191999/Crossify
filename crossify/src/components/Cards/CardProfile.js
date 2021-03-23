@@ -1,5 +1,6 @@
 import React from "react";
 import demopf from "assets/img/profilepic.jpg";
+import Tag from "components/Tag";
 // components
 
 export default function CardProfile(props) {
@@ -45,8 +46,9 @@ export default function CardProfile(props) {
               {props.club_name}
             </h2>
             <div className="mb-2 text-gray-700 ">
-              <i class="fas fa-hashtag mr-2 text-lg text-gray-500"></i>
-              {props.categoriesList}
+              {props.categoriesList.map((el) => (
+                <Tag data={el}></Tag>
+              ))}
             </div>
             <h5 className="text-sm">by </h5>
             <h3 className="text-md  leading-normal mb-2 text-gray-700 mb-2">
@@ -71,5 +73,5 @@ CardProfile.defaultProps = {
   channelSize: 2,
   ownerName: "Harshil Patel",
   location: "Ahmedabad , IN",
-  categoriesList: "Sports , Tech",
+  categoriesList: ["Sports", "Tech"],
 };

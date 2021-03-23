@@ -1,394 +1,478 @@
-var express = require('express');
-var auth = require('../middleware/auth');
-var mongoose = require('mongoose');
-var category_details = require('../modules/interest_category');
-var event_details = require('../modules/event_details');
-var user_details = require('../modules/user_details');
-var club_details = require('../modules/club_details');
-const { ObjectID, ObjectId } = require('bson');
-const { json } = require('express');
-const { update } = require('../modules/interest_category');
+var express = require("express");
+var auth = require("../middleware/auth");
+var mongoose = require("mongoose");
+var category_details = require("../modules/interest_category");
+var event_details = require("../modules/event_details");
+var user_details = require("../modules/user_details");
+var club_details = require("../modules/club_details");
+const { ObjectID, ObjectId } = require("bson");
+const { json } = require("express");
 var router = express.Router();
-const nodemailer = require("nodemailer");
-require("dotenv").config();
 
-const hostEmail ="bjkanodiya42gmail.com";
-const hostPassword = "Bhargav42@";
-
-const hostAccount = {
-    user: hostEmail,
-    pass: hostPassword,
-};
-
-const transpoter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: false,
-    auth: {
-        user: hostAccount.user,
-        pass: hostAccount.pass,
+router.post("/general-update", async function (req, res, next) {
+  var {
+    event_id,
+    event_name,
+    visibility,
+    pincode,
+    address,
+    city,
+    state,
+    latitude,
+    longitude,
+    starting_date,
+    starting_time,
+    ending_date,
+    ending_time,
+  } = req.body;
+  var startdate = new Date(starting_date + " " + starting_time);
+  var date = new Date(ending_date + " " + ending_time);
+  var check = event_details.update(
+    {
+      _id: ObjectId(event_id),
+      is_active: 1,
     },
+    {
+      event_name: event_name,
+      visibility,
+      location: address,
+      city,
+      pincode,
+      state,
+      longitude,
+      latitude,
+      startdate,
+      date,
+    }
+  );
+  await check.exec((error, data) => {
+    if (error) {
+      var error = {
+        is_error: true,
+        message: error.message,
+      };
+      return res.status(400).send(error);
+    } else if (data == null || data.length == 0) {
+      var error = {
+        is_error: true,
+        message: "wrong event id or you may not have access to update ",
+      };
+      return res.status(404).send(error);
+    } else {
+      var finaldata = {
+        update:true,
+        is_error: false,
+        message: "value updated succesfully",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
 });
-const sendEmail = async (dstemail,message) => {
-    try {
-        const info = await transpoter.sendMail({
-            from: hostEmail,
-            to: dstemail,
-            subject: `You are Invited !!!`,
-            text: 'You are receiving this because you have requested to join event by event organizer.\n\n message:'+message +'If you would like to know more please login to crossify.com\n'
+
+router.post("/details-update", async function (req, res, next) {
+  var { event_id, photo, description, eligibility, tags } = req.body;
+  var check;
+  if (photo != null) {
+    check = event_details.update(
+      {
+        _id: ObjectId(event_id),
+        is_active:1,
+      },
+      {
+        photo,
+        description,
+        eligibility,
+        tags,
+      }
+    );
+  }
+  else {
+    check = event_details.update(
+      {
+        _id: ObjectId(event_id),
+        is_active: 1,
+      },
+      {
+        description,
+        eligibility,
+        tags,
+      }
+    );
+  }
+  await check.exec((error, data) => {
+    if (error) {
+      var error = {
+        is_error: true,
+        message: error.message,
+      };
+      return res.status(400).send(error);
+    } else if (data == null || data.length == 0) {
+      var error = {
+        update: false,
+        is_error: true,
+        message: "wrong event id or you may not have access to update ",
+      };
+      return res.status(404).send(error);
+    } else {
+      var finaldata = {
+        update: true,
+        is_error: false,
+        message: "value updated succesfully",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/Status_Update", async function (req, res, next) {
+  var { event_id, user_id, status } = req.body;
+
+  var check = event_details.findOneAndUpdate(
+    {
+      _id: ObjectId(event_id),
+      participants_list: { $in: { user: ObjectId(user_id) } },
+    },
+    {
+      $set: { "participants_list.$.status": status },
+    }
+  );
+
+  await check.exec((err, data) => {
+    if (err) {
+      var err = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(err);
+    } else if (data) {
+      var finaldata = {
+        is_error: false,
+        message: "value updated succesfully",
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var err = {
+        is_error: true,
+        message: "wrong event id or you may not have access to update ",
+      };
+      return res.status(404).send(err);
+    }
+  });
+});
+
+router.post("/get-faq", async function (req, res, next) {
+  var { event_id } = req.body;
+  var result = event_details.findOne({
+    _id: ObjectId(event_id),
+    is_active: 1,
+  });
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (result == null) {
+      var error = {
+        is_error: true,
+        message: "User Not Found",
+      };
+      return res.status(600).send(error);
+    } else {
+      var final = [];
+      data.faq.forEach((e) => {
+        var d = new Date(e.date);
+        var date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+        var object = {
+          que: e.question,
+          ownerName: e.askedby,
+          date: date,
+          status:e.status,
+          privacy: e.privacy,
+          id: e._id,
+        };
+        final.push(object);
+      });
+      var finaldata = {
+        data: final,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/publish", async function (req, res, next) {
+  var { event_id, questions } = req.body;
+  var check = event_details.updateMany(
+    {
+      _id: ObjectId(event_id),
+    },
+    { $set: { "faq.$[elem].privacy": "public" } },
+    {
+      multi: true,
+      arrayFilters: [{ "elem.question": { $in: questions } }],
+    }
+  );
+  await check.exec((error, data) => {
+    if (error) {
+      var err = {
+        is_error: true,
+        message: error.message,
+      };
+      return res.status(500).send(err);
+    } else if (data == null || data.length == 0) {
+      var err = {
+        is_error: true,
+        message: "wrong event details",
+      };
+      return res.status(404).send(err);
+    } else {
+      var finaldata = {
+        update: true,
+        is_error: false,
+        message: "value has been updated",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/privatise", async function (req, res, next) {
+  var { event_id, questions } = req.body;
+  var check = event_details.updateMany(
+    {
+      _id: ObjectId(event_id),
+    },
+    { $set: { "faq.$[elem].privacy": "private" } },
+    {
+      multi: true,
+      arrayFilters: [{ "elem.question": { $in: questions } }],
+    }
+  );
+  await check.exec((error, data) => {
+    if (error) {
+      var err = {
+        is_error: true,
+        message: error.message,
+      };
+      return res.status(500).send(err);
+    } else if (data == null || data.length == 0) {
+       var err = {
+         is_error: true,
+         message: "wrong event details",
+       };
+       return res.status(404).send(err);
+    } else {
+      var finaldata = {
+        update:true,
+        is_error: false,
+        message: "value has been updated",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/reject", async function (req, res, next) {
+  var { event_id, questions } = req.body;
+  var check = event_details.updateMany(
+    {
+      _id: ObjectId(event_id),
+    },
+    { $set: { "faq.$[elem].status": "rejected" } },
+    {
+      multi: true,
+      arrayFilters: [{ "elem.question": { $in: questions } }],
+    }
+  );
+  await check.exec((error, data) => {
+    if (error) {
+      var err = {
+        is_error: true,
+        message: error.message,
+      };
+      return res.status(500).send(err);
+    } else if (data == null || data.length == 0) {
+      var err = {
+        is_error: true,
+        message: "wrong event details",
+      };
+      return res.status(404).send(err);
+    } else {
+      var finaldata = {
+        update: true,
+        is_error: false,
+        message: "value has been updated",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/answer", async function (req, res, next) {
+  var { event_id, question, answer } = req.body;
+  var check = event_details.findOneAndUpdate(
+    { _id: ObjectId(event_id), "faq.question": question },
+    { $set: { "faq.$.answer": answer, "faq.$.status": "answered" } }
+  );
+  await check.exec((err, data) => {
+    if (err) {
+      var err = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(err);
+    } else if (data) {
+      var finaldata = {
+        is_error: false,
+        message: "value updated succesfully",
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var err = {
+        is_error: true,
+        message: "wrong event id or you may not have access to update ",
+      };
+      return res.status(404).send(err);
+    }
+  });
+});
+
+router.post("/get-list", async function (req, res, next) {
+  var { event_id } = req.body;
+  var result = event_details.findOne({
+    _id: ObjectId(event_id),
+    is_active: 1,
+  });
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (result == null) {
+      var error = {
+        is_error: true,
+        message: "User Not Found",
+      };
+      return res.status(600).send(error);
+    } else {
+      var final = [];
+      async function resultdata() {
+        data.participants_list.forEach(async (e) => {
+          var getdata = user_details.findOne(
+            { _id: ObjectId(e.user), is_active: 1 },
+            { email: 1, fname: 1, lname: 1, city: 1, profile_photo: 1 }
+          );
+          await getdata.exec((err2, data2) => {
+            if (data2) {
+              var d = new Date(e.date);
+              var date =
+                d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+              var object = {
+                id: data2._id,
+                photo: data2.profile_photo,
+                name: data2.fname + " " + data2.lname,
+                date,
+                location: data.city,
+                status: e.status,
+              };
+              final.push(object);
+            }
+          });
         });
-        //    console.log(info.messageId);
-        //    console.log("Preview URL : ", nodemailer.getTestMessageUrl(info));
-    } catch (error) {
-        console.log("Error Sending Mail", error);
+        let promise = new Promise((resolve, reject) => {
+          setTimeout(() => resolve("done!"), 1000);
+        });
+        let result = await promise;
+      }
+      resultdata().then((err) => {
+        var finaldata = {
+          data: final,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      })
     }
-};
-router.post('/general-update',async function(req,res,next) {
-    var {
-        event_id,
-        user_id,
-        event_name,
-        privacy,
-        address,
-        city,
-        state,
-        latitude,
-        longitude,
-        starting_date,
-        starting_time,
-        ending_date,
-        ending_time }=req.body;
-    var startdate = new Date(starting_date + ' ' + starting_time); 
-    var date = new Date(ending_date + ' ' + ending_time); 
-    var check =  event_details.update(
-    {
-        _id:ObjectId(event_id),
-        organizer_id:ObjectId(user_id)
-    },{
-        event_name:event_name,
-        visibility:privacy,
-        location:address,
-        city,
-        state,
-        longitude,
-        latitude,
-        startdate,
-        date
-    });
-    console.log(check);
-    await check.exec((error,data)=>{
-        console.log(error);
-        console.log(data);
-        if(error){
-            var error = {
-                is_error: true,
-                message: error.message,
-              };
-              return res.status(400).send(error);
-        }
-        else if(data){
-        
-            var finaldata ={
-                is_error:false,
-                message: "value updated succesfully"
-            };
-            return res.status(200).send(finaldata);
-        }
-        else {
-            var error={
-                is_error:true,
-                message: "wrong event id or you may not have access to update "
-            };
-            return res.status(404).send(error);
-        }
-    });
-
-})
-router.post('/details-update',async function(req,res,next) {
-    var {
-        event_id,
-        user_id,
-        photo,
-        description,
-        eligibility,
-        tags } =req.body;
-   
-    var check = event_details.findOneAndUpdate(
-    {
-        _id:ObjectId(event_id),
-        organizer_id:ObjectId(user_id)
-    },{
-        photo,
-        description,
-        eligibility,
-        $push:{tags}
-        
-    });
-    console.log(check);
-    await check.exec((error,data)=>{
-        if(error){
-            var error = {
-                is_error: true,
-                message: error.message,
-              };
-              return res.status(400).send(error);
-        }
-        else if(!data){
-            var error={
-                is_error:true,
-                message: "wrong event id or you may not have access to update "
-            };
-            return res.status(404).send(error);
-            
-        }
-        else {
-            
-            var finaldata ={
-                is_error:false,
-                message: "value updated succesfully"
-            };
-            return res.status(200).send(finaldata);
-        }
-    });
-
-})
-router.post("/Status_Update", async function (req, res, next)
-{
-    var {
-        event_id,
-        user_id,
-        status
-    } = req.body;
-
-    var check = event_details.findOneAndUpdate(
-        { _id: ObjectId(event_id), participants_list: { $in: { user: ObjectId(user_id) } } },
-        {
-            $set: {"participants_list.$.status": status}
-        })
-    
-    await check.exec((err, data) =>
-    {
-        if (err) {
-            var err = {
-                is_error: true,
-                message: err.message,
-            };
-            return res.status(500).send(err);
-        }
-        else if(data){        
-            var finaldata ={
-                is_error:false,
-                message: "value updated succesfully"
-            };
-            return res.status(200).send(finaldata);
-        }
-        else {
-            var err={
-                is_error:true,
-                message: "wrong event id or you may not have access to update "
-            };
-            return res.status(404).send(err);
-        }
-    });
+  });
 });
-router.post('/publish',async function(req,res,next){
-    var {event_id,questions}= req.body;
-    //var n=question.length;
-    console.log(questions)
-    
-    var check = event_details.updateMany({
-        _id:ObjectId(event_id),
-       
-        
-    },{$set:{"faq.$[elem].privacy":"public"}},{
-        multi: true,
-        arrayFilters: [ { "elem.question": {$in:questions} } ]
-      }) 
-    await check.exec((error,data)=>{
 
-        if (error) {
-            var err = {
-                is_error: true,
-                message: error.message,
-            };
-            return res.status(500).send(err);
-        }
-        else if(data){
-           var finaldata = {
-               is_error:false,
-               message:"value has been updated"
-           }
-           return res.status(200).send(finaldata);
-        }
-        else {
-            
-            var err={
-                is_error:true,
-                message: "wrong event details"
-            };
-            return res.status(404).send(err);
-        }
-    })
-    
-})
-router.post('/canceled',async function(req,res,next){
-    var {event_id,user_id}= req.body;
-    var check = event_details.findOneAndUpdate({
-        _id:ObjectId(event_id)
-        
-    })
-})
-router.post('/privatise',async function(req,res,next){
-    var {event_id,questions}= req.body;
-    //var n=question.length;
-    console.log(questions)
-    
-    var check = event_details.updateMany({
-        _id:ObjectId(event_id),
-       
-        
-    },{$set:{"faq.$[elem].privacy":"privatise"}},{
-        multi: true,
-        arrayFilters: [ { "elem.question": {$in:questions} } ]
-      }) 
-    await check.exec((error,data)=>{
-
-        if (error) {
-            var err = {
-                is_error: true,
-                message: error.message,
-            };
-            return res.status(500).send(err);
-        }
-        else if(data){
-           var finaldata = {
-               is_error:false,
-               message:"value has been updated"
-           }
-           return res.status(200).send(finaldata);
-        }
-        else {
-            
-            var err={
-                is_error:true,
-                message: "wrong event details"
-            };
-            return res.status(404).send(err);
-        }
-    })
-    
-})
-router.post('/reject',async function(req,res,next){
-    var {event_id,questions}= req.body;
-    
-    
-    var check = event_details.updateMany({
-        _id:ObjectId(event_id),
-       
-        
-    },{$set:{"faq.$[elem].status":"rejected"}},{
-        multi: true,
-        arrayFilters: [ { "elem.question": {$in:questions} } ]
-      }) 
-    await check.exec((error,data)=>{
-
-        if (error) {
-            var err = {
-                is_error: true,
-                message: error.message,
-            };
-            return res.status(500).send(err);
-        }
-        else if(data){
-           var finaldata = {
-               is_error:false,
-               message:"value has been updated"
-           }
-           return res.status(200).send(finaldata);
-        }
-        else {
-            
-            var err={
-                is_error:true,
-                message: "wrong event details"
-            };
-            return res.status(404).send(err);
-        }
-    })
-    
-})
-router.post("/answer", async function (req, res,next)
-{
-    var {
-        event_id,
-        question,
-        answer
-    } = req.body;
-
-    var check = event_details.findOneAndUpdate(
-        { _id: ObjectId(event_id), "faq.question": question },
-        { $Set: { "faq.$.answer": answer } }
-    )
-
-    await check.exec((err, data) =>
+router.post("/arrived", async function (req, res, next) {
+  var { event_id, userIds } = req.body;
+  userIds = userIds.map((s) => mongoose.Types.ObjectId(s));
+  var check = event_details.updateMany(
     {
-        if (err) {
-            var err = {
-                is_error: true,
-                message: err.message,
-            };
-            return res.status(500).send(err);
-        }
-        else if(data){        
-            var finaldata ={
-                is_error:false,
-                message: "value updated succesfully"
-            };
-            return res.status(200).send(finaldata);
-        }
-        else {
-            var err={
-                is_error:true,
-                message: "wrong event id or you may not have access to update "
-            };
-            return res.status(404).send(err);
-        }
-    });
-});
-router.get('/broadcast_message',async function(req,res,next){
-    var {event_id,usersarray,message}= req.body;
-    // var check = event_details.find({
-    //     _id:event_id,
-    //     "participants_list.user": { $in:usersarray } 
-    // },{},{
-    //     multi: true,
-    //     arrayFilters: [ { "elem.participants_list": {$in:usersarray} } ]
-    //   })
-    await usersarray.forEach(element => {
-        async()=>{
-        var check = user_details.findOne({
-            _id:ObjectId(element),
-
-        })
-        await check.exec((error,data)=>{
-            if(error){
-            var err = {
-                is_error: true,
-                message: error.message,
-            };
-            return res.status(500).send(err);
-            }
-            else if(data){
-                var dstemail= data.email;
-                sendEmail(dstemail,message);
-                var finaldata={
-                    is_error:false,
-                    message:"mail sent"
-                }
-                return res.status(200).send(finaldata);
-            }
-    })
+      _id: ObjectId(event_id),
+    },
+    { $set: { "participants_list.$[elem].status": "arrived" } },
+    {
+      multi: true,
+      arrayFilters: [{ "elem.user": { $in: userIds } }],
     }
-    })
-})
-module.exports=router;
+  );
+  await check.exec((error, data) => {
+    if (error) {
+      var err = {
+        is_error: true,
+        message: error.message,
+      };
+      return res.status(500).send(err);
+    } else if (data == null || data.length == 0) {
+      var err = {
+        is_error: true,
+        message: "wrong event details",
+      };
+      return res.status(404).send(err);
+    } else {
+      var finaldata = {
+        update: true,
+        is_error: false,
+        message: "value has been updated",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/userarrived", async function (req, res, next) {
+  var {
+    event_id,
+    user_id
+  } = req.body;
+
+  var check = event_details.findOneAndUpdate(
+    { _id: ObjectId(event_id), "participants_list.user": ObjectId(user_id) },
+    { $set: { "participants_list.$.status": "Arrived" } }
+  )
+
+  await check.exec((err, data) => {
+    if (err) {
+      var err = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(err);
+    }
+    else if (data) {
+      var finaldata = {
+        is_error: false,
+        message: "value updated succesfully"
+      };
+      return res.status(200).send(finaldata);
+    }
+    else {
+      var err = {
+        is_error: true,
+        message: "wrong event id or you may not have access to update "
+      };
+      return res.status(404).send(err);
+    }
+  });
+});
+
+module.exports = router;

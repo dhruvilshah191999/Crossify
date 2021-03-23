@@ -292,6 +292,99 @@ router.post("/get-all-event", auth, async function (req, res, next) {
     }
   });
 });
-
+router.get ("/get-photo-name",async function(req,res,next){
+  var { user_id }= req.body;
+  var result = club_details.find({
+    creator_id:user_id
+  })
+  await result.exec((err,data)=>{
+    if(err){
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    }else if (data == null || data.length == 0) {
+      var error = {
+        check: false,
+        is_error: true,
+        message: "You hasn't created any club",
+      };
+      return res.status(200).send(error);
+    }
+    else{
+      
+      if(data instanceof Array){
+        var finaldata={message:[],is_error:false}
+        
+          data.forEach(element => {
+            finaldata.message.push({profile_photo:element.profile_photo,club_name:element.club_name})
+          });
+          return res.status(200).send(finaldata);
+      } 
+      else{
+        var finaldata = { 
+          message : { 
+            profile_photo:data.profile_photo,
+            club_name: data.club_name
+          },
+          is_error:false
+        }
+        return res.status(200).send(finaldata);
+      }
+    }
+    
+  })
+})
+router.post("/check-event", auth, async function (req, res, next) {
+  var { event_id } = req.body;
+  if (event_id.length != 24) {
+    var error = {
+      check: false,
+      is_error: true,
+      message: "User Not Found",
+    };
+    return res.status(200).send(error);
+  }
+  else {
+    var result = event_details.findOne({
+      _id: ObjectId(event_id),
+      is_active: 1,
+    });
+    await result.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(600).send(error);
+      } else if (data == null || data.length == 0) {
+        var error = {
+          check: false,
+          is_error: true,
+          message: "User Not Found",
+        };
+        return res.status(200).send(error);
+      } else {
+        if (data.oragnizer_id != req.user._id) {
+          var error = {
+            check: false,
+            is_error: true,
+            message: "User Not Found",
+          };
+          return res.status(200).send(error);
+        }
+        else {
+          var finaldata = {
+            check: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      }
+    });
+  }
+});
 
 module.exports = router;

@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import ReactNotification from "react-notifications-component";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
 import "assets/styles/customcss.css";
+import "react-notifications-component/dist/theme.css";
+// import "../node_modules/animate.css/animate.min.css";
 //import MapContainer from "./app";
 // layouts
 
@@ -50,19 +53,11 @@ const Routing = () => {
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
       {!token ? (
-        <PrivateRoute
-          authed={false}
-          path="/profile"
-          component={Profile}
-        />
+        <PrivateRoute authed={false} path="/profile" component={Profile} />
       ) : (
-        <PrivateRoute
-          authed={true}
-          path="/profile"
-          component={Profile}
-        />
+        <PrivateRoute authed={true} path="/profile" component={Profile} />
       )}
-      <Route path="/manage/event" component={ManageEvent} />
+      <Route path="/manage/event/:id" component={ManageEvent} />
       {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
       {/* <Route path="/profile" exact component={Profile} /> */}
@@ -79,7 +74,6 @@ const Routing = () => {
     </Switch>
   );
 };
-
 
 export default function App() {
   const { islogin_dispatch, dispatch } = useContext(UserContext);
@@ -112,7 +106,8 @@ export default function App() {
   }, []);
   return (
     <BrowserRouter>
-      <Routing/>
+      <ReactNotification />
+      <Routing />
     </BrowserRouter>
   );
 }

@@ -12,6 +12,7 @@ class UploadPic extends React.Component {
     this.setState({
       file: URL.createObjectURL(event.target.files[0]),
     });
+    this.props.parentCallback(event.target.files[0]);
   }
   render() {
     return (
@@ -34,6 +35,7 @@ class UploadPic extends React.Component {
           <div className=" ">
             <img
               className=""
+              onChange={this.handleChange2}
               src={this.state.file}
               style={{
                 height: 400,

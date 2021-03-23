@@ -44,19 +44,23 @@ export default function Navbar(props) {
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               {/* for mobile you have change text-black in all the navbar buttons/links */}
               <li className="flex items-center">
-                <a
-                  className="hover:text-lightwhite text-white md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
-                  href="#"
-                >
-                  <i className="text-white far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
-                  Events
-                </a>
+                <Link to="/search">
+                  <a
+                    className="hover:text-lightwhite text-white md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
+                    href="#"
+                  >
+                    <i className="text-white far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
+                    Events
+                  </a>
+                </Link>
               </li>
               <li className="flex items-center">
-                <div className="hover:text-lightwhite text-white px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
-                  <i className="text-white  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
-                  Clubs
-                </div>
+                <Link to="/clubsearch">
+                  <div className="hover:text-lightwhite text-white px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
+                    <i className="text-white  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
+                    Clubs
+                  </div>
+                </Link>
               </li>
 
               <li className={isLogin ? "hidden " : " " + "flex items-center"}>

@@ -3,11 +3,11 @@ import axios from "axios";
 import Moment from "moment";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
-import dance_cat from "../../assets/img/travel_cat.jpg";
-import MapContainer from "../../components/Maps/MapCode";
-import SweetAlertModal from "../../components/Modals/SweetAlertModal";
-import RegisteredMember from "../../components/Cards/RegisteredMembers";
-import JoinEventButton from "../../components/Modals/JoinEventButton";
+import dance_cat from "assets/img/travel_cat.jpg";
+import MapContainer from "components/Maps/MapCode";
+import AskQuestion from "components/Modals/AskQuestion";
+import RegisteredMember from "components/Cards/RegisteredMembers";
+import JoinEventButton from "components/Modals/JoinEventButton";
 
 // todo For Golu : MapContainer has to changed because we only want Map which shows the Event latitude and Longitute
 
@@ -60,7 +60,7 @@ export default function EventPage(props) {
       };
       var send_data = {
         event_id: id,
-        token
+        token,
       };
       const finaldata = await axios.post(
         "/api/events/checkevent",
@@ -89,7 +89,7 @@ export default function EventPage(props) {
             <div className=" mr-6  text-black bg-white rounded-md ">
               <img
                 src={eventdetails.photo}
-                className="event-image align-middle rounded-md mt-2"
+                className="event-image align-middle rounded mt-2"
                 alt="event_pic"
               />
             </div>
@@ -97,7 +97,7 @@ export default function EventPage(props) {
             <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container">
               <div className="flex flex-row">
                 <div className="flex flex-col justify-center">
-                  <div className="text-alpha text-xl font-semibold  pt-2">
+                  <div className="text-alpha text-xl font-semibold uppercase pl-1  pt-2">
                     {Moment(eventdetails.date).format("MMM")}
                   </div>
                   <div className=" text-3xl ">
@@ -184,24 +184,24 @@ export default function EventPage(props) {
           </div>
           <div className="mx-6 my-4">
             <div className="flex flex-col">
-              <div className="flex  flex-row lg:flex-col py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Description
                 </div>
-                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
+                <div className="mt-1 text-lg text-gray-700 lg:w-3/4 leading-relaxed">
                   {eventdetails.description}
                 </div>
               </div>
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Eligibility
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
                   {eventdetails.eligibility}
                 </div>
               </div>
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Tags
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
@@ -210,17 +210,17 @@ export default function EventPage(props) {
                   ))}
                 </div>
               </div>
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   People going
                 </div>
                 <RegisteredMember></RegisteredMember>
               </div>
 
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   FAQs <br />
-                  <SweetAlertModal></SweetAlertModal>
+                  <AskQuestion></AskQuestion>
                   {/* <button className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta">
                     <i class="fas fa-user-plus"></i> Ask
                   </button> */}
@@ -249,8 +249,8 @@ export default function EventPage(props) {
                   })}
                 </div>
               </div>
-              <div className="flex flex-row py-4">
-                <div className="font-semibold text-gray-800 text-2xl w-1/4">
+              <div className="flex flex-col lg:flex-row py-4">
+                <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Location
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">

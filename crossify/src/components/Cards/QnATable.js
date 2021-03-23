@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useParams } from "react-router";
+import axios from "axios";
 import {
   useTable,
   useFilters,
@@ -107,28 +109,68 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 );
 
-export default function App() {
-  const getSelectedAndReject = (e) => {
-    const IDlist = selectedFlatRows.map((el) => el.values);
-    //now do whatever you want to do
-    //todo GOLU Get the id or whatever uniquely identified thing and change the status to arriving to all the IDlist
-    console.log(IDlist);
+export default function App(props) {
+  const { id } = useParams();
+  const getSelectedAndReject = async (e) => {
+    const IDlist = selectedFlatRows.map((el) => el.values.que);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      questions:IDlist
+    };
+    const finaldata = await axios.post("/api/manage/reject", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
   };
-  const getSelectedAndPublish = (e) => {
-    const IDlist = selectedFlatRows.map((el) => el.values);
-    //now do whatever you want to do
-    //todo GOLU Get the id or whatever uniquely identified thing and change the status to arriving to all the IDlist
-    console.log(IDlist);
+  const getSelectedAndPublish = async(e) => {
+    const IDlist = selectedFlatRows.map((el) => el.values.que);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      questions:IDlist
+    };
+    const finaldata = await axios.post("/api/manage/publish", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
   };
-  const getSelectedAndPrivate = (e) => {
-    const IDlist = selectedFlatRows.map((el) => el.values);
-    //now do whatever you want to do
-    //todo GOLU Get the id or whatever uniquely identified thing and change the status to arriving to all the IDlist
-    console.log(IDlist);
+  const getSelectedAndPrivate = async (e) => {
+   const IDlist = selectedFlatRows.map((el) => el.values.que);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      questions:IDlist
+    };
+    const finaldata = await axios.post("/api/manage/privatise", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
   };
 
   const color = "light";
-  const data = React.useMemo(() => dataTable, []);
+  const data = React.useMemo(() => props.finaldata, []);
   const columns = React.useMemo(
     () => [
       {
@@ -191,7 +233,7 @@ export default function App() {
           },
         }) => (
           <div className="flex flex-row  justify-evenly">
-            <QnAModal answer="my answer is also same" question={que}></QnAModal>
+            <QnAModal event_id={id} question={que}></QnAModal>
           </div>
         ),
         disableFilters: true,

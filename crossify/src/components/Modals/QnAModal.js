@@ -1,33 +1,46 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
+import axios from "axios";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       alert: null,
       question: null,
       answer: null,
+      event_id: null,
     };
   }
   componentDidMount() {
-    this.setState({ question: this.props.question, answer: this.props.answer });
+    this.setState({
+      question: this.props.question,
+      event_id: this.props.event_id,
+    });
   }
   hideAlert = () => {
     this.setState({
       alert: null,
     });
   };
-  onRecievedInput = () => {
-    const updatedQ = this.state.question;
-    const updatedA = this.state.answer;
-    //todo GOLU we have question and answer in state you just make any axios request to update the current value
-    this.setState({
-      alert: null,
-      question: null,
-      answer: null,
-    });
+  onRecievedInput = async () => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: this.state.event_id,
+      question: this.state.question,
+      answer: this.state.answer,
+    };
+    const finaldata = await axios.post("/api/manage/answer", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
   };
   confirmProcess = () => {
     this.props.handleRejection();
@@ -42,7 +55,7 @@ export default class SweetAlertModal extends Component {
         confirmBtnBsStyle="success"
         title="Are you sure?"
         focusCancelBtn
-        confirmBtnCssClass="text-base rounded px-4 py-2 bg-green-500"
+        confirmBtnCssClass="text-base rounded px-4 py-2 bg-blue-500"
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
@@ -50,7 +63,7 @@ export default class SweetAlertModal extends Component {
         onConfirm={this.onRecievedInput}
         onCancel={this.hideAlert}
         type={"controlled"}
-        dependencies={[this.state.question, this.state.answer]}
+        dependencies={[this.state.question]}
       >
         <div>
           <form>
@@ -71,6 +84,7 @@ export default class SweetAlertModal extends Component {
                     onChange={(e) => {
                       this.setState({ question: e.target.value });
                     }}
+                    readOnly={true}
                   />
                 </div>
               </div>
@@ -106,7 +120,7 @@ export default class SweetAlertModal extends Component {
     return (
       <>
         <button title="Arrived" onClick={() => this.confirmArrival()}>
-          <i class="fas fa-edit text-green-500 text-lg focus:outline-none"></i>
+          <i class="fas fa-edit text-blue-500 text-lg focus:outline-none"></i>
         </button>
 
         {this.state.alert}

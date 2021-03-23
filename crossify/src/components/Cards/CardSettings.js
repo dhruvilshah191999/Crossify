@@ -1,5 +1,7 @@
 import React from "react";
-import dummyPF from "../../assets/img/demopf.png";
+import dummyPF from "assets/img/demopf.png";
+import MapContainer from "components/Maps/MapCode";
+import UploadPic from "components/Inputs/UploadPic";
 // components
 
 export default function CardSettings(props) {
@@ -23,7 +25,7 @@ export default function CardSettings(props) {
               Club Information
             </h6>
             <div className="flex flex-wrap">
-              <div className="w-full lg:w-6/12 px-4">
+              <div className="w-full lg:w-8/12 px-4">
                 <div className="relative w-full mb-3">
                   <label
                     className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -38,7 +40,7 @@ export default function CardSettings(props) {
                   />
                 </div>
               </div>
-              <div className="w-full lg:w-6/12 px-4">
+              <div className="w-full lg:w-4/12 px-4">
                 <div className="relative w-full mb-3">
                   <label
                     className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -46,11 +48,16 @@ export default function CardSettings(props) {
                   >
                     Privacy
                   </label>
-                  <input
-                    type="text"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue={props.privacy}
-                  />
+                  <select
+                    class="block shadow focus:shadow-outline pr-2  text-sm appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded ease-linear transition-all duration-150"
+                    id="grid-state"
+                    placeholder="Select your relevant Categories"
+                    style={{ outline: "none" }}
+                  >
+                    <option>Public</option>
+                    <option>Private</option>
+                    <option>Closed</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -121,6 +128,17 @@ export default function CardSettings(props) {
                   />
                 </div>
               </div>
+              <div className="w-full lg:w-12/12 px-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Map
+                  </label>
+                  <MapContainer />
+                </div>
+              </div>
             </div>
 
             <hr className="mt-6 border-b-1 border-gray-400" />
@@ -185,11 +203,12 @@ export default function CardSettings(props) {
                   >
                     Profile Photo
                   </label>
-                  <input
-                    type="file"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue={props.dummyPF}
-                  />
+                  {/* <input
+                          type="file"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          defaultValue={this.props.dummyPF}
+                        /> */}
+                  <UploadPic></UploadPic>
                 </div>
               </div>
             </div>

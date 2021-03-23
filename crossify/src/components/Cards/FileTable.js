@@ -273,10 +273,11 @@ export default function App() {
         accessor: "actions", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
           <div className="flex ">
-            <button title="Download rounded-full shadow bg-gray-200 ml-4">
+            <button title="Download">
               <i class="fas fa-download text-green-500  focus:outline-none mr-4 "></i>
             </button>
-            <button className="ml-2" title="Report">
+
+            <button className="ml-4" title="Report">
               <i class="fas fa-flag text-red-500 "></i>
             </button>
           </div>

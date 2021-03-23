@@ -35,3 +35,17 @@
 //     </Item>
 //   </Gallery>
 // );
+import React, { Component } from "react";
+import ProfilePage from "views/explore/ProfilePage";
+
+class PlayGround extends Component {
+  render() {
+    return (
+      <div>
+        <ProfilePage />
+      </div>
+    );
+  }
+}
+
+export default PlayGround;

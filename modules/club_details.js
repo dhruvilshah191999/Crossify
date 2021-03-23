@@ -30,7 +30,7 @@ var clubSchema = new Schema({
   background_photo: {
     //not added
     type: String,
-    required: true,
+    required: false,
   },
   location: {
     type: String,
@@ -38,7 +38,7 @@ var clubSchema = new Schema({
   },
   max_members: {
     type: Number,
-    required: true,
+    required: false,
   },
   joining_criteria: {
     type: String,

@@ -7,6 +7,14 @@ var event_details = new Schema({
     type: String,
     required: true,
   },
+  maximum_participants:{
+    type:Number,
+    required:true
+  },
+  current_participants:{
+    type:Number,
+    required:true
+  },
   photo: {
     type: String,
     required: true,
@@ -105,6 +113,14 @@ var event_details = new Schema({
   likes: {
     type: Array,
     require: false,
+  },
+  startdate: {
+    type: Date,
+    required: false,
+  },
+  pincode: {
+    type: Number,
+    required: false,
   },
 });
 

@@ -9,7 +9,7 @@ export default class SweetAlertModal extends Component {
       alert: null,
       question: null,
       isRegistered: this.props.check,
-      event_id:this.props.eventid
+      event_id: this.props.eventid,
     };
   }
 
@@ -130,7 +130,7 @@ export default class SweetAlertModal extends Component {
       <div className="w-full">
         {this.state.isRegistered ? (
           <button
-            className=" w-full h-12 hover:text-alpha hover:bg-white shadow border border-solid  bg-lightalpha  text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className=" w-full h-12 hover:text-white hover:bg-alpha shadow border border-solid  bg-lightalpha  text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             onClick={() => this.removeRegisteration()}
           >
@@ -138,7 +138,7 @@ export default class SweetAlertModal extends Component {
           </button>
         ) : (
           <button
-            className="w-full h-12 hover:text-alpha hover:bg-white shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className="w-full h-12 hover:text-white hover:bg-lightalpha shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             onClick={() => this.successJoined()}
           >

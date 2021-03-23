@@ -1,4 +1,4 @@
-import React ,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import City from "../../views/auth/states-and-districts.json";
 export default function CardSettings() {
@@ -12,9 +12,11 @@ export default function CardSettings() {
     lname: "",
     address: "",
     postalcode: "",
-    about_me:"",
-  })
+    about_me: "",
+    occupation: "",
+  });
 
+  //todo GOLU added occupation in the form as well
   const {
     username,
     email,
@@ -23,10 +25,11 @@ export default function CardSettings() {
     address,
     postalcode,
     about_me,
+    occupation,
   } = formData;
 
   const onChange = (e) =>
-     SetformData({ ...formData, [e.target.name]: e.target.value });
+    SetformData({ ...formData, [e.target.name]: e.target.value });
 
   var districts = [];
   if (statename !== "") {
@@ -60,7 +63,8 @@ export default function CardSettings() {
           lname: finaldata.data.data.lname,
           address: finaldata.data.data.address,
           postalcode: finaldata.data.data.pincode,
-          about_me:finaldata.data.data.about_me
+          about_me: finaldata.data.data.about_me,
+          occupation: finaldata.data.data.occupation,
         });
         setStateName(finaldata.data.data.state);
         setCityName(finaldata.data.data.city);
@@ -82,8 +86,9 @@ export default function CardSettings() {
       state: statename,
       about_me,
       pincode: postalcode,
-      token
-    }
+      occupation,
+      token,
+    };
     const config = {
       method: "POST",
       header: {
@@ -100,7 +105,7 @@ export default function CardSettings() {
     } else {
       window.location.reload();
     }
-  }
+  };
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">
@@ -294,6 +299,23 @@ export default function CardSettings() {
               About Me
             </h6>
             <div className="flex flex-wrap">
+              <div className="w-full lg:w-12/12 px-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Occupation
+                  </label>
+                  <input
+                    type="text"
+                    className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                    name="occupation"
+                    value={occupation}
+                    onChange={(e) => onChange(e)}
+                  />
+                </div>
+              </div>
               <div className="w-full lg:w-12/12 px-4">
                 <div className="relative w-full mb-3">
                   <label
