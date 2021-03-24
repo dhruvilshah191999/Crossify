@@ -8,6 +8,7 @@ import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import Pagination from "components/ResultWindow/Pagination";
 import ResultWindow from "components/ResultWindow/ClubIndex";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
+import logo from "assets/logos/logo_final.png";
 import RangeInput from "components/RangeSlider";
 
 export default function Sidebar(props) {
@@ -159,7 +160,7 @@ export default function Sidebar(props) {
 
   return (
     <>
-      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      <nav className="z-51 md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-md bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-no-wrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
           <button
@@ -171,10 +172,19 @@ export default function Sidebar(props) {
           </button>
           {/* Brand */}
           <Link
-            className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
+            className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 pt-1 pb-0 px-0"
             to="/"
           >
-            Notus React
+            <div className="flex flex-row items-center ">
+              <div>
+                <img className="w-8 ml-4 inline-block pt-2 " src={logo} />
+              </div>
+              <div>
+                <span className="font-semibold text-xl tracking-tight text-gray-600 px-2 ml-2">
+                  CROSSIFY
+                </span>
+              </div>
+            </div>
           </Link>
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
@@ -219,15 +229,20 @@ export default function Sidebar(props) {
               <div className="mb-3 pt-0">
                 <input
                   type="text"
-                  placeholder="Search"
+                  placeholder="Find Your Club"
                   className="px-3 py-2 h-12 border border-solid  border-gray-600 placeholder-gray-400 text-gray-700 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
+                />
+                <input
+                  type="text"
+                  placeholder="Specify Location"
+                  className="px-3 py-2 h-12 mt-2 border border-solid  border-gray-600 placeholder-gray-400 text-gray-700 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
                 />
               </div>
             </form>
             {/* Divider */}
 
             {/* Heading */}
-            <h6 className="md:min-w-full mt-2 text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full  text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
               Distance
             </h6>
             {/* Navigation */}
@@ -350,7 +365,7 @@ export default function Sidebar(props) {
           </div>
         </div>
       </nav>
-      <div style={{ marginTop: "100px" }}>
+      <div>
         <ResultWindow getclub={currentEvents} loading={loading} data="Club" />
         <Pagination
           postPerPage={postPerPage}

@@ -9,6 +9,7 @@ import {
 } from "react-table";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import EventReview from "components/Modals/EventReview";
+import RequestForEvent from "components/Modals/RequestForEvent";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -88,6 +89,9 @@ function SelectColumnFilter({
 export default function App() {
   const openModal = () => {
     ModalManager.open(<EventReview onRequestClose={() => true} />);
+  };
+  const openModal2 = () => {
+    ModalManager.open(<RequestForEvent onRequestClose={() => true} />);
   };
   const color = "light";
   const data = React.useMemo(
@@ -433,7 +437,7 @@ export default function App() {
                   <button
                     className="bg-green-500 text-white  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-4 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => openModal()}
+                    onClick={() => openModal2()}
                   >
                     <i class="fas fa-plus"></i>&nbsp; Create Event
                   </button>

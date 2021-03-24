@@ -4,6 +4,7 @@ import demobg from "assets/img/demopf.png";
 import Tag from "components/Tag";
 import MapContainer from "../../components/Maps/MapCode";
 import AskQuestion from "components/Modals/AskQuestion";
+import ChatMessage from "components/Cards/ChatMessage";
 
 Modal.defaultStyles = {};
 
@@ -13,10 +14,10 @@ const Help = (props) => <span className="help" {...props} />;
 
 var customModalStyles = {
   content: {
-    width: "80%",
+    width: "70%",
     marginTop: "20px",
     transform: "translate(-50%, -50%)",
-    height: "680px", // <-- This sets the height
+    height: "660px", // <-- This sets the height
     overlfow: "scroll", // <-- This tells the modal to scrol
   },
 };
@@ -184,6 +185,22 @@ class MyModal extends Component {
               <div className="flex w-full ml-4 px-4 py-2">
                 <div className="w-1/4 font-semibold  "> Review </div>
                 <div className="text-gray-700 w-3/4 ">
+                  <div
+                    className="overflow-y"
+                    style={{ maxHeight: 320, overflowY: "scroll" }}
+                  >
+                    {this.props.chats.map((el) => (
+                      <ChatMessage
+                        message={el.msg}
+                        time={el.time}
+                        username={el.owner}
+                        profilePic={el.photo}
+                      />
+                    ))}
+                  </div>
+                  <form>
+                    <div className="flex items-center mt-4"></div>
+                  </form>
                   <textarea
                     rows="4"
                     placeholder="Give proper feedback to this request explaining the decision you are taking and any improvement required from the organization side"
@@ -249,6 +266,57 @@ MyModal.defaultProps = {
       question: "Do they provide drinks and kits?",
       answer:
         "Yes , everything will be available if you want to play with your equipement then you can play with it otherwise most of the things will be available.",
+    },
+  ],
+
+  chats: [
+    {
+      msg:
+        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      time: "12:00 PM , 12 Feb 2021",
+      owner: "Harshil Patel",
+      photo: demobg,
+      isManager: false,
+    },
+    {
+      msg:
+        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      time: "12:00 PM , 12 Feb 2021",
+      owner: "Harshil Patel",
+      photo: demobg,
+      isManager: true,
+    },
+    {
+      msg:
+        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      time: "12:00 PM , 12 Feb 2021",
+      owner: "Harshil Patel",
+      photo: demobg,
+      isManager: false,
+    },
+    {
+      msg:
+        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      time: "12:00 PM , 12 Feb 2021",
+      owner: "Harshil Patel",
+      photo: demobg,
+      isManager: true,
+    },
+    {
+      msg:
+        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      time: "12:00 PM , 12 Feb 2021",
+      owner: "Harshil Patel",
+      photo: demobg,
+      isManager: false,
+    },
+    {
+      msg:
+        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      time: "12:00 PM , 12 Feb 2021",
+      owner: "Harshil Patel",
+      photo: demobg,
+      isManager: true,
     },
   ],
 };

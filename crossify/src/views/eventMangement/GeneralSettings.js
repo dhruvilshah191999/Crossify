@@ -8,7 +8,13 @@ import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import MapContainer from "components/Maps/MapCode";
 import dummyPF from "assets/img/demopf.png";
 
+import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import ViewFeedback from "components/Modals/ViewFeedback";
+
 export default function GeneralSettings(props) {
+  const openModal = () => {
+    ModalManager.open(<ViewFeedback onRequestClose={() => true} />);
+  };
   const { id } = useParams();
   const [loading, setloading] = useState(false);
   const [latitude, setlatitude] = useState(23.106517);
@@ -146,7 +152,17 @@ export default function GeneralSettings(props) {
               <div className="rounded-t bg-white mb-0 px-6 py-6">
                 <div className="text-center flex justify-between">
                   <h6 className="text-gray-800 text-xl font-bold">
-                    Event Info
+                    Event Status :
+                    {/* <i className="fas fa-circle text-orange-500 p-2 text-xs text-center"></i> */}
+                    <span className="text-lg text-orange-500 ml-2 font-semibold">
+                      Pending
+                    </span>
+                    <button
+                      className="text-orange-500 text-sm ml-2"
+                      onClick={() => openModal()}
+                    >
+                      <i className="fas fa-info-circle"></i>
+                    </button>
                   </h6>
                   <button
                     className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"

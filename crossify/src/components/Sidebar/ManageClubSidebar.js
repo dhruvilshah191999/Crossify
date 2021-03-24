@@ -134,7 +134,7 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Settings
+                  &nbsp;Settings
                 </Link>
               </li>
 
@@ -156,7 +156,7 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Events
+                  &nbsp;&nbsp;Events
                 </Link>
               </li>
               <li className="items-center">
@@ -176,7 +176,8 @@ export default function Sidebar() {
                         ? "opacity-75"
                         : "text-gray-400")
                     }
-                  ></i>{" "}
+                  ></i>
+                  {"  "}
                   Members
                 </Link>
               </li>
@@ -197,8 +198,9 @@ export default function Sidebar() {
                         ? "opacity-75"
                         : "text-gray-400")
                     }
-                  ></i>{" "}
-                  Maps
+                  ></i>
+                  {"  "}
+                  &nbsp;Maps
                 </Link>
               </li>
               <li className="items-center">
@@ -219,7 +221,28 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Rooms
+                  &nbsp;Rooms
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin/media") !== -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to="/admin/media"
+                >
+                  <i
+                    className={
+                      "fas fa-photo-video mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin/media") !== -1
+                        ? "opacity-75"
+                        : "text-gray-400")
+                    }
+                  ></i>{" "}
+                  &nbsp;Media
                 </Link>
               </li>
               <li className="items-center">
@@ -240,7 +263,7 @@ export default function Sidebar() {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Files
+                  &nbsp;Files
                 </Link>
               </li>
             </ul>

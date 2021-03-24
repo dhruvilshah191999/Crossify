@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import MyTag from "components/Tag";
+import moment from "moment";
 
 function ProfileClubCard(props) {
+  console.log(props);
   return (
-    <div className="relative bg-white hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-4 mb-2 rounded shadow lg:w-1by3">
+    <div
+      className="relative bg-white flex-shrink-0 hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-2 mb-4 rounded shadow "
+      style={{ width: 320, marginLeft: "0.5rem", marginRight: "0.5rem" }}
+    >
       <img
         src="https://images.unsplash.com/photo-1573748240263-a4e9c57a7fcd"
         alt="People"
@@ -12,11 +17,7 @@ function ProfileClubCard(props) {
       <div className="p-4 md:p-6">
         <p className="text-alpha">
           <span className="text-sm font-semibold text-alpha mr-2">
-            {props.date}
-          </span>
-          |
-          <span className="text-sm font-semibold text-gray-700 text-alpha px-2">
-            {props.duration}
+            {(props.date)}
           </span>
         </p>
         <div className="float-right">
@@ -34,7 +35,7 @@ function ProfileClubCard(props) {
           </button>
         </div>
         <h3 className="font-semibold mb-2 text-xl leading-tight sm:leading-normal">
-          {props.club_name}
+          {props.event_name}
         </h3>
         <div className="text-sm flex items-center">
           <i class="fas fa-map-marker-alt text-sm mr-2"></i>

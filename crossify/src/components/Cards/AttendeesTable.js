@@ -134,6 +134,48 @@ export default function App(props) {
     console.log(IDlist);
   };
 
+  const Coming = async (userid) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      user_id: userid,
+    };
+    const finaldata = await axios.post(
+      "/api/manage/userarrived",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  };
+
+  const Remove = async (userid) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      user_id: userid,
+    };
+    const finaldata = await axios.post("/api/manage/Cancelled", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  }
+
   const color = "light";
   const data = React.useMemo(() => props.finaldata, []);
   const columns = React.useMemo(
@@ -204,10 +246,14 @@ export default function App(props) {
         accessor: "id", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
           <div className="flex flex-row">
-            <button title="Arrived">
+            <button title="Arrived" onClick={() => Coming(value)}>
               <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
             </button>
-            <button className="ml-4" title="Remove">
+            <button
+              className="ml-4"
+              title="Remove"
+              onClick={() => Remove(value)}
+            >
               <i class="fas fa-window-close text-red-500 text-lg"></i>
             </button>
           </div>
@@ -349,7 +395,7 @@ export default function App(props) {
                       Coming
                     </option>
                     <option value="arrived">Arrived</option>
-                    <option value="canceled">Cancled</option>
+                    <option value="canceled">Cancelled</option>
                   </select>
                   <span className="ml-2 "></span>
                   <GlobalFilter

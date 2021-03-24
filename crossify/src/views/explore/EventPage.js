@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Moment from "moment";
 import { useParams } from "react-router";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import Navbar from "components/Navbars/ClubNavbar";
 import dance_cat from "assets/img/travel_cat.jpg";
-import MapContainer from "components/Maps/MapCode";
+import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/Modals/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/Modals/JoinEventButton";
-
-// todo For Golu : MapContainer has to changed because we only want Map which shows the Event latitude and Longitute
+import ReportEventButton from "components/Modals/ReportEventButton";
+import { store } from "react-notifications-component";
 
 const Tag = (props) => {
   return (
@@ -20,10 +21,12 @@ const Tag = (props) => {
 };
 
 export default function EventPage(props) {
-  const { id } = useParams();
+  var { id } = useParams();
   const [loading, setloading] = useState(false);
+  const [like, setLike] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
+  const token = localStorage.getItem("jwt");
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     async function event_details() {
@@ -74,22 +77,132 @@ export default function EventPage(props) {
       }
     }
 
+    async function fetchData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+        event_id: id,
+      };
+      const finaldata = await axios.post(
+        "/api/events/checklikes",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setLike(finaldata.data.Like);
+      }
+    }
+
+    fetchData();
     CheckEvent();
     event_details();
   }, []);
+
+  const notifyCopied = () => {
+    store.addNotification({
+      title: "Succesfully Copied to Clipboard",
+      message: "Share the event with your friends ! ",
+      type: "info",
+      insert: "top",
+      container: "bottom-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 3000,
+        // onScreen: true,
+      },
+    });
+  };
+
+  const addlike = async (e) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      token: token,
+      event_id: id,
+    };
+    const finaldata = await axios.post("/api/events/addlikes", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+      store.addNotification({
+        title: "Something went wrong",
+        message: "Cannot add to favourite",
+        type: "danger",
+        insert: "top",
+        container: "bottom-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          // onScreen: true,
+        },
+      });
+    } else {
+      store.addNotification({
+        title: "Added to Favourites !",
+        message: "You can access with ease in your profile.",
+        type: "danger",
+        insert: "top",
+        container: "bottom-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          // onScreen: true,
+        },
+      });
+      setLike(true);
+    }
+  };
+
+  const deletelike = async (e) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      token: token,
+      event_id: id,
+    };
+    const finaldata = await axios.post(
+      "/api/events/deletelikes",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      setLike(false);
+    }
+  };
+
   if (loading) {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col  container  event-container">
+        <div className="flex flex-col  justify-start lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
-            className="flex flex-row flex-wrap mt-20 justify-center items-start"
+            style={{ minHeight: "55vh" }}
+            className="flex flex-row flex-wrap mt-16 justify-center items-start flex-shrink-0"
           >
-            <div className=" mr-6  text-black bg-white rounded-md ">
+            <div className=" mr-6  text-black bg-white rounded-md">
               <img
                 src={eventdetails.photo}
-                className="event-image align-middle rounded mt-2"
+                className="event-image  rounded mt-2"
                 alt="event_pic"
               />
             </div>
@@ -110,19 +223,23 @@ export default function EventPage(props) {
                     style={{ textTransform: "capitalize" }}
                   >
                     {eventdetails.event_name}
+                    <span>
+                      {" "}
+                      <ReportEventButton event_id={id}></ReportEventButton>
+                    </span>
                   </h1>
                 </div>
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">
                 {" "}
-                <div>
+                <div className="ml-2">
                   <i class="fas fa-map-marker-alt text-lg "></i>
                   <span className="ml-2">
                     {" "}
                     {eventdetails.location},{eventdetails.city}
                   </span>
                 </div>
-                <div className="mt-2">
+                <div className="mt-2 ml-2">
                   {" "}
                   <i class="fas fa-clock"></i>
                   <span className="ml-2">
@@ -133,20 +250,22 @@ export default function EventPage(props) {
                   </span>
                 </div>
                 <div className="mt-6">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ml-1">
                     <div>
-                      <span className="font-semibold"> Hosted By :</span>
+                      <span className="font-semibold "> Hosted By :</span>
                     </div>
-                    <div className="flex flex-row">
+                    <div className="flex flex-row mt-1">
                       <div>
                         <img
-                          src={props.hostedByImg}
+                          src={eventdetails.club_details[0].profile_photo}
                           alt="HostedClubImage"
                           className="rounded mini-club-image mr-4"
                         />
                       </div>
                       <div className="flex flex-col justify-center">
-                        <div className="font-semibold">{props.hostedBy}</div>
+                        <div className="font-semibold">
+                          {eventdetails.club_details[0].club_name}
+                        </div>
                         <div className="text-sm">
                           {props.hostedByPrivacy} Club
                         </div>
@@ -158,25 +277,35 @@ export default function EventPage(props) {
               <div className="flex flex-row  mt-2 lg:mt-auto ">
                 <div className="w-6/12">
                   <button
-                    className="w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className={
+                      !like
+                        ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    }
                     type="button"
+                    onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
                   >
                     <i className="fas fa-heart"></i> Like
                   </button>
                 </div>
                 &nbsp;
                 <div className="w-6/12 self-end">
-                  <button
-                    className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <i class="fas fa-share-alt"></i> Share
-                  </button>
+                  <CopyToClipboard text={window.location.href}>
+                    <button
+                      className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={notifyCopied}
+                    >
+                      <i class="fas fa-share-alt"></i> Share
+                    </button>
+                  </CopyToClipboard>
                 </div>
               </div>
               <div className="flex justify-center mt-2">
                 <JoinEventButton
                   eventid={eventdetails._id}
+                  current={eventdetails.current_participants}
+                  max={eventdetails.maximum_participants}
                   check={checkevent}
                 ></JoinEventButton>
               </div>
@@ -210,27 +339,35 @@ export default function EventPage(props) {
                   ))}
                 </div>
               </div>
-              <div className="flex flex-col lg:flex-row py-4">
+              <div
+                className="flex flex-col lg:flex-row py-4"
+                style={
+                  eventdetails.participants_list.length !== 0
+                    ? { display: "" }
+                    : { display: "none" }
+                }
+              >
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   People going
                 </div>
-                <RegisteredMember></RegisteredMember>
+                {eventdetails.participants_list.length !== 0 ? (
+                  <RegisteredMember eventid={id}></RegisteredMember>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="flex flex-col lg:flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   FAQs <br />
-                  <AskQuestion></AskQuestion>
-                  {/* <button className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta">
-                    <i class="fas fa-user-plus"></i> Ask
-                  </button> */}
+                  <AskQuestion event_id={id}></AskQuestion>
                 </div>
                 <div
-                  className="mt-1 text-lg  w-3/4 leading-relaxed"
+                  className="mt-1 text-lg  lg:w-3/4 leading-relaxed"
                   style={{ overflowY: "auto", maxHeight: "400px" }}
                 >
                   {eventdetails.faq.map((el, i) => {
-                    if (el.answer != null && el.answer != "") {
+                    if (el.privacy == "public" && el.status == "answered") {
                       if (i == 0) {
                         return (
                           <details>
@@ -253,11 +390,8 @@ export default function EventPage(props) {
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   Location
                 </div>
-                <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
-                  <MapContainer
-                    lat={eventdetails.latitude}
-                    long={eventdetails.longitude}
-                  />
+                <div className="mt-1 text-lg text-gray-700 lg:w-3/4 leading-relaxed">
+                  <MapContainer data={eventdetails} />
                 </div>
               </div>
             </div>

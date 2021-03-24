@@ -42,6 +42,10 @@
   background-color: #00838f;
 }
 
+.bg-semibeta {
+  background-color: #67afb6;
+}
+
 .bg-lightbeta {
   background-color: #a4eef5;
 }
@@ -66,6 +70,18 @@
 
 .bg-alpha {
   background-color: #e82953;
+}
+
+.bg-yellow-400 {
+  background-color: #fbbf24;
+}
+
+.hover\:bg-yellow-300:hover {
+  background-color: #fcd34d;
+}
+
+.active\:bg-yellow-300:active {
+  background-color: #fcd34d;
 }
 
 .bg-orange-200 {
@@ -344,6 +360,9 @@
 .max-w-370-px {
   max-width: 370px;
 }
+.w-800px {
+  width: 800px !important;
+}
 
 .leading-wide {
   line-height: 1.8;
@@ -390,6 +409,14 @@
   margin-left: 4rem;
   margin-right: 4rem;
 }
+.mx-8 {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.mt-18 {
+  margin-top: 4.5rem;
+}
 
 .mt-36 {
   margin-top: 12rem;
@@ -410,9 +437,9 @@
 .w-24 {
   width: 13.5rem;
 }
-
+/* 850 for gaming scrren */
 .event-image {
-  width: 850px;
+  width: 750px;
   height: 420px;
 }
 .border-red-500 {
@@ -484,10 +511,11 @@
   color: #8898aa;
 }
 
-.event-container {
+.mx-28 {
   margin-left: 7rem;
   margin-right: 5.5rem;
 }
+
 .event-photo-preview-container {
   margin-left: 4rem;
   margin-right: 4rem;
@@ -562,6 +590,10 @@
 
 .overwrite-success-btn {
   background-color: #26ac62 !important;
+}
+
+.overwrite-info-btn {
+  background-color: #46b8da !important;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
@@ -951,4 +983,22 @@ body::-webkit-scrollbar-thumb {
   /* roundness of the scroll thumb */
   border: 3px solid white;
   /* creates padding around scroll thumb */
+}
+
+div.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  right: 0;
+}
+
+.map {
+  position: fixed !important;
+}
+
+.view-map {
+  position: relative !important;
+}
+
+.z-51 {
+  z-index: 51;
 }

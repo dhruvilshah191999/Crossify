@@ -4,11 +4,6 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const connectDB = require("./db/db");
-// var user_details = require("./modules/user_details");
-//var category_details = require("./modules/interest_category");
-//var club_details = require("./modules/club_details");
-//var member_details = require("./modules/members_details")
-//var event_details = require("./modules/event_details");
 
 var indexRouter = require("./routes/index");
 var eventsRouter = require("./routes/events");
@@ -17,6 +12,7 @@ var usersRouter = require("./routes/users");
 var clubRouter = require("./routes/clubs");
 var profileRouter = require("./routes/profile");
 var manageRouter = require("./routes/manage");
+const reports_exports = require("./modules/reports_details");
 
 var app = express();
 

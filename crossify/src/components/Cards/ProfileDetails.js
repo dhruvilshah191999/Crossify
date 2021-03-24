@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
+import axios from "axios";
+import Moment from "moment";
 import demopp from "assets/img/pp1.jpg";
 import Tag from "components/Tag";
 
@@ -18,7 +20,7 @@ const ClubView = (props) => {
         </div>
         <div className="flex flex-col ">
           <div className="font-semibold text-lg">{props.club_name}</div>
-          <div className="text-sm text-gray-700">{props.designation}</div>
+          <div className="text-sm text-gray-700">{"Admin"}</div>
         </div>
       </div>
     </div>
@@ -30,43 +32,106 @@ const ClubView = (props) => {
 };
 
 class ProfileDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { profile: {},tag:[],club:[] };
+  }
+
+  async componentDidMount() {
+    const token = localStorage.getItem("jwt");
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      token,
+    };
+    const finaldata = await axios.post(
+      "/api/profile/MyProfile",
+      send_data,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      this.setState({
+        profile: finaldata.data.data,
+        tag:finaldata.data.tag
+      });
+    }
+
+    const finaldata2 = await axios.post(
+      "/api/profile/get-photo-name",
+      send_data,
+      config
+    );
+    if (finaldata2.data.is_error) {
+      console.log(finaldata2.data.message);
+    } else {
+      this.setState({
+        club:finaldata2.data.message
+      });
+    }
+  }
+
   render() {
     return (
-      <div className="flex flex-col mx-16 mt-2 ">
-        <div className="flex p-4">
-          <div className="mr-8">
+      <div className="flex flex-col mx-8 lg:mx-16 mt-2 ">
+        <div className="flex p-4 flex-wrap">
+          <div className="mr-8 flex-shrink-0">
             <img
               className="profile-image rounded-full border"
               alt="profilepic"
-              src={demopp}
+              src={this.state.profile.profile_photo}
             ></img>
           </div>
           <div className="flex-col w-1/2 ml-6">
-            <div className=" relative w-100 flex flex-row mt-2">
-              <div className="text-4xl font-semibold ">
-                {this.props.fname} {this.props.lname}
+            <div className=" relative w-100 flex flex-row flex-wrap mt-2">
+              <div className="text-4xl flex-shrink-0 font-semibold ">
+                {this.props.fullname}
               </div>
-              <div className="text-xl ml-2 pt-4 text-gray-700">
+              <div className="text-xl  flex-shrink-0 text-gray-700 xl2:mt-4 xl2:ml-2">
                 as <span className="text-alpha">{this.props.username}</span>
               </div>
 
               {/* </div> */}
             </div>
-            <div className="text-gray-600 text-lg">
-              {this.props.occupation}&nbsp; | &nbsp;Joined{" "}
-              {this.props.joining_date}
+            <div className="flex flex-wrap">
+              <div className="text-gray-600 text-lg flex-shrink-0">
+                {this.props.occupation}&nbsp; | &nbsp;
+              </div>
+              <div className="text-gray-600 text-lg flex-shrink-0">
+                Joined {this.props.joining_date}
+              </div>
             </div>
-            <div className="text-gray-600 mt-1 text-lg">
-              <i class="fas fa-map-marker-alt  "></i> {this.props.place}
+            <div className="flex">
+              <div className="text-gray-600 mt-1 inline-block text-lg flex-shrink-0">
+                <i class="fas fa-map-marker-alt  "></i> {this.props.place}
+              </div>
             </div>
-            <div className=" mt-4 ">
+            <div
+              className=" mt-4 "
+              style={
+                this.state.profile.social_media
+                  ? { display: "" }
+                  : { display: "none" }
+              }
+            >
               {/* <div className="mt-2"> */}
               <button
                 className="bg-blue-600 text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
                 onClick={() => {
-                  window.open("https://github.com/hackershil", "_blank");
-                  return false;
+                  if (this.state.profile.social_media.facebook != "") {
+                    window.open(
+                      this.state.profile.social_media.facebook,
+                      "_blank"
+                    );
+                    return false;
+                  }
                 }}
               >
                 <i className="fab fa-facebook-f"></i>
@@ -75,8 +140,13 @@ class ProfileDetails extends Component {
                 className="bg-blue-400 text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
                 onClick={() => {
-                  window.open("https://twitter.com/hackershil", "_blank");
-                  return false;
+                  if (this.state.profile.social_media.twitter != "") {
+                    window.open(
+                      this.state.profile.social_media.twitter,
+                      "_blank"
+                    );
+                    return false;
+                  }
                 }}
               >
                 <i className="fab fa-twitter"></i>
@@ -85,8 +155,13 @@ class ProfileDetails extends Component {
                 className="bg-linkedin text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
                 onClick={() => {
-                  window.open("https://linkedin.com/in/hackershil", "_blank");
-                  return false;
+                  if (this.state.profile.social_media.linkedin != "") {
+                    window.open(
+                      this.state.profile.social_media.linkedin,
+                      "_blank"
+                    );
+                    return false;
+                  }
                 }}
               >
                 <i className="fab fa-linkedin"></i>
@@ -96,8 +171,13 @@ class ProfileDetails extends Component {
                 className="bg-instagram text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
                 onClick={() => {
-                  window.open("https://instagram.com/hackershil", "_blank");
-                  return false;
+                  if (this.state.profile.social_media.instagram != "") {
+                    window.open(
+                      this.state.profile.social_media.instagram,
+                      "_blank"
+                    );
+                    return false;
+                  }
                 }}
               >
                 <i className="fab fa-instagram"></i>
@@ -111,14 +191,14 @@ class ProfileDetails extends Component {
           </div>
           <hr></hr>
           <div className="p-2 mt-1  text-lg text-gray-800">
-            {this.props.bio}
+            {this.state.profile.about_me}
           </div>
           <div className="text-2xl text-alpha p-2 mt-2 ">
             <i class="fab fa-gratipay "></i> Interests
           </div>
           <hr></hr>
           <div className="p-2 mt-1">
-            {this.props.tags.map((el) => (
+            {this.state.tag.map((el) => (
               <Tag data={el}></Tag>
             ))}
           </div>
@@ -127,11 +207,10 @@ class ProfileDetails extends Component {
           </div>
           <hr></hr>
           <div className="p-2 mt-1 flex flex-wrap mb-2">
-            {this.props.clubs.map((el) => (
+            {this.state.club.map((el) => (
               <ClubView
                 club_name={el.club_name}
-                designation={el.designation}
-                club_img={demopp}
+                club_img={el.profile_photo}
               ></ClubView>
             ))}
           </div>
@@ -142,8 +221,7 @@ class ProfileDetails extends Component {
 }
 
 ProfileDetails.defaultProps = {
-  fname: "Harshil",
-  lname: "Patel",
+  fullname: "Harshil Patel",
   username: "hackershil",
   occupation: "Software Engineer",
   joining_date: "Apr 2020",

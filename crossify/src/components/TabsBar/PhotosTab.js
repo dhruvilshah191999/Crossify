@@ -83,7 +83,6 @@
 
 import React, { Component } from "react";
 import Lightbox from "fslightbox-react";
-import Gallery from "react-photo-gallery";
 import MyGallery from "components/sections/PhotoGallery";
 
 const images = [

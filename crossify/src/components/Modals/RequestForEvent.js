@@ -17,7 +17,7 @@ var customModalStyles = {
     width: "70%",
     marginTop: "20px",
     transform: "translate(-50%, -50%)",
-    height: "650px", // <-- This sets the height
+    height: "550px", // <-- This sets the height
     overlfow: "scroll", // <-- This tells the modal to scrol
   },
 };
@@ -80,7 +80,7 @@ class MyModal extends Component {
                     Privacy
                   </label>
                   <select
-                    class="block shadow focus:shadow-outline  appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded"
+                    class="block shadow focus:shadow-outline pr-2  text-sm appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded ease-linear transition-all duration-150"
                     id="grid-state"
                     placeholder="Select your relevant Categories"
                     style={{ outline: "none" }}

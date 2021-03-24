@@ -156,7 +156,7 @@ export default function Sidebar(props) {
 
   return (
     <>
-      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      <nav className="z-51 md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-md bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-no-wrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
           <button
@@ -168,7 +168,7 @@ export default function Sidebar(props) {
           </button>
           {/* Brand */}
           <Link
-            className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
+            className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 pt-1 pb-0 px-0"
             to="/"
           >
             <div className="flex flex-row items-center ">
@@ -207,7 +207,7 @@ export default function Sidebar(props) {
                     className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
                     to="/"
                   >
-                    Notus React
+                    Crossify
                   </Link>
                 </div>
                 <div className="w-6/12 flex justify-end">
@@ -226,15 +226,30 @@ export default function Sidebar(props) {
               <div className="mb-3 pt-0">
                 <input
                   type="text"
-                  placeholder="Search"
+                  placeholder="Find Your Event"
                   className="px-3 py-2 h-12 border border-solid  border-gray-600 placeholder-gray-400 text-gray-700 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
                 />
+                <input
+                  type="text"
+                  placeholder="Specify Location"
+                  className="px-3 py-2 h-12 border border-solid mt-2  border-gray-600 placeholder-gray-400 text-gray-700 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
+                />
+                {/* <input
+                  placeholder="Find Your Event"
+                  type="text"
+                  className="px-3 py-3 placeholder-gray-400 text-gray-700 mt-2 border border-solid bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                />
+                <input
+                  placeholder="Specify Location"
+                  type="text"
+                  className="px-3 py-3 mt-2 placeholder-gray-400 text-gray-700 bg-white border border-solid rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                /> */}
               </div>
             </form>
             {/* Divider */}
 
             {/* Heading */}
-            <h6 className="md:min-w-full mt-2 text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full  text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
               Distance
             </h6>
             {/* Navigation */}
@@ -333,7 +348,7 @@ export default function Sidebar(props) {
             </ul>
 
             {/* if club is selected then show member size and if event is selected show starting and ending date */}
-            <div className={eventShow ? "" : "hidden"}>
+            <div>
               <hr className="my-4 md:min-w-full" />
               {/* Heading */}
               <h6 className="md:min-w-full text-gray-700 text-xsm uppercase font-bold block pt-1 pb-4 no-underline">
@@ -364,19 +379,6 @@ export default function Sidebar(props) {
                 </li>
               </ul>
             </div>
-            <div className={eventShow ? "hidden" : ""}>
-              <hr className="my-4 md:min-w-full" />
-              {/* Heading */}
-              <h6 className="md:min-w-full text-gray-700 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-                Club Members
-              </h6>
-              {/* Navigation */}
-              <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-                <li className="mt-5" style={{ marginLeft: "15px" }}>
-                  <RangeInput></RangeInput>
-                </li>
-              </ul>
-            </div>
 
             <hr className="my-4 md:min-w-full" />
             <button
@@ -389,7 +391,7 @@ export default function Sidebar(props) {
           </div>
         </div>
       </nav>
-      <div style={{ marginTop: "100px" }}>
+      <div>
         {eventShow ? (
           <ResultWindow getevent={currentEvents} loading={loading} />
         ) : (

@@ -44,6 +44,10 @@ var user_details = new Schema({
     type: String,
     required: false,
   },
+  occupation: {
+    type: String,
+    required: false,
+  },
   pincode: {
     type: Number,
     required: false,

@@ -113,7 +113,10 @@ export default function EventTab() {
   const currentpastEvents = pastEvents.slice(pastStart, pastEnd);
   const upcomingEnd = upcomingIndex * eventPerPage;
   const upcomingStart = upcomingEnd - eventPerPage;
-  const currentupcomingEvents = pastEvents.slice(upcomingStart, upcomingEnd);
+  const currentupcomingEvents = upcomingEvents.slice(
+    upcomingStart,
+    upcomingEnd
+  );
 
   const renderupcomingEvents = currentupcomingEvents.map((el, index) => {
     return (

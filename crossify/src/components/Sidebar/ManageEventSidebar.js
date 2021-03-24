@@ -246,6 +246,29 @@ export default function Sidebar() {
                   QnA
                 </Link>
               </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/manage/event/reports") !==
+                    -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to={"/manage/event/reports/" + id}
+                >
+                  <i
+                    className={
+                      "fas fa-flag mr-2 text-sm " +
+                      (window.location.href.indexOf("/manage/event/reports") !==
+                      -1
+                        ? "opacity-7"
+                        : "text-gray-400")
+                    }
+                  ></i>{" "}
+                  Reports
+                </Link>
+              </li>
             </ul>
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}

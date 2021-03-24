@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import logo from "../../assets/logos/logo_final.png";
 import { Link } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
@@ -15,7 +15,7 @@ const SearchNavbar = (props) => {
       setSearch(searchResult.search);
       setlocation(searchResult.location);
     }
-  }, [])
+  }, []);
   const onSubmit = async (e) => {
     e.preventDefault();
     var object = {
@@ -28,26 +28,14 @@ const SearchNavbar = (props) => {
   };
 
   return (
-    <nav className="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between p-2 navbar-expand-lg bg-white border">
-      <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-        <Link to="/">
-          <div className="mt-1 ml-3 mr-4 sm:mb-0 flex flex-row content-center">
-            <img
-              className="brand-name"
-              src={logo}
-              style={{ width: "30px", height: "35px" }}
-            />
-            <span className="font text-xl tracking-tight px-3 pt-1">
-              CROSSIFY
-            </span>
-          </div>
-        </Link>
+    <nav className="top-0 fixed z-50 w-full flex  items-center justify-between p-2 navbar-expand-lg bg-white border hidden md:show">
+      <div className="container px-4 mx-auto flex  items-center justify-between">
         <div
-          className="lg:flex flex-grow flex-row items-center bg-white lg:bg-transparent lg:shadow-none block"
+          className="flex flex-grow flex-row items-center content-center w-full bg-white lg:bg-transparent lg:shadow-none block"
           id="example-navbar-warning"
         >
-          <div className="flex-auto ml-auto" style={{ marginLeft: "100px" }}>
-            <div className="bg-white p-2 align-center">
+          <div className="w-full flex " style={{ marginLeft: "17rem" }}>
+            <div className="bg-white p-2 w-full">
               <input
                 style={{
                   width: "50%",

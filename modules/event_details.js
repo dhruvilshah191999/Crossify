@@ -122,6 +122,16 @@ var event_details = new Schema({
     type: Number,
     required: false,
   },
+  maximum_participants: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  current_participants: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
 });
 
 var event_exports = mongoose.model('event_details', event_details);
