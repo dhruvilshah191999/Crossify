@@ -308,13 +308,15 @@ export default function Landing() {
                 {" "}
                 {categoryState.map((el) => {
                   return (
-                    <button
+                    <motion.button
                       type="button"
                       className=" rounded-lg shadow p-4 mr-6 category-container mb-4 text-center   hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
                       style={{ outline: "none" }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       {el}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>

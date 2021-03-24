@@ -31,6 +31,15 @@ const ClubView = (props) => {
   );
 };
 
+const QA = (props) => {
+  return (
+    <div className="flex flex-col p-2 first:pt-0">
+      <div className="text-xl font-semibold">{props.question}</div>
+      <div className="text-base text-gray-700 mt-1">{props.answer}</div>
+    </div>
+  );
+};
+
 class ProfileDetails extends Component {
   constructor(props) {
     super(props);
@@ -214,6 +223,15 @@ class ProfileDetails extends Component {
               ></ClubView>
             ))}
           </div>
+          <div className="text-3xl text-alpha p-2 mt-2 ">
+            <i class="fas fa-clipboard-list "></i>&nbsp; Answer Sheet
+          </div>
+          <hr></hr>
+          <div className="p-2 mt-1 flex flex-wrap">
+            {this.props.questionsAnswered.map((el) => (
+              <QA question={el.question} answer={el.answer}></QA>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -233,6 +251,22 @@ ProfileDetails.defaultProps = {
   place: "Ahmedabad , GJ",
   bio:
     "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
+  questionsAnswered: [
+    {
+      question: "Why do you want to join this club ?",
+      answer:
+        "Because I want to improve and grow in the field on web dev and I want to help and get helped from the other people which shares the same goal as me.",
+    },
+    {
+      question: "Which skillset you posses related to this club ?",
+      answer:
+        "I am great at managing events and elobrating and presenting technical info to the new comers and I posses great intrapersonal skill as well.",
+    },
+    {
+      question: "Any Achievement ?",
+      answer: "Rank 1220 in Global Finals of HackerCup 2020.",
+    },
+  ],
 };
 
 export default ProfileDetails;

@@ -163,6 +163,28 @@ export default function Sidebar() {
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin/requests") !== -1
+                      ? "text-blue-500 hover:text-blue-600"
+                      : "text-gray-800 hover:text-gray-600")
+                  }
+                  to="/admin/requests"
+                >
+                  <i
+                    className={
+                      "fas fa-address-card mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin/requests") !== -1
+                        ? "opacity-75"
+                        : "text-gray-400")
+                    }
+                  ></i>
+                  {"  "}
+                  &nbsp;Requests
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/memberlist") !== -1
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")

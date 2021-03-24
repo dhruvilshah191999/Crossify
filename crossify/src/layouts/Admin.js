@@ -18,6 +18,7 @@ import MemberList from "views/admin/MemberList";
 import ManageRooms from "views/admin/ManageRooms";
 import ManageFiles from "views/admin/FilesManager";
 import ManageMedia from "views/admin/MediaManager";
+import RequestsList from "views/admin/RequestsForJoin";
 
 export default function Admin() {
   return (
@@ -37,6 +38,7 @@ export default function Admin() {
             <Route path="/admin/rooms" exact component={ManageRooms} />
             <Route path="/admin/files" exact component={ManageFiles} />
             <Route path="/admin/media" exact component={ManageMedia} />
+            <Route path="/admin/requests" exact component={RequestsList} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
           <FooterAdmin />

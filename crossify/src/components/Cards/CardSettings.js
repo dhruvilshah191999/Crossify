@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import dummyPF from "assets/img/demopf.png";
 import MapContainer from "components/Maps/MapCode";
 import UploadPic from "components/Inputs/UploadPic";
+import MultipleInputs from "components/Inputs/MultipleInputs";
 // components
 
 export default function CardSettings(props) {
+  const [privacy, setPrivacy] = useState("Public");
+  const [questions, setQuestions] = useState([""]);
+  const addBelow = (index) => {
+    var arr = questions;
+    arr.splice(index, 0, " ");
+    setQuestions(arr);
+  };
+  const removeCurrent = (index) => {};
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">
@@ -61,13 +70,15 @@ export default function CardSettings(props) {
                     id="grid-state"
                     placeholder="Select your relevant Categories"
                     style={{ outline: "none" }}
+                    onChange={(e) => setPrivacy(e.target.value)}
                   >
-                    <option>Public</option>
-                    <option>Private</option>
-                    <option>Closed</option>
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                    <option value="closed">Closed</option>
                   </select>
                 </div>
               </div>
+              {privacy === "private" && <MultipleInputs></MultipleInputs>}
             </div>
 
             <hr className="mt-6 border-b-1 border-gray-400" />
