@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demopf from "assets/img/demopf.png";
 import ChatMessage from "components/Cards/ChatMessage";
+import axios from "axios";
 
 Modal.defaultStyles = {};
 
@@ -19,13 +20,59 @@ class MyModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props.data
+      data: this.props.data,
+      answer: null,
     };
   }
 
-  handleUpdateTags = (tags) => {
-    this.setState({ tags });
+  getRejected = async () => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      report_id: this.state.data._id,
+    };
+    const finaldata = await axios.post(
+      "/api/manage/rejected-reports",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
   };
+
+  sendMessage = async () => {
+    const token = localStorage.getItem("jwt");
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      token,
+      answer: this.state.answer,
+      report_id: this.state.data._id,
+      user_id:this.state.data.user_id
+    };
+    const finaldata = await axios.post(
+      "/api/manage/send-reports",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  };
+
   render() {
     const { onRequestClose } = this.props;
 
@@ -76,6 +123,10 @@ class MyModal extends Component {
                       rows="3"
                       placeholder="Describe your actions/fixes"
                       className="px-3 py-3  placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      value={this.state.answer}
+                      onChange={(e) => {
+                        this.setState({ answer: e.target.value });
+                      }}
                     />
                   </div>
                   <div className="w-1/4">
@@ -83,12 +134,14 @@ class MyModal extends Component {
                       <button
                         className="bg-green-500 text-white active:bg-green-600 mx-4 mb-2 mt-1 font-bold uppercase text-sm p-2 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
                         type="button"
+                        onClick={this.sendMessage}
                       >
                         Send
                       </button>
                       <button
                         className="bg-red-500 text-white active:bg-green-600 mx-4 mt-1 font-bold uppercase text-sm p-2 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
                         type="button"
+                        onClick={this.getRejected}
                       >
                         Reject
                       </button>

@@ -101,9 +101,6 @@ export class MapContainer extends React.Component {
       { enableHighAccuracy: true }
     );
   };
-  componentDidUpdate() {
-    console.log(this.state);
-  }
   onMarkerDragEnd = (coord) => {
     const { latLng } = coord;
     const lat = latLng.lat();

@@ -8,6 +8,7 @@ import {
   usePagination,
 } from "react-table";
 import Moment from "moment";
+import axios from "axios";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import ViewReport from "components/Modals/ViewReport";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
@@ -98,6 +99,28 @@ export default function App(props) {
   const openModal = (value) => {
     ModalManager.open(<ViewReport onRequestClose={() => true} data={value} />);
   };
+
+  const deleteObject = async (value) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      report_id: value._id,
+    };
+    const finaldata = await axios.post(
+      "/api/manage/remove-reports",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  }
   const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(() => props.finaldata, []);
 
@@ -172,7 +195,7 @@ export default function App(props) {
       },
       {
         Header: "Actions",
-        accessor: "record", // here add _id of event request so easy to attach with the buttons
+        accessor: "record",
         Cell: ({ value }) => (
           <div className="flex ">
             <button
@@ -183,7 +206,7 @@ export default function App(props) {
               <i class="fas fa-reply text-blue-500  focus:outline-none text-lg "></i>
             </button>
 
-            <button className="ml-4" title="Delete">
+            <button className="ml-4" title="Delete" onClick={()=>deleteObject(value)}>
               <i class="fas fa-trash text-red-500 text-lg"></i>
             </button>
           </div>

@@ -218,6 +218,7 @@ router.post("/socialstep2", async function (req, res, next) {
     }
   });
 });
+
 router.post("/change-password", async function (req, res, next) {
   let { user_id, oldPassword, newPassword } = req.body;
   var check = user_details.findOneAndUpdate({
@@ -287,6 +288,7 @@ router.post("/change-password", async function (req, res, next) {
     }
   });
 });
+
 router.post("/step2", async function (req, res, next) {
   var { email, username, city, state, pincode, address, lat, long } = req.body;
   var check = user_details.findOne({ username: username, is_active: 1 });
@@ -343,6 +345,35 @@ router.post("/step2", async function (req, res, next) {
 
 router.post("/auth", auth, async function (req, res, next) {
   return res.status(200).send(req.user);
+});
+
+router.post("/notification", auth, async function (req, res, next) {
+  user_details
+    .find(
+      {
+          _id: ObjectId(req.user._id),
+          is_active: true,
+      },
+      {
+        inbox: 1,
+      }
+    ).sort({"inbox.date": -1}).limit(10)
+    .exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else {
+        var finaldata = {
+          data: data,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
 });
 
 module.exports = router;
