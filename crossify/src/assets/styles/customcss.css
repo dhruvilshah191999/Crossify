@@ -1044,7 +1044,7 @@ div.sticky {
 }
 
 .switch[data-isOn="true"] {
-  background-color: #14103d;
+  background-color: #2b6cb0;
   justify-content: flex-end;
 }
 

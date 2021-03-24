@@ -6,10 +6,7 @@ import {
   InfoWindow,
   Marker,
 } from "react-google-maps";
-import Geocode from "react-geocode";
 
-Geocode.setApiKey("AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc");
-Geocode.enableDebug();
 class App extends React.Component {
   constructor(props) {
     super(props);

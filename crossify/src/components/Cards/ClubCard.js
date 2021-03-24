@@ -1,4 +1,3 @@
-import { Component } from "materialize-css";
 import React from "react";
 import defImg from "../../assets/img/event_1.jpeg";
 import { motion } from "framer-motion";
