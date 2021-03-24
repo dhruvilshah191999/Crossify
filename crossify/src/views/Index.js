@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import hobbyImg from "assets/img/hobbyImg.jpg";
 import { store } from "react-notifications-component";
 // components
+import { motion } from "framer-motion";
 
 import Navbar from "components/Navbars/AuthNavbar.js";
 import Footer from "components/Footers/Footer.js";
@@ -144,14 +145,14 @@ export default function Landing() {
           <div className="container relative mx-auto">
             <div className="items-center flex flex-wrap">
               <div className="w-full lg:w-6/12 px-2 ml-auto mr-auto text-center">
-                <h1 className="text-white font-semibold text-5xl">
+                <h1 className="text-white font-semibold text-5xl ">
                   Seek Your Interest
                 </h1>
               </div>
             </div>
             <br />
             <form>
-              <div className="flex justify-center flex-wrap">
+              <div className="flex justify-center flex-wrap ">
                 <div
                   style={{ width: "60%" }}
                   className="bg-white p-2 align-center"
@@ -212,12 +213,16 @@ export default function Landing() {
                 <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
                   Check out what's going on in your Area
                 </h4>
-                <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
+                <motion.button
+                  className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
                   <Link to="/search">
                     {" "}
                     Load More <i className="fas fa-angle-double-right"></i>{" "}
                   </Link>
-                </button>
+                </motion.button>
               </div>
             </div>
             <div className="flex flex-wrap ml-1">
@@ -237,12 +242,16 @@ export default function Landing() {
                 <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
                   Check out what's going on in your Area
                 </h4>
-                <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
+                <motion.button
+                  className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
                   <Link to="/clubsearch">
                     {" "}
                     Load More <i className="fas fa-angle-double-right"></i>{" "}
                   </Link>
-                </button>
+                </motion.button>
               </div>
             </div>
             <div className="flex flex-wrap ml-1">
@@ -263,12 +272,16 @@ export default function Landing() {
                   <h4 className="text-3xl  font-semibold leading-normal mt-0 mb-2 text-alpha">
                     {el.category}
                   </h4>
-                  <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
+                  <motion.button
+                    className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
                     <Link to="/search">
                       {" "}
                       Load More <i className="fas fa-angle-double-right"></i>{" "}
                     </Link>
-                  </button>
+                  </motion.button>
                 </div>
               </div>
               <div className="flex flex-wrap ml-1">

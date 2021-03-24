@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 // components
 // this needs to have state when user is loged in
 // Logged In things requires multiple components in the navbar
@@ -45,20 +46,24 @@ export default function Navbar(props) {
               </li>
 
               <li className="flex items-center">
-                <button
+                <motion.button
                   className="bg-gray-700 text-white active:bg-blue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-4  lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                   type="button"
+                  whileHover={{ scale: 1.09 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   <i className="fas fa-sign-in-alt"></i> Log In
-                </button>
+                </motion.button>
               </li>
               <li className="flex items-center">
-                <button
+                <motion.button
                   className="bg-blue-500 text-white active:bg-blue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                   type="button"
+                  whileHover={{ scale: 1.09 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   Sign Up <i className="fas fa-signature"></i>
-                </button>
+                </motion.button>
               </li>
             </ul>
           </div>

@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import demoImg1 from "../../assets/img/pp1.jpg";
 import demoImg2 from "../../assets/img/pp3.jpg";
 import demoImg3 from "../../assets/img/pp4.jpg";
@@ -7,7 +8,6 @@ import demoImg3 from "../../assets/img/pp4.jpg";
 const Member = (props) => {
   return (
     //todo GOLU set profile link in this one
-    <Link to="\">
       <div class="flex items-center justify-between my-4 w-24 hover:bg-gray-200 rounded-lg">
         <div class="w-16">
           <img class="w-16 h-16 rounded-full" src={props.image} alt="img" />
@@ -15,24 +15,50 @@ const Member = (props) => {
         <div class="flex-1 pl-4">
           <div class="text-gray-700 font-semibold">{props.name}</div>
           <div class="text-gray-600 font-normal text-base">
-            {props.designation}
+            {"Member"}
           </div>
         </div>
       </div>
-    </Link>
   );
 };
 
 class RegisteredMembers extends Component {
-  state = { Members: JoinedMembers };
+  constructor(props) {
+    super(props);
+    this.state = { eventid: this.props.eventid, Members: [], final: [] };
+  }
+  async componentDidMount() {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      event_id: this.state.eventid,
+    };
+    const finaldata = await axios.post(
+      "/api/events/get-profiles-of-events",
+      send_data,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      console.log(finaldata.data.event_data);
+      this.setState({
+        Members: finaldata.data.event_data,
+        final: finaldata.data.event_data,
+      });
+    }
+  }
   searchHandler = (event) => {
     let searcjQery = event.target.value.toLowerCase(),
-      displayedContacts = JoinedMembers.filter((el) => {
+      displayedContacts = this.state.final.filter((el) => {
         let searchValue = el.name.toLowerCase();
-        let authority = el.designation.toLowerCase();
         if (
-          searchValue.indexOf(searcjQery) !== -1 ||
-          authority.indexOf(searcjQery) !== -1
+          searchValue.indexOf(searcjQery) !== -1
         ) {
           return true;
         }
@@ -46,7 +72,7 @@ class RegisteredMembers extends Component {
     return (
       <div className="mt-1 text-lg text-gray-800 font-semibold lg:w-3/4 leading-relaxed">
         <div className="flex flex-row">
-          <div className="mt-2">{this.props.peopleGoing} booked so far</div>
+          <div className="mt-2">{this.state.Members.length +"/"+ this.props.capacity} slots booked so far</div>
           <div class="relative flex w-1/2 flex-wrap items-stretch mb-2 ml-auto">
             <span class=" h-full leading-snug font-normal z-2 text-center text-gray-700 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
               <i class="fas fa-search"></i>
@@ -63,13 +89,7 @@ class RegisteredMembers extends Component {
 
         <div className="flex flex-row flex-wrap overflow-x-auto max-h-300-px mt-2">
           {this.state.Members.map((el) => {
-            return (
-              <Member
-                image={el.profilPic}
-                name={el.name}
-                designation={el.designation}
-              />
-            );
+            return <Member image={el.profile_photo} name={el.name} />;
           })}
         </div>
       </div>

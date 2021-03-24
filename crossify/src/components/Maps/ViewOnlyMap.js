@@ -60,6 +60,8 @@ export class MapContainer extends Component {
       _id,
       date,
       photo,
+      maximum_participants,
+      current_participants,
     } = this.props.data;
 
     if (!this.props.loaded) return <div>Loading...</div>;
@@ -82,8 +84,8 @@ export class MapContainer extends Component {
           name={event_name}
           photo={photo}
           date={moment(date).format("LLL")}
-          bookedSeats={12}
-          totalSeats={43}
+          bookedSeats={current_participants}
+          totalSeats={maximum_participants}
           key={_id}
           onClick={this.onMarkerClick}
           position={{ lat: latitude, lng: longitude }}

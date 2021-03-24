@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { motion } from "framer-motion";
 export default function CardStats({
   statSubtitle,
   statTitle,
@@ -13,7 +13,11 @@ export default function CardStats({
 }) {
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
+      <motion.div
+        className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
+        whileHover={{ scale: 1.07 }}
+        whileTap={{ scale: 0.9 }}
+      >
         <div className="flex-auto p-4">
           <div className="flex flex-wrap">
             <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
@@ -51,7 +55,7 @@ export default function CardStats({
             <span className="whitespace-no-wrap">{statDescripiron}</span>
           </p>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

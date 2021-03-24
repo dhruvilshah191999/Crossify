@@ -4,11 +4,12 @@ import Tag from "components/Tag";
 import { useParams } from "react-router";
 import dance_cat from "assets/img/travel_cat.jpg";
 import demopf from "assets/img/demopf.png";
-import MapContainer from "components/Maps/MapShow";
+import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/Modals/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/Modals/JoinEventButton";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 export default function EventPreview(props) {
   var { id } = useParams();
@@ -78,7 +79,7 @@ export default function EventPreview(props) {
               <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container ">
                 <div className="flex flex-col lg:flex-row">
                   <div className="flex flex-col justify-center">
-                    <div className="text-alpha text-xl font-semibold  pt-2">
+                    <div className="text-alpha text-xl font-semibold uppercase pt-2">
                       {Moment(eventdetails.date).format("MMM")}
                     </div>
                     <div className=" text-3xl ">
@@ -140,23 +141,27 @@ export default function EventPreview(props) {
                 </div>
                 <div className="flex flex-col lg:flex-row  mt-3 md:mt-auto ">
                   <div className="w-6/12">
-                    <button
+                    <motion.button
                       className="w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       style={{ cursor: "not-allowed" }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <i className="fas fa-heart"></i> Like
-                    </button>
+                    </motion.button>
                   </div>
                   &nbsp;
                   <div className="w-6/12 self-end">
-                    <button
+                    <motion.button
                       className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       style={{ cursor: "not-allowed" }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <i class="fas fa-share-alt"></i> Share
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
                 <div className="flex justify-center mt-2">
@@ -247,7 +252,7 @@ export default function EventPreview(props) {
                     Location
                   </div>
                   <div className="mt-1 text-lg text-gray-700 w-full lg:w-3/4 leading-relaxed">
-                    <MapContainer lat={props.latitude} long={props.longitude} />
+                    <MapContainer data={eventdetails} />
                   </div>
                 </div>
               </div>
@@ -256,8 +261,7 @@ export default function EventPreview(props) {
         </div>
       </>
     );
-  }
-  else {
+  } else {
     return <></>;
   }
 }

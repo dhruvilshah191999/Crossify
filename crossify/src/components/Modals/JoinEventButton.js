@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
+import { motion } from "framer-motion";
 
 // Guideline you can now make variable depeding on database
 // isRegistered : Memeber is alerady in confirmed or waiting list
@@ -12,13 +13,13 @@ export default class SweetAlertModal extends Component {
     this.state = {
       alert: null,
       question: null,
-      isRegistered: this.props.check || 1,
+      isRegistered: this.props.check,
       eventid: this.props.eventid,
       current: this.props.current,
       max: this.props.max,
       readonly: this.props.readonly,
-      isFull: this.props.isFull || 1,
-      isInWaiting: this.props.isInWaiting || 0,
+      isFull: this.props.isFull,
+      isInWaiting: this.props.isInWaiting,
     };
   }
 
@@ -80,6 +81,7 @@ export default class SweetAlertModal extends Component {
         this.setState({
           alert: null,
           isRegistered: finaldata.data.participated,
+          isInWaiting: true,
         });
       }
     }
@@ -128,6 +130,7 @@ export default class SweetAlertModal extends Component {
   successJoined() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         success
         title="Woot!"
         confirmBtnText="Got It !"
@@ -149,12 +152,13 @@ export default class SweetAlertModal extends Component {
   successWaiting() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         info
         title="Added in Waiting List"
         confirmBtnText="Okay"
         confirmBtnCssClass="text-base rounded px-4 px-2 overwrite-info-btn"
         // confirmBtnStyle={{ backgroundColor: "##28a745" }}
-        onConfirm={this.pushOnQueue}
+        onConfirm={this.onJoining}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
         You are in queue. We will let you know if you got the slot.
@@ -168,6 +172,7 @@ export default class SweetAlertModal extends Component {
   removeRegisteration() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         danger
         showCancel
         confirmBtnText="Yes, Remove me!"
@@ -194,6 +199,7 @@ export default class SweetAlertModal extends Component {
   removeWaiting() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         danger
         showCancel
         confirmBtnText="Yes, Remove me!"
@@ -206,7 +212,7 @@ export default class SweetAlertModal extends Component {
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
-        onConfirm={this.popFromQueue}
+        onConfirm={this.removeThisMember}
         onCancel={this.hideAlert}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
@@ -250,13 +256,15 @@ export default class SweetAlertModal extends Component {
               <i class="fas fa-user-clock"></i> &nbsp;Join Waiting List
             </button>
           ) : (
-            <button
+            <motion.button
               className="w-full h-12 hover:text-white hover:bg-lightalpha shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
               onClick={this.state.readonly ? "" : () => this.successJoined()}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.9 }}
             >
               <i class="fas fa-user-plus "></i> Attend
-            </button>
+            </motion.button>
           )}
 
           {this.state.alert}

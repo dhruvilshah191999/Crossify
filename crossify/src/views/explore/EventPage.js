@@ -11,6 +11,7 @@ import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/Modals/JoinEventButton";
 import ReportEventButton from "components/Modals/ReportEventButton";
 import { store } from "react-notifications-component";
+import { motion } from "framer-motion";
 
 const Tag = (props) => {
   return (
@@ -24,6 +25,8 @@ export default function EventPage(props) {
   var { id } = useParams();
   const [loading, setloading] = useState(false);
   const [like, setLike] = useState(false);
+  const [isInWaiting, SetisInWaiting] = useState(false);
+  const [IsFull, SetIsFull] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
@@ -49,7 +52,13 @@ export default function EventPage(props) {
         console.log(finaldata.data.message);
       } else {
         Seteventsdetails(finaldata.data.event_data);
-        setTimeout(setloading(true), 1000);
+        if (
+          finaldata.data.event_data.current_participants >=
+          finaldata.data.event_data.maximum_participants
+        ) {
+          SetIsFull(true);
+        }
+        setTimeout(setloading(true), 1500);
       }
     }
 
@@ -74,6 +83,7 @@ export default function EventPage(props) {
         console.log(finaldata.data.message);
       } else {
         setevent(finaldata.data.attend);
+        SetisInWaiting(finaldata.data.waiting);
       }
     }
 
@@ -193,7 +203,7 @@ export default function EventPage(props) {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col  justify-start lg:mx-28">
+        <div className="flex flex-col justify-start lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
             style={{ minHeight: "55vh" }}
@@ -276,7 +286,7 @@ export default function EventPage(props) {
               </div>
               <div className="flex flex-row  mt-2 lg:mt-auto ">
                 <div className="w-6/12">
-                  <button
+                  <motion.button
                     className={
                       !like
                         ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -284,20 +294,24 @@ export default function EventPage(props) {
                     }
                     type="button"
                     onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <i className="fas fa-heart"></i> Like
-                  </button>
+                  </motion.button>
                 </div>
                 &nbsp;
                 <div className="w-6/12 self-end">
                   <CopyToClipboard text={window.location.href}>
-                    <button
+                    <motion.button
                       className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={notifyCopied}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <i class="fas fa-share-alt"></i> Share
-                    </button>
+                    </motion.button>
                   </CopyToClipboard>
                 </div>
               </div>
@@ -307,6 +321,8 @@ export default function EventPage(props) {
                   current={eventdetails.current_participants}
                   max={eventdetails.maximum_participants}
                   check={checkevent}
+                  isInWaiting={isInWaiting}
+                  isFull={IsFull}
                 ></JoinEventButton>
               </div>
             </div>
@@ -351,7 +367,10 @@ export default function EventPage(props) {
                   People going
                 </div>
                 {eventdetails.participants_list.length !== 0 ? (
-                  <RegisteredMember eventid={id}></RegisteredMember>
+                  <RegisteredMember
+                    eventid={id}
+                    capacity={eventdetails.maximum_participants}
+                  ></RegisteredMember>
                 ) : (
                   ""
                 )}

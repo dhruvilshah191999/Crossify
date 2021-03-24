@@ -73,17 +73,20 @@ import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import currentPosIcon from "assets/img/marker.png";
 export class MapContainer extends React.Component {
-  state = {
-    name: "Current position",
-    position: {
-      lat: 37.77,
-      lng: -122.42,
-    },
-    currentLocation: {
-      lat: 37.77,
-      lng: -122.42,
-    },
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "Current position",
+      position: {
+        lat: this.props.lat,
+        lng: this.props.long,
+      },
+      currentLocation: {
+        lat: this.props.lat,
+        lng: this.props.long,
+      },
+    };
+  }
   componentDidMount = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -106,6 +109,7 @@ export class MapContainer extends React.Component {
     const lat = latLng.lat();
     const lng = latLng.lng();
     this.setState({ position: { lat, lng } });
+    this.props.parentCallback(this.state.position);
   };
 
   render() {

@@ -23,6 +23,7 @@ export default class SweetAlertModal extends Component {
   confirmArrival() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         danger
         showCancel
         confirmBtnText="Remove"

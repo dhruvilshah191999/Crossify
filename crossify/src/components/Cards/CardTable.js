@@ -11,7 +11,7 @@ export default function CardTable({ color }) {
       <div
         className={
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
-          (color === "light" ? "bg-white" : "bg-blue-900 text-white")
+          (isLight ? "bg-white" : "bg-blue-900 text-white")
         }
       >
         <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -20,7 +20,7 @@ export default function CardTable({ color }) {
               <h3
                 className={
                   "font-semibold text-lg " +
-                  (color === "light" ? "text-gray-800" : "text-white")
+                  (isLight ? "text-gray-800" : "text-white")
                 }
               >
                 Card Tables
@@ -36,7 +36,7 @@ export default function CardTable({ color }) {
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
-                    (color === "light"
+                    (isLight
                       ? "bg-gray-100 text-gray-600 border-gray-200"
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
@@ -46,7 +46,7 @@ export default function CardTable({ color }) {
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
-                    (color === "light"
+                    (isLight
                       ? "bg-gray-100 text-gray-600 border-gray-200"
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
@@ -56,7 +56,7 @@ export default function CardTable({ color }) {
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
-                    (color === "light"
+                    (isLight
                       ? "bg-gray-100 text-gray-600 border-gray-200"
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
@@ -66,7 +66,7 @@ export default function CardTable({ color }) {
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
-                    (color === "light"
+                    (isLight
                       ? "bg-gray-100 text-gray-600 border-gray-200"
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
@@ -76,7 +76,7 @@ export default function CardTable({ color }) {
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
-                    (color === "light"
+                    (isLight
                       ? "bg-gray-100 text-gray-600 border-gray-200"
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
@@ -86,7 +86,7 @@ export default function CardTable({ color }) {
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
-                    (color === "light"
+                    (isLight
                       ? "bg-gray-100 text-gray-600 border-gray-200"
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
@@ -104,7 +104,7 @@ export default function CardTable({ color }) {
                   <span
                     className={
                       "ml-3 font-bold " +
-                      +(color === "light" ? "text-gray-700" : "text-white")
+                      +(isLight ? "text-gray-700" : "text-white")
                     }
                   >
                     Argon Design System
@@ -167,7 +167,7 @@ export default function CardTable({ color }) {
                   <span
                     className={
                       "ml-3 font-bold " +
-                      +(color === "light" ? "text-gray-700" : "text-white")
+                      +(isLight ? "text-gray-700" : "text-white")
                     }
                   >
                     Angular Now UI Kit PRO
@@ -231,7 +231,7 @@ export default function CardTable({ color }) {
                   <span
                     className={
                       "ml-3 font-bold " +
-                      +(color === "light" ? "text-gray-700" : "text-white")
+                      +(isLight ? "text-gray-700" : "text-white")
                     }
                   >
                     Black Dashboard Sketch
@@ -294,7 +294,7 @@ export default function CardTable({ color }) {
                   <span
                     className={
                       "ml-3 font-bold " +
-                      +(color === "light" ? "text-gray-700" : "text-white")
+                      +(isLight ? "text-gray-700" : "text-white")
                     }
                   >
                     React Material Dashboard
@@ -358,7 +358,7 @@ export default function CardTable({ color }) {
                   <span
                     className={
                       "ml-3 font-bold " +
-                      +(color === "light" ? "text-gray-700" : "text-white")
+                      +(isLight ? "text-gray-700" : "text-white")
                     }
                   >
                     React Material Dashboard

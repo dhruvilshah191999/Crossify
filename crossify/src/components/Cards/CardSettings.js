@@ -11,12 +11,20 @@ export default function CardSettings(props) {
         <div className="rounded-t bg-white mb-0 px-6 py-6">
           <div className="text-center flex justify-between">
             <h6 className="text-gray-800 text-xl font-bold">Club Info</h6>
-            <button
-              className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              type="button"
-            >
-              Go to Club
-            </button>
+            <div>
+              <button
+                className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-2 ease-linear transition-all duration-150"
+                type="button"
+              >
+                Go to Club
+              </button>
+              <button
+                className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                type="button"
+              >
+                Save &nbsp; <i className="fas fa-save"></i>
+              </button>
+            </div>
           </div>
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">

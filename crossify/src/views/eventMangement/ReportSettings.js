@@ -7,6 +7,7 @@ import ReportTable from "components/Cards/ReportTable.js";
 export default function Settings() {
   const { id } = useParams();
   const [data, setdata] = useState([]);
+  const token = localStorage.getItem("jwt");
   const [loding, setloding] = useState(false);
   useEffect(() => {
     async function fetchData() {
@@ -18,8 +19,13 @@ export default function Settings() {
       };
       var object = {
         event_id: id,
+        token,
       };
-      const finaldata = await axios.post("/api/manage/get-faq", object, config);
+      const finaldata = await axios.post(
+        "/api/manage/get-all-reports",
+        object,
+        config
+      );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {

@@ -49,10 +49,12 @@ export default class SweetAlertModal extends Component {
   confirmArrival() {
     const getAlert = () => (
       <SweetAlert
+        customClass="text-black"
         success
         showCancel
         confirmBtnText="Update"
         confirmBtnBsStyle="success"
+        customClass="text-black"
         title="Are you sure?"
         focusCancelBtn
         confirmBtnCssClass="text-base rounded px-4 py-2 bg-blue-500"

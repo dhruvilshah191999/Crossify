@@ -15,7 +15,7 @@ export default class DetailsSettings extends React.Component {
       photo: null,
       description: "",
       eligibility: "",
-      event_data:null
+      event_data: null,
     };
   }
 
@@ -43,7 +43,7 @@ export default class DetailsSettings extends React.Component {
         description: finaldata.data.event_data.description,
         eligibility: finaldata.data.event_data.eligibility,
         tags: finaldata.data.event_data.tags,
-        event_data:id
+        event_data: id,
       });
     }
   }
@@ -75,11 +75,11 @@ export default class DetailsSettings extends React.Component {
         .post(url, data, config)
         .then(async (res) => {
           const userdata = {
-            description:this.state.description,
-            eligibility:this.state.eligibility,
-            tags:this.state.tags,
+            description: this.state.description,
+            eligibility: this.state.eligibility,
+            tags: this.state.tags,
             photo: res.data.url,
-            event_id:this.state.event_data
+            event_id: this.state.event_data,
           };
           try {
             const config = {
@@ -104,8 +104,7 @@ export default class DetailsSettings extends React.Component {
           }
         })
         .catch((err) => console.log(err));
-    }
-    else {
+    } else {
       const config = {
         method: "POST",
         header: {
@@ -114,11 +113,11 @@ export default class DetailsSettings extends React.Component {
         validateStatus: () => true,
       };
       var send_data = {
-        description:this.state.description,
-        eligibility:this.state.eligibility,
-        tags:this.state.tags,
+        description: this.state.description,
+        eligibility: this.state.eligibility,
+        tags: this.state.tags,
         photo: this.state.photo,
-        event_id:this.state.event_data
+        event_id: this.state.event_data,
       };
       const finaldata = await axios.post(
         "/api/manage/details-update",
@@ -145,11 +144,11 @@ export default class DetailsSettings extends React.Component {
                     Event Details
                   </h6>
                   <button
-                    className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                    className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={this.onSubmit}
                   >
-                    Save
+                    Save &nbsp; <i className="fas fa-save"></i>
                   </button>
                 </div>
               </div>
