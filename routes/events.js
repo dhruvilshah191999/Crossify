@@ -491,7 +491,6 @@ router.post("/deletelikes", auth, async function (req, res, next) {
 router.post("/participate-event",auth,async function(req,res,next){
   let { event_id, current_participants } = req.body;
   current_participants += 1;
-  console.log(current_participants);
   var object = {
     user: ObjectId(req.user._id),
     date: new Date(),
@@ -545,7 +544,6 @@ router.post("/participate-event",auth,async function(req,res,next){
 
 router.post("/participate-event2",auth,async function(req,res,next){
   let { event_id, current_participants } = req.body;
-  console.log(current_participants);
   var object = {
     user: ObjectId(req.user._id),
     date: new Date(),
@@ -706,7 +704,6 @@ router.post("/undo-participation-event",auth,async function(req,res,next){
 
 router.post("/getclub", async function (req, res, next) {
   let { club_id } = req.body;
-  console.log(club_id);
   var checks = club_details.findOne(
     {
       _id: ObjectId(club_id),
@@ -876,7 +873,6 @@ router.post("/reports", auth, async function (req, res, next) {
     date: new Date(),
     status:"pending"
   }
-  console.log(req.user._id);
   var check = reports_details.find({
     event_id: ObjectId(event_id),
     user_id: ObjectId(req.user._id),

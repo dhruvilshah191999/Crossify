@@ -99,7 +99,7 @@ export default function Navbar(props) {
 
               <li className={isLogin ? " " : "hidden " + "flex items-center "}>
                 <div className=" ml-2 lg:ml-0 ">
-                  <NotificationDropdown />
+                  {isLogin ? <NotificationDropdown /> : ""}
                 </div>
               </li>
 

@@ -1,79 +1,14 @@
 import React from "react";
-// import FullCalendar from "@fullcalendar/react";
-// import dayGridPlugin from "@fullcalendar/daygrid";
-// import timeGridPlugin from "@fullcalendar/timegrid";
-// import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
-
-// must manually import the stylesheets for each plugin
-// import "@fullcalendar/common/main.css";
-// import "@fullcalendar/daygrid/main.css";
-// import "@fullcalendar/timegrid/main.css";
-
-export default class abc extends React.Component {
-  render() {
-    return <div></div>;
-  }
-}
-// class DemoApp extends React.Component {
-//   calendarComponentRef = React.createRef();
-
-//   state = {
-//     calendarWeekends: true,
-//     calendarEvents: [
-//       // initial event data
-//       { title: "Event Now", start: new Date() },
-//     ],
-//   };
-
-//   render() {
-//     return (
-//       <div className="demo-app">
-//         <div className="demo-app-top">
-//           <button onClick={this.toggleWeekends}>toggle weekends</button>&nbsp;
-//           <button onClick={this.gotoPast}>go to a date in the past</button>
-//           &nbsp; (also, click a date/time to add an event)
-//         </div>
-//         <div className="demo-app-calendar">
-//           <FullCalendar
-//             defaultView="dayGridMonth"
-//             headerToolbar={{
-//               left: "prev,next today",
-//               center: "title",
-//               right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
-//             }}
-//             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-//             ref={this.calendarComponentRef}
-//             weekends={this.state.calendarWeekends}
-//             events={this.state.calendarEvents}
-//             dateClick={this.handleDateClick}
-//           />
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   toggleWeekends = () => {
-//     this.setState({
-//       // update a property
-//       calendarWeekends: !this.state.calendarWeekends,
-//     });
-//   };
-
-//   gotoPast = () => {
-//     let calendarApi = this.calendarComponentRef.current.getApi();
-//     calendarApi.gotoDate("2000-01-01"); // call a method on the Calendar object
-//   };
-
-//   handleDateClick = (arg) => {
-//     console.log();
-//   };
-//}
-/*
-import React from "react";
-import FullCalendar from "@fullcalendar/react";
+import FullCalendar, { sliceEvents } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import { motion } from "framer-motion";
+import "@fullcalendar/common/main.css";
+import "@fullcalendar/daygrid/main.css";
+import "@fullcalendar/timegrid/main.css";
+
+import SweetAlert from "react-bootstrap-sweetalert";
 
 function renderEventContent(eventInfo) {
   return (
@@ -84,21 +19,143 @@ function renderEventContent(eventInfo) {
   );
 }
 export default class DemoApp extends React.Component {
+  calendarRef = React.createRef();
+  state = {
+    alert: null,
+    events: [
+      {
+        title: "Harshil Patel",
+        date: "2021-04-01",
+        start: new Date(),
+        end: "2021-03-28",
+      },
+      {
+        title: "event 2",
+        date: "2021-04-02",
+        start: "2021-03-22",
+        end: "2021-04-01",
+      },
+      { title: "event 2", date: "2021-04-02" },
+      { title: "event 2", date: "2021-04-02" },
+      { title: "event 2", date: "2021-04-02" },
+      { title: "event 2", date: "2021-04-02" },
+      { title: "event 2", date: new Date("March 29, 2021 03:24:00") },
+    ],
+  };
+
+  popOver = () => {
+    // alert("Working as smooth");
+    //hovering effect if you want to add
+  };
+
+  redirectToEventPage = (selectionInfo) => {
+    //todo Get the Id and then provide the link to open in new tab
+    alert("Clicked");
+  };
+
+  setDate = (e) => {
+    let calendarApi = this.calendarRef.current.getApi();
+    calendarApi.gotoDate(e.target.value);
+  };
+  changeView = () => {
+    let calendarApi = this.calendarRef.current.getApi();
+    const currentOption = calendarApi.getOption("eventDisplay");
+    const circleOfLife = [
+      "auto",
+      "block",
+      "list-item",
+      "background",
+      "inverse-background",
+      "none",
+    ];
+    const i = circleOfLife.indexOf(currentOption);
+    const newI = (i + 1) % (circleOfLife.length - 1);
+    calendarApi.setOption("eventDisplay", circleOfLife[newI]);
+  };
+
+  selectedDates = (selectionInfo) => {
+    console.log(selectionInfo);
+    const getAlert = () => (
+      <SweetAlert
+        customClass="text-black"
+        success
+        showCancel
+        confirmBtnText="Let's Fill the Details."
+        confirmBtnBsStyle="success"
+        title="Apply for Event "
+        focusCancelBtn
+        confirmBtnCssClass="text-base rounded px-4 py-2 bg-green-500"
+        confirmBtnStyle={{ color: "white" }}
+        cancelBtnCssClass="text-base"
+        cancelBtnBsStyle="default"
+        onConfirm={() => {}}
+        onCancel={() => {
+          this.setState({ alert: null });
+        }}
+        closeAnim={{ name: "hideSweetAlert", duration: 300 }}
+      >
+        You are requesting to host Event for {selectionInfo.startStr} to{" "}
+        {selectionInfo.endStr}.
+      </SweetAlert>
+    );
+    this.setState({
+      alert: getAlert(),
+    });
+    //todo pop up with sweetalert and say that do you sure you want to request for event for this to this
+  };
   render() {
     return (
-      <div style={{ padding: "8rem" }}>
+      <>
         <FullCalendar
+          ref={this.calendarRef}
+          height="800px"
+          stickyHeaderDates={true}
+          stickyFooterScrollbar={true}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          headerToolbar={{ center: "dayGridMonth,timeGridWeek,timeGridDay" }}
-          dateClick={this.handleDateClick}
-          eventContent={renderEventContent}
+          headerToolbar={{
+            center: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
+          eventColor="#B388DD"
+          // eventBorderColor=""
+          // dateClick={this.handleDateClick}
+          // eventContent={renderEventContent}
           defaultView="timeGridWeek"
-          events={[
-            { title: "Harshil Patel", date: "2021-04-01" },
-            { title: "event 2", date: "2021-04-02" },
-          ]}
+          events={this.state.events}
+          eventDisplay="auto"
+          eventTimeFormat={{
+            // like '14:30:00'
+            hour: "2-digit",
+            minute: "2-digit",
+            meridiem: false,
+          }}
+          eventClick={this.redirectToEventPage}
+          eventMouseEnter={this.popOver}
+          selectable={true}
+          select={this.selectedDates}
+          dayMaxEventRows={true}
+          dayMaxEvents={true}
         />
-      </div>
+        {this.state.alert}
+        <div className="flex w-full mt-4">
+          <div className="font-semibold text-lg">
+            Jump to :
+            <input type="date" className="ml-2 " onChange={this.setDate} />
+          </div>
+          <div className="ml-auto">
+            <motion.button
+              type="button"
+              className="rounded-lg  font-semibold p-2 text-base text-white hover:lightalpha active:lightalpha "
+              onClick={this.changeView}
+              style={{ backgroundColor: "#b388dd" }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {" "}
+              <i class="fas fa-wrench text-sm"></i> Toggle View
+            </motion.button>
+          </div>
+        </div>
+      </>
     );
   }
 
@@ -107,5 +164,3 @@ export default class DemoApp extends React.Component {
     alert(arg.dateStr);
   };
 }
-
-*/

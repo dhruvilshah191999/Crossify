@@ -1,8 +1,8 @@
 import { withMobileDialog } from "@material-ui/core";
 import React, { useState } from "react";
-import Photo from "../../assets/img/team-4-470x470.png";
-import ProfileEventClub from "../../components/Cards/ProfileEventCard";
-
+import Photo from "assets/img/team-4-470x470.png";
+import ProfileEventClub from "components/Cards/ProfileEventCard";
+import EventCalendar from "views/demo/PlayGround";
 //khatar banayu bhai harshil
 export default function EventTab() {
   const eventPerPage = 3;
@@ -284,6 +284,10 @@ export default function EventTab() {
             {tabIndex == 0 ? renderPageNumbers : renderPageNumbers2}
           </ul>
         </div>
+      </div>
+      <hr className="mt-6 border-b-1 border-gray-400 mb-6" />
+      <div style={{ height: 1000 }} className="px-16">
+        <EventCalendar />
       </div>
     </>
   );

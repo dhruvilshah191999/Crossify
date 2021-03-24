@@ -81,7 +81,7 @@ export default function Navbar(props) {
               </li>
 
               <li className={isLogin ? " " : "hidden " + "flex items-center"}>
-                <NotificationDropdown />
+                {isLogin ? <NotificationDropdown /> : ""}
               </li>
 
               <li className={isLogin ? " " : "hidden " + "flex items-center"}>

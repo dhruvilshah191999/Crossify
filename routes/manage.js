@@ -15,6 +15,7 @@ router.post("/general-update", async function (req, res, next) {
     event_id,
     event_name,
     visibility,
+    maximum_participants,
     pincode,
     address,
     city,
@@ -40,6 +41,7 @@ router.post("/general-update", async function (req, res, next) {
       city,
       pincode,
       state,
+      maximum_participants,
       longitude,
       latitude,
       startdate,
@@ -576,5 +578,118 @@ router.post("/get-all-reports",auth, async function (req, res, next) {
       }
     });
 });
+
+router.post("/remove-reports", async function (req, res, next) {
+  const { report_id } = req.body;
+  var update = reports_details.update(
+    {
+      _id:ObjectId(report_id),
+    }, {
+      is_active:false
+    }
+  )
+  await update.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data) {
+        var finaldata = {
+          update: true,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      } else {
+        var finaldata = {
+          is_error: true,
+          message: "Data Send",
+        };
+        return res.status(404).send(finaldata);
+      }
+    });
+});
+
+router.post("/rejected-reports", async function (req, res, next) {
+  const { report_id } = req.body;
+  var update = reports_details.updateMany(
+    {
+      _id: ObjectId(report_id),
+    },
+    { $set: { "reports.$[].status": "rejected" } }
+  );
+  await update.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data == null || data.length == 0) {
+        var finaldata = {
+          is_error: true,
+          message: "Data Send",
+        };
+        return res.status(404).send(finaldata);
+      } else {
+        var finaldata = {
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+});
+
+router.post("/send-reports", auth, async function (req, res, next) {
+  const { report_id, answer, user_id } = req.body;
+  var getdata = user_details.findOne({ _id: ObjectId(req.user._id) });
+  getdata.exec(async (err, final) => {
+    var object = {
+      date: new Date(),
+      title: "Your Reports is answered by "+final.fname,
+      description: answer,
+      sender_id: ObjectId(req.user._id),
+      photo: final.profile_photo,
+      isRead: false
+    }
+    var update = user_details.update(
+      {
+        _id: ObjectId(user_id),
+      },
+      { $push: { inbox: object } }
+    );
+    await update.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data == null || data.length == 0) {
+        var finaldata = {
+          is_error: true,
+          message: "Data Send",
+        };
+        return res.status(404).send(finaldata);
+      } else {
+        var updatereports = reports_details.updateMany(
+          {
+            _id: ObjectId(report_id),
+          },
+          { $set: { "reports.$[].status": "replied" } }
+        ).exec();
+        var finaldata = {
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+  });
+});
+
 
 module.exports = router;
