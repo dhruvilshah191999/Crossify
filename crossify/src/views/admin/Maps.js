@@ -1,9 +1,4 @@
 import React from "react";
-import mapboxgl from "mapbox-gl";
-// components
-
-import MapExample from "components/Maps/MapExample.js";
-import MapBoxApi from "components/Maps/MapBoxApi.js";
 
 import MapContainer from "components/Maps/MapCode";
 export default function Maps() {

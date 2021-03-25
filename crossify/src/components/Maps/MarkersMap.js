@@ -9,10 +9,6 @@ import {
   InfoWindow,
   Marker,
 } from "react-google-maps";
-import Geocode from "react-geocode";
-
-Geocode.setApiKey("AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc");
-Geocode.enableDebug();
 
 function generateRandomNumber() {
   var min = 1000,

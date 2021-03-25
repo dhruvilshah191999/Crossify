@@ -407,6 +407,12 @@
   width: 75%;
 }
 
+.px-16 {
+  margin: 3rem;
+  /* padding-left: 3rem;
+  padding-right: 3rem; */
+}
+
 .mx-12 {
   margin-left: 4rem;
   margin-right: 4rem;
@@ -1044,7 +1050,7 @@ div.sticky {
 }
 
 .switch[data-isOn="true"] {
-  background-color: #14103d;
+  background-color: #2b6cb0;
   justify-content: flex-end;
 }
 
@@ -1053,4 +1059,20 @@ div.sticky {
   height: 25px;
   background-color: white;
   border-radius: 40px;
+}
+
+.fc-dayGridMonth-button.fc-button.fc-button-primary,
+.fc-timeGridDay-button.fc-button.fc-button-primary,
+.fc-timeGridWeek-button.fc-button.fc-button-primary,
+.fc-prev-button.fc-button.fc-button-primary,
+.fc-next-button.fc-button.fc-button-primary {
+  background-color: var(--color-beta);
+}
+
+.fc-today-button.fc-button.fc-button-primary {
+  background-color: var(--color-alpha);
+}
+
+.fc-today-button.fc-button.fc-button-primary:hover {
+  background-color: var(--color-lightalpha);
 }

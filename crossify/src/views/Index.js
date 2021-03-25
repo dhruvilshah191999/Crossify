@@ -299,7 +299,7 @@ export default function Landing() {
             <div className="flex flex-col ">
               <div className="flex flex-row justify-center ">
                 {" "}
-                <div className="text-2xl m-4 font-bold category-list-header pt-6">
+                <div className="text-2xl m-4 font-bold text-alpha  pt-6">
                   {" "}
                   Browse Clubs by Category
                 </div>
