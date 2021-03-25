@@ -26,14 +26,14 @@ router.post("/create-club", auth, async (req, res) => {
     tags
   } = req.body;
   var array = [];
-  category.foreach(e => {
+  category.map(e => {
     array.push(ObjectId(e._id));
   })
 
   var club = new club_details({
     club_name,
     description,
-    creator_id: req.user_id,
+    creator_id: req.user._id,
     tags,
     rules,
     profile_photo: photo,
@@ -46,6 +46,13 @@ router.post("/create-club", auth, async (req, res) => {
     longitude,
     category_list: array,
     status:privacy
+  });
+  club.save().then((data) => {
+    var finaldata = {
+      is_error: false,
+      message: "Data Added",
+    };
+    return res.status(200).send(finaldata);
   });
 });
 

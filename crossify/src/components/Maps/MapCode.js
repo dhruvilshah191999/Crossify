@@ -81,26 +81,8 @@ export class MapContainer extends React.Component {
         lat: this.props.lat,
         lng: this.props.long,
       },
-      currentLocation: {
-        lat: this.props.lat,
-        lng: this.props.long,
-      },
     };
   }
-  componentDidMount = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          currentLocation: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          },
-        });
-      },
-      undefined,
-      { enableHighAccuracy: true }
-    );
-  };
   onMarkerDragEnd = (coord) => {
     const { latLng } = coord;
     const lat = latLng.lat();
@@ -119,7 +101,7 @@ export class MapContainer extends React.Component {
         zoom={14}
         disableDoubleClickZoom
         onDblclick={(t, map, coord) => this.onMarkerDragEnd(coord)}
-        initialCenter={currentLocation}
+        initialCenter={position}
       >
         <Marker
           position={position}
@@ -127,7 +109,6 @@ export class MapContainer extends React.Component {
           onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
           name={name}
         />
-        <Marker position={currentLocation} icon={currentPosIcon}></Marker>
       </Map>
     );
   }

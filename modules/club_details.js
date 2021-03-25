@@ -71,9 +71,10 @@ var clubSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  state: {
+  status: {
     type: String,
-    default:"Public"
+    default:"Public",
+    required: true,
   }
 });
 
