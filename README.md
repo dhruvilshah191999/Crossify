@@ -48,13 +48,6 @@
 **Appendix A: Glossary **
 **Appendix B: Analysis Models **
 
-**Revision History**
-
-| **Name** | **Date** | **Reason For Changes** | **Version** |
-| :------- | :------- | :--------------------- | :---------- |
-|          |          |                        |             |
-|          |          |                        |             |
-
 **_Software Requirements Specification for Crossify Web Appication***
 
 # **Introduction**
