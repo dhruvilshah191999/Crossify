@@ -1,10 +1,37 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { createPopper } from "@popperjs/core";
+import axios from "axios";
+import Moment from "moment";
 import demopf from "assets/img/pp1.jpg";
 import { useHistory, Link } from "react-router-dom";
+import { check } from "express-validator";
 
 const NotificationDropdown = (props) => {
-  // dropdown props
+  const [data, setData] = useState([]);
+  const [loading, setloding] = useState(false);
+  const token = localStorage.getItem("jwt");
+  useEffect(() => {
+    async function fetchData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token
+      };
+      const finaldata = await axios.post("/api/notification", object, config);
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setData(finaldata.data.data);
+        setTimeout(setloding(true), 1000);
+      }
+    }
+    fetchData();
+  }, []);
+
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
@@ -18,81 +45,90 @@ const NotificationDropdown = (props) => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
-  return (
-    <>
-      <div
-        onMouseEnter={(e) => {
-          e.preventDefault();
-          openDropdownPopover();
-        }}
-        onMouseLeave={(e) => {
-          e.preventDefault();
-          closeDropdownPopover();
-        }}
-      >
-        <a
-          className="hover:text-yellow text-yellow px-3 py-4 lg:py-2 flex items-center"
-          href="#pablo"
-          ref={btnDropdownRef}
-        >
-          <i className="fas fa-bell rounded-full text-xl leading-lg mr-2" />{" "}
-        </a>
+
+  const check = (e) => {
+    
+  }
+
+  if (loading) {
+    return (
+      <>
         <div
-          ref={popoverDropdownRef}
-          className={
-            (dropdownPopoverShow ? "block " : "hidden ") +
-            "bg-white text-base z-50 float-left  py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
-          }
-          style={{ width: 420 }}
+          onMouseEnter={(e) => {
+            e.preventDefault();
+            openDropdownPopover();
+          }}
+          onMouseLeave={(e) => {
+            e.preventDefault();
+            closeDropdownPopover();
+          }}
         >
-          <div
-            className="flex flex-col overflow-y max-h-400vh"
-            style={{ maxHeight: 455, overflowY: "scroll" }}
+          <a
+            className="hover:text-yellow text-yellow px-3 py-4 lg:py-2 flex items-center"
+            href="#pablo"
+            ref={btnDropdownRef}
           >
-            <div className="px-4 py-2 text-base mb-1 text-muted font-semibold">
-              {" "}
-              You have <span className="font-semibold text-beta">12</span>{" "}
-              Notifications.
-            </div>
-            {props.topNotifications.map((el) => (
-              <Link to="/profile">
+            <i className="fas fa-bell rounded-full text-xl leading-lg mr-2" />{" "}
+          </a>
+          <div
+            ref={popoverDropdownRef}
+            className={
+              (dropdownPopoverShow ? "block " : "hidden ") +
+              "bg-white text-base z-50 float-left  py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
+            }
+            style={{ width: 420 }}
+          >
+            <div
+              className="flex flex-col overflow-y max-h-400vh"
+              style={{ maxHeight: 455, overflowY: "scroll" }}
+            >
+              <div className="px-4 py-2 text-base mb-1 text-muted font-semibold">
                 {" "}
-                <div
-                  className={
-                    el.visited
-                      ? "w-full flex p-2 pt-2 border-b2 pb-4"
-                      : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4"
-                  }
-                >
-                  <div className="flex-shrink-0">
-                    <img
-                      className="w-12 h-12 rounded-full ml-2 "
-                      src={el.photo}
-                    />
-                  </div>
-                  <div className="flex flex-col ml-6 mr-4">
-                    {" "}
-                    <div className="flex flex-row w-full text-sm">
-                      <div className="font-semibold">{el.title}</div>
-                      <div className="ml-auto mr-1">
-                        <span className="text-xs text-gray-400 flex-shrink-0">
-                          {el.time}
-                        </span>{" "}
+                You have{" "}
+                <span className="font-semibold text-beta">
+                  {data[0].inbox.length}
+                </span>{" "}
+                Notifications.
+              </div>
+              {data[0].inbox.map((el) => (
+                  <div
+                    className={
+                      el.isRead
+                        ? "w-full flex p-2 pt-2 border-b2 pb-4"
+                        : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4"
+                    }
+                  >
+                    <div className="flex-shrink-0">
+                      <img
+                        className="w-12 h-12 rounded-full ml-2 "
+                        src={el.photo}
+                      />
+                    </div>
+                    <div className="flex flex-col ml-6 mr-4">
+                      {" "}
+                      <div className="flex flex-row w-full text-sm">
+                        <div className="font-semibold">{el.title}</div>
+                        <div className="ml-1">
+                          <span className="text-xs text-gray-400 flex-shrink-0">
+                            {Moment(el.date, "YYYYMMDDHHmmss").fromNow()}
+                          </span>{" "}
+                        </div>
                       </div>
-                      <div></div>
-                    </div>
-                    <div className="text-xs text-muted pr-4 ">
-                      {el.semiTitle}
+                      <div className="text-xs text-muted pr-4 ">
+                        {el.description}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+  else {
+    return <></>;
+  }
 };
 
 NotificationDropdown.defaultProps = {

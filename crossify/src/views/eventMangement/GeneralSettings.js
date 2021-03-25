@@ -30,6 +30,7 @@ export default function GeneralSettings(props) {
     ending_date: null,
     starting_time: null,
     ending_time: null,
+    maximum_participants:"",
   });
 
   const {
@@ -41,6 +42,7 @@ export default function GeneralSettings(props) {
     ending_date,
     starting_time,
     ending_time,
+    maximum_participants,
   } = formData;
 
   const onChange = (e) =>
@@ -86,6 +88,7 @@ export default function GeneralSettings(props) {
             "HH:mm"
           ),
           ending_time: Moment(finaldata.data.event_data.date).format("HH:mm"),
+          maximum_participants: finaldata.data.event_data.maximum_participants,
         });
         setlatitude(finaldata.data.event_data.latitude);
         setlongitude(finaldata.data.event_data.longitude);
@@ -121,6 +124,7 @@ export default function GeneralSettings(props) {
       ending_date,
       starting_time,
       ending_time,
+      maximum_participants,
     };
 
     const config = {
@@ -209,6 +213,9 @@ export default function GeneralSettings(props) {
                           id="grid-state"
                           placeholder="Select your relevant Categories"
                           style={{ outline: "none" }}
+                          name="privacy"
+                          value={privacy}
+                          onChange={(e) => onChange(e)}
                         >
                           <option>Public</option>
                           <option>Private</option>
@@ -340,6 +347,9 @@ export default function GeneralSettings(props) {
                         <input
                           type="number"
                           className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          name="maximum_participants"
+                          value={maximum_participants}
+                          onChange={(e) => onChange(e)}
                         />
                       </div>
                     </div>

@@ -27,16 +27,19 @@ var clubSchema = new Schema({
     type: String,
     required: true,
   },
-  background_photo: {
-    //not added
+  location: {
     type: String,
     required: false,
   },
-  location: {
+  city: {
     type: String,
     required: true,
   },
-  max_members: {
+  state: {
+    type: String,
+    required: true,
+  },
+  pincode: {
     type: Number,
     required: false,
   },
@@ -68,8 +71,11 @@ var clubSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  //need to add location specificity city , state , country
-  // privacy public private closed
+  status: {
+    type: String,
+    default:"Public",
+    required: true,
+  }
 });
 
 var club_exports = mongoose.model("club_details", clubSchema);

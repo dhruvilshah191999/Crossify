@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useTable,
   useFilters,
   useGlobalFilter,
   useAsyncDebounce,
   useSortBy,
+  useRowSelect,
   usePagination,
 } from "react-table";
-import Moment from "moment";
-import axios from "axios";
+
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import ViewReport from "components/Modals/ViewReport";
+import ProfileReview from "components/Modals/ProfileReview.js";
+import AcceptButton from "components/Modals/AcceptMemberButton";
+import RejectButton from "components/Modals/RejectMemberButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
+import dataTable from "./demorequests";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -65,17 +68,17 @@ function DefaultColumnFilter({
 }
 
 function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id },
+  column: { filterValue, setFilter, preFilteredRows, profile },
 }) {
   // Calculate the options for filtering
   // using the preFilteredRows
   const options = React.useMemo(() => {
     const options = new Set();
     preFilteredRows.forEach((row) => {
-      options.add(row.values[id]);
+      options.add(row.values[profile]);
     });
     return [...options.values()];
-  }, [id, preFilteredRows]);
+  }, [profile, preFilteredRows]);
 
   // Render a multi-select box
   return (
@@ -95,92 +98,88 @@ function SelectColumnFilter({
   );
 }
 
-export default function App(props) {
-  const openModal = (value) => {
-    ModalManager.open(<ViewReport onRequestClose={() => true} data={value} />);
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    );
+  }
+);
+
+export default function App() {
+  const [isLight, setIsLight] = useState(1);
+  const getSelectedAndReject = (e) => {
+    const profilelist = selectedFlatRows.map((el) => el.values);
+    //now do whatever you want to do
+    //todo GOLU Get the profile or whatever uniquely profileentified thing and change the status to arriving to all the profilelist
+    console.log(profilelist);
+  };
+  const getSelectedAndAccept = (broadcastMessage) => {
+    console.log(broadcastMessage);
+    //todo GOLU broadcast/Notification to added to all the selected users
+    const profilelist = selectedFlatRows.map((el) => el.values);
+    console.log(profilelist);
+  };
+  const openModal = () => {
+    ModalManager.open(<ProfileReview onRequestClose={() => true} />);
   };
 
-  const deleteObject = async (value) => {
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-    var object = {
-      report_id: value._id,
-    };
-    const finaldata = await axios.post(
-      "/api/manage/remove-reports",
-      object,
-      config
-    );
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      window.location.reload();
-    }
-  }
-  const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(() => props.finaldata, []);
-
+  const data = React.useMemo(() => dataTable, []);
   const columns = React.useMemo(
     () => [
       {
-        Header: "Issued By",
-        accessor: "name", // accessor is the "key" in the data
+        Header: "Profile",
+        accessor: "profilePhoto",
         disableFilters: true,
         Cell: ({ value }) => {
-          return <span className="font-semibold text-sm">{value}</span>;
+          return (
+            <div className="flex items-center">
+              <img
+                src={value}
+                alt="eventPhoto"
+                className="w-12 border h-12 rounded-full"
+              ></img>
+            </div>
+          );
         },
       },
-
       {
-        Header: "Description",
-        accessor: "description", // accessor is the "key" in the data
-        Cell: ({ value }) => (
-          <div className="break-words max-w-210-px overflow-hidden">
-            {value}
-          </div>
-        ),
+        Header: "Name",
+        accessor: "name",
         disableFilters: true,
       },
       {
-        Header: "Issue Date",
+        Header: "Date",
         accessor: "date", // accessor is the "key" in the data
-        Cell: ({ value }) => <div>{Moment(value).format("DD-MM-YYYY")}</div>,
+
+        disableFilters: true,
+      },
+      {
+        Header: "occupation",
+        accessor: "occupation",
         disableFilters: true,
       },
       {
         Header: "Status",
-        accessor: "status",
-        disableFilters: true,
+        accessor: "status", // accessor is the "key" in the data
+        Filter: SelectColumnFilter,
+        filter: "includes",
         Cell: ({ value }) => {
           var myColor = "red";
           if (value === "pending") {
             myColor = "orange";
-          } else if (value === "replied") {
+          } else if (value === "accepted") {
             myColor = "green";
           }
-          // return (
-          //   <span
-          //     class={
-          //       "relative inline-block px-3 py-1 font-semibold text-" +
-          //       myColor +
-          //       "-900 leading-tight"
-          //     }
-          //   >
-          //     <span
-          //       aria-hidden
-          //       class={
-          //         "absolute inset-0 bg-" +
-          //         myColor +
-          //         "-200 opacity-50 rounded-full"
-          //       }
-          //     ></span>
-          //     <span class="relative">{value}</span>
-          //   </span>
-          // );
           return (
             <>
               <i
@@ -192,22 +191,28 @@ export default function App(props) {
             </>
           );
         },
+        disableFilters: true,
       },
       {
-        Header: "Actions",
-        accessor: "record",
-        Cell: ({ value }) => (
-          <div className="flex ">
-            <button
-              title="Reply"
-              className="ml-4 mr-2"
-              onClick={() => openModal(value)}
-            >
-              <i class="fas fa-reply text-blue-500  focus:outline-none text-lg "></i>
-            </button>
+        Header: "Location",
+        accessor: "location", // accessor is the "key" in the data
 
-            <button className="ml-4" title="Delete" onClick={()=>deleteObject(value)}>
-              <i class="fas fa-trash text-red-500 text-lg"></i>
+        disableFilters: true,
+      },
+
+      {
+        Header: "Actions",
+        accessor: "actions", // here add _profile of event request so easy to attach with the buttons
+        Cell: ({ value }) => (
+          <div className="flex flex-row  justify-evenly">
+            <button title="Arrived">
+              <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
+            </button>
+            <button className="ml-2" title="Remove">
+              <i class="fas fa-window-close text-red-500 text-lg"></i>
+            </button>
+            <button className="" title="View" onClick={openModal}>
+              <i class="fas fa-eye text-blue-500 text-lg ml-2"></i>
             </button>
           </div>
         ),
@@ -219,15 +224,20 @@ export default function App(props) {
   );
   const defaultColumn = React.useMemo(
     () => ({
+      // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
   );
   const filterTypes = React.useMemo(
     () => ({
-      text: (rows, id, filterValue) => {
+      // Add a new fuzzyTextFilterFn filter type.
+
+      // Or, overrprofilee the default text filter to use
+      // "startWith"
+      text: (rows, profile, filterValue) => {
         return rows.filter((row) => {
-          const rowValue = row.values[id];
+          const rowValue = row.values[profile];
           return rowValue !== undefined
             ? String(rowValue)
                 .toLowerCase()
@@ -242,14 +252,17 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-
+    rows,
     prepareRow,
     state,
-
+    visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
     setFilter,
-    page,
+    page, // Instead of using 'rows', we'll use page,
+    // which has only the rows for the active page
+
+    // The rest of these things are super handy, too ;)
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -258,7 +271,8 @@ export default function App(props) {
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize },
+    selectedFlatRows,
+    state: { pageIndex, pageSize, selectedRowprofiles },
   } = useTable(
     {
       columns,
@@ -271,14 +285,43 @@ export default function App(props) {
     useFilters, // useFilters!
     useGlobalFilter, // useGlobalFilter!
     useSortBy,
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        // Let's make a column for selection
+        {
+          profile: "selection",
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the indivprofileual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
+
+  // useEffect(() => {
+  //   // This will now use our custom filter for age
+  //   setFilter("status", SelectColumnFilter);
+  // }, [SelectColumnFilter]);
 
   return (
     <>
       <div
         className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow rounded " +
+          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
           (isLight ? "bg-white" : "bg-blue-900 text-white")
         }
       >
@@ -288,14 +331,12 @@ export default function App(props) {
               <div className="flex flex-row">
                 {" "}
                 <div>
-                  <h3
-                    className={
-                      "font-semibold text-lg " +
-                      (isLight ? "text-gray-800" : "text-white")
-                    }
-                  >
-                    Reports
-                  </h3>
+                  <AcceptButton
+                    handleAcceptance={getSelectedAndAccept}
+                  ></AcceptButton>
+                  <RejectButton
+                    handleRejection={getSelectedAndReject}
+                  ></RejectButton>
                 </div>
                 <div className="inline-block ml-2">
                   <ToggleDarkMode
@@ -305,9 +346,9 @@ export default function App(props) {
                 </div>
                 <div className="ml-auto">
                   <i
-                    class={
+                    className={
                       isLight
-                        ? "fas fa-filter mr-4 text-gray-700"
+                        ? "fas fa-filter mr-4 text-gray-700 "
                         : "fas fa-filter mr-4 text-white"
                     }
                   ></i>
@@ -322,20 +363,16 @@ export default function App(props) {
                     }}
                   >
                     <option value="">All</option>
-                    <option value="pending">
-                      {/* <i className="fas fa-circle text-orange-500 mr-2"></i>{" "}  maybe later we can add that*/}
-                      Pending
-                    </option>
-                    <option value="replied">Replied</option>
+                    <option value="pending">Pending</option>
+                    <option value="accepted">Accepted</option>
                     <option value="rejected">Rejected</option>
                   </select>
                   <span className="ml-2 "></span>
-                  <span className="ml-2 "></span>
                   <GlobalFilter
-                    isLight={isLight}
                     preGlobalFilteredRows={preGlobalFilteredRows}
                     globalFilter={state.globalFilter}
                     setGlobalFilter={setGlobalFilter}
+                    isLight={isLight}
                   />
                 </div>
               </div>
@@ -354,7 +391,7 @@ export default function App(props) {
                     <th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                       className={
-                        "px-6 align-middle border border-solid py-3 text-xs  uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
+                        "px-6 align-mprofiledle border border-solprofile py-3 text-xs  uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
                         (isLight
                           ? "bg-gray-100 text-gray-600 border-gray-200"
                           : "bg-blue-800 text-blue-300 border-blue-700")
@@ -387,7 +424,7 @@ export default function App(props) {
                       return (
                         <td
                           {...cell.getCellProps()}
-                          className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xsm whitespace-no-wrap p-4"
+                          className="border-t-0 px-6 align-mprofiledle border-l-0 border-r-0 text-xsm whitespace-no-wrap p-4"
                         >
                           {cell.render("Cell")}
                         </td>
@@ -465,7 +502,7 @@ export default function App(props) {
                       : 0;
                     gotoPage(page);
                   }}
-                  style={{ width: "100px" }}
+                  style={{ wprofileth: "100px" }}
                 />
                 of {pageOptions.length}
               </span>{" "}

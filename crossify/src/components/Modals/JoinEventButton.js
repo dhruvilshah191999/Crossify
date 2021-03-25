@@ -189,7 +189,7 @@ export default class SweetAlertModal extends Component {
         onCancel={this.hideAlert}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
-        You are cancling your registeration
+        You are canceling your registeration
       </SweetAlert>
     );
     this.setState({
@@ -216,7 +216,7 @@ export default class SweetAlertModal extends Component {
         onCancel={this.hideAlert}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
-        You are cancling your waiting spot.
+        You are canceling your waiting spot.
       </SweetAlert>
     );
     this.setState({

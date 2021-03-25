@@ -51,25 +51,44 @@ const Routing = () => {
   var token = localStorage.getItem("jwt");
   return (
     <Switch>
-      {/* add routes with layouts */}
       <Route path="/admin" component={Admin} />
-      <Route path="/auth" component={Auth} />
-      {!token ? (
-        <PrivateRoute authed={false} path="/profile" component={Profile} />
-      ) : (
-        <PrivateRoute authed={true} path="/profile" component={Profile} />
-      )}
-      <Route path="/manage/event/:id" component={ManageEvent} />
-      {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
-      {/* <Route path="/profile" exact component={Profile} /> */}
       <Route path="/" exact component={Index} />
-      <Route path="/events/event=:id" component={EventPage} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/clubsearch" exact component={ClubSearchPage} />
       <Route path="/club" exact component={ClubPage} />
       <Route path="/playground" exact component={PlayGround} />
       <Route path="/createclub" exact component={CreateClub} />
+      <Route path="/auth" component={Auth} />
+      {!token ? (
+        <>
+          <PrivateRoute authed={false} path="/profile" component={Profile} />
+          <PrivateRoute
+            authed={false}
+            path="/manage/event/:id"
+            component={ManageEvent}
+          />
+          <PrivateRoute
+            authed={false}
+            path="/events/event=:id"
+            component={EventPage}
+          />
+        </>
+      ) : (
+        <>
+          <PrivateRoute authed={true} path="/profile" component={Profile} />
+          <PrivateRoute
+            authed={true}
+            path="/manage/event/:id"
+            component={ManageEvent}
+          />
+          <PrivateRoute
+            authed={true}
+            path="/events/event=:id"
+            component={EventPage}
+          />
+        </>
+      )}
 
       {/* add redirect for first page */}
       <Redirect from="*" to="/" />

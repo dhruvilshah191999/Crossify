@@ -146,81 +146,52 @@ router.post("/leave-club",async function(req,res,next){
     }
   })
 })
-router.post("/create-club",  async function(req, res,next){
-  const {name,privacy,categories,user_id,profile_photo,address,city,state,postal_code,latitude,longitude,description,joining_criteria,rules,tags} = req.body;
-  //console.log(req.body);
-  let objectIdArray = categories.map((s) => mongoose.Types.ObjectId(s));
-  var object = {
-    user_id: ObjectId(user_id),
-    level: "admin"
-  }
-  var check= club_details.findOne({club_name:name,is_active:1});
-  await check.exec((err, data) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err,
-      };
-      return res.status(501).send(error);
-    } else if (data) {
-      var error = {
-        is_error: true,
-        message: "This ClubName Already Taken",
-      };
-      return res.status(500).send(error);
-    } else if (data == null || data.length == 0) {
-      var club = new club_details({
-        club_name:name,
-        privacy:privacy,
-        creator_id:ObjectId(user_id),
-        profile_photo:profile_photo,
-        location:address,
-        category_list:objectIdArray,
-        city:city,
-        state:state,
-        pincode:postal_code,
-        latitude:latitude,
-        longitude:longitude,
-        description:description,
-        joining_criteria:joining_criteria,
-        rules:rules,
-        tags:tags
-      });
-      club.save((err) => {
-        if (err) {
-          var error = {
-            is_error: true,
-            message: err.message,
-          };
-          return res.status(500).send(error);
-        } else {
-          var member = new member_details ({
-            club_id:club._id,
-            is_active:true,
-            member_list:object
-          })
-          member.save((err)=>{
-            if (err) {
-              var error = {
-                is_error: true,
-                message: err.message,
-              };
-              return res.status(500).send(error);
-            }else{
-              var finaldata = {
-            
-                message: "Club Created Successfully",
-                is_error: false,
-              };
-              return res.status(200).send(finaldata);
-            }
-          })
-          
-        }
-      });
-    }
+router.post("/create-club", auth, async (req, res) => {
+  const {
+    club_name,
+    privacy,
+    address,
+    latitude,
+    longitude,
+    postalcode,
+    description,
+    criteria,
+    rules,
+    state,
+    city,
+    category,
+    photo,
+    tags
+  } = req.body;
+  var array = [];
+  category.map(e => {
+    array.push(ObjectId(e._id));
+  })
+
+  var club = new club_details({
+    club_name,
+    description,
+    creator_id: req.user._id,
+    tags,
+    rules,
+    profile_photo: photo,
+    location: address,
+    state,
+    city,
+    pincode: postalcode,
+    joining_criteria: criteria,
+    latitude,
+    longitude,
+    category_list: array,
+    status:privacy
   });
-  
+  club.save().then((data) => {
+    var finaldata = {
+      is_error: false,
+      message: "Data Added",
+    };
+    return res.status(200).send(finaldata);
+  });
 });
 
 module.exports = router;

@@ -299,7 +299,7 @@ export default function Landing() {
             <div className="flex flex-col ">
               <div className="flex flex-row justify-center ">
                 {" "}
-                <div className="text-2xl m-4 font-bold category-list-header pt-6">
+                <div className="text-2xl m-4 font-bold text-alpha  pt-6">
                   {" "}
                   Browse Clubs by Category
                 </div>
@@ -308,13 +308,15 @@ export default function Landing() {
                 {" "}
                 {categoryState.map((el) => {
                   return (
-                    <button
+                    <motion.button
                       type="button"
                       className=" rounded-lg shadow p-4 mr-6 category-container mb-4 text-center   hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
                       style={{ outline: "none" }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       {el}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
