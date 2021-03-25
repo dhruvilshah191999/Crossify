@@ -4,6 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const connectDB = require("./db/db");
+var http = require('http')
+var socketio = require('socket.io')
 
 var indexRouter = require("./routes/index");
 var eventsRouter = require("./routes/events");
@@ -13,9 +15,12 @@ var clubRouter = require("./routes/clubs");
 var profileRouter = require("./routes/profile");
 var manageRouter = require("./routes/manage");
 const reports_exports = require("./modules/reports_details");
-
+const channel_exports = require("./modules/channel_details");
+var chatRouter = require("./routes/chat");
 var app = express();
 
+var server = http.createServer(app);
+var io = socketio(server);
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -34,12 +39,14 @@ app.use("/api/profile", profileRouter);
 app.use("/api/manage", manageRouter);
 app.use("/users", usersRouter);
 app.use("/club", clubRouter);
-
+app.use("/club/chat",chatRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
+io.on('connect',(socket)=>{
+  console.log('connected with client')
+})
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
@@ -53,4 +60,4 @@ app.use(function (err, req, res, next) {
 
 connectDB();
 
-module.exports = app;
+module.exports = {app,io};
