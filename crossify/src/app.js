@@ -56,7 +56,7 @@ const Routing = () => {
       <Route path="/" exact component={Index} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/clubsearch" exact component={ClubSearchPage} />
-      <Route path="/club" exact component={ClubPage} />
+      <Route path="/club/:id" exact component={ClubPage} />
       <Route path="/playground" exact component={PlayGround} />
       <Route path="/createclub" exact component={CreateClub} />
       <Route path="/auth" component={Auth} />

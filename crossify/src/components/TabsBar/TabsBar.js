@@ -5,7 +5,7 @@ import RoomTab from "./RoomTab";
 import MemberTab from "./MemberTab";
 import PhotosTab from "./PhotosTab";
 import FilesTab from "./FilesTab";
-const Tabs = () => {
+const Tabs = (props) => {
   const [openTab, setOpenTab] = React.useState(1);
   return (
     <>
@@ -135,7 +135,11 @@ const Tabs = () => {
             <div className="px-4 py-5 flex-auto">
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                  <AboutTab />
+                  <AboutTab
+                    description={props.description}
+                    rules={props.rules}
+                    joining_criteria={props.joining_criteria}
+                  />
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                   <EventTab />

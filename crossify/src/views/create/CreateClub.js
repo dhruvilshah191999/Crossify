@@ -5,14 +5,13 @@ import { useHistory } from "react-router-dom";
 import { InputTagsContainer } from "react-input-tags";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import { usePosition } from "use-position";
-import MapContainer from "components/Maps/MapCode";
+import MapContainer from "components/Maps/AddMapCode";
 import City from "../auth/states-and-districts.json";
 import dummyPF from "../../assets/img/demopf.png";
 import MultiSelect from "components/Forms/MultiSelect";
 import UploadPic from "components/Inputs/UploadPic";
 
 function CreateClub(props) {
-  let history = useHistory();
   const [tags, setTags] = useState([]);
   const [photo, setPhoto] = useState(null);
   const [category, setCategory] = useState([]);
@@ -35,7 +34,6 @@ function CreateClub(props) {
     address,
     postalcode,
     description,
-    ending_date,
     criteria,
     rules,
   } = formData;
