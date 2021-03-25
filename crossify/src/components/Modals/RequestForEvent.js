@@ -8,10 +8,6 @@ import { InputTagsContainer } from "react-input-tags";
 
 Modal.defaultStyles = {};
 
-const Tag = (props) => <span className="tag" {...props} />;
-const Delete = (props) => <button className="delete" {...props} />;
-const Help = (props) => <span className="help" {...props} />;
-
 var customModalStyles = {
   content: {
     width: "70%",
@@ -216,6 +212,7 @@ class MyModal extends Component {
                   </label>
                   <input
                     type="date"
+                    defaultValue={this.props.startDate}
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>
@@ -230,6 +227,7 @@ class MyModal extends Component {
                   </label>
                   <input
                     type="date"
+                    defaultValue={this.props.endDate}
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                   />
                 </div>

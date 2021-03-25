@@ -21,7 +21,7 @@ export default function Navbar(props) {
           <img style={{ height: "25px", width: "30px" }} src={logo} />
           <div className="w-full  relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
-              className="text-gray-500 text-sm font-bold leading-relaxed inline-block mr-4 ml-3 py-2 whitespace-no-wrap uppercase"
+              className="text-gray-700 text-sm font-bold leading-relaxed inline-block mr-4 ml-3 py-2 whitespace-no-wrap uppercase"
               to="/"
             >
               Crossify
@@ -44,19 +44,22 @@ export default function Navbar(props) {
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               {/* for mobile you have change text-black in all the navbar buttons/links */}
               <li className="flex items-center">
-                <a
-                  className="hover:text-gray-800 text-gray-500 md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
+                <Link
+                  to="\search"
+                  className="hover:text-gray-800 text-gray-700 md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
                   href="#"
                 >
-                  <i className="text-gray-500 far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
+                  <i className="text-gray-700 far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
                   Events
-                </a>
+                </Link>
               </li>
               <li className="flex items-center">
-                <div className="hover:text-gray-800 text-gray-500 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
-                  <i className="text-gray-500  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
-                  Clubs
-                </div>
+                <Link to="/clubsearch">
+                  <div className="hover:text-gray-800 text-gray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
+                    <i className="text-gray-700  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
+                    Clubs
+                  </div>
+                </Link>
               </li>
 
               <li className={isLogin ? "hidden " : " " + "flex items-center"}>

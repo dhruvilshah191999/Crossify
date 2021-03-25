@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Photo from "assets/img/team-4-470x470.png";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import EventCalendar from "views/demo/PlayGround";
+import { motion } from "framer-motion";
 //khatar banayu bhai harshil
 export default function EventTab() {
   const eventPerPage = 3;
@@ -150,9 +151,16 @@ export default function EventTab() {
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
     return (
-      <li key={number} id={number} onClick={handleClick} className={classNames}>
+      <motion.li
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        key={number}
+        id={number}
+        onClick={handleClick}
+        className={classNames}
+      >
         {number}
-      </li>
+      </motion.li>
     );
   });
 
@@ -194,14 +202,16 @@ export default function EventTab() {
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
     return (
-      <li
+      <motion.li
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         key={number}
         id={number}
         onClick={handleClick2}
         className={classNames}
       >
         {number}
-      </li>
+      </motion.li>
     );
   });
 
