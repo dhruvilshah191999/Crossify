@@ -26,6 +26,7 @@ router.post("/create-club", auth, async (req, res) => {
     tags
   } = req.body;
   var array = [];
+  console.log(privacy);
   category.map(e => {
     array.push(ObjectId(e._id));
   })

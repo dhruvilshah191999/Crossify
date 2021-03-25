@@ -22,7 +22,7 @@ function CreateClub(props) {
   const [cityname, setCityName] = useState("");
   const [formData, SetformData] = useState({
     club_name: "",
-    privacy: "",
+    privacy: "Public",
     address: "",
     postalcode: "",
     description: "",
@@ -183,6 +183,7 @@ function CreateClub(props) {
                         placeholder="Select your relevant Categories"
                         style={{ outline: "none" }}
                         name="privacy"
+                        value={privacy}
                         onChange={(e) => onChange(e)}
                       >
                         <option>Public</option>

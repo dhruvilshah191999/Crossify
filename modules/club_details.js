@@ -73,8 +73,7 @@ var clubSchema = new Schema({
   },
   status: {
     type: String,
-    default:"Public",
-    required: true,
+    required:true,
   }
 });
 
