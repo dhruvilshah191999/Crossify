@@ -1,5 +1,7 @@
 import Navbar from "components/Navbars/ClubNavbar";
-import React,{useState} from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 import { InputTagsContainer } from "react-input-tags";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import { usePosition } from "use-position";
@@ -10,6 +12,7 @@ import MultiSelect from "components/Forms/MultiSelect";
 import UploadPic from "components/Inputs/UploadPic";
 
 function CreateClub(props) {
+  let history = useHistory();
   const [tags, setTags] = useState([]);
   const [photo, setPhoto] = useState(null);
   const [category, setCategory] = useState([]);
@@ -19,12 +22,12 @@ function CreateClub(props) {
   const [cityname, setCityName] = useState("");
   const [formData, SetformData] = useState({
     club_name: "",
-    privacy: "",
+    privacy: "Public",
     address: "",
     postalcode: "",
     description: "",
     criteria: "",
-    rules:"",
+    rules: "",
   });
   const {
     club_name,
@@ -67,8 +70,62 @@ function CreateClub(props) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(newlatitude, newlongitude, photo, tags,category,formData);
-  }
+    const token = localStorage.getItem("jwt");
+    if (photo != null) {
+      var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
+      var path = "Club/" + photo.name;
+      var data = new FormData();
+      data.append("file", photo);
+      data.append("upload_preset", "crossify-project");
+      data.append("public_id", path);
+      const config = {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      };
+      axios
+        .post(url, data, config)
+        .then(async (res) => {
+          var object = {
+            club_name,
+            privacy,
+            address,
+            state: statename,
+            city: cityname,
+            latitude: newlatitude,
+            longitude: newlongitude,
+            postalcode,
+            description,
+            rules,
+            criteria,
+            category,
+            tags,
+            token,
+            photo: res.data.url,
+          };
+          try {
+            const config = {
+              method: "POST",
+              header: {
+                "Content-Type": "application/json",
+              },
+              validateStatus: () => true,
+            };
+            const finaldata = await axios.post(
+              "/api/club/create-club",
+              object,
+              config
+            );
+            if (finaldata.data.is_error) {
+              console.log(finaldata.data.message);
+            } else {
+              window.location.reload();
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
   return (
     <>
       <Navbar></Navbar>
@@ -268,8 +325,8 @@ function CreateClub(props) {
                         Map
                       </label>
                       <MapContainer
-                        lat={latitude + 0.002}
-                        long={longitude + 0.002}
+                        lat={latitude}
+                        long={longitude}
                         parentCallback={handleCallback}
                       />
                     </div>

@@ -14,6 +14,10 @@ const EventCard = (props) => {
   const [clubname, Setclub] = useState("");
   const token = localStorage.getItem("jwt");
 
+  const showEvents = (event_id) => {
+    window.location.replace("/events/event=" + event_id);
+  };
+
   useEffect(() => {
     console.clear();
     async function fetchData() {
@@ -134,7 +138,9 @@ const EventCard = (props) => {
       style={{
         width: 311,
         minHeight: "auto",
+        cursor: "pointer",
       }}
+      onClick={() => showEvents(props.data._id)}
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
         <img

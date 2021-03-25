@@ -27,10 +27,14 @@ const Pagination = ({ postPerPage, totalPosts, paginate }) => {
                 <motion.li
                   key={number}
                   id={number}
+<<<<<<< HEAD
                   onClick={(e) => {
                     paginate(number);
                     setcurrent(number);
                   }}
+=======
+                  onClick={(e) => { paginate(number); setcurrent(number);}}
+>>>>>>> 79fad1ec3e8beea7c7217a7474ee62cc306bc8fb
                   className={classNames}
                   whileHover={{ scale: 1.09 }}
                   whileTap={{ scale: 0.9 }}

@@ -114,11 +114,13 @@ export default function App(props) {
         Cell: ({ value }) => {
           return (
             <div className="flex items-center">
-              <img
-                src={value}
-                alt="eventPhoto"
-                className="w-12 border h-10 mr-2"
-              ></img>
+              <div className="flex-shrink-0">
+                <img
+                  src={value}
+                  alt="eventPhoto"
+                  className="w-12 border h-10 mr-2 rounded-lg"
+                ></img>
+              </div>
             </div>
           );
         },
