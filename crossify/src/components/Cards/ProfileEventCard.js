@@ -1,9 +1,82 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import MyTag from "components/Tag";
-import moment from "moment";
+import Moment from "moment";
+import axios from "axios";
 import { motion } from "framer-motion";
 function ProfileClubCard(props) {
-  console.log(props);
+  const token = localStorage.getItem("jwt");
+  const [checklike, setcheck] = useState(false);
+  useEffect(() => {
+    async function getData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+        event_id: props.data._id,
+      };
+      const finaldata = await axios.post(
+        "/api/events/checklikes",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setcheck(finaldata.data.Like);
+      }
+    }
+
+    getData();
+  });
+
+  const addlike = async (e) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      token: token,
+      event_id: props.data._id,
+    };
+    const finaldata = await axios.post("/api/events/addlikes", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      setcheck(true);
+      window.location.reload();
+    }
+  };
+
+  const deletelike = async (e) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      token: token,
+      event_id: props.data._id,
+    };
+    const finaldata = await axios.post(
+      "/api/events/deletelikes",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      setcheck(false);
+      window.location.reload();
+    }
+  };
+
   return (
     <motion.div
       className="relative bg-white flex-shrink-0 hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-2 mb-4 rounded shadow "
@@ -12,25 +85,34 @@ function ProfileClubCard(props) {
       whileTap={{ scale: 0.9 }}
     >
       <img
-        src="https://images.unsplash.com/photo-1573748240263-a4e9c57a7fcd"
+        src={props.data.photo}
         alt="People"
         className="w-full object-cover h-32 sm:h-48 md:h-64"
       />
       <div className="p-4 md:p-6">
         <p className="text-alpha">
           <span className="text-sm font-semibold text-alpha mr-2">
-            {props.date}
+            {Moment(props.data.date).format("MMM DD YYYY")}
           </span>
         </p>
         <div className="float-right">
-          <motion.button
-            className="text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            type="button"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <i className="fas fa-heart"></i>
-          </motion.button>
+          {checklike ? (
+            <motion.button
+              className="bg-red-500 text-white shadow border border-solid border-red-500 hover:text-red-500 hover:bg-white active:text-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={(e) => deletelike(e)}
+            >
+              <i className="fas fa-heart"></i>
+            </motion.button>
+          ) : (
+            <motion.button
+              className="text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={(e) => addlike(e)}
+            >
+              <i className="fas fa-heart"></i>
+            </motion.button>
+          )}
           <motion.button
             className="text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
@@ -41,14 +123,17 @@ function ProfileClubCard(props) {
           </motion.button>
         </div>
         <h3 className="font-semibold mb-2 text-xl leading-tight sm:leading-normal">
-          {props.event_name}
+          {props.data.event_name}
         </h3>
         <div className="text-sm flex items-center">
           <i class="fas fa-map-marker-alt text-sm mr-2"></i>
-          <p className="leading-none"> {props.place}</p>
+          <p className="leading-none">
+            {" "}
+            {props.data.location},{props.data.city}
+          </p>
         </div>
         <p className="text-blue-500 font-semibold text-xs mb-1 leading-none mt-4">
-          {props.tags.map((el, i) => (
+          {props.data.tags.map((el, i) => (
             <MyTag data={el}></MyTag>
           ))}
         </p>
@@ -58,11 +143,15 @@ function ProfileClubCard(props) {
 }
 
 ProfileClubCard.defaultProps = {
-  club_name: "Badshah Gang",
-  tags: ["Tech", "Science"],
-  place: "Ahmedabad , GJ",
-  date: "July 14",
-  duration: "8 PM to 11 PM",
+  data: {
+    club_name: "Badshah Gang",
+    tags: ["Tech", "Science"],
+    photo:"1.jpg",
+    place: "Ahmedabad , GJ",
+    date: "July 14",
+    photo: "1.jpg",
+    duration: "8 PM to 11 PM",
+  },
 };
 
 export default ProfileClubCard;

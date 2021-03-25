@@ -361,7 +361,7 @@ router.post("/event-details", async function (req, res, next) {
 router.post("/checklikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.find({
-    _id: event_id,
+    _id: ObjectId(event_id),
     likes: ObjectId(req.user._id),
     is_active: 1,
   });
@@ -395,7 +395,7 @@ router.post("/addlikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.update(
     {
-      _id: event_id,
+      _id: ObjectId(event_id),
       is_active: 1,
     },
     {
@@ -412,7 +412,7 @@ router.post("/addlikes", auth, async function (req, res, next) {
     } else {
       var add = user_details.update(
         {
-          _id: req.user._id,
+          _id: ObjectId(req.user._id),
           is_active: 1,
         },
         {
@@ -444,7 +444,7 @@ router.post("/deletelikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.update(
     {
-      _id: event_id,
+      _id: ObjectId(event_id),
       is_active: 1,
     },
     {
@@ -461,7 +461,7 @@ router.post("/deletelikes", auth, async function (req, res, next) {
     } else {
       var remove = user_details.update(
         {
-          _id: req.user._id,
+          _id: ObjectId(req.user._id),
           is_active: 1,
         },
         {
