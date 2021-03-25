@@ -67,7 +67,21 @@ function CreateClub(props) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(newlatitude, newlongitude, photo, tags,category,formData);
+    var object = {
+      club_name,
+      privacy,
+      address,
+      state: statename,
+      city: cityname,
+      latitude: newlatitude,
+      longitude: newlongitude,
+      postalcode,
+      description,
+      rules,
+      criteria,
+      category,
+      tags,
+    }
   }
   return (
     <>
