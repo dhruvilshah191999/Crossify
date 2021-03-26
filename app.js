@@ -38,8 +38,8 @@ app.use("/api/filter", filterRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/manage", manageRouter);
 app.use("/users", usersRouter);
-app.use("/club", clubRouter);
-app.use("/club/chat",chatRouter);
+app.use("api/club", clubRouter);
+app.use("api/club/chat",chatRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

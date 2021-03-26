@@ -25,6 +25,12 @@ router.post('/send',async function (req, res) {
         senttime:new Date()
     }
     io.on('sendMessage',(message,callback)=>{
+      var message_obj={
+        message:encryptedMessage,
+        user_id:ObjectId(user_id),
+        room_id:ObjectId(room_id),
+        senttime:new Date()
+    }
         io.to(room_id).emit('message',message_obj)
         callback();
     })

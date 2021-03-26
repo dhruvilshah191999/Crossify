@@ -1,13 +1,23 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import ChatMessage from "components/Cards/ChatMessage.js";
-
+import io from "socket.io-client";
+import axios from "axios";
+let socket=io();
 export default class RoomTab extends React.Component {
   state = {
     currentTab: 0,
     rooms: [],
   };
+  
   componentDidMount() {
+    useEffect(()=>{
+      fetch('/api/club/chat/getRooms')
+      .then(res => res.json())
+      .then(data => console.log(data));
+
+    })
     const fetchedRoom = ["C++", "Java", "Python", "WebDev"];
+    
     this.setState({
       rooms: fetchedRoom,
     });
@@ -34,7 +44,29 @@ export default class RoomTab extends React.Component {
       </a>
     ));
   }
+     
+  
   render() {
+    async function sendMessage(){
+      
+      //socket.emit('sendMessage',)
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      var send_data = {
+        club_id: id,
+        token,
+      };
+      const finaldata = await axios.post(
+        "/api/club/chat/send",
+        send_data,
+        config
+      );
+    }
     return (
       <>
         <div className="flex flex-wrap  items-start">
@@ -75,7 +107,7 @@ export default class RoomTab extends React.Component {
                   ></input>
                 </div>
                 <div>
-                  <button type="button" className="p-4 ml-auto mr-2 ">
+                  <button type="button" onClick={sendMessage} className="p-4 ml-auto mr-2 ">
                     <i className="far fa-paper-plane text-xl text-gray-700"></i>
                   </button>
                 </div>

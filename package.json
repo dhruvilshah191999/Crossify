@@ -68,6 +68,7 @@
     "react-table": "^7.6.3",
     "react-tagsinput": "^3.19.0",
     "socket.io": "^4.0.0",
+    "socket.io-client": "^4.0.0",
     "styled-components": "^5.2.1",
     "sweetalert": "^2.1.2",
     "use-position": "0.0.8"
