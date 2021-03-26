@@ -8,6 +8,7 @@ import { notifyLiked } from "notify";
 import { motion } from "framer-motion";
 
 const EventCard = (props) => {
+  console.log(props.data);
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const [clubname, Setclub] = useState("");

@@ -2,6 +2,7 @@ import React from "react";
 import FullCalendar, { sliceEvents } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import moment from "moment";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import { motion } from "framer-motion";
 import "@fullcalendar/common/main.css";
@@ -9,6 +10,11 @@ import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
 import SweetAlert from "react-bootstrap-sweetalert";
+import RequestForEvent from "components/Modals/RequestForEvent";
+
+import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import { select } from "@tailwindcss/custom-forms/src/defaultOptions";
+import { Redirect } from "react-router";
 
 function renderEventContent(eventInfo) {
   return (
@@ -19,29 +25,43 @@ function renderEventContent(eventInfo) {
   );
 }
 export default class DemoApp extends React.Component {
-  calendarRef = React.createRef();
-  state = {
-    alert: null,
-    events: [
-      {
-        title: "Harshil Patel",
-        date: "2021-04-01",
-        start: new Date(),
-        end: "2021-03-28",
-      },
-      {
-        title: "event 2",
-        date: "2021-04-02",
-        start: "2021-03-22",
-        end: "2021-04-01",
-      },
-      { title: "event 2", date: "2021-04-02" },
-      { title: "event 2", date: "2021-04-02" },
-      { title: "event 2", date: "2021-04-02" },
-      { title: "event 2", date: "2021-04-02" },
-      { title: "event 2", date: new Date("March 29, 2021 03:24:00") },
-    ],
-  };
+  constructor(props) {
+    super(props);
+    this.calendarRef = React.createRef();
+    const cleanedEvents = this.props.showEvents.map(
+      ({
+        event_name,
+        starting_date,
+        starting_time,
+        ending_date,
+        ending_time,
+        _id,
+      }) => {
+        const startDateTime = moment(
+          `${starting_date} ${starting_time}`,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format();
+
+        const endDateTime = moment(
+          `${starting_date} ${starting_time}`,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format();
+        return {
+          title: event_name,
+          start: startDateTime,
+          end: new Date(),
+          id: "/events/event=" + _id,
+          // end: endDateTime,
+        };
+      }
+    );
+    console.log("herllo", cleanedEvents);
+    this.state = {
+      alert: null,
+      currentSelectionInfo: null,
+      events: cleanedEvents,
+    };
+  }
 
   popOver = () => {
     // alert("Working as smooth");
@@ -50,7 +70,9 @@ export default class DemoApp extends React.Component {
 
   redirectToEventPage = (selectionInfo) => {
     //todo Get the Id and then provide the link to open in new tab
-    alert("Clicked");
+    // window.open("https://www.geeksforgeeks.org", "_blank");
+    console.log(selectionInfo);
+    window.open(selectionInfo.event._def.publicId, "_blank").focus();
   };
 
   setDate = (e) => {
@@ -73,6 +95,18 @@ export default class DemoApp extends React.Component {
     calendarApi.setOption("eventDisplay", circleOfLife[newI]);
   };
 
+  redirectToRequestModal = () => {
+    console.log(this.state.currentSelectionInfo);
+    ModalManager.open(
+      <RequestForEvent
+        onRequestClose={() => true}
+        startDate={this.state.currentSelectionInfo.startStr}
+        endDate={this.state.currentSelectionInfo.endStr}
+      />
+    );
+    this.setState({ alert: null, currentSelectionInfo: null });
+  };
+
   selectedDates = (selectionInfo) => {
     console.log(selectionInfo);
     const getAlert = () => (
@@ -88,7 +122,7 @@ export default class DemoApp extends React.Component {
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
-        onConfirm={() => {}}
+        onConfirm={this.redirectToRequestModal}
         onCancel={() => {
           this.setState({ alert: null });
         }}
@@ -100,8 +134,8 @@ export default class DemoApp extends React.Component {
     );
     this.setState({
       alert: getAlert(),
+      currentSelectionInfo: selectionInfo,
     });
-    //todo pop up with sweetalert and say that do you sure you want to request for event for this to this
   };
   render() {
     return (
@@ -144,7 +178,7 @@ export default class DemoApp extends React.Component {
           <div className="ml-auto">
             <motion.button
               type="button"
-              className="rounded-lg  font-semibold p-2 text-base text-white hover:lightalpha active:lightalpha "
+              className="rounded-lg  font-semibold p-2 px-4 text-base text-white  hover:lightalpha active:lightalpha "
               onClick={this.changeView}
               style={{ backgroundColor: "#b388dd" }}
               whileHover={{ scale: 1.05 }}
@@ -164,3 +198,17 @@ export default class DemoApp extends React.Component {
     alert(arg.dateStr);
   };
 }
+
+DemoApp.defaultProps = {
+  showEvents: [
+    {
+      event_name: "Coding Competition",
+      starting_date: "2021-03-23",
+      starting_time: "11:00:44",
+
+      ending_date: "2021-03-25",
+      ending_time: "11:00:00",
+      _id: "5ff29fb4a04b22d9c9ff9ec1",
+    },
+  ],
+};

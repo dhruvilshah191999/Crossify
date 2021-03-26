@@ -1076,3 +1076,16 @@ div.sticky {
 .fc-today-button.fc-button.fc-button-primary:hover {
   background-color: var(--color-lightalpha);
 }
+
+.fc-daygrid-day.fc-day.fc-day-thu.fc-day-today {
+  background-color: #f9cfe7;
+}
+
+.fc-col-header-cell-cushion {
+  color: var(--color-alpha);
+}
+
+.fc-toolbar-title {
+  font-weight: 600;
+  padding-left: 10px;
+}

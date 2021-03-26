@@ -21,6 +21,7 @@ var clubSchema = new Schema({
   },
   rules: {
     type: String,
+    default:"no rules",
     required: true,
   },
   profile_photo: {
@@ -45,6 +46,7 @@ var clubSchema = new Schema({
   },
   joining_criteria: {
     type: String,
+    default:"no criteria",
     required: true,
   },
   date: {

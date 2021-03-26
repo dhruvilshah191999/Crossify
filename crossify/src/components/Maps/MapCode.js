@@ -83,6 +83,7 @@ export class MapContainer extends React.Component {
       },
     };
   }
+
   onMarkerDragEnd = (coord) => {
     const { latLng } = coord;
     const lat = latLng.lat();

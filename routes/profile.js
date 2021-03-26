@@ -182,7 +182,16 @@ router.post("/get-upcoming-event", auth, async function (req, res, next) {
     "participants_list.user": ObjectId(req.user._id),
     date: { $gt: new Date() },
     is_active: 1,
-  });
+  }, {
+    _id: 1,
+    city: 1,
+    location: 1,
+    date: 1,
+    photo: 1,
+    tags: 1,
+    event_name:1,
+  }
+  );
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -202,10 +211,21 @@ router.post("/get-upcoming-event", auth, async function (req, res, next) {
 });
 
 router.post("/get-like-event", auth, async function (req, res, next) {
-  var result = event_details.find({
-    likes: ObjectId(req.user._id),
-    is_active: 1,
-  });
+  var result = event_details.find(
+    {
+      likes: ObjectId(req.user._id),
+      is_active: 1,
+    },
+    {
+      _id: 1,
+      city: 1,
+      location: 1,
+      date: 1,
+      photo: 1,
+      tags: 1,
+      event_name: 1,
+    }
+  );
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -225,11 +245,22 @@ router.post("/get-like-event", auth, async function (req, res, next) {
 });
 
 router.post("/get-past-event", auth, async function (req, res, next) {
-  var result = event_details.find({
-    "participants_list.user": ObjectId(req.user._id),
-    date: { $lt: new Date() },
-    is_active: 1,
-  });
+  var result = event_details.find(
+    {
+      "participants_list.user": ObjectId(req.user._id),
+      date: { $lt: new Date() },
+      is_active: 1,
+    },
+    {
+      _id: 1,
+      city: 1,
+      location: 1,
+      date: 1,
+      photo: 1,
+      tags: 1,
+      event_name: 1,
+    }
+  );
   await result.exec((err, data) => {
     if (err) {
       var error = {
