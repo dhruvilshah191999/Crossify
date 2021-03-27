@@ -53,22 +53,30 @@ export default function Navbar(props) {
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               {/* for mobile you have change text-black in all the navbar buttons/links */}
               <li className="flex items-center">
-                <Link to="/search">
-                  <a
-                    className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
-                    href="#"
-                  >
-                    <i className="text-gray-700 lg:text-white  far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
-                    Events
-                  </a>
+                <Link
+                  to={isLogin ? "/createclub" : "/auth/login"}
+                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                >
+                  <i className="  fas fa-chalkboard-teacher text-lg leading-lg mr-2" />{" "}
+                  Start a Club
                 </Link>
               </li>
               <li className="flex items-center">
-                <Link to="/clubsearch">
-                  <div className="hover:text-lightwhite text-gray-700 lg:text-white  ml-2 lg:ml-0  px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
-                    <i className="text-gray-700 lg:text-white  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
-                    Clubs
-                  </div>
+                <Link
+                  to="/search"
+                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                >
+                  <i className=" far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
+                  Events
+                </Link>
+              </li>
+              <li className="flex items-center">
+                <Link
+                  to="/clubsearch"
+                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                >
+                  <i className="  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
+                  Clubs
                 </Link>
               </li>
 

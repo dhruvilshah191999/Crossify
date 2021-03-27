@@ -45,20 +45,31 @@ export default function Navbar(props) {
               {/* for mobile you have change text-black in all the navbar buttons/links */}
               <li className="flex items-center">
                 <Link
-                  to="\search"
-                  className="hover:text-gray-800 text-gray-700 md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
+                  to="/search"
+                  className="hover:text-lightbeta text-gray-700 md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
                   href="#"
                 >
-                  <i className="text-gray-700 far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
+                  <i className=" fas fa-chalkboard-teacher text-lg leading-lg mr-2" />{" "}
+                  Start a Club
+                </Link>
+              </li>
+              <li className="flex items-center">
+                <Link
+                  to="/search"
+                  className="hover:text-lightbeta text-gray-700 md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
+                  href="#"
+                >
+                  <i className=" far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
                   Events
                 </Link>
               </li>
               <li className="flex items-center">
-                <Link to="/clubsearch">
-                  <div className="hover:text-gray-800 text-gray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
-                    <i className="text-gray-700  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
-                    Clubs
-                  </div>
+                <Link
+                  to="/clubsearch"
+                  className="hover:text-lightbeta text-gray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                >
+                  <i className="  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
+                  Clubs
                 </Link>
               </li>
 

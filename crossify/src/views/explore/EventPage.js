@@ -242,12 +242,14 @@ export default function EventPage(props) {
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">
                 {" "}
-                <div className="ml-2">
-                  <i class="fas fa-map-marker-alt text-lg "></i>
-                  <span className="ml-2">
+                <div className="ml-2 flex">
+                  <div>
+                    <i class="fas fa-map-marker-alt text-lg "></i>
+                  </div>
+                  <div className="ml-3">
                     {" "}
                     {eventdetails.location},{eventdetails.city}
-                  </span>
+                  </div>
                 </div>
                 <div className="mt-2 ml-2">
                   {" "}
@@ -284,7 +286,7 @@ export default function EventPage(props) {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row  mt-2 lg:mt-auto ">
+              <div className="flex flex-row  mt-2  ">
                 <div className="w-6/12">
                   <motion.button
                     className={

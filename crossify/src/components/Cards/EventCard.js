@@ -133,16 +133,30 @@ const EventCard = (props) => {
   // 311 for normal screen 345 for larger screen
   return (
     <div
-      className="relative px-2 mb-4 flex-grow-0 "
+      className="relative"
       style={{
+<<<<<<< HEAD
         width: 305,
         minHeight: "auto",
       }}
+=======
+        flex: "1 1 0",
+        height: "auto",
+        minWidth: 250,
+      }}
+      // style={{
+      //   // width: 311,
+      //   // minHeight: "auto",
+      //   flexBasis
+      //   cursor: "pointer",
+      // }}
+      onClick={() => showEvents(props.data._id)}
+>>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
         <img
           src={props.data.photo}
-          style={{ height: "210px", width: "310px" }}
+          style={{ height: "210px", width: "100%" }}
           alt="eventPic"
         />
         <div className="px-2 py-1">
@@ -158,9 +172,9 @@ const EventCard = (props) => {
           >
             {props.data.event_name}
           </div>
-          <div className="text-xs text-gray-600 flex flex-row mt-1">
-            <div>
-              <i class="fas fa-map-marker-alt"></i> : {props.data.location},
+          <div className="text-xs text-gray-600 flex flex-row mt-1 ">
+            <div className="truncate max-ch-30">
+              <i class="fas fa-map-marker-alt "></i> : {props.data.location},
               {props.data.city},{props.data.state}
             </div>
           </div>
@@ -175,13 +189,10 @@ const EventCard = (props) => {
             </div>
           </div>
           <div className="text-xs text-gray-600 flex flex-row mb-1 mt-1"></div>
-          <div
-            className="absolute top-0 right-0 pl-4"
-            style={{ paddingRight: "20px", paddingTop: "5px" }}
-          ></div>
+
           <div
             className="absolute top-0 right-0"
-            style={{ marginTop: "195px", marginRight: "20px" }}
+            style={{ marginTop: "195px", marginRight: "12px" }}
           >
             <motion.button
               className={

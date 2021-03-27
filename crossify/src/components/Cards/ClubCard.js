@@ -8,6 +8,7 @@ import { notifyLiked } from "notify";
 import axios from "axios";
 
 const ClubCard = (props) => {
+<<<<<<< HEAD
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const token = localStorage.getItem("jwt");
@@ -112,6 +113,11 @@ const addlike = async (e) => {
   return (
     <div
       className="relative"
+
+  return (
+    <div
+      className="relative "
+>>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
       style={{
         flex: "1 1 0",
         height: "auto",
@@ -126,6 +132,7 @@ const addlike = async (e) => {
         />
 
         <div className="px-2 py-1">
+<<<<<<< HEAD
           <div
             className="text-lg mt-1 font-semibold truncate leading-snug max-ch-30"
             onClick={() => showClubs(props.data._id)}
@@ -133,6 +140,9 @@ const addlike = async (e) => {
               cursor: "pointer",
             }}
           >
+=======
+          <div className="text-lg mt-1 font-semibold truncate leading-snug max-ch-30">
+>>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
             {props.data.club_name}
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1">
@@ -140,15 +150,22 @@ const addlike = async (e) => {
               {" "}
               <i class="fas fa-user-lock"></i> : {props.data.status}
             </div>
+<<<<<<< HEAD
             <div className="ml-auto flex">
               {" "}
               <i className="fas fa-user-friends"></i> :{" "}{props.data.max_members}
+=======
+            <div className="ml-auto flex ">
+              {" "}
+              <i className="fas fa-user-friends"></i> :{" "}
+              {props.data.participates}
+>>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
             </div>
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1 mb-1">
             <div className="truncate" style={{ width: "30ch" }}>
               {" "}
-              <i class="fas fa-compass"></i> : {props.data.location},
+              <i class="fas fa-compass "></i> : {props.data.location},
               {props.data.city}
             </div>
             <div className="ml-auto">
