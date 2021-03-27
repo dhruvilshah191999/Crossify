@@ -43,10 +43,6 @@ var event_details = new Schema({
     type: ObjectId,
     required: true,
   },
-  url: {
-    type: String,
-    required: false,
-  },
   date: {
     type: Date,
     required: false,

@@ -5,12 +5,15 @@ const ResultWindow = (props) => {
   let history = useHistory();
   let count = 0;
   const start = moment().format("LT");
+
+  const showClubs = (event_id) => {
+    window.location.replace("/club/" + event_id);
+  };
   return (
     <div
       className="h-custom rounded-lg shadow p-4 flex mx-2 mt-4 mr-4 ml-2 hover:shadow-lg"
       style={{ width: "97%", cursor: "pointer" }}
-
-      //onClick={() => showEvents(props.data._id)}
+      onClick={() => showClubs(props.data._id)}
     >
       <div className="eventPhoto flex-shrink-0">
         <img
@@ -24,8 +27,8 @@ const ResultWindow = (props) => {
           <div className="text-xl font-bold">{props.data.club_name} </div>
 
           <div className=" text-sm font-semibold text-beta ">
-            <i className="fas fa-users"></i> {props.data.max_members} &bull;{" "}
-            {props.privacy} Group
+            <i className="fas fa-users"></i>{" "}
+            {props.data.status} Group
           </div>
           <div className="text-sm font-semibold  text-alpha">
             {" "}

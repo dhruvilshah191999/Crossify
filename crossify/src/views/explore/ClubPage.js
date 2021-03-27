@@ -1,19 +1,57 @@
-import React from "react";
+import React, { useState , useEffect}from "react";
 import Navbar from "components/Navbars/ClubNavbar";
+import axios from "axios";
+import { useParams } from "react-router";
 import TabsBar from "components/TabsBar/TabsBar";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
+import Moment from "moment";
 import JoinClubButton from "components/Modals/JoinClubButton";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import { motion } from "framer-motion";
 
-class ClubPage extends React.Component {
-  openModal() {
-    ModalManager.open(<MyModal onRequestClose={() => true} />);
-  }
-  render() {
+function ClubPage(props) {
+  var { id } = useParams();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setloading] = useState(false);
+  const [clubData, setClubData] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    async function event_details() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      var send_data = {
+        club_id: id,
+        token,
+      };
+      const finaldata = await axios.post(
+        "/api/club/get-club",
+        send_data,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setClubData(finaldata.data.data[0]);
+        setIsAdmin(finaldata.data.isAdmin);
+        setTimeout(setloading(true), 1000);
+      }
+    }
+    event_details();
+  },[])
+  const openModal = () => {
+    ModalManager.open(<MyModal onRequestClose={() => true} club_id={id}/>);
+  };
+
+  if (loading) {
     return (
       <>
         <Navbar />
@@ -24,7 +62,7 @@ class ClubPage extends React.Component {
                 <img
                   className="w-full h-full overflow-hidden object-contain rounded-lg"
                   alt="club_background_photo"
-                  src={this.props.bgImage}
+                  src={clubData.profile_photo}
                 />
               </div>
               <div
@@ -32,31 +70,35 @@ class ClubPage extends React.Component {
                 style={{ width: 370 }}
               >
                 <div className="text-3xl font-bold">
-                  {this.props.clubName}
+                  {clubData.club_name}
                   {/* //todo GOLU just redirect to the /admin page for control or
                   manage this club (ONLY IF HE IS MOD OR CREATOR OF THE CLUB) */}
-                  <button className="float-right text-lg">
-                    <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
-                  </button>
+                  {isAdmin ? (
+                    <button className="float-right text-lg">
+                      <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="text-base mt-2 text-gray-600 ml-2">
                   &nbsp;<i class="fas fa-map-marker-alt text-sm"></i>
-                  &nbsp;&nbsp;&nbsp; {this.props.loc} <br />
+                  &nbsp;&nbsp;&nbsp; {clubData.city},{clubData.state} <br />
                   <i class="fas fa-users text-sm"></i> &nbsp;&nbsp;
-                  {this.props.noOfMembers + " "}
+                  {props.noOfMembers + " "}
                   Members
                   <br />
                   <i class="fas fa-couch text-sm"></i> &nbsp;&nbsp;
-                  {this.props.clubType + " Club"}
+                  {clubData.status + " Club"}
                   <br />
                   <i class="fas fa-user-shield text-sm"></i> &nbsp;&nbsp;
-                  {this.props.owner}
+                  {clubData.user_data[0].fname} {clubData.user_data[0].lname}
                   <br />
                   <i class="fas fa-calendar-day text-sm"></i>&nbsp;&nbsp;&nbsp;
-                  {this.props.createdAt}
+                  {Moment(clubData.date).format("DD MMM YYYY")}
                 </div>
                 <div className="p-1 my-2 leading-wide">
-                  {this.props.categories.map((el) => (
+                  {clubData.tags.map((el) => (
                     <MyTag data={el}></MyTag>
                   ))}
                 </div>
@@ -87,7 +129,7 @@ class ClubPage extends React.Component {
                   <button
                     className=" w-full  hover:bg-lightbeta shadow border border-solid  bg-beta text-white active:bg-lightbeta font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={this.openModal.bind(this)}
+                    onClick={openModal.bind(this)}
                   >
                     <i className="fas fa-pen-alt"></i> Apply for Event
                   </button>
@@ -101,7 +143,7 @@ class ClubPage extends React.Component {
                     <i class="fas fa-user-plus"></i> Join
                   </button> */}
                   <JoinClubButton
-                    clubName={this.props.clubName}
+                    clubName={props.clubName}
                     designation="Member"
                   />{" "}
                 </div>
@@ -111,12 +153,20 @@ class ClubPage extends React.Component {
               className="bg-white rounded border ml-4 mt-2 p-2"
               style={{ width: 1225 }}
             >
-              <TabsBar />
+              <TabsBar
+                club_id={id}
+                description={clubData.description}
+                rules={clubData.rules}
+                joining_criteria={clubData.joining_criteria}
+              />
             </div>
           </div>
         </div>
       </>
     );
+  }
+  else {
+    return <></>
   }
 }
 
