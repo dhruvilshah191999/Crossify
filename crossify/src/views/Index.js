@@ -265,10 +265,7 @@ export default function Landing() {
           </div>
         </section>
         {insterestState.map((el) => (
-          <section
-            className="bg-white block m-4"
-            style={{ marginBottom: "0px" }}
-          >
+          <section className="bg-white block m-4" style={{ marginBottom: 0 }}>
             <div className="p-8 mx-6 pt-0">
               <div className="ml-2 mb-6">
                 <div className="flex flex-row ">

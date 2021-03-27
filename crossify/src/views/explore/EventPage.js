@@ -203,13 +203,13 @@ export default function EventPage(props) {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col justify-start lg:mx-28">
+        <div className="flex flex-col justify-start  lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
-            style={{ minHeight: "55vh" }}
-            className="flex flex-row flex-wrap mt-16 justify-center items-start flex-shrink-0"
+            // style={{ minHeight: "" }}
+            className="flex flex-row flex-wrap  mt-16  justify-center items-start flex-shrink-0"
           >
-            <div className=" mr-6  text-black bg-white rounded-md">
+            <div className="mr-6 text-black bg-white rounded-md">
               <img
                 src={eventdetails.photo}
                 className="event-image  rounded mt-2"
@@ -247,19 +247,21 @@ export default function EventPage(props) {
                     <i class="fas fa-map-marker-alt text-lg "></i>
                   </div>
                   <div className="ml-3">
-                    {" "}
                     {eventdetails.location},{eventdetails.city}
                   </div>
                 </div>
-                <div className="mt-2 ml-2">
-                  {" "}
-                  <i class="fas fa-clock"></i>
-                  <span className="ml-2">
+                <div className="mt-2 ml-2 flex">
+                  <div>
+                    {" "}
+                    <i class="fas fa-clock"></i>
+                  </div>
+
+                  <div className="ml-2">
                     {" "}
                     {Moment(eventdetails.date).format(
-                      "MMMM Do YYYY, h:mm:ss a"
+                      "MMMM Do YYYY, h:mm:ss A"
                     )}
-                  </span>
+                  </div>
                 </div>
                 <div className="mt-6">
                   <div className="flex flex-col ml-1">
@@ -286,7 +288,7 @@ export default function EventPage(props) {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row  mt-2  ">
+              <div className="flex flex-row  mt-2 lg:mt-auto  ">
                 <div className="w-6/12">
                   <motion.button
                     className={
