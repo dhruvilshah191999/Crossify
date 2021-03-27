@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import RoomsTable from "components/Cards/RoomsTable";
+import RoomsTable from "components/Tables/RoomsTable";
 class ManageRooms extends Component {
   render() {
     return (

@@ -30,7 +30,7 @@ export default function GeneralSettings(props) {
     ending_date: null,
     starting_time: null,
     ending_time: null,
-    maximum_participants:"",
+    maximum_participants: "",
   });
 
   const {

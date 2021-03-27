@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   useTable,
   useFilters,
   useGlobalFilter,
   useAsyncDebounce,
   useSortBy,
-  useRowSelect,
   usePagination,
 } from "react-table";
 
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import ProfileReview from "components/Modals/ProfileReview.js";
-import AcceptButton from "components/Modals/AcceptMemberButton";
-import RejectButton from "components/Modals/RejectMemberButton";
+import ViewProfile from "components/Modals/ViewProfile";
+import PromoteMemberButton from "components/SweetAlerts/PromoteMemberButton";
+import DemoteMemberButton from "components/SweetAlerts/DemoteMemberButton";
+import KickMemberButton from "components/SweetAlerts/KickMemberButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
-import dataTable from "./demorequests";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -68,17 +67,17 @@ function DefaultColumnFilter({
 }
 
 function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, profile },
+  column: { filterValue, setFilter, preFilteredRows, id },
 }) {
   // Calculate the options for filtering
   // using the preFilteredRows
   const options = React.useMemo(() => {
     const options = new Set();
     preFilteredRows.forEach((row) => {
-      options.add(row.values[profile]);
+      options.add(row.values[id]);
     });
     return [...options.values()];
-  }, [profile, preFilteredRows]);
+  }, [id, preFilteredRows]);
 
   // Render a multi-select box
   return (
@@ -98,88 +97,254 @@ function SelectColumnFilter({
   );
 }
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
-
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  }
-);
-
 export default function App() {
-  const [isLight, setIsLight] = useState(1);
-  const getSelectedAndReject = (e) => {
-    const profilelist = selectedFlatRows.map((el) => el.values);
-    //now do whatever you want to do
-    //todo GOLU Get the profile or whatever uniquely profileentified thing and change the status to arriving to all the profilelist
-    console.log(profilelist);
-  };
-  const getSelectedAndAccept = (broadcastMessage) => {
-    console.log(broadcastMessage);
-    //todo GOLU broadcast/Notification to added to all the selected users
-    const profilelist = selectedFlatRows.map((el) => el.values);
-    console.log(profilelist);
-  };
+  //todo GOLU pass name here too I don't know how if you cant do it then just remove it view button (NOT REQUIRED)
   const openModal = () => {
-    ModalManager.open(<ProfileReview onRequestClose={() => true} />);
+    ModalManager.open(<ViewProfile onRequestClose={() => true} />);
   };
+  const [isLight, setIsLight] = useState(1);
+  const data = React.useMemo(
+    () => [
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Moderator",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "arshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Admin",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+      {
+        eventName: "Cricket Tournament",
+        name: "Harshil Patel",
+        joinedDate: "11/2/2000",
+        location: "Ahmedabad",
+        role: "Member",
+        reports: 3,
+        eventOrganized: 3,
+        actions: " ",
+      },
+    ],
+    []
+  );
 
-  const data = React.useMemo(() => dataTable, []);
   const columns = React.useMemo(
     () => [
       {
-        Header: "Profile",
-        accessor: "profilePhoto",
+        Header: "Name",
+        accessor: "name", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
-          return (
-            <div className="flex items-center">
-              <img
-                src={value}
-                alt="eventPhoto"
-                className="w-12 border h-12 rounded-full"
-              ></img>
-            </div>
-          );
+          return <span className="font-semibold text-sm">{value}</span>;
         },
       },
+
       {
-        Header: "Name",
-        accessor: "name",
-        disableFilters: true,
-      },
-      {
-        Header: "Date",
-        accessor: "date", // accessor is the "key" in the data
+        Header: "Joined At",
+        accessor: "joinedDate", // accessor is the "key" in the data
 
         disableFilters: true,
       },
       {
-        Header: "occupation",
-        accessor: "occupation",
+        Header: "Location",
+        accessor: "location", // accessor is the "key" in the data
+
         disableFilters: true,
       },
       {
-        Header: "Status",
-        accessor: "status", // accessor is the "key" in the data
+        Header: "role",
+        accessor: "role", // accessor is the "key" in the data
         Filter: SelectColumnFilter,
         filter: "includes",
         Cell: ({ value }) => {
           var myColor = "red";
-          if (value === "pending") {
+          if (value === "Member") {
             myColor = "orange";
-          } else if (value === "accepted") {
+          } else if (value === "Moderator") {
             myColor = "green";
+          } else if (value === "Admin") {
+            myColor = "blue";
           }
+          return (
+            <span
+              class={
+                "relative inline-block px-3 py-1 font-semibold text-" +
+                myColor +
+                "-900 leading-tight"
+              }
+            >
+              <span
+                aria-hidden
+                class={
+                  "absolute inset-0 bg-" +
+                  myColor +
+                  "-200 opacity-50 rounded-full"
+                }
+              ></span>
+              <span class="relative">{value}</span>
+            </span>
+          );
           return (
             <>
               <i
@@ -193,26 +358,44 @@ export default function App() {
         },
         disableFilters: true,
       },
+
       {
-        Header: "Location",
-        accessor: "location", // accessor is the "key" in the data
+        Header: "Events",
+        accessor: "eventOrganized", // accessor is the "key" in the data
+
+        disableFilters: true,
+      },
+      {
+        Header: "Reports",
+        accessor: "reports", // accessor is the "key" in the data
 
         disableFilters: true,
       },
 
       {
         Header: "Actions",
-        accessor: "actions", // here add _profile of event request so easy to attach with the buttons
+        accessor: "actions", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
           <div className="flex flex-row  justify-evenly">
-            <button title="Arrived">
-              <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
-            </button>
-            <button className="ml-2" title="Remove">
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
-            </button>
+            <PromoteMemberButton
+              name="Harshil Patel"
+              promoteMember={() => console.log("Get id and promote him")}
+            />
+            <DemoteMemberButton
+              name="Harhsil Patel"
+              demoteMember={() => console.log("Get id and demote him")}
+            />
+            <KickMemberButton
+              name="Harshil Patel"
+              kickMember={() =>
+                console.log(
+                  "pass name or username of the member and id to remove him from the club"
+                )
+              }
+            />
+
             <button className="" title="View" onClick={openModal}>
-              <i class="fas fa-eye text-blue-500 text-lg ml-2"></i>
+              <i class="fas fa-eye text-blue-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -233,11 +416,11 @@ export default function App() {
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
 
-      // Or, overrprofilee the default text filter to use
+      // Or, override the default text filter to use
       // "startWith"
-      text: (rows, profile, filterValue) => {
+      text: (rows, id, filterValue) => {
         return rows.filter((row) => {
-          const rowValue = row.values[profile];
+          const rowValue = row.values[id];
           return rowValue !== undefined
             ? String(rowValue)
                 .toLowerCase()
@@ -271,8 +454,7 @@ export default function App() {
     nextPage,
     previousPage,
     setPageSize,
-    selectedFlatRows,
-    state: { pageIndex, pageSize, selectedRowprofiles },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -285,36 +467,12 @@ export default function App() {
     useFilters, // useFilters!
     useGlobalFilter, // useGlobalFilter!
     useSortBy,
-    usePagination,
-    useRowSelect,
-    (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        // Let's make a column for selection
-        {
-          profile: "selection",
-          // The header can use the table's getToggleAllRowsSelectedProps method
-          // to render a checkbox
-          Header: ({ getToggleAllPageRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
-            </div>
-          ),
-          // The cell can use the indivprofileual row's getToggleRowSelectedProps method
-          // to the render a checkbox
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
-        ...columns,
-      ]);
-    }
+    usePagination
   );
 
   // useEffect(() => {
   //   // This will now use our custom filter for age
-  //   setFilter("status", SelectColumnFilter);
+  //   setFilter("role", SelectColumnFilter);
   // }, [SelectColumnFilter]);
 
   return (
@@ -331,12 +489,14 @@ export default function App() {
               <div className="flex flex-row">
                 {" "}
                 <div>
-                  <AcceptButton
-                    handleAcceptance={getSelectedAndAccept}
-                  ></AcceptButton>
-                  <RejectButton
-                    handleRejection={getSelectedAndReject}
-                  ></RejectButton>
+                  <h3
+                    className={
+                      "font-semibold text-lg " +
+                      (isLight ? "text-gray-800" : "text-white")
+                    }
+                  >
+                    Member List
+                  </h3>
                 </div>
                 <div className="inline-block ml-2">
                   <ToggleDarkMode
@@ -346,9 +506,9 @@ export default function App() {
                 </div>
                 <div className="ml-auto">
                   <i
-                    className={
+                    class={
                       isLight
-                        ? "fas fa-filter mr-4 text-gray-700 "
+                        ? "fas fa-filter mr-4 text-gray-700"
                         : "fas fa-filter mr-4 text-white"
                     }
                   ></i>
@@ -359,20 +519,21 @@ export default function App() {
                         : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
                     }
                     onChange={(e) => {
-                      setFilter("status", e.target.value || undefined);
+                      setFilter("role", e.target.value || undefined);
                     }}
                   >
                     <option value="">All</option>
-                    <option value="pending">Pending</option>
-                    <option value="accepted">Accepted</option>
-                    <option value="rejected">Rejected</option>
+
+                    <option value="Member">Member</option>
+                    <option value="Moderator">Moderator</option>
+                    <option value="Admin">Admin</option>
                   </select>
                   <span className="ml-2 "></span>
                   <GlobalFilter
+                    isLight={isLight}
                     preGlobalFilteredRows={preGlobalFilteredRows}
                     globalFilter={state.globalFilter}
                     setGlobalFilter={setGlobalFilter}
-                    isLight={isLight}
                   />
                 </div>
               </div>
@@ -391,7 +552,7 @@ export default function App() {
                     <th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                       className={
-                        "px-6 align-mprofiledle border border-solprofile py-3 text-xs  uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
+                        "px-6 align-middle border border-solid py-3 text-xs  uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left " +
                         (isLight
                           ? "bg-gray-100 text-gray-600 border-gray-200"
                           : "bg-blue-800 text-blue-300 border-blue-700")
@@ -424,7 +585,7 @@ export default function App() {
                       return (
                         <td
                           {...cell.getCellProps()}
-                          className="border-t-0 px-6 align-mprofiledle border-l-0 border-r-0 text-xsm whitespace-no-wrap p-4"
+                          className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xsm whitespace-no-wrap p-4"
                         >
                           {cell.render("Cell")}
                         </td>
@@ -502,7 +663,7 @@ export default function App() {
                       : 0;
                     gotoPage(page);
                   }}
-                  style={{ wprofileth: "100px" }}
+                  style={{ width: "100px" }}
                 />
                 of {pageOptions.length}
               </span>{" "}

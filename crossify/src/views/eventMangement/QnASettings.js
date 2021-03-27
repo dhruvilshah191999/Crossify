@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Sidebar from "components/Sidebar/ManageEventSidebar.js";
-import QnATable from "components/Cards/QnATable.js";
+import QnATable from "components/Tables/QnATable.js";
 
 export default function Settings() {
   const { id } = useParams();

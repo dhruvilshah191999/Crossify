@@ -9,7 +9,7 @@ import Pagination from "components/ResultWindow/Pagination";
 import ResultWindow from "components/ResultWindow/ClubIndex";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import logo from "assets/logos/logo_final.png";
-import RangeInput from "components/RangeSlider";
+import RangeInput from "components/Inputs/RangeSlider";
 
 export default function Sidebar(props) {
   const watch = true;

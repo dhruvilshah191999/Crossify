@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MembersTable from "components/Cards/MembersTable";
+import MembersTable from "components/Tables/MembersTable";
 class MemberList extends Component {
   render() {
     return (

@@ -93,7 +93,7 @@ export default class SweetAlertModal extends Component {
           title="Report this Event"
           onClick={() => this.reportThisEvent()}
         >
-          <i className="fas fa-flag text-sm text-gray-500" />
+          <i className="fas fa-flag text-sm text-gray-500 hover:text-red-500" />
         </button>
 
         {this.state.alert}

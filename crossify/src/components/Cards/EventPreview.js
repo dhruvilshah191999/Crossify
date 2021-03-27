@@ -5,9 +5,9 @@ import { useParams } from "react-router";
 import dance_cat from "assets/img/travel_cat.jpg";
 import demopf from "assets/img/demopf.png";
 import MapContainer from "components/Maps/ViewOnlyMap";
-import AskQuestion from "components/Modals/AskQuestion";
+import AskQuestion from "components/SweetAlerts/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
-import JoinEventButton from "components/Modals/JoinEventButton";
+import JoinEventButton from "components/SweetAlerts/JoinEventButton";
 import axios from "axios";
 import { motion } from "framer-motion";
 

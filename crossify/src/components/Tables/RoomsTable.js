@@ -7,9 +7,9 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import RemoveRoomButton from "components/Modals/RemoveRoomButton";
-import RoomUpdation from "components/Modals/RoomUpdation";
-import CreateRoomButton from "components/Modals/CreateRoom";
+import RemoveRoomButton from "components/SweetAlerts/RemoveRoomButton";
+import RoomUpdation from "components/SweetAlerts/RoomUpdation";
+import CreateRoomButton from "components/SweetAlerts/CreateRoom";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 
 function GlobalFilter({

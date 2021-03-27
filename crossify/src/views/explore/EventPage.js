@@ -6,10 +6,10 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Navbar from "components/Navbars/ClubNavbar";
 import dance_cat from "assets/img/travel_cat.jpg";
 import MapContainer from "components/Maps/ViewOnlyMap";
-import AskQuestion from "components/Modals/AskQuestion";
+import AskQuestion from "components/SweetAlerts/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
-import JoinEventButton from "components/Modals/JoinEventButton";
-import ReportEventButton from "components/Modals/ReportEventButton";
+import JoinEventButton from "components/SweetAlerts/JoinEventButton";
+import ReportEventButton from "components/SweetAlerts/ReportEventButton";
 import { store } from "react-notifications-component";
 import { motion } from "framer-motion";
 

@@ -9,7 +9,6 @@ import Pagination from "components/ResultWindow/Pagination";
 import ResultWindow from "components/ResultWindow";
 import logo from "assets/logos/logo_final.png";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
-import RangeInput from "components/RangeSlider";
 
 export default function Sidebar(props) {
   const watch = true;

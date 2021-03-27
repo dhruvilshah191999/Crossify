@@ -3,14 +3,10 @@ import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demobg from "assets/img/demopf.png";
 import Tag from "components/Tag";
 import MapContainer from "../../components/Maps/MapCode";
-import AskQuestion from "components/Modals/AskQuestion";
+import AskQuestion from "components/SweetAlerts/AskQuestion";
 import ChatMessage from "components/Cards/ChatMessage";
 
 Modal.defaultStyles = {};
-
-// const Tag = (props) => <span className="tag" {...props} />;
-const Delete = (props) => <button className="delete" {...props} />;
-const Help = (props) => <span className="help" {...props} />;
 
 var customModalStyles = {
   content: {
@@ -66,13 +62,7 @@ class MyModal extends Component {
                 <div className="w-1/4 font-semibold  ">Event Name</div>
                 <div className="text-gray-700  "> {this.props.event_name}</div>
               </div>
-              {/* 
-              <div className="flex w-full ml-4 px-4 py-2">
-                <div className="w-1/4 font-semibold flex-shrink-0">Photo </div>
-                <div className="text-gray-700  ">
-                
-                </div>
-              </div> */}
+
               <div className="flex w-full ml-4 px-4 py-2">
                 <div className="w-1/4 font-semibold  ">Total Spots </div>
                 <div className="text-gray-700  "> {this.props.capacity}</div>
