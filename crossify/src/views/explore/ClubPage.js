@@ -16,7 +16,9 @@ function ClubPage(props) {
   var { id } = useParams();
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setloading] = useState(false);
+  const [like, setLike] = useState(false);
   const [clubData, setClubData] = useState([]);
+  const token = localStorage.getItem("jwt");
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");

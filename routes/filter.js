@@ -234,6 +234,9 @@ router.post("/search", async function (req, res, nex) {
   var { search, location } = req.body;
   let categoryarray = [];
 
+  if((search==null || search=="") && (location==null || location=="")){
+    search=" ";
+  }
   async function getids() {
     var ids = category_details.find(
       {
@@ -339,6 +342,9 @@ router.post("/searchclub", async function (req, res, nex) {
   var { search, location } = req.body;
   let categoryarray = [];
 
+  if((search==null || search=="") && (location==null || location=="")){
+    search=" ";
+  }
   async function getids() {
     var ids = category_details.find(
       {

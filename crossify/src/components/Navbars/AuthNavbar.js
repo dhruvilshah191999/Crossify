@@ -1,9 +1,9 @@
 /*eslint-disable*/
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link ,Redirect } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import { motion } from "framer-motion";
-// components
+// component
 
 import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
 import logo from "../../assets/logos/logo_light.png";

@@ -76,6 +76,10 @@ var clubSchema = new Schema({
   status: {
     type: String,
     required:true,
+  },
+  likes:{
+    type:Array,
+    required:false,
   }
 });
 

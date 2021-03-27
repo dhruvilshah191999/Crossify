@@ -8,7 +8,6 @@ import { notifyLiked } from "notify";
 import { motion } from "framer-motion";
 
 const EventCard = (props) => {
-  console.log(props.data);
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const [clubname, Setclub] = useState("");
@@ -136,11 +135,9 @@ const EventCard = (props) => {
     <div
       className="relative px-2 mb-4 flex-grow-0 "
       style={{
-        width: 311,
+        width: 305,
         minHeight: "auto",
-        cursor: "pointer",
       }}
-      onClick={() => showEvents(props.data._id)}
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
         <img
@@ -152,7 +149,13 @@ const EventCard = (props) => {
           <div className="text-xs text-gray-600 font-semibold">
             <i className="fas fa-user-shield"></i> : {clubname}
           </div>
-          <div className="text-xl  mt-1 font-semibold truncate leading-snug">
+          <div
+            className="text-xl  mt-1 font-semibold truncate leading-snug"
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => showEvents(props.data._id)}
+          >
             {props.data.event_name}
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1">

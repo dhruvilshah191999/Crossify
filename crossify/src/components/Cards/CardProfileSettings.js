@@ -174,6 +174,7 @@ export default function CardSettings() {
                     name="email"
                     value={email}
                     onChange={(e) => onChange(e)}
+                    readOnly={true}
                   />
                 </div>
               </div>

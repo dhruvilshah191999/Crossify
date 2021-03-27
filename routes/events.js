@@ -934,4 +934,50 @@ router.post("/reports", auth, async function (req, res, next) {
   })
 });
 
+router.get("/get-interest-data", async function (req, res, next) {
+  category_details
+    .aggregate([
+      {
+        $lookup: {
+          from: "event_details",
+          localField: "_id",
+          foreignField: "category_list",
+          as: "event_data",
+        },
+      },
+      {
+        $match: {
+          is_active: true,
+        },
+      },
+      { $match: { $expr: { $lt: [0.5, {$rand: {} } ] } } },
+      {
+        $project: {
+          event: { $slice: ["$event_data", 4]},
+          category_name: 1
+        }
+      },
+      {
+        $limit:3
+      }
+    ])
+    .exec((err, data) => {
+      console.log(data);
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err,
+        };
+        return res.status(500).send(error);
+      } else {
+        var finaldata = {
+          data: data,
+          is_error: false,
+          message: "Data Geted",
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+});
+
 module.exports = router;
