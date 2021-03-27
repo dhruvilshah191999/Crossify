@@ -75,6 +75,10 @@
   background-color: #f19e59;
 }
 
+.hover\:bg-brightalpha:hover {
+  background-color: #ff2957;
+}
+
 .active\:bg-orange-300:active {
   background-color: #fcd34d;
 }

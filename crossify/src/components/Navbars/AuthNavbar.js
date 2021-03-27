@@ -1,9 +1,9 @@
 /*eslint-disable*/
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import { motion } from "framer-motion";
-// components
+// component
 
 import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
 import logo from "../../assets/logos/logo_light.png";
@@ -55,7 +55,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to={isLogin ? "/createclub" : "/auth/login"}
-                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className="  fas fa-chalkboard-teacher text-lg leading-lg mr-2" />{" "}
                   Start a Club
@@ -64,7 +64,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to="/search"
-                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className=" far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
                   Events
@@ -73,7 +73,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to="/clubsearch"
-                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className="  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
                   Clubs

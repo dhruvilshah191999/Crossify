@@ -233,11 +233,11 @@ export default function EventPage(props) {
                     style={{ textTransform: "capitalize" }}
                   >
                     {eventdetails.event_name}
-                    <span>
-                      {" "}
-                      <ReportEventButton event_id={id}></ReportEventButton>
-                    </span>
                   </h1>
+                </div>
+                <div className="ml-auto mt-4 mr-3">
+                  {" "}
+                  <ReportEventButton event_id={id}></ReportEventButton>
                 </div>
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">
@@ -311,7 +311,7 @@ export default function EventPage(props) {
                       className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={notifyCopied}
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.9 }}
                     >
                       <i class="fas fa-share-alt"></i> Share
