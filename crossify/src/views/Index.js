@@ -156,60 +156,14 @@ export default function Landing() {
             <div className="container relative mx-auto">
               <div className="items-center flex flex-wrap">
                 <div className="w-full lg:w-6/12 px-2 ml-auto mr-auto text-center">
-                  <h1 className="text-white font-semibold text-5xl ">
+                  <h1 className="text-white font-semibold text-5xl">
                     Seek Your Interest
-                </h1>
+                  </h1>
                 </div>
-<<<<<<< HEAD
-=======
-                <button
-                  style={{ marginLeft: "10px" }}
-                  className="bg-alpha hover:bg-alpha hover:shadow-md rounded text-white p-2 pl-4 pr-4"
-                  onClick={(e) => onSubmit(e)}
-                >
-                  <p className="font-semibold text-md">Search</p>
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div
-            className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-            style={{ transform: "translateZ(0)" }}
-          >
-            <svg
-              className="absolute bottom-0 overflow-hidden"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              version="1.1"
-              viewBox="0 0 2560 100"
-              x="0"
-              y="0"
-            ></svg>
-          </div>
-        </div>
-        <section className="bg-white block m-4 ">
-          <div className="p-8 mx-6">
-            <div className="mb-6">
-              <div className="flex flex-row ">
-                <h4 className="text-3xl font-semibold leading-normal mt-0 mb-2 text-alpha">
-                  Check out what's going on in your Area
-                </h4>
-                <motion.button
-                  className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Link to="/search">
-                    {" "}
-                    Load More <i className="fas fa-angle-double-right"></i>{" "}
-                  </Link>
-                </motion.button>
->>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
               </div>
               <br />
               <form>
-                <div className="flex justify-center flex-wrap ">
+                <div className="flex justify-center flex-wrap">
                   <div
                     style={{ width: "60%" }}
                     className="bg-white p-2 align-center"
@@ -247,7 +201,6 @@ export default function Landing() {
                 </div>
               </form>
             </div>
-<<<<<<< HEAD
 
             <div
               className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
@@ -270,46 +223,13 @@ export default function Landing() {
                 <div className="flex flex-row px-4">
                   <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     Check out what's going on in your Area
-                </h4>
-                  <motion.button
-                    className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
+                  </h4>
+                  <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
                     <Link to="/search">
                       {" "}
-=======
-            <div
-              className="flex gap-1 flex-wrap  "
-              // style={{ justifyContent: "space-around" }}
-            >
-              {eventState.map((data) => (
-                <EventCard key={data._id} data={data}></EventCard>
-              ))}
-            </div>
-          </div>
-        </section>
-        <section
-          className="bg-white block m-4"
-          style={{ marginBottom: "20px" }}
-        >
-          <div className="p-8 mx-6 pt-0">
-            <div className="mb-6">
-              <div className="flex flex-row">
-                <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
-                  Check out what's going on in your Area
-                </h4>
-                <motion.button
-                  className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Link to="/clubsearch">
-                    {" "}
->>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
-                    Load More <i className="fas fa-angle-double-right"></i>{" "}
+                      Load More <i className="fas fa-angle-double-right"></i>{" "}
                     </Link>
-                  </motion.button>
+                  </button>
                 </div>
               </div>
               <div className="flex flex-wrap ml-1">
@@ -318,59 +238,28 @@ export default function Landing() {
                 ))}
               </div>
             </div>
-<<<<<<< HEAD
           </section>
-=======
-            <div className="flex flex-wrap gap-1 ">
-              {clubState.map((data) => (
-                <ClubCard key={data._id} data={data}></ClubCard>
-              ))}
-            </div>
-          </div>
-        </section>
-        {insterestState.map((el) => (
->>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
           <section
             className="bg-white block m-4"
             style={{ marginBottom: "20px" }}
           >
-<<<<<<< HEAD
             <div className="p-8 mx-4 pt-0">
               <div className="mb-6">
                 <div className="flex flex-row px-4">
                   <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     Check out what's going on in your Area
-                </h4>
-=======
-            <div className="p-8 mx-6 pt-0">
-              <div className="ml-2 mb-6">
-                <div className="flex flex-row ">
-                  <h4 className="text-3xl  font-semibold leading-normal mt-0 mb-2 text-alpha">
-                    {el.category}
                   </h4>
->>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
-                  <motion.button
-                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
+                  <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
                     <Link to="/clubsearch">
                       {" "}
-                    Load More <i className="fas fa-angle-double-right"></i>{" "}
+                      Load More <i className="fas fa-angle-double-right"></i>{" "}
                     </Link>
-                  </motion.button>
+                  </button>
                 </div>
               </div>
-<<<<<<< HEAD
               <div className="flex flex-wrap ml-1">
                 {clubState.map((data) => (
                   <ClubCard key={data._id} data={data}></ClubCard>
-=======
-              <div className="flex flex-wrap gap-1">
-                {/* to do Here after backend implementation eventState. changes to el.events. */}
-                {eventState.map((data) => (
-                  <EventCard key={data._id} data={data}></EventCard>
->>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
                 ))}
               </div>
             </div>

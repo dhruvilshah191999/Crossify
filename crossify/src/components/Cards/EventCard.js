@@ -135,23 +135,10 @@ const EventCard = (props) => {
     <div
       className="relative"
       style={{
-<<<<<<< HEAD
-        width: 305,
-        minHeight: "auto",
-      }}
-=======
         flex: "1 1 0",
         height: "auto",
         minWidth: 250,
       }}
-      // style={{
-      //   // width: 311,
-      //   // minHeight: "auto",
-      //   flexBasis
-      //   cursor: "pointer",
-      // }}
-      onClick={() => showEvents(props.data._id)}
->>>>>>> d22170d0b2c9159847def8d95fc77e050096a6a4
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
         <img
