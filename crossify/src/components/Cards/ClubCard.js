@@ -3,24 +3,25 @@ import defImg from "../../assets/img/event_1.jpeg";
 import { motion } from "framer-motion";
 
 const ClubCard = (props) => {
+  console.log(props.data);
   return (
     <div
-      className="relative px-2 mb-4 flex-grow-0 "
+      className="relative "
       style={{
-        width: 311,
-
-        minHeight: "auto",
+        flex: "1 1 0",
+        height: "auto",
+        minWidth: 250,
       }}
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
         <img
           src={props.data.profile_photo}
-          style={{ height: "210px", width: "355px" }}
+          style={{ height: "210px", width: "100%" }}
           alt="eventPic"
         />
 
         <div className="px-2 py-1">
-          <div className="text-lg mt-1 font-semibold truncate leading-snug">
+          <div className="text-lg mt-1 font-semibold truncate leading-snug max-ch-30">
             {props.data.club_name}
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1">
@@ -28,15 +29,16 @@ const ClubCard = (props) => {
               {" "}
               <i class="fas fa-user-lock"></i> : {props.privacy}
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto flex ">
               {" "}
-              <i className="fas fa-user-friends"></i> : {props.data.max_members}
+              <i className="fas fa-user-friends"></i> :{" "}
+              {props.data.participates}
             </div>
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1 mb-1">
-            <div>
+            <div className="truncate" style={{ width: "30ch" }}>
               {" "}
-              <i class="fas fa-compass"></i> : {props.data.location},
+              <i class="fas fa-compass "></i> : {props.data.location},
               {props.data.city}
             </div>
             <div className="ml-auto">

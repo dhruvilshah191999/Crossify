@@ -207,14 +207,14 @@ export default function Landing() {
           </div>
         </div>
         <section className="bg-white block m-4 ">
-          <div className="p-8 mx-4">
+          <div className="p-8 mx-6">
             <div className="mb-6">
-              <div className="flex flex-row px-4">
-                <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
+              <div className="flex flex-row ">
+                <h4 className="text-3xl font-semibold leading-normal mt-0 mb-2 text-alpha">
                   Check out what's going on in your Area
                 </h4>
                 <motion.button
-                  className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
+                  className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -225,7 +225,10 @@ export default function Landing() {
                 </motion.button>
               </div>
             </div>
-            <div className="flex flex-wrap ml-1">
+            <div
+              className="flex gap-1 flex-wrap  "
+              // style={{ justifyContent: "space-around" }}
+            >
               {eventState.map((data) => (
                 <EventCard key={data._id} data={data}></EventCard>
               ))}
@@ -236,14 +239,14 @@ export default function Landing() {
           className="bg-white block m-4"
           style={{ marginBottom: "20px" }}
         >
-          <div className="p-8 mx-4 pt-0">
+          <div className="p-8 mx-6 pt-0">
             <div className="mb-6">
-              <div className="flex flex-row px-4">
-                <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
+              <div className="flex flex-row">
+                <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                   Check out what's going on in your Area
                 </h4>
                 <motion.button
-                  className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
+                  className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -254,7 +257,7 @@ export default function Landing() {
                 </motion.button>
               </div>
             </div>
-            <div className="flex flex-wrap ml-1">
+            <div className="flex flex-wrap gap-1 ">
               {clubState.map((data) => (
                 <ClubCard key={data._id} data={data}></ClubCard>
               ))}
@@ -266,14 +269,14 @@ export default function Landing() {
             className="bg-white block m-4"
             style={{ marginBottom: "0px" }}
           >
-            <div className="p-8 mx-4 pt-0">
+            <div className="p-8 mx-6 pt-0">
               <div className="ml-2 mb-6">
-                <div className="flex flex-row px-2">
+                <div className="flex flex-row ">
                   <h4 className="text-3xl  font-semibold leading-normal mt-0 mb-2 text-alpha">
                     {el.category}
                   </h4>
                   <motion.button
-                    className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
+                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -284,7 +287,7 @@ export default function Landing() {
                   </motion.button>
                 </div>
               </div>
-              <div className="flex flex-wrap ml-1">
+              <div className="flex flex-wrap gap-1">
                 {/* to do Here after backend implementation eventState. changes to el.events. */}
                 {eventState.map((data) => (
                   <EventCard key={data._id} data={data}></EventCard>
