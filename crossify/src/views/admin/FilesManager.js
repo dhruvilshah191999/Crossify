@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ManageFilesTable from "components/Cards/ManageFilesTable";
+import ManageFilesTable from "components/Tables/ManageFilesTable";
 
 class FilesManager extends Component {
   render() {

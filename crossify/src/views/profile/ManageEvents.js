@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ManageEventsTable from "components/Cards/ManageEventsTable";
+import ManageEventsTable from "components/Tables/ManageEventsTable";
 export default function Tables() {
   const token = localStorage.getItem("jwt");
   const [data, setdata] = useState([]);

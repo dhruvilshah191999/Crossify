@@ -6,10 +6,10 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Navbar from "components/Navbars/ClubNavbar";
 import dance_cat from "assets/img/travel_cat.jpg";
 import MapContainer from "components/Maps/ViewOnlyMap";
-import AskQuestion from "components/Modals/AskQuestion";
+import AskQuestion from "components/SweetAlerts/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
-import JoinEventButton from "components/Modals/JoinEventButton";
-import ReportEventButton from "components/Modals/ReportEventButton";
+import JoinEventButton from "components/SweetAlerts/JoinEventButton";
+import ReportEventButton from "components/SweetAlerts/ReportEventButton";
 import { store } from "react-notifications-component";
 import { motion } from "framer-motion";
 
@@ -203,13 +203,13 @@ export default function EventPage(props) {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col justify-start lg:mx-28">
+        <div className="flex flex-col justify-start  lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
-            style={{ minHeight: "55vh" }}
-            className="flex flex-row flex-wrap mt-16 justify-center items-start flex-shrink-0"
+            // style={{ minHeight: "" }}
+            className="flex flex-row flex-wrap  mt-16  justify-center items-start flex-shrink-0"
           >
-            <div className=" mr-6  text-black bg-white rounded-md">
+            <div className="mr-6 text-black bg-white rounded-md">
               <img
                 src={eventdetails.photo}
                 className="event-image  rounded mt-2"
@@ -233,11 +233,11 @@ export default function EventPage(props) {
                     style={{ textTransform: "capitalize" }}
                   >
                     {eventdetails.event_name}
-                    <span>
-                      {" "}
-                      <ReportEventButton event_id={id}></ReportEventButton>
-                    </span>
                   </h1>
+                </div>
+                <div className="ml-auto mt-4 mr-3">
+                  {" "}
+                  <ReportEventButton event_id={id}></ReportEventButton>
                 </div>
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">
@@ -247,19 +247,21 @@ export default function EventPage(props) {
                     <i class="fas fa-map-marker-alt text-lg "></i>
                   </div>
                   <div className="ml-3">
-                    {" "}
                     {eventdetails.location},{eventdetails.city}
                   </div>
                 </div>
-                <div className="mt-2 ml-2">
-                  {" "}
-                  <i class="fas fa-clock"></i>
-                  <span className="ml-2">
+                <div className="mt-2 ml-2 flex">
+                  <div>
+                    {" "}
+                    <i class="fas fa-clock"></i>
+                  </div>
+
+                  <div className="ml-2">
                     {" "}
                     {Moment(eventdetails.date).format(
-                      "MMMM Do YYYY, h:mm:ss a"
+                      "MMMM Do YYYY, h:mm:ss A"
                     )}
-                  </span>
+                  </div>
                 </div>
                 <div className="mt-6">
                   <div className="flex flex-col ml-1">
@@ -286,7 +288,7 @@ export default function EventPage(props) {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row  mt-2  ">
+              <div className="flex flex-row  mt-2 lg:mt-auto  ">
                 <div className="w-6/12">
                   <motion.button
                     className={
@@ -309,7 +311,7 @@ export default function EventPage(props) {
                       className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={notifyCopied}
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.9 }}
                     >
                       <i class="fas fa-share-alt"></i> Share

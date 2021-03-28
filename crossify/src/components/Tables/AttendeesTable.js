@@ -1,16 +1,18 @@
 import React, { useState } from "react";
+import { useParams } from "react-router";
+import axios from "axios";
 import {
   useTable,
   useFilters,
   useGlobalFilter,
   useAsyncDebounce,
   useSortBy,
+  useRowSelect,
   usePagination,
 } from "react-table";
-import Moment from "moment";
-import axios from "axios";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import ViewReport from "components/Modals/ViewReport";
+import BroadcastButton from "components/SweetAlerts/BroadcastButton";
+import ArrivedButton from "components/SweetAlerts/ArrivedButton";
+import dataTable from "./demoTableData";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 
 function GlobalFilter({
@@ -95,12 +97,27 @@ function SelectColumnFilter({
   );
 }
 
-export default function App(props) {
-  const openModal = (value) => {
-    ModalManager.open(<ViewReport onRequestClose={() => true} data={value} />);
-  };
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
 
-  const deleteObject = async (value) => {
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    );
+  }
+);
+
+export default function App(props) {
+  const { id } = useParams();
+  const getSelectedAndArrived = async (e) => {
+    const IDlist = selectedFlatRows.map((el) => el.values.id);
     const config = {
       method: "POST",
       header: {
@@ -108,10 +125,36 @@ export default function App(props) {
       },
     };
     var object = {
-      report_id: value._id,
+      event_id: id,
+      userIds: IDlist,
+    };
+    const finaldata = await axios.post("/api/manage/arrived", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  };
+  const getSelectedAndBroadcast = (broadcastMessage) => {
+    console.log(broadcastMessage);
+    //todo GOLU broadcast/Notification to added to all the selected users
+    const IDlist = selectedFlatRows.map((el) => el.values);
+    console.log(IDlist);
+  };
+
+  const Coming = async (userid) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      user_id: userid,
     };
     const finaldata = await axios.post(
-      "/api/manage/remove-reports",
+      "/api/manage/userarrived",
       object,
       config
     );
@@ -120,67 +163,72 @@ export default function App(props) {
     } else {
       window.location.reload();
     }
-  }
+  };
+
+  const Remove = async (userid) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      user_id: userid,
+    };
+    const finaldata = await axios.post("/api/manage/Cancelled", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  };
+
   const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(() => props.finaldata, []);
-
   const columns = React.useMemo(
     () => [
       {
-        Header: "Issued By",
-        accessor: "name", // accessor is the "key" in the data
+        Header: "Profile",
+        accessor: "photo", // accessor is the "key" in the data
         disableFilters: true,
+        disableSortBy: true,
+        // todo GOLU : if you can grab a image from eventId then add it at this place as see does it look good if not then remove it and just make it look like simple one
         Cell: ({ value }) => {
-          return <span className="font-semibold text-sm">{value}</span>;
+          return (
+            <div className="flex items-center">
+              <img
+                src={value}
+                alt="eventPhoto"
+                className="w-10 border h-10 rounded-full"
+              ></img>
+            </div>
+          );
         },
       },
-
       {
-        Header: "Description",
-        accessor: "description", // accessor is the "key" in the data
-        Cell: ({ value }) => (
-          <div className="break-words max-w-210-px overflow-hidden">
-            {value}
-          </div>
-        ),
+        Header: "Name",
+        accessor: "name",
         disableFilters: true,
       },
       {
-        Header: "Issue Date",
+        Header: "Date",
         accessor: "date", // accessor is the "key" in the data
-        Cell: ({ value }) => <div>{Moment(value).format("DD-MM-YYYY")}</div>,
+
         disableFilters: true,
       },
       {
         Header: "Status",
-        accessor: "status",
-        disableFilters: true,
+        accessor: "status", // accessor is the "key" in the data
+        Filter: SelectColumnFilter,
+        filter: "includes",
         Cell: ({ value }) => {
           var myColor = "red";
-          if (value === "pending") {
+          if (value === "coming") {
             myColor = "orange";
-          } else if (value === "replied") {
+          } else if (value === "arrived") {
             myColor = "green";
           }
-          // return (
-          //   <span
-          //     class={
-          //       "relative inline-block px-3 py-1 font-semibold text-" +
-          //       myColor +
-          //       "-900 leading-tight"
-          //     }
-          //   >
-          //     <span
-          //       aria-hidden
-          //       class={
-          //         "absolute inset-0 bg-" +
-          //         myColor +
-          //         "-200 opacity-50 rounded-full"
-          //       }
-          //     ></span>
-          //     <span class="relative">{value}</span>
-          //   </span>
-          // );
           return (
             <>
               <i
@@ -192,22 +240,29 @@ export default function App(props) {
             </>
           );
         },
+        disableFilters: true,
       },
       {
-        Header: "Actions",
-        accessor: "record",
-        Cell: ({ value }) => (
-          <div className="flex ">
-            <button
-              title="Reply"
-              className="ml-4 mr-2"
-              onClick={() => openModal(value)}
-            >
-              <i class="fas fa-reply text-blue-500  focus:outline-none text-lg "></i>
-            </button>
+        Header: "Location",
+        accessor: "location", // accessor is the "key" in the data
 
-            <button className="ml-4" title="Delete" onClick={()=>deleteObject(value)}>
-              <i class="fas fa-trash text-red-500 text-lg"></i>
+        disableFilters: true,
+      },
+
+      {
+        Header: "Actions",
+        accessor: "id", // here add _id of event request so easy to attach with the buttons
+        Cell: ({ value }) => (
+          <div className="flex flex-row">
+            <button title="Arrived" onClick={() => Coming(value)}>
+              <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
+            </button>
+            <button
+              className="ml-4"
+              title="Remove"
+              onClick={() => Remove(value)}
+            >
+              <i class="fas fa-window-close text-red-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -219,12 +274,17 @@ export default function App(props) {
   );
   const defaultColumn = React.useMemo(
     () => ({
+      // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
   );
   const filterTypes = React.useMemo(
     () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+
+      // Or, override the default text filter to use
+      // "startWith"
       text: (rows, id, filterValue) => {
         return rows.filter((row) => {
           const rowValue = row.values[id];
@@ -242,14 +302,17 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-
+    rows,
     prepareRow,
     state,
-
+    visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
     setFilter,
-    page,
+    page, // Instead of using 'rows', we'll use page,
+    // which has only the rows for the active page
+
+    // The rest of these things are super handy, too ;)
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -258,7 +321,8 @@ export default function App(props) {
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize },
+    selectedFlatRows,
+    state: { pageIndex, pageSize, selectedRowIds },
   } = useTable(
     {
       columns,
@@ -271,14 +335,43 @@ export default function App(props) {
     useFilters, // useFilters!
     useGlobalFilter, // useGlobalFilter!
     useSortBy,
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        // Let's make a column for selection
+        {
+          id: "selection",
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
+
+  // useEffect(() => {
+  //   // This will now use our custom filter for age
+  //   setFilter("status", SelectColumnFilter);
+  // }, [SelectColumnFilter]);
 
   return (
     <>
       <div
         className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow rounded " +
+          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
           (isLight ? "bg-white" : "bg-blue-900 text-white")
         }
       >
@@ -288,14 +381,12 @@ export default function App(props) {
               <div className="flex flex-row">
                 {" "}
                 <div>
-                  <h3
-                    className={
-                      "font-semibold text-lg " +
-                      (isLight ? "text-gray-800" : "text-white")
-                    }
-                  >
-                    Reports
-                  </h3>
+                  <BroadcastButton
+                    handleBroadcast={getSelectedAndBroadcast}
+                  ></BroadcastButton>
+                  <ArrivedButton
+                    handleArriving={getSelectedAndArrived}
+                  ></ArrivedButton>
                 </div>
                 <div className="inline-block ml-2">
                   <ToggleDarkMode
@@ -311,6 +402,7 @@ export default function App(props) {
                         : "fas fa-filter mr-4 text-white"
                     }
                   ></i>
+                  <span className="ml-2 "></span>
                   <select
                     className={
                       isLight
@@ -322,14 +414,13 @@ export default function App(props) {
                     }}
                   >
                     <option value="">All</option>
-                    <option value="pending">
+                    <option value="coming">
                       {/* <i className="fas fa-circle text-orange-500 mr-2"></i>{" "}  maybe later we can add that*/}
-                      Pending
+                      Coming
                     </option>
-                    <option value="replied">Replied</option>
-                    <option value="rejected">Rejected</option>
+                    <option value="arrived">Arrived</option>
+                    <option value="canceled">Cancelled</option>
                   </select>
-                  <span className="ml-2 "></span>
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     isLight={isLight}
@@ -409,7 +500,7 @@ export default function App(props) {
                 className={
                   isLight
                     ? "border bg-white rounded px-3 py-1 outline-none text-sm"
-                    : "border bg-white rounded px-3 py-1 outline-none text-sm text-black"
+                    : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
                 }
               >
                 {[10, 20, 30, 40, 50].map((pageSize) => (

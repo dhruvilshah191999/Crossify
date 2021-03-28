@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useContext } from "react";
-import { Link ,Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import { motion } from "framer-motion";
 // component
@@ -36,7 +36,7 @@ export default function Navbar(props) {
               </div>
             </Link>
             <button
-              className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+              className="cursor-pointer z-51 text-xl leading-none px-3 py-1 border text-alpha border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
@@ -55,7 +55,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to={isLogin ? "/createclub" : "/auth/login"}
-                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className="  fas fa-chalkboard-teacher text-lg leading-lg mr-2" />{" "}
                   Start a Club
@@ -64,7 +64,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to="/search"
-                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className=" far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
                   Events
@@ -73,7 +73,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to="/clubsearch"
-                  className="hover:text-lightwhite text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className="  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
                   Clubs

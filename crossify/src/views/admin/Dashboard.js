@@ -2,12 +2,12 @@ import React from "react";
 
 // components
 
-import CardLineChart from "components/Cards/CardLineChart.js";
-import CardBarChart from "components/Cards/CardBarChart.js";
-import CardRadarChart from "components/Cards/CardRadarChart.js";
-import CardFileChart from "components/Cards/CardFileChart.js";
-import CardDougnutChart from "components/Cards/CardDougnutChart";
-import CardLocationChart from "components/Cards/CardLocationChart";
+import CardLineChart from "components/Charts/CardLineChart.js";
+import CardBarChart from "components/Charts/CardBarChart.js";
+import CardRadarChart from "components/Charts/CardRadarChart.js";
+import CardFileChart from "components/Charts/CardFileChart.js";
+import CardDougnutChart from "components/Charts/CardDougnutChart";
+import CardLocationChart from "components/Charts/CardLocationChart";
 
 export default function Dashboard() {
   return (

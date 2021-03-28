@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "app.js";
+import App from "App.js";
 import UserContextProvider from "context/usercontext";
 import ReactNotification from "react-notifications-component";
 

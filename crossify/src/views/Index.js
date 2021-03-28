@@ -92,15 +92,13 @@ export default function Landing() {
     }
     console.clear();
 
-    async function get_interest(){
-      const finaldata = await axios.get(
-          "/api/events/get-interest",
-        );
-        if (finaldata.data.is_error) {
-          console.log(finaldata.data.message);
-        } else {
-          setCategory(finaldata.data.data);
-        }
+    async function get_interest() {
+      const finaldata = await axios.get("/api/events/get-interest");
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setCategory(finaldata.data.data);
+      }
     }
 
     async function get_interest_data() {
@@ -118,13 +116,13 @@ export default function Landing() {
 
   const SearchFilter = async (category_name) => {
     var object = {
-      search:category_name,
-      location:"",
+      search: category_name,
+      location: "",
     };
     search_dispatch({ type: "Add-Search", add: object });
     history.push("/search");
-  }
-  
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     var object = {
@@ -193,7 +191,7 @@ export default function Landing() {
                   </div>
                   <button
                     style={{ marginLeft: "10px" }}
-                    className="bg-alpha hover:bg-alpha hover:shadow-md rounded text-white p-2 pl-4 pr-4"
+                    className="bg-alpha hover:bg-brightalpha hover:shadow-md rounded text-white p-2 pl-4 pr-4"
                     onClick={(e) => onSubmit(e)}
                   >
                     <p className="font-semibold text-md">Search</p>
@@ -218,18 +216,22 @@ export default function Landing() {
             </div>
           </div>
           <section className="bg-white block m-4 ">
-            <div className="p-8 mx-4">
+            <div className="p-8 mx-6">
               <div className="mb-6">
-                <div className="flex flex-row px-4">
-                  <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
+                <div className="flex flex-row ">
+                  <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     Check out what's going on in your Area
                   </h4>
-                  <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
+                  <motion.button
+                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
                     <Link to="/search">
                       {" "}
                       Load More <i className="fas fa-angle-double-right"></i>{" "}
                     </Link>
-                  </button>
+                  </motion.button>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1">
@@ -243,18 +245,22 @@ export default function Landing() {
             className="bg-white block m-4"
             style={{ marginBottom: "20px" }}
           >
-            <div className="p-8 mx-4 pt-0">
+            <div className="p-8 mx-6 pt-0">
               <div className="mb-6">
-                <div className="flex flex-row px-4">
-                  <h4 className="text-3xl px-2 font-semibold leading-normal mt-0 mb-2 text-alpha">
+                <div className="flex flex-row ">
+                  <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     Check out what's going on in your Area
                   </h4>
-                  <button className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta">
+                  <motion.button
+                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
                     <Link to="/clubsearch">
                       {" "}
                       Load More <i className="fas fa-angle-double-right"></i>{" "}
                     </Link>
-                  </button>
+                  </motion.button>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1">
@@ -270,14 +276,14 @@ export default function Landing() {
                 className="bg-white block m-4"
                 style={{ marginBottom: "0px" }}
               >
-                <div className="p-8 mx-4 pt-0">
-                  <div className="ml-2 mb-6">
-                    <div className="flex flex-row px-2">
-                      <h4 className="text-3xl  font-semibold leading-normal mt-0 mb-2 text-alpha">
+                <div className="p-8 mx-6 pt-0">
+                  <div className=" mb-6">
+                    <div className="flex flex-row ">
+                      <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                         {el.category_name}
                       </h4>
                       <motion.button
-                        className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
+                        className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -306,7 +312,7 @@ export default function Landing() {
             )
           )}
 
-          <section className="pb-4 bg-gray-300 ">
+          <section className="pb-4 bg-gray-100 ">
             <div className="container mx-auto px-4">
               <div className="flex flex-col ">
                 <div className="flex flex-row justify-center ">
@@ -461,8 +467,7 @@ export default function Landing() {
         <Footer />
       </>
     );
-  }
-  else {
+  } else {
     return <></>;
   }
 }

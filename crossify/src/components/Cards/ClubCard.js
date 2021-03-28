@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import defImg from "../../assets/img/event_1.jpeg";
 import { motion } from "framer-motion";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -54,11 +54,7 @@ const ClubCard = (props) => {
         token: token,
         club_id: props.data._id,
       };
-      const finaldata = await axios.post(
-        "/api/club/addlikes",
-        object,
-        config
-      );
+      const finaldata = await axios.post("/api/club/addlikes", object, config);
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
         store.addNotification({
@@ -115,6 +111,7 @@ const ClubCard = (props) => {
       style={{
         flex: "1 1 0",
         height: "auto",
+        minWidth: 250,
         maxWidth: 320,
       }}
     >

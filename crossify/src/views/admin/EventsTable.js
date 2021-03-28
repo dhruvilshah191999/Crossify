@@ -2,7 +2,7 @@ import React from "react";
 
 // components
 
-import CardTable from "components/Cards/EventTable.js";
+import CardTable from "components/Tables/EventTable.js";
 
 export default function Tables() {
   return (

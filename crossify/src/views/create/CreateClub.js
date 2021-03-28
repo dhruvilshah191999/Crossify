@@ -8,7 +8,7 @@ import { usePosition } from "use-position";
 import MapContainer from "components/Maps/AddMapCode";
 import City from "../auth/states-and-districts.json";
 import dummyPF from "../../assets/img/demopf.png";
-import MultiSelect from "components/Forms/MultiSelect";
+import MultiSelect from "components/Inputs/MultiSelect";
 import UploadPic from "components/Inputs/UploadPic";
 
 function CreateClub(props) {

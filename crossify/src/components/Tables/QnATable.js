@@ -10,13 +10,13 @@ import {
   useRowSelect,
   usePagination,
 } from "react-table";
-import RejectButton from "components/Modals/RejectButton";
-import PrivateButton from "components/Modals/PrivateButton";
-import PublishButton from "components/Modals/PublishButton";
+import RejectButton from "components/SweetAlerts/RejectButton";
+import PrivateButton from "components/SweetAlerts/PrivateButton";
+import PublishButton from "components/SweetAlerts/PublishButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 
 import dataTable from "./demoQnA";
-import QnAModal from "components/Modals/QnAModal";
+import QnAModal from "components/SweetAlerts/QnAModal";
 
 function GlobalFilter({
   preGlobalFilteredRows,

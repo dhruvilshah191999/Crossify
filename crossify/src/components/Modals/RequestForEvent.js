@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import MultiSelect from "../Forms/MultiSelect";
+import MultiSelect from "components/Inputs/MultiSelect";
 import axios from "axios";
 import MapContainer from "../Maps/AddMapCode";
 import { usePosition } from "use-position";
@@ -40,7 +40,7 @@ function MyModal(props) {
     starting_date: null,
     ending_date: null,
     starting_time: null,
-    ending_time:null
+    ending_time: null,
   });
 
   const {
@@ -55,7 +55,7 @@ function MyModal(props) {
     starting_date,
     ending_date,
     starting_time,
-    ending_time
+    ending_time,
   } = formData;
 
   const onChange = (e) =>
@@ -117,12 +117,12 @@ function MyModal(props) {
             starting_time,
             ending_date,
             ending_time,
-            club_id:props.club_id,
+            club_id: props.club_id,
             tags,
             token,
             photo: res.data.url,
             capacity,
-            category
+            category,
           };
           try {
             const config = {
@@ -148,7 +148,7 @@ function MyModal(props) {
         })
         .catch((err) => console.log(err));
     }
-  }
+  };
   const { onRequestClose } = props;
 
   return (
