@@ -322,7 +322,7 @@ export default function Landing() {
                     Browse Clubs by Category
                   </div>
                 </div>
-                <div className="flex flex-row flex-wrap container p-4 mx-5 ">
+                <div className="flex flex-row flex-wrap container p-4 mx-5">
                   {" "}
                   {categoryState.map((el) => {
                     return (
