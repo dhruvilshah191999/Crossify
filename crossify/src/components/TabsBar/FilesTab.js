@@ -56,7 +56,7 @@
 // }
 
 import React, { Component } from "react";
-import FileTable from "components/Cards/FileTable";
+import FileTable from "components/Tables/FileTable";
 class FilesTab extends Component {
   render() {
     return (

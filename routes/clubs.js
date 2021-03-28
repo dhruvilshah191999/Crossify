@@ -312,4 +312,135 @@ router.post("/create-event", auth, async (req, res) => {
   });
 });
 
+router.post("/addlikes", auth, async function (req, res, next) {
+  let { club_id } = req.body;
+  var checks = club_details.update(
+    {
+      _id: ObjectId(club_id),
+      is_active: 1,
+    },
+    {
+      $push: { likes: ObjectId(req.user._id)}
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var add = user_details.update(
+        {
+          _id: ObjectId(req.user._id),
+          is_active: 1,
+        },
+        {
+          $push: { fav_club: ObjectId(club_id) },
+        }
+      );
+      add.exec((err, data) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        }
+        else {
+          var finaldata = {
+            Like: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      })
+    }
+  });
+});
+
+router.post("/removelikes", auth, async function (req, res, next) {
+  let { club_id } = req.body;
+  var checks = club_details.update(
+    {
+      _id: ObjectId(club_id),
+      is_active: 1,
+    },
+    {
+      $pull: { likes: ObjectId(req.user._id)}
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var add = user_details.update(
+        {
+          _id: ObjectId(req.user._id),
+          is_active: 1,
+        },
+        {
+          $pull: { fav_club: ObjectId(club_id) },
+        }
+      );
+      add.exec((err, data) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(600).send(error);
+        }
+        else {
+          var finaldata = {
+            Like: true,
+            is_error: false,
+            message: "Data Send",
+          };
+          return res.status(200).send(finaldata);
+        }
+      })
+    }
+  });
+});
+
+router.post("/checklikes", auth, async function (req, res, next) {
+  let { club_id } = req.body;
+  var checks = club_details.find({
+    _id: ObjectId(club_id),
+    likes: ObjectId(req.user._id),
+    is_active: 1,
+  });
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if(data2.length!=0){
+      var finaldata = {
+        Like:true,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+    else {
+      var finaldata = {
+        Like: false,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 module.exports = router;

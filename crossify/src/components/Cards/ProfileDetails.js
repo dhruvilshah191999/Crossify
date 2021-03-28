@@ -91,10 +91,14 @@ class ProfileDetails extends Component {
           <div className="flex-col w-1/2 ml-6">
             <div className=" relative w-100 flex flex-row flex-wrap mt-2">
               <div className="text-4xl flex-shrink-0 font-semibold ">
-                {this.props.fullname}
+                {this.state.profile.fname}{" "}
+                {this.state.profile.lname}
               </div>
               <div className="text-xl  flex-shrink-0 text-gray-700 xl2:mt-4 xl2:ml-2">
-                as <span className="text-alpha">{this.props.username}</span>
+                as{" "}
+                <span className="text-alpha">
+                  {this.state.profile.username}
+                </span>
               </div>
 
               {/* </div> */}

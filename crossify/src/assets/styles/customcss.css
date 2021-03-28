@@ -1,8 +1,3 @@
-.hover\:bg-red-500:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
-}
-
 :root {
   --color-primary: #fc5185;
   --color-secondary: #3fc1c9;
@@ -80,6 +75,10 @@
   background-color: #f19e59;
 }
 
+.hover\:bg-brightalpha:hover {
+  background-color: #ff2957;
+}
+
 .active\:bg-orange-300:active {
   background-color: #fcd34d;
 }
@@ -140,6 +139,14 @@
 
 .hover\:bg-gray-200:hover {
   background-color: #fafafa;
+}
+.hover\:text-lightalpha:hover {
+  color: var(--color-lightalpha);
+}
+
+.hover\:bg-red-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
 }
 
 .hover\:bg-blue-300:hover {
@@ -345,6 +352,9 @@
   flex-shrink: 0;
 }
 
+.gap-1 {
+  gap: 1.5rem;
+}
 .content-end {
   align-content: flex-end;
 }
@@ -383,8 +393,29 @@
   height: 12rem;
 }
 
+.max-ch-30 {
+  max-width: 30ch;
+}
+
+.max-ch-20 {
+  max-width: 20ch;
+}
+.max-ch-10 {
+  max-width: 10ch;
+}
+.max-ch-15 {
+  max-width: 15ch;
+}
+.max-ch-25 {
+  max-width: 25ch;
+}
+
 .w-p20 {
   width: 20%;
+}
+
+.w-6 {
+  width: 1.75rem;
 }
 
 .w-25 {
@@ -966,12 +997,14 @@ button:focus {
   float: right;
 }
 
-.flex-shrink-0 {
-  flex-shrink: 0;
-}
-
 .w-max {
   width: max-content;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 body::-webkit-scrollbar {

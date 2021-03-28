@@ -7,9 +7,9 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import RemoveMediaButton from "components/Modals/RemoveMediaButton";
-import EditMediaButton from "components/Modals/EditMediaButton";
-import UploadMediaButton from "components/Modals/UploadMediaButton";
+import RemoveFileButton from "components/SweetAlerts/RemoveFileButton";
+import EditFileButton from "components/SweetAlerts/EditFileButton";
+import UploadFileButton from "components/SweetAlerts/UploadFileButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 
 function GlobalFilter({
@@ -99,7 +99,7 @@ export default function App() {
   const data = React.useMemo(
     () => [
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -107,7 +107,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "arshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -115,7 +115,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -123,7 +123,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -131,7 +131,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "arshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -139,7 +139,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -147,7 +147,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -155,7 +155,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "arshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -163,7 +163,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -171,7 +171,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -179,7 +179,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "arshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -187,7 +187,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -195,7 +195,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -203,7 +203,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "arshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -211,7 +211,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -219,7 +219,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -227,7 +227,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "arshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -235,7 +235,7 @@ export default function App() {
         actions: " ",
       },
       {
-        MediaName: "Cricket Tournament",
+        fileName: "Cricket Tournament",
         size: "Harshil Patel",
         date: "11/2/2000",
         location: "Ahmedabad",
@@ -250,8 +250,8 @@ export default function App() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Media",
-        accessor: "MediaName", // accessor is the "key" in the data
+        Header: "File",
+        accessor: "fileName", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
@@ -290,14 +290,14 @@ export default function App() {
               </button>
             </div>
 
-            <EditMediaButton></EditMediaButton>
-            <RemoveMediaButton
+            <EditFileButton></EditFileButton>
+            <RemoveFileButton
               handleRejection={() =>
                 console.log(
                   "GOLU MAKE THIS function to remove current clicked item"
                 )
               }
-            ></RemoveMediaButton>
+            ></RemoveFileButton>
           </div>
         ),
         disableFilters: true,
@@ -383,7 +383,7 @@ export default function App() {
                       (isLight ? "text-gray-800" : "text-white")
                     }
                   >
-                    Media List
+                    File List
                   </h3>
                 </div>
                 <div className="inline-block ml-2">
@@ -394,7 +394,7 @@ export default function App() {
                 </div>
                 <div className="ml-auto">
                   <div className="inline-block">
-                    <UploadMediaButton />
+                    <UploadFileButton />
                   </div>
                   <span className="ml-2 "></span>
                   <GlobalFilter

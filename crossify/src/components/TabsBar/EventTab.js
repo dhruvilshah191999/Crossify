@@ -2,7 +2,7 @@ import { withMobileDialog } from "@material-ui/core";
 import React, { useState } from "react";
 import Photo from "assets/img/team-4-470x470.png";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
-import EventCalendar from "views/demo/PlayGround";
+import EventCalendar from "components/Calendar/EventCalendar";
 import { motion } from "framer-motion";
 //khatar banayu bhai harshil
 export default function EventTab() {

@@ -1,18 +1,15 @@
 import React, { useState } from "react";
-import { useParams } from "react-router";
-import axios from "axios";
 import {
   useTable,
   useFilters,
   useGlobalFilter,
   useAsyncDebounce,
   useSortBy,
-  useRowSelect,
   usePagination,
 } from "react-table";
-import BroadcastButton from "components/Modals/BroadcastButton";
-import ArrivedButton from "components/Modals/ArrivedButton";
-import dataTable from "./demoTableData";
+import RemoveMediaButton from "components/SweetAlerts/RemoveMediaButton";
+import EditMediaButton from "components/SweetAlerts/EditMediaButton";
+import UploadMediaButton from "components/SweetAlerts/UploadMediaButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 
 function GlobalFilter({
@@ -97,173 +94,210 @@ function SelectColumnFilter({
   );
 }
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
-
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  }
-);
-
-export default function App(props) {
-  const { id } = useParams();
-  const getSelectedAndArrived = async (e) => {
-    const IDlist = selectedFlatRows.map((el) => el.values.id);
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-    var object = {
-      event_id: id,
-      userIds: IDlist,
-    };
-    const finaldata = await axios.post("/api/manage/arrived", object, config);
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      window.location.reload();
-    }
-  };
-  const getSelectedAndBroadcast = (broadcastMessage) => {
-    console.log(broadcastMessage);
-    //todo GOLU broadcast/Notification to added to all the selected users
-    const IDlist = selectedFlatRows.map((el) => el.values);
-    console.log(IDlist);
-  };
-
-  const Coming = async (userid) => {
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-    var object = {
-      event_id: id,
-      user_id: userid,
-    };
-    const finaldata = await axios.post(
-      "/api/manage/userarrived",
-      object,
-      config
-    );
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      window.location.reload();
-    }
-  };
-
-  const Remove = async (userid) => {
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-    var object = {
-      event_id: id,
-      user_id: userid,
-    };
-    const finaldata = await axios.post("/api/manage/Cancelled", object, config);
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      window.location.reload();
-    }
-  };
-
+export default function App() {
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(() => props.finaldata, []);
+  const data = React.useMemo(
+    () => [
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "pending",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "arshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description: "approved",
+        actions: " ",
+      },
+      {
+        MediaName: "Cricket Tournament",
+        size: "Harshil Patel",
+        date: "11/2/2000",
+        location: "Ahmedabad",
+        description:
+          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
+        actions: " ",
+      },
+    ],
+    []
+  );
+
   const columns = React.useMemo(
     () => [
       {
-        Header: "Profile",
-        accessor: "photo", // accessor is the "key" in the data
+        Header: "Media",
+        accessor: "MediaName", // accessor is the "key" in the data
         disableFilters: true,
-        disableSortBy: true,
-        // todo GOLU : if you can grab a image from eventId then add it at this place as see does it look good if not then remove it and just make it look like simple one
         Cell: ({ value }) => {
-          return (
-            <div className="flex items-center">
-              <img
-                src={value}
-                alt="eventPhoto"
-                className="w-10 border h-10 rounded-full"
-              ></img>
-            </div>
-          );
+          return <span className="font-semibold text-sm">{value}</span>;
         },
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Size",
+        accessor: "size",
         disableFilters: true,
       },
       {
-        Header: "Date",
+        Header: "Last Modified",
         accessor: "date", // accessor is the "key" in the data
 
         disableFilters: true,
       },
       {
-        Header: "Status",
-        accessor: "status", // accessor is the "key" in the data
-        Filter: SelectColumnFilter,
-        filter: "includes",
-        Cell: ({ value }) => {
-          var myColor = "red";
-          if (value === "coming") {
-            myColor = "orange";
-          } else if (value === "arrived") {
-            myColor = "green";
-          }
-          return (
-            <>
-              <i
-                className={
-                  "fas fa-circle text-xs text-" + myColor + "-500 mr-2"
-                }
-              ></i>{" "}
-              {value}
-            </>
-          );
-        },
-        disableFilters: true,
-      },
-      {
-        Header: "Location",
-        accessor: "location", // accessor is the "key" in the data
-
+        Header: "Description",
+        accessor: "description", // accessor is the "key" in the data
+        Cell: ({ value }) => (
+          <div className="break-words max-w-210-px overflow-hidden">
+            {value}
+          </div>
+        ),
         disableFilters: true,
       },
 
       {
         Header: "Actions",
-        accessor: "id", // here add _id of event request so easy to attach with the buttons
+        accessor: "actions", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
-          <div className="flex flex-row">
-            <button title="Arrived" onClick={() => Coming(value)}>
-              <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
-            </button>
-            <button
-              className="ml-4"
-              title="Remove"
-              onClick={() => Remove(value)}
-            >
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
-            </button>
+          <div className="flex ">
+            <div>
+              <button title="Download">
+                <i class="fas fa-download text-green-500 text-base pt-1 focus:outline-none mr-4 "></i>
+              </button>
+            </div>
+
+            <EditMediaButton></EditMediaButton>
+            <RemoveMediaButton
+              handleRejection={() =>
+                console.log(
+                  "GOLU MAKE THIS function to remove current clicked item"
+                )
+              }
+            ></RemoveMediaButton>
           </div>
         ),
         disableFilters: true,
@@ -274,17 +308,12 @@ export default function App(props) {
   );
   const defaultColumn = React.useMemo(
     () => ({
-      // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
   );
   const filterTypes = React.useMemo(
     () => ({
-      // Add a new fuzzyTextFilterFn filter type.
-
-      // Or, override the default text filter to use
-      // "startWith"
       text: (rows, id, filterValue) => {
         return rows.filter((row) => {
           const rowValue = row.values[id];
@@ -302,17 +331,14 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+
     prepareRow,
     state,
-    visibleColumns,
+
     preGlobalFilteredRows,
     setGlobalFilter,
-    setFilter,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
 
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -321,8 +347,7 @@ export default function App(props) {
     nextPage,
     previousPage,
     setPageSize,
-    selectedFlatRows,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -335,43 +360,14 @@ export default function App(props) {
     useFilters, // useFilters!
     useGlobalFilter, // useGlobalFilter!
     useSortBy,
-    usePagination,
-    useRowSelect,
-    (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        // Let's make a column for selection
-        {
-          id: "selection",
-          // The header can use the table's getToggleAllRowsSelectedProps method
-          // to render a checkbox
-          Header: ({ getToggleAllPageRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
-            </div>
-          ),
-          // The cell can use the individual row's getToggleRowSelectedProps method
-          // to the render a checkbox
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
-        ...columns,
-      ]);
-    }
+    usePagination
   );
-
-  // useEffect(() => {
-  //   // This will now use our custom filter for age
-  //   setFilter("status", SelectColumnFilter);
-  // }, [SelectColumnFilter]);
 
   return (
     <>
       <div
         className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
+          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow rounded " +
           (isLight ? "bg-white" : "bg-blue-900 text-white")
         }
       >
@@ -381,12 +377,14 @@ export default function App(props) {
               <div className="flex flex-row">
                 {" "}
                 <div>
-                  <BroadcastButton
-                    handleBroadcast={getSelectedAndBroadcast}
-                  ></BroadcastButton>
-                  <ArrivedButton
-                    handleArriving={getSelectedAndArrived}
-                  ></ArrivedButton>
+                  <h3
+                    className={
+                      "font-semibold text-lg " +
+                      (isLight ? "text-gray-800" : "text-white")
+                    }
+                  >
+                    Media List
+                  </h3>
                 </div>
                 <div className="inline-block ml-2">
                   <ToggleDarkMode
@@ -395,32 +393,9 @@ export default function App(props) {
                   />
                 </div>
                 <div className="ml-auto">
-                  <i
-                    class={
-                      isLight
-                        ? "fas fa-filter mr-4 text-gray-700"
-                        : "fas fa-filter mr-4 text-white"
-                    }
-                  ></i>
-                  <span className="ml-2 "></span>
-                  <select
-                    className={
-                      isLight
-                        ? "border bg-white rounded px-3 py-1 outline-none text-sm"
-                        : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
-                    }
-                    onChange={(e) => {
-                      setFilter("status", e.target.value || undefined);
-                    }}
-                  >
-                    <option value="">All</option>
-                    <option value="coming">
-                      {/* <i className="fas fa-circle text-orange-500 mr-2"></i>{" "}  maybe later we can add that*/}
-                      Coming
-                    </option>
-                    <option value="arrived">Arrived</option>
-                    <option value="canceled">Cancelled</option>
-                  </select>
+                  <div className="inline-block">
+                    <UploadMediaButton />
+                  </div>
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     isLight={isLight}
@@ -500,7 +475,7 @@ export default function App(props) {
                 className={
                   isLight
                     ? "border bg-white rounded px-3 py-1 outline-none text-sm"
-                    : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
+                    : "border bg-white rounded px-3 py-1 outline-none text-sm text-black"
                 }
               >
                 {[10, 20, 30, 40, 50].map((pageSize) => (

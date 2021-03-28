@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ManageMediaTable from "components/Cards/ManageMediaTable";
+import ManageMediaTable from "components/Tables/ManageMediaTable";
 
 class MediaManager extends Component {
   render() {

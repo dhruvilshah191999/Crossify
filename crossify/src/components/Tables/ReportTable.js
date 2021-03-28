@@ -7,9 +7,10 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import RemoveFileButton from "components/Modals/RemoveFileButton";
-import EditFileButton from "components/Modals/EditFileButton";
-import UploadFileButton from "components/Modals/UploadFileButton";
+import Moment from "moment";
+import axios from "axios";
+import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import ViewReport from "components/Modals/ViewReport";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 
 function GlobalFilter({
@@ -94,180 +95,46 @@ function SelectColumnFilter({
   );
 }
 
-export default function App() {
+export default function App(props) {
+  const openModal = (value) => {
+    ModalManager.open(<ViewReport onRequestClose={() => true} data={value} />);
+  };
+
+  const deleteObject = async (value) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      report_id: value._id,
+    };
+    const finaldata = await axios.post(
+      "/api/manage/remove-reports",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  };
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(
-    () => [
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description:
-          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
-        actions: " ",
-      },
-    ],
-    []
-  );
+  const data = React.useMemo(() => props.finaldata, []);
 
   const columns = React.useMemo(
     () => [
       {
-        Header: "File",
-        accessor: "fileName", // accessor is the "key" in the data
+        Header: "Issued By",
+        accessor: "name", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
         },
       },
-      {
-        Header: "Size",
-        accessor: "size",
-        disableFilters: true,
-      },
-      {
-        Header: "Last Modified",
-        accessor: "date", // accessor is the "key" in the data
 
-        disableFilters: true,
-      },
       {
         Header: "Description",
         accessor: "description", // accessor is the "key" in the data
@@ -278,26 +145,74 @@ export default function App() {
         ),
         disableFilters: true,
       },
-
+      {
+        Header: "Issue Date",
+        accessor: "date", // accessor is the "key" in the data
+        Cell: ({ value }) => <div>{Moment(value).format("DD-MM-YYYY")}</div>,
+        disableFilters: true,
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+        disableFilters: true,
+        Cell: ({ value }) => {
+          var myColor = "red";
+          if (value === "pending") {
+            myColor = "orange";
+          } else if (value === "replied") {
+            myColor = "green";
+          }
+          // return (
+          //   <span
+          //     class={
+          //       "relative inline-block px-3 py-1 font-semibold text-" +
+          //       myColor +
+          //       "-900 leading-tight"
+          //     }
+          //   >
+          //     <span
+          //       aria-hidden
+          //       class={
+          //         "absolute inset-0 bg-" +
+          //         myColor +
+          //         "-200 opacity-50 rounded-full"
+          //       }
+          //     ></span>
+          //     <span class="relative">{value}</span>
+          //   </span>
+          // );
+          return (
+            <>
+              <i
+                className={
+                  "fas fa-circle text-xs text-" + myColor + "-500 mr-2"
+                }
+              ></i>{" "}
+              {value}
+            </>
+          );
+        },
+      },
       {
         Header: "Actions",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
+        accessor: "record",
         Cell: ({ value }) => (
           <div className="flex ">
-            <div>
-              <button title="Download">
-                <i class="fas fa-download text-green-500 text-base pt-1 focus:outline-none mr-4 "></i>
-              </button>
-            </div>
+            <button
+              title="Reply"
+              className="ml-4 mr-2"
+              onClick={() => openModal(value)}
+            >
+              <i class="fas fa-reply text-blue-500  focus:outline-none text-lg "></i>
+            </button>
 
-            <EditFileButton></EditFileButton>
-            <RemoveFileButton
-              handleRejection={() =>
-                console.log(
-                  "GOLU MAKE THIS function to remove current clicked item"
-                )
-              }
-            ></RemoveFileButton>
+            <button
+              className="ml-4"
+              title="Delete"
+              onClick={() => deleteObject(value)}
+            >
+              <i class="fas fa-trash text-red-500 text-lg"></i>
+            </button>
           </div>
         ),
         disableFilters: true,
@@ -337,7 +252,7 @@ export default function App() {
 
     preGlobalFilteredRows,
     setGlobalFilter,
-
+    setFilter,
     page,
     canPreviousPage,
     canNextPage,
@@ -383,7 +298,7 @@ export default function App() {
                       (isLight ? "text-gray-800" : "text-white")
                     }
                   >
-                    File List
+                    Reports
                   </h3>
                 </div>
                 <div className="inline-block ml-2">
@@ -393,9 +308,32 @@ export default function App() {
                   />
                 </div>
                 <div className="ml-auto">
-                  <div className="inline-block">
-                    <UploadFileButton />
-                  </div>
+                  <i
+                    class={
+                      isLight
+                        ? "fas fa-filter mr-4 text-gray-700"
+                        : "fas fa-filter mr-4 text-white"
+                    }
+                  ></i>
+                  <select
+                    className={
+                      isLight
+                        ? "border bg-white rounded px-3 py-1 outline-none text-sm"
+                        : "border bg-white rounded px-3 py-1 outline-none text-sm text-gray-700"
+                    }
+                    onChange={(e) => {
+                      setFilter("status", e.target.value || undefined);
+                    }}
+                  >
+                    <option value="">All</option>
+                    <option value="pending">
+                      {/* <i className="fas fa-circle text-orange-500 mr-2"></i>{" "}  maybe later we can add that*/}
+                      Pending
+                    </option>
+                    <option value="replied">Replied</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                  <span className="ml-2 "></span>
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     isLight={isLight}

@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import MultiSelect from "../Forms/MultiSelect";
-import MapContainer from "../Maps/MapCode";
-import UploadPic from "components/Inputs/UploadPic";
 
-import { InputTagsContainer } from "react-input-tags";
-import Profile from "views/profile/MyProfile";
 import ProfileDetails from "components/Cards/ProfileDetails";
 
 Modal.defaultStyles = {};

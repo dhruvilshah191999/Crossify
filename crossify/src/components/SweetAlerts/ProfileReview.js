@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demobg from "assets/img/demopf.png";
 import Tag from "components/Tag";
-import MapContainer from "../../components/Maps/MapCode";
-import AskQuestion from "components/Modals/AskQuestion";
+import MapContainer from "../Maps/MapCode";
+import AskQuestion from "components/SweetAlerts/AskQuestion";
 import ChatMessage from "components/Cards/ChatMessage";
 import EvaulateProfile from "components/Cards/EvaulateProfile";
 

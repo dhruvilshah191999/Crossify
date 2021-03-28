@@ -1,4 +1,4 @@
-import React, { useState , useEffect}from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "components/Navbars/ClubNavbar";
 import axios from "axios";
 import { useParams } from "react-router";
@@ -8,7 +8,7 @@ import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
 import Moment from "moment";
-import JoinClubButton from "components/Modals/JoinClubButton";
+import JoinClubButton from "components/SweetAlerts/JoinClubButton";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import { motion } from "framer-motion";
 
@@ -16,7 +16,9 @@ function ClubPage(props) {
   var { id } = useParams();
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setloading] = useState(false);
+  const [like, setLike] = useState(false);
   const [clubData, setClubData] = useState([]);
+  const token = localStorage.getItem("jwt");
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -46,9 +48,9 @@ function ClubPage(props) {
       }
     }
     event_details();
-  },[])
+  }, []);
   const openModal = () => {
-    ModalManager.open(<MyModal onRequestClose={() => true} club_id={id}/>);
+    ModalManager.open(<MyModal onRequestClose={() => true} club_id={id} />);
   };
 
   if (loading) {
@@ -164,9 +166,8 @@ function ClubPage(props) {
         </div>
       </>
     );
-  }
-  else {
-    return <></>
+  } else {
+    return <></>;
   }
 }
 
