@@ -47,7 +47,6 @@
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "postcss-import": "^14.0.0",
-    "react": "^17.0.2",
     "react-bootstrap-sweetalert": "^5.2.0",
     "react-copy-to-clipboard": "^5.0.3",
     "react-dynamic-modal": "^1.1.1",
@@ -71,8 +70,7 @@
     "socket.io-client": "^4.0.0",
     "styled-components": "^5.2.1",
     "sweetalert": "^2.1.2",
-    "use-position": "0.0.8",
-    "webpack-dev-server": "^3.11.0"
+    "use-position": "0.0.8"
   },
   "devDependencies": {
     "fslightbox-react": "^1.6.2"

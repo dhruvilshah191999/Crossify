@@ -10,23 +10,23 @@ export default class RoomTab extends React.Component {
     rooms: [],
   };
   componentDidMount() {
-    //const fetchedRoom=[]
+    const fetchedRoom=[]
       
-      // fetch('/api/club/chat/getRooms?club_id=605c51d4ccb6bf2a3c2b5db2')
-      // .then(res => res.json())
-      // .then(data => {console.log(data)   
-      //   const roomIds = data.channel_list;
-      //   for(var i in roomIds){
-      //     fetch(`/api/club/chat/getParticularroom?room_id=${i}`)
-      //     .then(res=>res.json())
-      //     .then(data=>{console.log(data)
-      //       fetchedRoom.push(data.message.channel_name);
-      //     })
+      fetch('/api/club/chat/getRooms?club_id=605c51d4ccb6bf2a3c2b5db2')
+      .then(res => res.json())
+      .then(data => {console.log(data)   
+        const roomIds = data.channel_list;
+        for(var i in roomIds){
+          fetch(`/api/club/chat/getParticularroom?room_id=${i}`)
+          .then(res=>res.json())
+          .then(data=>{console.log(data)
+            fetchedRoom.push(data.message.channel_name);
+          })
           
-      //   } });
+        } });
       
       
-     const fetchedRoom = ["C++", "Java", "Python", "WebDev"];
+     //const fetchedRoom = ["C++", "Java", "Python", "WebDev"];
     
     this.setState({
       rooms: fetchedRoom,
