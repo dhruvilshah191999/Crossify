@@ -232,7 +232,7 @@ export default function Landing() {
                   </button>
                 </div>
               </div>
-              <div className="flex flex-wrap ml-1">
+              <div className="flex flex-wrap gap-1">
                 {eventState.map((data) => (
                   <EventCard key={data._id} data={data}></EventCard>
                 ))}
@@ -257,46 +257,54 @@ export default function Landing() {
                   </button>
                 </div>
               </div>
-              <div className="flex flex-wrap ml-1">
+              <div className="flex flex-wrap gap-1">
                 {clubState.map((data) => (
                   <ClubCard key={data._id} data={data}></ClubCard>
                 ))}
               </div>
             </div>
           </section>
-          {insterestState.map((el) => (
-            el.event.length!=0?(
-            <section
-              className="bg-white block m-4"
-              style={{ marginBottom: "0px" }}
-            >
-              <div className="p-8 mx-4 pt-0">
-                <div className="ml-2 mb-6">
-                  <div className="flex flex-row px-2">
-                    <h4 className="text-3xl  font-semibold leading-normal mt-0 mb-2 text-alpha">
-                      {el.category_name}
-                    </h4>
-                    <motion.button
-                      className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Link to="/search">
-                        {" "}
-                      Load More <i className="fas fa-angle-double-right"></i>{" "}
-                      </Link>
-                    </motion.button>
+          {insterestState.map((el) =>
+            el.event.length != 0 ? (
+              <section
+                className="bg-white block m-4"
+                style={{ marginBottom: "0px" }}
+              >
+                <div className="p-8 mx-4 pt-0">
+                  <div className="ml-2 mb-6">
+                    <div className="flex flex-row px-2">
+                      <h4 className="text-3xl  font-semibold leading-normal mt-0 mb-2 text-alpha">
+                        {el.category_name}
+                      </h4>
+                      <motion.button
+                        className="text-beta font-semibold ml-auto mr-3 hover:text-lightbeta"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Link to="/search">
+                          {" "}
+                          Load More{" "}
+                          <i className="fas fa-angle-double-right"></i>{" "}
+                        </Link>
+                      </motion.button>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {/* to do Here after backend implementation eventState. changes to el.events. */}
+                    {el.event.map((data) =>
+                      data.is_active ? (
+                        <EventCard key={data._id} data={data}></EventCard>
+                      ) : (
+                        ""
+                      )
+                    )}
                   </div>
                 </div>
-                <div className="flex flex-wrap ml-1">
-                  {/* to do Here after backend implementation eventState. changes to el.events. */}
-                  {el.event.map((data) => (
-                    data.is_active?(<EventCard key={data._id} data={data}></EventCard>):""
-                  ))}
-                </div>
-              </div>
-            </section>):""
-          ))}
+              </section>
+            ) : (
+              ""
+            )
+          )}
 
           <section className="pb-4 bg-gray-300 ">
             <div className="container mx-auto px-4">
@@ -305,10 +313,10 @@ export default function Landing() {
                   {" "}
                   <div className="text-2xl m-4 font-bold text-alpha  pt-6">
                     {" "}
-                  Browse Clubs by Category
+                    Browse Clubs by Category
+                  </div>
                 </div>
-                </div>
-                <div className="flex flex-row flex-wrap container p-4 mx-5 ">
+                <div className="flex flex-row flex-wrap container p-4 mx-5">
                   {" "}
                   {categoryState.map((el) => {
                     return (
@@ -318,7 +326,7 @@ export default function Landing() {
                         style={{ outline: "none" }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.9 }}
-                        onClick={()=>SearchFilter(el.category_name)}
+                        onClick={() => SearchFilter(el.category_name)}
                       >
                         {el.category_name}
                       </motion.button>
@@ -359,7 +367,7 @@ export default function Landing() {
                     src={hobbyImg}
                     style={{ maxHeight: "600px" }}
 
-                  // src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                    // src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                   />
                 </div>
                 <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
@@ -369,14 +377,14 @@ export default function Landing() {
                     </div>
                     <h3 className="text-3xl font-semibold">
                       A growing community
-                  </h3>
+                    </h3>
                     <p className="mt-4 text-lg leading-relaxed text-gray-600">
                       The application connects users with their interest to
-                      explore new inspiration and ideas of the related industries.
-                      Focuses on building keen, strong and united communities to
-                      prospore and flourish our interest whether it is career
-                      related or just a healthi hobby
-                  </p>
+                      explore new inspiration and ideas of the related
+                      industries. Focuses on building keen, strong and united
+                      communities to prospore and flourish our interest whether
+                      it is career related or just a healthi hobby
+                    </p>
                     <ul className="list-none mt-6">
                       <li className="py-2">
                         <div className="flex items-center">
@@ -388,7 +396,7 @@ export default function Landing() {
                           <div>
                             <h4 className="text-gray-600">
                               Wide Range of Clubs and Events
-                          </h4>
+                            </h4>
                           </div>
                         </div>
                       </li>
@@ -402,7 +410,7 @@ export default function Landing() {
                           <div>
                             <h4 className="text-gray-600">
                               Free and Simple to Build Club
-                          </h4>
+                            </h4>
                           </div>
                         </div>
                       </li>
@@ -416,7 +424,7 @@ export default function Landing() {
                           <div>
                             <h4 className="text-gray-600">
                               Powerful Nearby Search Engine
-                          </h4>
+                            </h4>
                           </div>
                         </div>
                       </li>

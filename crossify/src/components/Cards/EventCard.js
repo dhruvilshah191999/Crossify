@@ -137,7 +137,7 @@ const EventCard = (props) => {
       style={{
         flex: "1 1 0",
         height: "auto",
-        minWidth: 250,
+        maxWidth: 305,
       }}
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">

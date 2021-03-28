@@ -962,7 +962,6 @@ router.get("/get-interest-data", async function (req, res, next) {
       }
     ])
     .exec((err, data) => {
-      console.log(data);
       if (err) {
         var error = {
           is_error: true,

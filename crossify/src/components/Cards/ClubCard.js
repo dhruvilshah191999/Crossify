@@ -115,7 +115,7 @@ const ClubCard = (props) => {
       style={{
         flex: "1 1 0",
         height: "auto",
-        minWidth: 250,
+        maxWidth: 320,
       }}
     >
       <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
@@ -142,7 +142,7 @@ const ClubCard = (props) => {
             </div>
             <div className="ml-auto flex">
               {" "}
-              <i className="fas fa-user-friends"></i> :{" "}{props.data.max_members}
+              <i className="fas fa-user-friends"></i> : {props.data.max_members}
             </div>
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1 mb-1">
@@ -163,9 +163,11 @@ const ClubCard = (props) => {
             style={{ marginTop: "195px", marginRight: "20px" }}
           >
             <motion.button
-              className={!like
+              className={
+                !like
                   ? "text-red-500 bg-white shadow border border-solid  hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  : "text-white bg-red-500 shadow  hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"}
+                  : "text-white bg-red-500 shadow  hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              }
               type="button"
               style={loginstate ? {} : { cursor: "not-allowed" }}
               onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
