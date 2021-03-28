@@ -15,67 +15,159 @@ var channel_details = require("../modules/channel_details");
 const { ObjectID, ObjectId } = require("bson");
 var {io} = require('../app');
 var router = express.Router();
+router.post('/createRoom',async function(req,res,next){
+  var {club_id,channel_name}=req.body;
+  console.log("in api")
+  var check= club_details.findOne({
+    _id:ObjectId(club_id),
+    channel_list:{$in:channel_name}
+  })
+  await check.exec((err,data)=>{
+    if(err){
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(error);
+    }
+    else if(data===null || data.length===0 ){
+      var channel = new channel_details({
+        club_id:ObjectId(club_id),
+        channel_name:channel_name
+      })
+      channel.save((err,data2)=>{
+        if(err){
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(500).send(error);  
+        }
+        else if(data2){
+          var final =club_details.update({_id:ObjectId(club_id)},{$push:{
+            channel_list:channel._id
+          }})
+          final.exec((err,data3)=>{
+            if(err){
+              var error = {
+                is_error: true,
+                message: err.message,
+              };
+              return res.status(500).send(error);  
+            }
+            else if(data3){
+              console.log(data3);
+              var finaldata={
+                message:'channel created',
+                is_error:false
+              }
+              return res.status(200).send(finaldata);
+            }
+          })
+         
+        }
+      })
+    }
+    else{
+      var error={
+        message:'this room already exists',
+        is_error:true
+      }
+      res.status(403).send(error);
+    }
+  }) 
+})
+// router.get('/getroomName',async function(req,res){
+//   var {room_id}= req.body;
+
+// })
 router.post('/send',async function (req, res) {
-    var { message, user_id, room_id } = req.body;
-    var encryptedMessage=cryptr.encrypt(message);
+    var { messagetext, user_id, room_id,club_id } = req.body;
+    var encryptedMessage=cryptr.encrypt(messagetext);
+    console.log(encryptedMessage);
     var message_obj={
         message:encryptedMessage,
         user_id:ObjectId(user_id),
-        room_id:ObjectId(room_id),
         senttime:new Date()
     }
-    io.on('sendMessage',(message,callback)=>{
-      var message_obj={
-        message:encryptedMessage,
-        user_id:ObjectId(user_id),
-        room_id:ObjectId(room_id),
-        senttime:new Date()
-    }
-        io.to(room_id).emit('message',message_obj)
-        callback();
+    // io.on('sendMessage',(message,callback)=>{
+    //   var message_obj={
+    //     message:encryptedMessage,
+    //     user_id:ObjectId(user_id),
+    //     room_id:ObjectId(room_id),
+    //     senttime:new Date()
+    // }
+    //     io.to(room_id).emit('message',message_obj)
+    //     callback();
+    // })
+    var check = member_details.findOne({
+      club_id:ObjectId(club_id),
+      member_list:{$elemMatch:{user_id:ObjectId(user_id)}}
     })
-    var check = channel_details.findOneAndUpdate(
-      { _id:ObjectId(room_id), users: ObjectId(user_id) },
-      {
-          $push: { 
-              messages: {
-                  message : encryptedMessage,
-                  sendby: ObjectId(user_id)
-              }
-          }
-      },
-      { upsert: true, new: true }
-    );
-    await check.exec((error, data) => {
-        if (error) {
-          var error = {
-          is_error: true,
-          message: error,
-        };
-        return res.status(500).send(error);
-      } else if (data) {
-        var finaldata = {
-          is_error: false,
-          message: 'value inserted succesfully',
-        };
-        return res.status(200).send(finaldata);
-      } else {
+    await check.exec((err,data)=>{
+      if(err){
         var error = {
           is_error: true,
-          message: "you are not part of this room or room doesn't exists",
+          message: err.message,
+        };
+        return res.status(500).send(error);  
+      }
+      else if(data===null || data.length===0){
+        console.log("outer else");
+        var error = {
+          is_error: true,
+          message: "you are not part of this club",
         };
         return res.status(404).send(error);
       }
-    });
+      else{
+        
+        var update = channel_details.update(
+          { _id:ObjectId(room_id)},
+          {
+              $push: { 
+                  messages: {
+                    message:encryptedMessage,
+                    user_id:ObjectId(user_id),
+                    senttime:new Date()
+                  }
+              }
+          },
+          { upsert: true, new: true }
+        );
+        update.exec((err, data2) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(500).send(error);
+          } else if (data2) {
+            var finaldata = {
+              is_error: false,
+              message: 'value inserted succesfully',
+            };
+            return res.status(200).send(finaldata);
+          } else {
+            var error = {
+              is_error: true,
+              message: "you are not part of this room or room doesn't exists",
+            };
+            return res.status(404).send(error);
+          }
+        });
+      }
+    })
+    
 })
 router.get('/getRooms',async function (req, res) {
     var { club_id } = req.body;
     var check = club_details.findOne({ _id: club_id }, ['channel_list']);
-    await check.exec((error, data) => {
-      if (error) {
+    await check.exec((err, data) => {
+      if (err) {
         var error = {
           is_error: true,
-          message: error,
+          message: err.message,
         };
         return res.status(400).send(error);
       } else if (data) {
@@ -123,9 +215,9 @@ router.get('/getParticularroom',async function(req,res){
     })
 })
 router.get('/getAllchat',async function (req, res) {
-    var { user_id, room_id } = req.body;
-    var check = roomModel.findOne(
-      { _id: ObjectId(room_id), users: ObjectId(user_id) },['messages'] 
+    var { club_id, room_id } = req.body;
+    var check = channel_details.findOne(
+      { _id:ObjectId(room_id),club_id: ObjectId(club_id)},['messages'] 
     );
     await check.exec((error,data) => {
       if (error) {

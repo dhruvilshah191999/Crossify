@@ -19,8 +19,7 @@ const channel_exports = require("./modules/channel_details");
 var chatRouter = require("./routes/chat");
 var app = express();
 
-var server = http.createServer(app);
-var io = socketio(server);
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -38,12 +37,15 @@ app.use("/api/filter", filterRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/manage", manageRouter);
 app.use("/users", usersRouter);
-app.use("api/club", clubRouter);
-app.use("api/club/chat",chatRouter);
+app.use("/api/club", clubRouter);
+app.use("/api/club/chat",chatRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
+var server = http.createServer(app);
+var io = socketio(server);
 io.on('connect',(socket)=>{
   console.log('connected with client')
 })

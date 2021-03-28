@@ -38,10 +38,16 @@ router.post("/join-club",async function(req,res,next){
       club_id:ObjectId(club_id),
       level:"member"
     }
-    var check = member_details.findOneAndUpdate({club_id:ObjectId(club_id),member_list:{$nin:{user_object}}},{
+    var check = member_details.update(
+      {
+        club_id:ObjectId(club_id),
+        member_list:{$nin:{user_object}}
+      },{
       $push: { member_list: user_object },
-    })
-    await check.exec((err,data)=>{
+    }
+    )
+    console.log(check)
+    check.exec((err,data)=>{
       if(err){
         var error = {
           is_error: true,
@@ -49,7 +55,8 @@ router.post("/join-club",async function(req,res,next){
         };
         return res.status(501).send(error);
       }
-      else if(data == null || data.length == 0){
+      else if(data === null || data.length === 0){
+          console.log("in outer else if")
           var error={
             is_error:true,
             message:"wrong club details or you are already part of this club"
@@ -57,11 +64,11 @@ router.post("/join-club",async function(req,res,next){
         return res.status(501).send(error);
       }
       else{
-        async()=>{
-        var update = user_details.findOneAndUpdate({_id:ObjectId(user_id),clubs:{$nin:{club_object}}},{
+        
+        var update = user_details.update({_id:ObjectId(user_id),clubs:{$nin:{club_object}}},{
           $push:{clubs:club_object}
         })
-        await update.exec((err,data2)=>{
+        update.exec((err,data2)=>{
           if(err){
             var error = {
               is_error: true,
@@ -69,7 +76,7 @@ router.post("/join-club",async function(req,res,next){
             };
             return res.status(501).send(error);
           }
-          else if(data == null || data.length == 0){
+          else if(data2 == null || data2.length == 0){
             var error={
               is_error:true,
               message:"wrong club details or you are already part of this club"
@@ -84,8 +91,8 @@ router.post("/join-club",async function(req,res,next){
             return res.status(200).send(finaldata);
           }
         })
-        }
       }
+      
     })
 })
 router.post("/leave-club",async function(req,res,next){

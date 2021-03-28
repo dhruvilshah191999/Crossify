@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 const { ObjectID, ObjectId } = require("bson");
 var Schema = require("mongoose").Schema;
-var channel_details = new Schema({
+var channelSchema = new Schema({
     channel_name:{
         type: String,
         required: true,
@@ -10,17 +10,14 @@ var channel_details = new Schema({
         type: ObjectId,
         required: true,
     },
-    users :{
-        type: Array,
-        required:false
-    },
     messages:[
         {
             sendby:ObjectId,
-            senttime: { type: Date, default: Date.now },
-            message:String
+            message:String,
+            senttime: { type: Date, default: Date.now }
+            
         }
     ]
 })
-var channel_exports = mongoose.model('channel_details', channel_details);
+var channel_exports = mongoose.model('channel_details', channelSchema);
 module.exports = channel_exports;

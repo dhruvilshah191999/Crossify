@@ -4,19 +4,29 @@ import io from "socket.io-client";
 import axios from "axios";
 let socket=io();
 export default class RoomTab extends React.Component {
+  
   state = {
     currentTab: 0,
     rooms: [],
   };
-  
   componentDidMount() {
-    useEffect(()=>{
-      fetch('/api/club/chat/getRooms')
-      .then(res => res.json())
-      .then(data => console.log(data));
-
-    })
-    const fetchedRoom = ["C++", "Java", "Python", "WebDev"];
+    //const fetchedRoom=[]
+      
+      // fetch('/api/club/chat/getRooms?club_id=605c51d4ccb6bf2a3c2b5db2')
+      // .then(res => res.json())
+      // .then(data => {console.log(data)   
+      //   const roomIds = data.channel_list;
+      //   for(var i in roomIds){
+      //     fetch(`/api/club/chat/getParticularroom?room_id=${i}`)
+      //     .then(res=>res.json())
+      //     .then(data=>{console.log(data)
+      //       fetchedRoom.push(data.message.channel_name);
+      //     })
+          
+      //   } });
+      
+      
+     const fetchedRoom = ["C++", "Java", "Python", "WebDev"];
     
     this.setState({
       rooms: fetchedRoom,
@@ -30,6 +40,7 @@ export default class RoomTab extends React.Component {
             currentTab: index,
           });
         }}
+        
       >
         <li
           className={
@@ -49,23 +60,23 @@ export default class RoomTab extends React.Component {
   render() {
     async function sendMessage(){
       
-      //socket.emit('sendMessage',)
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        validateStatus: () => true,
-      };
-      var send_data = {
-        club_id: id,
-        token,
-      };
-      const finaldata = await axios.post(
-        "/api/club/chat/send",
-        send_data,
-        config
-      );
+      //socket.emit('sendMessage')
+    //   const config = {
+    //     method: "POST",
+    //     header: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     validateStatus: () => true,
+    //   };
+    //   var send_data = {
+    //     club_id: id,
+    //     token,
+    //   };
+    //   const finaldata = await axios.post(
+    //     "/api/club/chat/send",
+    //     send_data,
+    //     config
+    //   );
     }
     return (
       <>
@@ -82,7 +93,7 @@ export default class RoomTab extends React.Component {
           {/* right side */}
           <div className="w-75  border border-gray-300 rounded-lg relative h-screen">
             <div className="bg-gray-1000 font-semibold text-lg p-4 mx-3 border-b">
-              <h1 className="ml-2">Machine Learning</h1>
+              <h1 className="ml-2">{this.currentTab}</h1>{/*how to put current index */}
             </div>
             <ChatMessage
               username="hackershil"
