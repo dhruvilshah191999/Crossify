@@ -8,10 +8,10 @@ const ClubView = (props) => {
   return (
     <div
       className=" rounded-lg shadow p-2 mr-4 hover:bg-gray-200"
-      style={{ width: 250 }}
+      style={{ flex: "1 1 50%", maxWidth: 350 }}
     >
       <div className="flex flex-row">
-        <div>
+        <div className="flex-shrink-0">
           <img
             src={props.club_img}
             alt="HostedClubImage"
@@ -91,8 +91,7 @@ class ProfileDetails extends Component {
           <div className="flex-col w-1/2 ml-6">
             <div className=" relative w-100 flex flex-row flex-wrap mt-2">
               <div className="text-4xl flex-shrink-0 font-semibold ">
-                {this.state.profile.fname}{" "}
-                {this.state.profile.lname}
+                {this.state.profile.fname} {this.state.profile.lname}
               </div>
               <div className="text-xl  flex-shrink-0 text-gray-700 xl2:mt-4 xl2:ml-2">
                 as{" "}
@@ -210,7 +209,7 @@ class ProfileDetails extends Component {
             <i class="fas fa-users"></i> Clubs
           </div>
           <hr></hr>
-          <div className="p-2 mt-1 flex flex-wrap mb-2">
+          <div className="p-2 mt-1 flex flex-wrap mb-2 mt-2 gap-1">
             {this.state.club.map((el) => (
               <ClubView
                 club_name={el.club_name}

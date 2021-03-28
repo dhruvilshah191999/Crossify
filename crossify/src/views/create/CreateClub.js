@@ -10,6 +10,7 @@ import City from "../auth/states-and-districts.json";
 import dummyPF from "../../assets/img/demopf.png";
 import MultiSelect from "components/Inputs/MultiSelect";
 import UploadPic from "components/Inputs/UploadPic";
+import MultipleInputs from "components/Inputs/MultipleInputs";
 
 function CreateClub(props) {
   const [tags, setTags] = useState([]);
@@ -190,6 +191,11 @@ function CreateClub(props) {
                       </select>
                     </div>
                   </div>
+                  {formData.privacy === "Private" ? (
+                    <MultipleInputs></MultipleInputs>
+                  ) : (
+                    ""
+                  )}
                   <div className="w-full lg:w-12/12 px-4">
                     <div className="relative w-full mb-3">
                       <label
