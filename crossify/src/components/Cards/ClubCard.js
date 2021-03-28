@@ -173,14 +173,19 @@ const ClubCard = (props) => {
             >
               <i className="fas fa-heart"></i>
             </motion.button>
-            <motion.button
-              className="text-blue-500 bg-white shadow border border-solid  hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              type="button"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <CopyToClipboard
+              text={window.location.href + "club/" + props.data._id}
             >
-              <i class="fas fa-share-alt"></i>
-            </motion.button>
+              <motion.button
+                className="text-blue-500 bg-white shadow border border-solid  hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={notifyCopied}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <i class="fas fa-share-alt"></i>
+              </motion.button>
+            </CopyToClipboard>
           </div>
         </div>
       </div>
