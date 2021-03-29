@@ -51,12 +51,11 @@ const Routing = () => {
   var token = localStorage.getItem("jwt");
   return (
     <Switch>
-      <Route path="/admin" component={Admin} />
+      <Route path="/admin/:id" component={Admin} />
       <Route path="/landing" exact component={Landing} />
       <Route path="/" exact component={Index} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/clubsearch" exact component={ClubSearchPage} />
-      <Route path="/club/:id" exact component={ClubPage} />
       <Route path="/playground" exact component={PlayGround} />
       <Route path="/createclub" exact component={CreateClub} />
       <Route path="/auth" component={Auth} />
@@ -73,6 +72,12 @@ const Routing = () => {
             path="/events/event=:id"
             component={EventPage}
           />
+          <PrivateRoute
+            authed={false}
+            path="/club/:id"
+            exact
+            component={ClubPage}
+          />
         </>
       ) : (
         <>
@@ -86,6 +91,12 @@ const Routing = () => {
             authed={true}
             path="/events/event=:id"
             component={EventPage}
+          />
+          <PrivateRoute
+            authed={true}
+            path="/club/:id"
+            exact
+            component={ClubPage}
           />
         </>
       )}

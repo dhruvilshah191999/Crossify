@@ -7,6 +7,9 @@ import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
+import { store } from "react-notifications-component";
+import { notifyCopied } from "notify";
+import { notifyClubLiked } from "notify";
 import Moment from "moment";
 import JoinClubButton from "components/SweetAlerts/JoinClubButton";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
@@ -16,12 +19,14 @@ function ClubPage(props) {
   var { id } = useParams();
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setloading] = useState(false);
+  const [isRequest, setRequest] = useState(false);
+  const [isPublic, setPublic] = useState(true);
+  const [isJoin, setIsJoin] = useState(false);
   const [like, setLike] = useState(false);
   const [clubData, setClubData] = useState([]);
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
     async function event_details() {
       const config = {
         method: "POST",
@@ -44,11 +49,140 @@ function ClubPage(props) {
       } else {
         setClubData(finaldata.data.data[0]);
         setIsAdmin(finaldata.data.isAdmin);
+        if (finaldata.data.isAdmin) {
+          setIsJoin(true);
+        }
+          if (finaldata.data.data[0].status == "Private") {
+            setPublic(false);
+          }
         setTimeout(setloading(true), 1000);
       }
     }
+
+    async function fetchData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+        club_id: id,
+      };
+      const finaldata = await axios.post(
+        "/api/club/checklikes",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setLike(finaldata.data.Like);
+      }
+    }
+
+    async function CheckMember() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+        club_id: id,
+      };
+      const finaldata = await axios.post(
+        "/api/club/IsMemberExist",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setIsJoin(finaldata.data.join);
+      }
+    }
+
+    async function CheckRequestMember() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+        club_id: id,
+      };
+      const finaldata = await axios.post(
+        "/api/club/IsMemberRequestExist",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setRequest(finaldata.data.request);
+      }
+    }
+    fetchData();
+    CheckMember();
+    CheckRequestMember();
     event_details();
   }, []);
+
+  const addlike = async (e) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      token: token,
+      club_id: id,
+    };
+    const finaldata = await axios.post("/api/club/addlikes", object, config);
+    if (finaldata.data.is_error) {
+      store.addNotification({
+        title: "Something went wrong",
+        message: "Cannot add to favourite",
+        type: "danger",
+        insert: "top",
+        container: "bottom-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          // onScreen: true,
+        },
+      });
+    } else {
+      notifyClubLiked();
+      setLike(true);
+    }
+  };
+
+  const deletelike = async (e) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      token: token,
+      club_id: id,
+    };
+    const finaldata = await axios.post("/api/club/removelikes", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      setLike(false);
+    }
+  };
   const openModal = () => {
     ModalManager.open(<MyModal onRequestClose={() => true} club_id={id} />);
   };
@@ -107,8 +241,13 @@ function ClubPage(props) {
                 <div className="flex flex-row justify-center my-2">
                   <div className="w-6/12">
                     <motion.button
-                      className="w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      className={
+                        !like
+                          ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      }
                       type="button"
+                      onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -127,7 +266,7 @@ function ClubPage(props) {
                     </motion.button>
                   </div>
                 </div>
-                <div className="flex justify-center">
+                <div className={isJoin ? "flex justify-center" : "hidden"}>
                   <button
                     className=" w-full  hover:bg-lightbeta shadow border border-solid  bg-beta text-white active:bg-lightbeta font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
@@ -137,16 +276,17 @@ function ClubPage(props) {
                   </button>
                 </div>
 
-                <div className="flex justify-center">
-                  {/* <button
-                    className=" w-full  hover:bg-lightalpha shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <i class="fas fa-user-plus"></i> Join
-                  </button> */}
+                <div
+                  //className={isAdmin ? "hidden" : "flex justify-center"}
+                  className="flex justify-center"
+                >
                   <JoinClubButton
-                    clubName={props.clubName}
-                    designation="Member"
+                    clubName={clubData.club_name}
+                    isPublic={isPublic}
+                    club_id={id}
+                    isJoin={isJoin}
+                    question={clubData.question}
+                    isRequest={isRequest}
                   />{" "}
                 </div>
               </div>
@@ -160,6 +300,7 @@ function ClubPage(props) {
                 description={clubData.description}
                 rules={clubData.rules}
                 joining_criteria={clubData.joining_criteria}
+                isJoin={isJoin}
               />
             </div>
           </div>

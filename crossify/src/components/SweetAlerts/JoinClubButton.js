@@ -9,14 +9,12 @@ export default class SweetAlertModal extends Component {
     super(props);
     this.state = {
       alert: null,
-      isJoined: this.props.check,
-      club_id: this.props.clubid,
-      isPublic: 1,
-      questions: [
-        "Why Do you want to join this Club ?",
-        "What skillsets do you posses ?",
-        "Any Achievements related to IT industry.",
-      ],
+      isJoined: this.props.isJoin,
+      club_id: this.props.club_id,
+      isRequested:this.props.isRequest,
+      isPublic: this.props.isPublic,
+      isReply:[],
+      questions:this.props.question,
       answers: [],
     };
   }
@@ -42,16 +40,17 @@ export default class SweetAlertModal extends Component {
     };
     console.log(send_data);
     const finaldata = await axios.post(
-      "/api/club/join-club",
+      "/api/club/AddClubMember",
       send_data,
       config
     );
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      this.setState({ alert: null, isJoined: finaldata.data.participated });
+      window.location.replace("/club/" + this.state.club_id);
     }
   };
+
   removeThisMember = async () => {
     const token = localStorage.getItem("jwt");
     const config = {
@@ -65,21 +64,18 @@ export default class SweetAlertModal extends Component {
       token,
       club_id: this.state.club_id,
     };
-    console.log(send_data);
     const finaldata = await axios.post(
-      "/api/club/undo-join-club",
+      "/api/club/RemoveClubMember",
       send_data,
       config
     );
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      this.setState({
-        alert: null,
-        isJoined: finaldata.data.participated || false,
-      });
+      window.location.replace("/club/" + this.state.club_id);
     }
   };
+
   successJoined() {
     const getAlert = () => (
       <SweetAlert
@@ -102,14 +98,70 @@ export default class SweetAlertModal extends Component {
       isJoined: true,
     });
   }
-  onCancleRequest = () => {
-    //todo GOLU cancle Request
-    this.setState({ alert: null, isRequested: false });
+
+  updateValues = (value, index) => {
+    var ans = this.state.answers;
+    var que = this.state.questions;
+    var reply = this.state.isReply;
+    var object = {
+      question: que[index],
+      answer:value,
+    }
+    reply[index]=object
+    this.setState({
+      isReply: reply,
+    });
   };
 
-  onRecievedInput = () => {
-    //todo GOLU grab the question and answer here and post it
-    this.setState({ alert: null, isRequested: true, isJoined: false });
+  onCancleRequest = async () => {
+    const token = localStorage.getItem("jwt");
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      token,
+      club_id: this.state.club_id,
+    };
+    const finaldata = await axios.post(
+      "/api/club/RemoveRequest",
+      send_data,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.replace("/club/" + this.state.club_id);
+    }
+  };
+
+  onRecievedInput = async () => {
+    const token = localStorage.getItem("jwt");
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      token,
+      club_id: this.state.club_id,
+      isReply:this.state.isReply
+    };
+    const finaldata = await axios.post(
+      "/api/club/AddRequestMember",
+      send_data,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.replace("/club/" + this.state.club_id);
+    }
   };
   requestForJoining() {
     const getAlert = () => (
@@ -149,10 +201,10 @@ export default class SweetAlertModal extends Component {
                       <textarea
                         rows="2"
                         className="bg-gray-100 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                        defaultValue={this.state.answers[index]}
-                        onChange={(e) => {
-                          this.setState({ answers: e.target.value });
-                        }}
+                        value={this.state.answers[index]}
+                        onChange={(e) =>
+                          this.updateValues(e.target.value, index)
+                        }
                       />
                     </div>
                   </div>
@@ -230,8 +282,6 @@ export default class SweetAlertModal extends Component {
             onClick={() => this.removeRegisteration()}
           >
             <i class="fas fa-file-signature"></i> Member
-            {/* //todo GOLU here just
-           // get the designation of the person and put it here */}
           </button>
         ) : this.state.isRequested ? (
           <button

@@ -14,7 +14,7 @@ var memberSchema = new Schema({
     is_active: {
         type: Boolean,
         default:true
-    }
+    },
 });
 
 var member_exports = mongoose.model('member_details', memberSchema);

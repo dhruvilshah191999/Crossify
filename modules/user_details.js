@@ -86,11 +86,11 @@ var user_details = new Schema({
   },
   clubs: {
     type: Array,
-    required:false
+    required: false,
   },
   events: {
     type: Array,
-    required:false
+    required: false,
   },
   is_active: {
     type: Boolean,
@@ -98,12 +98,16 @@ var user_details = new Schema({
   },
   about_me: {
     type: String,
-    required:false
+    required: false,
   },
   social_media: {
     type: Object,
-    required:false
-  }
+    required: false,
+  },
+  club_answer: {
+    type: Array,
+    required: false,
+  },
 });
 
 user_details.methods.generateAuthToken = function () {

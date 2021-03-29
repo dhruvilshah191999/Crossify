@@ -30,3 +30,19 @@ export const notifyLiked = () => {
     },
   });
 };
+
+export const notifyClubLiked = () => {
+  store.addNotification({
+    title: "Added to Favourites !",
+    message: "You can access with ease in your profile.",
+    type: "danger",
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animate_animated", "animate_fadeIn"],
+    animationOut: ["animate_animated", "animate_fadeOut"],
+    dismiss: {
+      duration: 3000,
+      // onScreen: true,
+    },
+  });
+};

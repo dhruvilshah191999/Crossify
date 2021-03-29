@@ -104,10 +104,10 @@ class ProfileDetails extends Component {
             </div>
             <div className="flex flex-wrap">
               <div className="text-gray-600 text-lg flex-shrink-0">
-                {this.props.occupation}&nbsp; | &nbsp;
+                {this.state.profile.occupation}&nbsp; | &nbsp;
               </div>
               <div className="text-gray-600 text-lg flex-shrink-0">
-                Joined {this.props.joining_date}
+                Joined {Moment(this.state.profile.date).format("MMM YYYY")}
               </div>
             </div>
             <div className="flex">
