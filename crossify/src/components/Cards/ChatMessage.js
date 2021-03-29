@@ -6,15 +6,12 @@ const ChatMessage = (props) => {
         <div className="ml-2 w-12 h-12 rounded-full flex-shrink-0">
           <img
             src={props.profilePic}
-            alt={props.username}
             className="w-12 h-12 rounded-full flex-shrink-0"
           ></img>
         </div>
         <div className="flex flex-col">
           <div className="flex ml-4">
-            <div className="font-bold text-base mr-2">
-              {props.username.fname} {props.username.lname}
-            </div>
+            <div className="font-bold text-base mr-2">{props.username}</div>
             <div className="font-semibold text-gray-600 text-xs pt-1">
               {Moment(props.time).format("LLL")}
             </div>

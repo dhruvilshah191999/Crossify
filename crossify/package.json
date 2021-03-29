@@ -21,7 +21,7 @@
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
     "http-proxy-middleware": "^1.0.6",
-    "mapbox-gl": "^2.1.1",
+    "mapbox-gl": "^2.2.0",
     "match-sorter": "^6.3.0",
     "materialize-css": "^1.0.0-rc.2",
     "mdbreact": "^5.0.1",

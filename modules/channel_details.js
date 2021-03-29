@@ -12,7 +12,7 @@ var channelSchema = new Schema({
     },
     messages:[
         {
-            sendby:ObjectId,
+            user_id:ObjectId,
             message:String,
             senttime: { type: Date, default: Date.now }
             
