@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
+import { PickerOverlay, PickerDropPane } from "filestack-react";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class SweetAlertModal extends Component {
       alert: null,
       file: null,
       description: null,
+      overlay: false,
     };
   }
   componentDidMount() {
@@ -23,13 +25,20 @@ export default class SweetAlertModal extends Component {
     });
   };
   onRecievedInput = () => {
-    const updatedQ = this.state.file;
-    const updatedA = this.state.description;
-    //todo GOLU we have file and description in state you just make any axios request to update the current value
+    // const updatedQ = this.state.file;
+    // const updatedA = this.state.description;
+    // //todo GOLU we have file and description in state you just make any axios request to update the current value
+    const uploadOverlay = (
+      <PickerOverlay
+        apikey="ANZJzty1sQkCaLmKAzpe3z"
+        onSuccess={(res) => console.log(res)}
+      />
+    );
     this.setState({
-      alert: null,
+      alert: uploadOverlay,
       file: null,
       description: null,
+      overlay: true,
     });
   };
   confirmProcess = () => {
@@ -42,7 +51,7 @@ export default class SweetAlertModal extends Component {
         customClass="text-black"
         success
         showCancel
-        confirmBtnText="Upload"
+        confirmBtnText="Select My File"
         confirmBtnBsStyle="success"
         title="Are you sure?"
         focusCancelBtn
@@ -60,22 +69,6 @@ export default class SweetAlertModal extends Component {
           <form>
             <div className="flex flex-wrap ">
               <div className="w-full  px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    File
-                  </label>
-                  <input
-                    type="file"
-                    className="bg-gray-100 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue={this.state.file}
-                    onChange={(e) => {
-                      this.setState({ file: e.target.value });
-                    }}
-                  />
-                </div>
               </div>
               <div className="w-full px-4">
                 <div className="relative w-full mb-3">
@@ -83,7 +76,7 @@ export default class SweetAlertModal extends Component {
                     className="block uppercase text-gray-700 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Description
+                    Describe Your File
                   </label>
                   <textarea
                     rows="4"

@@ -187,7 +187,9 @@ function ClubPage(props) {
   const openModal = () => {
     ModalManager.open(<MyModal onRequestClose={() => true} club_id={id} />);
   };
-
+  const gotoAdmin = () => {
+    window.location.replace("/admin/" + id);
+  };
   if (loading) {
     return (
       <>
@@ -211,7 +213,10 @@ function ClubPage(props) {
                   {/* //todo GOLU just redirect to the /admin page for control or
                   manage this club (ONLY IF HE IS MOD OR CREATOR OF THE CLUB) */}
                   {isAdmin ? (
-                    <button className="float-right text-lg">
+                    <button
+                      className="float-right text-lg"
+                      onClick={() => gotoAdmin()}
+                    >
                       <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
                     </button>
                   ) : (

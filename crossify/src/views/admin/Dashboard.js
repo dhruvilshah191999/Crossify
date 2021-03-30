@@ -1,7 +1,7 @@
 import React from "react";
 
 // components
-
+import Sidebar from "components/Sidebar/ManageClubSidebar.js";
 import CardLineChart from "components/Charts/CardLineChart.js";
 import CardBarChart from "components/Charts/CardBarChart.js";
 import CardRadarChart from "components/Charts/CardRadarChart.js";
@@ -12,6 +12,7 @@ import CardLocationChart from "components/Charts/CardLocationChart";
 export default function Dashboard() {
   return (
     <>
+      <Sidebar />
       {/* <StatsBox /> */}
       <div className="flex flex-wrap">
         <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
