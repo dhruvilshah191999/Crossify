@@ -8,7 +8,7 @@ const ClubView = (props) => {
   return (
     <div
       className=" rounded-lg shadow p-2 mr-4 hover:bg-gray-200"
-      style={{ width: 250 }}
+      style={{ flex: "1 1 50%", maxWidth: 350 }}
     >
       <div className="flex flex-row">
         <div>
