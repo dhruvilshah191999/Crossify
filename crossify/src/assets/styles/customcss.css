@@ -370,6 +370,9 @@
 .max-w-370-px {
   max-width: 370px;
 }
+.max-w-25ch{
+  max-width: 25ch;
+}
 .w-800px {
   width: 800px !important;
 }

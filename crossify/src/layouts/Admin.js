@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // components
 
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
-import Sidebar from "components/Sidebar/ManageClubSidebar.js";
 import HeaderStats from "components/Headers/StatsBox.js";
 import FooterAdmin from "components/Footers/FooterAdmin.js";
 
@@ -23,7 +22,6 @@ import RequestsList from "views/admin/RequestsForJoin";
 export default function Admin() {
   return (
     <>
-      <Sidebar />
       <div className="relative md:ml-64 bg-gray-200">
         <AdminNavbar />
         {/* Header */}

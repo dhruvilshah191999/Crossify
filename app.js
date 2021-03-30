@@ -12,6 +12,7 @@ var usersRouter = require("./routes/users");
 var clubRouter = require("./routes/clubs");
 var profileRouter = require("./routes/profile");
 var manageRouter = require("./routes/manage");
+var adminRouter = require('./routes/admin');
 const reports_exports = require("./modules/reports_details");
 
 var app = express();
@@ -33,6 +34,7 @@ app.use("/api/profile", profileRouter);
 app.use("/api/manage", manageRouter);
 app.use("/users", usersRouter);
 app.use("/api/club", clubRouter);
+app.use("/api/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
