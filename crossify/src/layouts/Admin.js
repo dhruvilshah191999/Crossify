@@ -30,16 +30,16 @@ export default function Admin() {
         <HeaderStats />
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           <Switch>
-            <Route path="/admin/dashboard" exact component={Dashboard} />
-            <Route path="/admin/maps" exact component={Maps} />
-            <Route path="/admin/settings" exact component={Settings} />
-            <Route path="/admin/events" exact component={EventsTable} />
-            <Route path="/admin/memberlist" exact component={MemberList} />
-            <Route path="/admin/rooms" exact component={ManageRooms} />
-            <Route path="/admin/files" exact component={ManageFiles} />
-            <Route path="/admin/media" exact component={ManageMedia} />
-            <Route path="/admin/requests" exact component={RequestsList} />
-            <Redirect from="/admin" to="/admin/dashboard" />
+            <Route path="/admin/dashboard/:id" exact component={Dashboard} />
+            <Route path="/admin/maps/:id" exact component={Maps} />
+            <Route path="/admin/settings/:id" exact component={Settings} />
+            <Route path="/admin/events/:id" exact component={EventsTable} />
+            <Route path="/admin/memberlist/:id" exact component={MemberList} />
+            <Route path="/admin/rooms/:id" exact component={ManageRooms} />
+            <Route path="/admin/files/:id" exact component={ManageFiles} />
+            <Route path="/admin/media/:id" exact component={ManageMedia} />
+            <Route path="/admin/requests/:id" exact component={RequestsList} />
+            <Redirect from="/admin/:id" to="/admin/dashboard/:id" />
           </Switch>
           <FooterAdmin />
         </div>

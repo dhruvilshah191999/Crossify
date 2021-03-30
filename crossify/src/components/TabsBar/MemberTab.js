@@ -1,77 +1,6 @@
 import MemberUserDropdown from "components/Dropdowns/MemberUserDropdown";
-
+import axios from "axios";
 var React = require("react");
-let CONTACTS = [
-  {
-    id: 1,
-    name: "Natarajah",
-    designation: "Moderator",
-    image: "http://accounts-cdn.9gag.com/media/avatar/14368888_100_1.jpg",
-  },
-  {
-    id: 2,
-    name: "Krot",
-    designation: "Admin",
-    image:
-      "http://forums.animeboston.com/download/file.php?avatar=11355_1455595397.png",
-  },
-  {
-    id: 3,
-    name: "Mandala",
-    designation: "0975149873",
-    image: "http://avatars-cdn.9gag.com/avatar/erickson8903_14899765_100.jpg",
-  },
-  {
-    id: 4,
-    name: "Shiva",
-    designation: "Member",
-    image:
-      "https://38.media.tumblr.com/4249a67e76729e9126ef3f70e741c323/tumblr_inline_mixcyvIPd81qz4rgp.jpg",
-  },
-  {
-    id: 5,
-    name: "Ashvattha",
-    designation: "Member",
-    image:
-      "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
-  },
-  {
-    id: 6,
-    name: "Ashvattha",
-    designation: "Member",
-    image:
-      "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
-  },
-  {
-    id: 7,
-    name: "Ashvattha",
-    designation: "Member",
-    image:
-      "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
-  },
-  {
-    id: 8,
-    name: "Ashvattha",
-    designation: "Member",
-    image:
-      "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
-  },
-  {
-    id: 9,
-    name: "Ashvattha",
-    designation: "Member",
-    image:
-      "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
-  },
-  {
-    id: 10,
-    name: "Ashvattha",
-    designation: "Member",
-    image:
-      "http://supertalk.superfuture.com/uploads/profile/photo-thumb-142296.jpg?_r=1424512169",
-  },
-];
-
 class Contact extends React.Component {
   render() {
     return (
@@ -88,9 +17,9 @@ class Contact extends React.Component {
             <div class="text-gray-700 font-semibold">{this.props.name}</div>
             <div class="text-gray-600 font-thin">{this.props.phone}</div>
           </div>
-          <div class="text-red-400 mr-4">
+          {/*<div class="text-red-400 mr-4">
             <MemberUserDropdown />
-          </div>
+            </div>*/}
         </div>
         <hr class="boder-b-0 my-4" />
       </>
@@ -103,29 +32,44 @@ class ContactList extends React.Component {
     super(props);
     this.state = {
       displayedContacts: [],
+      finalContacts:[],
       currentTab: 0,
       members: [],
       moderator: [],
+      club_id:this.props.club_id
     };
   }
 
-  componentDidMount() {
-    //todo get the memberlist by axios
-
-    const mymoderator = CONTACTS.filter(
-      (el) => el.designation === "Moderator" || el.designation === "Admin"
+  async componentDidMount() {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      club_id: this.state.club_id,
+    };
+    const finaldata = await axios.post(
+      "/api/club/GetMembers",
+      send_data,
+      config
     );
-    const mymembers = CONTACTS.filter((el) => el.designation === "Member");
-    this.setState({
-      displayedContacts: CONTACTS,
-      members: mymembers,
-      moderator: mymoderator,
-    });
-    console.log(this.state);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      this.setState({
+        displayedContacts: finaldata.data.data,
+        finalContacts:finaldata.data.data,
+        members: finaldata.data.members,
+        moderator: finaldata.data.moderator,
+      });
+    }
   }
   searchHandler = (event) => {
     let searcjQery = event.target.value.toLowerCase(),
-      displayedContacts = this.state.displayedContacts.filter((el) => {
+      displayedContacts = this.state.finalContacts.filter((el) => {
         let searchValue = el.name.toLowerCase();
         let authority = el.designation.toLowerCase();
         return (

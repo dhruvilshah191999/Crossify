@@ -360,7 +360,7 @@ router.post("/event-details", async function (req, res, next) {
 
 router.post("/checklikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
-  var checks = event_details.find({
+  var checks = event_details.findOne({
     _id: ObjectId(event_id),
     likes: ObjectId(req.user._id),
     is_active: 1,
@@ -372,7 +372,7 @@ router.post("/checklikes", auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if(data2.length!=0){
+    } else if(data2){
       var finaldata = {
         Like:true,
         is_error: false,

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Moment from "moment";
 import { useParams } from "react-router";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import Navbar from "components/Navbars/ClubNavbar";
 import dance_cat from "assets/img/travel_cat.jpg";
 import MapContainer from "components/Maps/ViewOnlyMap";
@@ -12,6 +11,7 @@ import JoinEventButton from "components/SweetAlerts/JoinEventButton";
 import ReportEventButton from "components/SweetAlerts/ReportEventButton";
 import { store } from "react-notifications-component";
 import { motion } from "framer-motion";
+import BigShareButton from "components/SweetAlerts/BigShareButton";
 
 const Tag = (props) => {
   return (
@@ -264,10 +264,11 @@ export default function EventPage(props) {
                   </div>
                 </div>
                 <div className="mt-6">
-                  <div className="flex flex-col ml-1">
+                  <div className="flex flex-col ml-1 mb-1">
                     <div>
                       <span className="font-semibold "> Hosted By :</span>
                     </div>
+                    {/* // ! setup link here to redirect to ClubPage */}
                     <div className="flex flex-row mt-1">
                       <div>
                         <img
@@ -281,6 +282,7 @@ export default function EventPage(props) {
                           {eventdetails.club_details[0].club_name}
                         </div>
                         <div className="text-sm">
+                          {/* // ! put real data here */}
                           {props.hostedByPrivacy} Club
                         </div>
                       </div>
@@ -306,17 +308,12 @@ export default function EventPage(props) {
                 </div>
                 &nbsp;
                 <div className="w-6/12 self-end">
-                  <CopyToClipboard text={window.location.href}>
-                    <motion.button
-                      className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={notifyCopied}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <i class="fas fa-share-alt"></i> Share
-                    </motion.button>
-                  </CopyToClipboard>
+                  <BigShareButton
+                    shareUrl={window.location.href}
+                    title={eventdetails.event_name}
+                    description={eventdetails.description}
+                    tags={eventdetails.tags}
+                  ></BigShareButton>
                 </div>
               </div>
               <div className="flex justify-center mt-2">
@@ -379,7 +376,7 @@ export default function EventPage(props) {
                   ""
                 )}
               </div>
-
+              {/* // ! showing FAQ even tho there is no FAQs */}
               <div className="flex flex-col lg:flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   FAQs <br />
@@ -389,24 +386,28 @@ export default function EventPage(props) {
                   className="mt-1 text-lg  lg:w-3/4 leading-relaxed"
                   style={{ overflowY: "auto", maxHeight: "400px" }}
                 >
-                  {eventdetails.faq.map((el, i) => {
-                    if (el.privacy == "public" && el.status == "answered") {
-                      if (i == 0) {
+                  {eventdetails.faq.length ? (
+                    eventdetails.faq.map((el, i) => {
+                      if (el.privacy == "public" && el.status == "answered") {
+                        if (i == 0) {
+                          return (
+                            <details>
+                              <summary className="pt-0">{el.question}</summary>
+                              <p>{el.answer}</p>
+                            </details>
+                          );
+                        }
                         return (
                           <details>
-                            <summary className="pt-0">{el.question}</summary>
+                            <summary>{el.question}</summary>
                             <p>{el.answer}</p>
                           </details>
                         );
                       }
-                      return (
-                        <details>
-                          <summary>{el.question}</summary>
-                          <p>{el.answer}</p>
-                        </details>
-                      );
-                    }
-                  })}
+                    })
+                  ) : (
+                    <i> Nothing added Yet.</i>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col lg:flex-row py-4">

@@ -570,7 +570,7 @@ router.post("/get-all-reports",auth, async function (req, res, next) {
       }
       else {
         var finaldata = {
-          data: null,
+          data: [],
           is_error: false,
           message: "Data Send",
         };

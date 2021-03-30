@@ -11,6 +11,10 @@ var clubSchema = new Schema({
     type: String,
     required: true,
   },
+  question: {
+    type: Array,
+    required:false,
+  },
   creator_id: {
     type: ObjectId,
     required: true,

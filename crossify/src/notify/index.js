@@ -37,9 +37,9 @@ export const notifyClubLiked = () => {
     message: "You can access with ease in your profile.",
     type: "danger",
     insert: "top",
-    container: "top-left",
-    animationIn: ["animate__animated", "animate__fadeIn"],
-    animationOut: ["animate__animated", "animate__fadeOut"],
+    container: "top-right",
+    animationIn: ["animate_animated", "animate_fadeIn"],
+    animationOut: ["animate_animated", "animate_fadeOut"],
     dismiss: {
       duration: 3000,
       // onScreen: true,

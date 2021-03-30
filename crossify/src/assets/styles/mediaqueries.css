@@ -44,6 +44,9 @@
   .lg\:mb-0 {
     margin-bottom: 0rem;
   }
+  .lg\:minH80 {
+    min-height: 80vh;
+  }
 }
 
 @media (min-width: 1450px) {

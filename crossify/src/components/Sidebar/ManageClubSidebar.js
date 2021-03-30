@@ -124,7 +124,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/settings"
+                  to="/admin/settings/2"
                 >
                   <i
                     className={
@@ -201,7 +201,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/events"
+                  to="/admin/events/2"
                 >
                   <i
                     className={
