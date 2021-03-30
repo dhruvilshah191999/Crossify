@@ -7,6 +7,7 @@
 var { app } = require('../app');
 var debug = require('debug')('final-project:server');
 var http = require('http');
+var cors = require('cors');
 var socketio = require('socket.io');
 var socketapi = require('../socketapi');
 /**
@@ -15,14 +16,19 @@ var socketapi = require('../socketapi');
 
 var port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
-
+app.use(cors());
 /**
  * Create HTTP server.
  */
 
 var server = http.createServer(app);
 
-socketapi.io.listen(server);
+socketapi.io.attach(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+});
 
 /**
  * Listen on provided port, on all network interfaces.

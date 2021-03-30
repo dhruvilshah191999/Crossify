@@ -22,6 +22,7 @@ export default class RoomTab extends React.Component {
     var sendData = {
       club_id: "605c51d4ccb6bf2a3c2b5db2",
     };
+    var club_id = "605c51d4ccb6bf2a3c2b5db2";
     const config = {
       method: "POST",
       header: {
@@ -38,6 +39,12 @@ export default class RoomTab extends React.Component {
     const listOfChannels = allRoomsInfo.data.data.map((el) => el.channel_name);
     const msgs = allRoomsInfo.data.data[0].messages;
 
+    socket.emit("join", { token, club_id }, (error) => {
+      if (error) {
+        alert(error);
+      }
+    });
+
     this.setState({
       rooms: listOfChannels,
       curRoomMsgs: msgs,
@@ -47,6 +54,7 @@ export default class RoomTab extends React.Component {
 
   renderMsgs = () => {
     const msgs = this.state.curRoomMsgs;
+
     msgs.map(({ user_id, message, senttime }, index) => {
       if (!msgs[index].username) {
         const config = {
@@ -66,17 +74,19 @@ export default class RoomTab extends React.Component {
           });
       }
     });
-    socket.on("Message", (message, user_id, username, profilePic, senttime) => {
-      var socketMessage = {
-        message: message,
-        user_id: user_id,
-        username: username,
-        profilePic: profilePic,
-        senttime: senttime,
-      };
-      msgs.push(socketMessage);
-      console.log("socket data received");
-    });
+    socket
+      .off("Message")
+      .on("Message", ({ message, user_id, username, profilePic, senttime }) => {
+        var socketMessage = {
+          message: message,
+          user_id: user_id,
+          username: username,
+          profilePic: profilePic,
+          senttime: senttime,
+        };
+        console.log("socket data received");
+        msgs.push(socketMessage);
+      });
     return msgs.map(({ message, username, profilePic, senttime }) => (
       <ChatMessage
         message={message}
@@ -98,6 +108,7 @@ export default class RoomTab extends React.Component {
       <a
         onClick={() => {
           const val = this.state.database.data[index].messages;
+
           this.setState({
             currentTab: index,
             curRoomMsgs: val,
@@ -118,30 +129,30 @@ export default class RoomTab extends React.Component {
     ));
   };
 
-  renderChats = () => {
-    const index = this.state.currentTab;
-    const roomInfo = this.state.database[index];
-    console.log(roomInfo);
-    const curRoom = roomInfo.data.message.channel_name;
-    const msgs = roomInfo.data.message.messages;
+  // renderChats = () => {
+  //   const index = this.state.currentTab;
+  //   const roomInfo = this.state.database[index];
+  //   console.log(roomInfo);
+  //   const curRoom = roomInfo.data.message.channel_name;
+  //   const msgs = roomInfo.data.message.messages;
 
-    msgs.map(({ user_id, message, senttime }, index) => {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        validateStatus: () => true,
-      };
-      const userdata = axios.post(
-        "/api/profile/get-user-profile",
-        { user_id },
-        config
-      );
-      console.log("userdata:", userdata);
-      //msgs[index].username=userdata.
-    });
-  };
+  //   msgs.map(({ user_id, message, senttime }, index) => {
+  //     const config = {
+  //       method: "POST",
+  //       header: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       validateStatus: () => true,
+  //     };
+  //     const userdata = axios.post(
+  //       "/api/profile/get-user-profile",
+  //       { user_id },
+  //       config
+  //     );
+  //     console.log("userdata:", userdata);
+  //     //msgs[index].username=userdata.
+  //   });
+  // };
   getMessageText = (event) => {
     this.setState({
       messagetoSend: event.target.value,
