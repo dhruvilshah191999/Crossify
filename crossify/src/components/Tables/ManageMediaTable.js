@@ -23,6 +23,7 @@ const handleDownload = (url, filename) => {
       responseType: "blob",
     })
     .then((res) => {
+      console.log(res);
       fileDownload(res.data, filename);
     });
 };

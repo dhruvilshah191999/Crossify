@@ -58,7 +58,9 @@ export default function EventPage(props) {
         ) {
           SetIsFull(true);
         }
-        setTimeout(setloading(true), 1500);
+        setTimeout(() => {
+          setloading(true);
+        }, 1000);
       }
     }
 
@@ -283,7 +285,7 @@ export default function EventPage(props) {
                         </div>
                         <div className="text-sm">
                           {/* // ! put real data here */}
-                          {props.hostedByPrivacy} Club
+                          {eventdetails.club_details[0].status} Club
                         </div>
                       </div>
                     </div>
@@ -386,7 +388,7 @@ export default function EventPage(props) {
                   className="mt-1 text-lg  lg:w-3/4 leading-relaxed"
                   style={{ overflowY: "auto", maxHeight: "400px" }}
                 >
-                  {eventdetails.faq.length ? (
+                  {eventdetails.faq.some((cur) => cur == "public") ? (
                     eventdetails.faq.map((el, i) => {
                       if (el.privacy == "public" && el.status == "answered") {
                         if (i == 0) {

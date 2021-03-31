@@ -144,9 +144,11 @@ export default class GridGallery extends Component {
     isVisible: false,
     slide: 0,
     photos: [],
+    loading: false,
   };
   componentDidMount() {
     this.setState({ photos: images });
+    this.setState({loading:true})
   }
   showSlide = (slide) => {
     this.setState({
@@ -160,18 +162,20 @@ export default class GridGallery extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <Lightbox
-          toggler={this.state.isVisible}
-          slide={this.state.slide}
-          sources={this.state.photos.map((el) => el.url)}
-        />
-        <MyGallery
-          images={this.state.photos}
-          handleClick={this.showSlide}
-        ></MyGallery>
-      </div>
-    );
+      return (
+        <div>
+          <Lightbox
+            toggler={this.state.isVisible}
+            slide={this.state.slide}
+            sources={this.state.photos.map((el) => el.url)}
+          />
+          {this.state.loading && (
+            <MyGallery
+              images={this.state.photos}
+              handleClick={this.showSlide}
+            ></MyGallery>
+          )}
+        </div>
+      );
   }
 }

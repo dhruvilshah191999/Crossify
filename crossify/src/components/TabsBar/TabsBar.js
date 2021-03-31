@@ -142,7 +142,7 @@ const Tabs = (props) => {
                   />
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                  <EventTab />
+                  <EventTab club_id={props.club_id} />
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                   {props.isJoin ? <RoomTab /> : ""}
@@ -154,7 +154,7 @@ const Tabs = (props) => {
                   <PhotosTab />
                 </div>
                 <div className={openTab === 6 ? "block" : "hidden"} id="link3">
-                  {props.isJoin ? <FilesTab /> : ""}
+                  {props.isJoin ? <FilesTab club_id={props.club_id} /> : ""}
                 </div>
               </div>
             </div>

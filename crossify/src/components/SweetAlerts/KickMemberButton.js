@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
+import axios from "axios";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
@@ -7,6 +8,8 @@ export default class SweetAlertModal extends Component {
 
     this.state = {
       alert: null,
+      club_id: this.props.club_id,
+      user_id: this.props.user_id,
     };
   }
 
@@ -16,10 +19,25 @@ export default class SweetAlertModal extends Component {
     });
   };
 
-  confirmProcess = () => {
-    this.props.kickMember();
-    this.setState({ alert: null });
+  confirmProcess = async () => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      club_id: this.state.club_id,
+      user_id: this.state.user_id,
+    };
+    const finaldata = await axios.post("/api/admin/DeleteMember", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
   };
+
   confirmArrival() {
     const getAlert = () => (
       <SweetAlert

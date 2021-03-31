@@ -1,44 +1,66 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { PickerOverlay, PickerDropPane } from "filestack-react";
+import axios from "axios";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       alert: null,
       file: null,
       description: null,
-      overlay: false,
+      club_id: this.props.club_id,
     };
-  }
-  componentDidMount() {
-    this.setState({
-      file: this.props.file,
-      description: this.props.description,
-    });
   }
   hideAlert = () => {
     this.setState({
       alert: null,
     });
   };
+
+  onSubmit = async (res) => {
+    const token = localStorage.getItem("jwt");
+    var object = {
+      token,
+      club_id: this.state.club_id,
+      description: this.state.description,
+      file: res.filesUploaded[0].url,
+      name: res.filesUploaded[0].filename,
+      size: res.filesUploaded[0].size,
+    };
+    try {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      const finaldata = await axios.post(
+        "/api/admin/AddFile",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   onRecievedInput = () => {
-    // const updatedQ = this.state.file;
-    // const updatedA = this.state.description;
-    // //todo GOLU we have file and description in state you just make any axios request to update the current value
     const uploadOverlay = (
       <PickerOverlay
         apikey="ANZJzty1sQkCaLmKAzpe3z"
-        onSuccess={(res) => console.log(res)}
+        onSuccess={(res) => this.onSubmit(res)}
       />
     );
     this.setState({
-      alert: uploadOverlay,
-      file: null,
-      description: null,
-      overlay: true,
+      alert: uploadOverlay
     });
   };
   confirmProcess = () => {
@@ -68,8 +90,7 @@ export default class SweetAlertModal extends Component {
         <div>
           <form>
             <div className="flex flex-wrap ">
-              <div className="w-full  px-4">
-              </div>
+              <div className="w-full  px-4"></div>
               <div className="w-full px-4">
                 <div className="relative w-full mb-3">
                   <label

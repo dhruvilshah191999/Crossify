@@ -224,7 +224,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/memberlist"
+                  to={"/admin/memberlist/"+id}
                 >
                   <i
                     className={

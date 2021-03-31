@@ -14,6 +14,7 @@ import PromoteMemberButton from "components/SweetAlerts/PromoteMemberButton";
 import DemoteMemberButton from "components/SweetAlerts/DemoteMemberButton";
 import KickMemberButton from "components/SweetAlerts/KickMemberButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
+import Moment from "moment";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -97,197 +98,14 @@ function SelectColumnFilter({
   );
 }
 
-export default function App() {
-  //todo GOLU pass name here too I don't know how if you cant do it then just remove it view button (NOT REQUIRED)
-  const openModal = () => {
-    ModalManager.open(<ViewProfile onRequestClose={() => true} />);
+export default function App(props) {
+  const openModal = (user_id,name) => {
+    ModalManager.open(<ViewProfile name={name} user_id={user_id} onRequestClose={() => true} />);
   };
+  const [clubId, setClubId] = useState(props.club_id);
+  const [memberFile, setmemberFile] = useState(props.data);
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(
-    () => [
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "arshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Moderator",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "arshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Moderator",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "arshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Moderator",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "arshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Moderator",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Moderator",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "arshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Moderator",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "arshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Admin",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        name: "Harshil Patel",
-        joinedDate: "11/2/2000",
-        location: "Ahmedabad",
-        role: "Member",
-        reports: 3,
-        eventOrganized: 3,
-        actions: " ",
-      },
-    ],
-    []
-  );
+  const data = React.useMemo(() => memberFile, []);
 
   const columns = React.useMemo(
     () => [
@@ -302,14 +120,15 @@ export default function App() {
 
       {
         Header: "Joined At",
-        accessor: "joinedDate", // accessor is the "key" in the data
-
+        accessor: "date", // accessor is the "key" in the data
         disableFilters: true,
+        Cell: ({ value }) => {
+          return Moment(value).format("MMMM Do YYYY, h:mm:ss a");
+        },
       },
       {
         Header: "Location",
         accessor: "location", // accessor is the "key" in the data
-
         disableFilters: true,
       },
       {
@@ -319,11 +138,11 @@ export default function App() {
         filter: "includes",
         Cell: ({ value }) => {
           var myColor = "red";
-          if (value === "Member") {
+          if (value === "member") {
             myColor = "orange";
-          } else if (value === "Moderator") {
+          } else if (value === "moderator") {
             myColor = "green";
-          } else if (value === "Admin") {
+          } else if (value === "admin") {
             myColor = "blue";
           }
           return (
@@ -342,7 +161,9 @@ export default function App() {
                   "-200 opacity-50 rounded-full"
                 }
               ></span>
-              <span class="relative">{value}</span>
+              <span class="relative" style={{ textTransform: "capitalize" }}>
+                {value}
+              </span>
             </span>
           );
           return (
@@ -361,40 +182,41 @@ export default function App() {
 
       {
         Header: "Events",
-        accessor: "eventOrganized", // accessor is the "key" in the data
+        accessor: "event", // accessor is the "key" in the data
 
         disableFilters: true,
       },
-      {
-        Header: "Reports",
-        accessor: "reports", // accessor is the "key" in the data
-
-        disableFilters: true,
-      },
-
       {
         Header: "Actions",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
-        Cell: ({ value }) => (
+        accessor: "user_id", // here add _id of event request so easy to attach with the buttons
+        Cell: ({
+          value,
+          cell: {
+            row: {
+              values: { name, role },
+            },
+          },
+        }) => (
           <div className="flex flex-row  justify-evenly">
             <PromoteMemberButton
-              name="Harshil Patel"
-              promoteMember={() => console.log("Get id and promote him")}
+              name={name}
+              user_id={value}
+              club_id={clubId}
+              isModerator={role == "moderator"}
             />
             <DemoteMemberButton
-              name="Harhsil Patel"
-              demoteMember={() => console.log("Get id and demote him")}
+              name={name}
+              user_id={value}
+              club_id={clubId}
+              isMember={role == "member"}
             />
-            <KickMemberButton
-              name="Harshil Patel"
-              kickMember={() =>
-                console.log(
-                  "pass name or username of the member and id to remove him from the club"
-                )
-              }
-            />
+            <KickMemberButton name={name} user_id={value} club_id={clubId} />
 
-            <button className="" title="View" onClick={openModal}>
+            <button
+              className=""
+              title="View"
+              onClick={() => openModal(value, name)}
+            >
               <i class="fas fa-eye text-blue-500 text-lg"></i>
             </button>
           </div>

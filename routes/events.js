@@ -199,7 +199,6 @@ router.post("/get-event-byuser", auth, async function (req, res, next) {
   }
 });
 
-
 router.post("/get-club-byuser", auth, async function (req, res, next) {
   var { latitude, longitude } = req.user;
   if (latitude !== 0 && longitude !== 0) {

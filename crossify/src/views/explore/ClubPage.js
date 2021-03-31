@@ -56,7 +56,9 @@ function ClubPage(props) {
         if (finaldata.data.data[0].status == "Private") {
           setPublic(false);
         }
-        setTimeout(setloading(true), 1000);
+        setTimeout(() => {
+          setloading(true);
+        }, 500);
       }
     }
 
@@ -263,10 +265,10 @@ function ClubPage(props) {
                   &nbsp;
                   <div className="w-6/12 self-end">
                     <BigShareButton
-                      shareUrl={window.location.href + "club/" + props.data._id}
-                      title={props.data.club_name}
-                      description={props.data.description}
-                      tags={props.data.tags}
+                      shareUrl={window.location.href}
+                      title={clubData.club_name}
+                      description={clubData.description}
+                      tags={clubData.tags}
                     ></BigShareButton>
                   </div>
                 </div>

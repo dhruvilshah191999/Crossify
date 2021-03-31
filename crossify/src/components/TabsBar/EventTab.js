@@ -1,63 +1,21 @@
 import { withMobileDialog } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Photo from "assets/img/team-4-470x470.png";
+import axios from "axios";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import EventCalendar from "components/Calendar/EventCalendar";
 import { motion } from "framer-motion";
 //khatar banayu bhai harshil
-export default function EventTab() {
+export default function EventTab(props) {
   const eventPerPage = 3;
   const [pastIndex, setpastIndex] = useState(1);
+  const [clubId, setclubId] = useState(props.club_id);
   const [upcomingIndex, setUpcomingIndex] = useState(1);
   const [tabIndex, toggleTabIndex] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-
-  // todo GOLU fire a query and put pastevents and upcoming events in below two state (RAW ones)
-
-  const [rawPastEvents, setpastEvents] = useState([
-    {
-      club_name: "Think Less Act More",
-      place: "Punjab",
-      tags: ["Magic", "Entertainment"],
-    },
-    {
-      club_name: "Golfanatics",
-      place: "Japan",
-      tags: ["Sports", "Competition"],
-    },
-    {
-      club_name: "Gamers Louge",
-      place: "Rajkot",
-      tags: ["Gaming", "Streaming"],
-    },
-    {
-      club_name: "Gamers Louge",
-      place: "Rajkot",
-      tags: ["Gaming", "Streaming"],
-    },
-  ]);
-  const [rawUpcomingEvents, setupcomingEvents] = useState([
-    {
-      club_name: "Act Less Think More",
-      place: "Kerala",
-      tags: ["Stoicism", "Realist"],
-    },
-    {
-      club_name: "Table Truckers",
-      place: "California",
-      tags: ["Friendly"],
-    },
-    {
-      club_name: "Gamers Louge",
-      place: "Rajkot",
-      tags: ["Gaming", "Streaming"],
-    },
-    {
-      club_name: "Gamers Louge",
-      place: "Rajkot",
-      tags: ["Gaming", "Streaming"],
-    },
-  ]);
+  const [rawPastEvents, setpastEvents] = useState([]);
+  const [rawUpcomingEvents, setupcomingEvents] = useState([]);
+  const [loading, setloading] = useState(false);
   const handleClick = (event) => {
     setpastIndex(Number(event.target.id));
   };
@@ -77,8 +35,8 @@ export default function EventTab() {
     return false;
   };
   const pastEvents = rawPastEvents.filter((el) => {
-    let search1 = el.club_name.toLowerCase();
-    let search2 = el.place.toLowerCase();
+    let search1 = el.event_name.toLowerCase();
+    let search2 = el.location.toLowerCase();
     let search3 = el.tags;
     if (
       search1.indexOf(searchQuery) !== -1 ||
@@ -91,8 +49,8 @@ export default function EventTab() {
     return false;
   });
   const upcomingEvents = rawUpcomingEvents.filter((el) => {
-    let search1 = el.club_name.toLowerCase();
-    let search2 = el.place.toLowerCase();
+    let search1 = el.event_name.toLowerCase();
+    let search2 = el.location.toLowerCase();
     let search3 = el.tags;
     if (
       search1.indexOf(searchQuery) !== -1 ||
@@ -120,22 +78,10 @@ export default function EventTab() {
   );
 
   const renderupcomingEvents = currentupcomingEvents.map((el, index) => {
-    return (
-      <ProfileEventClub
-        club_name={el.club_name}
-        place={el.place}
-        tags={el.tags}
-      ></ProfileEventClub>
-    );
+    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
   });
   const renderpastEvents = currentpastEvents.map((el, index) => {
-    return (
-      <ProfileEventClub
-        club_name={el.club_name}
-        place={el.place}
-        tags={el.tags}
-      ></ProfileEventClub>
-    );
+    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
   });
   // Logic for displaying page numbers
   const pageNumbers = [];
@@ -240,6 +186,57 @@ export default function EventTab() {
       </div>
     );
   }
+
+  useEffect(() => {
+    async function getData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        club_id: clubId,
+      };
+      const finaldata = await axios.post(
+        "/api/admin/get-upcoming-event",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setupcomingEvents(finaldata.data.data);
+        setloading(true);
+      }
+    }
+
+    async function getpastdata() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        club_id: clubId,
+      };
+      const finaldata = await axios.post(
+        "/api/admin/get-past-event",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setpastEvents(finaldata.data.data);
+      }
+    }
+
+    getData();
+    getpastdata();
+  }, []);
+
   return (
     <>
       <div className="flex   text-sm">
@@ -297,7 +294,7 @@ export default function EventTab() {
       </div>
       <hr className="mt-6 border-b-1 border-gray-400 mb-6" />
       <div style={{ height: 1000 }} className="px-16">
-        <EventCalendar />
+        {loading&&<EventCalendar EventData={rawUpcomingEvents} />}
       </div>
     </>
   );

@@ -435,7 +435,6 @@ router.post("/get-photo-name", auth, async function (req, res, next) {
     creator_id: ObjectId(req.user._id),
   });
   await result.exec((err, data) => {
-    console.log(req.user._id);
     if (err) {
       var error = {
         is_error: true,

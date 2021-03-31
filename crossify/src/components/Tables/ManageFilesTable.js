@@ -11,6 +11,9 @@ import RemoveFileButton from "components/SweetAlerts/RemoveFileButton";
 import EditFileButton from "components/SweetAlerts/EditFileButton";
 import UploadFileButton from "components/SweetAlerts/UploadFileButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
+import Moment from "moment";
+import fileDownload from "js-file-download";
+import axios from "axios";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -46,6 +49,17 @@ function GlobalFilter({
     </span>
   );
 }
+
+const handleDownload = (url, filename) => {
+  console.log(url);
+  axios
+    .get(url, {
+      responseType: "blob",
+    })
+    .then((res) => {
+      fileDownload(res.data, filename);
+    });
+};
 
 function DefaultColumnFilter({
   column: { filterValue, preFilteredRows, setFilter },
@@ -94,156 +108,12 @@ function SelectColumnFilter({
   );
 }
 
-export default function App() {
+export default function App(props) {
   const [isLight, setIsLight] = useState(1);
+  const [clubId, setClubId] = useState(props.club_id);
+  const [mediaFile, setmediaFile] = useState(props.data);
   const data = React.useMemo(
-    () => [
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description:
-          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
-        actions: " ",
-      },
-    ],
+    () => mediaFile,
     []
   );
 
@@ -251,7 +121,7 @@ export default function App() {
     () => [
       {
         Header: "File",
-        accessor: "fileName", // accessor is the "key" in the data
+        accessor: "name", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
@@ -261,12 +131,18 @@ export default function App() {
         Header: "Size",
         accessor: "size",
         disableFilters: true,
+        Cell: ({ value }) => {
+          return Math.round(value) + " KB";
+        },
       },
       {
         Header: "Last Modified",
         accessor: "date", // accessor is the "key" in the data
 
         disableFilters: true,
+        Cell: ({ value }) => {
+          return Moment(value).format("MMMM Do YYYY, h:mm:ss a");
+        },
       },
       {
         Header: "Description",
@@ -281,23 +157,29 @@ export default function App() {
 
       {
         Header: "Actions",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
-        Cell: ({ value }) => (
+        accessor: "link", // here add _id of event request so easy to attach with the buttons
+        Cell: ({
+          value,
+          cell: {
+            row: {
+              values: { name },
+            },
+          },
+        }) => (
           <div className="flex ">
             <div>
-              <button title="Download">
+              <button
+                title="Download"
+                onClick={() => {
+                  handleDownload(value, name);
+                }}
+              >
                 <i class="fas fa-download text-green-500 text-base pt-1 focus:outline-none mr-4 "></i>
               </button>
             </div>
 
-            <EditFileButton></EditFileButton>
-            <RemoveFileButton
-              handleRejection={() =>
-                console.log(
-                  "GOLU MAKE THIS function to remove current clicked item"
-                )
-              }
-            ></RemoveFileButton>
+            {/* <EditFileButton></EditFileButton> */}
+            <RemoveFileButton club_id={clubId} link={value}></RemoveFileButton>
           </div>
         ),
         disableFilters: true,
@@ -394,7 +276,7 @@ export default function App() {
                 </div>
                 <div className="ml-auto">
                   <div className="inline-block">
-                    <UploadFileButton />
+                    <UploadFileButton club_id={clubId} />
                   </div>
                   <span className="ml-2 "></span>
                   <GlobalFilter

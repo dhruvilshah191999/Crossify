@@ -1,11 +1,24 @@
 import MemberUserDropdown from "components/Dropdowns/MemberUserDropdown";
+import Moment from "moment";
 import axios from "axios";
+import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import ViewProfile from "components/Modals/ViewProfile";
 var React = require("react");
 class Contact extends React.Component {
+  openModal = (user_id, name) => {
+    ModalManager.open(
+      <ViewProfile name={name} user_id={user_id} onRequestClose={() => true} />
+    );
+  };
+
   render() {
     return (
       <>
-        <div class="flex items-center justify-between my-4">
+        <div
+          class="flex items-center justify-between my-4"
+          onClick={() => this.openModal(this.props.user_id, this.props.name)}
+          style={{ cursor: "pointer" }}
+        >
           <div class="w-16">
             <img
               class="w-12 h-12 rounded-full"
@@ -14,8 +27,26 @@ class Contact extends React.Component {
             />
           </div>
           <div class="flex-1 pl-2">
-            <div class="text-gray-700 font-semibold">{this.props.name}</div>
-            <div class="text-gray-600 font-thin">{this.props.phone}</div>
+            <div
+              class="text-gray-700 font-semibold"
+              style={{ textTransform: "capitalize" }}
+            >
+              {this.props.name}
+            </div>
+
+            <div
+              class="text-gray-600 font-thin"
+              style={{ textTransform: "capitalize" }}
+            >
+              {"Joined "}
+              {Moment(this.props.date).format("MMM YYYY")}
+            </div>
+            <div
+              class="text-gray-600 font-thin"
+              style={{ textTransform: "capitalize" }}
+            >
+              {this.props.phone}
+            </div>
           </div>
           {/*<div class="text-red-400 mr-4">
             <MemberUserDropdown />
@@ -39,7 +70,6 @@ class ContactList extends React.Component {
       club_id:this.props.club_id
     };
   }
-
   async componentDidMount() {
     const config = {
       method: "POST",
@@ -155,6 +185,8 @@ class ContactList extends React.Component {
                     name={el.name}
                     image={el.image}
                     phone={el.designation}
+                    date={el.date}
+                    user_id={el.user_id}
                   />
                 );
               })}

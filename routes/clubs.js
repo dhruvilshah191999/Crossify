@@ -554,6 +554,7 @@ router.post('/GetMembers', async function (req, res, next) {
           'user_data.lname': 1,
           'user_data.profile_photo': 1,
           'user_data._id': 1,
+          'user_data.username': 1,
           member_list: 1,
         },
       },
@@ -571,12 +572,14 @@ router.post('/GetMembers', async function (req, res, next) {
         data[0].member_list.map((e) => {
           if (e.level == 'member') {
             var result = data[0].user_data.filter((obj) => {
-               return obj._id.equals(ObjectId(e.user))
+              return obj._id.equals(ObjectId(e.user));
             });
             var object = {
               name: result[0].fname + ' ' + result[0].lname,
               image: result[0].profile_photo,
               designation: e.level,
+              date: e.date,
+              user_id:e.user
             };
             members.push(object);
           } else {
@@ -587,6 +590,8 @@ router.post('/GetMembers', async function (req, res, next) {
               name: result[0].fname + ' ' + result[0].lname,
               image: result[0].profile_photo,
               designation: e.level,
+              date: e.date,
+              user_id:e.user
             };
             moderator.push(object);
           }
