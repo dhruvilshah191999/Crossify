@@ -640,7 +640,7 @@ router.post("/get-past-event", async function (req, res, next) {
       var finaldata = {
         data: data,
         is_error: false,
-        message: "Data Send",
+        message: 'Data Send',
       };
       return res.status(200).send(finaldata);
     }
