@@ -131,7 +131,7 @@ const Tabs = (props) => {
               </a>
             </li>
           </ul>
-          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-1  rounded">
             <div className="px-4 py-5 flex-auto">
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
@@ -145,7 +145,7 @@ const Tabs = (props) => {
                   <EventTab club_id={props.club_id} />
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                  {props.isJoin ? <RoomTab /> : ""}
+                  {props.isJoin ? <RoomTab club_id={props.club_id} /> : ""}
                 </div>
                 <div className={openTab === 4 ? "block" : "hidden"} id="link3">
                   {props.isJoin ? <MemberTab club_id={props.club_id} /> : ""}

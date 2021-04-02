@@ -82,28 +82,15 @@ router.post("/createRoom", async function (req, res, next) {
 
 // })
 router.post("/send", async function (req, res) {
+  console.log(
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa"
+  );
   var { messagetext, user_id, room_id, club_id } = req.body;
-  // var encryptedMessage = cryptr.encrypt(messagetext);
-  // console.log(encryptedMessage);
-  var message_obj = {
-    message: messagetext,
-    user_id: ObjectId(user_id),
-    senttime: new Date(),
-  };
+
   console.log(user_id);
-  // io.on('sendMessage',(message,callback)=>{
-  //   var message_obj={
-  //     message:encryptedMessage,
-  //     user_id:ObjectId(user_id),
-  //     room_id:ObjectId(room_id),
-  //     senttime:new Date()
-  // }
-  //     io.to(room_id).emit('message',message_obj)
-  //     callback();
-  // })
   var check = member_details.findOne({
     club_id: ObjectId(club_id),
-    member_list: { $elemMatch: { user_id: ObjectId(user_id) } },
+    member_list: { $elemMatch: { user: ObjectId(user_id) } },
   });
   await check.exec((err, data) => {
     if (err) {
@@ -113,7 +100,6 @@ router.post("/send", async function (req, res) {
       };
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
-      console.log("outer else");
       var error = {
         is_error: true,
         message: "you are not part of this club",

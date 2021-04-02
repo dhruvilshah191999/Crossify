@@ -9,6 +9,34 @@ var club_details = require("../modules/club_details");
 const { ObjectID, ObjectId } = require("bson");
 var router = express.Router();
 
+router.post("/get-user-profile", async function (req, res, next) {
+  var { user_id } = req.body;
+  var result = user_details.findOne({ _id: ObjectId(user_id) });
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (result == null) {
+      var error = {
+        is_error: true,
+        message: "User Not Found",
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        name: data.username,
+        profile_photo: data.profile_photo,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 router.post("/get-user", auth, async function (req, res, next) {
   var result = user_details.findOne({ _id: req.user._id, is_active: 1 });
   await result.exec((err, data) => {
