@@ -482,12 +482,12 @@ router.post("/get-photo-name", async function (req, res, next) {
   });
 });
 
-router.post("/Promotion", async function (req, res, next) {
+router.post('/Promotion', async function (req, res, next) {
   var { user_id, club_id } = req.body;
   console.log(req.body);
   var check = member_details.update(
-    { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
-    { $set: { "member_list.$.level": "moderator" } }
+    {club_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
+    {$set: {'member_list.$.level': "moderator"}}
   );
   await check.exec((err, data) => {
     if (err) {
@@ -544,8 +544,8 @@ router.post("/Demotion", async function (req, res, next) {
 router.post("/DeleteMember", async function (req, res, next) {
   var { user_id, club_id } = req.body;
   var check = member_details.update(
-    { club_id: ObjectId(club_id), is_active: 1 },
-    { $pull: { member_list: { user: ObjectId(user_id) } } }
+    { club_id: ObjectId(club_id), is_active:1 },
+    {$pull: { member_list: { user:ObjectId(user_id)}}}
   );
   await check.exec((err, data) => {
     if (err) {
@@ -573,7 +573,7 @@ router.post("/DeleteMember", async function (req, res, next) {
   });
 });
 
-router.post("/get-upcoming-event", async function (req, res, next) {
+router.post('/get-upcoming-event', async function (req, res, next) {
   var { club_id } = req.body;
   var result = event_details.find(
     {

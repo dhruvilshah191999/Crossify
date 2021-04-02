@@ -1,8 +1,8 @@
 import React from "react";
 import Chart from "chart.js";
-
+import axios from "axios";
+import { useParams } from "react-router";
 export default function CardBarChart() {
-<<<<<<< HEAD
   var { id } = useParams();
   React.useEffect(async () => {
     const config2 = {
@@ -26,46 +26,41 @@ export default function CardBarChart() {
       var randomScalingFactor = function () {
         return Math.round(Math.random() * 100);
       };
-=======
-  React.useEffect(() => {
-    var randomScalingFactor = function () {
-      return Math.round(Math.random() * 100);
-    };
->>>>>>> parent of d53fac3 (Graph)
 
-    var config = {
-      type: "pie",
-      data: {
-        datasets: [
-          {
-            data: [12, 45, 6, 4, 2],
-            backgroundColor: [
-              "#ff75a0",
-              "#fce38a",
-              "#4299e1",
-              "#95e1d3",
-              "gray",
-            ],
-            label: "Dataset 1",
-          },
-        ],
-        labels: ["Ahmedabad", "Gandhinagar", "Sanad", "Anand", "Other"],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-          labels: {
-            fontColor: "rgba(0,0,0,.4)",
-          },
-          align: "end",
-          position: "bottom",
+      var config = {
+        type: "pie",
+        data: {
+          datasets: [
+            {
+              data: finaldata.data.data,
+              backgroundColor: [
+                "#ff75a0",
+                "#fce38a",
+                "#4299e1",
+                "#95e1d3",
+                "gray",
+              ],
+              label: "Dataset 1",
+            },
+          ],
+          labels: finaldata.data.label,
         },
-      },
-    };
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          legend: {
+            labels: {
+              fontColor: "rgba(0,0,0,.4)",
+            },
+            align: "end",
+            position: "bottom",
+          },
+        },
+      };
 
-    let ctx = document.getElementById("pie-chart").getContext("2d");
-    window.myBar = new Chart(ctx, config);
+      let ctx = document.getElementById("pie-chart").getContext("2d");
+      window.myBar = new Chart(ctx, config);
+    }
   }, []);
   return (
     <>
