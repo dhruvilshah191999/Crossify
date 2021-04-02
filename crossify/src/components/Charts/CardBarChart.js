@@ -1,115 +1,107 @@
 import React from "react";
 import Chart from "chart.js";
-import axios from "axios";
-import { useParams } from "react-router";
 
 export default function CardBarChart() {
-  var { id } = useParams();
-  React.useEffect(async () => {
-    const config2 = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        validateStatus: () => true,
-      };
-      var send_data = {
-        club_id: id,
-      };
-      const finaldata = await axios.post(
-        "/api/admin/BarGraphs",
-        send_data,
-        config2
-      );
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      let config = {
-        type: "horizontalBar",
-        data: {
-          labels: finaldata.data.label,
+  React.useEffect(() => {
+    let config = {
+      type: "horizontalBar",
+      data: {
+        labels: [
+          "Startup",
+          "Networking",
+          "Conference",
+          "Business",
+          "Marketing",
+        ],
 
-          datasets: [
+        datasets: [
+          {
+            borderColor: "#ed64a6",
+            data: [12, 34, 43, 45, 12],
+            backgroundColor: [
+              "#ff75a0",
+              "#fce38a",
+              "#4299e1",
+              "#95e1d3",
+              "#364f6b",
+            ],
+            fill: false,
+            barThickness: 14,
+          },
+          // {
+          //   label: new Date().getFullYear() - 1,
+          //   fill: false,
+          //   backgroundColor: "#4c51bf",
+          //   borderColor: "#4c51bf",
+          //   data: [27, 68, 86, 74, 10, 4, 87],
+          //   barThickness: 8,
+          // },
+        ],
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: false,
+          text: "Orders Chart",
+        },
+        tooltips: {
+          mode: "index",
+          intersect: false,
+        },
+        hover: {
+          mode: "nearest",
+          intersect: true,
+        },
+        legend: {
+          display: false,
+          labels: {
+            fontColor: "rgba(0,0,0,.4)",
+          },
+          align: "end",
+          position: "bottom",
+        },
+        scales: {
+          xAxes: [
             {
-              borderColor: "#ed64a6",
-              data: finaldata.data.data,
-              backgroundColor: [
-                "#ff75a0",
-                "#fce38a",
-                "#4299e1",
-                "#95e1d3",
-                "#364f6b",
-              ],
-              fill: false,
-              barThickness: 14,
+              display: false,
+              scaleLabel: {
+                display: true,
+                labelString: "Month",
+              },
+              gridLines: {
+                borderDash: [2],
+                borderDashOffset: [2],
+                color: "rgba(33, 37, 41, 0.3)",
+                zeroLineColor: "rgba(33, 37, 41, 0.3)",
+                zeroLineBorderDash: [2],
+                zeroLineBorderDashOffset: [2],
+              },
+            },
+          ],
+          yAxes: [
+            {
+              display: true,
+              scaleLabel: {
+                display: false,
+                labelString: "Value",
+              },
+              gridLines: {
+                borderDash: [2],
+                drawBorder: false,
+                borderDashOffset: [2],
+                color: "rgba(33, 37, 41, 0.2)",
+                zeroLineColor: "rgba(33, 37, 41, 0.15)",
+                zeroLineBorderDash: [2],
+                zeroLineBorderDashOffset: [2],
+              },
             },
           ],
         },
-        options: {
-          maintainAspectRatio: false,
-          responsive: true,
-          title: {
-            display: false,
-            text: "Orders Chart",
-          },
-          tooltips: {
-            mode: "index",
-            intersect: false,
-          },
-          hover: {
-            mode: "nearest",
-            intersect: true,
-          },
-          legend: {
-            display: false,
-            labels: {
-              fontColor: "rgba(0,0,0,.4)",
-            },
-            align: "end",
-            position: "bottom",
-          },
-          scales: {
-            xAxes: [
-              {
-                display: false,
-                scaleLabel: {
-                  display: true,
-                  labelString: "Month",
-                },
-                gridLines: {
-                  borderDash: [2],
-                  borderDashOffset: [2],
-                  color: "rgba(33, 37, 41, 0.3)",
-                  zeroLineColor: "rgba(33, 37, 41, 0.3)",
-                  zeroLineBorderDash: [2],
-                  zeroLineBorderDashOffset: [2],
-                },
-              },
-            ],
-            yAxes: [
-              {
-                display: true,
-                scaleLabel: {
-                  display: false,
-                  labelString: "Value",
-                },
-                gridLines: {
-                  borderDash: [2],
-                  drawBorder: false,
-                  borderDashOffset: [2],
-                  color: "rgba(33, 37, 41, 0.2)",
-                  zeroLineColor: "rgba(33, 37, 41, 0.15)",
-                  zeroLineBorderDash: [2],
-                  zeroLineBorderDashOffset: [2],
-                },
-              },
-            ],
-          },
-        },
-      };
-      let ctx = document.getElementById("bar-chart").getContext("2d");
-      window.myBar = new Chart(ctx, config);
-    }
+      },
+    };
+    let ctx = document.getElementById("bar-chart").getContext("2d");
+    window.myBar = new Chart(ctx, config);
   }, []);
   return (
     <>
