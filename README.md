@@ -1,5 +1,5 @@
 ## Snapshots
-* Creating a Club
+- Creating a Club
 <img src="SnapShots/CreateClub.png">
 <img src="SnapShots/HomePage.png">
 <img src="SnapShots/ClubSearch.png">
