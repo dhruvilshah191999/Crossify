@@ -4,7 +4,6 @@ import moment from "moment";
 const ResultWindow = (props) => {
   let history = useHistory();
   let count = 0;
-  const start = moment().format("LT");
 
   const showClubs = (event_id) => {
     window.location.replace("/club/" + event_id);
@@ -17,6 +16,7 @@ const ResultWindow = (props) => {
     >
       <div className="eventPhoto flex-shrink-0">
         <img
+          alt="Profile Photo"
           className="card-image rounded-lg"
           src={props.data.profile_photo}
           style={{ width: "200px", height: "140px" }}
@@ -27,8 +27,7 @@ const ResultWindow = (props) => {
           <div className="text-xl font-bold">{props.data.club_name} </div>
 
           <div className=" text-sm font-semibold text-beta ">
-            <i className="fas fa-users"></i>{" "}
-            {props.data.status} Group
+            <i className="fas fa-users"></i> {props.data.status} Group
           </div>
           <div className="text-sm font-semibold  text-alpha">
             {" "}

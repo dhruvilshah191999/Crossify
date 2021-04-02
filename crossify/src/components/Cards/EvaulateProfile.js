@@ -1,7 +1,6 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 import axios from "axios";
-import Moment from "moment";
-import demopp from "assets/img/pp1.jpg";
+
 import Tag from "components/Tag";
 
 const ClubView = (props) => {
@@ -134,7 +133,7 @@ class ProfileDetails extends Component {
                 className="bg-blue-600 text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
                 onClick={() => {
-                  if (this.state.profile.social_media.facebook != "") {
+                  if (this.state.profile.social_media.facebook !== "") {
                     window.open(
                       this.state.profile.social_media.facebook,
                       "_blank"
@@ -149,7 +148,7 @@ class ProfileDetails extends Component {
                 className="bg-blue-400 text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
                 onClick={() => {
-                  if (this.state.profile.social_media.twitter != "") {
+                  if (this.state.profile.social_media.twitter !== "") {
                     window.open(
                       this.state.profile.social_media.twitter,
                       "_blank"
@@ -164,7 +163,7 @@ class ProfileDetails extends Component {
                 className="bg-linkedin text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
                 onClick={() => {
-                  if (this.state.profile.social_media.linkedin != "") {
+                  if (this.state.profile.social_media.linkedin !== "") {
                     window.open(
                       this.state.profile.social_media.linkedin,
                       "_blank"
@@ -180,7 +179,7 @@ class ProfileDetails extends Component {
                 className="bg-instagram text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
                 onClick={() => {
-                  if (this.state.profile.social_media.instagram != "") {
+                  if (this.state.profile.social_media.instagram !== "") {
                     window.open(
                       this.state.profile.social_media.instagram,
                       "_blank"

@@ -44,7 +44,6 @@ export default function Register5() {
         };
       })
     );
-    console.clear();
   }, []);
 
   const onSubmit = async (e) => {

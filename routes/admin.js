@@ -1,17 +1,17 @@
-var express = require('express');
-var auth = require('../middleware/auth');
-var mongoose = require('mongoose');
-var category_details = require('../modules/interest_category');
-var event_details = require('../modules/event_details');
-var user_details = require('../modules/user_details');
-var club_details = require('../modules/club_details');
-var member_details = require('../modules/members_details');
-var file_details = require('../modules/file_details');
-const {ObjectID, ObjectId} = require('bson');
+var express = require("express");
+var auth = require("../middleware/auth");
+var mongoose = require("mongoose");
+var category_details = require("../modules/interest_category");
+var event_details = require("../modules/event_details");
+var user_details = require("../modules/user_details");
+var club_details = require("../modules/club_details");
+var member_details = require("../modules/members_details");
+var file_details = require("../modules/file_details");
+const { ObjectID, ObjectId } = require("bson");
 var router = express.Router();
 
-router.post('/AddPhoto', auth, async function (req, res, next) {
-  var {description, photo, name, size, club_id} = req.body;
+router.post("/AddPhoto", auth, async function (req, res, next) {
+  var { description, photo, name, size, club_id } = req.body;
   var BytestoKB = size * 0.000977;
   var object = {
     name,
@@ -22,7 +22,10 @@ router.post('/AddPhoto', auth, async function (req, res, next) {
     addedBy: ObjectId(req.user._id),
   };
 
-  var check = file_details.findOne({club_id: ObjectId(club_id), is_active: 1});
+  var check = file_details.findOne({
+    club_id: ObjectId(club_id),
+    is_active: 1,
+  });
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -38,13 +41,13 @@ router.post('/AddPhoto', auth, async function (req, res, next) {
             is_active: 1,
           },
           {
-            $push: {photo: object},
+            $push: { photo: object },
           }
         )
         .exec();
       var finaldata = {
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     } else {
@@ -57,16 +60,19 @@ router.post('/AddPhoto', auth, async function (req, res, next) {
       added.save();
       var finaldata = {
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/GetPhotos', async function (req, res, next) {
-  var {club_id} = req.body;
-  var check = file_details.findOne({club_id: ObjectId(club_id), is_active: 1});
+router.post("/GetPhotos", async function (req, res, next) {
+  var { club_id } = req.body;
+  var check = file_details.findOne({
+    club_id: ObjectId(club_id),
+    is_active: 1,
+  });
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -83,22 +89,22 @@ router.post('/GetPhotos', async function (req, res, next) {
       var finaldata = {
         data: data.photo,
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     } else {
       var finaldata = {
         data: [],
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/DeletePhoto', async function (req, res, next) {
-  var {club_id, link} = req.body;
+router.post("/DeletePhoto", async function (req, res, next) {
+  var { club_id, link } = req.body;
   var check = file_details.updateOne(
     {
       club_id: ObjectId(club_id),
@@ -106,7 +112,7 @@ router.post('/DeletePhoto', async function (req, res, next) {
     },
     {
       $pull: {
-        photo: {link: link},
+        photo: { link: link },
       },
     }
   );
@@ -121,22 +127,22 @@ router.post('/DeletePhoto', async function (req, res, next) {
       var finaldata = {
         remove: true,
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     } else {
       var finaldata = {
         remove: false,
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/EditPhoto', async function (req, res, next) {
-  var {description, photo, name, size, club_id, link} = req.body;
+router.post("/EditPhoto", async function (req, res, next) {
+  var { description, photo, name, size, club_id, link } = req.body;
   console.log(req.body);
   var check = file_details.updateMany(
     {
@@ -145,16 +151,16 @@ router.post('/EditPhoto', async function (req, res, next) {
     },
     {
       $set: {
-        'photo.$[elem].description': description,
-        'photo.$[elem].link': photo,
-        'photo.$[elem].name': name,
-        'photo.$[elem].size': size,
-        'photo.$[elem].date': new Date(),
+        "photo.$[elem].description": description,
+        "photo.$[elem].link": photo,
+        "photo.$[elem].name": name,
+        "photo.$[elem].size": size,
+        "photo.$[elem].date": new Date(),
       },
     },
     {
       multi: true,
-      arrayFilters: [{'elem.link': link}],
+      arrayFilters: [{ "elem.link": link }],
     }
   );
   await check.exec((err, data) => {
@@ -168,15 +174,15 @@ router.post('/EditPhoto', async function (req, res, next) {
       var finaldata = {
         update: true,
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/AddFile', auth, async function (req, res, next) {
-  var {description, file, name, size, club_id} = req.body;
+router.post("/AddFile", auth, async function (req, res, next) {
+  var { description, file, name, size, club_id } = req.body;
   var BytestoKB = size * 0.000977;
   var object = {
     name,
@@ -187,7 +193,10 @@ router.post('/AddFile', auth, async function (req, res, next) {
     addedBy: ObjectId(req.user._id),
   };
 
-  var check = file_details.findOne({club_id: ObjectId(club_id), is_active: 1});
+  var check = file_details.findOne({
+    club_id: ObjectId(club_id),
+    is_active: 1,
+  });
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -203,13 +212,13 @@ router.post('/AddFile', auth, async function (req, res, next) {
             is_active: 1,
           },
           {
-            $push: {file: object},
+            $push: { file: object },
           }
         )
         .exec();
       var finaldata = {
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     } else {
@@ -222,16 +231,19 @@ router.post('/AddFile', auth, async function (req, res, next) {
       added.save();
       var finaldata = {
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/GetFiles', async function (req, res, next) {
-  var {club_id} = req.body;
-  var check = file_details.findOne({club_id: ObjectId(club_id), is_active: 1});
+router.post("/GetFiles", async function (req, res, next) {
+  var { club_id } = req.body;
+  var check = file_details.findOne({
+    club_id: ObjectId(club_id),
+    is_active: 1,
+  });
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -248,22 +260,22 @@ router.post('/GetFiles', async function (req, res, next) {
       var finaldata = {
         data: data.file,
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     } else {
       var finaldata = {
         data: [],
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/DeleteFile', async function (req, res, next) {
-  var {club_id, link} = req.body;
+router.post("/DeleteFile", async function (req, res, next) {
+  var { club_id, link } = req.body;
   var check = file_details.updateOne(
     {
       club_id: ObjectId(club_id),
@@ -271,7 +283,7 @@ router.post('/DeleteFile', async function (req, res, next) {
     },
     {
       $pull: {
-        file: {link: link},
+        file: { link: link },
       },
     }
   );
@@ -286,38 +298,38 @@ router.post('/DeleteFile', async function (req, res, next) {
       var finaldata = {
         remove: true,
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     } else {
       var finaldata = {
         remove: false,
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/GetMembers', async function (req, res, next) {
-  var {club_id} = req.body;
+router.post("/GetMembers", async function (req, res, next) {
+  var { club_id } = req.body;
   member_details
     .aggregate([
       {
         $lookup: {
-          from: 'user_details',
-          localField: 'member_list.user',
-          foreignField: '_id',
-          as: 'user_data',
+          from: "user_details",
+          localField: "member_list.user",
+          foreignField: "_id",
+          as: "user_data",
         },
       },
       {
         $lookup: {
-          from: 'event_details',
-          localField: 'member_list.user',
-          foreignField: 'oragnizer_id',
-          as: 'events',
+          from: "event_details",
+          localField: "member_list.user",
+          foreignField: "oragnizer_id",
+          as: "events",
         },
       },
       {
@@ -328,10 +340,10 @@ router.post('/GetMembers', async function (req, res, next) {
       },
       {
         $project: {
-          'user_data.fname': 1,
-          'user_data.lname': 1,
-          'user_data._id': 1,
-          'user_data.city': 1,
+          "user_data.fname": 1,
+          "user_data.lname": 1,
+          "user_data._id": 1,
+          "user_data.city": 1,
           member_list: 1,
           events: 1,
         },
@@ -354,7 +366,7 @@ router.post('/GetMembers', async function (req, res, next) {
             return obj.oragnizer_id.equals(ObjectId(e.user));
           });
           var object = {
-            name: result[0].fname + ' ' + result[0].lname,
+            name: result[0].fname + " " + result[0].lname,
             user_id: e.user,
             date: e.date,
             location: result[0].city,
@@ -366,24 +378,24 @@ router.post('/GetMembers', async function (req, res, next) {
         var finaldata = {
           data: array,
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       } else {
         var finaldata = {
           data: [],
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       }
     });
 });
 
-router.post('/MyProfile', async function (req, res, next) {
-  var {user_id} = req.body;
+router.post("/MyProfile", async function (req, res, next) {
+  var { user_id } = req.body;
   var check = user_details.findOne(
-    {_id: ObjectId(user_id)},
+    { _id: ObjectId(user_id) },
     {
       _id: 0,
       fav_club: 0,
@@ -402,17 +414,17 @@ router.post('/MyProfile', async function (req, res, next) {
         message: err.message,
       };
       return res.status(500).send(err);
-    } else if (data == null && data.length == 0) {
+    } else if (data === null && data.length === 0) {
       var err = {
         is_error: true,
-        message: 'wrong event id or you may not have access to update ',
+        message: "wrong event id or you may not have access to update ",
       };
       return res.status(404).send(err);
     } else {
       let tag = [];
       var tags = category_details.find(
-        {_id: {$in: data.interest_id}},
-        {tags: 1}
+        { _id: { $in: data.interest_id } },
+        { tags: 1 }
       );
       await tags.exec((err, data2) => {
         if (err) {
@@ -429,7 +441,7 @@ router.post('/MyProfile', async function (req, res, next) {
             data: data,
             tag: tag,
             is_error: false,
-            message: 'value send succesfully',
+            message: "value send succesfully",
           };
           return res.status(200).send(finaldata);
         }
@@ -438,8 +450,8 @@ router.post('/MyProfile', async function (req, res, next) {
   });
 });
 
-router.post('/get-photo-name', async function (req, res, next) {
-  var {user_id} = req.body;
+router.post("/get-photo-name", async function (req, res, next) {
+  var { user_id } = req.body;
   var result = club_details.find({
     creator_id: ObjectId(user_id),
   });
@@ -450,7 +462,7 @@ router.post('/get-photo-name', async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (data == null || data.length == 0) {
+    } else if (data === null || data.length === 0) {
       var error = {
         check: false,
         is_error: true,
@@ -458,7 +470,7 @@ router.post('/get-photo-name', async function (req, res, next) {
       };
       return res.status(200).send(error);
     } else {
-      var finaldata = {message: [], is_error: false};
+      var finaldata = { message: [], is_error: false };
       data.forEach((element) => {
         finaldata.message.push({
           profile_photo: element.profile_photo,
@@ -470,12 +482,12 @@ router.post('/get-photo-name', async function (req, res, next) {
   });
 });
 
-router.post('/Promotion', async function (req, res, next) {
+router.post("/Promotion", async function (req, res, next) {
   var { user_id, club_id } = req.body;
   console.log(req.body);
   var check = member_details.update(
-    {club_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
-    {$set: {'member_list.$.level': "moderator"}}
+    { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
+    { $set: { "member_list.$.level": "moderator" } }
   );
   await check.exec((err, data) => {
     if (err) {
@@ -487,24 +499,24 @@ router.post('/Promotion', async function (req, res, next) {
     } else if (data) {
       var finaldata = {
         is_error: false,
-        message: 'value updated succesfully',
+        message: "value updated succesfully",
       };
       return res.status(200).send(finaldata);
     } else {
       var err = {
         is_error: true,
-        message: 'wrong event id or you may not have access to update ',
+        message: "wrong event id or you may not have access to update ",
       };
       return res.status(404).send(err);
     }
   });
 });
 
-router.post('/Demotion', async function (req, res, next) {
-  var {user_id, club_id} = req.body;
+router.post("/Demotion", async function (req, res, next) {
+  var { user_id, club_id } = req.body;
   var check = member_details.update(
-    {club_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
-    {$set: {'member_list.$.level': 'member'}}
+    { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
+    { $set: { "member_list.$.level": "member" } }
   );
   await check.exec((err, data) => {
     if (err) {
@@ -516,24 +528,24 @@ router.post('/Demotion', async function (req, res, next) {
     } else if (data) {
       var finaldata = {
         is_error: false,
-        message: 'value updated succesfully',
+        message: "value updated succesfully",
       };
       return res.status(200).send(finaldata);
     } else {
       var err = {
         is_error: true,
-        message: 'wrong event id or you may not have access to update ',
+        message: "wrong event id or you may not have access to update ",
       };
       return res.status(404).send(err);
     }
   });
 });
 
-router.post('/DeleteMember', async function (req, res, next) {
-  var {user_id, club_id} = req.body;
+router.post("/DeleteMember", async function (req, res, next) {
+  var { user_id, club_id } = req.body;
   var check = member_details.update(
-    { club_id: ObjectId(club_id), is_active:1 },
-    {$pull: { member_list: { user:ObjectId(user_id)}}}
+    { club_id: ObjectId(club_id), is_active: 1 },
+    { $pull: { member_list: { user: ObjectId(user_id) } } }
   );
   await check.exec((err, data) => {
     if (err) {
@@ -543,30 +555,32 @@ router.post('/DeleteMember', async function (req, res, next) {
       };
       return res.status(500).send(err);
     } else {
-      user_details.update(
-        {
-          _id: ObjectId(user_id),
-          is_active: 1
-        },
-        {
-          $pull: { clubs: ObjectId(club_id) }
-        }
-      ).exec();
+      user_details
+        .update(
+          {
+            _id: ObjectId(user_id),
+            is_active: 1,
+          },
+          {
+            $pull: { clubs: ObjectId(club_id) },
+          }
+        )
+        .exec();
       var finaldata = {
         is_error: false,
-        message: 'value updated succesfully',
+        message: "value updated succesfully",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/get-upcoming-event', async function (req, res, next) {
+router.post("/get-upcoming-event", async function (req, res, next) {
   var { club_id } = req.body;
   var result = event_details.find(
     {
       club_id: ObjectId(club_id),
-      date: {$gt: new Date()},
+      date: { $gt: new Date() },
       is_active: 1,
     },
     {
@@ -577,7 +591,7 @@ router.post('/get-upcoming-event', async function (req, res, next) {
       photo: 1,
       tags: 1,
       event_name: 1,
-      startdate:1
+      startdate: 1,
     }
   );
   await result.exec((err, data) => {
@@ -592,19 +606,19 @@ router.post('/get-upcoming-event', async function (req, res, next) {
       var finaldata = {
         data: data,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/get-past-event', async function (req, res, next) {
-  var {club_id} = req.body;
+router.post("/get-past-event", async function (req, res, next) {
+  var { club_id } = req.body;
   var result = event_details.find(
     {
       club_id: ObjectId(club_id),
-      date: {$lt: new Date()},
+      date: { $lt: new Date() },
       is_active: 1,
     },
     {
@@ -628,7 +642,7 @@ router.post('/get-past-event', async function (req, res, next) {
       var finaldata = {
         data: data,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }

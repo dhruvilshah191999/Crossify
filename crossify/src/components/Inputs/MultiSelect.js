@@ -23,24 +23,24 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount = async ()=>{
+  componentDidMount = async () => {
     const finaldata = await axios.get("/api/events/get-interest");
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      this.setState({ objectArray: finaldata.data.data});
+      this.setState({ objectArray: finaldata.data.data });
     }
-  }
+  };
 
-  onSelect=(selectedList)=> {
+  onSelect = (selectedList) => {
     this.props.parentCallback(selectedList);
-  }
+  };
 
-  onRemove=(selectedList)=> {
+  onRemove = (selectedList) => {
     this.props.parentCallback(selectedList);
-  }
+  };
   render() {
-    const { plainArray, objectArray, selectedValues } = this.state;
+    const { objectArray, selectedValues } = this.state;
     return (
       <>
         <Multiselect

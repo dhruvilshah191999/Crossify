@@ -68,7 +68,7 @@ const SearchNavbar = (props) => {
             </div>
           </div>
           <ul className="flex flex-row list-none lg:ml-auto">
-            <li className={isLogin ? "hidden " : " " + "flex items-center"}>
+            <li className={isLogin ? "hidden " : "flex items-center"}>
               <Link to="/auth/login">
                 <button
                   className="bg-white hover:bg-offwhite text-gray-800 active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"

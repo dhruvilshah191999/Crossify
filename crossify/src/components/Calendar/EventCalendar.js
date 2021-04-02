@@ -1,5 +1,5 @@
 import React from "react";
-import FullCalendar, { sliceEvents } from "@fullcalendar/react";
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import moment from "moment";
@@ -12,10 +12,10 @@ import "@fullcalendar/timegrid/main.css";
 import SweetAlert from "react-bootstrap-sweetalert";
 import RequestForEvent from "components/Modals/RequestForEvent";
 
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import { select } from "@tailwindcss/custom-forms/src/defaultOptions";
+import { ModalManager } from "react-dynamic-modal";
 import { Redirect } from "react-router";
 
+//this is used to make custom view in calendar for event
 function renderEventContent(eventInfo) {
   return (
     <button className="p-2 bg-alpha w-full" onClick={() => alert("Working")}>
@@ -123,11 +123,10 @@ export default class DemoApp extends React.Component {
       alert: getAlert(),
       currentSelectionInfo: selectionInfo,
     });
-  }; 
+  };
   render() {
     return (
       <div>
-
         <FullCalendar
           ref={this.calendarRef}
           height="800px"

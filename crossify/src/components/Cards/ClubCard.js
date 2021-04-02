@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import defImg from "../../assets/img/event_1.jpeg";
 import { motion } from "framer-motion";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { store } from "react-notifications-component";
-import { notifyCopied } from "notify";
 import { notifyLiked } from "notify";
 import axios from "axios";
 import ShareButton from "components/SweetAlerts/ShareButton";
@@ -14,7 +12,6 @@ const ClubCard = (props) => {
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
-    console.clear();
     async function fetchData() {
       const config = {
         method: "POST",

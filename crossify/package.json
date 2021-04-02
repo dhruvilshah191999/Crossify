@@ -48,6 +48,7 @@
     "react-scripts": "4.0.1",
     "react-share": "^4.4.0",
     "react-table": "^7.6.3",
+    "socket.io-client": "^4.0.1",
     "tailwindcss": "2.0.1",
     "use-position": "0.0.8"
   },

@@ -28,7 +28,6 @@ export default function Sidebar(props) {
   const [endDate, SetendDate] = React.useState(new Date());
 
   React.useEffect(() => {
-    console.clear();
     async function fetchData() {
       let InterestArray = [];
       try {

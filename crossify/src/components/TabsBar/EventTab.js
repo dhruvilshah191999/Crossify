@@ -1,5 +1,5 @@
 import { withMobileDialog } from "@material-ui/core";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Photo from "assets/img/team-4-470x470.png";
 import axios from "axios";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
@@ -92,7 +92,7 @@ export default function EventTab(props) {
   var renderPageNumbers = pageNumbers.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == pastIndex) {
+    if (number === pastIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -110,7 +110,7 @@ export default function EventTab(props) {
     );
   });
 
-  if (pageNumbers.length == 0) {
+  if (pageNumbers.length === 0) {
     renderPageNumbers = (
       <div
         className="flex justify-center content-center"
@@ -143,7 +143,7 @@ export default function EventTab(props) {
   var renderPageNumbers2 = pageNumbers2.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == upcomingIndex) {
+    if (number === upcomingIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -161,7 +161,7 @@ export default function EventTab(props) {
     );
   });
 
-  if (pageNumbers2.length == 0) {
+  if (pageNumbers2.length === 0) {
     renderPageNumbers2 = (
       <div
         className="flex justify-center content-center"
@@ -288,13 +288,13 @@ export default function EventTab(props) {
       <div className="py-2 justify-center flex">
         <div className="block">
           <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
-            {tabIndex == 0 ? renderPageNumbers : renderPageNumbers2}
+            {tabIndex === 0 ? renderPageNumbers : renderPageNumbers2}
           </ul>
         </div>
       </div>
       <hr className="mt-6 border-b-1 border-gray-400 mb-6" />
       <div style={{ height: 1000 }} className="px-16">
-        {loading&&<EventCalendar EventData={rawUpcomingEvents} />}
+        {loading && <EventCalendar EventData={rawUpcomingEvents} />}
       </div>
     </>
   );

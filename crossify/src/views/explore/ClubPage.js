@@ -53,7 +53,7 @@ function ClubPage(props) {
         if (finaldata.data.isAdmin) {
           setIsJoin(true);
         }
-        if (finaldata.data.data[0].status == "Private") {
+        if (finaldata.data.data[0].status === "Private") {
           setPublic(false);
         }
         setTimeout(() => {

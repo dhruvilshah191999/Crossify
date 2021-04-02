@@ -104,7 +104,7 @@ export default function MyClubs() {
   var renderPageNumbersOld = pageNumbersOld.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == backIndex) {
+    if (number === backIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -129,7 +129,7 @@ export default function MyClubs() {
   var renderPageNumbersNew = pageNumbersNew.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == upcomingIndex) {
+    if (number === upcomingIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -154,7 +154,7 @@ export default function MyClubs() {
   var renderPageNumbersLiked = pageNumbersLiked.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == likedIndex) {
+    if (number === likedIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -172,7 +172,7 @@ export default function MyClubs() {
     );
   });
 
-  if (pageNumbersOld.length == 0) {
+  if (pageNumbersOld.length === 0) {
     renderPageNumbersOld = (
       <div
         className="flex justify-center content-center"
@@ -197,7 +197,7 @@ export default function MyClubs() {
       </div>
     );
   }
-  if (pageNumbersLiked.length == 0) {
+  if (pageNumbersLiked.length === 0) {
     renderPageNumbersLiked = (
       <div
         className="flex justify-center content-center"
@@ -222,7 +222,7 @@ export default function MyClubs() {
       </div>
     );
   }
-  if (pageNumbersNew.length == 0) {
+  if (pageNumbersNew.length === 0) {
     renderPageNumbersNew = (
       <div
         className="flex justify-center content-center"
@@ -384,9 +384,9 @@ export default function MyClubs() {
       <div className="py-2 justify-center flex">
         <div className="block">
           <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
-            {tabIndex == 0
+            {tabIndex === 0
               ? renderPageNumbersOld
-              : tabIndex == 1
+              : tabIndex === 1
               ? renderPageNumbersLiked
               : renderPageNumbersNew}
           </ul>

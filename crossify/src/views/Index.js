@@ -90,8 +90,6 @@ export default function Landing() {
         console.log(err);
       }
     }
-    console.clear();
-
     async function get_interest() {
       const finaldata = await axios.get("/api/events/get-interest");
       if (finaldata.data.is_error) {

@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import ReactNotification from "react-notifications-component";
-import { store as notify } from "react-notifications-component";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
@@ -29,6 +27,7 @@ import PlayGround from "views/demo/PlayGround";
 import ClubPage from "views/explore/ClubPage";
 import CreateClub from "views/create/CreateClub";
 import { UserContext } from "context/usercontext";
+import ProfilePage from "views/explore/ProfilePage";
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
@@ -58,6 +57,7 @@ const Routing = () => {
       <Route path="/clubsearch" exact component={ClubSearchPage} />
       <Route path="/playground" exact component={PlayGround} />
       <Route path="/createclub" exact component={CreateClub} />
+      <Route path="/profilepage" exact component={ProfilePage} />
       <Route path="/auth" component={Auth} />
       {!token ? (
         <>

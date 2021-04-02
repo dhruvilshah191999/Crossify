@@ -8,7 +8,6 @@ const totalSeats = 30;
 const ResultWindow = (props) => {
   let history = useHistory();
   let count = 0;
-  const start = moment().format("LT");
 
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);

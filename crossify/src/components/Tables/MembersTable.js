@@ -99,8 +99,10 @@ function SelectColumnFilter({
 }
 
 export default function App(props) {
-  const openModal = (user_id,name) => {
-    ModalManager.open(<ViewProfile name={name} user_id={user_id} onRequestClose={() => true} />);
+  const openModal = (user_id, name) => {
+    ModalManager.open(
+      <ViewProfile name={name} user_id={user_id} onRequestClose={() => true} />
+    );
   };
   const [clubId, setClubId] = useState(props.club_id);
   const [memberFile, setmemberFile] = useState(props.data);
@@ -202,13 +204,13 @@ export default function App(props) {
               name={name}
               user_id={value}
               club_id={clubId}
-              isModerator={role == "moderator"}
+              isModerator={role === "moderator"}
             />
             <DemoteMemberButton
               name={name}
               user_id={value}
               club_id={clubId}
-              isMember={role == "member"}
+              isMember={role === "member"}
             />
             <KickMemberButton name={name} user_id={value} club_id={clubId} />
 

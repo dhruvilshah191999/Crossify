@@ -1,6 +1,6 @@
 import Moment from "react-moment";
 import axios from "axios";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { store } from "react-notifications-component";
 import { notifyLiked } from "notify";
 import { motion } from "framer-motion";
@@ -17,7 +17,6 @@ const EventCard = (props) => {
   };
 
   useEffect(() => {
-    console.clear();
     async function fetchData() {
       const config = {
         method: "POST",

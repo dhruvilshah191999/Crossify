@@ -4,7 +4,7 @@ class UploadPic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: this.props.file||null,
+      file: this.props.file || null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -34,6 +34,7 @@ class UploadPic extends React.Component {
           <br />
           <div className=" ">
             <img
+              alt="PreviewImg"
               className=""
               onChange={this.handleChange2}
               src={this.state.file}

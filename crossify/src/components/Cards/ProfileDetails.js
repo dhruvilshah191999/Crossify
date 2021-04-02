@@ -1,7 +1,6 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import Moment from "moment";
-import demopp from "assets/img/pp1.jpg";
 import Tag from "components/Tag";
 
 const ClubView = (props) => {
@@ -30,7 +29,7 @@ const ClubView = (props) => {
 class ProfileDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = { profile: {}, tag: [], club: [] ,loading:false };
+    this.state = { profile: {}, tag: [], club: [], loading: false };
   }
 
   async componentDidMount() {
@@ -105,7 +104,7 @@ class ProfileDetails extends Component {
               <div className="flex flex-wrap">
                 <div className="text-gray-600 text-lg flex-shrink-0">
                   {this.state.profile.occupation}&nbsp; | &nbsp;
-              </div>
+                </div>
                 <div className="text-gray-600 text-lg flex-shrink-0">
                   Joined {Moment(this.state.profile.date).format("MMM YYYY")}
                 </div>
@@ -128,7 +127,7 @@ class ProfileDetails extends Component {
                   className="bg-blue-600 text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                   type="button"
                   onClick={() => {
-                    if (this.state.profile.social_media.facebook != "") {
+                    if (this.state.profile.social_media.facebook !== "") {
                       window.open(
                         this.state.profile.social_media.facebook,
                         "_blank"
@@ -143,7 +142,7 @@ class ProfileDetails extends Component {
                   className="bg-blue-400 text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                   type="button"
                   onClick={() => {
-                    if (this.state.profile.social_media.twitter != "") {
+                    if (this.state.profile.social_media.twitter !== "") {
                       window.open(
                         this.state.profile.social_media.twitter,
                         "_blank"
@@ -158,7 +157,7 @@ class ProfileDetails extends Component {
                   className="bg-linkedin text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                   type="button"
                   onClick={() => {
-                    if (this.state.profile.social_media.linkedin != "") {
+                    if (this.state.profile.social_media.linkedin !== "") {
                       window.open(
                         this.state.profile.social_media.linkedin,
                         "_blank"
@@ -174,7 +173,7 @@ class ProfileDetails extends Component {
                   className="bg-instagram text-white w-8 h-8 rounded-lg outline-none focus:outline-none mr-1 mb-1"
                   type="button"
                   onClick={() => {
-                    if (this.state.profile.social_media.instagram != "") {
+                    if (this.state.profile.social_media.instagram !== "") {
                       window.open(
                         this.state.profile.social_media.instagram,
                         "_blank"
@@ -191,14 +190,14 @@ class ProfileDetails extends Component {
           <div className="flex flex-col">
             <div className="text-2xl text-alpha p-2 ">
               <i class="fas fa-info-circle"></i> About
-          </div>
+            </div>
             <hr></hr>
             <div className="p-2 mt-1  text-lg text-gray-800">
               {this.state.profile.about_me}
             </div>
             <div className="text-2xl text-alpha p-2 mt-2 ">
               <i class="fab fa-gratipay "></i> Interests
-          </div>
+            </div>
             <hr></hr>
             <div className="p-2 mt-1">
               {this.state.tag.map((el) => (
@@ -207,7 +206,7 @@ class ProfileDetails extends Component {
             </div>
             <div className="text-2xl text-alpha p-2 mt-2 ">
               <i class="fas fa-users"></i> Clubs
-          </div>
+            </div>
             <hr></hr>
             <div className="p-2 mt-1 flex flex-wrap mb-2 mt-2 gap-1">
               {this.state.club.map((el) => (
@@ -220,9 +219,8 @@ class ProfileDetails extends Component {
           </div>
         </div>
       );
-    }
-    else {
-      return <></>
+    } else {
+      return <></>;
     }
   }
 }

@@ -3,10 +3,6 @@ import Chart from "chart.js";
 
 export default function CardBarChart() {
   React.useEffect(() => {
-    var randomScalingFactor = function () {
-      return Math.round(Math.random() * 100);
-    };
-
     var config = {
       type: "pie",
       data: {
