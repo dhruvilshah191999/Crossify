@@ -34,7 +34,6 @@ class UploadPic extends React.Component {
           <br />
           <div className=" ">
             <img
-              alt="PreviewImg"
               className=""
               onChange={this.handleChange2}
               src={this.state.file}
