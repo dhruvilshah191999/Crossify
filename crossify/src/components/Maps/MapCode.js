@@ -72,7 +72,8 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import currentPosIcon from "assets/img/marker.png";
-import GOOGLE_MAPS_API from "config/default.json";
+import Keys from "config/default.json";
+const GOOGLE_MAPS_API = Keys.GOOGLE_MAPS_API;
 export class MapContainer extends React.Component {
   constructor(props) {
     super(props);

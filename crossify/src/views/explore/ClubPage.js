@@ -8,11 +8,10 @@ import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
 import { store } from "react-notifications-component";
-import { notifyCopied } from "notify";
 import { notifyClubLiked } from "notify";
 import Moment from "moment";
 import JoinClubButton from "components/SweetAlerts/JoinClubButton";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import { ModalManager } from "react-dynamic-modal";
 import { motion } from "framer-motion";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
 
@@ -45,6 +44,7 @@ function ClubPage(props) {
         send_data,
         config
       );
+      console.log(finaldata.data);
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {

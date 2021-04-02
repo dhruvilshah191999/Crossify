@@ -1,6 +1,7 @@
 import React from "react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
-import GOOGLE_MAPS_API from "config/default.json";
+import Keys from "config/default.json";
+const GOOGLE_MAPS_API = Keys.GOOGLE_MAPS_API;
 export class MapContainer extends React.Component {
   state = {
     markers: [

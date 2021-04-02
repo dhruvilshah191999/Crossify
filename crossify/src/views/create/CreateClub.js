@@ -1,5 +1,5 @@
 import Navbar from "components/Navbars/ClubNavbar";
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { InputTagsContainer } from "react-input-tags";
@@ -45,7 +45,7 @@ function CreateClub(props) {
 
   useEffect(() => {
     setTimeout(setLoading(true), 1500);
-  },[])
+  }, []);
 
   var districts = [];
   if (statename !== "") {
@@ -109,7 +109,7 @@ function CreateClub(props) {
             tags,
             token,
             photo: res.data.url,
-            question:question1
+            question: question1,
           };
           try {
             const config = {
@@ -127,7 +127,7 @@ function CreateClub(props) {
             if (finaldata.data.is_error) {
               console.log(finaldata.data.message);
             } else {
-               window.location.replace("/clubsearch");
+              window.location.replace("/clubsearch");
             }
           } catch (err) {
             console.log(err);
@@ -455,8 +455,7 @@ function CreateClub(props) {
         </div>
       </>
     );
-  }
-  else {
+  } else {
     return <></>;
   }
 }

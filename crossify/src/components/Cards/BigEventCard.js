@@ -12,6 +12,7 @@ const ResultWindow = (props) => {
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);
   };
+  // ! Add right data at Club Name
   return (
     <div
       className="h-custom rounded-lg shadow p-4 flex mx-2 mt-4 mr-4 ml-2 hover:shadow-lg"
@@ -43,6 +44,7 @@ const ResultWindow = (props) => {
             </span>
           </div>
           <div className="mt-1 text-gray-700 text-sm ">
+            {/* // ! HEREEEEE */}
             <i className="fas fa-users"></i> {props.ownerGroup}
           </div>
 
