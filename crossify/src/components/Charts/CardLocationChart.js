@@ -1,7 +1,9 @@
 import React from "react";
 import Chart from "chart.js";
-
+import axios from "axios";
+import { useParams } from "react-router";
 export default function CardBarChart() {
+<<<<<<< HEAD
   React.useEffect(() => {
     var config = {
       type: "pie",
@@ -27,15 +29,66 @@ export default function CardBarChart() {
         legend: {
           labels: {
             fontColor: "rgba(0,0,0,.4)",
-          },
-          align: "end",
-          position: "bottom",
+=======
+  var { id } = useParams();
+  React.useEffect(async () => {
+    const config2 = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
         },
-      },
-    };
+        validateStatus: () => true,
+      };
+      var send_data = {
+        club_id: id,
+      };
+      const finaldata = await axios.post(
+        "/api/admin/LocationGraphs",
+        send_data,
+        config2
+      );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      var randomScalingFactor = function () {
+        return Math.round(Math.random() * 100);
+      };
 
-    let ctx = document.getElementById("pie-chart").getContext("2d");
-    window.myBar = new Chart(ctx, config);
+      var config = {
+        type: "pie",
+        data: {
+          datasets: [
+            {
+              data: finaldata.data.data,
+              backgroundColor: [
+                "#ff75a0",
+                "#fce38a",
+                "#4299e1",
+                "#95e1d3",
+                "gray",
+              ],
+              label: "Dataset 1",
+            },
+          ],
+          labels: finaldata.data.label,
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          legend: {
+            labels: {
+              fontColor: "rgba(0,0,0,.4)",
+            },
+            align: "end",
+            position: "bottom",
+>>>>>>> d53fac3ffa9cd23935f82f3f7496ecabce96d1ac
+          },
+        },
+      };
+
+      let ctx = document.getElementById("pie-chart").getContext("2d");
+      window.myBar = new Chart(ctx, config);
+    }
   }, []);
   return (
     <>

@@ -482,12 +482,21 @@ router.post("/get-photo-name", async function (req, res, next) {
   });
 });
 
+<<<<<<< HEAD
 router.post("/Promotion", async function (req, res, next) {
   var { user_id, club_id } = req.body;
   console.log(req.body);
   var check = member_details.update(
     { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
     { $set: { "member_list.$.level": "moderator" } }
+=======
+router.post('/Promotion', async function (req, res, next) {
+  var {user_id, club_id} = req.body;
+  console.log(req.body);
+  var check = member_details.update(
+    {club_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
+    {$set: {'member_list.$.level': 'moderator'}}
+>>>>>>> d53fac3ffa9cd23935f82f3f7496ecabce96d1ac
   );
   await check.exec((err, data) => {
     if (err) {
@@ -544,8 +553,13 @@ router.post("/Demotion", async function (req, res, next) {
 router.post("/DeleteMember", async function (req, res, next) {
   var { user_id, club_id } = req.body;
   var check = member_details.update(
+<<<<<<< HEAD
     { club_id: ObjectId(club_id), is_active: 1 },
     { $pull: { member_list: { user: ObjectId(user_id) } } }
+=======
+    {club_id: ObjectId(club_id), is_active: 1},
+    {$pull: {member_list: {user: ObjectId(user_id)}}}
+>>>>>>> d53fac3ffa9cd23935f82f3f7496ecabce96d1ac
   );
   await check.exec((err, data) => {
     if (err) {
@@ -562,7 +576,11 @@ router.post("/DeleteMember", async function (req, res, next) {
             is_active: 1,
           },
           {
+<<<<<<< HEAD
             $pull: { clubs: ObjectId(club_id) },
+=======
+            $pull: {clubs: ObjectId(club_id)},
+>>>>>>> d53fac3ffa9cd23935f82f3f7496ecabce96d1ac
           }
         )
         .exec();
@@ -575,8 +593,13 @@ router.post("/DeleteMember", async function (req, res, next) {
   });
 });
 
+<<<<<<< HEAD
 router.post("/get-upcoming-event", async function (req, res, next) {
   var { club_id } = req.body;
+=======
+router.post('/get-upcoming-event', async function (req, res, next) {
+  var {club_id} = req.body;
+>>>>>>> d53fac3ffa9cd23935f82f3f7496ecabce96d1ac
   var result = event_details.find(
     {
       club_id: ObjectId(club_id),
@@ -648,4 +671,110 @@ router.post("/get-past-event", async function (req, res, next) {
     }
   });
 });
+
+router.post('/LocationGraphs', async function (req, res, next) {
+  var { club_id } = req.body;
+  var result = user_details.aggregate([
+    {
+      $match: {
+        clubs: ObjectId(club_id),
+      },
+    },
+    {
+      $group: {
+        _id: '$city',
+        count: {$sum: 1},
+      },
+    },
+    {
+      $sort: {count: -1},
+    },
+    {
+      $limit: 5,
+    },
+  ]);
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data.length != 0) {
+      var label = [];
+      var count = [];
+      data.forEach(e => {
+        label.push(e._id);
+        count.push(e.count);
+      })
+      var finaldata = {
+        label,
+        data: count,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+    else {
+      var finaldata = {
+        label:[],
+        data: [],
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/BarGraphs', async function (req, res, next) {
+  var {club_id} = req.body;
+  var result = event_details.aggregate([
+    {
+      $match: {
+        club_id: ObjectId(club_id),
+      },
+    },
+    {$unwind: '$tags'},
+    {$sortByCount: '$tags'},
+    {
+      $sort: {count: -1},
+    },
+    {
+      $limit: 5,
+    },
+  ]);
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data.length != 0) {
+      var label = [];
+      var count = [];
+      data.forEach((e) => {
+        label.push(e._id);
+        count.push(e.count);
+      });
+      var finaldata = {
+        label,
+        data: count,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var finaldata = {
+        label: [],
+        data: [],
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 module.exports = router;
