@@ -2,3 +2,4 @@ node_modules/
 crossify/.eslintcache
 config/
 .env.local
+crossify/src/config

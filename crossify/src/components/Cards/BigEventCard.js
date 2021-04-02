@@ -20,6 +20,7 @@ const ResultWindow = (props) => {
     >
       <div className="eventPhoto flex-shrink-0">
         <img
+          alt="Event_photo"
           className="card-image rounded-lg"
           src={props.data.photo}
           style={{ width: "200px", height: "140px" }}
