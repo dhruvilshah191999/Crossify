@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import ReactNotification from "react-notifications-component";
-import { store as notify } from "react-notifications-component";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
@@ -29,6 +27,7 @@ import PlayGround from "views/demo/PlayGround";
 import ClubPage from "views/explore/ClubPage";
 import CreateClub from "views/create/CreateClub";
 import { UserContext } from "context/usercontext";
+import ProfilePage from "views/explore/ProfilePage";
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
@@ -51,14 +50,14 @@ const Routing = () => {
   var token = localStorage.getItem("jwt");
   return (
     <Switch>
-      <Route path="/admin" component={Admin} />
+      <Route path="/admin/:id" component={Admin} />
       <Route path="/landing" exact component={Landing} />
       <Route path="/" exact component={Index} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/clubsearch" exact component={ClubSearchPage} />
-      <Route path="/club/:id" exact component={ClubPage} />
       <Route path="/playground" exact component={PlayGround} />
       <Route path="/createclub" exact component={CreateClub} />
+      <Route path="/profilepage" exact component={ProfilePage} />
       <Route path="/auth" component={Auth} />
       {!token ? (
         <>
@@ -73,6 +72,12 @@ const Routing = () => {
             path="/events/event=:id"
             component={EventPage}
           />
+          <PrivateRoute
+            authed={false}
+            path="/club/:id"
+            exact
+            component={ClubPage}
+          />
         </>
       ) : (
         <>
@@ -86,6 +91,12 @@ const Routing = () => {
             authed={true}
             path="/events/event=:id"
             component={EventPage}
+          />
+          <PrivateRoute
+            authed={true}
+            path="/club/:id"
+            exact
+            component={ClubPage}
           />
         </>
       )}

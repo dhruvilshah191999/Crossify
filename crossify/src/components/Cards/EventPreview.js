@@ -115,7 +115,7 @@ export default function EventPreview(props) {
                     </span>
                   </div>
                   <div className="mt-6">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col mb-1">
                       <div>
                         <span className="font-semibold"> Hosted By :</span>
                       </div>
@@ -227,24 +227,33 @@ export default function EventPreview(props) {
                     className="mt-1 text-lg  w-3/4 leading-relaxed"
                     style={{ overflowY: "auto", maxHeight: "400px" }}
                   >
-                    {eventdetails.faq.map((el, i) => {
-                      if (el.privacy == "public" && el.status == "answered") {
-                        if (i == 0) {
+                    {eventdetails.faq.length ? (
+                      eventdetails.faq.map((el, i) => {
+                        if (
+                          el.privacy === "public" &&
+                          el.status === "answered"
+                        ) {
+                          if (i === 0) {
+                            return (
+                              <details>
+                                <summary className="pt-0">
+                                  {el.question}
+                                </summary>
+                                <p>{el.answer}</p>
+                              </details>
+                            );
+                          }
                           return (
                             <details>
-                              <summary className="pt-0">{el.question}</summary>
+                              <summary>{el.question}</summary>
                               <p>{el.answer}</p>
                             </details>
                           );
                         }
-                        return (
-                          <details>
-                            <summary>{el.question}</summary>
-                            <p>{el.answer}</p>
-                          </details>
-                        );
-                      }
-                    })}
+                      })
+                    ) : (
+                      <i>Nothing Added Yet.</i>
+                    )}
                   </div>
                 </div>
                 <div className="flex flex-col lg:flex-row py-4">

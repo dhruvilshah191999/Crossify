@@ -142,19 +142,19 @@ const Tabs = (props) => {
                   />
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                  <EventTab />
+                  <EventTab club_id={props.club_id} />
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                  <RoomTab />
+                  {props.isJoin ? <RoomTab /> : ""}
                 </div>
                 <div className={openTab === 4 ? "block" : "hidden"} id="link3">
-                  <MemberTab />
+                  {props.isJoin ? <MemberTab club_id={props.club_id} /> : ""}
                 </div>
                 <div className={openTab === 5 ? "block" : "hidden"} id="link3">
                   <PhotosTab />
                 </div>
                 <div className={openTab === 6 ? "block" : "hidden"} id="link3">
-                  <FilesTab />
+                  {props.isJoin ? <FilesTab club_id={props.club_id} /> : ""}
                 </div>
               </div>
             </div>

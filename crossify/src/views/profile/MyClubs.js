@@ -117,7 +117,7 @@ export default function MyClubs() {
   var renderpagesManage = pagesManage.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == manageIndex) {
+    if (number === manageIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -146,7 +146,7 @@ export default function MyClubs() {
   var renderpagesJoined = pagesJoined.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == joinedIndex) {
+    if (number === joinedIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -175,7 +175,7 @@ export default function MyClubs() {
   var renderpagesLiked = pagesLiked.map((number) => {
     var classNames =
       "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-    if (number == likedIndex) {
+    if (number === likedIndex) {
       classNames =
         "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
     }
@@ -193,7 +193,7 @@ export default function MyClubs() {
     );
   });
 
-  if (pagesManage.length == 0) {
+  if (pagesManage.length === 0) {
     renderpagesManage = (
       <div
         className="flex justify-center content-center"
@@ -218,7 +218,7 @@ export default function MyClubs() {
       </div>
     );
   }
-  if (pagesLiked.length == 0) {
+  if (pagesLiked.length === 0) {
     renderpagesLiked = (
       <div
         className="flex justify-center content-center"
@@ -243,7 +243,7 @@ export default function MyClubs() {
       </div>
     );
   }
-  if (pagesJoined.length == 0) {
+  if (pagesJoined.length === 0) {
     renderpagesJoined = (
       <div
         className="flex justify-center content-center"
@@ -404,9 +404,9 @@ export default function MyClubs() {
       <div className="py-2 justify-center flex">
         <div className="block">
           <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
-            {tabIndex == 1
+            {tabIndex === 1
               ? renderpagesManage
-              : tabIndex == 0
+              : tabIndex === 0
               ? renderpagesLiked
               : renderpagesJoined}
           </ul>

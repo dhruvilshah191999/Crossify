@@ -1,6 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import currentPosIcon from "assets/img/marker.png";
+import hello from "config/default.json";
+const GOOGLE_MAPS_API = hello.GOOGLE_MAPS_API;
+console.log(GOOGLE_MAPS_API);
 export class MapContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -11,25 +14,26 @@ export class MapContainer extends React.Component {
         lng: this.props.long,
       },
     };
+    console.log(GOOGLE_MAPS_API);
   }
 
-  componentDidMount = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          let self = this;
-          self.setState({
-            position: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-          });
-        },
-        undefined,
-        { enableHighAccuracy: true }
-      );
-    }
-  };
+  // componentDidMount = () => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         let self = this;
+  //         self.setState({
+  //           position: {
+  //             lat: position.coords.latitude,
+  //             lng: position.coords.longitude,
+  //           },
+  //         });
+  //       },
+  //       undefined,
+  //       { enableHighAccuracy: true }
+  //     );
+  //   }
+  // };
   onMarkerDragEnd = (coord) => {
     const { latLng } = coord;
     const lat = latLng.lat();
@@ -62,6 +66,6 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc",
+  apiKey: GOOGLE_MAPS_API,
   version: "3.38",
 })(MapContainer);

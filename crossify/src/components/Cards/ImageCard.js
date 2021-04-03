@@ -11,7 +11,6 @@ class ImageCard extends React.Component {
 
   componentDidMount() {
     this.imageRef.current.addEventListener("load", this.setSpans);
-    console.log("Processed");
   }
 
   setSpans = () => {

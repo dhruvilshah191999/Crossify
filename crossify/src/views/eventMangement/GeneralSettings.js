@@ -100,7 +100,6 @@ export default function GeneralSettings(props) {
       }
     }
     fetchData();
-    console.clear();
   }, []);
 
   const handleCallback = (childData) => {

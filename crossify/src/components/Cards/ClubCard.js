@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import defImg from "../../assets/img/event_1.jpeg";
 import { motion } from "framer-motion";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { store } from "react-notifications-component";
-import { notifyCopied } from "notify";
 import { notifyLiked } from "notify";
 import axios from "axios";
+import ShareButton from "components/SweetAlerts/ShareButton";
 
 const ClubCard = (props) => {
   const [loginstate, setLogin] = useState(false);
@@ -13,7 +12,6 @@ const ClubCard = (props) => {
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
-    console.clear();
     async function fetchData() {
       const config = {
         method: "POST",
@@ -157,7 +155,7 @@ const ClubCard = (props) => {
 
           <div
             className="absolute top-0 right-0"
-            style={{ marginTop: "195px", marginRight: "20px" }}
+            style={{ marginTop: "195px", marginRight: "12px" }}
           >
             <motion.button
               className={
@@ -173,14 +171,12 @@ const ClubCard = (props) => {
             >
               <i className="fas fa-heart"></i>
             </motion.button>
-            <motion.button
-              className="text-blue-500 bg-white shadow border border-solid  hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              type="button"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <i class="fas fa-share-alt"></i>
-            </motion.button>
+            <ShareButton
+              shareUrl={window.location.href + "club/" + props.data._id}
+              title={props.data.club_name}
+              description={props.data.description}
+              tags={props.data.tags}
+            ></ShareButton>
           </div>
         </div>
       </div>

@@ -201,6 +201,6 @@ MapContainer.defaultProps = {
 };
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc",
+  apiKey: GOOGLE_MAPS_API,
   version: "3.38",
 })(MapContainer);

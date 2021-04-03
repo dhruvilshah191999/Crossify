@@ -28,7 +28,6 @@ export default function Sidebar(props) {
   const [member, setMember] = React.useState([0, 50]);
 
   React.useEffect(() => {
-    console.clear();
     async function fetchData() {
       let InterestArray = [];
       try {

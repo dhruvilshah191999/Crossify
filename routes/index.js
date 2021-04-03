@@ -27,7 +27,7 @@ router.post("/login", async function (req, res, next) {
       };
       return res.status(400).send(error);
     } else {
-      if (data == null || data.length == 0) {
+      if (data === null || data.length === 0) {
         var error = {
           is_error: true,
           message: "Username or Password invalid",
@@ -77,7 +77,7 @@ router.post("/signup", async function (req, res, next) {
         message: "This EmailId Already Exists.",
       };
       return res.status(500).send(error);
-    } else if (data == null || data.length == 0) {
+    } else if (data === null || data.length === 0) {
       password = bcrypt.hashSync(password, 10);
       var user = new user_details({
         email,
@@ -125,7 +125,7 @@ router.post("/socialsignup", async function (req, res, next) {
         message: "This Account Already Exists.",
       };
       return res.status(500).send(error);
-    } else if (data == null || data.length == 0) {
+    } else if (data === null || data.length === 0) {
       var user = new user_details({
         socialId,
         email,
@@ -179,7 +179,7 @@ router.post("/socialstep2", async function (req, res, next) {
         message: "This Username Already Exists.",
       };
       return res.status(500).send(error);
-    } else if (data == null || data.length == 0) {
+    } else if (data === null || data.length === 0) {
       password = bcrypt.hashSync(password, 10);
       var update = user_details.findOneAndUpdate(
         { email: email, is_active: 1 },
@@ -232,7 +232,7 @@ router.post("/change-password", async function (req, res, next) {
       };
       return res.status(400).send(error);
     } else {
-      if (data == null || data.length == 0) {
+      if (data === null || data.length === 0) {
         var error = {
           is_error: true,
           message: "Password invalid",
@@ -305,7 +305,7 @@ router.post("/step2", async function (req, res, next) {
         message: "This Username Already Exists.",
       };
       return res.status(500).send(error);
-    } else if (data == null || data.length == 0) {
+    } else if (data === null || data.length === 0) {
       var update = user_details.findOneAndUpdate(
         { email: email, is_active: 1 },
         {
@@ -351,13 +351,15 @@ router.post("/notification", auth, async function (req, res, next) {
   user_details
     .find(
       {
-          _id: ObjectId(req.user._id),
-          is_active: true,
+        _id: ObjectId(req.user._id),
+        is_active: true,
       },
       {
         inbox: 1,
       }
-    ).sort({"inbox.date": -1}).limit(10)
+    )
+    .sort({ "inbox.date": -1 })
+    .limit(10)
     .exec((err, data) => {
       if (err) {
         var error = {

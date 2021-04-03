@@ -1,6 +1,7 @@
 import UploadPic from "components/Inputs/UploadPic";
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
+import axios from "axios";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
@@ -8,25 +9,106 @@ export default class SweetAlertModal extends Component {
 
     this.state = {
       alert: null,
-      file: null,
-      description: null,
+      file: this.props.link,
+      description: this.props.description,
+      club_id: this.props.club_id,
+      old_file: this.props.link,
+      link:this.props.link,
+      size: this.props.size,
+      name:this.props.name,
     };
   }
-  componentDidMount() {
-    this.setState({
-      file: this.props.file,
-      description: this.props.description,
-    });
-  }
+
+  handlePhotoCallback = (childData) => {
+    this.setState({ file: childData });
+  };
+
   hideAlert = () => {
     this.setState({
       alert: null,
     });
   };
-  onRecievedInput = () => {
-    const updatedQ = this.state.file;
-    const updatedA = this.state.description;
-    //todo GOLU we have file and description in state you just make any axios request to update the current value
+  onRecievedInput = async () => {
+    var file = this.state.file;
+    var desc = this.state.description;
+    if (this.state.file != null && this.state.file != this.state.old_file) {
+      var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
+      var path =
+        "ClubPhoto/" +
+        this.state.club_id +
+        "/" +
+        this.state.file.name.split(".")[0];
+      var data = new FormData();
+      data.append("file", this.state.file);
+      data.append("upload_preset", "crossify-project");
+      data.append("public_id", path);
+      const config = {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      };
+      axios
+        .post(url, data, config)
+        .then(async (res) => {
+          var BytestoKB = file.size * 0.000977;
+          var object = {
+            club_id: this.state.club_id,
+            description: desc,
+            photo: res.data.url,
+            name: file.name,
+            size: BytestoKB,
+            link: this.state.link,
+          };
+          try {
+            const config = {
+              method: "POST",
+              header: {
+                "Content-Type": "application/json",
+              },
+              validateStatus: () => true,
+            };
+            const finaldata = await axios.post(
+              "/api/admin/EditPhoto",
+              object,
+              config
+            );
+            if (finaldata.data.is_error) {
+              console.log(finaldata.data.message);
+            } else {
+              window.location.reload();
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    else {
+      var object = {
+        club_id: this.state.club_id,
+        description: this.state.description,
+        photo: this.state.old_file,
+        name: this.state.name,
+        size: this.state.size,
+        link:this.state.link
+      };
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      const finaldata = await axios.post(
+        "/api/admin/EditPhoto",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        window.location.reload();
+      }
+    }
+
     this.setState({
       alert: null,
       file: null,
@@ -68,7 +150,10 @@ export default class SweetAlertModal extends Component {
                   >
                     Media
                   </label>
-                  <UploadPic></UploadPic>
+                  <UploadPic
+                    file={this.state.file}
+                    parentCallback={this.handlePhotoCallback}
+                  ></UploadPic>
                 </div>
               </div>
               <div className="w-full px-4">

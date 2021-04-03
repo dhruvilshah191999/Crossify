@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
 class MultipleInputs extends Component {
-  state = { questions: [" "] };
+  state = { questions: [""] };
   addBelow = (index) => {
     var arr = this.state.questions;
-    if (arr[arr.length - 1] === " ") {
+    if (arr[arr.length - 1] === "") {
       return;
     }
-    arr.splice(index + 1, 0, " ");
+    arr.splice(index + 1, 0, "");
     this.setState({ questions: arr });
   };
   removeCurrent = (index) => {
@@ -17,6 +17,7 @@ class MultipleInputs extends Component {
     var arr = this.state.questions;
     arr.splice(index, 1);
     this.setState({ questions: arr });
+    this.props.parentCallback(arr);
   };
   updateValues = (value, index) => {
     var arr = this.state.questions;
@@ -24,6 +25,7 @@ class MultipleInputs extends Component {
     this.setState({
       questions: arr,
     });
+    this.props.parentCallback(arr);
   };
   render() {
     return (

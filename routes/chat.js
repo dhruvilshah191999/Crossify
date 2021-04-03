@@ -83,13 +83,14 @@ router.post('/createRoom', async function (req, res, next) {
 // })
 router.post('/send', async function (req, res) {
   var { messagetext, user_id, room_id, club_id } = req.body;
-  var encryptedMessage = cryptr.encrypt(messagetext);
-  console.log(encryptedMessage);
+  // var encryptedMessage = cryptr.encrypt(messagetext);
+  // console.log(encryptedMessage);
   var message_obj = {
-    message: encryptedMessage,
+    message: messagetext,
     user_id: ObjectId(user_id),
     senttime: new Date(),
   };
+  console.log(user_id);
   // io.on('sendMessage',(message,callback)=>{
   //   var message_obj={
   //     message:encryptedMessage,
@@ -124,7 +125,7 @@ router.post('/send', async function (req, res) {
         {
           $push: {
             messages: {
-              message: encryptedMessage,
+              message: messagetext,
               user_id: ObjectId(user_id),
               senttime: new Date(),
             },
@@ -156,9 +157,9 @@ router.post('/send', async function (req, res) {
     }
   });
 });
-router.get('/getRooms', async function (req, res) {
+router.post('/getRooms', async function (req, res) {
   var { club_id } = req.body;
-  var check = club_details.findOne({ _id: club_id }, ['channel_list']);
+  var check = channel_details.find({ club_id });
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -171,8 +172,8 @@ router.get('/getRooms', async function (req, res) {
         is_error: false,
         data: data,
       };
-      console.log(finaldata);
-      return res.status(200).send(data);
+      //console.log(finaldata);
+      return res.status(200).send(finaldata);
     } else {
       var error = {
         is_error: true,
@@ -182,7 +183,7 @@ router.get('/getRooms', async function (req, res) {
     }
   });
 });
-router.get('/getParticularroom', async function (req, res) {
+router.post('/getParticularroom', async function (req, res) {
   var { room_id } = req.body;
   var check = channel_details.findOne({ _id: ObjectId(room_id) });
   await check.exec((error, data) => {

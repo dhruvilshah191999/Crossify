@@ -1,3 +1,20 @@
+## Snapshots
+- Creating a Club
+<img src="SnapShots/CreateClub.png">
+<img src="SnapShots/HomePage.png">
+<img src="SnapShots/ClubSearch.png">
+<img src="SnapShots/EventSearch.png">
+<img src="SnapShots/EditEvent.png">
+<img src="SnapShots/EventPage.png">
+<img src="SnapShots/ClubPage.png">
+<img src="SnapShots/PrivateClubPage.png">
+<img src="SnapShots/SignInPage.png">
+<img src="SnapShots/SignUpPage.png">
+
+<img src="SnapShots/AdminDashBoard.png">
+<img src="SnapShots/UserDashBoard.png">
+<img src="SnapShots/EditEvent.png">
+
 **Software Requirements Specification for Crossify**
 
 **Prepared by Crossify TEAM**

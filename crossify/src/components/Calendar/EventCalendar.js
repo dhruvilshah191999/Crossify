@@ -1,5 +1,5 @@
 import React from "react";
-import FullCalendar, { sliceEvents } from "@fullcalendar/react";
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import moment from "moment";
@@ -12,10 +12,10 @@ import "@fullcalendar/timegrid/main.css";
 import SweetAlert from "react-bootstrap-sweetalert";
 import RequestForEvent from "components/Modals/RequestForEvent";
 
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import { select } from "@tailwindcss/custom-forms/src/defaultOptions";
+import { ModalManager } from "react-dynamic-modal";
 import { Redirect } from "react-router";
 
+//this is used to make custom view in calendar for event
 function renderEventContent(eventInfo) {
   return (
     <button className="p-2 bg-alpha w-full" onClick={() => alert("Working")}>
@@ -28,50 +28,36 @@ export default class DemoApp extends React.Component {
   constructor(props) {
     super(props);
     this.calendarRef = React.createRef();
-    const cleanedEvents = this.props.showEvents.map(
-      ({
-        event_name,
-        starting_date,
-        starting_time,
-        ending_date,
-        ending_time,
-        _id,
-      }) => {
-        const startDateTime = moment(
-          `${starting_date} ${starting_time}`,
-          "YYYY-MM-DD HH:mm:ss"
-        ).format();
-
-        const endDateTime = moment(
-          `${starting_date} ${starting_time}`,
-          "YYYY-MM-DD HH:mm:ss"
-        ).format();
-        return {
-          title: event_name,
-          start: startDateTime,
-          end: new Date(),
-          id: "/events/event=" + _id,
-          // end: endDateTime,
-        };
-      }
-    );
-    console.log("herllo", cleanedEvents);
+    console.log(this.props.EventData);
     this.state = {
       alert: null,
       currentSelectionInfo: null,
-      events: cleanedEvents,
+      events: [],
+      loading: false,
     };
   }
 
-  popOver = () => {
-    // alert("Working as smooth");
-    //hovering effect if you want to add
-  };
-
+  componentDidMount() {
+    const cleanedEvents = this.props.EventData.map(
+      ({ event_name, date, startdate, _id }) => {
+        const startDateTime = moment(startdate).format("YYYY-MM-DD HH:mm:ss");
+        const endDateTime = moment(date).format("YYYY-MM-DD HH:mm:ss");
+        return {
+          title: event_name,
+          start: startDateTime,
+          end: endDateTime,
+          id: "/events/event=" + _id,
+        };
+      }
+    );
+    this.setState({ loading: true }, () => {
+      this.setState({
+        loading: false,
+        events: cleanedEvents,
+      });
+    });
+  }
   redirectToEventPage = (selectionInfo) => {
-    //todo Get the Id and then provide the link to open in new tab
-    // window.open("https://www.geeksforgeeks.org", "_blank");
-    console.log(selectionInfo);
     window.open(selectionInfo.event._def.publicId, "_blank").focus();
   };
 
@@ -79,6 +65,7 @@ export default class DemoApp extends React.Component {
     let calendarApi = this.calendarRef.current.getApi();
     calendarApi.gotoDate(e.target.value);
   };
+
   changeView = () => {
     let calendarApi = this.calendarRef.current.getApi();
     const currentOption = calendarApi.getOption("eventDisplay");
@@ -139,7 +126,7 @@ export default class DemoApp extends React.Component {
   };
   render() {
     return (
-      <>
+      <div>
         <FullCalendar
           ref={this.calendarRef}
           height="800px"
@@ -189,7 +176,7 @@ export default class DemoApp extends React.Component {
             </motion.button>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
@@ -205,7 +192,6 @@ DemoApp.defaultProps = {
       event_name: "Coding Competition",
       starting_date: "2021-03-23",
       starting_time: "11:00:44",
-
       ending_date: "2021-03-25",
       ending_time: "11:00:00",
       _id: "5ff29fb4a04b22d9c9ff9ec1",

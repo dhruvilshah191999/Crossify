@@ -19,7 +19,7 @@ const Pagination = ({ postPerPage, totalPosts, paginate }) => {
             {pageNumbers.map((number) => {
               var classNames =
                 "first:ml-0 text-xs cursor-pointer font-semibold text-alpha bg-white flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha   m-2";
-              if (number == current) {
+              if (number === current) {
                 classNames =
                   "first:ml-0 shadow-full cursor-pointer text-xs bg-alpha text-white font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-alpha  bg-white  m-2";
               }

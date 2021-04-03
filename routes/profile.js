@@ -18,7 +18,7 @@ router.post("/get-user", auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (result == null) {
+    } else if (result === null) {
       var error = {
         is_error: true,
         message: "User Not Found",
@@ -70,7 +70,7 @@ router.post("/update-user", auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (result == null) {
+    } else if (result === null) {
       var error = {
         is_error: true,
         message: "User Not Found",
@@ -97,7 +97,7 @@ router.post("/update-password", async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (data == null || data.length == 0) {
+    } else if (data === null || data.length === 0) {
       var error = {
         is_error: true,
         message: "User Not Found",
@@ -160,7 +160,7 @@ router.post("/update-social", auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (result == null) {
+    } else if (result === null) {
       var error = {
         is_error: true,
         message: "User Not Found",
@@ -178,19 +178,21 @@ router.post("/update-social", auth, async function (req, res, next) {
 });
 
 router.post("/get-upcoming-event", auth, async function (req, res, next) {
-  var result = event_details.find({
-    "participants_list.user": ObjectId(req.user._id),
-    date: { $gt: new Date() },
-    is_active: 1,
-  }, {
-    _id: 1,
-    city: 1,
-    location: 1,
-    date: 1,
-    photo: 1,
-    tags: 1,
-    event_name:1,
-  }
+  var result = event_details.find(
+    {
+      "participants_list.user": ObjectId(req.user._id),
+      date: { $gt: new Date() },
+      is_active: 1,
+    },
+    {
+      _id: 1,
+      city: 1,
+      location: 1,
+      date: 1,
+      photo: 1,
+      tags: 1,
+      event_name: 1,
+    }
   );
   await result.exec((err, data) => {
     if (err) {
@@ -291,7 +293,7 @@ router.post("/get-all-event", auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (result == null) {
+    } else if (result === null) {
       var error = {
         is_error: true,
         message: "User Not Found",
@@ -391,7 +393,7 @@ router.post("/check-event", auth, async function (req, res, next) {
           message: err.message,
         };
         return res.status(600).send(error);
-      } else if (data == null || data.length == 0) {
+      } else if (data === null || data.length === 0) {
         var error = {
           check: false,
           is_error: true,
@@ -440,7 +442,7 @@ router.post("/MyProfile", auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(500).send(err);
-    } else if (data==null && data.length==0) {
+    } else if (data == null && data.length == 0) {
       var err = {
         is_error: true,
         message: "wrong event id or you may not have access to update ",
@@ -448,7 +450,10 @@ router.post("/MyProfile", auth, async function (req, res, next) {
       return res.status(404).send(err);
     } else {
       let tag = [];
-      var tags = category_details.find({ _id: { $in: data.interest_id } }, { tags: 1 });
+      var tags = category_details.find(
+        { _id: { $in: data.interest_id } },
+        { tags: 1 }
+      );
       await tags.exec((err, data2) => {
         if (err) {
           var error = {
@@ -462,7 +467,7 @@ router.post("/MyProfile", auth, async function (req, res, next) {
           });
           var finaldata = {
             data: data,
-            tag:tag,
+            tag: tag,
             is_error: false,
             message: "value send succesfully",
           };
@@ -478,14 +483,13 @@ router.post("/get-photo-name", auth, async function (req, res, next) {
     creator_id: ObjectId(req.user._id),
   });
   await result.exec((err, data) => {
-    console.log(req.user._id);
     if (err) {
       var error = {
         is_error: true,
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (data == null || data.length == 0) {
+    } else if (data === null || data.length === 0) {
       var error = {
         check: false,
         is_error: true,

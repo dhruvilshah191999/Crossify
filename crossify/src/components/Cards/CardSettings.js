@@ -8,12 +8,7 @@ import MultipleInputs from "components/Inputs/MultipleInputs";
 export default function CardSettings(props) {
   const [privacy, setPrivacy] = useState("Public");
   const [questions, setQuestions] = useState([""]);
-  const addBelow = (index) => {
-    var arr = questions;
-    arr.splice(index, 0, " ");
-    setQuestions(arr);
-  };
-  const removeCurrent = (index) => {};
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0">

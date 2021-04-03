@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 
-import ProfileDetails from "components/Cards/ProfileDetails";
+import MemberProfileDetails from "components/Cards/MemberProfileDetails";
 
 Modal.defaultStyles = {};
-
-const Tag = (props) => <span className="tag" {...props} />;
-const Delete = (props) => <button className="delete" {...props} />;
-const Help = (props) => <span className="help" {...props} />;
 
 var customModalStyles = {
   content: {
@@ -20,13 +16,13 @@ var customModalStyles = {
 };
 
 class MyModal extends Component {
-  state = {
-    tags: [],
-  };
-
-  handleUpdateTags = (tags) => {
-    this.setState({ tags });
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: this.props.name,
+      user_id:this.props.user_id
+    };
+  }
   render() {
     const { onRequestClose } = this.props;
 
@@ -38,7 +34,8 @@ class MyModal extends Component {
       >
         <div className="flex items-start justify-between p-5 ml-1 border-b border-solid bg-gray-600 border-gray-300 rounded-t">
           <h3 className="text-2xl">
-            View Profile of <span className="font-semibold">hackershil</span>
+            View Profile of{" "}
+            <span className="font-semibold">{this.state.name}</span>
             {/* {this.props.username} */}
           </h3>
           <button
@@ -51,7 +48,7 @@ class MyModal extends Component {
           </button>
         </div>
         <div className="px-6 py-4 ">
-          <ProfileDetails />
+          <MemberProfileDetails user_id={ this.state.user_id}/>
         </div>
       </Modal>
     );

@@ -90,8 +90,6 @@ export default function Landing() {
         console.log(err);
       }
     }
-    console.clear();
-
     async function get_interest() {
       const finaldata = await axios.get("/api/events/get-interest");
       if (finaldata.data.is_error) {
@@ -111,7 +109,9 @@ export default function Landing() {
     }
     get_interest();
     get_interest_data();
-    setTimeout(isLoading(true), 1500);
+    setTimeout(() => {
+      isLoading(true);
+    }, 500);
   }, []);
 
   const SearchFilter = async (category_name) => {
@@ -322,7 +322,7 @@ export default function Landing() {
                     Browse Clubs by Category
                   </div>
                 </div>
-                <div className="flex flex-row flex-wrap container p-4 mx-5 ">
+                <div className="flex flex-row flex-wrap container p-4 mx-5">
                   {" "}
                   {categoryState.map((el) => {
                     return (

@@ -25,7 +25,9 @@ export default function Tables() {
         console.log(finaldata.data.message);
       } else {
         setdata(finaldata.data.data);
-        setTimeout(setloding(true), 1000);
+        setTimeout(() => {
+          setloding(true);
+        }, 500);
       }
     }
 

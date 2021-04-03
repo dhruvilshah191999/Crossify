@@ -8,6 +8,21 @@ import {
   usePagination,
 } from "react-table";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
+import Moment from "moment";
+import fileDownload from "js-file-download";
+import axios from "axios";
+
+const handleDownload = (url, filename) => {
+  console.log(url);
+  axios
+    .get(url, {
+      responseType: "blob",
+    })
+    .then((res) => {
+      fileDownload(res.data, filename);
+    });
+};
+
 function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
@@ -90,164 +105,17 @@ function SelectColumnFilter({
   );
 }
 
-export default function App() {
+export default function App(props) {
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(
-    () => [
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        fileName: "Cricket Tournament",
-        size: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        description:
-          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
-        actions: " ",
-      },
-    ],
-    []
-  );
+  const [clubId, setClubId] = useState(props.club_id);
+  const [mediaFile, setmediaFile] = useState(props.data);
+  const data = React.useMemo(() => mediaFile, []);
 
   const columns = React.useMemo(
     () => [
       {
         Header: "File",
-        accessor: "fileName", // accessor is the "key" in the data
+        accessor: "name", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
@@ -257,12 +125,17 @@ export default function App() {
         Header: "Size",
         accessor: "size",
         disableFilters: true,
+        Cell: ({ value }) => {
+          return Math.round(value) + " KB";
+        },
       },
       {
         Header: "Last Modified",
         accessor: "date", // accessor is the "key" in the data
-
         disableFilters: true,
+        Cell: ({ value }) => {
+          return Moment(value).format("MMMM Do YYYY, h:mm:ss a");
+        },
       },
       {
         Header: "Description",
@@ -277,16 +150,28 @@ export default function App() {
 
       {
         Header: "Actions",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
-        Cell: ({ value }) => (
-          <div className="flex ">
-            <button title="Download">
+        accessor: "link", // here add _id of event request so easy to attach with the buttons
+        Cell: ({
+          value,
+          cell: {
+            row: {
+              values: { name },
+            },
+          },
+        }) => (
+          <div className="flex ml-4">
+            <button
+              title="Download"
+              onClick={() => {
+                handleDownload(value, name);
+              }}
+            >
               <i class="fas fa-download text-green-500  focus:outline-none mr-4 "></i>
             </button>
 
-            <button className="ml-4" title="Report">
+            {/* <button className="ml-4" title="Report">
               <i class="fas fa-flag text-red-500 "></i>
-            </button>
+            </button> */}
           </div>
         ),
         disableFilters: true,

@@ -1,5 +1,7 @@
 import React from "react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import Keys from "config/default.json";
+const GOOGLE_MAPS_API = Keys.GOOGLE_MAPS_API;
 export class MapContainer extends React.Component {
   state = {
     markers: [
@@ -50,6 +52,6 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc",
+  apiKey: GOOGLE_MAPS_API,
   version: "3.38",
 })(MapContainer);

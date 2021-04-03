@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-import demopf from "assets/img/demopf.png";
 import currentPosIcon from "assets/img/marker.png";
-
+import Keys, { GOOGLE_MAPS_API } from "config/default.json";
 import moment from "moment";
+const GOOGLE_MAPS_API2 = Keys.GOOGLE_MAPS_API;
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -150,6 +150,6 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyDTdEjltqANAZ2gIVPpu1_-KESWjPSxdrc",
+  apiKey: GOOGLE_MAPS_API,
   version: "3.38",
 })(MapContainer);

@@ -1,11 +1,10 @@
 import Moment from "react-moment";
 import axios from "axios";
-import React, { useState, useEffect, useContext } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import React, { useState, useEffect } from "react";
 import { store } from "react-notifications-component";
-import { notifyCopied } from "notify";
 import { notifyLiked } from "notify";
 import { motion } from "framer-motion";
+import ShareButton from "components/SweetAlerts/ShareButton";
 
 const EventCard = (props) => {
   const [loginstate, setLogin] = useState(false);
@@ -18,7 +17,6 @@ const EventCard = (props) => {
   };
 
   useEffect(() => {
-    console.clear();
     async function fetchData() {
       const config = {
         method: "POST",
@@ -199,22 +197,12 @@ const EventCard = (props) => {
                 // style={{ fontSize: "14px" }}
               ></i>
             </motion.button>
-            <CopyToClipboard
-              text={window.location.href + "events/event=" + props.data._id}
-            >
-              <motion.button
-                className="text-blue-500 bg-white shadow border border-solid  hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                type="button"
-                onClick={notifyCopied}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <i
-                  class="fas fa-share-alt"
-                  // style={{ fontSize: "14px" }}
-                ></i>
-              </motion.button>
-            </CopyToClipboard>
+            <ShareButton
+              shareUrl={window.location.href + "events/event=" + props.data._id}
+              title={props.data.event_name}
+              description={props.data.description}
+              tags={props.data.tags}
+            ></ShareButton>
           </div>
         </div>
       </div>

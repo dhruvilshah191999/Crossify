@@ -5,10 +5,6 @@ import ChatMessage from "components/Cards/ChatMessage";
 
 Modal.defaultStyles = {};
 
-const Tag = (props) => <span className="tag" {...props} />;
-const Delete = (props) => <button className="delete" {...props} />;
-const Help = (props) => <span className="help" {...props} />;
-
 var customModalStyles = {
   content: {
     width: "50%",

@@ -9,50 +9,53 @@ export default function FooterAdmin() {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4">
               <div className="text-sm text-gray-600 font-semibold py-1 text-center md:text-left">
-                Copyright © {new Date().getFullYear()}{" "}
+                Crossify by&nbsp;
                 <a
                   href="https://www.creative-tim.com?ref=nr-footer-admin"
                   className="text-gray-600 hover:text-gray-800 text-sm font-semibold py-1"
                 >
-                  Creative Tim
+                  TheDarkSlayers
                 </a>
               </div>
             </div>
-            <div className="w-full md:w-8/12 px-4">
-              <ul className="flex flex-wrap list-none md:justify-end  justify-center">
-                <li>
-                  <a
-                    href="https://www.creative-tim.com?ref=nr-footer-admin"
-                    className="text-gray-700 hover:text-gray-900 text-sm font-semibold block py-1 px-3"
-                  >
-                    Creative Tim
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.creative-tim.com/presentation?ref=nr-footer-admin"
-                    className="text-gray-700 hover:text-gray-900 text-sm font-semibold block py-1 px-3"
-                  >
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="http://blog.creative-tim.com?ref=nr-footer-admin"
-                    className="text-gray-700 hover:text-gray-900 text-sm font-semibold block py-1 px-3"
-                  >
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/creativetimofficial/notus-react/blob/master/LICENSE.md?ref=nr-footer-admin"
-                    className="text-gray-700 hover:text-gray-900 text-sm font-semibold block py-1 px-3"
-                  >
-                    MIT License
-                  </a>
-                </li>
-              </ul>
+            <div className="w-full lg:w-6/12 px-4">
+              <div className="flex flex-wrap items-top mb-6">
+                <div className="w-full lg:w-6/12 px-4 ml-auto">
+                  <div className="mt-6 lg:mb-0 mb-6">
+                    <button
+                      className="bg-white text-blue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                      type="button"
+                      onClick={() => {
+                        window.open(
+                          " https://twitter.com/CrossifyWeb",
+                          "_blank"
+                        );
+                      }}
+                    >
+                      <i className="fab fa-twitter"></i>
+                    </button>
+                    <button
+                      className="bg-white text-blue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                      type="button"
+                    >
+                      <i className="fab fa-facebook-square"></i>
+                    </button>
+
+                    <button
+                      className="bg-white text-gray-900 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                      type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://www.github.com/dhruvilshah191999/Crossify",
+                          "_blank"
+                        );
+                      }}
+                    >
+                      <i className="fab fa-github"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

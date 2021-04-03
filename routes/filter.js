@@ -11,7 +11,7 @@ const c = require("config");
 var router = express.Router();
 
 function getdistance(lat1, lon1, lat2, lon2, unit) {
-  if (lat1 == lat2 && lon1 == lon2) {
+  if (lat1 === lat2 && lon1 === lon2) {
     return 0;
   } else {
     var radlat1 = (Math.PI * lat1) / 180;
@@ -27,10 +27,10 @@ function getdistance(lat1, lon1, lat2, lon2, unit) {
     dist = Math.acos(dist);
     dist = (dist * 180) / Math.PI;
     dist = dist * 60 * 1.1515;
-    if (unit == "K") {
+    if (unit === "K") {
       dist = dist * 1.609344;
     }
-    if (unit == "N") {
+    if (unit === "N") {
       dist = dist * 0.8684;
     }
     return dist;
@@ -234,8 +234,11 @@ router.post("/search", async function (req, res, nex) {
   var { search, location } = req.body;
   let categoryarray = [];
 
-  if((search==null || search=="") && (location==null || location=="")){
-    search=" ";
+  if (
+    (search == null || search == "") &&
+    (location == null || location == "")
+  ) {
+    search = " ";
   }
   async function getids() {
     var ids = category_details.find(
@@ -342,8 +345,11 @@ router.post("/searchclub", async function (req, res, nex) {
   var { search, location } = req.body;
   let categoryarray = [];
 
-  if((search==null || search=="") && (location==null || location=="")){
-    search=" ";
+  if (
+    (search == null || search == "") &&
+    (location == null || location == "")
+  ) {
+    search = " ";
   }
   async function getids() {
     var ids = category_details.find(
@@ -447,13 +453,7 @@ router.post("/searchclub", async function (req, res, nex) {
 });
 
 router.post("/club", async function (req, res, nex) {
-  var {
-    interestarray,
-    distance,
-    latitude,
-    longitude,
-    member
-  } = req.body;
+  var { interestarray, distance, latitude, longitude, member } = req.body;
   var query;
   var distancearray = [];
   var memberarray = [];
@@ -468,8 +468,8 @@ router.post("/club", async function (req, res, nex) {
         ) {
           memberarray.push(e.club_id);
         }
-      })
-    })
+      });
+    });
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => resolve("done!"), 1000);
     });
@@ -494,20 +494,18 @@ router.post("/club", async function (req, res, nex) {
               $in: interest_array,
             },
             _id: {
-              $in:memberarray
-            }
+              $in: memberarray,
+            },
           });
-        }
-        else {
+        } else {
           query = club_details.find({
             is_active: true,
             category_list: {
               $in: interest_array,
-            }
+            },
           });
         }
-      }
-      else {
+      } else {
         if (memberarray.length !== 0) {
           memberarray = memberarray.map((s) => mongoose.Types.ObjectId(s));
           query = club_details.find({

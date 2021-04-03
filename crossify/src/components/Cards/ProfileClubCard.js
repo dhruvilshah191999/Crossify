@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { notifyCopied, notifyLiked } from "notify";
 import { motion } from "framer-motion";
 //this notification is not working
@@ -19,7 +19,7 @@ function ProfileClubCard(props) {
       <div className="p-4 md:p-6">
         <p className="text-blue-500 font-semibold text-xs mb-1 leading-none">
           {props.tags.map((el, i) => {
-            if (i == props.tags.length - 1) {
+            if (i === props.tags.length - 1) {
               return <span>{el} </span>;
             }
             return <span>{el} &bull; </span>;

@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import React from "react";
+import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 import logo from "assets/logos/logo_final.png";
@@ -7,6 +8,7 @@ import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
 export default function Sidebar() {
+  const { id } = useParams();
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
     <>
@@ -102,7 +104,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/dashboard"
+                  to={"/admin/dashboard/"+id}
                 >
                   <i
                     className={
@@ -124,7 +126,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/settings"
+                  to={"/admin/settings/"+id}
                 >
                   <i
                     className={
@@ -145,7 +147,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/maps"
+                  to={"/admin/maps/"+id}
                 >
                   <i
                     className={
@@ -178,7 +180,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/requests"
+                  to={"/admin/requests/"+id}
                 >
                   <i
                     className={
@@ -201,7 +203,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/events"
+                  to="/admin/events/2"
                 >
                   <i
                     className={
@@ -222,7 +224,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/memberlist"
+                  to={"/admin/memberlist/"+id}
                 >
                   <i
                     className={
@@ -244,7 +246,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/rooms"
+                  to={"/admin/rooms/"+id}
                 >
                   <i
                     className={
@@ -265,7 +267,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/media"
+                  to={"/admin/media/"+id}
                 >
                   <i
                     className={
@@ -286,7 +288,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/files"
+                  to={"/admin/files/"+id}
                 >
                   <i
                     className={

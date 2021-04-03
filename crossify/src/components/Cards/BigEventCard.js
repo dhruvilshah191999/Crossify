@@ -8,11 +8,11 @@ const totalSeats = 30;
 const ResultWindow = (props) => {
   let history = useHistory();
   let count = 0;
-  const start = moment().format("LT");
 
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);
   };
+  // ! Add right data at Club Name
   return (
     <div
       className="h-custom rounded-lg shadow p-4 flex mx-2 mt-4 mr-4 ml-2 hover:shadow-lg"
@@ -21,6 +21,7 @@ const ResultWindow = (props) => {
     >
       <div className="eventPhoto flex-shrink-0">
         <img
+          alt="Event_photo"
           className="card-image rounded-lg"
           src={props.data.photo}
           style={{ width: "200px", height: "140px" }}
@@ -43,6 +44,7 @@ const ResultWindow = (props) => {
             </span>
           </div>
           <div className="mt-1 text-gray-700 text-sm ">
+            {/* // ! HEREEEEE */}
             <i className="fas fa-users"></i> {props.ownerGroup}
           </div>
 
