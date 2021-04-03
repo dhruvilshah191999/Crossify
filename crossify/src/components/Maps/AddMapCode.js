@@ -3,7 +3,7 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import currentPosIcon from "assets/img/marker.png";
 import hello from "config/default.json";
 const GOOGLE_MAPS_API = hello.GOOGLE_MAPS_API;
-console.log(GOOGLE_MAPS_API);
+
 export class MapContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +14,6 @@ export class MapContainer extends React.Component {
         lng: this.props.long,
       },
     };
-    console.log(GOOGLE_MAPS_API);
   }
 
   // componentDidMount = () => {

@@ -38,7 +38,7 @@ export default class RoomTab extends React.Component {
 
     const listOfChannels = allRoomsInfo.data.data.map((el) => el.channel_name);
     //first channel auto selected
-    const msgs = allRoomsInfo.data.data[0].messages;
+    const msgs = allRoomsInfo.data.data[0].messages || [];
 
     socket.emit("join", { token, club_id }, (error) => {
       if (error) {
@@ -244,7 +244,9 @@ export default class RoomTab extends React.Component {
                     id="exampleInputPassword1"
                     placeholder="type your message here"
                     onChange={this.getMessageText}
-                    // onKeyDown={this.sendMessage}
+                    // onKeyPress={(e) => {
+                    //   e.key == "Enter" && this.sendMessage();
+                    // }}
                     value={this.state.messagetoSend}
                     onKeyPress={(e) => {
                       if (e.key === "Enter") {

@@ -63,11 +63,11 @@ class ContactList extends React.Component {
     super(props);
     this.state = {
       displayedContacts: [],
-      finalContacts:[],
+      finalContacts: [],
       currentTab: 0,
       members: [],
       moderator: [],
-      club_id:this.props.club_id
+      club_id: this.props.club_id,
     };
   }
   async componentDidMount() {
@@ -91,7 +91,7 @@ class ContactList extends React.Component {
     } else {
       this.setState({
         displayedContacts: finaldata.data.data,
-        finalContacts:finaldata.data.data,
+        finalContacts: finaldata.data.data,
         members: finaldata.data.members,
         moderator: finaldata.data.moderator,
       });
@@ -115,7 +115,7 @@ class ContactList extends React.Component {
   renderSideMenu() {
     const mods = this.state.moderator;
     const mem = this.state.members;
-    console.log("Mods : " + mods);
+
     let section = [
       { name: "All", val: [...mods, ...mem] },
       { name: "Moderators", val: [...mods] },

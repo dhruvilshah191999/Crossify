@@ -293,7 +293,7 @@ export default function EventTab(props) {
         </div>
       </div>
       <hr className="mt-6 border-b-1 border-gray-400 mb-6" />
-      <div style={{ height: 1000 }} className="px-16">
+      <div className="px-16">
         {loading && <EventCalendar EventData={rawUpcomingEvents} />}
       </div>
     </>
