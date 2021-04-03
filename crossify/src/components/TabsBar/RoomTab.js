@@ -246,7 +246,13 @@ export default class RoomTab extends React.Component {
                     onChange={this.getMessageText}
                     // onKeyDown={this.sendMessage}
                     value={this.state.messagetoSend}
-                    onKeyPress={(e) => e.key === "Enter" && this.sendMessage}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        {
+                          this.sendMessage();
+                        }
+                      }
+                    }}
                   ></input>
                 </div>
                 <div>
