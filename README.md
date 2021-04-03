@@ -1,18 +1,29 @@
 ## Snapshots
-- Creating a Club
-<img src="SnapShots/CreateClub.png">
+- Home Page
 <img src="SnapShots/HomePage.png">
+- Club Search
 <img src="SnapShots/ClubSearch.png">
+-Event Search
 <img src="SnapShots/EventSearch.png">
+-Manage Event
 <img src="SnapShots/EditEvent.png">
+-Event Page
 <img src="SnapShots/EventPage.png">
+-Club Page
 <img src="SnapShots/ClubPage.png">
+-Request to join (Private Club)
 <img src="SnapShots/PrivateClubPage.png">
+- Sign In Page
 <img src="SnapShots/SignInPage.png">
+-Sign Up Page
 <img src="SnapShots/SignUpPage.png">
-
+-Start a New Club  
+<img src="SnapShots/CreateClub.png">
+- Admin(Club Creator and Moderator) Dashboard
 <img src="SnapShots/AdminDashBoard.png">
+- User Dashboard
 <img src="SnapShots/UserDashBoard.png">
+- Modify Event details
 <img src="SnapShots/EditEvent.png">
 
 **Software Requirements Specification for Crossify**
