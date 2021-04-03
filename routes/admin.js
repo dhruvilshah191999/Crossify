@@ -555,15 +555,17 @@ router.post("/DeleteMember", async function (req, res, next) {
       };
       return res.status(500).send(err);
     } else {
-      user_details.update(
-        {
-          _id: ObjectId(user_id),
-          is_active: 1
-        },
-        {
-          $pull: { clubs: ObjectId(club_id) }
-        }
-      ).exec();
+      user_details
+        .update(
+          {
+            _id: ObjectId(user_id),
+            is_active: 1,
+          },
+          {
+            $pull: { clubs: ObjectId(club_id) },
+          }
+        )
+        .exec();
       var finaldata = {
         is_error: false,
         message: "value updated succesfully",
@@ -589,7 +591,7 @@ router.post('/get-upcoming-event', async function (req, res, next) {
       photo: 1,
       tags: 1,
       event_name: 1,
-      startdate:1
+      startdate: 1,
     }
   );
   await result.exec((err, data) => {
@@ -646,4 +648,109 @@ router.post("/get-past-event", async function (req, res, next) {
     }
   });
 });
+
+router.post("/LocationGraphs", async function (req, res, next) {
+  var { club_id } = req.body;
+  var result = user_details.aggregate([
+    {
+      $match: {
+        clubs: ObjectId(club_id),
+      },
+    },
+    {
+      $group: {
+        _id: "$city",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { count: -1 },
+    },
+    {
+      $limit: 5,
+    },
+  ]);
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data.length != 0) {
+      var label = [];
+      var count = [];
+      data.forEach((e) => {
+        label.push(e._id);
+        count.push(e.count);
+      });
+      var finaldata = {
+        label,
+        data: count,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var finaldata = {
+        label: [],
+        data: [],
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post("/BarGraphs", async function (req, res, next) {
+  var { club_id } = req.body;
+  var result = event_details.aggregate([
+    {
+      $match: {
+        club_id: ObjectId(club_id),
+      },
+    },
+    { $unwind: "$tags" },
+    { $sortByCount: "$tags" },
+    {
+      $sort: { count: -1 },
+    },
+    {
+      $limit: 5,
+    },
+  ]);
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data.length != 0) {
+      var label = [];
+      var count = [];
+      data.forEach((e) => {
+        label.push(e._id);
+        count.push(e.count);
+      });
+      var finaldata = {
+        label,
+        data: count,
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var finaldata = {
+        label: [],
+        data: [],
+        is_error: false,
+        message: "Data Send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 module.exports = router;
