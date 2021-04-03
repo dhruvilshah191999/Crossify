@@ -28,7 +28,7 @@ export default class DemoApp extends React.Component {
   constructor(props) {
     super(props);
     this.calendarRef = React.createRef();
-    console.log(this.props.EventData);
+
     this.state = {
       alert: null,
       currentSelectionInfo: null,

@@ -106,7 +106,8 @@ router.post("/get-club", auth, async (req, res) => {
         return res.status(500).send(error);
       } else {
         var isAdmin = false;
-        if (data[0].creator_id === req.user._id) {
+        console.log(req.user._id, data[0].creator_id);
+        if (req.user._id == data[0].creator_id) {
           isAdmin = true;
         }
         var finaldata = {
@@ -115,6 +116,7 @@ router.post("/get-club", auth, async (req, res) => {
           is_error: false,
           message: "Data Send",
         };
+        console.log("SENDING >>> ", finaldata);
         return res.status(200).send(finaldata);
       }
     });

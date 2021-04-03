@@ -14,6 +14,7 @@ import JoinClubButton from "components/SweetAlerts/JoinClubButton";
 import { ModalManager } from "react-dynamic-modal";
 import { motion } from "framer-motion";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
+import Footer from "components/Footers/FooterAdmin";
 
 function ClubPage(props) {
   var { id } = useParams();
@@ -44,10 +45,11 @@ function ClubPage(props) {
         send_data,
         config
       );
-      console.log(finaldata.data);
+
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
+        console.log(finaldata.data.isAdmin);
         setClubData(finaldata.data.data[0]);
         setIsAdmin(finaldata.data.isAdmin);
         if (finaldata.data.isAdmin) {
@@ -310,6 +312,7 @@ function ClubPage(props) {
               />
             </div>
           </div>
+          <Footer></Footer>
         </div>
       </>
     );
