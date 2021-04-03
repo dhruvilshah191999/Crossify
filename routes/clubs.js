@@ -106,7 +106,7 @@ router.post("/get-club", auth, async (req, res) => {
         return res.status(500).send(error);
       } else {
         var isAdmin = false;
-        if (data[0].creator_id === req.user._id) {
+        if (data[0].creator_id == req.user._id) {
           isAdmin = true;
         }
         var finaldata = {
