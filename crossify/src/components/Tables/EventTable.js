@@ -9,6 +9,7 @@ import {
 } from "react-table";
 import { motion } from "framer-motion";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import Moment from "moment";
 import EventReview from "components/Modals/EventReview";
 import RequestForEvent from "components/Modals/RequestForEvent";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
@@ -95,161 +96,18 @@ function SelectColumnFilter({
   );
 }
 
-export default function App() {
-  const openModal = () => {
-    ModalManager.open(<EventReview onRequestClose={() => true} />);
+export default function App(props) {
+  const [clubId, setClubId] = useState(props.club_id);
+  const [eventFile, setEventFile] = useState(props.data);
+  const openModal = (event) => {
+    ModalManager.open(<EventReview onRequestClose={() => true} eventData={event}/>);
   };
   const openModal2 = () => {
-    ModalManager.open(<RequestForEvent onRequestClose={() => true} />);
+    ModalManager.open(<RequestForEvent onRequestClose={() => true} club_id={clubId} isAdmin={ true}/>);
   };
   const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(
-    () => [
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "completed",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "approved",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "arshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "rejected",
-        actions: " ",
-      },
-      {
-        eventName: "Cricket Tournament",
-        organizerName: "Harshil Patel",
-        date: "11/2/2000",
-        location: "Ahmedabad",
-        status: "pending",
-        actions: " ",
-      },
-    ],
+    () => eventFile,
     []
   );
 
@@ -257,7 +115,7 @@ export default function App() {
     () => [
       {
         Header: "Event Name",
-        accessor: "eventName", // accessor is the "key" in the data
+        accessor: "event_name", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
@@ -265,14 +123,16 @@ export default function App() {
       },
       {
         Header: "Organizer",
-        accessor: "organizerName",
+        accessor: "name",
         disableFilters: true,
       },
       {
         Header: "Date",
         accessor: "date", // accessor is the "key" in the data
-
         disableFilters: true,
+        Cell: ({ value }) => {
+          return Moment(value).format("MMMM Do YYYY");
+        },
       },
       {
         Header: "Status",
@@ -329,16 +189,10 @@ export default function App() {
 
       {
         Header: "Actions",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
+        accessor: "data", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
           <div className="flex flex-row  justify-evenly">
-            <button title="Approve">
-              <i class="fas fa-vote-yea text-green-500 text-lg focus:outline-none"></i>
-            </button>
-            <button className="ml-2" title="Reject">
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
-            </button>
-            <button className="ml-2" title="More" onClick={openModal}>
+            <button className="ml-0" title="More" onClick={()=>openModal(value)}>
               <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
             </button>
           </div>

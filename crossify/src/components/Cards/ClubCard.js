@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import defImg from "../../assets/img/event_1.jpeg";
 import { motion } from "framer-motion";
+import { useHistory } from "react-router-dom";
 import { store } from "react-notifications-component";
 import { notifyLiked } from "notify";
 import axios from "axios";
 import ShareButton from "components/SweetAlerts/ShareButton";
 
 const ClubCard = (props) => {
+  let history = useHistory();
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const token = localStorage.getItem("jwt");
@@ -101,7 +103,7 @@ const ClubCard = (props) => {
   };
 
   const showClubs = (club_id) => {
-    window.location.replace("/club/" + club_id);
+    history.push("/club/" + club_id);
   };
   return (
     <div

@@ -9,7 +9,7 @@ class FilesManager extends Component {
     this.state = {
       club_id: this.props.match.params.id,
       mediaData: [],
-      loding: false,
+      loading: false,
     };
   }
 
@@ -31,13 +31,13 @@ class FilesManager extends Component {
         mediaData: finaldata.data.data,
       });
       setTimeout(() => {
-        this.setState({ loding: true });
+        this.setState({ loading: true });
       }, 500);
     }
   }
 
   render() {
-    if (this.state.loding) {
+    if (this.state.loading) {
       return (
         <>
           <Sidebar />

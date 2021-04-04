@@ -6,7 +6,7 @@ const ResultWindow = (props) => {
   let count = 0;
 
   const showClubs = (event_id) => {
-    window.location.replace("/club/" + event_id);
+    history.push("/club/" + event_id);
   };
   return (
     <div

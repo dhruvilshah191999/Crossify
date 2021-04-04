@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 //todo GOLU all the things are created you just have to make backend code for api/join-club and api/undo-join-club
-
-export default class SweetAlertModal extends Component {
+class SweetAlertModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +47,7 @@ export default class SweetAlertModal extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      window.location.replace("/club/" + this.state.club_id);
+      this.props.history.go(0);
     }
   };
 
@@ -72,7 +72,9 @@ export default class SweetAlertModal extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      window.location.replace("/club/" + this.state.club_id);
+       this.props.history.go(
+         0
+       );
     }
   };
 
@@ -134,7 +136,7 @@ export default class SweetAlertModal extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      window.location.replace("/club/" + this.state.club_id);
+      this.props.history.go(0);
     }
   };
 
@@ -160,7 +162,7 @@ export default class SweetAlertModal extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      window.location.replace("/club/" + this.state.club_id);
+      this.props.history.go(0);
     }
   };
   requestForJoining() {
@@ -314,3 +316,5 @@ export default class SweetAlertModal extends Component {
     );
   }
 }
+
+export default withRouter(SweetAlertModal);

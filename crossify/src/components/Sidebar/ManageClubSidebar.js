@@ -1,15 +1,45 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 import logo from "assets/logos/logo_final.png";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
 export default function Sidebar() {
   const { id } = useParams();
+  let history = useHistory();
   const [collapseShow, setCollapseShow] = React.useState("hidden");
+  const token = localStorage.getItem("jwt");
+  useEffect(() => {
+    async function fetchData() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token: token,
+        club_id: id,
+      };
+      const finaldata = await axios.post(
+        "/api/manage/check-club",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        history.push("/");
+      } else {
+        if (!finaldata.data.check) {
+          history.push("/");
+        }
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -203,7 +233,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to="/admin/events/2"
+                  to={"/admin/events/"+id}
                 >
                   <i
                     className={
