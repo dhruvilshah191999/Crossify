@@ -482,12 +482,12 @@ router.post("/get-photo-name", async function (req, res, next) {
   });
 });
 
-router.post("/Promotion", async function (req, res, next) {
+router.post('/Promotion', async function (req, res, next) {
   var { user_id, club_id } = req.body;
   console.log(req.body);
   var check = member_details.update(
-    { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
-    { $set: { "member_list.$.level": "moderator" } }
+    {club_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
+    {$set: {'member_list.$.level': "moderator"}}
   );
   await check.exec((err, data) => {
     if (err) {
@@ -544,8 +544,8 @@ router.post("/Demotion", async function (req, res, next) {
 router.post("/DeleteMember", async function (req, res, next) {
   var { user_id, club_id } = req.body;
   var check = member_details.update(
-    { club_id: ObjectId(club_id), is_active: 1 },
-    { $pull: { member_list: { user: ObjectId(user_id) } } }
+    { club_id: ObjectId(club_id), is_active:1 },
+    {$pull: { member_list: { user:ObjectId(user_id)}}}
   );
   await check.exec((err, data) => {
     if (err) {
@@ -575,7 +575,7 @@ router.post("/DeleteMember", async function (req, res, next) {
   });
 });
 
-router.post("/get-upcoming-event", async function (req, res, next) {
+router.post('/get-upcoming-event', async function (req, res, next) {
   var { club_id } = req.body;
   var result = event_details.find(
     {
@@ -602,7 +602,6 @@ router.post("/get-upcoming-event", async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else {
-      console.log(data);
       var finaldata = {
         data: data,
         is_error: false,
@@ -642,7 +641,7 @@ router.post("/get-past-event", async function (req, res, next) {
       var finaldata = {
         data: data,
         is_error: false,
-        message: "Data Send",
+        message: 'Data Send',
       };
       return res.status(200).send(finaldata);
     }
@@ -753,4 +752,130 @@ router.post("/BarGraphs", async function (req, res, next) {
   });
 });
 
+router.post("/getAllEvents", async function (req, res, next) {
+var {club_id} = req.body;
+event_details
+  .aggregate([
+    {
+      $lookup: {
+        from: 'user_details',
+        localField: 'oragnizer_id',
+        foreignField: '_id',
+        as: 'user_data',
+      },
+    },
+    {
+      $match: {
+        club_id: ObjectId(club_id),
+      },
+    },
+  ])
+  .exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(error);
+    } else if (data.length != 0) {
+      var array = [];
+      data.map((e) => {
+        var status = '';
+        if (new Date(e.date) > new Date() && e.is_active) {
+          status = 'approved';
+        } else if (new Date(e.date) < new Date() && e.is_active) {
+          status = 'completed';
+        } else if (e.visibility != 'rejected' && !e.is_active) {
+          status = 'pending';
+        } else {
+          status = 'rejected';
+        }
+        var object = {
+          event_name: e.event_name,
+          event_id:e._id,
+          name: e.user_data[0].fname + ' ' + e.user_data[0].lname,
+          user_id: e.user_data[0]._id,
+          date: e.date,
+          location: e.city,
+          status,
+          data:e,
+        };
+        array.push(object);
+      });
+      var finaldata = {
+        data: array,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var finaldata = {
+        data: [],
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/getEvent', async function (req, res, next) {
+  var {event_id} = req.body;
+  event_details
+    .findOne(
+      {
+        _id: ObjectId(event_id),
+      },
+    )
+    .exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data) {
+        var finaldata = {
+          data: data,
+          is_error: false,
+          message: 'Data Send',
+        };
+        return res.status(200).send(finaldata);
+      } else {
+        var finaldata = {
+          data: {},
+          is_error: false,
+          message: 'Data Send',
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+});
+
+router.post('/acceptEvent', async function (req, res, next) {
+  var { event_id } = req.body;
+  event_details.updateOne(
+    {
+      _id:ObjectId(event_id)
+    },
+    {
+      is_active:true
+    }
+  ).exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(error);
+    } else if (data) {
+      var finaldata = {
+        update: true,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  })
+})
 module.exports = router;

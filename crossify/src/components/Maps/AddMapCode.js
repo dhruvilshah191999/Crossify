@@ -7,6 +7,7 @@ console.log(GOOGLE_MAPS_API);
 export class MapContainer extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props.lat);
     this.state = {
       name: "Current position",
       position: {

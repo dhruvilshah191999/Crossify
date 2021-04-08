@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import axios from "axios";
 import { motion } from "framer-motion";
+import EmptyContainer from "components/sections/EmptyContainer";
 
 const getSegment = (totalEvents, curIndex, eventPerPage) => {
   const end = curIndex * eventPerPage;
@@ -173,79 +174,88 @@ export default function MyClubs() {
   });
 
   if (pageNumbersOld.length === 0) {
-    renderPageNumbersOld = (
-      <div
-        className="flex justify-center content-center"
-        style={{ height: 400 }}
-      >
-        <div className="flex flex-row mt-32">
-          {" "}
-          <div>
+    renderPageNumbersOld =
+      pastEvents.length !== 0 ? (
+        <div
+          className="flex justify-center content-center"
+          style={{ height: 400 }}
+        >
+          <div className="flex flex-row mt-32">
             {" "}
-            <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-700 ">
-              No result from "{searchQuery}
-              ".
-            </h1>
-            <h2 className="text-gray-600 mr-4">
-              Try to search other relevant terms.
-            </h2>
+            <div>
+              {" "}
+              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl text-gray-700 ">
+                No result from "{searchQuery}
+                ".
+              </h1>
+              <h2 className="text-gray-600 mr-4">
+                Try to search other relevant terms.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      ) : (
+        <EmptyContainer />
+      );
   }
   if (pageNumbersLiked.length === 0) {
-    renderPageNumbersLiked = (
-      <div
-        className="flex justify-center content-center"
-        style={{ height: 400 }}
-      >
-        <div className="flex flex-row mt-32">
-          {" "}
-          <div>
+    renderPageNumbersLiked =
+      likedEvents.length !== 0 ? (
+        <div
+          className="flex justify-center content-center"
+          style={{ height: 400 }}
+        >
+          <div className="flex flex-row mt-32">
             {" "}
-            <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-700 ">
-              No result from "{searchQuery}
-              ".
-            </h1>
-            <h2 className="text-gray-600 mr-4">
-              Try to search other relevant terms.
-            </h2>
+            <div>
+              {" "}
+              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl text-gray-700 ">
+                No result from "{searchQuery}
+                ".
+              </h1>
+              <h2 className="text-gray-600 mr-4">
+                Try to search other relevant terms.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      ) : (
+        <EmptyContainer />
+      );
   }
   if (pageNumbersNew.length === 0) {
-    renderPageNumbersNew = (
-      <div
-        className="flex justify-center content-center"
-        style={{ height: 400 }}
-      >
-        <div className="flex flex-row mt-32">
-          {" "}
-          <div>
+    renderPageNumbersNew =
+      newEvents.length !== 0 ? (
+        <div
+          className="flex justify-center content-center"
+          style={{ height: 400 }}
+        >
+          <div className="flex flex-row mt-32">
             {" "}
-            <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-700 ">
-              No result from "{searchQuery}
-              ".
-            </h1>
-            <h2 className="text-gray-600 mr-4">
-              Try to search other relevant terms.
-            </h2>
+            <div>
+              {" "}
+              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl text-gray-700 ">
+                No result from "{searchQuery}
+                ".
+              </h1>
+              <h2 className="text-gray-600 mr-4">
+                Try to search other relevant terms.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      ) : (
+        <EmptyContainer />
+      );
   }
   useEffect(() => {
     async function getData() {

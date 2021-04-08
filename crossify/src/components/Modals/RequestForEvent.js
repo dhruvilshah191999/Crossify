@@ -70,7 +70,7 @@ function MyModal(props) {
   let { latitude, longitude } = usePosition(true);
 
   useEffect(() => {
-    setTimeout(setLoading(true), 1500);
+    setTimeout(setLoading(true), 1000);
   }, []);
 
   const handleUpdateTags = (tags) => {
@@ -128,6 +128,7 @@ function MyModal(props) {
             photo: res.data.url,
             capacity,
             category,
+            isAdmin: props.isAdmin,
           };
           try {
             const config = {
@@ -335,11 +336,15 @@ function MyModal(props) {
                   >
                     Map
                   </label>
-                  <MapContainer
-                    lat={latitude}
-                    long={longitude}
-                    parentCallback={handleCallback}
-                  ></MapContainer>
+                  {latitude ? (
+                    <MapContainer
+                      lat={latitude}
+                      long={longitude}
+                      parentCallback={handleCallback}
+                    ></MapContainer>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>

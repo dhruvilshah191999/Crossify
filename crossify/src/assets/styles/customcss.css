@@ -344,6 +344,13 @@
   height: 410px;
 }
 
+.center-now {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .justify-evenly {
   justify-content: space-evenly;
 }
@@ -370,7 +377,7 @@
 .max-w-370-px {
   max-width: 370px;
 }
-.max-w-25ch{
+.max-w-25ch {
   max-width: 25ch;
 }
 .w-800px {
@@ -623,9 +630,10 @@
   outline: 0;
 }
 
-.max-h-300-px {
-  max-height: 300px;
+.empty-table-space {
+  height: 400px;
 }
+
 .max-h-400vh {
   max-height: 400vh;
 }
