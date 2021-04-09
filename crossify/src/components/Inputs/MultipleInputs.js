@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 
 class MultipleInputs extends Component {
-  state = { questions: [""] };
+  constructor(props) {
+    super(props);
+    this.state = {
+      questions: props.questions.length ? props.questions : [" "],
+    };
+  }
   addBelow = (index) => {
     var arr = this.state.questions;
     if (arr[arr.length - 1] === "") {
@@ -68,3 +73,8 @@ class MultipleInputs extends Component {
 }
 
 export default MultipleInputs;
+
+MultipleInputs.defaultProps = {
+  questions: [""],
+};
+

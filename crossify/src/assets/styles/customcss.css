@@ -626,6 +626,11 @@
 .max-h-300-px {
   max-height: 300px;
 }
+
+.h-100-px {
+  height: 100px;
+}
+
 .max-h-400vh {
   max-height: 400vh;
 }

@@ -468,7 +468,9 @@ router.post("/AddRequestMember", auth, async function (req, res, next) {
   var { club_id, isReply } = req.body;
   var object = {
     club: ObjectId(club_id),
+    date:new Date(),
     reply: isReply,
+    status:"Pending"
   };
   var result = user_details.update(
     {

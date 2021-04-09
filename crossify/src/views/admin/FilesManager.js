@@ -37,23 +37,19 @@ class FilesManager extends Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return (
-        <>
-          <Sidebar />
-          <div className="flex flex-wrap">
-            <div className="w-full px-4">
-              <ManageFilesTable
-                club_id={this.state.club_id}
-                data={this.state.mediaData}
-              ></ManageFilesTable>
-            </div>
+    return (
+      <>
+        <Sidebar />
+        <div className="flex flex-wrap">
+          <div className="w-full px-4">
+            {this.state.loading?<ManageFilesTable
+              club_id={this.state.club_id}
+              data={this.state.mediaData}
+            ></ManageFilesTable>:""}
           </div>
-        </>
-      );
-    } else {
-      return <></>;
-    }
+        </div>
+      </>
+    );
   }
 }
 

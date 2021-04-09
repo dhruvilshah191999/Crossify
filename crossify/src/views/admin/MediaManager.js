@@ -36,21 +36,16 @@ class MediaManager extends Component {
     }
   }
   render() {
-    if (this.state.loading) {
-      return (
-        <>
-          <Sidebar />
-          <div className="flex flex-wrap">
-            <div className="w-full px-4">
-              <ManageMediaTable club_id={this.state.club_id} data={this.state.mediaData}></ManageMediaTable>
-            </div>
+    return (
+      <>
+        <Sidebar />
+        <div className="flex flex-wrap">
+          <div className="w-full px-4">
+            {this.state.loading ? <ManageMediaTable club_id={this.state.club_id} data={this.state.mediaData}></ManageMediaTable> : ""}
           </div>
-        </>
-      );
-    }
-    else {
-      return <></>
-    }
+        </div>
+      </>
+    );
   }
 }
 

@@ -151,7 +151,7 @@ const Tabs = (props) => {
                   {props.isJoin ? <MemberTab club_id={props.club_id} /> : ""}
                 </div>
                 <div className={openTab === 5 ? "block" : "hidden"} id="link3">
-                  <PhotosTab />
+                  {openTab==5 && <PhotosTab />}
                 </div>
                 <div className={openTab === 6 ? "block" : "hidden"} id="link3">
                   {props.isJoin ? <FilesTab club_id={props.club_id} /> : ""}
