@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProfileClubCard from "components/Cards/ProfileClubCard";
 import axios from "axios";
 import { motion } from "framer-motion";
+import EmptyContainer from "components/sections/EmptyContainer";
 
 const getSegment = (totalEvents, curIndex, eventPerPage) => {
   const end = curIndex * eventPerPage;
@@ -194,79 +195,88 @@ export default function MyClubs() {
   });
 
   if (pagesManage.length === 0) {
-    renderpagesManage = (
-      <div
-        className="flex justify-center content-center"
-        style={{ height: 400 }}
-      >
-        <div className="flex flex-row mt-32">
-          {" "}
-          <div>
+    renderpagesManage =
+      manageClubs.length !== 0 ? (
+        <div
+          className="flex justify-center content-center"
+          style={{ height: 400 }}
+        >
+          <div className="flex flex-row mt-32">
             {" "}
-            <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-700 ">
-              No result from "{searchQuery}
-              ".
-            </h1>
-            <h2 className="text-gray-600 mr-4">
-              Try to search other relevant terms.
-            </h2>
+            <div>
+              {" "}
+              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl text-gray-700 ">
+                No result from "{searchQuery}
+                ".
+              </h1>
+              <h2 className="text-gray-600 mr-4">
+                Try to search other relevant terms.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      ) : (
+        <EmptyContainer />
+      );
   }
   if (pagesLiked.length === 0) {
-    renderpagesLiked = (
-      <div
-        className="flex justify-center content-center"
-        style={{ height: 400 }}
-      >
-        <div className="flex flex-row mt-32">
-          {" "}
-          <div>
+    renderpagesLiked =
+      likedClubs.length !== 0 ? (
+        <div
+          className="flex justify-center content-center"
+          style={{ height: 400 }}
+        >
+          <div className="flex flex-row mt-32">
             {" "}
-            <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-700 ">
-              No result from "{searchQuery}
-              ".
-            </h1>
-            <h2 className="text-gray-600 mr-4">
-              Try to search other relevant terms.
-            </h2>
+            <div>
+              {" "}
+              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl text-gray-700 ">
+                No result from "{searchQuery}
+                ".
+              </h1>
+              <h2 className="text-gray-600 mr-4">
+                Try to search other relevant terms.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      ) : (
+        <EmptyContainer />
+      );
   }
   if (pagesJoined.length === 0) {
-    renderpagesJoined = (
-      <div
-        className="flex justify-center content-center"
-        style={{ height: 400 }}
-      >
-        <div className="flex flex-row mt-32">
-          {" "}
-          <div>
+    renderpagesJoined =
+      joinedClubs.length !== 0 ? (
+        <div
+          className="flex justify-center content-center"
+          style={{ height: 400 }}
+        >
+          <div className="flex flex-row mt-32">
             {" "}
-            <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-700 ">
-              No result from "{searchQuery}
-              ".
-            </h1>
-            <h2 className="text-gray-600 mr-4">
-              Try to search other relevant terms.
-            </h2>
+            <div>
+              {" "}
+              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl text-gray-700 ">
+                No result from "{searchQuery}
+                ".
+              </h1>
+              <h2 className="text-gray-600 mr-4">
+                Try to search other relevant terms.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      ) : (
+        <EmptyContainer />
+      );
   }
   useEffect(() => {
     async function getData() {

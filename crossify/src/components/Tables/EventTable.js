@@ -7,8 +7,8 @@ import {
   useSortBy,
   usePagination,
 } from "react-table";
-import { motion } from "framer-motion";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import EmptyTable from "components/sections/EmptyTable";
+import { ModalManager } from "react-dynamic-modal";
 import Moment from "moment";
 import EventReview from "components/Modals/EventReview";
 import RequestForEvent from "components/Modals/RequestForEvent";
@@ -100,16 +100,21 @@ export default function App(props) {
   const [clubId, setClubId] = useState(props.club_id);
   const [eventFile, setEventFile] = useState(props.data);
   const openModal = (event) => {
-    ModalManager.open(<EventReview onRequestClose={() => true} eventData={event}/>);
+    ModalManager.open(
+      <EventReview onRequestClose={() => true} eventData={event} />
+    );
   };
   const openModal2 = () => {
-    ModalManager.open(<RequestForEvent onRequestClose={() => true} club_id={clubId} isAdmin={ true}/>);
+    ModalManager.open(
+      <RequestForEvent
+        onRequestClose={() => true}
+        club_id={clubId}
+        isAdmin={true}
+      />
+    );
   };
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(
-    () => eventFile,
-    []
-  );
+  const data = React.useMemo(() => eventFile, []);
 
   const columns = React.useMemo(
     () => [
@@ -192,7 +197,11 @@ export default function App(props) {
         accessor: "data", // here add _id of event request so easy to attach with the buttons
         Cell: ({ value }) => (
           <div className="flex flex-row  justify-evenly">
-            <button className="ml-0" title="More" onClick={()=>openModal(value)}>
+            <button
+              className="ml-0"
+              title="More"
+              onClick={() => openModal(value)}
+            >
               <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
             </button>
           </div>
@@ -348,7 +357,8 @@ export default function App(props) {
             </div>
           </div>
         </div>
-        <div className="block w-full overflow-x-auto">
+        <div className="block w-full overflow-x-auto relative">
+          {page.length == 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -403,6 +413,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
+            {page.length == 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

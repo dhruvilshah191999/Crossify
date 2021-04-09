@@ -5,6 +5,7 @@ import axios from "axios";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import EventCalendar from "components/Calendar/EventCalendar";
 import { motion } from "framer-motion";
+import EmptyContainer from "components/sections/EmptyContainer";
 //khatar banayu bhai harshil
 export default function EventTab(props) {
   const eventPerPage = 3;
@@ -111,29 +112,32 @@ export default function EventTab(props) {
   });
 
   if (pageNumbers.length === 0) {
-    renderPageNumbers = (
-      <div
-        className="flex justify-center content-center"
-        style={{ height: 400 }}
-      >
-        <div className="flex flex-row mt-32">
-          {" "}
-          <div>
+    renderPageNumbers =
+      rawPastEvents.length !== 0 ? (
+        <div
+          className="flex justify-center content-center"
+          style={{ height: 400 }}
+        >
+          <div className="flex flex-row mt-32">
             {" "}
-            <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-700 ">
-              No result from "{searchQuery}
-              ".
-            </h1>
-            <h2 className="text-gray-600 mr-4">
-              Try to search other relevant terms.
-            </h2>
+            <div>
+              {" "}
+              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl text-gray-700 ">
+                No result from "{searchQuery}
+                ".
+              </h1>
+              <h2 className="text-gray-600 mr-4">
+                Try to search other relevant terms.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      ) : (
+        <EmptyContainer />
+      );
   }
 
   const pageNumbers2 = [];
@@ -162,29 +166,32 @@ export default function EventTab(props) {
   });
 
   if (pageNumbers2.length === 0) {
-    renderPageNumbers2 = (
-      <div
-        className="flex justify-center content-center"
-        style={{ height: 400 }}
-      >
-        <div className="flex flex-row mt-32">
-          {" "}
-          <div>
+    renderPageNumbers2 =
+      rawUpcomingEvents.length !== 0 ? (
+        <div
+          className="flex justify-center content-center"
+          style={{ height: 400 }}
+        >
+          <div className="flex flex-row mt-32">
             {" "}
-            <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
-          </div>
-          <div>
-            <h1 className="text-2xl text-gray-700 ">
-              No result from "{searchQuery}
-              ".
-            </h1>
-            <h2 className="text-gray-600 mr-4">
-              Try to search other relevant terms.
-            </h2>
+            <div>
+              {" "}
+              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl text-gray-700 ">
+                No result from "{searchQuery}
+                ".
+              </h1>
+              <h2 className="text-gray-600 mr-4">
+                Try to search other relevant terms.
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      ) : (
+        <EmptyContainer />
+      );
   }
 
   useEffect(() => {

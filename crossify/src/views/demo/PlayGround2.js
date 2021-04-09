@@ -1,77 +1,89 @@
-import React from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import React, { useState, useCallback } from "react";
+import Gallery from "react-photo-gallery";
+import Carousel, { Modal, ModalGateway } from "react-images";
 
-import "./styles.css";
+const photos = [
+  {
+    src: "https://source.unsplash.com/2ShvY8Lf6l0/800x599",
+    width: 4,
+    height: 3,
+  },
+  {
+    src: "https://source.unsplash.com/Dm-qxdynoEc/800x799",
+    width: 1,
+    height: 1,
+  },
+  {
+    src: "https://source.unsplash.com/qDkso9nvCg0/600x799",
+    width: 3,
+    height: 4,
+  },
+  {
+    src: "https://source.unsplash.com/iecJiKe_RNg/600x799",
+    width: 3,
+    height: 4,
+  },
+  {
+    src: "https://source.unsplash.com/epcsn8Ed8kY/600x799",
+    width: 3,
+    height: 4,
+  },
+  {
+    src: "https://source.unsplash.com/NQSWvyVRIJk/800x599",
+    width: 4,
+    height: 3,
+  },
+  {
+    src: "https://source.unsplash.com/zh7GEuORbUw/600x799",
+    width: 3,
+    height: 4,
+  },
+  {
+    src: "https://source.unsplash.com/PpOHJezOalU/800x599",
+    width: 4,
+    height: 3,
+  },
+  {
+    src: "https://source.unsplash.com/I1ASdgphUH4/800x599",
+    width: 4,
+    height: 3,
+  },
+];
 
-// must manually import the stylesheets for each plugin
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
+function App() {
+  const [currentImage, setCurrentImage] = useState(0);
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
-export default class DemoApp extends React.Component {
-  calendarComponentRef = React.createRef();
+  const openLightbox = useCallback((event, { photo, index }) => {
+    setCurrentImage(index);
+    setViewerIsOpen(true);
+  }, []);
 
-  state = {
-    calendarWeekends: true,
-    calendarEvents: [
-      // initial event data
-      { title: "Event Now", start: new Date() },
-    ],
+  const closeLightbox = () => {
+    setCurrentImage(0);
+    setViewerIsOpen(false);
   };
 
-  render() {
-    return (
-      <div className="demo-app">
-        <div className="demo-app-top">
-          <button onClick={this.toggleWeekends}>toggle weekends</button>&nbsp;
-          <button onClick={this.gotoPast}>go to a date in the past</button>
-          &nbsp; (also, click a date/time to add an event)
-        </div>
-        <div className="demo-app-calendar">
-          <FullCalendar
-            defaultView="dayGridMonth"
-            header={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
-            }}
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            ref={this.calendarComponentRef}
-            weekends={this.state.calendarWeekends}
-            events={this.state.calendarEvents}
-            dateClick={this.handleDateClick}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  toggleWeekends = () => {
-    this.setState({
-      // update a property
-      calendarWeekends: !this.state.calendarWeekends,
-    });
-  };
-
-  gotoPast = () => {
-    let calendarApi = this.calendarComponentRef.current.getApi();
-    calendarApi.gotoDate("2000-01-01"); // call a method on the Calendar object
-  };
-
-  handleDateClick = (arg) => {
-    if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
-      this.setState({
-        // add new event data
-        calendarEvents: this.state.calendarEvents.concat({
-          // creates a new array
-          title: "New Event",
-          start: arg.date,
-          allDay: arg.allDay,
-        }),
-      });
-    }
-  };
+  return (
+    <div>
+      Hello
+      <Gallery photos={photos} onClick={openLightbox} />
+      <ModalGateway>
+        {viewerIsOpen ? (
+          <Modal onClose={closeLightbox}>
+            <Carousel
+              currentIndex={currentImage}
+              views={photos.map((x) => ({
+                ...x,
+                srcset: x.srcSet,
+                caption: x.title,
+              }))}
+            />
+          </Modal>
+        ) : null}
+      </ModalGateway>
+    </div>
+  );
 }
+
+export default App;

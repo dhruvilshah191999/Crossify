@@ -17,6 +17,7 @@ import Moment from "moment";
 import AcceptButton from "components/SweetAlerts/AcceptMemberButton";
 import RejectButton from "components/SweetAlerts/RejectMemberButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
+import EmptyTable from "components/sections/EmptyTable";
 import dataTable from "./demorequests";
 
 function GlobalFilter({
@@ -414,7 +415,8 @@ export default function App(props) {
             </div>
           </div>
         </div>
-        <div className="block w-full overflow-x-auto">
+        <div className="block w-full overflow-x-auto relative">
+          {page.length == 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -469,6 +471,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
+            {page.length == 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

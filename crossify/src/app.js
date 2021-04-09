@@ -77,6 +77,7 @@ const Routing = () => {
       <Route path="/clubsearch" exact component={ClubSearchPage} />
       <Route path="/createclub" exact component={CreateClub} />
       <Route path="/profilepage" exact component={ProfilePage} />
+      <Route path="/playground" exact component={PlayGround} />
       {!token ? (
         <>
           <PrivateRoute authed={false} path="/profile" component={Profile} />

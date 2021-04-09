@@ -38,8 +38,8 @@ function MyModal(props) {
     eligibility: "",
     capacity: 0,
     last_registraiton_date: null,
-    starting_date: null,
-    ending_date: null,
+    starting_date: props.startDate || null,
+    ending_date: props.endDate || null,
     starting_time: null,
     ending_time: null,
   });
@@ -128,7 +128,7 @@ function MyModal(props) {
             photo: res.data.url,
             capacity,
             category,
-            isAdmin:props.isAdmin
+            isAdmin: props.isAdmin,
           };
           try {
             const config = {
@@ -336,13 +336,15 @@ function MyModal(props) {
                   >
                     Map
                   </label>
-                  {latitude?(
-                   <MapContainer
+                  {latitude ? (
+                    <MapContainer
                       lat={latitude}
                       long={longitude}
                       parentCallback={handleCallback}
                     ></MapContainer>
-                  ):""}
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
@@ -554,8 +556,7 @@ function MyModal(props) {
         </div>
       </Modal>
     );
-  }
-  else {
+  } else {
     return <></>;
   }
 }

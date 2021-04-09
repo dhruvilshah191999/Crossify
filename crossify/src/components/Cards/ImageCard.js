@@ -12,7 +12,12 @@ class ImageCard extends React.Component {
   }
 
   setSpans = () => {
+<<<<<<< HEAD
     var height = this.props.image.height || this.imageRef.current.clientHeight;
+=======
+    //done only add to the render when it is required NOt use classes to hide and show just render using && (if)
+    var height = this.imageRef.current.clientHeight;
+>>>>>>> 40f7a9d145ce916035060e4b183420d152ce48b8
     const spans = Math.ceil(height / 10 + 1);
     this.setState({ spans: spans });
   };
