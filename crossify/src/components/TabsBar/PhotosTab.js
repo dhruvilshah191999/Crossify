@@ -148,18 +148,10 @@ export default class GridGallery extends Component {
     refresh: this.props.refresh,
   };
   componentDidMount() {
-    console.log(this.state.refresh);
     this.setState({ photos: images });
     this.setState({ loading: true });
   }
 
-  componentDidUpdate() {
-    console.log("UPDATEDD");
-  }
-  // componentWillReceiveProps(props) {
-  //   console.log(props);
-  //   this.setState(this.state);
-  // }
 
   showSlide = (slide) => {
     this.setState({

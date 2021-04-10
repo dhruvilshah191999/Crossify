@@ -7,6 +7,10 @@ let socket = io("http://localhost:5000", {
   transport: ["websocket", "polling", "flashsocket"],
 });
 
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
+
 const token = localStorage.getItem("jwt");
 
 export default class RoomTab extends React.Component {
@@ -16,13 +20,14 @@ export default class RoomTab extends React.Component {
     isLoading: false,
     curRoomMsgs: [],
     database: [],
+    users: [],
     messagetoSend: "",
   };
   messagesEndRef = React.createRef();
 
   componentDidMount = async () => {
     const { club_id } = this.props;
-
+    console.log(club_id);
     const config = {
       method: "POST",
       header: {
@@ -31,14 +36,30 @@ export default class RoomTab extends React.Component {
       validateStatus: () => true,
     };
     const allRoomsInfo = await axios.post(
-      "/api/club/chat/getRooms",
+      "/api/club/chat/getMsgWithUsers",
       { club_id },
       config
     );
+    console.log(allRoomsInfo);
+    const listOfChannels = allRoomsInfo.data.roomsData.map(
+      (el) => el.channel_name
+    );
+    var uniqueUsers = {};
+    allRoomsInfo.data.roomsData.forEach((el) => {
+      el.users.forEach(({ _id, profile_photo, username }) => {
+        if (!uniqueUsers.hasOwnProperty(_id)) {
+          uniqueUsers[_id] = {
+            profile_photo,
+            username,
+          };
+        }
+      });
+    });
 
-    const listOfChannels = allRoomsInfo.data.data.map((el) => el.channel_name);
-    //first channel auto selected
-    const msgs = allRoomsInfo.data.data[0].messages || [];
+    console.log(uniqueUsers);
+    // usage example:
+
+    const msgs = allRoomsInfo.data.roomsData[0].messages || [];
 
     socket.emit("join", { token, club_id }, (error) => {
       if (error) {
@@ -50,6 +71,7 @@ export default class RoomTab extends React.Component {
       rooms: listOfChannels,
       curRoomMsgs: msgs,
       database: allRoomsInfo.data,
+      users: uniqueUsers,
     });
     this.scrollToBottom();
   };
@@ -66,32 +88,17 @@ export default class RoomTab extends React.Component {
     var msgs = this.state.curRoomMsgs;
 
     //appending photo and username from user_id
-    msgs.map(async ({ user_id }, index) => {
-      if (!msgs[index].username) {
-        const config = {
-          method: "POST",
-          header: {
-            "Content-Type": "application/json",
-          },
-          validateStatus: () => true,
-        };
-        const userdata = await axios.post(
-          "/api/profile/get-user-profile",
-          { user_id },
-          config
-        );
-        var username = userdata.data.name;
-        var profilePic = userdata.data.profile_photo;
-        msgs[index].username = username;
-        msgs[index].profilePic = profilePic;
-      }
+    msgs.map(({ user_id }, index) => {
+      const { username, profile_photo } = this.state.users[user_id];
+      msgs[index].username = username;
+      msgs[index].profilePic = profile_photo;
     });
     socket
       .off("Message")
       .on(
         "Message",
         ({ message, user_id, username, profilePic, senttime, room_id }) => {
-          const roomInfo = this.state.database.data[this.state.currentTab];
+          const roomInfo = this.state.database.roomsData[this.state.currentTab];
           const cur_id = roomInfo._id;
           const newMsg = {
             message,
@@ -103,14 +110,16 @@ export default class RoomTab extends React.Component {
           if (room_id === cur_id) {
             msgs.push(newMsg);
           } else {
-            const relatedRoomIndex = this.state.database.data.findIndex(
+            const relatedRoomIndex = this.state.database.roomsData.findIndex(
               (el, index) => el._id === room_id
             );
             var updatedDatabase = this.state.database;
             var oldRelatedMsgs =
-              updatedDatabase.data[relatedRoomIndex].messages;
+              updatedDatabase.roomsData[relatedRoomIndex].messages;
             oldRelatedMsgs.push(newMsg);
-            updatedDatabase.data[relatedRoomIndex].messages = oldRelatedMsgs;
+            updatedDatabase.roomsData[
+              relatedRoomIndex
+            ].messages = oldRelatedMsgs;
             this.setState({ database: updatedDatabase });
           }
           this.setState({ curRoomMsgs: msgs });
@@ -130,7 +139,7 @@ export default class RoomTab extends React.Component {
     return this.state.rooms.map((el, index) => (
       <a
         onClick={() => {
-          const val = this.state.database.data[index].messages;
+          const val = this.state.database.roomsData[index].messages;
 
           this.setState({
             currentTab: index,
@@ -160,8 +169,9 @@ export default class RoomTab extends React.Component {
   };
 
   sendMessage = async () => {
+    console.log(this.state.database);
     const index = this.state.currentTab;
-    const roomInfo = this.state.database.data[index];
+    const roomInfo = this.state.database.roomsData[index];
     const room_id = roomInfo._id;
     const messagetext = this.state.messagetoSend;
 
