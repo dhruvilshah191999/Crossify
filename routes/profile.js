@@ -49,7 +49,7 @@ router.post("/update-user", auth, async function (req, res, next) {
     pincode,
     occupation,
   } = req.body;
-  var result = user_details.update(
+  var result = user_details.updateOne(
     { _id: req.user._id, is_active: 1 },
     {
       username,
@@ -107,7 +107,7 @@ router.post("/update-password", async function (req, res, next) {
     } else {
       if (bcrypt.compareSync(password, data.password)) {
         new_password = bcrypt.hashSync(new_password, 10);
-        var final = user_details.update(
+        var final = user_details.updateOne(
           { email, is_active: 1 },
           { password: new_password }
         );
@@ -148,7 +148,7 @@ router.post("/update-social", auth, async function (req, res, next) {
     instagram,
   };
 
-  var result = user_details.update(
+  var result = user_details.updateOne(
     { _id: req.user._id, is_active: 1 },
     {
       social_media: object,

@@ -84,88 +84,45 @@
 import React, { Component } from "react";
 import Lightbox from "fslightbox-react";
 import MyGallery from "components/sections/PhotoGallery";
+import axios from "axios";
+import EmptyContainer from "components/sections/EmptyContainer";
 
-const images = [
-  {
-    id: 1,
-    url: "https://source.unsplash.com/2ShvY8Lf6l0/800x599",
-    description: "nice photo bro",
-  },
-  {
-    id: 2,
-    url: "https://source.unsplash.com/Dm-qxdynoEc/800x799",
-    description: "nice photo bro",
-  },
-  {
-    id: 3,
-    url: "https://source.unsplash.com/qDkso9nvCg0/600x799",
-
-    description: "nice photo bro",
-  },
-  {
-    id: 4,
-    url: "https://source.unsplash.com/iecJiKe_RNg/600x799",
-
-    description: "nice photo bro",
-  },
-  {
-    id: 5,
-    url: "https://source.unsplash.com/epcsn8Ed8kY/600x799",
-
-    description: "nice photo bro",
-  },
-  {
-    id: 6,
-    url: "https://source.unsplash.com/NQSWvyVRIJk/800x599",
-
-    description: "nice photo bro",
-  },
-  {
-    id: 7,
-    url: "https://source.unsplash.com/zh7GEuORbUw/600x799",
-
-    description: "nice photo bro",
-  },
-  {
-    id: 8,
-    url: "https://source.unsplash.com/PpOHJezOalU/800x599",
-
-    description: "nice photo bro",
-  },
-  {
-    id: 9,
-    url: "https://source.unsplash.com/I1ASdgphUH4/800x599",
-
-    description: "nice photo bro",
-  },
-];
 export default class GridGallery extends Component {
-  state = {
-    isVisible: false,
-    slide: 0,
-<<<<<<< HEAD
-    photos: images,
-  };
-=======
-    photos: [],
-    loading: false,
-    refresh: this.props.refresh,
-  };
-  componentDidMount() {
-    console.log(this.state.refresh);
-    this.setState({ photos: images });
-    this.setState({ loading: true });
+  constructor(props) {
+    super(props);
+    this.state = {
+      isVisible: false,
+      slide: 0,
+      club_id: this.props.club_id,
+      photos: [],
+    };
   }
 
-  componentDidUpdate() {
-    console.log("UPDATEDD");
+  async componentDidMount() {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      club_id: this.state.club_id,
+    };
+    const finaldata = await axios.post(
+      "/api/admin/GetPhotosClub",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      console.log(finaldata.data.data);
+      this.setState({
+        photos: finaldata.data.data,
+      });
+    }
   }
-  // componentWillReceiveProps(props) {
-  //   console.log(props);
-  //   this.setState(this.state);
-  // }
 
->>>>>>> 40f7a9d145ce916035060e4b183420d152ce48b8
   showSlide = (slide) => {
     this.setState({
       isVisible: !this.state.isVisible,
@@ -174,40 +131,28 @@ export default class GridGallery extends Component {
   };
 
   getSources = (images) => {
-    return images.map((el) => el.url);
+    return images.map((el) => el.photo);
   };
 
   render() {
-<<<<<<< HEAD
-      return (
-        <div>
-          <Lightbox
-            toggler={this.state.isVisible}
-            slide={this.state.slide}
-            sources={this.state.photos.map((el) => el.url)}
-          />
+    return (
+      <>
+        {this.state.photos.length != 0 ? (
+          <div>
+            <Lightbox
+              toggler={this.state.isVisible}
+              slide={this.state.slide}
+              sources={this.state.photos.map((el) => el.photo)}
+            />
             <MyGallery
               images={this.state.photos}
               handleClick={this.showSlide}
             ></MyGallery>
-        </div>
-      );
-=======
-    return (
-      <div>
-        <Lightbox
-          toggler={this.state.isVisible}
-          slide={this.state.slide}
-          sources={this.state.photos.map((el) => el.url)}
-        />
-        {this.state.loading && (
-          <MyGallery
-            images={this.state.photos}
-            handleClick={this.showSlide}
-          ></MyGallery>
+          </div>
+        ) : (
+          <EmptyContainer />
         )}
-      </div>
+      </>
     );
->>>>>>> 40f7a9d145ce916035060e4b183420d152ce48b8
   }
 }

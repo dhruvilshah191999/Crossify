@@ -26,6 +26,15 @@ const ClubView = (props) => {
   );
 };
 
+const QA = (props) => {
+  return (
+    <div className="flex flex-col p-2 first:pt-0">
+      <div className="text-xl font-semibold">{props.question}</div>
+      <div className="text-base text-gray-700 mt-1">{props.answer}</div>
+    </div>
+  );
+};
+
 class MemberProfileDetails extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +42,7 @@ class MemberProfileDetails extends Component {
       profile: {},
       tag: [],
       club: [],
+      question: [],
       user_id: this.props.user_id,
     };
   }
@@ -59,6 +69,7 @@ class MemberProfileDetails extends Component {
       this.setState({
         profile: finaldata.data.data,
         tag: finaldata.data.tag,
+        question: finaldata.data.data.club_answer,
       });
     }
 
@@ -212,8 +223,8 @@ class MemberProfileDetails extends Component {
             }
           >
             <i class="fas fa-users"></i> Clubs
+            <hr></hr>
           </div>
-          <hr></hr>
           <div className="p-2 mt-1 flex flex-wrap mb-2 mt-2 gap-1">
             {this.state.club.map((el) => (
               <ClubView
@@ -221,6 +232,25 @@ class MemberProfileDetails extends Component {
                 club_img={el.profile_photo}
               ></ClubView>
             ))}
+          </div>
+          <div
+            className={
+              this.state.question && this.state.question.length !== 0
+                ? "text-3xl text-alpha p-2 mt-2 "
+                : "hidden"
+            }
+          >
+            <i class="fas fa-clipboard-list "></i>&nbsp; Answer Sheet
+            <hr></hr>
+          </div>
+          <div className="p-2 mt-1 flex flex-wrap flex-col">
+            {this.state.question.map((el) =>
+              el.club == this.props.club_id
+                ? el.reply.map((e) => (
+                    <QA question={e.question} answer={e.answer}></QA>
+                  ))
+                : ""
+            )}
           </div>
         </div>
       </div>
@@ -241,6 +271,22 @@ MemberProfileDetails.defaultProps = {
   place: "Ahmedabad , GJ",
   bio:
     "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
+  questionsAnswered: [
+    {
+      question: "Why do you want to join this club ?",
+      answer:
+        "Because I want to improve and grow in the field on web dev and I want to help and get helped from the other people which shares the same goal as me.",
+    },
+    {
+      question: "Which skillset you posses related to this club ?",
+      answer:
+        "I am great at managing events and elobrating and presenting technical info to the new comers and I posses great intrapersonal skill as well.",
+    },
+    {
+      question: "Any Achievement ?",
+      answer: "Rank 1220 in Global Finals of HackerCup 2020.",
+    },
+  ],
 };
 
 export default MemberProfileDetails;

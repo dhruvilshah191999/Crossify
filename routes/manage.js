@@ -29,7 +29,7 @@ router.post("/general-update", async function (req, res, next) {
   } = req.body;
   var startdate = new Date(starting_date + " " + starting_time);
   var date = new Date(ending_date + " " + ending_time);
-  var check = event_details.update(
+  var check = event_details.updateOne(
     {
       _id: ObjectId(event_id),
       is_active: 1,
@@ -76,7 +76,7 @@ router.post("/details-update", async function (req, res, next) {
   var { event_id, photo, description, eligibility, tags } = req.body;
   var check;
   if (photo != null) {
-    check = event_details.update(
+    check = event_details.updateOne(
       {
         _id: ObjectId(event_id),
         is_active: 1,
@@ -445,7 +445,7 @@ router.post("/arrived", async function (req, res, next) {
 router.post("/userarrived", async function (req, res, next) {
   var { event_id, user_id } = req.body;
 
-  var check = event_details.update(
+  var check = event_details.updateOne(
     { _id: ObjectId(event_id), "participants_list.user": ObjectId(user_id) },
     { $set: { "participants_list.$.status": "coming" } }
   );
@@ -475,7 +475,7 @@ router.post("/userarrived", async function (req, res, next) {
 
 router.post("/Cancelled", async function (req, res, next) {
   var { event_id, user_id } = req.body;
-  var check = event_details.update(
+  var check = event_details.updateOne(
     { _id: ObjectId(event_id), "participants_list.user": ObjectId(user_id) },
     { $set: { "participants_list.$.status": "Cancelled" } }
   );
@@ -575,7 +575,7 @@ router.post("/get-all-reports", auth, async function (req, res, next) {
 
 router.post("/remove-reports", async function (req, res, next) {
   const { report_id } = req.body;
-  var update = reports_details.update(
+  var update = reports_details.updateOne(
     {
       _id: ObjectId(report_id),
     },
@@ -650,7 +650,7 @@ router.post("/send-reports", auth, async function (req, res, next) {
       photo: final.profile_photo,
       isRead: false,
     };
-    var update = user_details.update(
+    var update = user_details.updateOne(
       {
         _id: ObjectId(user_id),
       },

@@ -124,20 +124,61 @@ export default function App(props) {
   const [isLight, setIsLight] = useState(1);
   const [clubId, setClubId] = useState(props.club_id);
   const [userData, setuserData] = useState(props.data);
-  const getSelectedAndReject = (e) => {
-    const profilelist = selectedFlatRows.map((el) => el.values);
-    //now do whatever you want to do
-    //todo GOLU Get the profile or whatever uniquely profileentified thing and change the status to arriving to all the profilelist
-    console.log(profilelist);
+  const getSelectedAndReject = async (e) => {
+    const profilelist = selectedFlatRows.map((el) => el.values.id);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      club_id: clubId,
+      userArray: profilelist
+    };
+    const finaldata = await axios.post(
+      "/api/admin/RemoveRequests",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      history.go(0);
+    }
   };
-  const getSelectedAndAccept = (broadcastMessage) => {
-    console.log(broadcastMessage);
-    //todo GOLU broadcast/Notification to added to all the selected users
-    const profilelist = selectedFlatRows.map((el) => el.values);
-    console.log(profilelist);
+  const getSelectedAndAccept = async (e) => {
+    const profilelist = selectedFlatRows.map((el) => el.values.id);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      club_id: clubId,
+      userArray: profilelist
+    };
+    const finaldata = await axios.post(
+      "/api/admin/AcceptRequests",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      history.go(0);
+    }
   };
-  const openModal = () => {
-    ModalManager.open(<ProfileReview onRequestClose={() => true} />);
+  const openModal = (user_id,name) => {
+    ModalManager.open(
+      <ProfileReview
+        name={name}
+        club_id={clubId}
+        user_id={user_id}
+        onRequestClose={() => true}
+      />
+    );
   };
 
   const acceptRequest = async (user_id) => {
@@ -162,6 +203,29 @@ export default function App(props) {
       history.go(0);
     }
   }
+
+  const RejectedRequest = async (user_id) => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      club_id: clubId,
+      user_id,
+    };
+    const finaldata = await axios.post(
+      "/api/admin/RemoveRequested",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      history.go(0);
+    }
+  };
 
   const data = React.useMemo(() => userData, []);
   const columns = React.useMemo(
@@ -200,11 +264,7 @@ export default function App(props) {
         accessor: "occupation",
         disableFilters: true,
         Cell: ({ value }) => {
-          return (
-            <div style={{textTransform:"capitalize"}}>
-              {value}
-            </div>
-          );
+          return <div style={{ textTransform: "capitalize" }}>{value}</div>;
         },
       },
       {
@@ -225,7 +285,8 @@ export default function App(props) {
                 className={
                   "fas fa-circle text-xs text-" + myColor + "-500 mr-2"
                 }
-              ></i>{value}
+              ></i>
+              {value}
             </>
           );
         },
@@ -241,15 +302,30 @@ export default function App(props) {
       {
         Header: "Actions",
         accessor: "id", // here add _profile of event request so easy to attach with the buttons
-        Cell: ({ value }) => (
+        Cell: ({
+          value,
+          cell: {
+            row: {
+              values: { name },
+            },
+          },
+        }) => (
           <div className="flex flex-row  justify-evenly">
-            <button title="Arrived" onClick={(e)=>acceptRequest(value)}>
+            <button title="Arrived" onClick={(e) => acceptRequest(value)}>
               <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
             </button>
-            <button className="ml-2" title="Remove">
+            <button
+              className="ml-2"
+              title="Remove"
+              onClick={(e) => RejectedRequest(value)}
+            >
               <i class="fas fa-window-close text-red-500 text-lg"></i>
             </button>
-            <button className="" title="View" onClick={openModal}>
+            <button
+              className=""
+              title="View"
+              onClick={(e) => openModal(value, name)}
+            >
               <i class="fas fa-eye text-blue-500 text-lg ml-2"></i>
             </button>
           </div>

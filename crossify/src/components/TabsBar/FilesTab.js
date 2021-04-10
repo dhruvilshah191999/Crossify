@@ -30,23 +30,22 @@ class FilesTab extends Component {
       });
       setTimeout(() => {
         this.setState({ loding: true });
-      }, 500);
+      }, 100);
     }
   }
   render() {
-    if (this.state.loding) {
-      return (
-        <div>
+    return (
+      <div>
+        {this.state.loding ? (
           <FileTable
             club_id={this.state.club_id}
             data={this.state.mediaData}
           ></FileTable>
-        </div>
-      );
-    }
-    else {
-      return <></>;
-    }
+        ) : (
+          ""
+        )}
+      </div>
+    );
   }
 }
 

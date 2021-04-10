@@ -204,7 +204,7 @@ router.post("/create-event", auth, async (req, res) => {
 
 router.post("/addlikes", auth, async function (req, res, next) {
   let { club_id } = req.body;
-  var checks = club_details.update(
+  var checks = club_details.updateOne(
     {
       _id: ObjectId(club_id),
       is_active: 1,
@@ -221,7 +221,7 @@ router.post("/addlikes", auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else {
-      var add = user_details.update(
+      var add = user_details.updateOne(
         {
           _id: ObjectId(req.user._id),
           is_active: 1,
@@ -252,7 +252,7 @@ router.post("/addlikes", auth, async function (req, res, next) {
 
 router.post("/removelikes", auth, async function (req, res, next) {
   let { club_id } = req.body;
-  var checks = club_details.update(
+  var checks = club_details.updateOne(
     {
       _id: ObjectId(club_id),
       is_active: 1,
@@ -269,7 +269,7 @@ router.post("/removelikes", auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else {
-      var add = user_details.update(
+      var add = user_details.updateOne(
         {
           _id: ObjectId(req.user._id),
           is_active: 1,
@@ -372,7 +372,7 @@ router.post("/AddClubMember", auth, async function (req, res, next) {
           });
       });
     } else {
-      var Members = member_details.update(
+      var Members = member_details.updateOne(
         {
           club_id: ObjectId(club_id),
           is_active: true,

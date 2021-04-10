@@ -111,7 +111,7 @@ export default function Landing() {
     get_interest_data();
     setTimeout(() => {
       isLoading(true);
-    }, 500);
+    }, 100);
   }, []);
 
   const SearchFilter = async (category_name) => {
