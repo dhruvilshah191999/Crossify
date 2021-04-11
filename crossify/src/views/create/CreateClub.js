@@ -45,7 +45,9 @@ function CreateClub(props) {
   let { latitude, longitude } = usePosition(true);
 
   useEffect(() => {
-    setTimeout(setLoading(true), 1500);
+    setTimeout(() => {
+      setLoading(true);
+    }, 100);
   }, []);
 
   var districts = [];
@@ -343,11 +345,11 @@ function CreateClub(props) {
                         >
                           Map
                         </label>
-                        <MapContainer
+                        {loading?<MapContainer
                           lat={latitude}
                           long={longitude}
                           parentCallback={handleCallback}
-                        />
+                        />:""}
                       </div>
                     </div>
                   </div>

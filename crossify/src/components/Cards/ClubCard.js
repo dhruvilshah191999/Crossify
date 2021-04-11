@@ -11,6 +11,7 @@ const ClubCard = (props) => {
   let history = useHistory();
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
+  const [count, setCount] = useState({});
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
@@ -36,6 +37,32 @@ const ClubCard = (props) => {
         setLike(finaldata.data.Like);
       }
     }
+
+    async function get_count() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      var send_data = {
+        club_id: props.data._id,
+      };
+      const finaldata = await axios.post(
+        "/api/admin/getCount",
+        send_data,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        console.log(finaldata.data.data)
+        setCount(finaldata.data.data);
+      }
+    }
+
+    get_count();
     if (token) {
       setLogin(true);
       fetchData();
@@ -137,9 +164,9 @@ const ClubCard = (props) => {
               {" "}
               <i class="fas fa-user-lock"></i> : {props.data.status}
             </div>
-            <div className="ml-auto flex">
+            <div className="ml-auto">
               {" "}
-              <i className="fas fa-user-friends"></i> : {props.data.max_members}
+              <i className="fas fa-user-friends"></i> : {count.member}
             </div>
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1 mb-1">
@@ -150,8 +177,7 @@ const ClubCard = (props) => {
             </div>
             <div className="ml-auto">
               {" "}
-              <i className="fas fa-calendar-check"></i> :{" "}
-              {props.eventCompoleted}
+              <i className="fas fa-calendar-check"></i> : {count.event}
             </div>
           </div>
 

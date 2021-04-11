@@ -332,19 +332,20 @@ router.post("/get-all-event", auth, async function (req, res, next) {
     }
   });
 });
-router.get ("/get-photo-name",async function(req,res,next){
-  var { user_id }= req.body;
+
+router.get("/get-photo-name", async function (req, res, next) {
+  var { user_id } = req.body;
   var result = club_details.find({
-    creator_id:user_id
+    creator_id: user_id
   })
-  await result.exec((err,data)=>{
-    if(err){
+  await result.exec((err, data) => {
+    if (err) {
       var error = {
         is_error: true,
         message: err.message,
       };
       return res.status(600).send(error);
-    }else if (data == null || data.length == 0) {
+    } else if (data == null || data.length == 0) {
       var error = {
         check: false,
         is_error: true,
@@ -352,30 +353,31 @@ router.get ("/get-photo-name",async function(req,res,next){
       };
       return res.status(200).send(error);
     }
-    else{
+    else {
       
-      if(data instanceof Array){
-        var finaldata={message:[],is_error:false}
+      if (data instanceof Array) {
+        var finaldata = { message: [], is_error: false }
         
-          data.forEach(element => {
-            finaldata.message.push({profile_photo:element.profile_photo,club_name:element.club_name})
-          });
-          return res.status(200).send(finaldata);
-      } 
-      else{
-        var finaldata = { 
-          message : { 
-            profile_photo:data.profile_photo,
+        data.forEach(element => {
+          finaldata.message.push({ profile_photo: element.profile_photo, club_name: element.club_name })
+        });
+        return res.status(200).send(finaldata);
+      }
+      else {
+        var finaldata = {
+          message: {
+            profile_photo: data.profile_photo,
             club_name: data.club_name
           },
-          is_error:false
+          is_error: false
         }
         return res.status(200).send(finaldata);
       }
     }
     
   })
-})
+});
+
 router.post("/check-event", auth, async function (req, res, next) {
   var { event_id } = req.body;
   if (event_id.length != 24) {
@@ -389,7 +391,6 @@ router.post("/check-event", auth, async function (req, res, next) {
     var result = event_details.findOne({
       _id: ObjectId(event_id),
       oragnizer_id: ObjectId(req.user._id),
-      is_active: 1,
     });
     await result.exec((err, data) => {
       if (err) {
@@ -619,4 +620,41 @@ router.post('/get-manage-club', auth, async function (req, res, next) {
     }
   });
 });
+
+router.post('/event-details', async function (req, res, next) {
+  let {event_id} = req.body;
+  event_details
+    .aggregate([
+      {
+        $lookup: {
+          from: 'club_details',
+          localField: 'club_id',
+          foreignField: '_id',
+          as: 'club_details',
+        },
+      },
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(event_id),
+        },
+      },
+    ])
+    .exec(async (err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else {
+        var finaldata = {
+          event_data: data[0],
+          is_error: false,
+          message: 'Data Send',
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+});
+
 module.exports = router;
