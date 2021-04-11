@@ -16,6 +16,9 @@ const token = localStorage.getItem("jwt");
 export default class RoomTab extends React.Component {
   state = {
     currentTab: 0,
+    myid: "",
+    myname: "",
+    myprofile: "",
     rooms: [],
     isLoading: false,
     curRoomMsgs: [],
@@ -26,6 +29,7 @@ export default class RoomTab extends React.Component {
   messagesEndRef = React.createRef();
 
   componentDidMount = async () => {
+    console.log(this.props);
     const { club_id } = this.props;
     console.log(club_id);
     const config = {
@@ -58,10 +62,15 @@ export default class RoomTab extends React.Component {
 
     console.log(uniqueUsers);
     // usage example:
+    var send_token = {
+      token: token,
+    };
 
+    const user = await axios.post("/api/auth", send_token, config);
+    const user_id = user.data._id;
     const msgs = allRoomsInfo.data.roomsData[0].messages || [];
 
-    socket.emit("join", { token, club_id }, (error) => {
+    socket.emit("join", { user_id, club_id }, (error) => {
       if (error) {
         alert(error);
       }
@@ -72,6 +81,9 @@ export default class RoomTab extends React.Component {
       curRoomMsgs: msgs,
       database: allRoomsInfo.data,
       users: uniqueUsers,
+      myid: user_id,
+      myname: user.data.username,
+      myprofile: user.data.profile_photo,
     });
     this.scrollToBottom();
   };
@@ -175,6 +187,9 @@ export default class RoomTab extends React.Component {
     const roomInfo = this.state.database.roomsData[index];
     const room_id = roomInfo._id;
     const messagetext = this.state.messagetoSend;
+    const current_user_id = this.state.myid;
+    const current_user_name = this.state.myname;
+    const current_user_profile = this.state.myprofile;
     console.log(oldMsgs);
     const config = {
       method: "POST",
@@ -183,37 +198,36 @@ export default class RoomTab extends React.Component {
       },
       validateStatus: () => true,
     };
-    var send_token = {
-      token: token,
-    };
+    // var send_token = {
+    //   token: token,
+    // };
 
-    const user = await axios.post("/api/auth", send_token, config);
-    console.log(user.data);
+    // const user = await axios.post("/api/auth", send_token, config);
+    // console.log(user.data);
     socket.emit(
       "sendMessage",
       {
         club_id: this.props.club_id,
-        token: token,
         message: messagetext,
         room_id: room_id,
-        user_id: user.data._id,
-        username: user.data.username,
-        profilePic: user.data.profile_photo,
+        user_id: current_user_id,
+        username: current_user_name,
+        profilePic: current_user_profile,
         senttime: new Date(),
       },
       console.log("in send message")
     );
     var newMessage = {
       message: messagetext,
-      user_id: user.data._id,
-      username: user.data.username,
-      profilePic: user.data.profile_photo,
+      user_id: current_user_id,
+      username: current_user_name,
+      profilePic: current_user_profile,
       senttime: new Date(),
     };
     oldMsgs.push(newMessage);
     var send_data = {
       club_id: this.props.club_id,
-      user_id: user.data._id,
+      user_id: current_user_id,
       messagetext: messagetext,
       room_id: room_id,
     };
