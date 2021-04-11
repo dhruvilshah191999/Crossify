@@ -298,7 +298,6 @@ export default function MyClubs() {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        console.log(finaldata.data.data);
         setlikedEvents(finaldata.data.data);
       }
     }

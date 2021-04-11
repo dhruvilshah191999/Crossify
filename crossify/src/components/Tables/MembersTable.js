@@ -102,7 +102,12 @@ function SelectColumnFilter({
 export default function App(props) {
   const openModal = (user_id, name) => {
     ModalManager.open(
-      <ViewProfile name={name} user_id={user_id} onRequestClose={() => true} />
+      <ViewProfile
+        name={name}
+        club_id={clubId}
+        user_id={user_id}
+        onRequestClose={() => true}
+      />
     );
   };
   const [clubId, setClubId] = useState(props.club_id);

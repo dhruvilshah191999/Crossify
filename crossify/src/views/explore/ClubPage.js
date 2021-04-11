@@ -59,7 +59,7 @@ function ClubPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-        }, 1000);
+        }, 400);
       }
     }
 

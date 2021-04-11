@@ -36,19 +36,14 @@ export default function Tables() {
    }
    event_details();
  }, []);
-  if (loading) {
-    return (
-      <>
-        <Sidebar />
-        <div className="flex flex-wrap">
-          <div className="w-full px-4">
-            <CardTable club_id={id} data={eventData} />
-          </div>
+  return (
+    <>
+      <Sidebar />
+      <div className="flex flex-wrap">
+        <div className="w-full px-4">
+          {loading ? <CardTable club_id={id} data={eventData} /> : ""}
         </div>
-      </>
-    );
-  }
-  else {
-    return <></>;
-  }
+      </div>
+    </>
+  );
 }

@@ -1,12 +1,13 @@
-var express = require("express");
-var auth = require("../middleware/auth");
-var bcrypt = require("bcryptjs");
-var mongoose = require("mongoose");
-var category_details = require("../modules/interest_category");
-var event_details = require("../modules/event_details");
-var user_details = require("../modules/user_details");
-var club_details = require("../modules/club_details");
-const { ObjectID, ObjectId } = require("bson");
+var express = require('express');
+var auth = require('../middleware/auth');
+var bcrypt = require('bcryptjs');
+var mongoose = require('mongoose');
+var category_details = require('../modules/interest_category');
+var event_details = require('../modules/event_details');
+var user_details = require('../modules/user_details');
+var club_details = require('../modules/club_details');
+var members_details = require('../modules/members_details');
+const {ObjectID, ObjectId} = require('bson');
 var router = express.Router();
 
 router.post("/get-user", auth, async function (req, res, next) {
@@ -48,7 +49,7 @@ router.post("/update-user", auth, async function (req, res, next) {
     pincode,
     occupation,
   } = req.body;
-  var result = user_details.update(
+  var result = user_details.updateOne(
     { _id: req.user._id, is_active: 1 },
     {
       username,
@@ -106,7 +107,7 @@ router.post("/update-password", async function (req, res, next) {
     } else {
       if (bcrypt.compareSync(password, data.password)) {
         new_password = bcrypt.hashSync(new_password, 10);
-        var final = user_details.update(
+        var final = user_details.updateOne(
           { email, is_active: 1 },
           { password: new_password }
         );
@@ -147,7 +148,7 @@ router.post("/update-social", auth, async function (req, res, next) {
     instagram,
   };
 
-  var result = user_details.update(
+  var result = user_details.updateOne(
     { _id: req.user._id, is_active: 1 },
     {
       social_media: object,
@@ -499,6 +500,121 @@ router.post("/get-photo-name", auth, async function (req, res, next) {
           club_name: element.club_name,
         });
       });
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/get-like-club', auth,async function (req, res, next) {
+  var result = club_details.find(
+    {
+      likes: ObjectId(req.user._id),
+      is_active: 1,
+    },
+    {
+      _id: 1,
+      city: 1,
+      location: 1,
+      profile_photo: 1,
+      tags: 1,
+      club_name: 1,
+    }
+  );
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        data: data,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/get-join-club', auth, async function (req, res, next) {
+  members_details.aggregate([
+    {
+      $lookup: {
+        from: 'club_details',
+        localField: 'club_id',
+        foreignField: '_id',
+        as: 'club_data',
+      },
+    },
+    {
+      $match: {
+        'member_list.user': ObjectId(req.user._id),
+        is_active: true,
+      },
+    },
+    {
+      $project: {
+        "club_data._id": 1,
+        "club_data.city": 1,
+        "club_data.location": 1,
+        "club_data.profile_photo": 1,
+        "club_data.tags": 1,
+        "club_data.club_name": 1,
+      },
+    },
+  ]).exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var array = [];
+      data.forEach(e => {
+        array.push(e.club_data[0]);
+      });
+      console.log(array);
+      var finaldata = {
+        data: array,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/get-manage-club', auth, async function (req, res, next) {
+  var result = club_details.find(
+    {
+      creator_id: ObjectId(req.user._id),
+      is_active: 1,
+    },
+    {
+      _id: 1,
+      city: 1,
+      location: 1,
+      profile_photo: 1,
+      tags: 1,
+      club_name: 1,
+    }
+  );
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        data: data,
+        is_error: false,
+        message: 'Data Send',
+      };
       return res.status(200).send(finaldata);
     }
   });

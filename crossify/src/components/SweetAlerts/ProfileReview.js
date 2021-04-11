@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demobg from "assets/img/demopf.png";
+import axios from "axios";
 import Tag from "components/Tag";
 import MapContainer from "../Maps/MapCode";
 import AskQuestion from "components/SweetAlerts/AskQuestion";
 import ChatMessage from "components/Cards/ChatMessage";
-import EvaulateProfile from "components/Cards/EvaulateProfile";
+import EvaulateProfile from "components/Cards/MemberProfileDetails";
 
 Modal.defaultStyles = {};
-
-// const Tag = (props) => <span className="tag" {...props} />;
-const Delete = (props) => <button className="delete" {...props} />;
-const Help = (props) => <span className="help" {...props} />;
 
 var customModalStyles = {
   content: {
@@ -31,6 +28,53 @@ class MyModal extends Component {
   handleUpdateTags = (tags) => {
     this.setState({ tags });
   };
+
+  acceptRequest = async () => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      club_id: this.props.club_id,
+      user_id: this.props.user_id
+    };
+    const finaldata = await axios.post(
+      "/api/admin/AcceptRequested",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  }
+
+  RejectedRequest = async () => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      club_id: this.props.club_id,
+      user_id: this.props.user_id,
+    };
+    const finaldata = await axios.post(
+      "/api/admin/RemoveRequested",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
+  };
+
   render() {
     const { onRequestClose } = this.props;
 
@@ -42,7 +86,7 @@ class MyModal extends Component {
       >
         <div className="flex items-start justify-between p-5 ml-1 border-b border-solid bg-gray-600 border-gray-300 rounded-t">
           <h3 className="text-2xl">
-            View Profile of <span className="font-semibold">hackershil</span>
+            View Profile of <span className="font-semibold">{ this.props.name}</span>
             {/* {this.props.username} */}
           </h3>
           <button
@@ -55,18 +99,20 @@ class MyModal extends Component {
           </button>
         </div>
         <div className="px-6 py-4 ">
-          <EvaulateProfile />
+          <EvaulateProfile user_id={this.props.user_id} club_id={ this.props.club_id}/>
         </div>
         <div className="flex items-center justify-end py-2 mb-2 ">
           <button
             className="bg-green-500 text-white active:bg-green-600 mr-2 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
             type="button"
+            onClick={this.acceptRequest}
           >
             Accept
           </button>
           <button
             className="bg-red-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
             type="button"
+            onClick={this.RejectedRequest}
           >
             Reject
           </button>

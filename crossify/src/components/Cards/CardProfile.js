@@ -13,7 +13,7 @@ export default function CardProfile(props) {
               <div className="relative">
                 <img
                   alt="..."
-                  src={props.profilePic}
+                  src={props.clubData.profile_photo}
                   className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                 />
               </div>
@@ -22,13 +22,13 @@ export default function CardProfile(props) {
               <div className="flex justify-center py-4 lg:pt-4 pt-8">
                 <div className="mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
-                    {props.memberSize}
+                    {props.count.member}
                   </span>
                   <span className="text-sm text-gray-500">Members</span>
                 </div>
                 <div className="mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
-                    {props.eventSize}
+                    {props.count.event}
                   </span>
                   <span className="text-sm text-gray-500">Events</span>
                 </div>
@@ -43,20 +43,20 @@ export default function CardProfile(props) {
           </div>
           <div className="text-center ">
             <h2 className="text-2xl font-semibold leading-normal  text-gray-800 mb-2">
-              {props.club_name}
+              {props.clubData.club_name}
             </h2>
             <div className="mb-2 text-gray-700 ">
               {props.categoriesList.map((el) => (
                 <Tag data={el}></Tag>
               ))}
             </div>
-            <h5 className="text-sm">by </h5>
+            {/* <h5 className="text-sm">by </h5>
             <h3 className="text-md  leading-normal mb-2 text-gray-700 mb-2">
               {props.ownerName}
-            </h3>
+            </h3> */}
             <div className="text-sm leading-normal mt-0 mb-4 text-gray-500 font-bold uppercase">
               <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-              {props.location}
+              {props.clubData.city},{props.clubData.state}
             </div>
           </div>
         </div>

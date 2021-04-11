@@ -634,6 +634,10 @@
   height: 400px;
 }
 
+.h-100-px {
+  height: 100px;
+}
+
 .max-h-400vh {
   max-height: 400vh;
 }

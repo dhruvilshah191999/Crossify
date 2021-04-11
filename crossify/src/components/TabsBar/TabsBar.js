@@ -165,7 +165,11 @@ const Tabs = (props) => {
                   )}
                 </div>
                 <div className={openTab === 5 ? "block" : "hidden"} id="link3">
-                  {openTab == 5 && <PhotosTab />}
+                  {props.isJoin && openTab === 5 ? (
+                    <PhotosTab club_id={props.club_id} />
+                  ) : (
+                    <RestrictAccessNotice></RestrictAccessNotice>
+                  )}
                 </div>
                 <div className={openTab === 6 ? "block" : "hidden"} id="link3">
                   {props.isJoin && openTab === 6 ? (

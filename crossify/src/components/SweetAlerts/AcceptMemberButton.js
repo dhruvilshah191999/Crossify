@@ -17,7 +17,7 @@ export default class SweetAlertModal extends Component {
   };
 
   confirmProcess = () => {
-    this.props.promoteMember();
+    this.props.handleAcceptance();
     this.setState({ alert: null });
   };
   confirmArrival() {

@@ -40,7 +40,7 @@ export default function MyClubs() {
     return false;
   };
   const filteredManageClubs = manageClubs.filter((el) => {
-    let search1 = el.event_name.toLowerCase();
+    let search1 = el.club_name.toLowerCase();
     let search2 = el.location.toLowerCase();
     let search3 = el.tags;
     if (
@@ -54,7 +54,7 @@ export default function MyClubs() {
     return false;
   });
   const filteredJoinedClubs = joinedClubs.filter((el) => {
-    let search1 = el.event_name.toLowerCase();
+    let search1 = el.club_name.toLowerCase();
     let search2 = el.location.toLowerCase();
     let search3 = el.tags;
     if (
@@ -68,7 +68,7 @@ export default function MyClubs() {
     return false;
   });
   const filteredLikedClubs = likedClubs.filter((el) => {
-    let search1 = el.event_name.toLowerCase();
+    let search1 = el.club_name.toLowerCase();
     let search2 = el.location.toLowerCase();
     let search3 = el.tags;
     return (
@@ -290,13 +290,14 @@ export default function MyClubs() {
         token: token,
       };
       const finaldata = await axios.post(
-        "/api/profile/get-upcoming-event",
+        "/api/profile/get-join-club",
         object,
         config
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
+        console.log(finaldata);
         setJoinedClubs(finaldata.data.data);
       }
     }
@@ -312,19 +313,18 @@ export default function MyClubs() {
         token: token,
       };
       const finaldata = await axios.post(
-        "/api/profile/get-like-event",
+        "/api/profile/get-like-club",
         object,
         config
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        console.log(finaldata.data.data);
         setLikedClubs(finaldata.data.data);
       }
     }
 
-    async function getpastdata() {
+    async function getadmindata() {
       const config = {
         method: "POST",
         header: {
@@ -335,7 +335,7 @@ export default function MyClubs() {
         token: token,
       };
       const finaldata = await axios.post(
-        "/api/profile/get-past-event",
+        "/api/profile/get-manage-club",
         object,
         config
       );
@@ -348,7 +348,7 @@ export default function MyClubs() {
 
     getData();
     getlikedata();
-    getpastdata();
+    getadmindata();
   }, []);
 
   return (

@@ -20,7 +20,8 @@ class MyModal extends Component {
     super(props);
     this.state = {
       name: this.props.name,
-      user_id:this.props.user_id
+      user_id: this.props.user_id,
+      club_id:this.props.club_id
     };
   }
   render() {
@@ -48,7 +49,7 @@ class MyModal extends Component {
           </button>
         </div>
         <div className="px-6 py-4 ">
-          <MemberProfileDetails user_id={ this.state.user_id}/>
+          <MemberProfileDetails user_id={this.state.user_id} club_id={ this.state.club_id}/>
         </div>
       </Modal>
     );

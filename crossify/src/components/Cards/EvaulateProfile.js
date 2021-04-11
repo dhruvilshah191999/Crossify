@@ -254,7 +254,7 @@ ProfileDetails.defaultProps = {
     {
       question: "Why do you want to join this club ?",
       answer:
-        "Because I want to improve and grow in the field on web dev and I want to help and get helped from the other people which shares the same goal as me.",
+        "Because I want to improve",
     },
     {
       question: "Which skillset you posses related to this club ?",

@@ -36,23 +36,19 @@ class MemberList extends Component {
     }
   }
   render() {
-    if (this.state.loading) {
-      return (
-        <>
-          <Sidebar />
-          <div className="flex flex-wrap">
-            <div className="w-full px-4">
-              <MembersTable
-                club_id={this.state.club_id}
-                data={this.state.memberData}
-              ></MembersTable>
-            </div>
+    return (
+      <>
+        <Sidebar />
+        <div className="flex flex-wrap">
+          <div className="w-full px-4">
+            {this.state.loading ? <MembersTable
+              club_id={this.state.club_id}
+              data={this.state.memberData}
+            ></MembersTable> : ""}
           </div>
-        </>
-      );
-    } else {
-      return <></>;
-    }
+        </div>
+      </>
+    );
   }
 }
 

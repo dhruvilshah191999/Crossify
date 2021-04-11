@@ -1,10 +1,8 @@
 import React from "react";
-
 import ImageCard from "components/Cards/ImageCard";
-import { useState } from "react";
 
 const PhotoGallery = (props) => {
-  const images = props.images.map((image) => {
+  const images = props.images.map((image,index) => {
     return (
       <ImageCard key={image.id} image={image} showSlide={props.handleClick} />
     );

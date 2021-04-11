@@ -392,7 +392,7 @@ router.post("/checklikes", auth, async function (req, res, next) {
 
 router.post("/addlikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
-  var checks = event_details.update(
+  var checks = event_details.updateOne(
     {
       _id: ObjectId(event_id),
       is_active: 1,
@@ -440,7 +440,7 @@ router.post("/addlikes", auth, async function (req, res, next) {
 
 router.post("/deletelikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
-  var checks = event_details.update(
+  var checks = event_details.updateOne(
     {
       _id: ObjectId(event_id),
       is_active: 1,
@@ -494,7 +494,7 @@ router.post("/participate-event", auth, async function (req, res, next) {
     date: new Date(),
     status: "coming",
   };
-  var checks = event_details.update(
+  var checks = event_details.updateOne(
     {
       _id: ObjectId(event_id),
       is_active: 1,
@@ -548,7 +548,7 @@ router.post("/participate-event2", auth, async function (req, res, next) {
     date: new Date(),
     status: "waiting",
   };
-  var checks = event_details.update(
+  var checks = event_details.updateOne(
     {
       _id: ObjectId(event_id),
       is_active: 1,
@@ -611,7 +611,7 @@ router.post("/undo-participation-event", auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else if (data != null) {
-      var checks = event_details.update(
+      var checks = event_details.updateOne(
         {
           _id: ObjectId(event_id),
           is_active: 1,
@@ -657,7 +657,7 @@ router.post("/undo-participation-event", auth, async function (req, res, next) {
       });
     } else {
       current_participants -= 1;
-      var checks = event_details.update(
+      var checks = event_details.updateOne(
         {
           _id: ObjectId(event_id),
           is_active: 1,
@@ -887,7 +887,7 @@ router.post("/reports", auth, async function (req, res, next) {
       };
       return res.status(600).send(error);
     } else if (data.length != 0) {
-      var add = reports_details.update(
+      var add = reports_details.updateOne(
         {
           user_id: ObjectId(req.user._id),
           event_id: ObjectId(event_id),
