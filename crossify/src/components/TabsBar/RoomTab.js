@@ -29,6 +29,7 @@ export default class RoomTab extends React.Component {
   messagesEndRef = React.createRef();
 
   componentDidMount = async () => {
+    const token = localStorage.getItem("jwt");
     console.log(this.props);
     const { club_id } = this.props;
     console.log(club_id);
@@ -198,12 +199,7 @@ export default class RoomTab extends React.Component {
       },
       validateStatus: () => true,
     };
-    // var send_token = {
-    //   token: token,
-    // };
 
-    // const user = await axios.post("/api/auth", send_token, config);
-    // console.log(user.data);
     socket.emit(
       "sendMessage",
       {
