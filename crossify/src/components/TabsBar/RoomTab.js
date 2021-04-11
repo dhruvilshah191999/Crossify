@@ -40,9 +40,15 @@ export default class RoomTab extends React.Component {
       },
       validateStatus: () => true,
     };
+    var send_token = {
+      token: token,
+    };
+
+    const user = await axios.post("/api/auth", send_token, config);
+    const user_id = user.data._id;
     const allRoomsInfo = await axios.post(
       "/api/club/chat/getMsgWithUsers",
-      { club_id },
+      { club_id, user_id },
       config
     );
     console.log(allRoomsInfo);
@@ -63,12 +69,9 @@ export default class RoomTab extends React.Component {
 
     console.log(uniqueUsers);
     // usage example:
-    var send_token = {
-      token: token,
-    };
 
-    const user = await axios.post("/api/auth", send_token, config);
-    const user_id = user.data._id;
+    console.log(allRoomsInfo.data);
+    //const user_id = user.data._id;
     const msgs = allRoomsInfo.data.roomsData[0].messages || [];
 
     socket.emit("join", { user_id, club_id }, (error) => {

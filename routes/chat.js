@@ -16,7 +16,7 @@ const { ObjectID, ObjectId } = require('bson');
 var { io } = require('../app');
 var router = express.Router();
 router.post('/createRoom', async function (req, res, next) {
-  var { club_id, channel_name } = req.body;
+  var { club_id, channel_name, is_readable, is_writable } = req.body;
   console.log('in api');
   var check = club_details.findOne({
     _id: ObjectId(club_id),
@@ -33,6 +33,8 @@ router.post('/createRoom', async function (req, res, next) {
       var channel = new channel_details({
         club_id: ObjectId(club_id),
         channel_name: channel_name,
+        is_readable: is_readable,
+        is_writable: is_writable,
       });
       channel.save((err, data2) => {
         if (err) {
@@ -103,6 +105,7 @@ router.post('/send', async function (req, res) {
       };
       return res.status(404).send(error);
     } else {
+      console.log(data);
       var update = channel_details.update(
         { _id: ObjectId(room_id) },
         {
@@ -142,54 +145,117 @@ router.post('/send', async function (req, res) {
 });
 
 router.post('/getMsgWithUsers', async function (req, res, next) {
-  var { club_id } = req.body;
-  channel_details
-    .aggregate([
-      {
-        $lookup: {
-          from: 'user_details',
-          localField: 'messages.user_id',
-          foreignField: '_id',
-          as: 'users',
+  try {
+    var { club_id, user_id } = req.body;
+
+    channel_details
+      .aggregate([
+        {
+          $lookup: {
+            from: 'user_details',
+            localField: 'messages.user_id',
+            foreignField: '_id',
+            as: 'users',
+          },
         },
-      },
-      {
-        $match: {
-          club_id: ObjectId(club_id),
+        {
+          $match: {
+            club_id: ObjectId(club_id),
+          },
         },
-      },
-      {
-        $project: {
-          'users.profile_photo': 1,
-          'users._id': 1,
-          'users.username': 1,
-          messages: 1,
-          channel_name: 1,
+        {
+          $project: {
+            'users.profile_photo': 1,
+            'users._id': 1,
+            'users.username': 1,
+            messages: 1,
+            channel_name: 1,
+            is_readable: 1,
+            is_writable: 1,
+          },
         },
-      },
-    ])
-    .exec((err, data) => {
-      if (err) {
-        var error = {
-          is_error: true,
-          message: err.message,
-        };
-        return res.status(500).send(error);
-      } else if (data.length != 0) {
-        console.log(data);
-        var finaldata = {
-          is_error: false,
-          roomsData: data,
-        };
-        return res.status(200).send(finaldata);
-      } else {
-        var error = {
-          is_error: true,
-          message: 'No channel found',
-        };
-        return res.status(404).send(error);
-      }
-    });
+      ])
+      .exec((err, chatdata) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(500).send(error);
+        } else if (chatdata.length != 0) {
+          var roomsData = [];
+          console.log(chatdata);
+          var inc = 0;
+          var length = chatdata.length;
+          chatdata.forEach(async (element) => {
+            if (element.is_readable) {
+              var membercheck = await member_details.findOne({
+                club_id: ObjectId(club_id),
+                member_list: {
+                  $elemMatch: { user: ObjectId(user_id) },
+                },
+              });
+              if (membercheck) {
+                inc++;
+                roomsData.push(element);
+              } else {
+                var admincheck = await club_details.findOne({
+                  _id: ObjectId(club_id),
+                  creator_id: ObjectId(user_id),
+                });
+                if (admincheck) {
+                  inc++;
+                  roomsData.push(element);
+                } else {
+                  inc++;
+                }
+              }
+            } else {
+              var admincheck = await club_details.findOne({
+                _id: ObjectId(club_id),
+                creator_id: ObjectId(user_id),
+              });
+              if (admincheck) {
+                inc++;
+                roomsData.push(element);
+              } else {
+                var moderatorcheck = await member_details.findOne({
+                  club_id: ObjectId(club_id),
+                  member_list: {
+                    $elemMatch: { user: ObjectId(user_id), level: 'moderator' },
+                  },
+                });
+                if (moderatorcheck) {
+                  inc++;
+                  roomsData.push(element);
+                } else {
+                  inc++;
+                }
+              }
+            }
+            if (inc === length) {
+              var finaldata = {
+                is_error: false,
+                roomsData: roomsData,
+              };
+              return res.status(200).send(finaldata);
+            }
+          });
+        } else {
+          var error = {
+            is_error: true,
+            message: 'No channel found',
+          };
+          return res.status(404).send(error);
+        }
+      });
+  } catch (err) {
+    var error = {
+      is_error: true,
+      message: err.message,
+    };
+    return res.status(500).send(error);
+  }
 });
 
 router.post('/getAllMsgs', async function (req, res, next) {

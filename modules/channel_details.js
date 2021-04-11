@@ -6,6 +6,14 @@ var channelSchema = new Schema({
     type: String,
     required: true,
   },
+  is_readble: {
+    type: Boolean,
+    required: true,
+  },
+  is_writable: {
+    type: Boolean,
+    required: true,
+  },
   club_id: {
     type: ObjectId,
     required: true,
