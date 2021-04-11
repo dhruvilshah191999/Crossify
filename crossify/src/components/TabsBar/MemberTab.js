@@ -28,24 +28,24 @@ class Contact extends React.Component {
           </div>
           <div class="flex-1 pl-2">
             <div
-              class="text-gray-700 font-semibold"
-              style={{ textTransform: "capitalize" }}
+              class="text-gray-700 font-semibold text-lg"
+              style={{ textTransform: "capitalize", lineHeight: "1rem" }}
             >
               {this.props.name}
             </div>
 
             <div
-              class="text-gray-600 font-thin"
+              class="text-gray-600 font-thin text-sm"
               style={{ textTransform: "capitalize" }}
             >
               {"Joined "}
               {Moment(this.props.date).format("MMM YYYY")}
-            </div>
-            <div
-              class="text-gray-600 font-thin"
-              style={{ textTransform: "capitalize" }}
-            >
-              {this.props.phone}
+              <div
+                class="text-gray-600 font-thin text-sm"
+                style={{ textTransform: "capitalize", lineHeight: "0.75rem" }}
+              >
+                {this.props.phone}
+              </div>
             </div>
           </div>
           {/*<div class="text-red-400 mr-4">
@@ -63,11 +63,11 @@ class ContactList extends React.Component {
     super(props);
     this.state = {
       displayedContacts: [],
-      finalContacts:[],
+      finalContacts: [],
       currentTab: 0,
       members: [],
       moderator: [],
-      club_id:this.props.club_id
+      club_id: this.props.club_id,
     };
   }
   async componentDidMount() {
@@ -91,7 +91,7 @@ class ContactList extends React.Component {
     } else {
       this.setState({
         displayedContacts: finaldata.data.data,
-        finalContacts:finaldata.data.data,
+        finalContacts: finaldata.data.data,
         members: finaldata.data.members,
         moderator: finaldata.data.moderator,
       });

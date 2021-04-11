@@ -634,6 +634,10 @@
   height: 400px;
 }
 
+.px-8 {
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
+}
 .h-100-px {
   height: 100px;
 }
@@ -1166,4 +1170,17 @@ div.sticky {
 .Demo__some-network__custom-icon {
   width: 32px;
   height: 32px;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  background: 0 0;
+  width: 0;
 }

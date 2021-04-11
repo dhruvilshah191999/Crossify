@@ -189,7 +189,9 @@ function ClubPage(props) {
     }
   };
   const openModal = () => {
-    ModalManager.open(<MyModal onRequestClose={() => true} club_id={id} isAdmin={isAdmin}/>);
+    ModalManager.open(
+      <MyModal onRequestClose={() => true} club_id={id} isAdmin={isAdmin} />
+    );
   };
   const gotoAdmin = () => {
     history.push("/admin/" + id);

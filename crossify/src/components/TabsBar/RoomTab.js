@@ -1,5 +1,5 @@
 import React from "react";
-import ChatMessage from "components/Cards/ChatMessage2.js";
+import ChatMessage from "components/Message/Message";
 import io from "socket.io-client";
 import axios from "axios";
 
@@ -219,6 +219,7 @@ export default class RoomTab extends React.Component {
       );
     return msgs.map(({ message, username, profilePic, senttime }) => (
       <ChatMessage
+        self={username === this.state.username}
         message={message}
         username={username}
         profilePic={profilePic}
@@ -339,6 +340,7 @@ export default class RoomTab extends React.Component {
               </h1>
             </div>
             <div
+              className="px-4"
               style={{
                 flex: 1,
                 overflowY: "scroll",
