@@ -19,6 +19,7 @@ export default class RoomTab extends React.Component {
     myid: "",
     username: "",
     myProfilePic: "",
+    userlevel: "",
     rooms: [],
     privacyOfChannels: [],
     isLoading: false,
@@ -68,7 +69,7 @@ export default class RoomTab extends React.Component {
         }
       });
     });
-
+    const userLevel = allRoomsInfo.data.level;
     const msgs = allRoomsInfo.data.roomsData[0].messages || [];
 
     socket.emit("join", { user_id, club_id }, (error) => {
@@ -85,6 +86,7 @@ export default class RoomTab extends React.Component {
       username: user.data.username,
       myProfilePic: user.data.profile_photo,
       privacyOfChannels: privacyOfChannels,
+      userlevel: userLevel,
     });
     this.scrollToBottom();
   };
@@ -269,7 +271,44 @@ export default class RoomTab extends React.Component {
             </div>
 
             <div className=" font-bold text-sm p-2 absolute right-0 left-0 bottom-0 inline-flex justify-between items-center">
-              {this.state.privacyOfChannels[this.state.currentTab] ? (
+              {this.state.userlevel === "member" ? (
+                this.state.privacyOfChannels[this.state.currentTab] ? (
+                  <div className=" bg-gray-200 rounded-lg flex w-full p-1">
+                    <div className="w-full">
+                      <input
+                        type="text"
+                        className="p-4 ml-2 w-full bg-gray-200 rounded-lg focus:rounded-lg"
+                        id="exampleInputPassword1"
+                        placeholder="type your message here"
+                        onChange={this.getMessageText}
+                        value={this.state.messagetoSend}
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+                            {
+                              this.sendMessage();
+                            }
+                          }
+                        }}
+                      ></input>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        onClick={this.sendMessage}
+                        className="p-4 ml-auto mr-2 "
+                      >
+                        <i className="far fa-paper-plane text-xl text-gray-700"></i>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className=" bg-gray-200 rounded-lg flex w-full p-4">
+                    <div className="flex justify-center items-center w-full">
+                      Only Authorized Persons are allowed to write.
+                    </div>
+                  </div>
+                )
+              ) : (
                 <div className=" bg-gray-200 rounded-lg flex w-full p-1">
                   <div className="w-full">
                     <input
@@ -296,12 +335,6 @@ export default class RoomTab extends React.Component {
                     >
                       <i className="far fa-paper-plane text-xl text-gray-700"></i>
                     </button>
-                  </div>
-                </div>
-              ) : (
-                <div className=" bg-gray-200 rounded-lg flex w-full p-4">
-                  <div className="flex justify-center items-center w-full">
-                    Only Authorized Persons are allowed to write.
                   </div>
                 </div>
               )}
