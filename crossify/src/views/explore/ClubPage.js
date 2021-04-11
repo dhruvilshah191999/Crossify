@@ -293,6 +293,7 @@ function ClubPage(props) {
                     isPublic={isPublic}
                     club_id={id}
                     isJoin={isJoin}
+                    isAdmin={isAdmin}
                     question={clubData.question}
                     isRequest={isRequest}
                   />{" "}

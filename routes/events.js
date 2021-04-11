@@ -948,7 +948,6 @@ router.get("/get-interest-data", async function (req, res, next) {
           is_active: true,
         },
       },
-      { $match: { $expr: { $lt: [0.5, { $rand: {} }] } } },
       {
         $project: {
           event: { $slice: ["$event_data", 4] },

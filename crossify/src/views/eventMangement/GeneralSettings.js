@@ -66,7 +66,7 @@ export default function GeneralSettings(props) {
         event_id: id,
       };
       const finaldata = await axios.post(
-        "/api/events/event-details",
+        "/api/profile/event-details",
         object,
         config
       );

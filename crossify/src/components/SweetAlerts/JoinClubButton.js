@@ -11,6 +11,7 @@ class SweetAlertModal extends Component {
       alert: null,
       isJoined: this.props.isJoin,
       club_id: this.props.club_id,
+      isAdmin:this.props.isAdmin,
       isRequested:this.props.isRequest,
       isPublic: this.props.isPublic,
       isReply:[],
@@ -283,7 +284,7 @@ class SweetAlertModal extends Component {
             type="button"
             onClick={() => this.removeRegisteration()}
           >
-            <i class="fas fa-file-signature"></i> Member
+            <i class="fas fa-file-signature"></i>{this.state.isAdmin?"Admin":"Member"}
           </button>
         ) : this.state.isRequested ? (
           <button
