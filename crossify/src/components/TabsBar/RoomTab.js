@@ -17,9 +17,10 @@ export default class RoomTab extends React.Component {
   state = {
     currentTab: 0,
     myid: "",
-    myname: "",
-    myprofile: "",
+    username: "",
+    myProfilePic: "",
     rooms: [],
+    privacyOfChannels: [],
     isLoading: false,
     curRoomMsgs: [],
     database: [],
@@ -30,9 +31,8 @@ export default class RoomTab extends React.Component {
 
   componentDidMount = async () => {
     const token = localStorage.getItem("jwt");
-    console.log(this.props);
+
     const { club_id } = this.props;
-    console.log(club_id);
     const config = {
       method: "POST",
       header: {
@@ -51,9 +51,11 @@ export default class RoomTab extends React.Component {
       { club_id, user_id },
       config
     );
-    console.log(allRoomsInfo);
-    const listOfChannels = allRoomsInfo.data.roomsData.map(
-      (el) => el.channel_name
+    const listOfChannels = allRoomsInfo.data.roomsData.map((el) => {
+      return el.channel_name;
+    });
+    const privacyOfChannels = allRoomsInfo.data.roomsData.map(
+      (el) => el.is_writable
     );
     var uniqueUsers = {};
     allRoomsInfo.data.roomsData.forEach((el) => {
@@ -67,11 +69,6 @@ export default class RoomTab extends React.Component {
       });
     });
 
-    console.log(uniqueUsers);
-    // usage example:
-
-    console.log(allRoomsInfo.data);
-    //const user_id = user.data._id;
     const msgs = allRoomsInfo.data.roomsData[0].messages || [];
 
     socket.emit("join", { user_id, club_id }, (error) => {
@@ -79,15 +76,15 @@ export default class RoomTab extends React.Component {
         alert(error);
       }
     });
-
     this.setState({
       rooms: listOfChannels,
       curRoomMsgs: msgs,
       database: allRoomsInfo.data,
       users: uniqueUsers,
       myid: user_id,
-      myname: user.data.username,
-      myprofile: user.data.profile_photo,
+      username: user.data.username,
+      myProfilePic: user.data.profile_photo,
+      privacyOfChannels: privacyOfChannels,
     });
     this.scrollToBottom();
   };
@@ -102,8 +99,6 @@ export default class RoomTab extends React.Component {
 
   renderMsgs = () => {
     var msgs = this.state.curRoomMsgs;
-
-    //appending photo and username from user_id
     msgs.map(({ user_id }, index) => {
       const { username, profile_photo } = this.state.users[user_id];
       msgs[index].username = username;
@@ -181,20 +176,26 @@ export default class RoomTab extends React.Component {
     this.setState({
       messagetoSend: event.target.value,
     });
-    console.log(this.state.messagetoSend);
   };
 
   sendMessage = async () => {
-    console.log(this.state.database);
     const index = this.state.currentTab;
     const oldMsgs = this.state.curRoomMsgs;
     const roomInfo = this.state.database.roomsData[index];
     const room_id = roomInfo._id;
     const messagetext = this.state.messagetoSend;
     const current_user_id = this.state.myid;
-    const current_user_name = this.state.myname;
-    const current_user_profile = this.state.myprofile;
-    console.log(oldMsgs);
+    const current_user_name = this.state.username;
+    const current_user_profile = this.state.myProfilePic;
+    var { users } = this.state;
+
+    if (!users.hasOwnProperty(current_user_id)) {
+      users[current_user_id] = {
+        profile_photo: current_user_profile,
+        username: current_user_name,
+      };
+    }
+
     const config = {
       method: "POST",
       header: {
@@ -203,19 +204,15 @@ export default class RoomTab extends React.Component {
       validateStatus: () => true,
     };
 
-    socket.emit(
-      "sendMessage",
-      {
-        club_id: this.props.club_id,
-        message: messagetext,
-        room_id: room_id,
-        user_id: current_user_id,
-        username: current_user_name,
-        profilePic: current_user_profile,
-        senttime: new Date(),
-      },
-      console.log("in send message")
-    );
+    socket.emit("sendMessage", {
+      club_id: this.props.club_id,
+      message: messagetext,
+      room_id: room_id,
+      user_id: current_user_id,
+      username: current_user_name,
+      profilePic: current_user_profile,
+      senttime: new Date(),
+    });
     var newMessage = {
       message: messagetext,
       user_id: current_user_id,
@@ -231,12 +228,13 @@ export default class RoomTab extends React.Component {
       room_id: room_id,
     };
     axios.post("/api/club/chat/send", send_data, config);
-    this.setState({ messagetoSend: "", curRoomMsgs: oldMsgs });
+    this.setState({ messagetoSend: "", curRoomMsgs: oldMsgs, users: users });
   };
   render() {
     if (this.state.isLoading) {
       return <p>Loading....</p>;
     }
+
     return (
       <>
         <div className="flex flex-wrap  items-start">
@@ -271,37 +269,42 @@ export default class RoomTab extends React.Component {
             </div>
 
             <div className=" font-bold text-sm p-2 absolute right-0 left-0 bottom-0 inline-flex justify-between items-center">
-              <div className=" bg-gray-200 rounded-lg flex w-full p-1">
-                <div className="w-full">
-                  <input
-                    type="text"
-                    className="p-4 ml-2 w-full bg-gray-200 rounded-lg focus:rounded-lg"
-                    id="exampleInputPassword1"
-                    placeholder="type your message here"
-                    onChange={this.getMessageText}
-                    // onKeyPress={(e) => {
-                    //   e.key == "Enter" && this.sendMessage();
-                    // }}
-                    value={this.state.messagetoSend}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        {
-                          this.sendMessage();
+              {this.state.privacyOfChannels[this.state.currentTab] ? (
+                <div className=" bg-gray-200 rounded-lg flex w-full p-1">
+                  <div className="w-full">
+                    <input
+                      type="text"
+                      className="p-4 ml-2 w-full bg-gray-200 rounded-lg focus:rounded-lg"
+                      id="exampleInputPassword1"
+                      placeholder="type your message here"
+                      onChange={this.getMessageText}
+                      value={this.state.messagetoSend}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          {
+                            this.sendMessage();
+                          }
                         }
-                      }
-                    }}
-                  ></input>
+                      }}
+                    ></input>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={this.sendMessage}
+                      className="p-4 ml-auto mr-2 "
+                    >
+                      <i className="far fa-paper-plane text-xl text-gray-700"></i>
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <button
-                    type="button"
-                    onClick={this.sendMessage}
-                    className="p-4 ml-auto mr-2 "
-                  >
-                    <i className="far fa-paper-plane text-xl text-gray-700"></i>
-                  </button>
+              ) : (
+                <div className=" bg-gray-200 rounded-lg flex w-full p-4">
+                  <div className="flex justify-center items-center w-full">
+                    Only Authorized Persons are allowed to write.
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
