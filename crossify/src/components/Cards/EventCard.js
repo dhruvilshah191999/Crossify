@@ -2,18 +2,20 @@ import Moment from "react-moment";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { store } from "react-notifications-component";
+import { useHistory } from "react-router-dom";
 import { notifyLiked } from "notify";
 import { motion } from "framer-motion";
 import ShareButton from "components/SweetAlerts/ShareButton";
 
 const EventCard = (props) => {
+  let history = useHistory();
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const [clubname, Setclub] = useState("");
   const token = localStorage.getItem("jwt");
 
   const showEvents = (event_id) => {
-    window.location.replace("/events/event=" + event_id);
+    history.push("/events/event=" + event_id);
   };
 
   useEffect(() => {

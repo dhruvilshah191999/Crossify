@@ -14,7 +14,7 @@ import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 import Moment from "moment";
 import fileDownload from "js-file-download";
 import axios from "axios";
-
+import EmptyTable from "components/sections/EmptyTable";
 
 const handleDownload = (url, filename) => {
   console.log(url);
@@ -114,10 +114,7 @@ export default function App(props) {
   const [isLight, setIsLight] = useState(1);
   const [mediaPhoto, setmediaPhoto] = useState(props.data);
   const [clubId, setClubId] = useState(props.club_id);
-  const data = React.useMemo(
-    () => mediaPhoto,
-    []
-  );
+  const data = React.useMemo(() => mediaPhoto, []);
 
   const columns = React.useMemo(
     () => [
@@ -159,7 +156,14 @@ export default function App(props) {
       {
         Header: "Actions",
         accessor: "link", // here add _id of event request so easy to attach with the buttons
-        Cell: ({value,cell:{row:{values:{name,description,size}}}}) => {
+        Cell: ({
+          value,
+          cell: {
+            row: {
+              values: { name, description, size },
+            },
+          },
+        }) => {
           return (
             <div className="flex ">
               <div>
@@ -295,7 +299,8 @@ export default function App(props) {
             </div>
           </div>
         </div>
-        <div className="block w-full overflow-x-auto">
+        <div className="block w-full overflow-x-auto relative">
+          {page.length == 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -350,6 +355,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
+            {page.length == 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

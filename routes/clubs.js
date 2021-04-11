@@ -244,7 +244,7 @@ router.post("/get-club", auth, async (req, res) => {
         return res.status(500).send(error);
       } else {
         var isAdmin = false;
-        if (data[0].creator_id === req.user._id) {
+        if (data[0].creator_id == req.user._id) {
           isAdmin = true;
         }
         var finaldata = {
@@ -280,7 +280,28 @@ router.post("/create-event", auth, async (req, res) => {
     starting_time,
     ending_time,
     club_id,
+    isAdmin
   } = req.body;
+  var status=false;
+  if (isAdmin) {
+    status = true;
+  }
+
+  var check = await member_details.findOne({
+    club_id: ObjectId(club_id),
+    member_list: {
+      $elemMatch: {
+        user: ObjectId(req.user._id),
+        level: "moderator"
+      }
+    },
+    is_active: true
+  }).exec();
+
+  if (check) {
+    status = true;
+  }
+
   var array = [];
   category.map((e) => {
     array.push(ObjectId(e._id));
@@ -308,6 +329,7 @@ router.post("/create-event", auth, async (req, res) => {
     startdate,
     pincode: postalcode,
     maximum_participants: capacity,
+    is_active:status,
   });
   event.save().then((data) => {
     var finaldata = {
@@ -741,6 +763,16 @@ router.post("/GetMembers", async function (req, res, next) {
           moderator,
           is_error: false,
           message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
+      }
+      else {
+        var finaldata = {
+          data: [],
+          members:[],
+          moderator:[],
+          is_error: false,
+          message: 'Data Send',
         };
         return res.status(200).send(finaldata);
       }

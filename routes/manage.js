@@ -688,4 +688,44 @@ router.post("/send-reports", auth, async function (req, res, next) {
   });
 });
 
+router.post('/check-club', auth, async function (req, res, next) {
+  var {club_id} = req.body;
+  if (club_id.length != 24) {
+    var error = {
+      check: false,
+      is_error: true,
+      message: 'User Not Found',
+    };
+    return res.status(200).send(error);
+  } else {
+    var result = club_details.findOne({
+      _id: ObjectId(club_id),
+      creator_id: ObjectId(req.user._id),
+      is_active: 1,
+    });
+    await result.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(600).send(error);
+      } else if (!data) {
+        var error = {
+          check: false,
+          is_error: true,
+          message: 'User Not Found',
+        };
+        return res.status(200).send(error);
+      } else {
+        var finaldata = {
+          check: true,
+          is_error: false,
+          message: 'Data Send',
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+  }
+});
 module.exports = router;

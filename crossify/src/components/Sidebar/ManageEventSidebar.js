@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
@@ -8,6 +9,7 @@ import logo from "assets/logos/logo_final.png";
 
 export default function Sidebar() {
   const { id } = useParams();
+  let history = useHistory();
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const token = localStorage.getItem("jwt");
   useEffect(() => {
@@ -28,10 +30,10 @@ export default function Sidebar() {
         config
       );
       if (finaldata.data.is_error) {
-        window.location = "/";
+        history.push("/");
       } else {
         if (!finaldata.data.check) {
-          window.location = "/";
+          history.push("/");
         }
       }
     }

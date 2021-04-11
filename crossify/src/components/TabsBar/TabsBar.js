@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AboutTab from "./AboutTab";
 import EventTab from "./EventTab";
 import RoomTab from "./RoomTab";
 import MemberTab from "./MemberTab";
 import PhotosTab from "./PhotosTab";
 import FilesTab from "./FilesTab";
+import RestrictAccessNotice from "components/sections/RestrictAccessNotice";
+
 const Tabs = (props) => {
   const [openTab, setOpenTab] = React.useState(1);
+
   return (
     <>
       <div className="flex flex-wrap">
@@ -101,6 +104,7 @@ const Tabs = (props) => {
                 }
                 onClick={(e) => {
                   e.preventDefault();
+
                   setOpenTab(5);
                 }}
                 data-toggle="tab"
@@ -131,7 +135,7 @@ const Tabs = (props) => {
               </a>
             </li>
           </ul>
-          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-1  rounded">
             <div className="px-4 py-5 flex-auto">
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
@@ -142,19 +146,33 @@ const Tabs = (props) => {
                   />
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                  <EventTab club_id={props.club_id} />
+                  {openTab == 2 && (
+                    <EventTab club_id={props.club_id} isAdmin={props.isAdmin} />
+                  )}
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                  {props.isJoin ? <RoomTab /> : ""}
+                  {props.isJoin ? (
+                    <RoomTab club_id={props.club_id} />
+                  ) : (
+                    <RestrictAccessNotice></RestrictAccessNotice>
+                  )}
                 </div>
                 <div className={openTab === 4 ? "block" : "hidden"} id="link3">
-                  {props.isJoin ? <MemberTab club_id={props.club_id} /> : ""}
+                  {props.isJoin && openTab === 4 ? (
+                    <MemberTab club_id={props.club_id} />
+                  ) : (
+                    <RestrictAccessNotice></RestrictAccessNotice>
+                  )}
                 </div>
                 <div className={openTab === 5 ? "block" : "hidden"} id="link3">
-                  <PhotosTab />
+                  {openTab == 5 && <PhotosTab />}
                 </div>
                 <div className={openTab === 6 ? "block" : "hidden"} id="link3">
-                  {props.isJoin ? <FilesTab club_id={props.club_id} /> : ""}
+                  {props.isJoin && openTab === 6 ? (
+                    <FilesTab club_id={props.club_id} />
+                  ) : (
+                    <RestrictAccessNotice></RestrictAccessNotice>
+                  )}
                 </div>
               </div>
             </div>

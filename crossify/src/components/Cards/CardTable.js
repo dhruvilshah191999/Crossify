@@ -28,7 +28,8 @@ export default function CardTable({ color }) {
             </div>
           </div>
         </div>
-        <div className="block w-full overflow-x-auto">
+        <div className="block w-full overflow-x-auto relative">
+          {page.length == 0 && <EmptyTable isLight={isLight} />}
           {/* Projects table */}
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
@@ -413,6 +414,7 @@ export default function CardTable({ color }) {
                 </td>
               </tr>
             </tbody>
+            {page.length == 0 && <div className="empty-table-space"></div>}
           </table>
         </div>
       </div>

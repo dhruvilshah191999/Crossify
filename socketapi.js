@@ -1,46 +1,35 @@
-const io = require("socket.io")();
-const usersArray = [];
-
-const addUser = ({ id, token, club_id }) => {
-  token = token;
-  club_id = club_id;
-
-  const existingUser = usersArray.find(
-    (user) => user.club_id === club_id && user.token === token
-  );
-
-  if (!token || !club_id) return { error: "Username and room are required." };
-  if (existingUser) return { error: "Username is taken." };
-
-  const user = { id, token, club_id };
-
-  usersArray.push(user);
-
-  return { user };
-};
-const getUser = (id) => usersArray.find((user) => user.id === id);
-const removeUser = (id) => {
-  const index = usersArray.findIndex((user) => user.id === id);
-
-  if (index !== -1) return usersArray.splice(index, 1)[0];
-};
+const io = require('socket.io')();
+const club_ids = new Map();
+const connection = new Map();
 const socketapi = {
   io: io,
 };
-io.on("connect", (socket) => {
-  console.log("connected with client");
-  socket.on("join", ({ token, club_id }, callback) => {
-    const { error, user } = addUser({ id: socket.id, token, club_id });
-    socket.join(user.club_id);
-    console.log("user joined in a room");
+io.on('connect', (socket) => {
+  console.log('connected with client');
+
+  socket.on('join', ({ token, club_id }, callback) => {
+    console.log('Adding user : ', socket.id);
+    const uid = token;
+    if (token != null) {
+      connection.set(uid, socket.id);
+      if (!club_ids.hasOwnProperty(club_id)) {
+        club_ids[club_id] = new Set();
+      }
+      club_ids[club_id].add(socket.id);
+    }
+    console.log('user joined in a room');
   });
-  socket.on("sendMessage", (message) => {
-    console.log("send message socket received", message);
-    const user = getUser(socket.id);
-    io.to(user.club_id).emit("Message", message, console.log(message.room_id));
+  socket.on('sendMessage', (message) => {
+    console.log('send message socket received', message);
+    const currentclub = club_ids[message.club_id];
+    for (var member of currentclub.values()) {
+      if (member === connection.get(message.token)) continue;
+      io.to(member).emit('Message', message, console.log(message.room_id));
+    }
   });
-  socket.on("disconnect", () => {
-    const user = removeUser(socket.id);
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+    connection.delete(socket.id);
   });
 });
 module.exports = socketapi;

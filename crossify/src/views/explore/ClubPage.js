@@ -3,6 +3,7 @@ import Navbar from "components/Navbars/ClubNavbar";
 import axios from "axios";
 import { useParams } from "react-router";
 import TabsBar from "components/TabsBar/TabsBar";
+import { useHistory } from "react-router-dom";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/RequestForEvent";
@@ -16,6 +17,7 @@ import { motion } from "framer-motion";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
 
 function ClubPage(props) {
+  let history = useHistory();
   var { id } = useParams();
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setloading] = useState(false);
@@ -44,7 +46,6 @@ function ClubPage(props) {
         send_data,
         config
       );
-      console.log(finaldata.data);
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
@@ -58,7 +59,7 @@ function ClubPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-        }, 500);
+        }, 1000);
       }
     }
 
@@ -130,9 +131,10 @@ function ClubPage(props) {
         setRequest(finaldata.data.request);
       }
     }
-    fetchData();
+
     CheckMember();
     CheckRequestMember();
+    fetchData();
     event_details();
   }, []);
 
@@ -187,10 +189,10 @@ function ClubPage(props) {
     }
   };
   const openModal = () => {
-    ModalManager.open(<MyModal onRequestClose={() => true} club_id={id} />);
+    ModalManager.open(<MyModal onRequestClose={() => true} club_id={id} isAdmin={isAdmin}/>);
   };
   const gotoAdmin = () => {
-    window.location.replace("/admin/" + id);
+    history.push("/admin/" + id);
   };
   if (loading) {
     return (
@@ -307,6 +309,7 @@ function ClubPage(props) {
                 rules={clubData.rules}
                 joining_criteria={clubData.joining_criteria}
                 isJoin={isJoin}
+                isAdmin={isAdmin}
               />
             </div>
           </div>

@@ -13,6 +13,7 @@ import UploadPic from "components/Inputs/UploadPic";
 import MultipleInputs from "components/Inputs/MultipleInputs";
 
 function CreateClub(props) {
+  let history = useHistory();
   const [tags, setTags] = useState([]);
   const [question1, setquestion] = useState([]);
   const [photo, setPhoto] = useState(null);
@@ -127,7 +128,7 @@ function CreateClub(props) {
             if (finaldata.data.is_error) {
               console.log(finaldata.data.message);
             } else {
-              window.location.replace("/clubsearch");
+              history.push("/clubsearch");
             }
           } catch (err) {
             console.log(err);

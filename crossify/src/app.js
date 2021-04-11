@@ -1,6 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
@@ -46,19 +52,32 @@ function PrivateRoute({ component: Component, authed, ...rest }) {
   );
 }
 
+function LoginRoute({ component: Component, authed, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        authed === true ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+        )
+      }
+    />
+  );
+}
+
 const Routing = () => {
   var token = localStorage.getItem("jwt");
   return (
     <Switch>
-      <Route path="/admin/:id" component={Admin} />
       <Route path="/landing" exact component={Landing} />
       <Route path="/" exact component={Index} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/clubsearch" exact component={ClubSearchPage} />
-      <Route path="/playground" exact component={PlayGround} />
       <Route path="/createclub" exact component={CreateClub} />
       <Route path="/profilepage" exact component={ProfilePage} />
-      <Route path="/auth" component={Auth} />
+      <Route path="/playground" exact component={PlayGround} />
       {!token ? (
         <>
           <PrivateRoute authed={false} path="/profile" component={Profile} />
@@ -78,6 +97,8 @@ const Routing = () => {
             exact
             component={ClubPage}
           />
+          <PrivateRoute authed={false} path="/admin/:id" component={Admin} />
+          <LoginRoute authed={true} path="/auth" component={Auth} />
         </>
       ) : (
         <>
@@ -98,6 +119,8 @@ const Routing = () => {
             exact
             component={ClubPage}
           />
+          <PrivateRoute authed={true} path="/admin/:id" component={Admin} />
+          <LoginRoute authed={false} path="/auth" component={Auth} />
         </>
       )}
 
@@ -109,6 +132,7 @@ const Routing = () => {
 
 export default function App() {
   const { islogin_dispatch, dispatch } = useContext(UserContext);
+  let history = useHistory();
 
   useEffect(() => {
     async function checkLogin() {
@@ -128,9 +152,15 @@ export default function App() {
             },
           };
           const res = await axios.post("/api/auth", data, config);
-          dispatch({ type: "ADD_USER", payload: res.data });
+          if (res.data.is_error) {
+            window.localStorage.removeItem("jwt");
+            history.push("/auth");
+          } else {
+            dispatch({ type: "ADD_USER", payload: res.data });
+          }
         } catch (error) {
-          console.log(error);
+          window.localStorage.removeItem("jwt");
+          history.push("/auth");
         }
       }
     }

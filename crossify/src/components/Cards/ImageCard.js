@@ -3,9 +3,7 @@ import React from "react";
 class ImageCard extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = { spans: 0 };
-
     this.imageRef = React.createRef();
   }
 
@@ -14,11 +12,9 @@ class ImageCard extends React.Component {
   }
 
   setSpans = () => {
-    //todo at first render it doesn't look proper because it cannot get the height of image properly (bydefault 0) so provide height of image
-    var height = this.props.image.height || this.imageRef.current.clientHeight;
+    //done only add to the render when it is required NOt use classes to hide and show just render using && (if)
+    var height = this.imageRef.current.clientHeight;
     const spans = Math.ceil(height / 10 + 1);
-
-    console.log("Spasns : " + spans);
     this.setState({ spans: spans });
   };
   render() {

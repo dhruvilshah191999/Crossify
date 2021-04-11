@@ -28,12 +28,13 @@ export default class DemoApp extends React.Component {
   constructor(props) {
     super(props);
     this.calendarRef = React.createRef();
-    console.log(this.props.EventData);
     this.state = {
       alert: null,
       currentSelectionInfo: null,
       events: [],
       loading: false,
+      club_id: this.props.club_id,
+      isAdmin:this.props.isAdmin
     };
   }
 
@@ -83,12 +84,13 @@ export default class DemoApp extends React.Component {
   };
 
   redirectToRequestModal = () => {
-    console.log(this.state.currentSelectionInfo);
     ModalManager.open(
       <RequestForEvent
         onRequestClose={() => true}
         startDate={this.state.currentSelectionInfo.startStr}
         endDate={this.state.currentSelectionInfo.endStr}
+        club_id={this.state.club_id}
+        isAdmin={this.state.isAdmin}
       />
     );
     this.setState({ alert: null, currentSelectionInfo: null });

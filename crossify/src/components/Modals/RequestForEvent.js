@@ -38,8 +38,8 @@ function MyModal(props) {
     eligibility: "",
     capacity: 0,
     last_registraiton_date: null,
-    starting_date: null,
-    ending_date: null,
+    starting_date: props.startDate || null,
+    ending_date: props.endDate || null,
     starting_time: null,
     ending_time: null,
   });
@@ -70,7 +70,7 @@ function MyModal(props) {
   let { latitude, longitude } = usePosition(true);
 
   useEffect(() => {
-    setTimeout(setLoading(true), 1500);
+    setTimeout(setLoading(true), 1000);
   }, []);
 
   const handleUpdateTags = (tags) => {
@@ -128,6 +128,7 @@ function MyModal(props) {
             photo: res.data.url,
             capacity,
             category,
+            isAdmin: props.isAdmin,
           };
           try {
             const config = {
@@ -171,14 +172,14 @@ function MyModal(props) {
           >
             <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
               ×
-          </span>
+            </span>
           </button>
         </div>
         <div className="px-6 py-4 bg-gray-200">
           <form>
             <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
               Event Information
-          </h6>
+            </h6>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-8/12 px-4">
                 <div className="relative w-full mb-3">
@@ -187,7 +188,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Event Name
-                </label>
+                  </label>
                   <input
                     type="text"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -205,7 +206,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Privacy
-                </label>
+                  </label>
                   <select
                     class="block shadow focus:shadow-outline pr-2  text-sm appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded ease-linear transition-all duration-150"
                     id="grid-state"
@@ -228,7 +229,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Categories
-                </label>
+                  </label>
                   <MultiSelect
                     placeholder="Select your relevant Categories"
                     parentCallback={handleCategory}
@@ -241,7 +242,7 @@ function MyModal(props) {
 
             <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
               place Information
-          </h6>
+            </h6>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-4">
                 <div className="relative w-full mb-3">
@@ -250,7 +251,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Address
-                </label>
+                  </label>
                   <input
                     type="text"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -268,7 +269,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     State
-                </label>
+                  </label>
                   <select
                     id="reg-state"
                     name="state"
@@ -292,7 +293,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     City
-                </label>
+                  </label>
                   <select
                     id="reg-city"
                     name="city"
@@ -316,7 +317,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Postal Code
-                </label>
+                  </label>
                   <input
                     type="number"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -334,12 +335,16 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Map
-                </label>
-                  <MapContainer
-                    lat={latitude}
-                    long={longitude}
-                    parentCallback={handleCallback}
-                  ></MapContainer>
+                  </label>
+                  {latitude ? (
+                    <MapContainer
+                      lat={latitude}
+                      long={longitude}
+                      parentCallback={handleCallback}
+                    ></MapContainer>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
@@ -348,7 +353,7 @@ function MyModal(props) {
 
             <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
               Capacity and Timing
-          </h6>
+            </h6>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 px-4">
                 <div className="relative w-full mb-3">
@@ -357,7 +362,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Total Slots (Capacity)
-                </label>
+                  </label>
                   <input
                     type="number"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -374,7 +379,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Last Registraiton Date
-                </label>
+                  </label>
                   <input
                     type="date"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -391,7 +396,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Starting Date
-                </label>
+                  </label>
                   <input
                     type="date"
                     name="starting_date"
@@ -408,7 +413,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Ending Date
-                </label>
+                  </label>
                   <input
                     type="date"
                     name="ending_date"
@@ -425,7 +430,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Starting Time
-                </label>
+                  </label>
                   <input
                     type="time"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -442,7 +447,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Ending Time
-                </label>
+                  </label>
                   <input
                     type="time"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -456,7 +461,7 @@ function MyModal(props) {
             <hr className="mt-6 border-b-1 border-gray-400" />
             <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
               Event Details
-          </h6>
+            </h6>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-4">
                 <div className="relative w-full mb-3">
@@ -465,7 +470,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Profile Photo
-                </label>
+                  </label>
                   <UploadPic parentCallback={handlePhotoCallback}></UploadPic>
                 </div>
               </div>
@@ -475,7 +480,7 @@ function MyModal(props) {
 
             <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
               About Event
-          </h6>
+            </h6>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-4">
                 <div className="relative w-full mb-3">
@@ -484,7 +489,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     description
-                </label>
+                  </label>
                   <textarea
                     type="text"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -503,7 +508,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Eligibility
-                </label>
+                  </label>
                   <textarea
                     type="text"
                     className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -522,7 +527,7 @@ function MyModal(props) {
                     htmlFor="grid-password"
                   >
                     Tags
-                </label>
+                  </label>
                   <InputTagsContainer
                     tags={tags}
                     handleUpdateTags={handleUpdateTags}
@@ -538,21 +543,20 @@ function MyModal(props) {
                 onClick={ModalManager.close}
               >
                 Close
-            </button>
+              </button>
               <button
                 className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
                 type="button"
                 onClick={(e) => onSubmit(e)}
               >
                 Submit
-            </button>
+              </button>
             </div>
           </form>
         </div>
       </Modal>
     );
-  }
-  else {
+  } else {
     return <></>;
   }
 }

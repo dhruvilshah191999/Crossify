@@ -284,7 +284,6 @@ router.post("/get-past-event", auth, async function (req, res, next) {
 router.post("/get-all-event", auth, async function (req, res, next) {
   var result = event_details.find({
     oragnizer_id: ObjectId(req.user._id),
-    is_active: 1,
   });
   await result.exec((err, data) => {
     if (err) {
@@ -303,10 +302,14 @@ router.post("/get-all-event", auth, async function (req, res, next) {
       var final = [];
       data.forEach((e) => {
         var status;
-        if (new Date(e.date) > new Date()) {
-          status = "pending";
-        } else if (new Date(e.date) < new Date()) {
+        if (new Date(e.date) > new Date() && e.is_active) {
+          status = "approved";
+        } else if (new Date(e.date) < new Date() && e.is_active) {
           status = "completed";
+        } else if (e.visibility != "rejected" && !e.is_active) {
+          status = "pending";
+        } else {
+          status = "rejected";
         }
         var object = {
           photo: e.photo,
@@ -384,6 +387,7 @@ router.post("/check-event", auth, async function (req, res, next) {
   } else {
     var result = event_details.findOne({
       _id: ObjectId(event_id),
+      oragnizer_id: ObjectId(req.user._id),
       is_active: 1,
     });
     await result.exec((err, data) => {
@@ -393,7 +397,7 @@ router.post("/check-event", auth, async function (req, res, next) {
           message: err.message,
         };
         return res.status(600).send(error);
-      } else if (data === null || data.length === 0) {
+      } else if (!data) {
         var error = {
           check: false,
           is_error: true,
@@ -401,21 +405,12 @@ router.post("/check-event", auth, async function (req, res, next) {
         };
         return res.status(200).send(error);
       } else {
-        if (data.oragnizer_id != req.user._id) {
-          var error = {
-            check: false,
-            is_error: true,
-            message: "User Not Found",
-          };
-          return res.status(200).send(error);
-        } else {
-          var finaldata = {
-            check: true,
-            is_error: false,
-            message: "Data Send",
-          };
-          return res.status(200).send(finaldata);
-        }
+        var finaldata = {
+          check: true,
+          is_error: false,
+          message: "Data Send",
+        };
+        return res.status(200).send(finaldata);
       }
     });
   }
