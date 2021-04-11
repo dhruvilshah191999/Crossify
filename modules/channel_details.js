@@ -6,7 +6,7 @@ var channelSchema = new Schema({
     type: String,
     required: true,
   },
-  is_readble: {
+  is_readable: {
     type: Boolean,
     required: true,
   },

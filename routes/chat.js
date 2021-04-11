@@ -99,6 +99,7 @@ router.post('/send', async function (req, res) {
       };
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
+      console.log('else 1');
       var error = {
         is_error: true,
         message: 'you are not part of this club',
@@ -133,6 +134,7 @@ router.post('/send', async function (req, res) {
           };
           return res.status(200).send(finaldata);
         } else {
+          console.log('else 2');
           var error = {
             is_error: true,
             message: "you are not part of this room or room doesn't exists",
@@ -146,7 +148,7 @@ router.post('/send', async function (req, res) {
 
 router.post('/getMsgWithUsers', async function (req, res, next) {
   try {
-    var { club_id, user_id } = req.body;
+    var { club_id, user_id, page, limit } = req.body;
     var is_admin = false;
     var user_is_member = await member_details.findOne({
       club_id: ObjectId(club_id),
@@ -215,6 +217,37 @@ router.post('/getMsgWithUsers', async function (req, res, next) {
             };
             return res.status(500).send(error);
           } else if (chatdata.length != 0) {
+            chatdata.forEach((element) => {
+              var message_length = element.messages.length;
+              var totalfloatPages = message_length / limit;
+              var totalPages = Math.ceil(totalfloatPages);
+              console.log(totalPages);
+              if (message_length > limit) {
+                console.log(page);
+                console.log(totalPages);
+                if (page == totalPages) {
+                  console.log('from if');
+                  var messagestoAppend = element.messages.slice(
+                    0,
+                    message_length - limit * (page - 1)
+                  );
+                  console.log('from 0', messagestoAppend);
+                  element.messages = messagestoAppend.slice(0);
+                } else if (page < totalPages) {
+                  var messagestoAppend = element.messages.slice(
+                    message_length - limit * page,
+                    message_length - limit * (page - 1)
+                  );
+                  element.messages = messagestoAppend.slice(0);
+                } else {
+                  element.messages = [];
+                }
+              } else {
+                if (page > 1) {
+                  element.messages = [];
+                }
+              }
+            });
             var finaldata = {
               is_error: false,
               level: 'member',
@@ -265,6 +298,37 @@ router.post('/getMsgWithUsers', async function (req, res, next) {
             };
             return res.status(500).send(error);
           } else if (chatdata.length != 0) {
+            chatdata.forEach((element) => {
+              var message_length = element.messages.length;
+              var totalfloatPages = message_length / limit;
+              var totalPages = Math.ceil(totalfloatPages);
+              console.log(totalPages);
+              if (message_length > limit) {
+                console.log(page);
+                console.log(totalPages);
+                if (page == totalPages) {
+                  console.log('from if');
+                  var messagestoAppend = element.messages.slice(
+                    0,
+                    message_length - limit * (page - 1)
+                  );
+                  console.log('from 0', messagestoAppend);
+                  element.messages = messagestoAppend.slice(0);
+                } else if (page < totalPages) {
+                  var messagestoAppend = element.messages.slice(
+                    message_length - limit * page,
+                    message_length - limit * (page - 1)
+                  );
+                  element.messages = messagestoAppend.slice(0);
+                } else {
+                  element.messages = [];
+                }
+              } else {
+                if (page > 1) {
+                  element.messages = [];
+                }
+              }
+            });
             if (is_admin) {
               var finaldata = {
                 is_error: false,

@@ -1,153 +1,159 @@
-var express = require("express");
-var auth = require("../middleware/auth");
-var mongoose = require("mongoose");
-var category_details = require("../modules/interest_category");
-var event_details = require("../modules/event_details");
-var user_details = require("../modules/user_details");
-var member_details = require("../modules/members_details");
-var club_details = require("../modules/club_details");
-var member_details = require("../modules/members_details");
-const { ObjectID, ObjectId } = require("bson");
+var express = require('express');
+var auth = require('../middleware/auth');
+var mongoose = require('mongoose');
+var category_details = require('../modules/interest_category');
+var event_details = require('../modules/event_details');
+var channel_details = require('../modules/channel_details');
+var user_details = require('../modules/user_details');
+var member_details = require('../modules/members_details');
+var club_details = require('../modules/club_details');
+var member_details = require('../modules/members_details');
+const { ObjectID, ObjectId } = require('bson');
 var router = express.Router();
-router.get("/get-particular-club",async function(req,res,next){
-  const {club_id}= req.body;
-  var check = club_details.findById({_id:ObjectId(club_id)});
-  await check.exec((err,data)=>{
+router.get('/get-particular-club', async function (req, res, next) {
+  const { club_id } = req.body;
+  var check = club_details.findById({ _id: ObjectId(club_id) });
+  await check.exec((err, data) => {
     if (err) {
       var error = {
         is_error: true,
         message: err,
       };
       return res.status(501).send(error);
-  }
-  else{
-    var finaldata={
-      is_error:false,
-      message:data
+    } else {
+      var finaldata = {
+        is_error: false,
+        message: data,
+      };
+      return res.status(200).send(finaldata);
     }
-    return res.status(200).send(finaldata);
-  }
-  })
-})
-router.post("/join-club",async function(req,res,next){
-    const {user_id,club_id}= req.body;
-    var user_object = {
-      user_id:ObjectId(user_id),
-      level:"member"
-    }
-    var club_object = {
-      club_id:ObjectId(club_id),
-      level:"member"
-    }
-    var check = member_details.findOneAndUpdate({club_id:ObjectId(club_id),member_list:{$nin:{user_object}}},{
-      $push: { member_list: user_object },
-    })
-    await check.exec((err,data)=>{
-      if(err){
-        var error = {
-          is_error: true,
-          message: err,
-        };
-        return res.status(501).send(error);
-      }
-      else if(data == null || data.length == 0){
-          var error={
-            is_error:true,
-            message:"wrong club details or you are already part of this club"
-          }
-        return res.status(501).send(error);
-      }
-      else{
-        async()=>{
-        var update = user_details.findOneAndUpdate({_id:ObjectId(user_id),clubs:{$nin:{club_object}}},{
-          $push:{clubs:club_object}
-        })
-        await update.exec((err,data2)=>{
-          if(err){
-            var error = {
-              is_error: true,
-              message: err,
-            };
-            return res.status(501).send(error);
-          }
-          else if(data == null || data.length == 0){
-            var error={
-              is_error:true,
-              message:"wrong club details or you are already part of this club"
-            }
-            return res.status(501).send(error);
-          }
-          else {
-            var finaldata= {
-              is_error:false,
-              message:"yayy..! you joined a club"
-            }
-            return res.status(200).send(finaldata);
-          }
-        })
-        }
-      }
-    })
-})
-router.post("/leave-club",async function(req,res,next){
-  const {user_id,club_id}= req.body;
+  });
+});
+router.post('/join-club', async function (req, res, next) {
+  const { user_id, club_id } = req.body;
   var user_object = {
-    user_id:ObjectId(user_id),
-    level:"member"
-  }
-  var check = member_details.findOneAndUpdate({club_id:ObjectId(club_id),member_list:{$in:{user_object}}},{
-    $pull: { member_list: user_object }
-  })
- 
-  await check.exec((err,data)=>{
-    console.log(err);
-    if(err){
+    user_id: ObjectId(user_id),
+    level: 'member',
+  };
+  var club_object = {
+    club_id: ObjectId(club_id),
+    level: 'member',
+  };
+  var check = member_details.findOneAndUpdate(
+    { club_id: ObjectId(club_id), member_list: { $nin: { user_object } } },
+    {
+      $push: { member_list: user_object },
+    }
+  );
+  await check.exec((err, data) => {
+    if (err) {
       var error = {
         is_error: true,
         message: err,
       };
       return res.status(501).send(error);
-    }
-    else if(data == null || data.length == 0){
-        var error={
-          is_error:true,
-          message:"wrong club details or you are not part of this club"
-        }
+    } else if (data == null || data.length == 0) {
+      var error = {
+        is_error: true,
+        message: 'wrong club details or you are already part of this club',
+      };
       return res.status(501).send(error);
-    }
-    else {
-      async()=>{
-      var update = user_details.findOneAndUpdate({_id:ObjectId(user_id),clubs:{$nin:{club_object}}},{
-        $push:{clubs:club_object}
-      })
-      await update.exec((err,data2)=>{
-        if(err){
-          var error = {
-            is_error: true,
-            message: err,
-          };
-          return res.status(501).send(error);
-        }
-        else if(data == null || data.length == 0){
-          var error={
-            is_error:true,
-            message:"wrong club details or you are already part of this club"
+    } else {
+      async () => {
+        var update = user_details.findOneAndUpdate(
+          { _id: ObjectId(user_id), clubs: { $nin: { club_object } } },
+          {
+            $push: { clubs: club_object },
           }
-          return res.status(501).send(error);
-        }
-        else {
-          var finaldata= {
-            is_error:false,
-            message:"you left this club"
+        );
+        await update.exec((err, data2) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err,
+            };
+            return res.status(501).send(error);
+          } else if (data == null || data.length == 0) {
+            var error = {
+              is_error: true,
+              message:
+                'wrong club details or you are already part of this club',
+            };
+            return res.status(501).send(error);
+          } else {
+            var finaldata = {
+              is_error: false,
+              message: 'yayy..! you joined a club',
+            };
+            return res.status(200).send(finaldata);
           }
-          return res.status(200).send(finaldata);
-        }
-      })
-      }
+        });
+      };
     }
-  })
-})
-router.post("/create-club", auth, async (req, res) => {
+  });
+});
+router.post('/leave-club', async function (req, res, next) {
+  const { user_id, club_id } = req.body;
+  var user_object = {
+    user_id: ObjectId(user_id),
+    level: 'member',
+  };
+  var check = member_details.findOneAndUpdate(
+    { club_id: ObjectId(club_id), member_list: { $in: { user_object } } },
+    {
+      $pull: { member_list: user_object },
+    }
+  );
+
+  await check.exec((err, data) => {
+    console.log(err);
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(501).send(error);
+    } else if (data == null || data.length == 0) {
+      var error = {
+        is_error: true,
+        message: 'wrong club details or you are not part of this club',
+      };
+      return res.status(501).send(error);
+    } else {
+      async () => {
+        var update = user_details.findOneAndUpdate(
+          { _id: ObjectId(user_id), clubs: { $nin: { club_object } } },
+          {
+            $push: { clubs: club_object },
+          }
+        );
+        await update.exec((err, data2) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err,
+            };
+            return res.status(501).send(error);
+          } else if (data == null || data.length == 0) {
+            var error = {
+              is_error: true,
+              message:
+                'wrong club details or you are already part of this club',
+            };
+            return res.status(501).send(error);
+          } else {
+            var finaldata = {
+              is_error: false,
+              message: 'you left this club',
+            };
+            return res.status(200).send(finaldata);
+          }
+        });
+      };
+    }
+  });
+});
+router.post('/create-club', auth, async (req, res) => {
   const {
     club_name,
     privacy,
@@ -189,24 +195,58 @@ router.post("/create-club", auth, async (req, res) => {
     question,
   });
   club.save().then((data) => {
-    var finaldata = {
-      is_error: false,
-      message: "Data Added",
-    };
-    return res.status(200).send(finaldata);
+    var channel = new channel_details({
+      club_id: ObjectId(club._id),
+      channel_name: 'general',
+      is_readable: true,
+      is_writable: true,
+    });
+    channel.save((err, data2) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data2) {
+        var final = club_details.update(
+          { _id: ObjectId(club._id) },
+          {
+            $push: {
+              channel_list: channel._id,
+            },
+          }
+        );
+        final.exec((err, data3) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(500).send(error);
+          } else if (data3) {
+            console.log(data3);
+            var finaldata = {
+              message: 'club created',
+              is_error: false,
+            };
+            return res.status(200).send(finaldata);
+          }
+        });
+      }
+    });
   });
 });
-
-router.post("/get-club", auth, async (req, res) => {
+router.post('/get-club', auth, async (req, res) => {
   const { club_id } = req.body;
   club_details
     .aggregate([
       {
         $lookup: {
-          from: "user_details",
-          localField: "creator_id",
-          foreignField: "_id",
-          as: "user_data",
+          from: 'user_details',
+          localField: 'creator_id',
+          foreignField: '_id',
+          as: 'user_data',
         },
       },
       {
@@ -225,8 +265,8 @@ router.post("/get-club", auth, async (req, res) => {
           profile_photo: 1,
           status: 1,
           creator_id: 1,
-          "user_data.fname": 1,
-          "user_data.lname": 1,
+          'user_data.fname': 1,
+          'user_data.lname': 1,
           _id: 1,
           description: 1,
           joining_criteria: 1,
@@ -251,14 +291,14 @@ router.post("/get-club", auth, async (req, res) => {
           data: data,
           isAdmin,
           is_error: false,
-          message: "Data Send",
+          message: 'Data Send',
         };
         return res.status(200).send(finaldata);
       }
     });
 });
 
-router.post("/create-event", auth, async (req, res) => {
+router.post('/create-event', auth, async (req, res) => {
   const {
     event_name,
     privacy,
@@ -280,23 +320,25 @@ router.post("/create-event", auth, async (req, res) => {
     starting_time,
     ending_time,
     club_id,
-    isAdmin
+    isAdmin,
   } = req.body;
-  var status=false;
+  var status = false;
   if (isAdmin) {
     status = true;
   }
 
-  var check = await member_details.findOne({
-    club_id: ObjectId(club_id),
-    member_list: {
-      $elemMatch: {
-        user: ObjectId(req.user._id),
-        level: "moderator"
-      }
-    },
-    is_active: true
-  }).exec();
+  var check = await member_details
+    .findOne({
+      club_id: ObjectId(club_id),
+      member_list: {
+        $elemMatch: {
+          user: ObjectId(req.user._id),
+          level: 'moderator',
+        },
+      },
+      is_active: true,
+    })
+    .exec();
 
   if (check) {
     status = true;
@@ -306,8 +348,8 @@ router.post("/create-event", auth, async (req, res) => {
   category.map((e) => {
     array.push(ObjectId(e._id));
   });
-  var startdate = new Date(starting_date + " " + starting_time);
-  var date = new Date(ending_date + " " + ending_time);
+  var startdate = new Date(starting_date + ' ' + starting_time);
+  var date = new Date(ending_date + ' ' + ending_time);
 
   var event = new event_details({
     event_name,
@@ -329,18 +371,18 @@ router.post("/create-event", auth, async (req, res) => {
     startdate,
     pincode: postalcode,
     maximum_participants: capacity,
-    is_active:status,
+    is_active: status,
   });
   event.save().then((data) => {
     var finaldata = {
       is_error: false,
-      message: "Data Added",
+      message: 'Data Added',
     };
     return res.status(200).send(finaldata);
   });
 });
 
-router.post("/addlikes", auth, async function (req, res, next) {
+router.post('/addlikes', auth, async function (req, res, next) {
   let { club_id } = req.body;
   var checks = club_details.updateOne(
     {
@@ -379,7 +421,7 @@ router.post("/addlikes", auth, async function (req, res, next) {
           var finaldata = {
             Like: true,
             is_error: false,
-            message: "Data Send",
+            message: 'Data Send',
           };
           return res.status(200).send(finaldata);
         }
@@ -388,7 +430,7 @@ router.post("/addlikes", auth, async function (req, res, next) {
   });
 });
 
-router.post("/removelikes", auth, async function (req, res, next) {
+router.post('/removelikes', auth, async function (req, res, next) {
   let { club_id } = req.body;
   var checks = club_details.updateOne(
     {
@@ -427,7 +469,7 @@ router.post("/removelikes", auth, async function (req, res, next) {
           var finaldata = {
             Like: true,
             is_error: false,
-            message: "Data Send",
+            message: 'Data Send',
           };
           return res.status(200).send(finaldata);
         }
@@ -436,7 +478,7 @@ router.post("/removelikes", auth, async function (req, res, next) {
   });
 });
 
-router.post("/checklikes", auth, async function (req, res, next) {
+router.post('/checklikes', auth, async function (req, res, next) {
   let { club_id } = req.body;
   var checks = club_details.find({
     _id: ObjectId(club_id),
@@ -454,25 +496,25 @@ router.post("/checklikes", auth, async function (req, res, next) {
       var finaldata = {
         Like: true,
         is_error: false,
-        message: "Data Send",
+        message: 'Data Send',
       };
       return res.status(200).send(finaldata);
     } else {
       var finaldata = {
         Like: false,
         is_error: false,
-        message: "Data Send",
+        message: 'Data Send',
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post("/AddClubMember", auth, async function (req, res, next) {
+router.post('/AddClubMember', auth, async function (req, res, next) {
   var { club_id } = req.body;
   var object = {
     user: ObjectId(req.user._id),
-    level: "member",
+    level: 'member',
     date: new Date(),
   };
   var result = member_details.findOne({
@@ -504,7 +546,7 @@ router.post("/AddClubMember", auth, async function (req, res, next) {
             var finaldata = {
               participated: true,
               is_error: false,
-              message: "Data Send",
+              message: 'Data Send',
             };
             return res.status(200).send(finaldata);
           });
@@ -529,7 +571,7 @@ router.post("/AddClubMember", auth, async function (req, res, next) {
             var finaldata = {
               participated: true,
               is_error: false,
-              message: "Data Send",
+              message: 'Data Send',
             };
             return res.status(200).send(finaldata);
           });
@@ -538,7 +580,7 @@ router.post("/AddClubMember", auth, async function (req, res, next) {
   });
 });
 
-router.post("/RemoveClubMember", auth, async function (req, res, next) {
+router.post('/RemoveClubMember', auth, async function (req, res, next) {
   var { club_id } = req.body;
 
   var result = member_details.findOneAndUpdate(
@@ -563,18 +605,18 @@ router.post("/RemoveClubMember", auth, async function (req, res, next) {
       var finaldata = {
         participated: false,
         is_error: false,
-        message: "Data Send",
+        message: 'Data Send',
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post("/IsMemberExist", auth, async function (req, res, next) {
+router.post('/IsMemberExist', auth, async function (req, res, next) {
   var { club_id } = req.body;
   var result = member_details.findOne({
     club_id: ObjectId(club_id),
-    "member_list.user": ObjectId(req.user._id),
+    'member_list.user': ObjectId(req.user._id),
     is_active: 1,
   });
   await result.exec((err, data) => {
@@ -602,13 +644,13 @@ router.post("/IsMemberExist", auth, async function (req, res, next) {
   });
 });
 
-router.post("/AddRequestMember", auth, async function (req, res, next) {
+router.post('/AddRequestMember', auth, async function (req, res, next) {
   var { club_id, isReply } = req.body;
   var object = {
     club: ObjectId(club_id),
-    date:new Date(),
+    date: new Date(),
     reply: isReply,
-    status:"Pending"
+    status: 'Pending',
   };
   var result = user_details.update(
     {
@@ -629,18 +671,18 @@ router.post("/AddRequestMember", auth, async function (req, res, next) {
     } else {
       var finaldata = {
         is_error: false,
-        message: "Data Send",
+        message: 'Data Send',
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post("/IsMemberRequestExist", auth, async function (req, res, next) {
+router.post('/IsMemberRequestExist', auth, async function (req, res, next) {
   var { club_id } = req.body;
   var result = user_details.findOne({
     _id: ObjectId(req.user._id),
-    "club_answer.club": ObjectId(club_id),
+    'club_answer.club': ObjectId(club_id),
     is_active: 1,
   });
   await result.exec((err, data) => {
@@ -668,7 +710,7 @@ router.post("/IsMemberRequestExist", auth, async function (req, res, next) {
   });
 });
 
-router.post("/RemoveRequest", auth, async function (req, res, next) {
+router.post('/RemoveRequest', auth, async function (req, res, next) {
   var { club_id } = req.body;
   var result = user_details.findOneAndUpdate(
     { _id: ObjectId(req.user._id) },
@@ -685,23 +727,23 @@ router.post("/RemoveRequest", auth, async function (req, res, next) {
       var finaldata = {
         participated: false,
         is_error: false,
-        message: "Data Send",
+        message: 'Data Send',
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post("/GetMembers", async function (req, res, next) {
+router.post('/GetMembers', async function (req, res, next) {
   var { club_id } = req.body;
   member_details
     .aggregate([
       {
         $lookup: {
-          from: "user_details",
-          localField: "member_list.user",
-          foreignField: "_id",
-          as: "user_data",
+          from: 'user_details',
+          localField: 'member_list.user',
+          foreignField: '_id',
+          as: 'user_data',
         },
       },
       {
@@ -712,11 +754,11 @@ router.post("/GetMembers", async function (req, res, next) {
       },
       {
         $project: {
-          "user_data.fname": 1,
-          "user_data.lname": 1,
-          "user_data.profile_photo": 1,
-          "user_data._id": 1,
-          "user_data.username": 1,
+          'user_data.fname': 1,
+          'user_data.lname': 1,
+          'user_data.profile_photo': 1,
+          'user_data._id': 1,
+          'user_data.username': 1,
           member_list: 1,
         },
       },
@@ -732,12 +774,12 @@ router.post("/GetMembers", async function (req, res, next) {
         let members = [];
         let moderator = [];
         data[0].member_list.map((e) => {
-          if (e.level === "member") {
+          if (e.level === 'member') {
             var result = data[0].user_data.filter((obj) => {
               return obj._id.equals(ObjectId(e.user));
             });
             var object = {
-              name: result[0].fname + " " + result[0].lname,
+              name: result[0].fname + ' ' + result[0].lname,
               image: result[0].profile_photo,
               designation: e.level,
               date: e.date,
@@ -749,7 +791,7 @@ router.post("/GetMembers", async function (req, res, next) {
               return obj._id.equals(ObjectId(e.user));
             });
             var object = {
-              name: result[0].fname + " " + result[0].lname,
+              name: result[0].fname + ' ' + result[0].lname,
               image: result[0].profile_photo,
               designation: e.level,
               date: e.date,
@@ -764,15 +806,14 @@ router.post("/GetMembers", async function (req, res, next) {
           members,
           moderator,
           is_error: false,
-          message: "Data Send",
+          message: 'Data Send',
         };
         return res.status(200).send(finaldata);
-      }
-      else {
+      } else {
         var finaldata = {
           data: [],
-          members:[],
-          moderator:[],
+          members: [],
+          moderator: [],
           is_error: false,
           message: 'Data Send',
         };

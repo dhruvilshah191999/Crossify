@@ -27,6 +27,8 @@ export default class RoomTab extends React.Component {
     database: [],
     users: [],
     messagetoSend: "",
+    pageonChat: [],
+    fetchMore: [],
   };
   messagesEndRef = React.createRef();
 
@@ -44,12 +46,13 @@ export default class RoomTab extends React.Component {
     var send_token = {
       token: token,
     };
-
+    var page = 1;
+    var limit = 30;
     const user = await axios.post("/api/auth", send_token, config);
     const user_id = user.data._id;
     const allRoomsInfo = await axios.post(
       "/api/club/chat/getMsgWithUsers",
-      { club_id, user_id },
+      { club_id, user_id, page, limit },
       config
     );
     const listOfChannels = allRoomsInfo.data.roomsData.map((el) => {
@@ -58,6 +61,22 @@ export default class RoomTab extends React.Component {
     const privacyOfChannels = allRoomsInfo.data.roomsData.map(
       (el) => el.is_writable
     );
+    var fetchInitial = [];
+    var pagesInitial = [];
+    console.log(allRoomsInfo.data);
+    var temp = 0;
+    allRoomsInfo.data.roomsData.forEach((el) => {
+      console.log(el);
+      if (el.messages.length >= limit) {
+        fetchInitial[temp] = true;
+        pagesInitial[temp] = 1;
+      } else {
+        fetchInitial[temp] = false;
+        pagesInitial[temp] = 1;
+      }
+      temp++;
+    });
+    console.log(fetchInitial);
     var uniqueUsers = {};
     allRoomsInfo.data.roomsData.forEach((el) => {
       el.users.forEach(({ _id, profile_photo, username }) => {
@@ -78,6 +97,7 @@ export default class RoomTab extends React.Component {
       }
     });
     this.setState({
+      fetchMore: fetchInitial,
       rooms: listOfChannels,
       curRoomMsgs: msgs,
       database: allRoomsInfo.data,
@@ -87,6 +107,7 @@ export default class RoomTab extends React.Component {
       myProfilePic: user.data.profile_photo,
       privacyOfChannels: privacyOfChannels,
       userlevel: userLevel,
+      pageonChat: pagesInitial,
     });
     this.scrollToBottom();
   };
@@ -98,7 +119,65 @@ export default class RoomTab extends React.Component {
   scrollToBottom = () => {
     this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
+  handleScroll = async (e) => {
+    let element = e.target;
+    if (element.scrollTop === 0) {
+      const index = this.state.currentTab;
+      var fetch = this.state.fetchMore;
+      const { club_id } = this.props;
+      const openDatabase = this.state.database;
+      const user_id = this.state.myid;
+      const msgs = this.state.curRoomMsgs;
+      var pages = this.state.pageonChat;
+      const limit = 30;
+      console.log(fetch[index]);
+      if (fetch[index]) {
+        pages[index]++;
+        const config = {
+          method: "POST",
+          header: {
+            "Content-Type": "application/json",
+          },
+          validateStatus: () => true,
+        };
+        var page = pages[index];
+        const allRoomsInfo = await axios.post(
+          "/api/club/chat/getMsgWithUsers",
+          { club_id, user_id, page, limit },
+          config
+        );
+        console.log(allRoomsInfo);
+        var newMessages = allRoomsInfo.data.roomsData[index].messages;
+        console.log(newMessages);
+        if (newMessages === null) {
+          fetch[index] = false;
+          this.setState({
+            fetchMore: fetch,
+            pageonChat: pages,
+          });
+        } else {
+          newMessages.map(({ user_id }, index) => {
+            const { username, profile_photo } = this.state.users[user_id];
+            msgs[index].username = username;
+            msgs[index].profilePic = profile_photo;
+          });
+          console.log(openDatabase);
+          var updatedArray = newMessages.concat(
+            openDatabase.roomsData[index].messages
+          );
+          openDatabase.roomsData[index].messages = updatedArray;
+          console.log(openDatabase);
+          var concetedMessages = newMessages.concat(msgs);
+          console.log(concetedMessages);
+          this.setState({
+            curRoomMsgs: concetedMessages,
+            database: openDatabase,
+            pageonChat: pages,
+          });
+        }
+      }
+    }
+  };
   renderMsgs = () => {
     var msgs = this.state.curRoomMsgs;
     msgs.map(({ user_id }, index) => {
@@ -261,9 +340,11 @@ export default class RoomTab extends React.Component {
             </div>
             <div
               style={{
+                flex: 1,
                 overflowY: "scroll",
                 maxHeight: "525px",
               }}
+              onScroll={this.handleScroll}
             >
               {" "}
               {this.renderMsgs()}
