@@ -1,69 +1,124 @@
 /*eslint-disable*/
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
+import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import { motion } from "framer-motion";
-// components
-// this needs to have state when user is loged in
-// Logged In things requires multiple components in the navbar
-// import IndexDropdown from "components/Dropdowns/IndexDropdown.js"; This will be used once user is logged in
-import logo from "../../assets/logos/logo_final.png";
+// component
+
+import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
+import logo from "../../assets/logos/logo_light.png";
+import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
+import { UserContext } from "context/usercontext";
+
 export default function Navbar(props) {
+  const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const [notification, setnotification] = React.useState(false);
+  const [userdrop, setuserdrop] = React.useState(false);
+  const { isLogin } = useContext(UserContext);
   return (
     <>
-      <nav className="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white shadow">
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div className="mt-1 sm:mb-0 flex flex-row">
-            {/* <img className="brand-name" src={logo} /> */}
-            <span className="font-semibold text-xl tracking-tight px-2">
-              CROSSIFY
-            </span>
+      <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-6 py-3 navbar-expand-lg bg-transparent">
+        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between bg-transparent">
+          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+            <Link
+              className="text-white text-sm font-bold leading-relaxed inline-block mr-4 ml-3 py-2 whitespace-no-wrap uppercase"
+              to="/"
+            >
+              <div className="flex ">
+                <div>
+                  <img
+                    style={{ height: "25px", width: "30px" }}
+                    className="inline-block"
+                    src={logo}
+                  />
+                </div>
+                <div className="ml-3">Crossify</div>
+              </div>
+            </Link>
+            <button
+              className="cursor-pointer z-51 text-xl leading-none px-3 py-1 border text-alpha border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+              type="button"
+              onClick={() => setNavbarOpen(!navbarOpen)}
+            >
+              <i className="text-white fas fa-bars"></i>
+            </button>
           </div>
           <div
             className={
               "lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none" +
-              (navbarOpen ? " block" : " hidden")
+              (navbarOpen ? " block rounded shadow-lg" : " hidden")
             }
             id="example-navbar-warning"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+              {/* for mobile you have change text-black in all the navbar buttons/links */}
               <li className="flex items-center">
-                <a
-                  className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                  href="#"
+                <Link
+                  to={isLogin ? "/createclub" : "/auth/login"}
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
-                  <i className="text-gray-500 far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
-                  Events
-                </a>
+                  <i className="  fas fa-chalkboard-teacher text-lg leading-lg mr-2" />{" "}
+                  Start a Club
+                </Link>
               </li>
               <li className="flex items-center">
-                <a
-                  className="hover:text-gray-600 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                  href="#"
+                <Link
+                  to="/search"
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
-                  <i className="text-gray-500 fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
+                  <i className=" far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
+                  Events
+                </Link>
+              </li>
+              <li className="flex items-center">
+                <Link
+                  to="/clubsearch"
+                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                >
+                  <i className="  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
                   Clubs
-                </a>
+                </Link>
               </li>
 
-              <li className="flex items-center">
-                <motion.button
-                  className="bg-gray-700 text-white active:bg-blue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-4  lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
-                  type="button"
-                  whileHover={{ scale: 1.09 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <i className="fas fa-sign-in-alt"></i> Log In
-                </motion.button>
+              <li className={isLogin ? "hidden " : " " + "flex items-center"}>
+                <Link to="/auth/login">
+                  <motion.button
+                    className="bg-white hover:bg-offwhite text-gray-800 ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-2 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                    type="button"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <i className="fas fa-sign-in-alt"></i> Log In
+                  </motion.button>
+                </Link>
               </li>
-              <li className="flex items-center">
-                <motion.button
-                  className="bg-blue-500 text-white active:bg-blue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
-                  type="button"
-                  whileHover={{ scale: 1.09 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  Sign Up <i className="fas fa-signature"></i>
-                </motion.button>
+              <li className={isLogin ? "hidden " : " " + "flex items-center"}>
+                <Link to="/auth/register">
+                  <motion.button
+                    className="bg-alpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                    type="button"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <i className="fas fa-user-plus"></i> Sign Up
+                  </motion.button>
+                </Link>
+              </li>
+
+              <li className={isLogin ? " " : "hidden " + "flex items-center "}>
+                <div className=" ml-2 lg:ml-0 ">
+                  {isLogin ? <NotificationDropdown /> : ""}
+                </div>
+              </li>
+
+              <li
+                className={
+                  isLogin ? " " : "hidden " + "flex items-center ml-2 lg:ml-0 "
+                }
+              >
+                <div className=" ml-3 mb-2 lg:ml-0 lg:mb-0  ">
+                  <UserDropdown />
+                </div>
               </li>
             </ul>
           </div>

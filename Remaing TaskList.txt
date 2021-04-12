@@ -8,5 +8,9 @@ Notification       => Add socket.io notifications
 Forms 		   => Validations
 Attendees   	   => displaying proper time , Broadcast button
 MyRequestedEvents  => Add Clubname as column
-Sign Up from  	   => Make it stylish
+Sign Up from  	   => Make it stylish , Check for username availability 
 Index   	   => Only Show events which can be available for registeration
+Forgot Password => Require to build
+Can add Calendar view of all the events in MyEvents
+Is it possible to login with facebook and Google without writing login password
+MySettings    => Needs to add section to modify Interest

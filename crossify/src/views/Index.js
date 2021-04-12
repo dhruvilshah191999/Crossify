@@ -8,7 +8,7 @@ import { store } from "react-notifications-component";
 // components
 import { motion } from "framer-motion";
 import GridLoader from "react-spinners/GridLoader";
-import Navbar from "components/Navbars/AuthNavbar.js";
+import Navbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import EventCard from "components/Cards/EventCard";
 import ClubCard from "components/Cards/ClubCard";

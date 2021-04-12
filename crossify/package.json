@@ -46,6 +46,7 @@
     "react-input-tags": "^3.0.3",
     "react-moment": "^1.1.1",
     "react-notifications-component": "^3.0.4",
+    "react-particles-js": "^3.4.1",
     "react-photo-gallery": "^8.0.0",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",

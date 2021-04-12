@@ -1,7 +1,4 @@
 :root {
-  --color-primary: #fc5185;
-  --color-secondary: #3fc1c9;
-  --color-charlie: #364f6b;
   --color-offwhite: #f5f5f5;
   --color-alpha: #e82953;
   --color-beta: #00838f;
@@ -9,32 +6,8 @@
   --color-lightbeta: #a4eef5;
 }
 
-.bg-primary {
-  background-color: #fc5185;
-}
-
-.bg-secondary {
-  background-color: #3fc1c9;
-}
-
-.bg-charlie {
-  background-color: #364f6b;
-}
-
-.bg-light-alpha {
-  background-color: #ec98aa;
-}
-
-.bg-offwhite {
-  background-color: #f5f5f5;
-}
-
-.bg-gamma {
-  background-color: #f43939;
-}
-
 .bg-beta {
-  background-color: #00838f;
+  background-color: var(--color-beta);
 }
 
 .bg-semibeta {
@@ -42,11 +15,11 @@
 }
 
 .bg-lightbeta {
-  background-color: #a4eef5;
+  background-color: var(--color-lightbeta);
 }
 
 .bg-lightalpha {
-  background-color: #e05a77;
+  background-color: var(--color-lightalpha);
 }
 
 .bg-footer {
@@ -61,14 +34,24 @@
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
 }
 
+.bg-gradient-alpha {
+  /* background-color: #fbda61; */
+  background-image: linear-gradient(
+    110.6deg,
+    rgba(179, 157, 219, 1) 7%,
+    rgba(150, 159, 222, 1) 47.7%,
+    rgba(24, 255, 255, 1) 100.6%
+  );
+}
+
 .bg-lightbeta {
-  background-color: #a4eef5;
+  background-color: var(--color-lightbeta);
 }
 
 /* changed rgb(199, 36, 71); to #e82953*/
 
 .bg-alpha {
-  background-color: #e82953;
+  background-color: var(--color-alpha);
 }
 
 .bg-yellow-400 {
@@ -130,7 +113,7 @@
   color: #7f1d1d;
 }
 .hover\:bg-alpha:hover {
-  background-color: #e82953;
+  background-color: var(--color-alpha);
 }
 
 .hover\:bg-lightalpha:hover {
@@ -162,15 +145,11 @@
 }
 
 .hover\:bg-beta:hover {
-  background-color: #00838f;
+  background-color: var(--color-beta);
 }
 
 .hover\:bg-offwhite:hover {
   background-color: #f5f5f5;
-}
-
-.hover\:bg-light-alpha:hover {
-  background-color: #ec98aa;
 }
 
 .hover\:bg-dark-alpha:hover {
@@ -309,7 +288,7 @@
 }
 
 .hover\:border-beta:hover {
-  border: 1px solid #00838f;
+  border: 1px solid var(--color-beta);
 }
 
 .hover\:border-alpha:hover {
@@ -317,11 +296,11 @@
 }
 
 .border-2-b {
-  border-bottom: 2px solid #e82953;
+  border-bottom: 2px solid var(--color-alpha);
 }
 
 .border-beta {
-  border-color: #00838f;
+  border-color: var(--color-beta);
 }
 
 .border-lightbeta {
@@ -340,7 +319,7 @@
   background-color: rgba(14, 14, 17, 0.7);
 }
 .ho .text-beta {
-  color: #00838f;
+  color: var(--color-beta);
 }
 
 .club-bg {
@@ -989,7 +968,7 @@ tbody tr:hover {
 }
 
 tbody tr td:nth-child(1) {
-  color: #e82953;
+  color: var(--color-alpha);
   text-align: center;
 } */
 

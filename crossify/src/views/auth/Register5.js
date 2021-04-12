@@ -1,24 +1,24 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Navbar from "components/Navbars/RegNavbar.js";
 import axios from "axios";
 export default function Register5() {
- 
-  componentDidMount= ()=> {
+  componentDidMount = () => {
     this.getCategoryData();
-  }
-  
-  var getCategoryData=()=>{
-    axios.get('/api/category_send')
-    .then((response)=>{
-      const data=response.data;
-      this.setState()
-      console.log(data)
-      console.log("Data recieved")
-    })
-    .catch(()=>{
-      console.log("error in data recieving")
-    })
-  }
+  };
+
+  var getCategoryData = () => {
+    axios
+      .get("/api/category_send")
+      .then((response) => {
+        const data = response.data;
+        this.setState();
+        console.log(data);
+        console.log("Data recieved");
+      })
+      .catch(() => {
+        console.log("error in data recieving");
+      });
+  };
   return (
     <>
       <Navbar transparent />
@@ -130,7 +130,7 @@ export default function Register5() {
                   </div>
                   <div className="w-full mt-6">
                     <button
-                      className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
+                      className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
                       type="button"
                     >
                       Next

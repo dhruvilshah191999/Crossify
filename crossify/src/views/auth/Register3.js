@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Key from "config/default.json";
+import { notifySuccessSignUp } from "notify";
 import CryptoJS from "crypto-js";
 
 export default function Register5() {
@@ -75,6 +76,7 @@ export default function Register5() {
         localStorage.removeItem("email");
         history.push("/auth");
       } else {
+        notifySuccessSignUp();
         localStorage.removeItem("email");
         history.push("/auth");
       }
@@ -128,11 +130,11 @@ export default function Register5() {
                   </div>
                   <div className="w-full mt-6">
                     <button
-                      className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
+                      className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
                       type="button"
                       onClick={(e) => onSubmit(e)}
                     >
-                      Next
+                      Submit
                     </button>
                   </div>
                 </form>

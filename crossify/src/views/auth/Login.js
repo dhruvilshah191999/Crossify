@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { Link } from "react-router-dom";
 import { UserContext } from "context/usercontext";
-import { store } from "react-notifications-component";
+import { notifySuccessLogin } from "notify";
 
 var vertical = "top";
 var horizontal = "center";
@@ -19,8 +19,15 @@ function Login() {
   });
 
   const [errorStatus, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const { email, password } = formData;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  });
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -56,24 +63,13 @@ function Login() {
         dispatch({ type: "ADD_USER", payload: res.data.data });
         history.push("/");
         const name = res.data.data.fname + " " + res.data.data.lname;
-        store.addNotification({
-          title: "Succesfully Logged In",
-          message: "Welcome " + name + " !",
-          type: "success",
-          insert: "top",
-          container: "top-right",
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          dismiss: {
-            duration: 5000,
-            onScreen: true,
-          },
-        });
+        notifySuccessLogin(name);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div className="container mx-auto px-4 h-full">
       <Snackbar
@@ -91,9 +87,9 @@ function Login() {
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
             <div className="rounded-t mb-0 px-6 py-6">
               <div className="text-center">
-                <h6 className="text-gray-600 text-sm font-bold">
+                <h1 className="text-gray-600 text-sm font-bold">
                   Sign in with
-                </h6>
+                </h1>
               </div>
             </div>
             <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -135,7 +131,7 @@ function Login() {
                 </div>
                 <div className="text-center mt-6">
                   <button
-                    className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                    className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                     type="submit"
                   >
                     Sign In

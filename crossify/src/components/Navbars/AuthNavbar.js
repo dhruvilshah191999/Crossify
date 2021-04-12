@@ -52,19 +52,11 @@ export default function Navbar(props) {
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               {/* for mobile you have change text-black in all the navbar buttons/links */}
-              <li className="flex items-center">
-                <Link
-                  to={isLogin ? "/createclub" : "/auth/login"}
-                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
-                >
-                  <i className="  fas fa-chalkboard-teacher text-lg leading-lg mr-2" />{" "}
-                  Start a Club
-                </Link>
-              </li>
+
               <li className="flex items-center">
                 <Link
                   to="/search"
-                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-alpha text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className=" far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
                   Events
@@ -73,7 +65,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to="/clubsearch"
-                  className="hover:text-lightbeta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-alpha text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className="  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
                   Clubs
@@ -95,7 +87,7 @@ export default function Navbar(props) {
               <li className={isLogin ? "hidden " : " " + "flex items-center"}>
                 <Link to="/auth/register">
                   <motion.button
-                    className="bg-alpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                    className="bg-lightalpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                     type="button"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.9 }}

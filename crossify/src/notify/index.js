@@ -78,3 +78,35 @@ export const notifyDownload = () => {
     },
   });
 };
+
+export const notifySuccessSignUp = () => {
+  store.addNotification({
+    title: "Your Account is Succesfully Created.",
+    message: "You can now login via email and password.",
+    type: "success",
+    insert: "top",
+    container: "bottom-right",
+    animationIn: ["animate_animated", "animate_fadeIn"],
+    animationOut: ["animate_animated", "animate_fadeOut"],
+    dismiss: {
+      duration: 3000,
+      // onScreen: true,
+    },
+  });
+};
+
+export const notifySuccessLogin = (name) => {
+  store.addNotification({
+    title: "Succesfully Logged In",
+    message: "Welcome " + name + " !",
+    type: "success",
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 5000,
+      onScreen: true,
+    },
+  });
+};
