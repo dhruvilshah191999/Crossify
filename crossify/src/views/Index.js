@@ -7,7 +7,7 @@ import hobbyImg from "assets/img/hobbyImg.jpg";
 import { store } from "react-notifications-component";
 // components
 import { motion } from "framer-motion";
-
+import GridLoader from "react-spinners/GridLoader";
 import Navbar from "components/Navbars/AuthNavbar.js";
 import Footer from "components/Footers/Footer.js";
 import EventCard from "components/Cards/EventCard";
@@ -111,7 +111,7 @@ export default function Landing() {
     get_interest_data();
     setTimeout(() => {
       isLoading(true);
-    }, 100);
+    }, 400);
   }, []);
 
   const SearchFilter = async (category_name) => {
@@ -468,6 +468,15 @@ export default function Landing() {
       </>
     );
   } else {
-    return <></>;
+    return (
+      <>
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "100vh" }}
+        >
+          <GridLoader color="#36D7B7" size={15} />
+        </div>
+      </>
+    );
   }
 }

@@ -50,6 +50,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.1",
     "react-share": "^4.4.0",
+    "react-spinners": "^0.10.6",
     "react-table": "^7.6.3",
     "socket.io-client": "^4.0.1",
     "tailwindcss": "2.0.1",

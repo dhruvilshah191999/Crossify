@@ -11,6 +11,7 @@ import JoinEventButton from "components/SweetAlerts/JoinEventButton";
 import ReportEventButton from "components/SweetAlerts/ReportEventButton";
 import { store } from "react-notifications-component";
 import { motion } from "framer-motion";
+import GridLoader from "react-spinners/GridLoader";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
 
 const Tag = (props) => {
@@ -431,7 +432,16 @@ export default function EventPage(props) {
       </>
     );
   } else {
-    return <></>;
+    return (
+      <>
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "100vh" }}
+        >
+          <GridLoader color="#36D7B7" size={15} />
+        </div>
+      </>
+    );
   }
 }
 
