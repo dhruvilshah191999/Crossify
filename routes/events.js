@@ -844,7 +844,7 @@ router.post("/ask-question", auth, async function (req, res, next) {
     status: "pending",
     privacy: "public",
   };
-  var update = event_details.findOneAndUpdate(
+  var update = event_details.updateOne(
     { _id: ObjectId(event_id) },
     {
       $push: { faq: object },

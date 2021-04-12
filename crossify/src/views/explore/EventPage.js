@@ -390,8 +390,8 @@ export default function EventPage(props) {
                 >
                   {eventdetails.faq.some((cur) => cur === "public") ? (
                     eventdetails.faq.map((el, i) => {
-                      if (el.privacy === "public" && el.status === "answered") {
-                        if (i === 0) {
+                      if (el.privacy == "public" && el.status == "answered") {
+                        if (i == 0) {
                           return (
                             <details>
                               <summary className="pt-0">{el.question}</summary>

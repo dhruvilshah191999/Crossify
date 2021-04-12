@@ -62,6 +62,7 @@ var event_details = new Schema({
       askedby: String,
       privacy: String,
       status: String,
+      answer:String,
     },
   ],
   volunteers_list: {

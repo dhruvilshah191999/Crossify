@@ -317,9 +317,13 @@ router.post("/reject", async function (req, res, next) {
 
 router.post("/answer", async function (req, res, next) {
   var { event_id, question, answer } = req.body;
-  var check = event_details.findOneAndUpdate(
-    { _id: ObjectId(event_id), "faq.question": question },
-    { $set: { "faq.$.answer": answer, "faq.$.status": "answered" } }
+  var check = event_details.updateOne(
+    { _id: ObjectId(event_id) },
+    { $set: { "faq.$[elem].status": "answered","faq.$[elem].answer": answer } },
+    {
+      multi: false,
+      arrayFilters: [{ "elem.question": question }],
+    }
   );
   await check.exec((err, data) => {
     if (err) {
