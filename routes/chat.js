@@ -99,12 +99,61 @@ router.post('/send', async function (req, res) {
       };
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
-      console.log('else 1');
-      var error = {
-        is_error: true,
-        message: 'you are not part of this club',
-      };
-      return res.status(404).send(error);
+      var user_is_admin = club_details.findOne({
+        _id: ObjectId(club_id),
+        creator_id: ObjectId(user_id),
+      });
+      user_is_admin.exec((err, admin) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err.message,
+          };
+          return res.status(500).send(error);
+        } else if (admin) {
+          var update = channel_details.update(
+            { _id: ObjectId(room_id) },
+            {
+              $push: {
+                messages: {
+                  message: messagetext,
+                  user_id: ObjectId(user_id),
+                  senttime: new Date(),
+                },
+              },
+            },
+            { upsert: true, new: true }
+          );
+          update.exec((err, messageSent) => {
+            if (err) {
+              var error = {
+                is_error: true,
+                message: err.message,
+              };
+              return res.status(500).send(error);
+            } else if (messageSent) {
+              var finaldata = {
+                is_error: false,
+                message: 'value inserted succesfully',
+              };
+              return res.status(200).send(finaldata);
+            } else {
+              console.log('else 2');
+              var error = {
+                is_error: true,
+                message: "you are not part of this room or room doesn't exists",
+              };
+              return res.status(404).send(error);
+            }
+          });
+        } else {
+          var error = {
+            is_error: true,
+            message: 'you are not part of this club',
+          };
+          return res.status(404).send(error);
+        }
+      });
     } else {
       console.log(data);
       var update = channel_details.update(
