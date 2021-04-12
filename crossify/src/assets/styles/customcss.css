@@ -57,6 +57,10 @@
   color: #750c0c;
 }
 
+.bg-gradient-primary {
+  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
+}
+
 .bg-lightbeta {
   background-color: #a4eef5;
 }

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "components/Navbars/ClubNavbar";
 import axios from "axios";
-import { useParams } from "react-router";
-import TabsBar from "components/TabsBar/TabsBar";
+import Moment from "moment";
 import { useHistory } from "react-router-dom";
+import { useParams } from "react-router";
+import { ModalManager } from "react-dynamic-modal";
+import { motion } from "framer-motion";
+
+import TabsBar from "components/TabsBar/TabsBar";
+import Navbar from "components/Navbars/ClubNavbar";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
-import { store } from "react-notifications-component";
-import { notifyClubLiked } from "notify";
-import Moment from "moment";
+import { notifyClubLiked, notifyWentWrong } from "notify";
 import JoinClubButton from "components/SweetAlerts/JoinClubButton";
-import { ModalManager } from "react-dynamic-modal";
-import { motion } from "framer-motion";
+
 import BigShareButton from "components/SweetAlerts/BigShareButton";
 
 function ClubPage(props) {
@@ -151,19 +152,7 @@ function ClubPage(props) {
     };
     const finaldata = await axios.post("/api/club/addlikes", object, config);
     if (finaldata.data.is_error) {
-      store.addNotification({
-        title: "Something went wrong",
-        message: "Cannot add to favourite",
-        type: "danger",
-        insert: "top",
-        container: "bottom-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 3000,
-          // onScreen: true,
-        },
-      });
+      notifyWentWrong();
     } else {
       notifyClubLiked();
       setLike(true);
@@ -290,15 +279,19 @@ function ClubPage(props) {
                   //className={isAdmin ? "hidden" : "flex justify-center"}
                   className="flex justify-center"
                 >
-                  {loading?<JoinClubButton
-                    clubName={clubData.club_name}
-                    isPublic={isPublic}
-                    club_id={id}
-                    isJoin={isJoin}
-                    isAdmin={isAdmin}
-                    question={clubData.question}
-                    isRequest={isRequest}
-                  />:""}{" "}
+                  {loading ? (
+                    <JoinClubButton
+                      clubName={clubData.club_name}
+                      isPublic={isPublic}
+                      club_id={id}
+                      isJoin={isJoin}
+                      isAdmin={isAdmin}
+                      question={clubData.question}
+                      isRequest={isRequest}
+                    />
+                  ) : (
+                    ""
+                  )}{" "}
                 </div>
               </div>
             </div>

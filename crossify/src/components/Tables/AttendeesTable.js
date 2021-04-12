@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
+import { CSVLink } from "react-csv";
 import {
   useTable,
   useFilters,
@@ -11,6 +12,7 @@ import {
   usePagination,
 } from "react-table";
 
+import { notifyDownload } from "notify";
 import EmptyTable from "components/sections/EmptyTable";
 import BroadcastButton from "components/SweetAlerts/BroadcastButton";
 import ArrivedButton from "components/SweetAlerts/ArrivedButton";
@@ -303,10 +305,8 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     state,
-    visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
     setFilter,
@@ -328,11 +328,9 @@ export default function App(props) {
     {
       columns,
       data,
-
       defaultColumn, // Be sure to pass the defaultColumn option
       filterTypes,
     },
-
     useFilters, // useFilters!
     useGlobalFilter, // useGlobalFilter!
     useSortBy,
@@ -388,6 +386,23 @@ export default function App(props) {
                   <ArrivedButton
                     handleArriving={getSelectedAndArrived}
                   ></ArrivedButton>
+                  <CSVLink
+                    filename={"Attendees_List.csv"}
+                    onClick={notifyDownload}
+                    data={data.map(({ name, date, location, status }) => ({
+                      name,
+                      date,
+                      location,
+                      status,
+                    }))}
+                  >
+                    <button
+                      className="bg-green-500 ml-2 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                      type="button"
+                    >
+                      <i class="fas fa-file-download"></i>&nbsp; CSV Export
+                    </button>
+                  </CSVLink>
                 </div>
                 <div className="inline-block ml-2">
                   <ToggleDarkMode

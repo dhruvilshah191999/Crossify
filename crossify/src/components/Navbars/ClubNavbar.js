@@ -55,7 +55,7 @@ export default function Navbar(props) {
               {/* for mobile you have change text-black in all the navbar buttons/links */}
               <li className="flex items-center">
                 <Link
-                  to="/search"
+                  to="/createclub"
                   className="hover:text-lightbeta text-gray-700 md:text-white-400 px-3 py-4 lg:py-2 sm:text-white-400 flex items-center text-xs uppercase font-bold"
                   href="#"
                 >

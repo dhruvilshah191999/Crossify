@@ -1,0 +1,12 @@
+Event Search       => Add right Club name , Add real slot booked
+Club Page          => Member Size , Open Profile in new Page
+Event Page    	   => Open Club by clicking on Club Info
+MyClubs , MyEvents => Add links to open the events or club
+FAQ 		   => Send only public ones
+AdminPage          => Rejecting Event, Rooms Table , Dashboard
+Notification       => Add socket.io notifications
+Forms 		   => Validations
+Attendees   	   => displaying proper time , Broadcast button
+MyRequestedEvents  => Add Clubname as column
+Sign Up from  	   => Make it stylish
+Index   	   => Only Show events which can be available for registeration
