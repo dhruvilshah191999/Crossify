@@ -60,7 +60,7 @@ export default function EventPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-        }, 1000);
+        }, 300);
       }
     }
 
@@ -388,7 +388,10 @@ export default function EventPage(props) {
                   className="mt-1 text-lg  lg:w-3/4 leading-relaxed"
                   style={{ overflowY: "auto", maxHeight: "400px" }}
                 >
-                  {eventdetails.faq.some((cur) => cur === "public") ? (
+                  {eventdetails.faq.some(
+                    (cur) =>
+                      cur.privacy === "public" && cur.status == "answered"
+                  ) ? (
                     eventdetails.faq.map((el, i) => {
                       if (el.privacy == "public" && el.status == "answered") {
                         if (i == 0) {
