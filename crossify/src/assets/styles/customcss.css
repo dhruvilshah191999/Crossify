@@ -4,6 +4,7 @@
   --color-beta: #00838f;
   --color-lightalpha: #e05a77;
   --color-lightbeta: #a4eef5;
+  --color-wild: #b388dd;
 }
 
 .bg-beta {
@@ -26,6 +27,10 @@
   background-color: #343840;
 }
 
+.bg-wild {
+  background-color: var(--color-wild);
+}
+
 .bg-back {
   color: #750c0c;
 }
@@ -36,12 +41,75 @@
 
 .bg-gradient-alpha {
   /* background-color: #fbda61; */
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     110.6deg,
     rgba(179, 157, 219, 1) 7%,
     rgba(150, 159, 222, 1) 47.7%,
     rgba(24, 255, 255, 1) 100.6%
+  ); */
+  /* background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114));
+  background-image: linear-gradient(
+    110.5deg,
+    rgba(248, 196, 249, 0.66) 22.8%,
+    rgba(253, 122, 4, 0.15) 64.6%
   );
+  background-image: linear-gradient(135deg, #5efce8 10%, #736efe 100%);
+  background-image: linear-gradient(
+    90.6deg,
+    rgba(59, 158, 255, 1) -1.2%,
+    rgba(246, 135, 255, 1) 91.6%
+  );
+  background-image: linear-gradient(
+    179.4deg,
+    rgba(253, 240, 233, 1) 2.2%,
+    rgba(255, 194, 203, 1) 96.2%
+  ); */
+  background-image: linear-gradient(
+    57.4deg,
+    rgba(249, 206, 183, 1) 4.6%,
+    rgba(234, 174, 202, 1) 26%,
+    rgba(210, 182, 226, 1) 49.1%,
+    rgba(173, 209, 242, 1) 86.5%
+  );
+  background-image: linear-gradient(
+    134.6deg,
+    rgba(158, 150, 252, 0.85) -1%,
+    rgba(211, 133, 176, 1) 16.9%,
+    rgba(249, 116, 146, 1) 43.7%,
+    rgba(255, 158, 136, 1) 66.9%,
+    rgba(254, 228, 172, 1) 94.8%
+  );
+}
+
+.hover\:google-gradient:hover {
+  background: linear-gradient(-120deg, #4285f4, #34a853, #fbbc05, #ea4335);
+}
+
+.fa-google {
+  background: conic-gradient(
+      from -45deg,
+      #ea4335 110deg,
+      #4285f4 90deg 180deg,
+      #34a853 180deg 270deg,
+      #fbbc05 270deg
+    )
+    73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.btnFacebook {
+  width: 107px;
+  height: 42px;
+  border-radius: 4px;
+  background: #3b5998;
+  color: white;
+  border: 0px transparent;
+  text-align: center;
+  margin-top: 5px;
+  padding-bottom: 2px;
 }
 
 .bg-lightbeta {
@@ -64,6 +132,17 @@
 
 .hover\:bg-brightalpha:hover {
   background-color: #ff2957;
+}
+
+.hover\:bg-gradient-alpha:hover {
+  background-image: linear-gradient(
+    134.6deg,
+    rgba(158, 150, 252, 0.85) -1%,
+    rgba(211, 133, 176, 1) 16.9%,
+    rgba(249, 116, 146, 1) 43.7%,
+    rgba(255, 158, 136, 1) 66.9%,
+    rgba(254, 228, 172, 1) 94.8%
+  );
 }
 
 .active\:bg-orange-300:active {

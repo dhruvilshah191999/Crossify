@@ -56,7 +56,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to="/search"
-                  className="hover:text-alpha text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-beta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className=" far fa-calendar-alt text-lg leading-lg mr-2" />{" "}
                   Events
@@ -65,7 +65,7 @@ export default function Navbar(props) {
               <li className="flex items-center">
                 <Link
                   to="/clubsearch"
-                  className="hover:text-alpha text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
+                  className="hover:text-beta text-gray-700 ml-2 lg:ml-0 lg:text-white px-3 py-4 lg:py-2  flex items-center text-xs uppercase font-bold"
                 >
                   <i className="  fas fa-users rounded-full text-lg leading-lg mr-2" />{" "}
                   Clubs
