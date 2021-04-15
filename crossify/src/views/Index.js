@@ -13,6 +13,7 @@ import Footer from "components/Footers/Footer.js";
 import EventCard from "components/Cards/EventCard";
 import ClubCard from "components/Cards/ClubCard";
 import Creators from "components/sections/Creators";
+
 export default function Landing() {
   let history = useHistory();
   const { isLogin, search_dispatch } = useContext(UserContext);
@@ -21,6 +22,7 @@ export default function Landing() {
   const [clubState, setClubstate] = useState([]);
   const [search, setSearch] = useState("");
   const [location, setlocation] = useState("");
+  const [readNotification, setreadNotification] = React.useState(false);
 
   //todo GOLU : get all the event which is related to users interest otherwise show popular 3 (if he didn't add any interest yet or NOT LOGGED IN )
   const [insterestState, setInterests] = useState([]);

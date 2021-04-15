@@ -3,7 +3,10 @@ import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demopf from "assets/img/demopf.png";
 import ChatMessage from "components/Cards/ChatMessage";
 import axios from "axios";
-
+import io from "socket.io-client";
+let socket = io("http://localhost:5000", {
+  transport: ["websocket", "polling", "flashsocket"],
+});
 Modal.defaultStyles = {};
 
 var customModalStyles = {
@@ -49,17 +52,35 @@ class MyModal extends Component {
 
   sendMessage = async () => {
     const token = localStorage.getItem("jwt");
+    console.log(this.state.data);
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    console.log(profile_photo);
+    socket.emit(
+      "sendReport",
+      {
+        date: new Date(),
+        description: this.state.answer,
+        title: "Your Reports is answered by " + firstName,
+        profile_photo: profile_photo,
+        report_id: this.state.data._id,
+        user_id: this.state.data.user_id,
+      },
+      console.log("in send Report")
+    );
+
     var object = {
       token,
       answer: this.state.answer,
       report_id: this.state.data._id,
-      user_id:this.state.data.user_id
+      user_id: this.state.data.user_id,
     };
     const finaldata = await axios.post(
       "/api/manage/send-reports",

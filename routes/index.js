@@ -1,17 +1,17 @@
-var express = require("express");
-var bcrypt = require("bcryptjs");
-var auth = require("../middleware/auth");
-var category_details = require("../modules/interest_category");
-var user_details = require("../modules/user_details");
-const { check, validationResult } = require("express-validator");
-var CryptoJS = require("crypto-js");
-const { ObjectID, ObjectId } = require("bson");
-const config = require("config");
-const secret = config.get("Secret");
+var express = require('express');
+var bcrypt = require('bcryptjs');
+var auth = require('../middleware/auth');
+var category_details = require('../modules/interest_category');
+var user_details = require('../modules/user_details');
+const { check, validationResult } = require('express-validator');
+var CryptoJS = require('crypto-js');
+const { ObjectID, ObjectId } = require('bson');
+const config = require('config');
+const secret = config.get('Secret');
 
 var router = express.Router();
 
-router.post("/login", async function (req, res, next) {
+router.post('/login', async function (req, res, next) {
   let { login_username, password } = req.body;
   var check = user_details.findOne({
     $and: [
@@ -30,7 +30,7 @@ router.post("/login", async function (req, res, next) {
       if (data === null || data.length === 0) {
         var error = {
           is_error: true,
-          message: "Username or Password invalid",
+          message: 'Username or Password invalid',
         };
         return res.status(500).send(error);
       } else {
@@ -46,13 +46,13 @@ router.post("/login", async function (req, res, next) {
             data: data,
             token: ciphertext,
             is_error: false,
-            message: "Signin Successfully",
+            message: 'Signin Successfully',
           };
           return res.send(finaldata);
         } else {
           var error = {
             is_error: true,
-            message: "Username or Password invalid",
+            message: 'Username or Password invalid',
           };
           return res.status(500).send(error);
         }
@@ -61,7 +61,7 @@ router.post("/login", async function (req, res, next) {
   });
 });
 
-router.post("/signup", async function (req, res, next) {
+router.post('/signup', async function (req, res, next) {
   var { fname, lname, password, email, photo } = req.body;
   var check = user_details.findOne({ email: email, is_active: 1 });
   await check.exec((err, data) => {
@@ -74,7 +74,7 @@ router.post("/signup", async function (req, res, next) {
     } else if (data) {
       var error = {
         is_error: true,
-        message: "This EmailId Already Exists.",
+        message: 'This EmailId Already Exists.',
       };
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
@@ -96,7 +96,7 @@ router.post("/signup", async function (req, res, next) {
         } else {
           var finaldata = {
             email,
-            message: "Signup Successfully",
+            message: 'Signup Successfully',
             is_error: false,
           };
           return res.send(finaldata);
@@ -106,7 +106,7 @@ router.post("/signup", async function (req, res, next) {
   });
 });
 
-router.post("/socialsignup", async function (req, res, next) {
+router.post('/socialsignup', async function (req, res, next) {
   var { socialId, fname, lname, photo, email } = req.body;
   var check = user_details.findOne({
     $or: [{ email: email }, { socialId: socialId }],
@@ -122,7 +122,7 @@ router.post("/socialsignup", async function (req, res, next) {
     } else if (data) {
       var error = {
         is_error: true,
-        message: "This Account Already Exists.",
+        message: 'This Account Already Exists.',
       };
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
@@ -143,7 +143,7 @@ router.post("/socialsignup", async function (req, res, next) {
         } else {
           var finaldata = {
             email,
-            message: "Signup Successfully",
+            message: 'Signup Successfully',
             is_error: false,
           };
           return res.send(finaldata);
@@ -153,7 +153,7 @@ router.post("/socialsignup", async function (req, res, next) {
   });
 });
 
-router.post("/socialstep2", async function (req, res, next) {
+router.post('/socialstep2', async function (req, res, next) {
   var {
     email,
     username,
@@ -176,7 +176,7 @@ router.post("/socialstep2", async function (req, res, next) {
     } else if (data) {
       var error = {
         is_error: true,
-        message: "This Username Already Exists.",
+        message: 'This Username Already Exists.',
       };
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
@@ -204,13 +204,13 @@ router.post("/socialstep2", async function (req, res, next) {
         } else if (!ans) {
           var error = {
             is_error: true,
-            message: "Please First Complete Registration Step 1",
+            message: 'Please First Complete Registration Step 1',
           };
           return res.status(500).send(error);
         } else {
           var finaldata = {
             is_error: false,
-            message: "User Data Updated",
+            message: 'User Data Updated',
           };
           return res.status(200).send(finaldata);
         }
@@ -219,7 +219,7 @@ router.post("/socialstep2", async function (req, res, next) {
   });
 });
 
-router.post("/change-password", async function (req, res, next) {
+router.post('/change-password', async function (req, res, next) {
   let { user_id, oldPassword, newPassword } = req.body;
   var check = user_details.findOneAndUpdate({
     $and: [{ _id: ObjectId(user_id) }, { is_active: true }],
@@ -235,7 +235,7 @@ router.post("/change-password", async function (req, res, next) {
       if (data === null || data.length === 0) {
         var error = {
           is_error: true,
-          message: "Password invalid",
+          message: 'Password invalid',
         };
         return res.status(500).send(error);
       } else {
@@ -250,7 +250,7 @@ router.post("/change-password", async function (req, res, next) {
             data: data,
             token: ciphertext,
             is_error: false,
-            message: "Password is valid",
+            message: 'Password is valid',
           };
           if (!finaldata.is_error) {
             password = bcrypt.hashSync(newPassword, 10);
@@ -270,7 +270,7 @@ router.post("/change-password", async function (req, res, next) {
               } else {
                 var finaldata2 = {
                   password: password,
-                  message: "Password changed successfully",
+                  message: 'Password changed successfully',
                   is_error: false,
                 };
                 return res.status(200).send(finaldata2);
@@ -280,7 +280,7 @@ router.post("/change-password", async function (req, res, next) {
         } else {
           var error = {
             is_error: true,
-            message: "Password invalid",
+            message: 'Password invalid',
           };
           return res.status(500).send(error);
         }
@@ -289,7 +289,7 @@ router.post("/change-password", async function (req, res, next) {
   });
 });
 
-router.post("/step2", async function (req, res, next) {
+router.post('/step2', async function (req, res, next) {
   var { email, username, city, state, pincode, address, lat, long } = req.body;
   var check = user_details.findOne({ username: username, is_active: 1 });
   await check.exec((err, data) => {
@@ -302,7 +302,7 @@ router.post("/step2", async function (req, res, next) {
     } else if (data) {
       var error = {
         is_error: true,
-        message: "This Username Already Exists.",
+        message: 'This Username Already Exists.',
       };
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
@@ -328,13 +328,13 @@ router.post("/step2", async function (req, res, next) {
         } else if (!ans) {
           var error = {
             is_error: true,
-            message: "Please First Complete Registration Step 1",
+            message: 'Please First Complete Registration Step 1',
           };
           return res.status(500).send(error);
         } else {
           var finaldata = {
             is_error: false,
-            message: "User Data Updated",
+            message: 'User Data Updated',
           };
           return res.status(200).send(finaldata);
         }
@@ -343,11 +343,11 @@ router.post("/step2", async function (req, res, next) {
   });
 });
 
-router.post("/auth", auth, async function (req, res, next) {
+router.post('/auth', auth, async function (req, res, next) {
   return res.status(200).send(req.user);
 });
 
-router.post("/notification", auth, async function (req, res, next) {
+router.post('/notification', auth, async function (req, res, next) {
   user_details
     .find(
       {
@@ -358,7 +358,7 @@ router.post("/notification", auth, async function (req, res, next) {
         inbox: 1,
       }
     )
-    .sort({ "inbox.date": -1 })
+    .sort({ 'inbox.date': -1 })
     .limit(10)
     .exec((err, data) => {
       if (err) {
@@ -371,7 +371,7 @@ router.post("/notification", auth, async function (req, res, next) {
         var finaldata = {
           data: data,
           is_error: false,
-          message: "Data Send",
+          message: 'Data Send',
         };
         return res.status(200).send(finaldata);
       }

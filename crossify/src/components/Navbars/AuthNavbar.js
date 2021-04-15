@@ -9,12 +9,30 @@ import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
 import logo from "../../assets/logos/logo_light.png";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
 import { UserContext } from "context/usercontext";
+import io from "socket.io-client";
+let socket = io("http://localhost:5000", {
+  transport: ["websocket", "polling", "flashsocket"],
+});
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [notification, setnotification] = React.useState(false);
   const [userdrop, setuserdrop] = React.useState(false);
   const { isLogin } = useContext(UserContext);
+  console.log("in function");
+  if (isLogin) {
+    console.log("in function after login");
+    socket.on("Notify", ({ date, description, title, report_id }) => {
+      var object = {
+        date: date,
+        description: description,
+        title: title,
+        report_id: report_id,
+      };
+      console.log("Notification received");
+      console.log(object);
+    });
+  }
   return (
     <>
       <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-6 py-3 navbar-expand-lg bg-transparent">

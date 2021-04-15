@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import { motion } from "framer-motion";
@@ -13,8 +13,10 @@ import { UserContext } from "context/usercontext";
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [notification, setnotification] = React.useState(false);
+  const [readNotification, setreadNotification] = React.useState(false);
   const [userdrop, setuserdrop] = React.useState(false);
   const { isLogin } = useContext(UserContext);
+
   return (
     <>
       <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-6 py-3 navbar-expand-lg bg-transparent">

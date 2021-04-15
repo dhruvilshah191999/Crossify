@@ -1,5 +1,6 @@
 import React from "react";
 import ChatMessage from "components/Message/Message";
+import addNotification from "react-push-notification";
 import io from "socket.io-client";
 import axios from "axios";
 
@@ -205,6 +206,14 @@ export default class RoomTab extends React.Component {
             const relatedRoomIndex = this.state.database.roomsData.findIndex(
               (el, index) => el._id === room_id
             );
+            var roomName = this.state.rooms[relatedRoomIndex];
+            addNotification({
+              title: "A new Message Received",
+              subtitle: roomName,
+              message: message,
+              native: true,
+              silent: false,
+            });
             var updatedDatabase = this.state.database;
             var oldRelatedMsgs =
               updatedDatabase.roomsData[relatedRoomIndex].messages;
