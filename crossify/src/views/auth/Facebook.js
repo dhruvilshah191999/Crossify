@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import FacebookLogin from "react-facebook-login";
-import "assets/styles/facebookbutton.css";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Key from "config/default.json";
@@ -60,7 +59,7 @@ export default function Facebook() {
   let fbContent;
   fbContent = (
     <FacebookLogin
-      cssClass="btnFacebook"
+      cssClass="btnFacebook hover:shadow-lg "
       appId="393912875359725"
       autoLoad={false}
       fields="name,email,picture"
@@ -69,6 +68,7 @@ export default function Facebook() {
       textButton="&nbsp;&nbsp;Facebook"
     />
   );
+
   return (
     <div className="inline-block">
       <Snackbar

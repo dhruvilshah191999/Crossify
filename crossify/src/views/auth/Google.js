@@ -53,21 +53,18 @@ export default function Google() {
       clientId="368003567815-p9au9e07ev68n06bbjddv77dn4oftbjs.apps.googleusercontent.com"
       render={(renderProps) => (
         <button
+          className="hover:shadow-md bg-white rounded"
           onClick={renderProps.onClick}
           style={{
-            background: "white",
-            border: " 0px transparent",
             width: "107px",
             height: "42px",
             textAlign: "center",
-            borderRadius: "4px",
-            marginTop: "3px",
+
             marginBottom: "3px",
-            paddingBottom: "2px",
-            fontWeight: "500",
           }}
         >
-          <i className="fab fa-google"></i> &nbsp;&nbsp;Google
+          <i className="fab fa-google text-lg" style={{ height: 18 }}></i>
+          &nbsp;&nbsp;Google
         </button>
       )}
       onSuccess={responseGoogle}
