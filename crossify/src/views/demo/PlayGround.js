@@ -10,5 +10,13 @@ class PlayGround extends Component {
     );
   }
 }
-
+//room code temp by bhargav for appending after presentation
+// var roomName = this.state.rooms[relatedRoomIndex];
+// addNotification({
+//   title: "A new Message Received",
+//   subtitle: roomName,
+//   message: message,
+//   native: true,
+//   silent: false,
+// });
 export default PlayGround;
