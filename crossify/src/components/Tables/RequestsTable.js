@@ -134,7 +134,7 @@ export default function App(props) {
     };
     var object = {
       club_id: clubId,
-      userArray: profilelist
+      userArray: profilelist,
     };
     const finaldata = await axios.post(
       "/api/admin/RemoveRequests",
@@ -157,7 +157,7 @@ export default function App(props) {
     };
     var object = {
       club_id: clubId,
-      userArray: profilelist
+      userArray: profilelist,
     };
     const finaldata = await axios.post(
       "/api/admin/AcceptRequests",
@@ -170,7 +170,7 @@ export default function App(props) {
       history.go(0);
     }
   };
-  const openModal = (user_id,name) => {
+  const openModal = (user_id, name) => {
     ModalManager.open(
       <ProfileReview
         name={name}
@@ -190,7 +190,7 @@ export default function App(props) {
     };
     var object = {
       club_id: clubId,
-      user_id
+      user_id,
     };
     const finaldata = await axios.post(
       "/api/admin/AcceptRequested",
@@ -202,7 +202,7 @@ export default function App(props) {
     } else {
       history.go(0);
     }
-  }
+  };
 
   const RejectedRequest = async (user_id) => {
     const config = {
@@ -255,7 +255,7 @@ export default function App(props) {
         Header: "Date",
         accessor: "date", // accessor is the "key" in the data
         Cell: ({ value }) => {
-          return Moment(value).format("MMMM Do YYYY, h:mm:ss a");
+          return Moment(value).format("DD MMM YYYY ");
         },
         disableFilters: true,
       },

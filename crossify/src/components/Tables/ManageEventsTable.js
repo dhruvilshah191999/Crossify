@@ -12,6 +12,7 @@ import {
 } from "react-table";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 import EmptyTable from "components/sections/EmptyTable";
+import moment from "moment";
 
 // This is the Global(which can go through all column for searching) Filter style and which algorithm to evaulate/filter
 function GlobalFilter({
@@ -144,6 +145,9 @@ export default function App(props) {
         Header: "Date",
         accessor: "date", // accessor is the "key" in the data
         disableFilters: true,
+        Cell: ({ value }) => {
+          return moment(value).format("DD MMM YYYY");
+        },
       },
       {
         Header: "Location",

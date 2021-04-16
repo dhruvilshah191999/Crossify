@@ -140,7 +140,7 @@ export default function App(props) {
 
         disableFilters: true,
         Cell: ({ value }) => {
-          return Moment(value).format("MMMM Do YYYY, h:mm:ss a");
+          return Moment(value).format("DD MMM YYYY ");
         },
       },
       {

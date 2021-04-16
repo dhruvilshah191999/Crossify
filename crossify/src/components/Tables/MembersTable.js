@@ -131,7 +131,7 @@ export default function App(props) {
         accessor: "date", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
-          return Moment(value).format("MMMM Do YYYY, h:mm:ss a");
+          return Moment(value).format("DD MMM YYYY ");
         },
       },
       {
@@ -354,9 +354,9 @@ export default function App(props) {
                   >
                     <option value="">All</option>
 
-                    <option value="Member">Member</option>
-                    <option value="Moderator">Moderator</option>
-                    <option value="Admin">Admin</option>
+                    <option value="member">Member</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="admin">Admin</option>
                   </select>
                   <span className="ml-2 "></span>
                   <GlobalFilter

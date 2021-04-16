@@ -3,8 +3,7 @@ Club Page          => Member Size , Open Profile in new Page
 Event Page    	   => Open Club by clicking on Club Info
 MyClubs , MyEvents => Add links to open the events or club
 FAQ 		   => Send only public ones
-AdminPage          => Rejecting Event, Rooms Table , Dashboard
-Notification       => Add socket.io notifications
+AdminPage          =>  Rooms Table , Dashboard , filter is not working
 Forms 		   => Validations
 Attendees   	   => displaying proper time , Broadcast button
 MyRequestedEvents  => Add Clubname as column
@@ -13,4 +12,8 @@ Index   	   => Only Show events which can be available for registeration
 Forgot Password => Require to build
 Can add Calendar view of all the events in MyEvents
 Is it possible to login with facebook and Google without writing login password
-MySettings    => Needs to add section to modify Interest
+MySettings    => Needs to add section to modify Interest , Change Profile Photo
+Add Google Reminder of the Event option
+Auto suggestion in location search field
+Navbar options in manage pages
+Problem while login with facebook and google

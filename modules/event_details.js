@@ -1,19 +1,19 @@
-var mongoose = require('mongoose');
-const { ObjectID, ObjectId } = require('bson');
-var Schema = require('mongoose').Schema;
+var mongoose = require("mongoose");
+const { ObjectID, ObjectId } = require("bson");
+var Schema = require("mongoose").Schema;
 
 var event_details = new Schema({
   event_name: {
     type: String,
     required: true,
   },
-  maximum_participants:{
-    type:Number,
-    required:true
+  maximum_participants: {
+    type: Number,
+    required: true,
   },
-  current_participants:{
-    type:Number,
-    required:true
+  current_participants: {
+    type: Number,
+    required: true,
   },
   photo: {
     type: String,
@@ -62,7 +62,7 @@ var event_details = new Schema({
       askedby: String,
       privacy: String,
       status: String,
-      answer:String,
+      answer: String,
     },
   ],
   volunteers_list: {
@@ -81,6 +81,7 @@ var event_details = new Schema({
     {
       user: ObjectId,
       status: String,
+      date: Date,
     },
   ],
   feedbacks: {
@@ -127,7 +128,7 @@ var event_details = new Schema({
   },
 });
 
-var event_exports = mongoose.model('event_details', event_details);
+var event_exports = mongoose.model("event_details", event_details);
 
 // var event = new event_exports({
 //     event_name: "Cricket Tournament",

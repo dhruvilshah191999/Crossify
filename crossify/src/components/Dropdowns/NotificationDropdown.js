@@ -4,9 +4,8 @@ import axios from "axios";
 import Moment from "moment";
 import demopf from "assets/img/pp1.jpg";
 import addNotification from "react-push-notification";
-import { useHistory, Link } from "react-router-dom";
-import { check } from "express-validator";
 import io from "socket.io-client";
+
 let socket = io("http://localhost:5000", {
   transport: ["websocket", "polling", "flashsocket"],
 });
@@ -138,36 +137,38 @@ const NotificationDropdown = (props) => {
                 </span>{" "}
                 Notifications.
               </div>
-              {data[0].inbox.map((el) => (
-                <div
-                  className={
-                    el.isRead
-                      ? "w-full flex p-2 pt-2 border-b2 pb-4"
-                      : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4"
-                  }
-                >
-                  <div className="flex-shrink-0">
-                    <img
-                      className="w-12 h-12 rounded-full ml-2 "
-                      src={el.photo}
-                    />
-                  </div>
-                  <div className="flex flex-col ml-6 mr-4">
-                    {" "}
-                    <div className="flex flex-row w-full text-sm">
-                      <div className="font-semibold">{el.title}</div>
-                      <div className="ml-1">
-                        <span className="text-xs text-gray-400 flex-shrink-0">
-                          {Moment(el.date, "YYYYMMDDHHmmss").fromNow()}
-                        </span>{" "}
+              {data[0].inbox
+                .map((el) => (
+                  <div
+                    className={
+                      el.isRead
+                        ? "w-full flex p-2 pt-2 border-b2 pb-4"
+                        : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4"
+                    }
+                  >
+                    <div className="flex-shrink-0">
+                      <img
+                        className="w-12 h-12 rounded-full ml-2 "
+                        src={el.photo}
+                      />
+                    </div>
+                    <div className="flex flex-col ml-6 mr-4">
+                      {" "}
+                      <div className="flex flex-row w-full text-sm">
+                        <div className="font-semibold">{el.title}</div>
+                        <div className="ml-1">
+                          <span className="text-xs text-gray-400 flex-shrink-0">
+                            {Moment(el.date, "YYYYMMDDHHmmss").fromNow()}
+                          </span>{" "}
+                        </div>
+                      </div>
+                      <div className="text-xs text-muted pr-4 ">
+                        {el.description}
                       </div>
                     </div>
-                    <div className="text-xs text-muted pr-4 ">
-                      {el.description}
-                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+                .reverse()}
             </div>
           </div>
         </div>

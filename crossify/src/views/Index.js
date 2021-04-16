@@ -222,7 +222,7 @@ export default function Landing() {
               <div className="mb-6">
                 <div className="flex flex-row ">
                   <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
-                    Check out what's going on in your Area
+                    Upcoming Nearby Events
                   </h4>
                   <motion.button
                     className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
@@ -251,7 +251,7 @@ export default function Landing() {
               <div className="mb-6">
                 <div className="flex flex-row ">
                   <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
-                    Check out what's going on in your Area
+                    Explore Local Clubs
                   </h4>
                   <motion.button
                     className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"

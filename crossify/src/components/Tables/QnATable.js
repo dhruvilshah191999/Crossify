@@ -15,6 +15,7 @@ import PrivateButton from "components/SweetAlerts/PrivateButton";
 import PublishButton from "components/SweetAlerts/PublishButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 import EmptyTable from "components/sections/EmptyTable";
+import Moment from "moment";
 
 import QnAModal from "components/SweetAlerts/QnAModal";
 
@@ -189,7 +190,9 @@ export default function App(props) {
       {
         Header: "Date",
         accessor: "date", // accessor is the "key" in the data
-
+        Cell: ({ value }) => {
+          return Moment(value).format("DD MMM YYYY ");
+        },
         disableFilters: true,
       },
       {

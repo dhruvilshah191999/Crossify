@@ -17,6 +17,7 @@ import EmptyTable from "components/sections/EmptyTable";
 import BroadcastButton from "components/SweetAlerts/BroadcastButton";
 import ArrivedButton from "components/SweetAlerts/ArrivedButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
+import moment from "moment";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -217,7 +218,9 @@ export default function App(props) {
       {
         Header: "Date",
         accessor: "date", // accessor is the "key" in the data
-
+        Cell: ({ value }) => {
+          return moment(value).format("DD MMM YYYY");
+        },
         disableFilters: true,
       },
       {

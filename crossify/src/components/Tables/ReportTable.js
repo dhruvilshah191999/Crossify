@@ -149,7 +149,7 @@ export default function App(props) {
       {
         Header: "Issue Date",
         accessor: "date", // accessor is the "key" in the data
-        Cell: ({ value }) => <div>{Moment(value).format("DD-MM-YYYY")}</div>,
+        Cell: ({ value }) => <div>{Moment(value).format("DD MMM YYYY")}</div>,
         disableFilters: true,
       },
       {
