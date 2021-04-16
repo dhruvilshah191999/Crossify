@@ -7,6 +7,7 @@ import Facebook from "./Facebook";
 import Google from "./Google";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
+import { Formik, useField } from "formik";
 
 var vertical = "top";
 var horizontal = "center";
@@ -37,72 +38,6 @@ export default function Register() {
     setError(false);
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (
-      fname.trim() === "" ||
-      lname.trim() === "" ||
-      email.trim() === "" ||
-      password.trim() === "" ||
-      repassword.trim() === "" ||
-      image === ""
-    ) {
-      setError(true);
-      setMessage("Please Enter Your Details");
-    } else if (!checked) {
-      setError(true);
-      setMessage("Please Accept the Privacy Policy");
-    } else if (password !== repassword) {
-      setError(true);
-      setMessage("Password and Re-Type Password Are Not Matched");
-    } else {
-      var emailname = email.split("@");
-      var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
-      var path = "User_Profile/" + emailname[0];
-      var data = new FormData();
-      data.append("file", image);
-      data.append("upload_preset", "crossify-project");
-      data.append("public_id", path);
-      const config = {
-        headers: { "X-Requested-With": "XMLHttpRequest" },
-      };
-      axios
-        .post(url, data, config)
-        .then(async (res) => {
-          const userdata = {
-            fname,
-            lname,
-            email,
-            password,
-            photo: res.data.url,
-          };
-          try {
-            const config = {
-              method: "POST",
-              header: {
-                "Content-Type": "application/json",
-              },
-              validateStatus: () => true,
-            };
-            const finaldata = await axios.post("/api/signup", userdata, config);
-            if (finaldata.data.is_error) {
-              setError(true);
-              setMessage(finaldata.data.message);
-            } else {
-              var ciphertext = CryptoJS.AES.encrypt(
-                JSON.stringify(finaldata.data),
-                Key.Secret
-              ).toString();
-              localStorage.setItem("email", ciphertext);
-              history.push("/auth/register/step2");
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  };
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -136,161 +71,282 @@ export default function Register() {
                 <div className="text-gray-600 text-center mb-3 font-bold">
                   <small>Or sign up with credentials</small>
                 </div>
-                <form>
-                  <div className="-mx-3 md:flex">
-                    <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3 mr-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="reg-fname"
-                      >
-                        First Name
-                      </label>
-                      <input
-                        id="reg-fname"
-                        type="text"
-                        className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
-                        placeholder="First Name"
-                        name="fname"
-                        value={fname}
-                        onChange={(e) => onChange(e)}
-                        required
-                      />
-                    </div>
-                    <div className="md:w-1/2 md:mb-0 w-full w-1/2 m3-6">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="reg-lname"
-                      >
-                        Last Name
-                      </label>
-                      <input
-                        id="reg-lname"
-                        type="text"
-                        className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
-                        placeholder="Last Name"
-                        name="lname"
-                        value={lname}
-                        onChange={(e) => onChange(e)}
-                        required
-                      />
-                    </div>
-                  </div>
+                <Formik
+                  initialValues={formData}
+                  validate={() => {
+                    const errors = {};
+                    if (!fname) {
+                      errors.fname = "First Name is Required !!!";
+                    } else if (!lname) {
+                      errors.lname = "Last Name is Required !!!";
+                    } else if (!email) {
+                      errors.email = "Email is Required!!!";
+                    } else if (
+                      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
+                    ) {
+                      errors.email = "Invalid email address";
+                    } else if (!password) {
+                      errors.password = "Password is Required !!!";
+                    } else if (password.length < 6) {
+                      errors.password = "Minimim 6 Characters are Required !!!";
+                    } else if (!repassword) {
+                      errors.repassword = "Re Enter Your Password !!!";
+                    } else if (password != repassword) {
+                      errors.repassword =
+                        "Re Password and Password Does Not Match!!!";
+                    } else if (!checked) {
+                      errors.checkbox =
+                        "You Must Have to Agree Our Terms and Conditions";
+                    }
+                    return errors;
+                  }}
+                  onSubmit={async ({ setSubmitting }) => {
+                    if (image === "") {
+                      setError(true);
+                      setMessage("Please Enter Your Details");
+                    } else {
+                      var emailname = email.split("@");
+                      var url =
+                        "https://api.cloudinary.com/v1_1/crossify/image/upload/";
+                      var path = "User_Profile/" + emailname[0];
+                      var data = new FormData();
+                      data.append("file", image);
+                      data.append("upload_preset", "crossify-project");
+                      data.append("public_id", path);
+                      const config = {
+                        headers: { "X-Requested-With": "XMLHttpRequest" },
+                      };
+                      axios
+                        .post(url, data, config)
+                        .then(async (res) => {
+                          const userdata = {
+                            fname,
+                            lname,
+                            email,
+                            password,
+                            photo: res.data.url,
+                          };
+                          try {
+                            const config = {
+                              method: "POST",
+                              header: {
+                                "Content-Type": "application/json",
+                              },
+                              validateStatus: () => true,
+                            };
+                            const finaldata = await axios.post(
+                              "/api/signup",
+                              userdata,
+                              config
+                            );
+                            if (finaldata.data.is_error) {
+                              setError(true);
+                              setMessage(finaldata.data.message);
+                            } else {
+                              var ciphertext = CryptoJS.AES.encrypt(
+                                JSON.stringify(finaldata.data),
+                                Key.Secret
+                              ).toString();
+                              localStorage.setItem("email", ciphertext);
+                              history.push("/auth/register/step2");
+                            }
+                          } catch (err) {
+                            console.log(err);
+                          }
+                        })
+                        .catch((err) => console.log(err));
+                    }
+                    setSubmitting(false);
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                  }) => (
+                    <form>
+                      <div className="-mx-3 md:flex">
+                        <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3 mr-3">
+                          <label
+                            className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            htmlFor="reg-fname"
+                          >
+                            First Name
+                          </label>
+                          <input
+                            id="reg-fname"
+                            type="text"
+                            className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
+                            placeholder="First Name"
+                            name="fname"
+                            value={fname}
+                            onChange={(e) => onChange(e)}
+                            onBlur={handleBlur}
+                          />
+                          <p style={{ color: "#fb8090" }}>
+                            {errors.fname && touched.fname && errors.fname}
+                          </p>
+                        </div>
+                        <div className="md:w-1/2 md:mb-0 w-full w-1/2 m3-6">
+                          <label
+                            className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            htmlFor="reg-lname"
+                          >
+                            Last Name
+                          </label>
+                          <input
+                            id="reg-lname"
+                            type="text"
+                            className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
+                            placeholder="Last Name"
+                            name="lname"
+                            value={lname}
+                            onChange={(e) => onChange(e)}
+                            onBlur={handleBlur}
+                          />
+                          <p style={{ color: "#fb8090" }}>
+                            {errors.lname && touched.lname && errors.lname}
+                          </p>
+                        </div>
+                      </div>
 
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                      htmlFor="reg-email"
-                    >
-                      Email
-                    </label>
-                    <input
-                      id="reg-email"
-                      type="email"
-                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                      placeholder="Email"
-                      name="email"
-                      value={email}
-                      onChange={(e) => onChange(e)}
-                      required
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                      htmlFor="reg-password"
-                    >
-                      Password
-                    </label>
-                    <input
-                      id="reg-password"
-                      type="password"
-                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                      placeholder="Password"
-                      name="password"
-                      value={password}
-                      onChange={(e) => onChange(e)}
-                      required
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                      htmlFor="reg-re-password"
-                    >
-                      Re-Type Password
-                    </label>
-                    <input
-                      id="reg-re-password"
-                      type="password"
-                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                      placeholder="Re-Type Password"
-                      name="repassword"
-                      value={repassword}
-                      onChange={(e) => onChange(e)}
-                      required
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                      htmlFor="reg-photo"
-                    >
-                      Your Profile Photo
-                    </label>
-
-                    <input
-                      id="reg-photo"
-                      type="file"
-                      accept="image/*"
-                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                      onChange={(e) => setImage(e.target.files[0])}
-                    />
-                  </div>
-                  <div>
-                    <label className="inline-flex items-center cursor-pointer">
-                      <input
-                        id="customCheckLogin"
-                        type="checkbox"
-                        className="form-checkbox text-gray-800 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                        name="checkbox"
-                        value={checked}
-                        onChange={(e) => handleCheck(e)}
-                        required
-                      />
-                      <span className="ml-2 text-sm font-semibold text-gray-700">
-                        I agree with the{" "}
-                        <a
-                          href="#pablo"
-                          className="text-blue-500"
-                          onClick={(e) => e.preventDefault()}
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-email"
                         >
-                          Privacy Policy
+                          Email
+                        </label>
+                        <input
+                          id="reg-email"
+                          type="email"
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Email"
+                          name="email"
+                          value={email}
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                        />
+                        <p style={{ color: "#fb8090" }}>
+                          {errors.email && touched.email && errors.email}
+                        </p>
+                      </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-password"
+                        >
+                          Password
+                        </label>
+                        <input
+                          id="reg-password"
+                          type="password"
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Password"
+                          name="password"
+                          value={password}
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                        />
+                        <p style={{ color: "#fb8090" }}>
+                          {errors.password &&
+                            touched.password &&
+                            errors.password}
+                        </p>
+                      </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-re-password"
+                        >
+                          Re-Type Password
+                        </label>
+                        <input
+                          id="reg-re-password"
+                          type="password"
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Re-Type Password"
+                          name="repassword"
+                          value={repassword}
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                        />
+                        <p style={{ color: "#fb8090" }}>
+                          {errors.repassword &&
+                            touched.repassword &&
+                            errors.repassword}
+                        </p>
+                      </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-photo"
+                        >
+                          Your Profile Photo
+                        </label>
+
+                        <input
+                          id="reg-photo"
+                          type="file"
+                          accept="image/*"
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          onChange={(e) => setImage(e.target.files[0])}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="inline-flex items-center cursor-pointer">
+                          <input
+                            id="customCheckLogin"
+                            type="checkbox"
+                            className="form-checkbox text-gray-800 ml-1 w-5 h-5 ease-linear transition-all duration-150"
+                            name="checkbox"
+                            value={checked}
+                            onChange={(e) => handleCheck(e)}
+                            onBlur={handleBlur}
+                          />
+                          <span className="ml-2 text-sm font-semibold text-gray-700">
+                            I agree with the{" "}
+                            <a
+                              href="#pablo"
+                              className="text-blue-500"
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              Privacy Policy
+                            </a>
+                          </span>
+                        </label>
+                        <p style={{ color: "#fb8090" }}>{errors.checkbox}</p>
+                      </div>
+
+                      <div className="text-center mt-6">
+                        <button
+                          className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                          type="button"
+                          onClick={handleSubmit}
+                          disabled={isSubmitting}
+                        >
+                          Create Account
+                        </button>
+                      </div>
+
+                      <div className="text-center mt-6">
+                        Already A Member ?
+                        <a className="text-blue-500" href="login">
+                          {" "}
+                          Log In
                         </a>
-                      </span>
-                    </label>
-                  </div>
-
-                  <div className="text-center mt-6">
-                    <button
-                      className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={(e) => onSubmit(e)}
-                    >
-                      Create Account
-                    </button>
-                  </div>
-
-                  <div className="text-center mt-6">
-                    Already A Member ?
-                    <a className="text-blue-500" href="login">
-                      {" "}
-                      Log In
-                    </a>
-                  </div>
-                </form>
+                      </div>
+                    </form>
+                  )}
+                </Formik>
               </div>
             </div>
           </div>
