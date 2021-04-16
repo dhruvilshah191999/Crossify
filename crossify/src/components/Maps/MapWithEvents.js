@@ -8,7 +8,6 @@ const GOOGLE_MAPS_API2 = Keys.GOOGLE_MAPS_API;
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
-    console.log(props.data);
     this.state = {
       currentLocation: { lat: this.props.lat, lng: this.props.lng },
       activeMarker: {},
@@ -55,8 +54,7 @@ export class MapContainer extends Component {
   };
 
   render() {
-    if (!this.props.loaded) return <div>Loading...</div>;
-
+    // try to this in componentDidMount /Update
     var bounds = new this.props.google.maps.LatLngBounds();
     this.props.data.forEach((el) => {
       bounds.extend({ lat: el.latitude, lng: el.longitude });

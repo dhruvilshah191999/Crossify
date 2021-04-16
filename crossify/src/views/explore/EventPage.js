@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Moment from "moment";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
 import dance_cat from "assets/img/travel_cat.jpg";
@@ -9,7 +10,7 @@ import AskQuestion from "components/SweetAlerts/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/SweetAlerts/JoinEventButton";
 import ReportEventButton from "components/SweetAlerts/ReportEventButton";
-import { store } from "react-notifications-component";
+import { notifyLiked, notifyWentWrong } from "notify";
 import { motion } from "framer-motion";
 import GridLoader from "react-spinners/GridLoader";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
@@ -23,6 +24,7 @@ const Tag = (props) => {
 };
 
 export default function EventPage(props) {
+  let history = useHistory();
   var { id } = useParams();
   const [loading, setloading] = useState(false);
   const [like, setLike] = useState(false);
@@ -118,22 +120,6 @@ export default function EventPage(props) {
     event_details();
   }, []);
 
-  const notifyCopied = () => {
-    store.addNotification({
-      title: "Succesfully Copied to Clipboard",
-      message: "Share the event with your friends ! ",
-      type: "info",
-      insert: "top",
-      container: "bottom-right",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      dismiss: {
-        duration: 3000,
-        // onScreen: true,
-      },
-    });
-  };
-
   const addlike = async (e) => {
     const config = {
       method: "POST",
@@ -148,33 +134,9 @@ export default function EventPage(props) {
     const finaldata = await axios.post("/api/events/addlikes", object, config);
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
-      store.addNotification({
-        title: "Something went wrong",
-        message: "Cannot add to favourite",
-        type: "danger",
-        insert: "top",
-        container: "bottom-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 3000,
-          // onScreen: true,
-        },
-      });
+      notifyWentWrong();
     } else {
-      store.addNotification({
-        title: "Added to Favourites !",
-        message: "You can access with ease in your profile.",
-        type: "danger",
-        insert: "top",
-        container: "bottom-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 3000,
-          // onScreen: true,
-        },
-      });
+      notifyLiked();
       setLike(true);
     }
   };
@@ -200,6 +162,10 @@ export default function EventPage(props) {
     } else {
       setLike(false);
     }
+  };
+
+  const showClubs = (club_id) => {
+    history.push("/club/" + club_id);
   };
 
   if (loading) {
@@ -266,7 +232,10 @@ export default function EventPage(props) {
                     )}
                   </div>
                 </div>
-                <div className="mt-6">
+                <div
+                  className="mt-6 cursor-pointer"
+                  onClick={() => showClubs(eventdetails.club_id)}
+                >
                   <div className="flex flex-col ml-1 mb-1">
                     <div>
                       <span className="font-semibold "> Hosted By :</span>

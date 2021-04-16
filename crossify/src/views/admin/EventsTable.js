@@ -3,6 +3,7 @@ import CardTable from "components/Tables/EventTable.js";
 import Sidebar from "components/Sidebar/ManageClubSidebar.js";
 import axios from "axios";
 import { useParams } from "react-router";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 export default function Tables() {
   var { id } = useParams();
@@ -41,7 +42,16 @@ export default function Tables() {
       <Sidebar />
       <div className="flex flex-wrap">
         <div className="w-full px-4">
-          {loading ? <CardTable club_id={id} data={eventData} /> : ""}
+          {loading ? (
+            <CardTable club_id={id} data={eventData} />
+          ) : (
+            <div
+              className="flex justify-center items-center"
+              style={{ height: "60vh" }}
+            >
+              <ScaleLoader color="#825ee4" size={60} />
+            </div>
+          )}
         </div>
       </div>
     </>

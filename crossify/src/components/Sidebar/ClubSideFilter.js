@@ -17,7 +17,7 @@ export default function Sidebar(props) {
     UserContext
   );
   const [collapseShow, setCollapseShow] = React.useState("hidden");
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage] = React.useState(5);
   const [eventShow, setEventShow] = React.useState(true);
@@ -57,6 +57,7 @@ export default function Sidebar(props) {
         if (finaldata2.data.is_error) {
           console.log(finaldata2.data.message);
         } else {
+          setLoading(false);
           setClub(finaldata2.data.data);
         }
       } catch (err) {
@@ -64,10 +65,13 @@ export default function Sidebar(props) {
       }
     }
     fetchData();
-    fetchEvent();
+    if (searchResult.search == null && searchResult.location == null) {
+      fetchEvent();
+    }
   }, []);
 
   React.useEffect(() => {
+    setLoading(true);
     async function getsearchobjecy() {
       try {
         const config = {
@@ -85,6 +89,7 @@ export default function Sidebar(props) {
         if (finaldata3.data.is_error) {
           console.log(finaldata3.data.message);
         } else {
+          setLoading(false);
           setClub(finaldata3.data.data);
           setCurrentPage(1);
         }
@@ -111,6 +116,7 @@ export default function Sidebar(props) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     console.log(member);
     let array = [];
     await interestState.map((data) => {
@@ -147,7 +153,7 @@ export default function Sidebar(props) {
         if (finaldata.data.is_error) {
           console.log(finaldata.data.message);
         } else {
-          console.log(finaldata);
+          setLoading(false);
           setClub(finaldata.data.data);
           setCurrentPage(1);
         }

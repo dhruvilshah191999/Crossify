@@ -132,6 +132,7 @@ const ClubCard = (props) => {
   const showClubs = (club_id) => {
     history.push("/club/" + club_id);
   };
+
   return (
     <div
       className="relative"

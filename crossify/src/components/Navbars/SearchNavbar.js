@@ -47,6 +47,13 @@ const SearchNavbar = (props) => {
                 name="search"
                 onChange={(e) => setSearch(e.target.value)}
                 value={search}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    {
+                      onSubmit(e)
+                    }
+                  }
+                }}
                 placeholder="Find your club,events"
               />
               <input
@@ -55,6 +62,13 @@ const SearchNavbar = (props) => {
                 type="text"
                 name="location"
                 onChange={(e) => setlocation(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    {
+                      onSubmit(e)
+                    }
+                  }
+                }}
                 value={location}
                 placeholder="Select Location"
               />

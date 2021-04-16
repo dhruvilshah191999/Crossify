@@ -80,6 +80,10 @@ function ProfileClubCard(props) {
     }
   };
 
+  const showEvents = (event_id) => {
+    history.push("/events/event=" + event_id);
+  };
+
   return (
     <div
       className="relative bg-white flex-shrink-0 hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-2 mb-4 rounded shadow "
@@ -122,7 +126,10 @@ function ProfileClubCard(props) {
             tags={props.data.tags}
           ></ShareButton>
         </div>
-        <h3 className="font-semibold mb-2 text-xl leading-tight sm:leading-normal">
+        <h3
+          className="font-semibold mb-2 text-xl leading-tight sm:leading-normal cursor-pointer"
+          onClick={() => showEvents(props.data._id)}
+        >
           {props.data.event_name}
         </h3>
         <div className="text-sm flex items-center">

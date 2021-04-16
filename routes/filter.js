@@ -38,7 +38,8 @@ function getdistance(lat1, lon1, lat2, lon2, unit) {
 }
 
 router.get("/get-event", async function (req, res, next) {
-  var records = event_details.find({ is_active: true }).sort({ date: -1 });
+  var today = new Date();
+  var records = event_details.find({ is_active: true,date:{$gt:today} }).sort({ date: -1 });
   await records.exec((err, data) => {
     if (err) {
       var error = {

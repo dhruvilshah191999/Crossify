@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 import { ModalManager } from "react-dynamic-modal";
 import { motion } from "framer-motion";
-
+import GridLoader from "react-spinners/GridLoader";
 import TabsBar from "components/TabsBar/TabsBar";
 import Navbar from "components/Navbars/ClubNavbar";
 import demopf from "assets/img/demobg.jpg";
@@ -26,6 +26,7 @@ function ClubPage(props) {
   const [isPublic, setPublic] = useState(true);
   const [isJoin, setIsJoin] = useState(false);
   const [like, setLike] = useState(false);
+  const [count, setCount] = useState({});
   const [clubData, setClubData] = useState([]);
   const token = localStorage.getItem("jwt");
 
@@ -61,6 +62,29 @@ function ClubPage(props) {
         setTimeout(() => {
           setloading(true);
         }, 500);
+      }
+    }
+
+    async function get_count() {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      var send_data = {
+        club_id: id,
+      };
+      const finaldata = await axios.post(
+        "/api/admin/getCount",
+        send_data,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setCount(finaldata.data.data);
       }
     }
 
@@ -137,6 +161,7 @@ function ClubPage(props) {
     CheckRequestMember();
     fetchData();
     event_details();
+    get_count();
   }, []);
 
   const addlike = async (e) => {
@@ -222,7 +247,7 @@ function ClubPage(props) {
                   &nbsp;<i class="fas fa-map-marker-alt text-sm"></i>
                   &nbsp;&nbsp;&nbsp; {clubData.city},{clubData.state} <br />
                   <i class="fas fa-users text-sm"></i> &nbsp;&nbsp;
-                  {props.noOfMembers + " "}
+                  {count.member + " "}
                   Members
                   <br />
                   <i class="fas fa-couch text-sm"></i> &nbsp;&nbsp;
@@ -313,7 +338,16 @@ function ClubPage(props) {
       </>
     );
   } else {
-    return <></>;
+    return (
+      <>
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "100vh" }}
+        >
+          <GridLoader color="#36D7B7" size={15} />
+        </div>
+      </>
+    );
   }
 }
 

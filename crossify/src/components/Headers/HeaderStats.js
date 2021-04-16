@@ -6,7 +6,7 @@ export default function HeaderStats(props) {
   return (
     <>
       {/* Header */}
-      <div className="relative bg-blue-600 md:pt-32 pb-20 pt-12"></div>
+      <div className="relative bg-gradient-primary md:pt-32 pb-20 pt-12"></div>
     </>
   );
 }

@@ -75,6 +75,10 @@ function ProfileClubCard(props) {
     }
   };
 
+  const showClubs = (club_id) => {
+    history.push("/club/" + club_id);
+  };
+
   return (
     <div
       className="relative bg-white flex-shrink-0 hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-2 mb-4 rounded shadow "
@@ -121,7 +125,10 @@ function ProfileClubCard(props) {
             tags={props.data.tags}
           ></ShareButton>
         </div>
-        <h3 className="font-semibold mb-2 text-xl leading-tight sm:leading-normal">
+        <h3
+          className="font-semibold mb-2 text-xl leading-tight sm:leading-normal cursor-pointer"
+          onClick={() => showClubs(props.data._id)}
+        >
           {props.data.club_name}
         </h3>
         <div className="text-sm flex items-center">

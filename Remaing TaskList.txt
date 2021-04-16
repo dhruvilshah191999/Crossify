@@ -1,14 +1,10 @@
-Event Search       => Add right Club name , Add real slot booked
-Club Page          => Member Size , Open Profile in new Page
-Event Page    	   => Open Club by clicking on Club Info
-MyClubs , MyEvents => Add links to open the events or club
+Merge (Member_details,file_details) into club_details
+Club Page          => Open Profile in new Page
 FAQ 		   => Send only public ones
 AdminPage          =>  Rooms Table , Dashboard , filter is not working
 Forms 		   => Validations
-Attendees   	   => displaying proper time , Broadcast button
-MyRequestedEvents  => Add Clubname as column
-Sign Up from  	   => Make it stylish , Check for username availability 
-Index   	   => Only Show events which can be available for registeration
+Attendees   	   => Broadcast button
+Sign Up from  	   => Make it stylish , Check for username availability
 Forgot Password => Require to build
 Can add Calendar view of all the events in MyEvents
 Is it possible to login with facebook and Google without writing login password

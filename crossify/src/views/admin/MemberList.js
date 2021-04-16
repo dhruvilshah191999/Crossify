@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Sidebar from "components/Sidebar/ManageClubSidebar.js";
 import MembersTable from "components/Tables/MembersTable";
 import axios from "axios";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 class MemberList extends Component {
   constructor(props) {
@@ -41,10 +42,19 @@ class MemberList extends Component {
         <Sidebar />
         <div className="flex flex-wrap">
           <div className="w-full px-4">
-            {this.state.loading ? <MembersTable
-              club_id={this.state.club_id}
-              data={this.state.memberData}
-            ></MembersTable> : ""}
+            {this.state.loading ? (
+              <MembersTable
+                club_id={this.state.club_id}
+                data={this.state.memberData}
+              ></MembersTable>
+            ) : (
+              <div
+                className="flex justify-center items-center"
+                style={{ height: "60vh" }}
+              >
+                <ScaleLoader color="#825ee4" size={60} />
+              </div>
+            )}
           </div>
         </div>
       </>

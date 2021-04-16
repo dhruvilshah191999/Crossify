@@ -64,9 +64,10 @@ router.get("/get-interest", async function (req, res, next) {
 });
 
 router.get("/get-event", async function (req, res, next) {
+  var today=new Date();
   var records = event_details
-    .find({ is_active: true })
-    .sort({ date: -1 })
+    .find({is_active: true, ending_date_registration: {$gt: today}})
+    .sort({date: -1})
     .limit(4);
   await records.exec((err, data) => {
     if (err) {
@@ -110,9 +111,13 @@ router.get("/get-club", async function (req, res, next) {
 });
 
 router.post("/get-event-byuser", auth, async function (req, res, next) {
+  var today = new Date();
   var { latitude, longitude } = req.user;
   if (latitude !== 0 && longitude !== 0) {
-    var records = event_details.find({ is_active: true });
+    var records = event_details.find({
+      is_active: true,
+      ending_date_registration: {$gt: today},
+    });
     let distancearray = [];
     let idstring = "";
     await records.exec(async (err, data) => {

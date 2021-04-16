@@ -4,6 +4,7 @@ import CardSettings from "components/Cards/CardSettings.js";
 import CardProfile from "components/Cards/CardProfile.js";
 import axios from "axios";
 import { useParams } from "react-router";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 export default function Settings() {
   var { id } = useParams();
@@ -66,14 +67,23 @@ export default function Settings() {
   return (
     <>
       <Sidebar />
-      <div className="flex flex-wrap">
-        <div className="w-full lg:w-7/10 px-4">
-          {loading ? <CardSettings data={clubData} /> : ""}
+      {loading ? (
+        <div className="flex flex-wrap">
+          <div className="w-full lg:w-7/10 px-4">
+            <CardSettings data={clubData} />
+          </div>
+          <div className="w-full lg:w-3/10 px-4">
+            <CardProfile clubData={clubData} count={count} />
+          </div>
         </div>
-        <div className="w-full lg:w-3/10 px-4">
-          {loading ? <CardProfile clubData={clubData} count={count} /> : ""}
+      ) : (
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "60vh" }}
+        >
+          <ScaleLoader color="#825ee4" size={60} />
         </div>
-      </div>
+      )}
     </>
   );
 }

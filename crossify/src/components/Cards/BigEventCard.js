@@ -1,18 +1,41 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 import moment from "moment";
-
-const bookedSeats = 12;
-const totalSeats = 30;
 
 const ResultWindow = (props) => {
   let history = useHistory();
   let count = 0;
+  const [clubName, setClub] = useState("");
+  useEffect(() => {
+    async function getName() {
+       const config = {
+         method: "POST",
+         header: {
+           "Content-Type": "application/json",
+         },
+         validateStatus: () => true,
+      };
+      var object = {
+        club_id: props.data.club_id,
+      };
+       const finaldata = await axios.post(
+         "/api/events/getclub",
+         object,
+         config
+       );
+       if (finaldata.data.is_error) {
+         console.log(finaldata.data.message);
+       } else {
+         setClub(finaldata.data.data.club_name);
+       }
+    }
 
+    getName();
+  }, []);
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);
   };
-  // ! Add right data at Club Name
   return (
     <div
       className="h-custom rounded-lg shadow p-4 flex mx-2 mt-4 mr-4 ml-2 hover:shadow-lg"
@@ -40,12 +63,13 @@ const ResultWindow = (props) => {
             <span className="text-gray-800 font-semibold">&bull;</span>
             <span className="text-beta font-semibold">
               {"  "}
-              <i class="fas fa-glass-cheers"></i> : {bookedSeats} / {totalSeats}
+              <i class="fas fa-glass-cheers"></i> :{" "}
+              {props.data.current_participants} /{" "}
+              {props.data.maximum_participants}
             </span>
           </div>
           <div className="mt-1 text-gray-700 text-sm ">
-            {/* // ! HEREEEEE */}
-            <i className="fas fa-users"></i> {props.ownerGroup}
+            <i className="fas fa-users"></i> {clubName}
           </div>
 
           <div className="mt-2">

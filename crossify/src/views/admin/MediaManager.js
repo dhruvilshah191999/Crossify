@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Sidebar from "components/Sidebar/ManageClubSidebar.js";
 import ManageMediaTable from "components/Tables/ManageMediaTable";
 import axios from "axios";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 class MediaManager extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class MediaManager extends Component {
       });
       setTimeout(() => {
         this.setState({ loading: true });
-      }, 500);
+      }, 3000);
     }
   }
   render() {
@@ -41,7 +42,19 @@ class MediaManager extends Component {
         <Sidebar />
         <div className="flex flex-wrap">
           <div className="w-full px-4">
-            {this.state.loading ? <ManageMediaTable club_id={this.state.club_id} data={this.state.mediaData}></ManageMediaTable> : ""}
+            {this.state.loading ? (
+              <ManageMediaTable
+                club_id={this.state.club_id}
+                data={this.state.mediaData}
+              ></ManageMediaTable>
+            ) : (
+              <div
+                className="flex justify-center items-center"
+                style={{ height: "60vh" }}
+              >
+                <ScaleLoader color="#825ee4" size={60} />
+              </div>
+            )}
           </div>
         </div>
       </>

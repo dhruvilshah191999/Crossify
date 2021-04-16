@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 import { usePosition } from "use-position";
 import { UserContext } from "context/usercontext";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
@@ -9,6 +10,7 @@ import Pagination from "components/ResultWindow/Pagination";
 import ResultWindow from "components/ResultWindow";
 import logo from "assets/logos/logo_final.png";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
+import { helpers } from "chart.js";
 
 export default function Sidebar(props) {
   const watch = true;
@@ -16,10 +18,9 @@ export default function Sidebar(props) {
     UserContext
   );
   const [collapseShow, setCollapseShow] = React.useState("hidden");
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage] = React.useState(5);
-  const [eventShow, setEventShow] = React.useState(true);
   const [interestState, setInterestState] = React.useState([]);
   const [getevent, setEvent] = React.useState([]);
   const [distance, Setdistance] = React.useState(0);
@@ -57,17 +58,20 @@ export default function Sidebar(props) {
         if (finaldata2.data.is_error) {
           console.log(finaldata2.data.message);
         } else {
+          setLoading(false);
           setEvent(finaldata2.data.data);
         }
       } catch (err) {
         console.log(err);
       }
     }
+
     fetchData();
     fetchEvent();
   }, []);
 
   React.useEffect(() => {
+    setLoading(true);
     async function getsearchobjecy() {
       try {
         const config = {
@@ -85,6 +89,7 @@ export default function Sidebar(props) {
         if (finaldata3.data.is_error) {
           console.log(finaldata3.data.message);
         } else {
+          setLoading(false);
           setEvent(finaldata3.data.data);
           setCurrentPage(1);
         }
@@ -92,7 +97,7 @@ export default function Sidebar(props) {
         console.log(error);
       }
     }
-    if (Object.keys(searchResult).length !== 0 && eventShow) {
+    if (Object.keys(searchResult).length !== 0) {
       getsearchobjecy().then(() => {
         search_dispatch({ type: "Remove-Search" });
       });
@@ -105,15 +110,16 @@ export default function Sidebar(props) {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   let { latitude, longitude } = usePosition(watch);
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    let array = [];
-    await interestState.map((data) => {
-      if (data.select === true) {
-        array.push(data.id);
-      }
-    });
-    if (eventShow) {
+    async function helpers() {
+      setLoading(true);
+      let array = [];
+      await interestState.map((data) => {
+        if (data.select === true) {
+          array.push(data.id);
+        }
+      });
       if (isLogin) {
         latitude = users.latitude;
         longitude = users.longitude;
@@ -143,6 +149,7 @@ export default function Sidebar(props) {
         if (finaldata.data.is_error) {
           console.log(finaldata.data.message);
         } else {
+          setLoading(false);
           setEvent(finaldata.data.data);
           setCurrentPage(1);
         }
@@ -150,6 +157,7 @@ export default function Sidebar(props) {
         console.log(err);
       }
     }
+    helpers();
   };
 
   return (
@@ -390,12 +398,7 @@ export default function Sidebar(props) {
         </div>
       </nav>
       <div>
-        {eventShow ? (
-          <ResultWindow getevent={currentEvents} loading={loading} />
-        ) : (
-          ""
-        )}
-
+        <ResultWindow getevent={currentEvents} loading={loading}/>
         <Pagination
           postPerPage={postPerPage}
           totalPosts={getevent.length}

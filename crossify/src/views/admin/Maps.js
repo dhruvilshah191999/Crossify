@@ -3,6 +3,7 @@ import Sidebar from "components/Sidebar/ManageClubSidebar.js";
 import { useParams } from "react-router";
 import axios from "axios";
 import MapContainer from "components/Maps/MapCode";
+import ScaleLoader from "react-spinners/ScaleLoader";
 export default function Maps() {
   var { id } = useParams();
   const [loading, setloading] = useState(false);
@@ -45,7 +46,20 @@ export default function Maps() {
       <div className="flex flex-wrap">
         <div className="w-full px-4">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-             {loading?<MapContainer lat={latitude} long={ longitude} parentCallback={handleCallback}/>:""}
+            {loading ? (
+              <MapContainer
+                lat={latitude}
+                long={longitude}
+                parentCallback={handleCallback}
+              />
+            ) : (
+              <div
+                className="flex justify-center items-center"
+                style={{ height: "60vh" }}
+              >
+                <ScaleLoader color="#825ee4" size={60} />
+              </div>
+            )}
           </div>
         </div>
       </div>
