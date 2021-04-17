@@ -8,6 +8,7 @@ import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/SweetAlerts/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/SweetAlerts/JoinEventButton";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import axios from "axios";
 import { motion } from "framer-motion";
 
@@ -38,7 +39,9 @@ export default function EventPreview(props) {
         console.log(finaldata.data.message);
       } else {
         Seteventsdetails(finaldata.data.event_data);
-        setTimeout(setloading(true), 500);
+        setTimeout(() => {
+          setloading(true);
+        }, 300);
       }
     }
     event_details();
@@ -271,7 +274,16 @@ export default function EventPreview(props) {
       </>
     );
   } else {
-    return <></>;
+    return (
+      <>
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "60vh" }}
+        >
+          <ScaleLoader color="#825ee4" size={60} />
+        </div>
+      </>
+    );
   }
 }
 EventPreview.defaultProps = {

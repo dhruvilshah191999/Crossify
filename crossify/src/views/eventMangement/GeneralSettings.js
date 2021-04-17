@@ -12,6 +12,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import ViewFeedback from "components/Modals/ViewFeedback";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 var vertical = "top";
 var horizontal = "center";
@@ -119,12 +120,11 @@ export default function GeneralSettings(props) {
     setlatitude(childData.lat);
     setlongitude(childData.lng);
   };
-
-  if (loading) {
-    return (
-      <>
-        <Sidebar />
-        <div className="flex flex-wrap">
+  return (
+    <>
+      <Sidebar />
+      <div className={loading?"flex flex-wrap":""}>
+        {loading ? (
           <Formik
             initialValues={formData}
             validate={() => {
@@ -534,12 +534,17 @@ export default function GeneralSettings(props) {
               </div>
             )}
           </Formik>
-        </div>
-      </>
-    );
-  } else {
-    return <></>;
-  }
+        ) : (
+          <div
+            className="flex justify-center items-center"
+            style={{ height: "60vh" }}
+          >
+            <ScaleLoader color="#825ee4" size={60} />
+          </div>
+        )}
+      </div>
+    </>
+  );
 }
 GeneralSettings.defaultProps = {
   club_name: "Badshah gang",
