@@ -32,7 +32,6 @@ router.post("/general-update", async function (req, res, next) {
   var check = event_details.updateOne(
     {
       _id: ObjectId(event_id),
-      is_active: 1,
     },
     {
       event_name: event_name,
@@ -79,7 +78,6 @@ router.post("/details-update", async function (req, res, next) {
     check = event_details.updateOne(
       {
         _id: ObjectId(event_id),
-        is_active: 1,
       },
       {
         photo,
@@ -166,7 +164,6 @@ router.post("/get-faq", async function (req, res, next) {
   var { event_id } = req.body;
   var result = event_details.findOne({
     _id: ObjectId(event_id),
-    is_active: 1,
   });
   await result.exec((err, data) => {
     if (err) {
@@ -354,7 +351,6 @@ router.post("/get-list", async function (req, res, next) {
   var { event_id } = req.body;
   var result = event_details.findOne({
     _id: ObjectId(event_id),
-    is_active: 1,
   });
   await result.exec((err, data) => {
     if (err) {
@@ -522,7 +518,7 @@ router.post("/get-all-reports", auth, async function (req, res, next) {
       {
         $match: {
           event_id: ObjectId(event_id),
-          is_active: true,
+          is_active:true,
         },
       },
       {

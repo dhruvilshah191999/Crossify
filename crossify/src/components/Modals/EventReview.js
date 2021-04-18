@@ -27,36 +27,36 @@ class MyModal extends Component {
     this.state = {
       tags: [],
       event_data: this.props.eventData,
+      message: [],
       loading: false,
       description: null,
     };
   }
 
   async componentDidMount() {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    var send_data = {
+      event_id: this.state.event_data._id,
+    };
+    const finaldata = await axios.post(
+      "/api/admin/getRejectedMessage",
+      send_data,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      this.setState({ message: finaldata.data.data });
+    }
     setTimeout(() => {
       this.setState({ loading: true });
     }, 100);
-    // const config = {
-    //    method: "POST",
-    //    header: {
-    //      "Content-Type": "application/json",
-    //    },
-    //    validateStatus: () => true,
-    //  };
-    //  var send_data = {
-    //    event_id: this.state.event_id,
-    //  };
-    //  const finaldata = await axios.post(
-    //    "/api/admin/getEvent",
-    //    send_data,
-    //    config
-    //  );
-    //  if (finaldata.data.is_error) {
-    //    console.log(finaldata.data.message);
-    //  } else {
-    //    this.setState({ event_data: finaldata.data.data });
-
-    //  }
   }
 
   handleUpdateTags = (tags) => {
@@ -87,6 +87,7 @@ class MyModal extends Component {
   };
 
   RejectedEvent = async () => {
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
@@ -96,10 +97,11 @@ class MyModal extends Component {
     };
     var send_data = {
       event_id: this.state.event_data._id,
-      club_id: this.state.event_data.club_id,
+      description: this.state.description,
+      token,
     };
     const finaldata = await axios.post(
-      "/api/admin/acceptEvent",
+      "/api/admin/rejectedEvent",
       send_data,
       config
     );
@@ -255,12 +257,12 @@ class MyModal extends Component {
                   Frequently Asked Question
                 </div>
               </div>
-              <hr></hr>
 
               {this.state.loading
                 ? this.state.event_data.faq.map((el, index) =>
                     el.privacy === "public" && el.status === "answered" ? (
                       <>
+                        <hr></hr>
                         <div className="flex w-full ml-4 px-4 py-2">
                           <div className="w-1/4 font-semibold flex-shrink-0 ">
                             Q {index})
@@ -280,36 +282,46 @@ class MyModal extends Component {
                   )
                 : ""}
 
-              <div className="text-lg text-alpha my-4">Feedback</div>
-              <hr></hr>
-              <div className="flex w-full ml-4 px-4 py-2">
-                <div className="w-1/4 font-semibold  "> Review </div>
-                <div className="text-gray-700 w-3/4 ">
-                  <div
-                    className="overflow-y"
-                    style={{ maxHeight: 320, overflowY: "scroll" }}
-                  >
-                    {this.props.chats.map((el) => (
-                      <ChatMessage
-                        message={el.msg}
-                        time={el.time}
-                        username={el.owner}
-                        profilePic={el.photo}
-                      />
-                    ))}
+              <div
+                className={
+                  this.state.message.length != 0
+                    ? "text-lg text-alpha my-4"
+                    : "hidden"
+                }
+              >
+                Feedback
+              </div>
+              <div className={this.state.message.length != 0 ? "" : "hidden"}>
+                <hr></hr>
+                <div className="flex w-full ml-4 px-4 py-2">
+                  <div className="w-1/4 font-semibold  "> Review </div>
+                  <div className="text-gray-700 w-3/4 ">
+                    <div
+                      className="overflow-y"
+                      style={{ maxHeight: 320, overflowY: "scroll" }}
+                    >
+                      {this.state.message.map((el) => (
+                        <ChatMessage
+                          message={el.message}
+                          time={el.date}
+                          username={el.name}
+                          profilePic={el.image}
+                        />
+                      ))}
+                    </div>
+                    <form>
+                      <div className="flex items-center mt-4"></div>
+                    </form>
+                    <textarea
+                      rows="4"
+                      placeholder="Give proper feedback to this request explaining the decision you are taking and any improvement required from the organization side"
+                      className="px-3 py-3 w-full placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      defaultValue={this.state.description}
+                      onChange={(e) => {
+                        this.setState({ description: e.target.value });
+                      }}
+                    />
                   </div>
-                  <form>
-                    <div className="flex items-center mt-4"></div>
-                  </form>
-                  <textarea
-                    rows="4"
-                    placeholder="Give proper feedback to this request explaining the decision you are taking and any improvement required from the organization side"
-                    className="px-3 py-3 w-full placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue={this.state.description}
-                    onChange={(e) => {
-                      this.setState({ description: e.target.value });
-                    }}
-                  />
                 </div>
               </div>
             </div>
@@ -325,6 +337,7 @@ class MyModal extends Component {
               <button
                 className="bg-red-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
                 type="button"
+                onClick={this.RejectedEvent}
               >
                 Reject
               </button>

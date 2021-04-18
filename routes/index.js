@@ -3,22 +3,25 @@ var bcrypt = require('bcryptjs');
 var auth = require('../middleware/auth');
 var category_details = require('../modules/interest_category');
 var user_details = require('../modules/user_details');
-const { check, validationResult } = require('express-validator');
+const {check, validationResult} = require('express-validator');
 var CryptoJS = require('crypto-js');
-const { ObjectID, ObjectId } = require('bson');
+const {ObjectID, ObjectId} = require('bson');
 const config = require('config');
 const secret = config.get('Secret');
 
 var router = express.Router();
 
 router.post('/login', async function (req, res, next) {
-  let { login_username, password } = req.body;
-  var check = user_details.findOne({
-    $and: [
-      { $or: [{ username: login_username }, { email: login_username }] },
-      { is_active: true },
-    ],
-  });
+  let {login_username, password} = req.body;
+  var check = user_details.findOne(
+    {
+      $and: [
+        {$or: [{username: login_username}, {email: login_username}]},
+        {is_active: true},
+      ],
+    },
+    {_id: 1, fname: 1, lname: 1, profile_photo: 1,password:1}
+  );
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -41,7 +44,6 @@ router.post('/login', async function (req, res, next) {
             JSON.stringify(token),
             secret
           ).toString();
-          console.log(data);
           var finaldata = {
             data: data,
             token: ciphertext,
@@ -62,8 +64,8 @@ router.post('/login', async function (req, res, next) {
 });
 
 router.post('/signup', async function (req, res, next) {
-  var { fname, lname, password, email, photo } = req.body;
-  var check = user_details.findOne({ email: email, is_active: 1 });
+  var {fname, lname, password, email, photo} = req.body;
+  var check = user_details.findOne({email: email, is_active: 1});
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -106,10 +108,47 @@ router.post('/signup', async function (req, res, next) {
   });
 });
 
-router.post('/socialsignup', async function (req, res, next) {
-  var { socialId, fname, lname, photo, email } = req.body;
+router.post('/socialsignin', async function (req, res, next) {
+  var {socialId, email} = req.body;
   var check = user_details.findOne({
-    $or: [{ email: email }, { socialId: socialId }],
+    email: email,
+    socialId: socialId,
+    is_active: 1,
+  },{_id:1,fname:1,lname:1,profile_photo:1});
+  await check.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err,
+      };
+      return res.status(500).send(error);
+    } else if (data) {
+      let token = data.generateAuthToken();
+      var ciphertext = CryptoJS.AES.encrypt(
+        JSON.stringify(token),
+        secret
+      ).toString();
+      var finaldata = {
+        data: data,
+        token: ciphertext,
+        is_error: false,
+        message: 'Signin Successfully',
+      };
+      return res.send(finaldata);
+    } else {
+      var error = {
+        is_error: true,
+        message: "This account don't exits",
+      };
+      return res.status(500).send(error);
+    }
+  });
+});
+
+router.post('/socialsignup', async function (req, res, next) {
+  var {socialId, fname, lname, photo, email} = req.body;
+  var check = user_details.findOne({
+    $or: [{email: email}, {socialId: socialId}],
     is_active: 1,
   });
   await check.exec((err, data) => {
@@ -165,7 +204,7 @@ router.post('/socialstep2', async function (req, res, next) {
     lat,
     long,
   } = req.body;
-  var check = user_details.findOne({ username: username, is_active: 1 });
+  var check = user_details.findOne({username: username, is_active: 1});
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -182,7 +221,7 @@ router.post('/socialstep2', async function (req, res, next) {
     } else if (data === null || data.length === 0) {
       password = bcrypt.hashSync(password, 10);
       var update = user_details.findOneAndUpdate(
-        { email: email, is_active: 1 },
+        {email: email, is_active: 1},
         {
           username: username,
           password: password,
@@ -220,9 +259,9 @@ router.post('/socialstep2', async function (req, res, next) {
 });
 
 router.post('/change-password', async function (req, res, next) {
-  let { user_id, oldPassword, newPassword } = req.body;
+  let {user_id, oldPassword, newPassword} = req.body;
   var check = user_details.findOneAndUpdate({
-    $and: [{ _id: ObjectId(user_id) }, { is_active: true }],
+    $and: [{_id: ObjectId(user_id)}, {is_active: true}],
   });
   await check.exec((err, data) => {
     if (err) {
@@ -255,7 +294,7 @@ router.post('/change-password', async function (req, res, next) {
           if (!finaldata.is_error) {
             password = bcrypt.hashSync(newPassword, 10);
             var update = user_details.findOneAndUpdate(
-              { _id: ObjectId(user_id) },
+              {_id: ObjectId(user_id)},
               {
                 password: password,
               }
@@ -290,8 +329,8 @@ router.post('/change-password', async function (req, res, next) {
 });
 
 router.post('/step2', async function (req, res, next) {
-  var { email, username, city, state, pincode, address, lat, long } = req.body;
-  var check = user_details.findOne({ username: username, is_active: 1 });
+  var {email, username, city, state, pincode, address, lat, long} = req.body;
+  var check = user_details.findOne({username: username, is_active: 1});
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -307,7 +346,7 @@ router.post('/step2', async function (req, res, next) {
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
       var update = user_details.findOneAndUpdate(
-        { email: email, is_active: 1 },
+        {email: email, is_active: 1},
         {
           username: username,
           address: address,
@@ -358,7 +397,7 @@ router.post('/notification', auth, async function (req, res, next) {
         inbox: 1,
       }
     )
-    .sort({ 'inbox.date': -1 })
+    .sort({'inbox.date': -1})
     .limit(10)
     .exec((err, data) => {
       if (err) {

@@ -1,47 +1,47 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
+import axios from "axios";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       alert: null,
+      club_id: this.props.club_id,
       name: null,
-      readable: null,
-      writable: null,
+      readable: "Member",
+      writable: "Member",
       description: null,
     };
-  }
-  componentDidMount() {
-    this.setState({
-      name: this.props.name,
-      description: this.props.description,
-      readable: this.props.readable,
-      writable: this.props.writable,
-    });
   }
   hideAlert = () => {
     this.setState({
       alert: null,
     });
   };
-  onRecievedInput = () => {
-    const updatedQ = this.state.name;
-    const updatedA = this.state.description;
-    //todo GOLU we have name and description in state you just make any axios request to update the current value
-    this.setState({
-      alert: null,
-      name: null,
-      description: null,
-      readable: null,
-      writable: null,
-    });
+  onRecievedInput = async () => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      club_id:this.state.club_id,
+      name: this.state.name,
+      readable: this.state.readable,
+      writable:this.state.writable,
+      description: this.state.description,
+    };
+    const finaldata = await axios.post("/api/admin/Addchannel", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      this.setState({ alert: null });
+      window.location.reload();
+    }
   };
-  confirmProcess = () => {
-    //todo GOLU here make the new room of the club and everything you need can be passed through props
-    this.setState({ alert: null });
-  };
+
   confirmArrival() {
     const getAlert = () => (
       <SweetAlert
@@ -98,8 +98,9 @@ export default class SweetAlertModal extends Component {
                   </label>
                   <select
                     className="bg-gray-100 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                    defaultValue={this.state.readable}
                     onChange={(e) => {
-                      this.setState({ name: e.target.value });
+                      this.setState({ readable: e.target.value });
                     }}
                   >
                     <option value="Member">All</option>
@@ -117,8 +118,9 @@ export default class SweetAlertModal extends Component {
                   </label>
                   <select
                     className="bg-gray-100 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                    defaultValue={this.state.writable}
                     onChange={(e) => {
-                      this.setState({ name: e.target.value });
+                      this.setState({ writable: e.target.value });
                     }}
                   >
                     <option value="Member">All</option>
