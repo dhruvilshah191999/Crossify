@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
+import axios from "axios";
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      id:this.props.id,
       alert: null,
     };
   }
@@ -16,9 +17,27 @@ export default class SweetAlertModal extends Component {
     });
   };
 
-  confirmProcess = () => {
-    this.props.removeRoom();
-    this.setState({ alert: null });
+  confirmProcess = async () => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      channel_id: this.state.id,
+    };
+    const finaldata = await axios.post(
+      "/api/admin/removechannel",
+      object,
+      config
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      this.setState({ alert: null });
+      window.location.reload();
+    }
   };
   confirmArrival() {
     const getAlert = () => (

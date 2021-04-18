@@ -1,56 +1,80 @@
 import React from "react";
 import Chart from "chart.js";
-
+import axios from "axios";
+import { useParams } from "react-router";
 export default function CardLineChart() {
-  React.useEffect(() => {
-    var config = {
-      type: "polarArea",
-      data: {
-        datasets: [
-          {
-            data: [3, 15, 3, 5, 7, 11],
-            backgroundColor: [
-              "#ff75a0",
-              "#fce38a",
-              "#4299e1",
-              "#95e1d3",
-              "#364f6b",
-              "#a1cae2",
-            ],
-            label: "My dataset", // for legend
-          },
-        ],
-        labels: ["JPG", "PNG", "EXE", "ZIP", "MOV", "MP4"],
+  var { id } = useParams();
+  React.useEffect(async () => {
+    const config2 = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
       },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-
-        legend: {
-          position: "right",
-        },
-        title: {
-          display: false,
-          text: "Chart.js Polar Area Chart",
-        },
-
-        scales: {
-          r: {
-            ticks: {
-              beginAtZero: true,
-            },
-            reverse: false,
-          },
-        },
-        animation: {
-          animateRotate: false,
-          animateScale: true,
-        },
-      },
+      validateStatus: () => true,
     };
+    var send_data = {
+      club_id: id,
+    };
+    const finaldata = await axios.post(
+      "/api/admin/ExtentionsGraphs",
+      send_data,
+      config2
+    );
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+       finaldata.data.label = finaldata.data.label.map(function (x) {
+         return x.toUpperCase();
+       });
+      var config = {
+        type: "polarArea",
+        data: {
+          datasets: [
+            {
+              data: finaldata.data.data,
+              backgroundColor: [
+                "#ff75a0",
+                "#fce38a",
+                "#4299e1",
+                "#95e1d3",
+                "#364f6b",
+                "#a1cae2",
+              ],
+              label: "My dataset", // for legend
+            },
+          ],
+          labels: finaldata.data.label,
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
 
-    var ctx = document.getElementById("polar-chart").getContext("2d");
-    window.myPolar = new Chart(ctx, config);
+          legend: {
+            position: "right",
+          },
+          title: {
+            display: false,
+            text: "Chart.js Polar Area Chart",
+          },
+
+          scales: {
+            r: {
+              ticks: {
+                beginAtZero: true,
+              },
+              reverse: false,
+            },
+          },
+          animation: {
+            animateRotate: false,
+            animateScale: true,
+          },
+        },
+      };
+
+      var ctx = document.getElementById("polar-chart").getContext("2d");
+      window.myPolar = new Chart(ctx, config);
+    }
   }, []);
   return (
     <>

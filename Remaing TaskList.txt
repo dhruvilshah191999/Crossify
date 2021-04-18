@@ -2,7 +2,6 @@ Merge (Member_details,file_details) into club_details
 Club Page          => Open Profile in new Page
 FAQ 		   => Send only public ones
 AdminPage          =>  Rooms Table , Dashboard , filter is not working
-Forms 		   => Validations
 Attendees   	   => Broadcast button
 Sign Up from  	   => Make it stylish , Check for username availability
 Forgot Password => Require to build

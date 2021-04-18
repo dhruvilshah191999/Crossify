@@ -3,6 +3,8 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import Facebook from "./Facebook";
+import Google from "./LoginGoogle";
 import { Link } from "react-router-dom";
 import { UserContext } from "context/usercontext";
 import { notifySuccessLogin } from "notify";
@@ -61,6 +63,11 @@ function Login() {
                   Sign in with
                 </h1>
               </div>
+              <div className="btn-wrapper text-center ">
+                <Google />
+                <Facebook />
+              </div>
+              <hr className="mt-6 border-b-1 border-gray-400" />
             </div>
             <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
               <Formik

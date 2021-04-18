@@ -406,6 +406,10 @@
   height: 410px;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 .center-now {
   position: absolute;
   left: 50%;
