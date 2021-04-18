@@ -133,7 +133,7 @@ class Creators extends Component {
                   </p>
                   <div className="mt-6">
                     <button
-                      className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-linkedin text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                       onClick={() => {
                         window.open(
