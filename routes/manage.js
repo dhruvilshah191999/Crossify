@@ -8,6 +8,13 @@ var club_details = require("../modules/club_details");
 var reports_details = require("../modules/reports_details");
 const { ObjectID, ObjectId } = require("bson");
 const { json } = require("express");
+const nodemailer = require("nodemailer");
+var mail_file = require("../config/default.json");
+var handlebars = require('handlebars');
+var fs = require('fs');
+const { Console } = require("console");
+//const Email = require('email-templates');
+//var ejs = require("ejs");
 var router = express.Router();
 
 router.post("/general-update", async function (req, res, next) {
@@ -732,4 +739,311 @@ router.post("/check-club", auth, async function (req, res, next) {
     });
   }
 });
+
+router.post("/Broadcast", async function (req, res,next)
+{
+    var {
+        users_array,
+        event_id,
+        broadcact_mess
+    } = req.body;
+
+    let objectIdArray = users_array.map((s) => mongoose.Types.ObjectId(s));
+
+    var check = user_details.find( 
+        { _id: objectIdArray}
+    )
+
+    var event = event_details.findOne({ _id: ObjectId(event_id) });
+    var eventName;
+    await event.exec((err, data) =>
+    {
+        if (err) {
+            var err = {
+                is_error: true,
+                message: err.message,
+            };
+        }
+        else if (data) {
+          eventName = data.event_name;
+        }
+    });
+
+    await check.exec((err, data) =>
+    {
+        if (err) {
+            var err = {
+                is_error: true,
+                message: err.message,
+            };
+            return res.status(500).send(err);
+        }
+        else if(data){        
+            var finaldata ={
+                is_error:false,
+                message: "value updated succesfully"
+            };
+          let result = data.map(a => a.email);  //email id no array
+          let result1 = data.map(a => a.fname);  //fname no array no array
+          
+          var readHTMLFile = function(path, callback) {
+            fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+                if (err) {
+                    throw err;
+                    callback(err);
+                }
+                else {
+                    callback(null, html);
+                }
+            });
+        };
+
+            var transporter = nodemailer.createTransport({
+               service: 'gmail',
+               name:"SAGAR18-11",
+               host: "smtp.gmail.com",
+               port: 465,   //587
+               secure: true, //for true 465, 
+                auth: {
+                       user: mail_file.email,
+                       pass: mail_file.password
+                }
+            });
+          
+            readHTMLFile("E:/CROSSIFY/Crossify Web App/views/BroadcastEmail.html", function(err, html) {
+              var template = handlebars.compile(html);
+              for (let index = 0; index < result.length; index++) {
+                var replacements = {
+                  username: result1[index],
+                  broadcast_mess: broadcact_mess
+                };
+                var htmlToSend = template(replacements);
+                const mailOptions = {
+                  from: 'crossify.vgec@gmail.com',
+                  to: result[index], 
+                  subject: `Something For You From ${eventName}`,
+                  html: htmlToSend,
+                  // attachments: [
+                  //  { filename: "crossify.pptx", path: "../Crossify Web App/Crossify.pptx", cid: "crossify@ppt" }
+                  // ]
+                };
+                transporter.sendMail(mailOptions, function (error) {
+                  if (error) {
+                       console.log(error);
+                       callback(error);
+                   }
+               });
+              }
+            });
+          
+            return res.status(200).send(finaldata);
+        }
+        else {
+            var err={
+                is_error:true,
+                message: "wrong event id or you may not have access to update "
+            };
+            return res.status(404).send(err);
+        }
+    });
+});
+
+router.post("/WelcomeMail", async function (req, res,next)
+{
+    var {
+        username
+    } = req.body;
+    var check = user_details.findOne( 
+        { username:username}
+    )
+    await check.exec((err, data) =>
+    {
+        if (err) {
+            var err = {
+                is_error: true,
+                message: err.message,
+            };
+            return res.status(500).send(err);
+        }
+        else if(data){        
+            var finaldata ={
+                is_error:false,
+                message: "value updated succesfully"
+            };
+          
+          var readHTMLFile = function(path, callback) {
+            fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+                if (err) {
+                    throw err;
+                    callback(err);
+                }
+                else {
+                    callback(null, html);
+                }
+            });
+        };
+
+            var transporter = nodemailer.createTransport({
+               service: 'gmail',
+               name:"SAGAR18-11",
+               host: "smtp.gmail.com",
+               port: 465,   //587
+               secure: true, //for true 465, 
+                auth: {
+                       user: mail_file.email,
+                       pass: mail_file.password
+                }
+            });
+          
+            readHTMLFile("E:/CROSSIFY/Crossify Web App/views/WelcomeEmail.html", function(err, html) {
+              var template = handlebars.compile(html);
+                var replacements = {
+                  username: username,
+                };
+                var htmlToSend = template(replacements);
+                const mailOptions = {
+                  from: 'crossify.vgec@gmail.com',
+                  to: data.email, 
+                  subject: "Welcome To Crossify",
+                  html: htmlToSend,
+                  // attachments: [
+                  //  { filename: "crossify.pptx", path: "../Crossify Web App/Crossify.pptx", cid: "crossify@ppt" }
+                  // ]
+                };
+                transporter.sendMail(mailOptions, function (error) {
+                  if (error) {
+                       console.log(error);
+                       callback(error);
+                   }
+               });
+            });
+          
+            return res.status(200).send(finaldata);
+        }
+        else {
+            var err={
+                is_error:true,
+                message: "wrong event id or you may not have access to update "
+            };
+            return res.status(404).send(err);
+        }
+    });
+});
+
+router.post("/ForgotMail", async function (req, res,next)
+{
+    var {
+        email
+    } = req.body;
+    var check = user_details.findOne( 
+        { email:email}
+    )
+    await check.exec((err, data) =>
+    {
+        if (err) {
+            var err = {
+                is_error: true,
+                message: err.message,
+            };
+            return res.status(500).send(err);
+        }
+        else if(data){        
+            var finaldata ={
+                is_error:false,
+                message: "value updated succesfully"
+            };
+          
+          var readHTMLFile = function(path, callback) {
+            fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+                if (err) {
+                    throw err;
+                    callback(err);
+                }
+                else {
+                    callback(null, html);
+                }
+            });
+        };
+
+            var transporter = nodemailer.createTransport({
+               service: 'gmail',
+               name:"SAGAR18-11",
+               host: "smtp.gmail.com",
+               port: 465,   //587
+               secure: true, //for true 465, 
+                auth: {
+                       user: mail_file.email,
+                       pass: mail_file.password
+                }
+            });
+          
+            readHTMLFile("E:/CROSSIFY/Crossify Web App/views/ForgotEmail.html", function(err, html) {
+              var template = handlebars.compile(html);
+                var replacements = {
+                  username: data.username,
+                  forgot_password_link:"ac7514@f$*790^^"  // work for golu:text append karie linkma e....
+                };
+                var htmlToSend = template(replacements);
+                const mailOptions = {
+                  from: 'crossify.vgec@gmail.com',
+                  to: email, 
+                  subject: "Forgot Password",
+                  html: htmlToSend,
+                  // attachments: [
+                  //  { filename: "crossify.pptx", path: "../Crossify Web App/Crossify.pptx", cid: "crossify@ppt" }
+                  // ]
+                };
+                transporter.sendMail(mailOptions, function (error) {
+                  if (error) {
+                       console.log(error);
+                       callback(error);
+                   }
+               });
+            });
+          
+            return res.status(200).send(finaldata);
+        }
+        else {
+            var err={
+                is_error:true,
+                message: "wrong event id or you may not have access to update "
+            };
+            return res.status(404).send(err);
+        }
+    });
+});
+
+
+router.post("/UserNameCheck", async function (req, res, next)
+{
+  var { username } = req.body;
+  console.log(username);
+  var check = user_details.findOne({ username: username });
+  await check.exec((err, data) =>
+  {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if(!data){
+      var error = {
+        check: true,
+        is_error: true,
+        message: "not found",
+      };
+      return res.status(200).send(error);
+    }
+    else {
+      var finaldata = {
+        check: true,
+        is_error: false,
+        message: "data send",
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 module.exports = router;

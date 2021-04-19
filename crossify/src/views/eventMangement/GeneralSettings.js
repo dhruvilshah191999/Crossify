@@ -130,22 +130,22 @@ export default function GeneralSettings(props) {
             validate={() => {
               const errors = {};
               if (!event_name) {
-                errors.event_name = "Event Name is Required!!!";
+                errors.event_name = "Event name is required !";
               } else if (!address) {
-                errors.address = "Address is Required !!!";
+                errors.address = "Address is required !";
               } else if (!statename || statename === "Select Option") {
-                errors.statename = "State is Required !!!";
+                errors.statename = "State is required !";
               } else if (!cityname || cityname === "Select Option") {
-                errors.cityname = "City is Required !!!";
+                errors.cityname = "City is required !";
               } else if (!postalcode) {
-                errors.postalcode = "PostalCode is Required !!!";
+                errors.postalcode = "PostalCode is required !";
               } else if (postalcode.length != 6) {
-                errors.postalcode = "Pin Code Should Be in 6 Digits !!!";
+                errors.postalcode = "PostalCode should be in 6 digits !!!";
               } else if (
                 !maximum_participants ||
                 maximum_participants === " "
               ) {
-                errors.maximum_participants = "Capacity is Required !!!";
+                errors.maximum_participants = "Capacity is required !";
               }
               return errors;
             }}
@@ -259,7 +259,7 @@ export default function GeneralSettings(props) {
                               onChange={(e) => onChange(e)}
                               onBlur={handleBlur}
                             />
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.event_name &&
                                 touched.event_name &&
                                 errors.event_name}
@@ -313,7 +313,7 @@ export default function GeneralSettings(props) {
                               onChange={(e) => onChange(e)}
                               onBlur={handleBlur}
                             />
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.address &&
                                 touched.address &&
                                 errors.address}
@@ -343,9 +343,7 @@ export default function GeneralSettings(props) {
                                 </option>
                               ))}
                             </select>
-                            <p style={{ color: "#3182ce" }}>
-                              {errors.statename}
-                            </p>
+                            <p className="FormError">{errors.statename}</p>
                           </div>
                         </div>
                         <div className="w-full lg:w-4/12 px-4">
@@ -371,9 +369,7 @@ export default function GeneralSettings(props) {
                                 </option>
                               ))}
                             </select>
-                            <p style={{ color: "#3182ce" }}>
-                              {errors.cityname}
-                            </p>
+                            <p className="FormError">{errors.cityname}</p>
                           </div>
                         </div>
                         <div className="w-full lg:w-4/12 px-4">
@@ -392,7 +388,7 @@ export default function GeneralSettings(props) {
                               onChange={(e) => onChange(e)}
                               onBlur={handleBlur}
                             />
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.postalcode &&
                                 touched.postalcode &&
                                 errors.postalcode}
@@ -438,7 +434,7 @@ export default function GeneralSettings(props) {
                               onChange={(e) => onChange(e)}
                               onBlur={handleBlur}
                             />
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.maximum_participants &&
                                 touched.maximum_participants &&
                                 errors.maximum_participants}

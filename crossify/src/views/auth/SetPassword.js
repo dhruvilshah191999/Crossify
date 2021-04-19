@@ -11,7 +11,7 @@ import { Formik } from "formik";
 var vertical = "top";
 var horizontal = "center";
 
-function Login() {
+function SetPassword() {
   let history = useHistory();
   const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
@@ -20,9 +20,10 @@ function Login() {
   });
 
   const [errorStatus, setError] = useState(false);
+  const [successStatus, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
-  const { email, password } = formData;
+  const { email, password, confirm_password } = formData;
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,6 +36,7 @@ function Login() {
       return;
     }
     setError(false);
+    setSuccess(false);
   };
 
   const onChange = (e) =>
@@ -52,13 +54,22 @@ function Login() {
           {message}
         </Alert>
       </Snackbar>
+      {/* alert show when password set successfully */}
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={successStatus}
+        autoHideDuration={2000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose}>{message}</Alert>
+      </Snackbar>
       <div className="flex content-center items-center justify-center h-full">
         <div className="w-full lg:w-4/12 px-4">
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
             <div className="rounded-t mb-0 px-6 py-6">
               <div className="text-center">
                 <h1 className="text-gray-600 text-sm font-bold">
-                  Sign in with
+                  Set Your New Password
                 </h1>
               </div>
             </div>
@@ -67,14 +78,14 @@ function Login() {
                 initialValues={formData}
                 validate={() => {
                   const errors = {};
-                  if (!email) {
-                    errors.email = "Email is required !";
-                  } else if (
-                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
-                  ) {
-                    errors.email = "Invalid email address !";
-                  } else if (!password) {
+                  if (!password) {
                     errors.password = "Password is required !";
+                  } else if (password.length < 6) {
+                    errors.password = "Minimim 6 characters are required !";
+                  } else if (confirm_password) {
+                    errors.confirm_password = "Confirm password is required !";
+                  } else if (password != confirm_password) {
+                    errors.confirm_password = "Password does not match !";
                   }
                   return errors;
                 }}
@@ -100,13 +111,21 @@ function Login() {
                       setError(true);
                       setMessage(res.data.message);
                     } else {
-                      localStorage.setItem("jwt", res.data.token);
-                      islogin_dispatch({ type: "Login-Status", status: true });
-                      dispatch({ type: "ADD_USER", payload: res.data.data });
-                      history.push("/");
-                      const name =
-                        res.data.data.fname + " " + res.data.data.lname;
-                      notifySuccessLogin(name);
+                      // password successfully set thai jay ana mate
+                      setSuccess(true);
+                      setMessage("Your Password Set Successfully !!!");
+                      setTimeout(() => {
+                        localStorage.setItem("jwt", res.data.token);
+                        islogin_dispatch({
+                          type: "Login-Status",
+                          status: true,
+                        });
+                        dispatch({ type: "ADD_USER", payload: res.data.data });
+                        history.push("/");
+                        const name =
+                          res.data.data.fname + " " + res.data.data.lname;
+                        notifySuccessLogin(name);
+                      }, 3000);
                     }
                   } catch (error) {
                     console.log(error);
@@ -129,27 +148,6 @@ function Login() {
                         className="block uppercase text-gray-700 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Email
-                      </label>
-                      <input
-                        type="text"
-                        className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                        placeholder="Email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => onChange(e)}
-                        onBlur={handleBlur}
-                      />
-                      <p className="FormError">
-                        {errors.email && touched.email && errors.email}
-                      </p>
-                    </div>
-
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
-                      >
                         Password
                       </label>
                       <input
@@ -165,34 +163,41 @@ function Login() {
                         {errors.password && touched.password && errors.password}
                       </p>
                     </div>
+
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Confirm Password
+                      </label>
+                      <input
+                        type="password"
+                        className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                        placeholder="Confirm Password"
+                        name="confirm_password"
+                        value={confirm_password}
+                        onChange={(e) => onChange(e)}
+                        onBlur={handleBlur}
+                      />
+                      <p className="FormError">
+                        {errors.confirm_password &&
+                          touched.confirm_password &&
+                          errors.confirm_password}
+                      </p>
+                    </div>
                     <div className="text-center mt-6">
                       <button
                         className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                         type="submit"
                         disabled={isSubmitting}
                       >
-                        Sign In
+                        Submit
                       </button>
                     </div>
                   </form>
                 )}
               </Formik>
-            </div>
-          </div>
-          <div className="flex flex-wrap mt-6 relative">
-            <div className="w-1/2">
-              <a
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-                className="text-gray-300"
-              >
-                <small>Forgot password?</small>
-              </a>
-            </div>
-            <div className="w-1/2 text-right">
-              <Link to="/auth/register" className="text-gray-300">
-                <small>Create new account</small>
-              </Link>
             </div>
           </div>
         </div>
@@ -201,4 +206,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SetPassword;

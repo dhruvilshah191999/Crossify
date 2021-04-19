@@ -11,7 +11,7 @@ import { Formik } from "formik";
 var vertical = "top";
 var horizontal = "center";
 
-function Login() {
+function ForgotPassword() {
   let history = useHistory();
   const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
@@ -20,6 +20,7 @@ function Login() {
   });
 
   const [errorStatus, setError] = useState(false);
+  const [successStatus, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const { email, password } = formData;
@@ -35,6 +36,7 @@ function Login() {
       return;
     }
     setError(false);
+    setSuccess(false);
   };
 
   const onChange = (e) =>
@@ -52,13 +54,22 @@ function Login() {
           {message}
         </Alert>
       </Snackbar>
+      {/* password mail successfully send */}
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={successStatus}
+        autoHideDuration={2000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose}>{message}</Alert>
+      </Snackbar>
       <div className="flex content-center items-center justify-center h-full">
         <div className="w-full lg:w-4/12 px-4">
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
             <div className="rounded-t mb-0 px-6 py-6">
               <div className="text-center">
                 <h1 className="text-gray-600 text-sm font-bold">
-                  Sign in with
+                  Forgot Password
                 </h1>
               </div>
             </div>
@@ -73,11 +84,10 @@ function Login() {
                     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
                   ) {
                     errors.email = "Invalid email address !";
-                  } else if (!password) {
-                    errors.password = "Password is required !";
                   }
                   return errors;
                 }}
+                //ahiya golu tare API call karwani when click on onsubmit
                 onSubmit={async ({ setSubmitting }) => {
                   const Credentials = {
                     login_username: email,
@@ -100,6 +110,9 @@ function Login() {
                       setError(true);
                       setMessage(res.data.message);
                     } else {
+                      /*show alert when successfully mail sent */
+                      setSuccess(true);
+                      setMessage("Email Sent For Password Change.");
                       localStorage.setItem("jwt", res.data.token);
                       islogin_dispatch({ type: "Login-Status", status: true });
                       dispatch({ type: "ADD_USER", payload: res.data.data });
@@ -144,55 +157,18 @@ function Login() {
                         {errors.email && touched.email && errors.email}
                       </p>
                     </div>
-
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
-                      >
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                        placeholder="Password"
-                        name="password"
-                        value={password}
-                        onChange={(e) => onChange(e)}
-                        onBlur={handleBlur}
-                      />
-                      <p className="FormError">
-                        {errors.password && touched.password && errors.password}
-                      </p>
-                    </div>
                     <div className="text-center mt-6">
                       <button
                         className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                         type="submit"
                         disabled={isSubmitting}
                       >
-                        Sign In
+                        Submit
                       </button>
                     </div>
                   </form>
                 )}
               </Formik>
-            </div>
-          </div>
-          <div className="flex flex-wrap mt-6 relative">
-            <div className="w-1/2">
-              <a
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-                className="text-gray-300"
-              >
-                <small>Forgot password?</small>
-              </a>
-            </div>
-            <div className="w-1/2 text-right">
-              <Link to="/auth/register" className="text-gray-300">
-                <small>Create new account</small>
-              </Link>
             </div>
           </div>
         </div>
@@ -201,4 +177,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPassword;

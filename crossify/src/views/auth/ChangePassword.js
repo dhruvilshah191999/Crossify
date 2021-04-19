@@ -76,23 +76,23 @@ function ChangePassword() {
               validate={() => {
                 const errors = {};
                 if (!email) {
-                  errors.email = "Email is Required!!!";
+                  errors.email = "Email is required !";
                 } else if (
                   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
                 ) {
-                  errors.email = "Invalid email address";
+                  errors.email = "Invalid email address !";
                 } else if (!password) {
-                  errors.password = "Old Password is Required !!!";
+                  errors.password = "Old password is required !";
                 } else if (!new_password) {
-                  errors.new_password = "New Password is Required !!!";
+                  errors.new_password = "New password is required !";
                 } else if (password === new_password) {
                   errors.new_password =
-                    "New Password is Same As Old Password !!!";
+                    "New password is same as old password !";
                 } else if (!confirm_new_password) {
-                  errors.confirm_new_password = "Confirm Password Required !!!";
+                  errors.confirm_new_password = "Confirm password required !";
                 } else if (new_password != confirm_new_password) {
                   errors.confirm_new_password =
-                    "Confirm Password Does Not Match !!!";
+                    "Confirm password does not match !";
                 }
                 return errors;
               }}
@@ -152,7 +152,7 @@ function ChangePassword() {
                       onChange={(e) => onChange(e)}
                       onBlur={handleBlur}
                     />
-                    <p style={{ color: "#3182ce" }}>
+                    <p className="FormError">
                       {errors.email && touched.email && errors.email}
                     </p>
                   </div>
@@ -173,7 +173,7 @@ function ChangePassword() {
                       onChange={(e) => onChange(e)}
                       onBlur={handleBlur}
                     />
-                    <p style={{ color: "#3182ce" }}>
+                    <p className="FormError">
                       {errors.password && touched.password && errors.password}
                     </p>
                   </div>
@@ -194,7 +194,7 @@ function ChangePassword() {
                       onChange={(e) => onChange(e)}
                       onBlur={handleBlur}
                     />
-                    <p style={{ color: "#3182ce" }}>
+                    <p className="FormError">
                       {errors.new_password &&
                         touched.new_password &&
                         errors.new_password}
@@ -217,7 +217,7 @@ function ChangePassword() {
                       onChange={(e) => onChange(e)}
                       onBlur={handleBlur}
                     />
-                    <p style={{ color: "#3182ce" }}>
+                    <p className="FormError">
                       {errors.confirm_new_password &&
                         touched.confirm_new_password &&
                         errors.confirm_new_password}
