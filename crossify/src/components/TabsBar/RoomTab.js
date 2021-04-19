@@ -1,10 +1,11 @@
 import React from "react";
 import ChatMessage from "components/Message/Message";
 import addNotification from "react-push-notification";
+import urlObject from "../../config/default.json";
 import io from "socket.io-client";
 import axios from "axios";
-
-let socket = io("http://localhost:5000", {
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
   transport: ["websocket", "polling", "flashsocket"],
 });
 
@@ -35,7 +36,6 @@ export default class RoomTab extends React.Component {
 
   componentDidMount = async () => {
     const token = localStorage.getItem("jwt");
-
     const { club_id } = this.props;
     const config = {
       method: "POST",

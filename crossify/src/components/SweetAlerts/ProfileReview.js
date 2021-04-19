@@ -7,7 +7,12 @@ import MapContainer from "../Maps/MapCode";
 import AskQuestion from "components/SweetAlerts/AskQuestion";
 import ChatMessage from "components/Cards/ChatMessage";
 import EvaulateProfile from "components/Cards/MemberProfileDetails";
-
+import urlObject from "../../config/default.json";
+import io from "socket.io-client";
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
+  transport: ["websocket", "polling", "flashsocket"],
+});
 Modal.defaultStyles = {};
 
 var customModalStyles = {
@@ -30,15 +35,34 @@ class MyModal extends Component {
   };
 
   acceptRequest = async () => {
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = this.props.club_id;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var des = ` Your Request of joining ${clubName} club has been accepted by ${firstName}`;
+    socket.emit("sendNotification", {
+      date: new Date(),
+      description: des,
+      title: "Congratulations! On your new role 🥳",
+      profile_photo: profile_photo,
+      user_id: this.props.user_id,
+    });
     var object = {
       club_id: this.props.club_id,
-      user_id: this.props.user_id
+      user_id: this.props.user_id,
+      token: token,
+      profile_photo: profile_photo,
+      description: des,
     };
     const finaldata = await axios.post(
       "/api/admin/AcceptRequested",
@@ -50,18 +74,37 @@ class MyModal extends Component {
     } else {
       window.location.reload();
     }
-  }
+  };
 
   RejectedRequest = async () => {
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = this.props.club_id;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var des = ` Your Request of joining ${clubName} club has been rejected by ${firstName}`;
+    socket.emit("sendNotification", {
+      date: new Date(),
+      description: des,
+      title: "offo..! You request has been rejected ☹️",
+      profile_photo: profile_photo,
+      user_id: this.props.user_id,
+    });
     var object = {
       club_id: this.props.club_id,
       user_id: this.props.user_id,
+      token: token,
+      profile_photo: profile_photo,
+      description: des,
     };
     const finaldata = await axios.post(
       "/api/admin/RemoveRequested",
@@ -86,7 +129,8 @@ class MyModal extends Component {
       >
         <div className="flex items-start justify-between p-5 ml-1 border-b border-solid bg-gray-600 border-gray-300 rounded-t">
           <h3 className="text-2xl">
-            View Profile of <span className="font-semibold">{ this.props.name}</span>
+            View Profile of{" "}
+            <span className="font-semibold">{this.props.name}</span>
             {/* {this.props.username} */}
           </h3>
           <button
@@ -99,7 +143,10 @@ class MyModal extends Component {
           </button>
         </div>
         <div className="px-6 py-4 ">
-          <EvaulateProfile user_id={this.props.user_id} club_id={ this.props.club_id}/>
+          <EvaulateProfile
+            user_id={this.props.user_id}
+            club_id={this.props.club_id}
+          />
         </div>
         <div className="flex items-center justify-end py-2 mb-2 ">
           <button

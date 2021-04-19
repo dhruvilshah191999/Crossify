@@ -99,9 +99,14 @@ function SelectColumnFilter({
 export default function App(props) {
   const [clubId, setClubId] = useState(props.club_id);
   const [eventFile, setEventFile] = useState(props.data);
+  console.log(eventFile);
   const openModal = (event) => {
     ModalManager.open(
-      <EventReview onRequestClose={() => true} eventData={event} />
+      <EventReview
+        onRequestClose={() => true}
+        eventData={event}
+        club_id={clubId}
+      />
     );
   };
   const openModal2 = () => {

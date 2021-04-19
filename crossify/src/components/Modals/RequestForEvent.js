@@ -117,39 +117,39 @@ function MyModal(props) {
             validate={() => {
               const errors = {};
               if (!event_name) {
-                errors.event_name = "Club Name is Required!!!";
+                errors.event_name = "Club name is required !";
               } else if (category.length === 0) {
-                errors.category = "Category Required !!!";
+                errors.category = "Category is required !";
               } else if (!address) {
-                errors.address = "Address is Required !!!";
+                errors.address = "Address is required !";
               } else if (!statename) {
-                errors.statename = "State is Required !!!";
+                errors.statename = "State is required !";
               } else if (!cityname) {
-                errors.cityname = "City is Required !!!";
+                errors.cityname = "City is required !";
               } else if (!cityname) {
-                errors.cityname = "City is Required !!!";
+                errors.cityname = "City is required !";
               } else if (!postalcode) {
-                errors.postalcode = "PostalCode is Required !!!";
+                errors.postalcode = "PostalCode is required !";
               } else if (postalcode.length != 6) {
-                errors.postalcode = "Pin Code Should Be in 6 Digits !!!";
+                errors.postalcode = "PostalCode should be in 6 digits !";
               } else if (!capacity) {
-                errors.capacity = "Capacity is Required !!!";
+                errors.capacity = "Capacity is required !";
               } else if (!(capacity > 0)) {
-                errors.capacity = "Capacity Should Be Greater Than Zero !!!";
+                errors.capacity = "Capacity should be greater than zero !";
               } else if (!last_registraiton_date) {
-                errors.last_registraiton_date = "Last Date is Required !!!";
+                errors.last_registraiton_date = "Last date is required !";
               } else if (!starting_date) {
-                errors.starting_date = "Starting Date is Required !!!";
+                errors.starting_date = "Starting date is required !";
               } else if (!ending_date) {
-                errors.ending_date = "Ending Date is Required !!!";
+                errors.ending_date = "Ending date is required !";
               } else if (!starting_time) {
-                errors.starting_time = "Starting Time is Required !!!";
+                errors.starting_time = "Starting time is required !";
               } else if (!ending_time) {
-                errors.ending_time = "Ending Time is Required !!!";
+                errors.ending_time = "Ending time is required !";
               } else if (!description) {
-                errors.description = "Description is Required !!!";
+                errors.description = "Description is required !";
               } else if (!eligibility) {
-                errors.eligibility = "Eligibility is Required !!!";
+                errors.eligibility = "Eligibility is required !";
               }
               return errors;
             }}
@@ -252,7 +252,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.event_name &&
                           touched.event_name &&
                           errors.event_name}
@@ -295,7 +295,7 @@ function MyModal(props) {
                         parentCallback={handleCategory}
                       ></MultiSelect>
                     </div>
-                    <p style={{ color: "#3182ce" }}>
+                    <p className="FormError">
                       {/* {errors.category &&
                                 touched.category && errors.category} */}
                       {category.length === 0 ? errors.category : ""}
@@ -326,7 +326,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.address && touched.address && errors.address}
                       </p>
                     </div>
@@ -354,7 +354,7 @@ function MyModal(props) {
                           </option>
                         ))}
                       </select>
-                      <p style={{ color: "#3182ce" }}>{errors.statename}</p>
+                      <p className="FormError">{errors.statename}</p>
                     </div>
                   </div>
                   <div className="w-full lg:w-4/12 px-4">
@@ -380,7 +380,7 @@ function MyModal(props) {
                           </option>
                         ))}
                       </select>
-                      <p style={{ color: "#3182ce" }}>{errors.cityname}</p>
+                      <p className="FormError">{errors.cityname}</p>
                     </div>
                   </div>
                   <div className="w-full lg:w-4/12 px-4">
@@ -400,7 +400,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.postalcode &&
                           touched.postalcode &&
                           errors.postalcode}
@@ -450,7 +450,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.capacity && touched.capacity && errors.capacity}
                       </p>
                     </div>
@@ -471,7 +471,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.last_registraiton_date &&
                           touched.last_registraiton_date &&
                           errors.last_registraiton_date}
@@ -494,7 +494,7 @@ function MyModal(props) {
                         className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.starting_date &&
                           touched.starting_date &&
                           errors.starting_date}
@@ -517,7 +517,7 @@ function MyModal(props) {
                         className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.ending_date &&
                           touched.ending_date &&
                           errors.ending_date}
@@ -540,7 +540,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.starting_time &&
                           touched.starting_time &&
                           errors.starting_time}
@@ -563,7 +563,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.ending_time &&
                           touched.ending_time &&
                           errors.ending_time}
@@ -615,7 +615,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       ></textarea>
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.description &&
                           touched.description &&
                           errors.description}
@@ -640,7 +640,7 @@ function MyModal(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       ></textarea>
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.eligibility &&
                           touched.eligibility &&
                           errors.eligibility}

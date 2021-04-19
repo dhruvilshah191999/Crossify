@@ -128,33 +128,34 @@ function CreateClub(props) {
                   validate={() => {
                     const errors = {};
                     if (!club_name) {
-                      errors.club_name = "Club Name is Required!!!";
+                      errors.club_name = "Club name is required !";
                     } else if (category.length === 0) {
-                      errors.category = "Category Required !!!";
+                      errors.category = "Category required !";
                     } else if (!address) {
-                      errors.address = "Address is Required !!!";
+                      errors.address = "Address is required !";
                     } else if (!statename) {
-                      errors.statename = "State is Required !!!";
+                      errors.statename = "State is required !";
                     } else if (!cityname) {
-                      errors.cityname = "City is Required !!!";
+                      errors.cityname = "City is required !";
                     } else if (!cityname) {
-                      errors.cityname = "City is Required !!!";
+                      errors.cityname = "City is required !";
                     } else if (!postalcode) {
-                      errors.postalcode = "PostalCode is Required !!!";
+                      errors.postalcode = "PostalCode is required !";
                     } else if (postalcode.length != 6) {
-                      errors.postalcode = "Pin Code Should Be in 6 Digits !!!";
+                      errors.postalcode =
+                        "PostalCode should be in 6 digits !!!";
                     } else if (!description) {
-                      errors.description = "Description is Required !!!";
+                      errors.description = "Description is required !";
                     } else if (description.length < 20) {
-                      errors.description = "Minimum Words Not Satified !!!";
+                      errors.description = "Minimum 20 words are required";
                     } else if (!criteria) {
-                      errors.criteria = "Joining Criteria is Required !!!";
+                      errors.criteria = "Joining criteria is required !";
                     } else if (criteria.length < 20) {
-                      errors.criteria = "Minimum Words Not Satified !!!";
+                      errors.criteria = "Minimum 20 words are required";
                     } else if (!rules) {
-                      errors.rules = "Rules are Required !!!";
+                      errors.rules = "Rules are required !";
                     } else if (rules.length < 20) {
-                      errors.rules = "Minimum Words Not Satified !!!";
+                      errors.rules = "Minimum 20 words are required";
                     }
                     return errors;
                   }}
@@ -254,7 +255,7 @@ function CreateClub(props) {
                               onChange={(e) => onChange(e)}
                               onBlur={handleBlur}
                             />
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.club_name &&
                                 touched.club_name &&
                                 errors.club_name}
@@ -303,7 +304,7 @@ function CreateClub(props) {
                               placeholder="Select your relevant Categories"
                               parentCallback={handleCategory}
                             ></MultiSelect>
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {/* {errors.category &&
                                 touched.category && errors.category} */}
                               {category.length === 0 ? errors.category : ""}
@@ -353,7 +354,7 @@ function CreateClub(props) {
                               onChange={(e) => onChange(e)}
                               onBlur={handleBlur}
                             />
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.address &&
                                 touched.address &&
                                 errors.address}
@@ -383,9 +384,7 @@ function CreateClub(props) {
                                 </option>
                               ))}
                             </select>
-                            <p style={{ color: "#3182ce" }}>
-                              {errors.statename}
-                            </p>
+                            <p className="FormError">{errors.statename}</p>
                           </div>
                         </div>
                         <div className="w-full lg:w-4/12 px-4">
@@ -411,9 +410,7 @@ function CreateClub(props) {
                                 </option>
                               ))}
                             </select>
-                            <p style={{ color: "#3182ce" }}>
-                              {errors.cityname}
-                            </p>
+                            <p className="FormError">{errors.cityname}</p>
                           </div>
                         </div>
                         <div className="w-full lg:w-4/12 px-4">
@@ -433,7 +430,7 @@ function CreateClub(props) {
                               onChange={(e) => onChange(e)}
                               onBlur={handleBlur}
                             />
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.postalcode &&
                                 touched.postalcode &&
                                 errors.postalcode}
@@ -485,7 +482,7 @@ function CreateClub(props) {
                               onBlur={handleBlur}
                               rows="6"
                             ></textarea>
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.description &&
                                 touched.description &&
                                 errors.description}
@@ -510,7 +507,7 @@ function CreateClub(props) {
                               onBlur={handleBlur}
                               rows="6"
                             ></textarea>
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.criteria &&
                                 touched.criteria &&
                                 errors.criteria}
@@ -535,7 +532,7 @@ function CreateClub(props) {
                               onBlur={handleBlur}
                               rows="6"
                             ></textarea>
-                            <p style={{ color: "#3182ce" }}>
+                            <p className="FormError">
                               {errors.rules && touched.rules && errors.rules}
                             </p>
                           </div>

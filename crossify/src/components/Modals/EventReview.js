@@ -8,7 +8,12 @@ import Tag from "components/Tag";
 import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/SweetAlerts/AskQuestion";
 import ChatMessage from "components/Cards/ChatMessage";
-
+import urlObject from "../../config/default.json";
+import io from "socket.io-client";
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
+  transport: ["websocket", "polling", "flashsocket"],
+});
 Modal.defaultStyles = {};
 
 var customModalStyles = {
@@ -30,10 +35,12 @@ class MyModal extends Component {
       message: [],
       loading: false,
       description: null,
+      clubId: this.props.club_id,
     };
   }
 
   async componentDidMount() {
+    console.log(this.state.event_data);
     const config = {
       method: "POST",
       header: {
@@ -64,6 +71,7 @@ class MyModal extends Component {
   };
 
   AcceptEvent = async () => {
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
@@ -71,8 +79,29 @@ class MyModal extends Component {
       },
       validateStatus: () => true,
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = this.props.club_id;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var userId = this.state.event_data.organizer_id;
+    var eventName = this.state.event_data.event_name;
+    var des = ` Your Request of Event ${eventName} in  ${clubName} club has been accepted by ${firstName}, BTW we need a pass 😉`;
+    socket.emit("sendNotification", {
+      date: new Date(),
+      description: des,
+      title: "Congratulations! your event just got approval🥳",
+      profile_photo: profile_photo,
+      user_id: userId,
+    });
     var send_data = {
       event_id: this.state.event_data._id,
+      user_id: userId,
+      token: token,
+      profile_photo: profile_photo,
+      description: des,
     };
     const finaldata = await axios.post(
       "/api/admin/acceptEvent",
@@ -87,6 +116,7 @@ class MyModal extends Component {
   };
 
   RejectedEvent = async () => {
+    //it is not working properly because need to add description property
     const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
@@ -95,10 +125,29 @@ class MyModal extends Component {
       },
       validateStatus: () => true,
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = this.props.club_id;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var userId = this.state.event_data.organizer_id;
+    var eventName = this.state.event_data.event_name;
+    var des = ` Your Request of Event ${eventName} in  ${clubName} club has been rejected by ${firstName}, Bring Something more interesting next time 😊`;
+    socket.emit("sendNotification", {
+      date: new Date(),
+      description: des,
+      title: "alas! your event just got rejected ☹️",
+      profile_photo: profile_photo,
+      user_id: userId,
+    });
     var send_data = {
       event_id: this.state.event_data._id,
-      description: this.state.description,
-      token,
+      user_id: userId,
+      token: token,
+      profile_photo: profile_photo,
+      description: des,
     };
     const finaldata = await axios.post(
       "/api/admin/rejectedEvent",

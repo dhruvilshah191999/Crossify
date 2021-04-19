@@ -191,6 +191,7 @@
 .text-red-900 {
   color: #7f1d1d;
 }
+
 .hover\:bg-alpha:hover {
   background-color: var(--color-alpha);
 }
@@ -206,6 +207,7 @@
 .hover\:bg-gray-200:hover {
   background-color: #fafafa;
 }
+
 .hover\:text-lightalpha:hover {
   color: var(--color-lightalpha);
 }
@@ -283,6 +285,7 @@
 .text-beta {
   color: var(--color-beta);
 }
+
 .text-offwhite {
   color: rgb(243, 235, 235);
 }
@@ -342,6 +345,7 @@
 .border-b {
   border-bottom: 1px solid #edf2f7;
 }
+
 .border-b2 {
   border-bottom: 1px solid #e2e8f0;
 }
@@ -397,6 +401,7 @@
 .bg-overlay {
   background-color: rgba(14, 14, 17, 0.7);
 }
+
 .ho .text-beta {
   color: var(--color-beta);
 }
@@ -428,6 +433,7 @@
 .gap-1 {
   gap: 1.5rem;
 }
+
 .content-end {
   align-content: flex-end;
 }
@@ -443,15 +449,19 @@
 .max-w-370-px {
   max-width: 370px;
 }
+
 .max-w-25ch {
   max-width: 25ch;
 }
+
 .w-800px {
   width: 800px !important;
 }
+
 .w-400px {
   width: 400px !important;
 }
+
 .leading-wide {
   line-height: 1.8;
 }
@@ -476,12 +486,15 @@
 .max-ch-20 {
   max-width: 20ch;
 }
+
 .max-ch-10 {
   max-width: 10ch;
 }
+
 .max-ch-15 {
   max-width: 15ch;
 }
+
 .max-ch-25 {
   max-width: 25ch;
 }
@@ -524,6 +537,7 @@
   margin-left: 4rem;
   margin-right: 4rem;
 }
+
 .mx-8 {
   margin-left: 2rem;
   margin-right: 2rem;
@@ -552,11 +566,13 @@
 .w-24 {
   width: 13.5rem;
 }
+
 /* 850 for gaming scrren */
 .event-image {
   width: 750px;
   height: 420px;
 }
+
 .border-red-500 {
   border-color: #f56565;
 }
@@ -565,6 +581,7 @@
   width: 700px;
   height: 400px;
 }
+
 .mx-16 {
   margin-left: 5.5rem;
   margin-right: 5.5rem;
@@ -574,6 +591,7 @@
   margin-left: 0.75rem;
   margin-right: 0.75rem;
 }
+
 .mx-6 {
   margin-left: 2.6rem;
   margin-right: 2.6rem;
@@ -635,6 +653,7 @@
   margin-left: 4rem;
   margin-right: 4rem;
 }
+
 .mt-auto {
   margin-top: auto;
 }
@@ -704,6 +723,7 @@
   padding-left: 1.7rem;
   padding-right: 1.7rem;
 }
+
 .h-100-px {
   height: 100px;
 }
@@ -721,6 +741,7 @@
 }
 
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
+
 /* 
 details {
   position: relative;
@@ -1017,6 +1038,7 @@ input.react-input-tags-input {
   padding-top: 0.7rem;
   padding-bottom: 0.7rem;
 }
+
 .pt-4 {
   padding-top: 1rem;
 }
@@ -1112,7 +1134,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 div.sticky {
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
+  /* Safari */
   position: sticky;
   right: 0;
 }
@@ -1241,14 +1264,27 @@ div.sticky {
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #ddd;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
   background: 0 0;
   width: 0;
+}
+.FormError {
+  color: #ff0000;
+  padding-top: 5px;
+  font-size: 12px;
+}
+
+.FormSuccess {
+  color: #00ff00;
+  padding-top: 5px;
+  font-size: 12px;
 }
 
 .addeventatc_icon.atc_node.notranslate {

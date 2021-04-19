@@ -9,3 +9,5 @@ Is it possible to login with facebook and Google without writing login password
 MySettings    => Needs to add section to modify Interest , Change Profile Photo
 Auto suggestion in location search field
 Navbar options in manage pages
+Backend connection in Profile PHoto update and interest update 
+In maps add booked seat and total seats dynamically (Currently it is hard coded)

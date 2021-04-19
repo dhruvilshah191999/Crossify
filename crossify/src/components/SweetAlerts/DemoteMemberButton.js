@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
 import axios from "axios";
+import urlObject from "../../config/default.json";
+import io from "socket.io-client";
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
+  transport: ["websocket", "polling", "flashsocket"],
+});
 
 export default class SweetAlertModal extends Component {
   constructor(props) {
@@ -21,15 +27,33 @@ export default class SweetAlertModal extends Component {
   };
 
   confirmProcess = async () => {
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = this.state.club_id;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var des = ` You got demoted in ${clubName} club by ${firstName}`;
+    socket.emit("sendNotification", {
+      date: new Date(),
+      description: des,
+      title: "Oops...! you got demotion 🥺",
+      profile_photo: profile_photo,
+      user_id: this.state.user_id,
+    });
     var object = {
       club_id: this.state.club_id,
       user_id: this.state.user_id,
+      token: token,
+      description: des,
     };
     const finaldata = await axios.post("/api/admin/Demotion", object, config);
     if (finaldata.data.is_error) {
@@ -69,7 +93,7 @@ export default class SweetAlertModal extends Component {
       <div>
         {this.state.isMember ? (
           <button className=" text-lg mr-2 " type="button">
-            <i className="fas fa-level-down-alt text-orange-500 text-lg"></i>
+            <i class="fas fa-level-down-alt text-orange-500 text-lg"></i>
           </button>
         ) : (
           <button

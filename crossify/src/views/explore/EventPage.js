@@ -25,6 +25,7 @@ const Tag = (props) => {
 
 export default function EventPage(props) {
   let history = useHistory();
+  const [isAdmin, setIsAdmin] = useState(false);
   var { id } = useParams();
   const [loading, setloading] = useState(false);
   const [like, setLike] = useState(false);
@@ -33,7 +34,9 @@ export default function EventPage(props) {
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
-
+  const gotoAdmin = () => {
+    history.push("/admin/" + id);
+  };
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     async function event_details() {
@@ -209,6 +212,19 @@ export default function EventPage(props) {
                 <div className="ml-auto mt-4 mr-3">
                   {" "}
                   <ReportEventButton event_id={id}></ReportEventButton>
+                </div>
+                {/* TODO: setting as club page */}
+                <div className="ml-auto mt-4 mr-3">
+                  {isAdmin ? (
+                    <button
+                      className="float-right text-lg"
+                      onClick={() => gotoAdmin()}
+                    >
+                      <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">

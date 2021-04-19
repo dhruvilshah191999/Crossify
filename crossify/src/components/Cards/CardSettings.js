@@ -77,23 +77,23 @@ export default function CardSettings(props) {
         validate={() => {
           const errors = {};
           if (!club_name) {
-            errors.club_name = "Club Name is Required!!!";
+            errors.club_name = "Club name is required !";
           } else if (!address) {
-            errors.address = "Address is Required !!!";
+            errors.address = "Address is required !";
           } else if (!statename) {
-            errors.statename = "State is Required !!!";
+            errors.statename = "State is required !";
           } else if (!cityname) {
-            errors.cityname = "City is Required !!!";
+            errors.cityname = "City is required !";
           } else if (!cityname) {
-            errors.cityname = "City is Required !!!";
+            errors.cityname = "City is required !";
           } else if (!postalcode) {
-            errors.postalcode = "PostalCode is Required !!!";
+            errors.postalcode = "PostalCode is required !";
           } else if (!description) {
-            errors.description = "Description is Required !!!";
+            errors.description = "Description is required !";
           } else if (!criteria) {
-            errors.criteria = "Joining Criteria is Required !!!";
+            errors.criteria = "Joining criteria is required !";
           } else if (!rules) {
-            errors.rules = "Rules are Required !!!";
+            errors.rules = "Rules are required !";
           }
           return errors;
         }}
@@ -262,7 +262,7 @@ export default function CardSettings(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.club_name &&
                           touched.club_name &&
                           errors.club_name}
@@ -321,7 +321,7 @@ export default function CardSettings(props) {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.address && touched.address && errors.address}
                       </p>
                     </div>
@@ -349,7 +349,7 @@ export default function CardSettings(props) {
                           </option>
                         ))}
                       </select>
-                      <p style={{ color: "#3182ce" }}>{errors.statename}</p>
+                      <p className="FormError">{errors.statename}</p>
                     </div>
                   </div>
                   <div className="w-full lg:w-4/12 px-4">
@@ -375,7 +375,7 @@ export default function CardSettings(props) {
                           </option>
                         ))}
                       </select>
-                      <p style={{ color: "#3182ce" }}>{errors.cityname}</p>
+                      <p className="FormError">{errors.cityname}</p>
                     </div>
                   </div>
                   <div className="w-full lg:w-4/12 px-4">
@@ -394,7 +394,7 @@ export default function CardSettings(props) {
                         onBlur={handleBlur}
                         onChange={(e) => onChange(e)}
                       />
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.postalcode &&
                           touched.postalcode &&
                           errors.postalcode}
@@ -441,7 +441,7 @@ export default function CardSettings(props) {
                         onBlur={handleBlur}
                         rows="6"
                       ></textarea>
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.description &&
                           touched.description &&
                           errors.description}
@@ -465,7 +465,7 @@ export default function CardSettings(props) {
                         onBlur={handleBlur}
                         rows="6"
                       ></textarea>
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.criteria && touched.criteria && errors.criteria}
                       </p>
                     </div>
@@ -487,7 +487,7 @@ export default function CardSettings(props) {
                         onBlur={handleBlur}
                         rows="6"
                       ></textarea>
-                      <p style={{ color: "#3182ce" }}>
+                      <p className="FormError">
                         {errors.rules && touched.rules && errors.rules}
                       </p>
                     </div>

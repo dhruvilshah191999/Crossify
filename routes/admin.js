@@ -533,96 +533,215 @@ router.post("/get-photo-name", async function (req, res, next) {
   });
 });
 
-router.post("/Promotion", async function (req, res, next) {
-  var { user_id, club_id } = req.body;
-  console.log(req.body);
-  var check = member_details.updateOne(
-    { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
-    { $set: { "member_list.$.level": "moderator" } }
-  );
-  await check.exec((err, data) => {
+router.post("/Promotion", auth, async function (req, res, next) {
+  var { user_id, club_id, description } = req.body;
+  var getdata = user_details.findOne({ _id: ObjectId(req.user._id) });
+  getdata.exec(async (err, final) => {
     if (err) {
-      var err = {
+      var error = {
         is_error: true,
         message: err.message,
       };
-      return res.status(500).send(err);
-    } else if (data) {
-      var finaldata = {
-        is_error: false,
-        message: "value updated succesfully",
-      };
-      return res.status(200).send(finaldata);
-    } else {
-      var err = {
-        is_error: true,
-        message: "wrong event id or you may not have access to update ",
-      };
-      return res.status(404).send(err);
+      return res.status(500).send(error);
     }
-  });
-});
-
-router.post("/Demotion", async function (req, res, next) {
-  var { user_id, club_id } = req.body;
-  var check = member_details.updateOne(
-    { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
-    { $set: { "member_list.$.level": "member" } }
-  );
-  await check.exec((err, data) => {
-    if (err) {
-      var err = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(500).send(err);
-    } else if (data) {
-      var finaldata = {
-        is_error: false,
-        message: "value updated succesfully",
-      };
-      return res.status(200).send(finaldata);
-    } else {
-      var err = {
-        is_error: true,
-        message: "wrong event id or you may not have access to update ",
-      };
-      return res.status(404).send(err);
-    }
-  });
-});
-
-router.post("/DeleteMember", async function (req, res, next) {
-  var { user_id, club_id } = req.body;
-  var check = member_details.updateOne(
-    { club_id: ObjectId(club_id), is_active: 1 },
-    { $pull: { member_list: { user: ObjectId(user_id) } } }
-  );
-  await check.exec((err, data) => {
-    if (err) {
-      var err = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(500).send(err);
-    } else {
-      user_details
-        .updateOne(
-          {
-            _id: ObjectId(user_id),
-            is_active: 1,
-          },
-          {
-            $pull: { clubs: ObjectId(club_id) },
+    var object = {
+      date: new Date(),
+      title: "yaay..! You got promotion 🤩",
+      description: description,
+      sender_id: ObjectId(req.user._id),
+      photo: final.profile_photo,
+      isRead: false,
+    };
+    var update = user_details.updateOne(
+      {
+        _id: ObjectId(user_id),
+      },
+      { $push: { inbox: object } }
+    );
+    await update.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data === null || data.length === 0) {
+        var finaldata = {
+          is_error: true,
+          message: "Data Send",
+        };
+        return res.status(404).send(finaldata);
+      } else {
+        var check = member_details.updateOne(
+          { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
+          { $set: { "member_list.$.level": "moderator" } }
+        );
+        check.exec((err, data) => {
+          if (err) {
+            var err = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(500).send(err);
+          } else if (data) {
+            var finaldata = {
+              is_error: false,
+              message: "value updated succesfully",
+            };
+            return res.status(200).send(finaldata);
+          } else {
+            var err = {
+              is_error: true,
+              message: "wrong event id or you may not have access to update ",
+            };
+            return res.status(404).send(err);
           }
-        )
-        .exec();
-      var finaldata = {
-        is_error: false,
-        message: "value updated succesfully",
+        });
+      }
+    });
+  });
+});
+
+router.post("/Demotion", auth, async function (req, res, next) {
+  var { user_id, club_id, description } = req.body;
+  var getdata = user_details.findOne({ _id: ObjectId(req.user._id) });
+  getdata.exec(async (err, final) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
       };
-      return res.status(200).send(finaldata);
+      return res.status(500).send(error);
     }
+    var object = {
+      date: new Date(),
+      title: "Oops...! you got demotion 🥺",
+      description: description,
+      sender_id: ObjectId(req.user._id),
+      photo: final.profile_photo,
+      isRead: false,
+    };
+    var update = user_details.updateOne(
+      {
+        _id: ObjectId(user_id),
+      },
+      { $push: { inbox: object } }
+    );
+    await update.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data === null || data.length === 0) {
+        var finaldata = {
+          is_error: true,
+          message: "Data Send",
+        };
+        return res.status(404).send(finaldata);
+      } else {
+        var check = member_details.updateOne(
+          { club_id: ObjectId(club_id), "member_list.user": ObjectId(user_id) },
+          { $set: { "member_list.$.level": "member" } }
+        );
+        check.exec((err, data) => {
+          if (err) {
+            var err = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(500).send(err);
+          } else if (data) {
+            var finaldata = {
+              is_error: false,
+              message: "value updated succesfully",
+            };
+            return res.status(200).send(finaldata);
+          } else {
+            var err = {
+              is_error: true,
+              message: "wrong event id or you may not have access to update ",
+            };
+            return res.status(404).send(err);
+          }
+        });
+      }
+    });
+  });
+});
+
+router.post("/DeleteMember", auth, async function (req, res, next) {
+  var { user_id, club_id, description } = req.body;
+  var getdata = user_details.findOne({ _id: ObjectId(req.user._id) });
+  getdata.exec(async (err, final) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(error);
+    }
+    var object = {
+      date: new Date(),
+      title: "Oops...! you got kicked 🥺",
+      description: description,
+      sender_id: ObjectId(req.user._id),
+      photo: final.profile_photo,
+      isRead: false,
+    };
+    var update = user_details.updateOne(
+      {
+        _id: ObjectId(user_id),
+      },
+      { $push: { inbox: object } }
+    );
+    await update.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else if (data === null || data.length === 0) {
+        var finaldata = {
+          is_error: true,
+          message: "Data Send",
+        };
+        return res.status(404).send(finaldata);
+      } else {
+        var check = member_details.updateOne(
+          { club_id: ObjectId(club_id), is_active: 1 },
+          { $pull: { member_list: { user: ObjectId(user_id) } } }
+        );
+        check.exec((err, data) => {
+          if (err) {
+            var err = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(500).send(err);
+          } else {
+            user_details
+              .updateOne(
+                {
+                  _id: ObjectId(user_id),
+                  is_active: 1,
+                },
+                {
+                  $pull: { clubs: ObjectId(club_id) },
+                }
+              )
+              .exec();
+            var finaldata = {
+              is_error: false,
+              message: "value updated succesfully",
+            };
+            return res.status(200).send(finaldata);
+          }
+        });
+      }
+    });
   });
 });
 
@@ -935,37 +1054,67 @@ router.post("/getEvent", async function (req, res, next) {
     });
 });
 
-router.post("/acceptEvent", async function (req, res, next) {
-  var { event_id } = req.body;
-  event_details
-    .updateOne(
-      {
-        _id: ObjectId(event_id),
-      },
-      {
-        is_active: true,
-      }
-    )
-    .exec((err, data) => {
-      if (err) {
-        var error = {
-          is_error: true,
-          message: err.message,
-        };
-        return res.status(500).send(error);
-      } else if (data) {
-        var finaldata = {
-          update: true,
-          is_error: false,
-          message: "Data Send",
-        };
-        return res.status(200).send(finaldata);
-      }
-    });
+router.post("/acceptEvent", auth, async function (req, res, next) {
+  var { event_id, user_id, profile_photo, description } = req.body;
+  var object = {
+    date: new Date(),
+    title: "Congratulations! your event just got approval🥳",
+    description: description,
+    sender_id: ObjectId(req.user._id),
+    photo: profile_photo,
+    isRead: false,
+  };
+  var update = user_details.updateOne(
+    {
+      _id: ObjectId(user_id),
+    },
+    { $push: { inbox: object } }
+  );
+  await update.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(error);
+    } else if (data === null || data.length === 0) {
+      var finaldata = {
+        is_error: true,
+        message: "Data Send",
+      };
+      return res.status(404).send(finaldata);
+    } else {
+      event_details
+        .updateOne(
+          {
+            _id: ObjectId(event_id),
+          },
+          {
+            is_active: true,
+          }
+        )
+        .exec((err, data) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(500).send(error);
+          } else if (data) {
+            var finaldata = {
+              update: true,
+              is_error: false,
+              message: "Data Send",
+            };
+            return res.status(200).send(finaldata);
+          }
+        });
+    }
+  });
 });
 
 router.post("/rejectedEvent", auth, async function (req, res, next) {
-  var { event_id, club_id, description } = req.body;
+  var { event_id, description } = req.body;
   var object = {
     send_by: ObjectId(req.user._id),
     message: description,
@@ -1131,13 +1280,20 @@ router.post("/getRequested", async function (req, res, next) {
   });
 });
 
-router.post("/AcceptRequested", async function (req, res, next) {
-  var { club_id, user_id } = req.body;
-
+router.post("/AcceptRequested", auth, async function (req, res, next) {
+  var { club_id, user_id, description, profile_photo } = req.body;
+  var object = {
+    date: new Date(),
+    title: "Congratulations! On your new role 🥳",
+    description: description,
+    sender_id: ObjectId(req.user._id),
+    photo: profile_photo,
+    isRead: false,
+  };
   user_details
     .updateOne(
       { _id: ObjectId(user_id), "club_answer.club": ObjectId(club_id) },
-      { $set: { "club_answer.$.status": "Approved" } }
+      { $set: { "club_answer.$.status": "Approved" }, $push: { inbox: object } }
     )
     .exec();
 
@@ -1209,11 +1365,22 @@ router.post("/AcceptRequested", async function (req, res, next) {
   });
 });
 
-router.post("/RemoveRequested", async function (req, res, next) {
-  var { club_id, user_id } = req.body;
+router.post("/RemoveRequested", auth, async function (req, res, next) {
+  var { club_id, user_id, description, profile_photo } = req.body;
+  var object = {
+    date: new Date(),
+    title: "offo..! You request has been rejected ☹️",
+    description: description,
+    sender_id: ObjectId(req.user._id),
+    photo: profile_photo,
+    isRead: false,
+  };
   var result = user_details.updateOne(
     { _id: ObjectId(user_id), is_active: true },
-    { $pull: { club_answer: { club: ObjectId(club_id) } } }
+    {
+      $pull: { club_answer: { club: ObjectId(club_id) } },
+      $push: { inbox: object },
+    }
   );
   await result.exec((err, data) => {
     if (err) {
@@ -1232,13 +1399,21 @@ router.post("/RemoveRequested", async function (req, res, next) {
   });
 });
 
-router.post("/AcceptRequests", async function (req, res, next) {
-  var { club_id, userArray } = req.body;
+router.post("/AcceptRequests", auth, async function (req, res, next) {
+  var { club_id, userArray, description, profile_photo } = req.body;
   userArray = userArray.map((s) => mongoose.Types.ObjectId(s));
+  var object = {
+    date: new Date(),
+    title: "Congratulations! On your new role 🥳",
+    description: description,
+    sender_id: ObjectId(req.user._id),
+    photo: profile_photo,
+    isRead: false,
+  };
   user_details
     .updateMany(
       { _id: { $in: userArray }, "club_answer.club": ObjectId(club_id) },
-      { $set: { "club_answer.$.status": "Approved" } }
+      { $set: { "club_answer.$.status": "Approved" }, $push: { inbox: object } }
     )
     .exec();
 
@@ -1313,12 +1488,23 @@ router.post("/AcceptRequests", async function (req, res, next) {
   });
 });
 
-router.post("/RemoveRequests", async function (req, res, next) {
-  var { club_id, userArray } = req.body;
+router.post("/RemoveRequests", auth, async function (req, res, next) {
+  var { club_id, userArray, description, profile_photo } = req.body;
   userArray = userArray.map((s) => mongoose.Types.ObjectId(s));
+  var object = {
+    date: new Date(),
+    title: "offo..! You request has been rejected ☹️",
+    description: description,
+    sender_id: ObjectId(req.user._id),
+    photo: profile_photo,
+    isRead: false,
+  };
   var result = user_details.updateMany(
     { _id: { $in: userArray }, is_active: true },
-    { $pull: { club_answer: { club: ObjectId(club_id) } } }
+    {
+      $pull: { club_answer: { club: ObjectId(club_id) } },
+      $push: { inbox: object },
+    }
   );
   await result.exec((err, data) => {
     if (err) {

@@ -14,12 +14,15 @@ io.on('connect', (socket) => {
     }
   });
   socket.on(
-    'sendReport',
-    ({ date, description, title, report_id, user_id, profile_photo }) => {
-      io.to(socketIds.get(user_id)).emit(
-        'Notify',
-        { date, description, title, report_id, profile_photo, user_id },
-      );
+    'sendNotification',
+    ({ date, description, title, user_id, profile_photo }) => {
+      io.to(socketIds.get(user_id)).emit('Notify', {
+        date,
+        description,
+        title,
+        profile_photo,
+        user_id,
+      });
     }
   );
   socket.on('join', ({ user_id, club_id }, callback) => {
@@ -36,10 +39,7 @@ io.on('connect', (socket) => {
     const currentclub = club_ids[message.club_id];
     for (var member of currentclub.values()) {
       if (member === connection.get(message.user_id)) continue;
-      io.to(member).emit(
-        'Message',
-        message,
-      );
+      io.to(member).emit('Message', message);
     }
   });
   socket.on('disconnect', () => {
