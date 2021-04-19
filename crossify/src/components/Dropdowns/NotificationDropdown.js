@@ -4,9 +4,10 @@ import axios from "axios";
 import Moment from "moment";
 import demopf from "assets/img/pp1.jpg";
 import addNotification from "react-push-notification";
+import urlObject from "../../config/default.json";
 import io from "socket.io-client";
-
-let socket = io("http://localhost:5000", {
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
   transport: ["websocket", "polling", "flashsocket"],
 });
 const NotificationDropdown = (props) => {
@@ -51,7 +52,7 @@ const NotificationDropdown = (props) => {
         .off("Notify")
         .on(
           "Notify",
-          ({ date, description, title, profile_photo, report_id, user_id }) => {
+          ({ date, description, title, profile_photo, user_id }) => {
             var object = {
               date: date,
               description: description,

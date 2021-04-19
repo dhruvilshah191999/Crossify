@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import harshilImg from "assets/img/harshilImg.jpg";
-import dhruvilImg from "assets/img/pp3.jpg";
-import sagarImg from "assets/img/pp4.jpg";
-import bhargavImg from "assets/img/pp5.png";
+import dhruvilImg from "assets/img/pp1.jpg";
+import sagarImg from "assets/img/sagar.jpeg";
+import bhargavImg from "assets/img/bhargavImage.jpg";
 
 class Creators extends Component {
   render() {
@@ -126,29 +126,60 @@ class Creators extends Component {
                 />
                 <div className="pt-6 text-center">
                   <h5 className="text-xl font-bold text-offwhite">
-                    Bhargav Patel
+                    Bhargav Kanodiya
                   </h5>
                   <p className="mt-1 text-sm text-gray-500 uppercase font-semibold">
                     Backend Dev
                   </p>
                   <div className="mt-6">
                     <button
-                      className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-linkedin text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://www.linkedin.com/in/bhargav-kanodiya-9a72b2171",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
-                      <i className="fab fa-google"></i>
+                      <i className="fab fa-linkedin"></i>
                     </button>
                     <button
                       className="bg-blue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://twitter.com/Bhargavpatel_27",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
                       <i className="fab fa-twitter"></i>
                     </button>
                     <button
-                      className="bg-gray-800 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-instagram text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://www.instagram.com/bhargav_patel_2742/",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
                       <i className="fab fa-instagram"></i>
+                    </button>
+                    <button
+                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      type="button"
+                      onClick={() => {
+                        window.open("https://github.com/bhargu-27", "_blank");
+                        return false;
+                      }}
+                    >
+                      <i class="fab fa-github"></i>
                     </button>
                   </div>
                 </div>

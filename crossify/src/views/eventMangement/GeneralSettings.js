@@ -12,16 +12,16 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import ViewFeedback from "components/Modals/ViewFeedback";
+import ScaleLoader from "react-spinners/ScaleLoader";
+import { set } from "mongoose";
 
 var vertical = "top";
 var horizontal = "center";
 export default function GeneralSettings(props) {
-  const openModal = () => {
-    ModalManager.open(<ViewFeedback onRequestClose={() => true} />);
-  };
   const [successStatus, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const { id } = useParams();
+  const [status, setStatus] = useState("");
   const [loading, setloading] = useState(false);
   const [latitude, setlatitude] = useState(23.106517);
   const [longitude, setlongitude] = useState(72.59482);
@@ -50,6 +50,16 @@ export default function GeneralSettings(props) {
     ending_time,
     maximum_participants,
   } = formData;
+
+  const openModal = () => {
+    ModalManager.open(
+      <ViewFeedback
+        onRequestClose={() => true}
+        event_id={id}
+        event_name={event_name}
+      />
+    );
+  };
 
   const onChange = (e) =>
     SetformData({ ...formData, [e.target.name]: e.target.value });
@@ -86,6 +96,25 @@ export default function GeneralSettings(props) {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
+        if (
+          new Date(finaldata.data.event_data.date) > new Date() &&
+          finaldata.data.event_data.is_active
+        ) {
+          setStatus("approved");
+        } else if (
+          new Date(finaldata.data.event_data.date) < new Date() &&
+          finaldata.data.event_data.is_active
+        ) {
+          setStatus("completed");
+        } else if (
+          finaldata.data.event_data.visibility != "rejected" &&
+          !finaldata.data.event_data.is_active
+        ) {
+          setStatus("pending");
+        } else {
+          setStatus("rejected");
+        }
+
         SetformData({
           event_name: finaldata.data.event_data.event_name,
           privacy: finaldata.data.event_data.visibility,
@@ -120,11 +149,19 @@ export default function GeneralSettings(props) {
     setlongitude(childData.lng);
   };
 
-  if (loading) {
-    return (
-      <>
-        <Sidebar />
-        <div className="flex flex-wrap">
+  var color = "orange";
+  if (status == "rejected") {
+    color = "red";
+  } else if (status == "completed") {
+    color = "blue";
+  } else if (status == "approved") {
+    color = "green";
+  }
+  return (
+    <>
+      <Sidebar />
+      <div className={loading ? "flex flex-wrap" : ""}>
+        {loading ? (
           <Formik
             initialValues={formData}
             validate={() => {
@@ -208,11 +245,21 @@ export default function GeneralSettings(props) {
                       <h6 className="text-gray-800 text-xl font-bold">
                         Event Status :
                         {/* <i className="fas fa-circle text-orange-500 p-2 text-xs text-center"></i> */}
-                        <span className="text-lg text-orange-500 ml-2 font-semibold">
-                          Pending
+                        <span
+                          className={
+                            "text-lg text-" +
+                            color +
+                            "-500 ml-2 font-semibold capitalize"
+                          }
+                        >
+                          {status}
                         </span>
                         <button
-                          className="text-orange-500 text-sm ml-2"
+                          className={
+                            status == "rejected"
+                              ? "text-red-500 text-sm ml-2"
+                              : "hidden"
+                          }
                           onClick={() => openModal()}
                         >
                           <i className="fas fa-info-circle"></i>
@@ -530,12 +577,17 @@ export default function GeneralSettings(props) {
               </div>
             )}
           </Formik>
-        </div>
-      </>
-    );
-  } else {
-    return <></>;
-  }
+        ) : (
+          <div
+            className="flex justify-center items-center"
+            style={{ height: "60vh" }}
+          >
+            <ScaleLoader color="#825ee4" size={60} />
+          </div>
+        )}
+      </div>
+    </>
+  );
 }
 GeneralSettings.defaultProps = {
   club_name: "Badshah gang",

@@ -18,11 +18,15 @@ var channelSchema = new Schema({
     type: ObjectId,
     required: true,
   },
+  description: {
+    type: String,
+    required: false,
+  },
   messages: [
     {
       user_id: ObjectId,
       message: String,
-      senttime: { type: Date, default: Date.now },
+      senttime: {type: Date, default: Date.now},
     },
   ],
 });

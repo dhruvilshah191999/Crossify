@@ -22,6 +22,7 @@
     "crypto-js": "^4.0.0",
     "crypto-random-string": "^3.3.0",
     "filestack-react": "^4.0.0",
+    "formik": "^2.2.6",
     "framer-motion": "^4.0.3",
     "fslightbox-react": "^1.6.2",
     "google-maps-react": "^2.0.6",

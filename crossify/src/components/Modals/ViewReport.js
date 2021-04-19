@@ -3,8 +3,10 @@ import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demopf from "assets/img/demopf.png";
 import ChatMessage from "components/Cards/ChatMessage";
 import axios from "axios";
+import urlObject from "../../config/default.json";
 import io from "socket.io-client";
-let socket = io("http://localhost:5000", {
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
   transport: ["websocket", "polling", "flashsocket"],
 });
 Modal.defaultStyles = {};
@@ -29,20 +31,34 @@ class MyModal extends Component {
   }
 
   getRejected = async () => {
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    socket.emit("sendNotification", {
+      date: new Date(),
+      description: this.state.answer,
+      title: "Your Reports is rejected by " + firstName,
+      profile_photo: profile_photo,
+      user_id: this.state.data.user_id,
+    });
     var object = {
+      token,
       report_id: this.state.data._id,
+      user_id: this.state.data.user_id,
     };
     const finaldata = await axios.post(
       "/api/manage/rejected-reports",
       object,
       config
     );
+
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
@@ -64,16 +80,15 @@ class MyModal extends Component {
     var profile_photo = user.data.data.profile_photo;
     console.log(profile_photo);
     socket.emit(
-      "sendReport",
+      "sendNotification",
       {
         date: new Date(),
         description: this.state.answer,
         title: "Your Reports is answered by " + firstName,
         profile_photo: profile_photo,
-        report_id: this.state.data._id,
         user_id: this.state.data.user_id,
-      },
-      console.log("in send Report")
+      }
+      //console.log("in send Report")
     );
 
     var object = {
@@ -130,7 +145,11 @@ class MyModal extends Component {
               <ChatMessage
                 message={el.report}
                 time={el.date}
-                username={this.state.data.user_data[0]}
+                username={
+                  this.state.data.user_data[0].fname +
+                  " " +
+                  this.state.data.user_data[0].lname
+                }
                 profilePic={this.state.data.user_data[0].profile_photo}
               />
             ))}

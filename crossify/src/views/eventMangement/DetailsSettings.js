@@ -32,7 +32,7 @@ export default class DetailsSettings extends React.Component {
       event_id: id,
     };
     const finaldata = await axios.post(
-      "/api/events/event-details",
+      "/api/profile/event-details",
       send_data,
       config
     );

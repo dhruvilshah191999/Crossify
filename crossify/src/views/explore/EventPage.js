@@ -14,6 +14,7 @@ import { notifyLiked, notifyWentWrong } from "notify";
 import { motion } from "framer-motion";
 import GridLoader from "react-spinners/GridLoader";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
+import keys from "config/default.json";
 
 const Tag = (props) => {
   return (
@@ -24,6 +25,7 @@ const Tag = (props) => {
 };
 
 export default function EventPage(props) {
+  console.log(keys);
   let history = useHistory();
   const [isAdmin, setIsAdmin] = useState(false);
   var { id } = useParams();
@@ -34,6 +36,129 @@ export default function EventPage(props) {
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
+  var gapi = window.gapi;
+
+  var CLIENT_ID = keys.GOOGLE_CALENDAR_CLIENT_ID;
+  var API_KEY = keys.GOOGLE_CALENDAR_API_KEY;
+  var DISCOVERY_DOCS = [
+    "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+  ];
+  var SCOPES = "https://www.googleapis.com/auth/calendar.events";
+
+  const handleClick = () => {
+    gapi.load("client:auth2", () => {
+      console.log("loaded client");
+
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES,
+      });
+
+      gapi.client.load("calendar", "v3", () => console.log("bam!"));
+      //setup real data here
+      gapi.auth2
+        .getAuthInstance()
+        .signIn()
+        .then(() => {
+          // var event = {
+          //   summary: eventdetails.event_name,
+          //   location:
+          //     eventdetails.location +
+          //     ", " +
+          //     eventdetails.city +
+          //     ", " +
+          //     eventdetails.state,
+          //   description: eventdetails.description,
+          //   start: {
+          //     dateTime: eventdetails.date,
+          //     timeZone: "Asia/Kolkata",
+          //   },
+          //   end: {
+          //     dateTime: eventdetails.date,
+          //     timeZone: "Asia/Kolkata",
+          //   },
+          //   // recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
+          //   // attendees: [
+          //   //   { email: "lpage@example.com" },
+          //   //   { email: "sbrin@example.com" },
+          //   // ],
+          //   reminders: {
+          //     useDefault: false,
+          //     overrides: [
+          //       { method: "email", minutes: 24 * 60 },
+          //       { method: "popup", minutes: 10 },
+          //     ],
+          //   },
+          // };
+
+          // var request = gapi.client.calendar.events.insert({
+          //   calendarId: "primary",
+          //   resource: event,
+          // });
+
+          // request.execute((event) => {
+          //   console.log(event);
+          //   window.open(event.htmlLink);
+          // });
+          var event = {
+            summary: "Google I/O 2015",
+            location: "800 Howard St., San Francisco, CA 94103",
+            description:
+              "A chance to hear more about Google's developer products.",
+            start: {
+              dateTime: "2015-05-28T09:00:00-07:00",
+              timeZone: "America/Los_Angeles",
+            },
+            end: {
+              dateTime: "2015-05-28T17:00:00-07:00",
+              timeZone: "America/Los_Angeles",
+            },
+            recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
+            attendees: [
+              { email: "lpage@example.com" },
+              { email: "sbrin@example.com" },
+            ],
+            reminders: {
+              useDefault: false,
+              overrides: [
+                { method: "email", minutes: 24 * 60 },
+                { method: "popup", minutes: 10 },
+              ],
+            },
+          };
+
+          var request = gapi.client.calendar.events.insert({
+            calendarId: "primary",
+            resource: event,
+          });
+
+          request.execute(function (event) {
+            window.open(event.htmlLink);
+            //appendPre("Event created: " + event.htmlLink);
+          });
+
+          /*
+          Uncomment the following block to get events
+      */
+          /*
+      // get events
+      gapi.client.calendar.events.list({
+        'calendarId': 'primary',
+        'timeMin': (new Date()).toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 10,
+        'orderBy': 'startTime'
+      }).then(response => {
+        const events = response.result.items
+        console.log('EVENTS: ', events)
+      })
+      */
+        });
+    });
+  };
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     async function event_details() {
@@ -169,10 +294,14 @@ export default function EventPage(props) {
     history.push("/club/" + club_id);
   };
 
+<<<<<<< HEAD
   const gotoAdmin = () => {
     history.push("/admin/" + id);
   };
 
+=======
+  console.log(eventdetails);
+>>>>>>> c25b0589f1c16e9541bac9acd5c97003651c052b
   if (loading) {
     return (
       <>
@@ -250,8 +379,20 @@ export default function EventPage(props) {
                     )}
                   </div>
                 </div>
+                {/* <button type="button" onClick={handleClick}>
+                  Click me
+                </button> */}
+                {/* <div title="Add to Calendar" class="addeventatc">
+                  Add to Calendar
+                  <span class="start">05/02/2021 08:00 AM</span>
+                  <span class="end">05/02/2021 10:00 AM</span>
+                  <span class="timezone">America/Los_Angeles</span>
+                  <span class="title">Summary of the event</span>
+                  <span class="description">Description of the event</span>
+                  <span class="location">Location of the event</span>
+                </div> */}
                 <div
-                  className="mt-6 cursor-pointer"
+                  className="mt-2 cursor-pointer"
                   onClick={() => showClubs(eventdetails.club_id)}
                 >
                   <div className="flex flex-col ml-1 mb-1">
@@ -280,6 +421,7 @@ export default function EventPage(props) {
                   </div>
                 </div>
               </div>
+
               <div className="flex flex-row  mt-2 lg:mt-auto  ">
                 <div className="w-6/12">
                   <motion.button
@@ -305,6 +447,30 @@ export default function EventPage(props) {
                     tags={eventdetails.tags}
                   ></BigShareButton>
                 </div>
+              </div>
+              <div
+                title="Add to Calendar"
+                class="addeventatc mt-1  text-xs rounded-lg"
+                style={{ fontSize: "smaller !important" }}
+                data-styling="none"
+              >
+                <span className="uppercase">
+                  <i class="far fa-calendar-plus text-base"></i> &nbsp;Add to
+                  Calendar
+                </span>
+                <span class="arrow">&nbsp;</span>
+                <span class="start">{eventdetails.startdate}</span>
+                <span class="end">{eventdetails.date}</span>
+                <span class="timezone">Asia/Kolkata</span>
+                <span class="title">{eventdetails.event_name}</span>
+                <span class="description">{eventdetails.description}</span>
+                <span class="location">
+                  {eventdetails.location +
+                    ", " +
+                    eventdetails.city +
+                    ", " +
+                    eventdetails.state}
+                </span>
               </div>
               <div className="flex justify-center mt-2">
                 <JoinEventButton

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import ManageEventsTable from "components/Tables/ManageEventsTable";
 export default function Tables() {
   const token = localStorage.getItem("jwt");
   const [data, setdata] = useState([]);
-  const [loding, setloding] = useState(false);
+  const [loading, setloading] = useState(false);
   useEffect(() => {
     async function fetchData() {
       const config = {
@@ -26,16 +27,15 @@ export default function Tables() {
       } else {
         setdata(finaldata.data.data);
         setTimeout(() => {
-          setloding(true);
+          setloading(true);
         }, 500);
       }
     }
 
     fetchData();
   }, []);
-  if (loding) {
+  if (loading) {
     return (
-      console.log(data),
       (
         <>
           <div className="flex flex-wrap mt-4">
@@ -48,6 +48,13 @@ export default function Tables() {
       )
     );
   } else {
-    return <></>;
+    return (
+      <div
+        className="flex justify-center items-center"
+        style={{ height: "60vh" }}
+      >
+        <ScaleLoader color="#825ee4" size={60} />
+      </div>
+    );
   }
 }

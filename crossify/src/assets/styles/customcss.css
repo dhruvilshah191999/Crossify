@@ -402,6 +402,10 @@
   height: 410px;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 .center-now {
   position: absolute;
   left: 50%;
@@ -1258,6 +1262,7 @@ div.sticky {
   width: 0;
 }
 
+<<<<<<< HEAD
 .FormError {
   color: #ff0000;
   padding-top: 5px;
@@ -1269,3 +1274,196 @@ div.sticky {
   padding-top: 5px;
   font-size: 12px;
 }
+=======
+.addeventatc_icon.atc_node.notranslate {
+  left: 8px !important;
+}
+
+/* Use Google's hosted "Open Sans" font as display font in button */
+
+/* The button */
+.addeventatc {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  background: rgb(18, 138, 185);
+  cursor: pointer;
+  font-family: inherit;
+  color: #fff !important;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
+  padding: 10px 16px;
+  outline: none;
+}
+.addeventatc:hover {
+  color: #fff;
+
+  text-decoration: none;
+  background-color: rgb(70, 145, 172);
+}
+.addeventatc .arrow {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -8px;
+  background: url(assets/svgs/icon-arrow-t1.svg) no-repeat;
+  background-size: 16px 16px;
+}
+.addeventatc-selected {
+  background-color: #2c84f4;
+}
+.addeventatc .start,
+.addeventatc .end,
+.addeventatc .timezone,
+.addeventatc .title,
+.addeventatc .description,
+.addeventatc .location,
+.addeventatc .organizer,
+.addeventatc .organizer_email,
+.addeventatc .facebook_event,
+.addeventatc .all_day_event,
+.addeventatc .date_format,
+.addeventatc .alarm_reminder,
+.addeventatc .recurring,
+.addeventatc .attendees,
+.addeventatc .calname,
+.addeventatc .uid,
+.addeventatc .status,
+.addeventatc .method,
+.addeventatc .client,
+.addeventatc .transp {
+  display: none !important;
+}
+
+/* Drop down */
+.addeventatc_dropdown {
+  width: 230px;
+  position: absolute;
+  padding: 6px 0px 0px 0px;
+  font-family: "Open Sans", Roboto, "Helvetica Neue", Helvetica, Optima, Segoe,
+    "Segoe UI", Candara, Calibri, Arial, sans-serif;
+  color: #000 !important;
+  font-weight: 600;
+  line-height: 100%;
+  background: #fff;
+  font-size: 15px;
+  text-decoration: none;
+  text-align: left;
+  margin-left: -1px;
+  display: none;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 26px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 26px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 26px;
+  transform: scale(0.98, 0.98) translateY(5px);
+  z-index: -1;
+  transition: transform 0.15s ease;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.addeventatc_dropdown.topdown {
+  transform: scale(0.98, 0.98) translateY(-5px) !important;
+}
+.addeventatc_dropdown span {
+  display: block;
+  line-height: 100%;
+  background: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  font-weight: 600;
+  padding: 14px 10px 14px 55px;
+  margin: -2px 0px;
+}
+.addeventatc_dropdown span:hover {
+  background-color: #f4f4f4;
+  color: #000;
+  text-decoration: none;
+  font-size: 15px;
+}
+.addeventatc_dropdown em {
+  color: #999 !important;
+  font-size: 12px !important;
+  font-weight: 400;
+}
+.addeventatc_dropdown .frs a {
+  background: #fff;
+  color: #cacaca !important;
+  cursor: pointer;
+  font-size: 9px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 110% !important;
+  padding-left: 10px;
+  position: absolute;
+  right: 10px;
+  text-align: right;
+  text-decoration: none;
+  top: 5px;
+  z-index: 101;
+}
+.addeventatc_dropdown .frs a:hover {
+  color: #999 !important;
+}
+.addeventatc_dropdown .ateappleical {
+  background: url(assets/svgs/icon-apple-t5.svg) 18px 40% no-repeat;
+  background-size: 22px 100%;
+}
+.addeventatc_dropdown .ategoogle {
+  background: url(assets/svgs/icon-google-t5.svg) 18px 50% no-repeat;
+  background-size: 22px 100%;
+}
+.addeventatc_dropdown .ateoffice365 {
+  background: url(assets/svgs/icon-office365-t5.svg) 19px 50% no-repeat;
+  background-size: 18px 100%;
+}
+.addeventatc_dropdown .ateoutlook {
+  background: url(assets/svgs/icon-outlook-t5.svg) 18px 50% no-repeat;
+  background-size: 22px 100%;
+}
+.addeventatc_dropdown .ateoutlookcom {
+  background: url(assets/svgs/icon-outlookcom-t5.svg) 18px 50% no-repeat;
+  background-size: 22px 100%;
+}
+.addeventatc_dropdown .ateyahoo {
+  background: url(assets/svgs/icon-yahoo-t5.svg) 18px 50% no-repeat;
+  background-size: 22px 100%;
+}
+.addeventatc_dropdown .atefacebook {
+  background: url(assets/svgs/icon-facebook-t5.svg) 18px 50% no-repeat;
+  background-size: 22px 100%;
+}
+.addeventatc_dropdown .copyx {
+  height: 21px;
+  display: block;
+  position: relative;
+  cursor: default;
+}
+.addeventatc_dropdown .brx {
+  height: 1px;
+  overflow: hidden;
+  background: #e8e8e8;
+  position: absolute;
+  z-index: 100;
+  left: 10px;
+  right: 10px;
+  top: 9px;
+}
+.addeventatc_dropdown.addeventatc-selected {
+  transform: scale(1, 1) translateY(0px);
+  z-index: 99999999999;
+}
+.addeventatc_dropdown.topdown.addeventatc-selected {
+  transform: scale(1, 1) translateY(0px) !important;
+}
+.addeventatc_dropdown .drop_markup {
+  background-color: #f4f4f4;
+}
+>>>>>>> c25b0589f1c16e9541bac9acd5c97003651c052b

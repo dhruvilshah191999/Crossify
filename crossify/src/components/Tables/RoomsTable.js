@@ -95,164 +95,17 @@ function SelectColumnFilter({
   );
 }
 
-export default function App() {
+export default function App(props) {
+  const [clubId, setClubId] = useState(props.club_id);
+  const [roomData, setRoomData] = useState(props.data);
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(
-    () => [
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "All",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "All",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "All",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "All",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "All",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "pending",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "All",
-        writable: "All",
-        location: "Ahmedabad",
-        description: "approved",
-        actions: " ",
-      },
-      {
-        roomName: "Cricket Tournament",
-        readable: "Moderator",
-        writable: "All",
-        location: "Ahmedabad",
-        description:
-          "pendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpendingpending",
-        actions: " ",
-      },
-    ],
-    []
-  );
+  const data = React.useMemo(() => roomData, []);
 
   const columns = React.useMemo(
     () => [
       {
         Header: "Name",
-        accessor: "roomName", // accessor is the "key" in the data
+        accessor: "channel_name", // accessor is the "key" in the data
         disableFilters: true,
         Cell: ({ value }) => {
           return <span className="font-semibold text-sm">{value}</span>;
@@ -260,14 +113,27 @@ export default function App() {
       },
       {
         Header: "Readable",
-        accessor: "readable",
+        accessor: "is_readable",
         disableFilters: true,
+        Cell: ({ value }) => {
+          if (value) {
+            return "All";
+          } else {
+            return "Moderator";
+          }
+        },
       },
       {
-        Header: "Writable",
-        accessor: "writable", // accessor is the "key" in the data
-
+        Header: "Writeable",
+        accessor: "is_writable", // accessor is the "key" in the data
         disableFilters: true,
+        Cell: ({ value }) => {
+          if (value) {
+            return "All";
+          } else {
+            return "Moderator";
+          }
+        },
       },
       {
         Header: "Description",
@@ -282,24 +148,25 @@ export default function App() {
 
       {
         Header: "Actions",
-        accessor: "actions", // here add _id of event request so easy to attach with the buttons
-        Cell: ({ value }) => (
+        accessor: "_id", // here add _id of event request so easy to attach with the buttons
+        Cell: ({
+          value,
+          cell: {
+            row: {
+              values: { channel_name, is_writable, is_readable, description },
+            },
+          },
+        }) => (
           <div className="flex ">
             <RoomUpdation
-              updateRoom={() =>
-                console.log("pass id to update info in the modal")
-              }
-              name="insert here"
-              description="insert here"
-              readable="Moderator"
-              writable="Moderator"
+              name={channel_name}
+              description={description}
+              readable={is_readable}
+              writable={is_writable}
+              id={value}
             />
             <RemoveRoomButton
-              removeRoom={() =>
-                console.log(
-                  "GOLU MAKE THIS function to remove current clicked room"
-                )
-              }
+              id={value}
             ></RemoveRoomButton>
           </div>
         ),
@@ -397,7 +264,7 @@ export default function App() {
                 </div>
                 <div className="ml-auto">
                   <div className="inline-block">
-                    <CreateRoomButton />
+                    <CreateRoomButton club_id={clubId}/>
                   </div>
                   <span className="ml-2 "></span>
                   <GlobalFilter

@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import axios from "axios";
 import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import ReportTable from "components/Tables/ReportTable.js";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 export default function Settings() {
   const { id } = useParams();
@@ -29,9 +30,10 @@ export default function Settings() {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        console.log(finaldata.data.data);
         setdata(finaldata.data.data);
-        setTimeout(setloding(true), 1000);
+        setTimeout(() => {
+          setloding(true);
+        }, 100);
       }
     }
 
@@ -42,7 +44,16 @@ export default function Settings() {
       <Sidebar />
       <div className="flex flex-wrap">
         <div className="w-full  px-4">
-          {loding ? <ReportTable finaldata={data} /> : ""}
+          {loding ? (
+            <ReportTable finaldata={data} />
+          ) : (
+            <div
+              className="flex justify-center items-center"
+              style={{ height: "60vh" }}
+            >
+              <ScaleLoader color="#825ee4" size={60} />
+            </div>
+          )}
         </div>
       </div>
     </>

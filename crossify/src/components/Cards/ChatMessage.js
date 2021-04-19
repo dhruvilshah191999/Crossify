@@ -12,9 +12,7 @@ const ChatMessage = (props) => {
         </div>
         <div className="flex flex-col">
           <div className="flex ml-4">
-            <div className="font-bold text-base mr-2">
-              {props.username.fname} {props.username.lname}
-            </div>
+            <div className="font-bold text-base mr-2">{props.username}</div>
             <div className="font-semibold text-gray-600 text-xs pt-1">
               {Moment(props.time).format("LLL")}
             </div>

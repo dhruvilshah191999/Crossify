@@ -33,7 +33,7 @@ class FilesManager extends Component {
       });
       setTimeout(() => {
         this.setState({ loading: true });
-      }, 3000);
+      }, 300);
     }
   }
 
