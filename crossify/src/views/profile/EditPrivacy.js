@@ -25,57 +25,57 @@ class EditSocialMedia extends Component {
               </h6>
               <div className="flex flex-col">
                 <div>
-                  <label class="inline-flex items-center mt-3">
+                  <label className="inline-flex items-center mt-3">
                     <input
                       type="checkbox"
-                      class="form-checkbox h-5 w-5 text-blue-600"
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
-                    <span class="ml-2 font-bold">
+                    <span className="ml-2 font-bold">
                       Make profile photo visible to public
                     </span>
                   </label>
                 </div>
                 <div>
-                  <label class="inline-flex items-center mt-3">
+                  <label className="inline-flex items-center mt-3">
                     <input
                       type="checkbox"
-                      class="form-checkbox h-5 w-5 text-blue-600"
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
-                    <span class="ml-2 font-bold">
+                    <span className="ml-2 font-bold">
                       Show Social Media on Profile
                     </span>
                   </label>
                 </div>
                 <div>
-                  <label class="inline-flex items-center mt-3">
+                  <label className="inline-flex items-center mt-3">
                     <input
                       type="checkbox"
-                      class="form-checkbox h-5 w-5 text-blue-600"
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
-                    <span class="ml-2 font-bold">
+                    <span className="ml-2 font-bold">
                       {" "}
                       Show Interest on profile
                     </span>
                   </label>
                 </div>
                 <div>
-                  <label class="inline-flex items-center mt-3">
+                  <label className="inline-flex items-center mt-3">
                     <input
                       type="checkbox"
-                      class="form-checkbox h-5 w-5 text-blue-600"
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
-                    <span class="ml-2 font-bold">
+                    <span className="ml-2 font-bold">
                       Show Joined Clubs on Profile
                     </span>
                   </label>
                 </div>
                 <div>
-                  <label class="inline-flex items-center mt-3">
+                  <label className="inline-flex items-center mt-3">
                     <input
                       type="checkbox"
-                      class="form-checkbox h-5 w-5 text-blue-600"
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
-                    <span class="ml-2 font-bold">
+                    <span className="ml-2 font-bold">
                       Email Subscription to newsletter
                     </span>
                   </label>

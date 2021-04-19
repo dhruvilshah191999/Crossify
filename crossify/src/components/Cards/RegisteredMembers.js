@@ -8,17 +8,15 @@ import demoImg3 from "../../assets/img/pp4.jpg";
 const Member = (props) => {
   return (
     //todo GOLU set profile link in this one
-      <div class="flex items-center justify-between my-4 w-24 hover:bg-gray-200 rounded-lg">
-        <div class="w-16">
-          <img class="w-16 h-16 rounded-full" src={props.image} alt="img" />
-        </div>
-        <div class="flex-1 pl-4">
-          <div class="text-gray-700 font-semibold">{props.name}</div>
-          <div class="text-gray-600 font-normal text-base">
-            {"Member"}
-          </div>
-        </div>
+    <div className="flex items-center justify-between my-4 w-24 hover:bg-gray-200 rounded-lg">
+      <div className="w-16">
+        <img className="w-16 h-16 rounded-full" src={props.image} alt="img" />
       </div>
+      <div className="flex-1 pl-4">
+        <div className="text-gray-700 font-semibold">{props.name}</div>
+        <div className="text-gray-600 font-normal text-base">{"Member"}</div>
+      </div>
+    </div>
   );
 };
 
@@ -57,9 +55,7 @@ class RegisteredMembers extends Component {
     let searcjQery = event.target.value.toLowerCase(),
       displayedContacts = this.state.final.filter((el) => {
         let searchValue = el.name.toLowerCase();
-        if (
-          searchValue.indexOf(searcjQery) !== -1
-        ) {
+        if (searchValue.indexOf(searcjQery) !== -1) {
           return true;
         }
         return false;
@@ -72,15 +68,18 @@ class RegisteredMembers extends Component {
     return (
       <div className="mt-1 text-lg text-gray-800 font-semibold lg:w-3/4 leading-relaxed">
         <div className="flex flex-row">
-          <div className="mt-2">{this.state.Members.length +"/"+ this.props.capacity} slots booked so far</div>
-          <div class="relative flex w-1/2 flex-wrap items-stretch mb-2 ml-auto">
-            <span class=" h-full leading-snug font-normal z-2 text-center text-gray-700 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-              <i class="fas fa-search"></i>
+          <div className="mt-2">
+            {this.state.Members.length + "/" + this.props.capacity} slots booked
+            so far
+          </div>
+          <div className="relative flex w-1/2 flex-wrap items-stretch mb-2 ml-auto">
+            <span className=" h-full leading-snug font-normal z-2 text-center text-gray-700 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+              <i className="fas fa-search"></i>
             </span>
             <input
               type="text"
               placeholder="Find your friends..."
-              class="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
+              className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
               classNAme="search"
               onChange={this.searchHandler}
             />

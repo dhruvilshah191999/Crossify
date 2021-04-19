@@ -85,7 +85,6 @@ export class MapContainer extends Component {
                 totalSeats={43}
                 key={_id}
                 onClick={this.onMarkerClick}
-                onMouseOut={() => alert("does it work!")}
                 position={{ lat: latitude, lng: longitude }}
                 lat={latitude}
                 lng={longitude}
@@ -125,7 +124,7 @@ export class MapContainer extends Component {
                   target="_blank"
                   type="button"
                 >
-                  <i class="fas fa-directions"></i>
+                  <i className="fas fa-directions"></i>
                 </a>
               </div>
             </div>

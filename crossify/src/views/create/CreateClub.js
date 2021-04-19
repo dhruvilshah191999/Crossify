@@ -270,7 +270,7 @@ function CreateClub(props) {
                               Privacy
                             </label>
                             <select
-                              class="block shadow focus:shadow-outline  appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded"
+                              className="block shadow focus:shadow-outline  appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded"
                               id="grid-state"
                               placeholder="Select your relevant Categories"
                               style={{ outline: "none" }}

@@ -31,7 +31,7 @@ export default class SweetAlertModal extends Component {
       channel_id: this.state.id,
       name: this.state.name,
       readable: this.state.readable,
-      writable:this.state.writable,
+      writable: this.state.writable,
       description: this.state.description,
     };
     const finaldata = await axios.post(
@@ -169,7 +169,7 @@ export default class SweetAlertModal extends Component {
     return (
       <>
         <button title="Edit" onClick={() => this.confirmArrival()}>
-          <i class="fas fa-edit text-blue-500 text-lg focus:outline-none mr-4 "></i>
+          <i className="fas fa-edit text-blue-500 text-lg focus:outline-none mr-4 "></i>
         </button>
 
         {this.state.alert}

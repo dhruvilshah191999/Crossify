@@ -80,7 +80,7 @@ class Creators extends Component {
                         return false;
                       }}
                     >
-                      <i class="fab fa-github"></i>
+                      <i className="fab fa-github"></i>
                     </button>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ class Creators extends Component {
                         return false;
                       }}
                     >
-                      <i class="fab fa-github"></i>
+                      <i className="fab fa-github"></i>
                     </button>
                   </div>
                 </div>

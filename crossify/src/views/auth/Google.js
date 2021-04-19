@@ -20,31 +20,33 @@ export default function Google() {
     setError(false);
   };
   var responseGoogle = async (response) => {
-    const data = {
-      socialId: response.googleId,
-      email: response.profileObj.email,
-      fname: response.profileObj.givenName,
-      lname: response.profileObj.familyName,
-      photo: response.profileObj.imageUrl,
-    };
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-      validateStatus: () => true,
-    };
-    const finaldata = await axios.post("/api/socialsignup", data, config);
-    if (finaldata.data.is_error) {
-      setError(true);
-      setMessage(finaldata.data.message);
-    } else {
-      var ciphertext = CryptoJS.AES.encrypt(
-        JSON.stringify(finaldata.data),
-        Key.Secret
-      ).toString();
-      localStorage.setItem("email", ciphertext);
-      history.push("/auth/register/socialstep2");
+    if (!response.error) {
+      const data = {
+        socialId: response.googleId,
+        email: response.profileObj.email,
+        fname: response.profileObj.givenName,
+        lname: response.profileObj.familyName,
+        photo: response.profileObj.imageUrl,
+      };
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      const finaldata = await axios.post("/api/socialsignup", data, config);
+      if (finaldata.data.is_error) {
+        setError(true);
+        setMessage(finaldata.data.message);
+      } else {
+        var ciphertext = CryptoJS.AES.encrypt(
+          JSON.stringify(finaldata.data),
+          Key.Secret
+        ).toString();
+        localStorage.setItem("email", ciphertext);
+        history.push("/auth/register/socialstep2");
+      }
     }
   };
   let googleContent;

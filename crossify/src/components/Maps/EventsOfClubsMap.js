@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import currentPosIcon from "assets/img/marker.png";
-import { Link } from "react-router-dom";
+import Keys, { GOOGLE_MAPS_API } from "config/default.json";
 import moment from "moment";
-import Keys from "config/default.json";
-const GOOGLE_MAPS_API = Keys.GOOGLE_MAPS_API;
+const GOOGLE_MAPS_API2 = Keys.GOOGLE_MAPS_API;
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -55,43 +54,43 @@ export class MapContainer extends Component {
   };
 
   render() {
-    const {
-      event_name,
-      latitude,
-      longitude,
-      _id,
-      date,
-      photo,
-      maximum_participants,
-      current_participants,
-    } = this.props.data;
-
-    if (!this.props.loaded) return <div>Loading...</div>;
+    // try to this in componentDidMount /Update
+    var bounds = new this.props.google.maps.LatLngBounds();
+    this.props.data.forEach((el) => {
+      bounds.extend({ lat: el.latitude, lng: el.longitude });
+    });
     return (
       <Map
         className="view-map w-full overflow-hidden rounded"
         google={this.props.google}
         onClick={this.onMapClicked}
-        style={{ height: "500px", position: "relative" }}
+        style={{ height: "600px", position: "relative", marginTop: "30px" }}
         zoom={13}
-        initialCenter={{ lat: latitude, lng: longitude }}
+        initialCenter={this.props.center}
+        bounds={bounds}
       >
         <Marker
           position={this.state.currentLocation}
           icon={currentPosIcon}
         ></Marker>
-
-        <Marker
-          animation={this.props.google.maps.Animation.DROP}
-          name={event_name}
-          photo={photo}
-          date={moment(date).format("LLL")}
-          bookedSeats={current_participants}
-          totalSeats={maximum_participants}
-          key={_id}
-          onClick={this.onMarkerClick}
-          position={{ lat: latitude, lng: longitude }}
-        />
+        {this.props.data &&
+          this.props.data.map(
+            ({ event_name, latitude, longitude, _id, date, photo }) => (
+              <Marker
+                // animation={this.props.google.maps.Animation.BOUNCE}
+                name={event_name}
+                photo={photo}
+                date={moment(date).format("LLL")}
+                bookedSeats={12}
+                totalSeats={43}
+                key={_id}
+                onClick={this.onMarkerClick}
+                position={{ lat: latitude, lng: longitude }}
+                lat={latitude}
+                lng={longitude}
+              />
+            )
+          )}
 
         <InfoWindow
           marker={this.state.activeMarker}
@@ -105,11 +104,11 @@ export class MapContainer extends Component {
               <img
                 src={this.state.selectedPlace.photo}
                 className="rounded-lg"
-                style={{ width: 200, height: 130 }}
+                style={{ width: "100%", height: 130 }}
               ></img>
             </div>
             <div className="flex">
-              <div className="font-semibold text-alpha my-2 text-lg px-2">
+              <div className="font-semibold text-alpha my-2 text-base px-2">
                 {this.state.selectedPlace.name}
               </div>
               <div className="ml-auto">
@@ -118,9 +117,9 @@ export class MapContainer extends Component {
                   style={{ marginTop: "0.35rem" }}
                   href={
                     "https://www.google.com/maps/search/?api=1&query=" +
-                    latitude +
+                    this.state.selectedPlace.lat +
                     "," +
-                    longitude
+                    this.state.selectedPlace.lng
                   }
                   target="_blank"
                   type="button"

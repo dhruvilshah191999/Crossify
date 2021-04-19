@@ -54,7 +54,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.confirmArrival()}
         >
-          <i class="fas fa-lock  "></i>&nbsp; Privatise
+          <i className="fas fa-lock  "></i>&nbsp; Privatise
         </button>
 
         {this.state.alert}

@@ -205,7 +205,7 @@ export default function MyClubs() {
             {" "}
             <div>
               {" "}
-              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+              <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
             </div>
             <div>
               <h1 className="text-2xl text-gray-700 ">
@@ -233,7 +233,7 @@ export default function MyClubs() {
             {" "}
             <div>
               {" "}
-              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+              <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
             </div>
             <div>
               <h1 className="text-2xl text-gray-700 ">
@@ -261,7 +261,7 @@ export default function MyClubs() {
             {" "}
             <div>
               {" "}
-              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+              <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
             </div>
             <div>
               <h1 className="text-2xl text-gray-700 ">
@@ -363,7 +363,7 @@ export default function MyClubs() {
             }
             onClick={() => toggleTabIndex(0)}
           >
-            <i class="fas fa-heart hover:text-offwhite hover:text-offwhite"></i>
+            <i className="fas fa-heart hover:text-offwhite hover:text-offwhite"></i>
             &nbsp; Liked
           </button>
           <button
@@ -375,7 +375,8 @@ export default function MyClubs() {
             onClick={() => toggleTabIndex(1)}
           >
             {" "}
-            <i class="fas fa-sliders-h hover:text-offwhite"></i>&nbsp; Managing
+            <i className="fas fa-sliders-h hover:text-offwhite"></i>&nbsp;
+            Managing
           </button>
 
           <button
@@ -387,15 +388,16 @@ export default function MyClubs() {
             onClick={() => toggleTabIndex(2)}
           >
             {" "}
-            <i class="fab fa-fort-awesome hover:text-offwhite"></i>&nbsp; Joined
+            <i className="fab fa-fort-awesome hover:text-offwhite"></i>&nbsp;
+            Joined
           </button>
         </div>
-        <div class="bg-white shadow  ml-auto mr-8 flex border border-beta rounded-lg">
-          <span class="w-auto flex justify-end items-center text-gray-500 p-2">
+        <div className="bg-white shadow  ml-auto mr-8 flex border border-beta rounded-lg">
+          <span className="w-auto flex justify-end items-center text-gray-500 p-2">
             <i className="fas fa-search text-beta"></i>
           </span>
           <input
-            class="w-full rounded-lg py-2"
+            className="w-full rounded-lg py-2"
             type="text"
             placeholder="Search Event..."
             onChange={searchHandler}
@@ -403,7 +405,7 @@ export default function MyClubs() {
         </div>
       </div>
       <div>
-        <div class="ml-4 mt-10 bg-gray-200 flex flex-wrap flex-row">
+        <div className="ml-4 mt-10 bg-gray-200 flex flex-wrap flex-row">
           {tabIndex === 2
             ? renderjoinedClubs
             : tabIndex === 0

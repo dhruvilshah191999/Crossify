@@ -217,6 +217,7 @@ export default function Landing() {
               ></svg>
             </div>
           </div>
+
           <section className="bg-white block m-4 ">
             <div className="p-8 mx-6">
               <div className="mb-6">
@@ -398,7 +399,7 @@ export default function Landing() {
                         <div className="flex items-center">
                           <div>
                             <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 mr-3">
-                              <i class="fas fa-bullhorn"></i>
+                              <i className="fas fa-bullhorn"></i>
                             </span>
                           </div>
                           <div>
@@ -412,7 +413,7 @@ export default function Landing() {
                         <div className="flex items-center">
                           <div>
                             <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 mr-3">
-                              <i class="fas fa-chart-line"></i>
+                              <i className="fas fa-chart-line"></i>
                             </span>
                           </div>
                           <div>
@@ -426,7 +427,7 @@ export default function Landing() {
                         <div className="flex items-center">
                           <div>
                             <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 mr-3">
-                              <i class="fas fa-bolt"></i>
+                              <i className="fas fa-bolt"></i>
                             </span>
                           </div>
                           <div>

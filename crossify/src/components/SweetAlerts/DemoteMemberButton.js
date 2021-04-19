@@ -20,7 +20,7 @@ export default class SweetAlertModal extends Component {
     });
   };
 
-  confirmProcess =async() => {
+  confirmProcess = async () => {
     const config = {
       method: "POST",
       header: {
@@ -68,11 +68,8 @@ export default class SweetAlertModal extends Component {
     return (
       <div>
         {this.state.isMember ? (
-          <button
-            className=" text-lg mr-2 "
-            type="button"
-          >
-            <i class="fas fa-level-down-alt text-orange-500 text-lg"></i>
+          <button className=" text-lg mr-2 " type="button">
+            <i className="fas fa-level-down-alt text-orange-500 text-lg"></i>
           </button>
         ) : (
           <button
@@ -80,7 +77,7 @@ export default class SweetAlertModal extends Component {
             type="button"
             onClick={() => this.confirmArrival()}
           >
-            <i class="fas fa-level-down-alt text-orange-500 text-lg"></i>
+            <i className="fas fa-level-down-alt text-orange-500 text-lg"></i>
           </button>
         )}
 

@@ -35,7 +35,7 @@ function GlobalFilter({
     <span className="text-gray-700 font-normal ml-2 ">
       {/* Search:{" "} */}
       <i
-        class={
+        className={
           isLight
             ? "fas fa-search mr-4 text-gray-700"
             : "fas fa-search mr-4 text-white"
@@ -261,14 +261,14 @@ export default function App(props) {
         Cell: ({ value }) => (
           <div className="flex flex-row">
             <button title="Arrived" onClick={() => Coming(value)}>
-              <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
+              <i className="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
             </button>
             <button
               className="ml-4"
               title="Remove"
               onClick={() => Remove(value)}
             >
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
+              <i className="fas fa-window-close text-red-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -403,7 +403,7 @@ export default function App(props) {
                       className="bg-green-500 ml-2 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                       type="button"
                     >
-                      <i class="fas fa-file-download"></i>&nbsp; CSV Export
+                      <i className="fas fa-file-download"></i>&nbsp; CSV Export
                     </button>
                   </CSVLink>
                 </div>
@@ -415,7 +415,7 @@ export default function App(props) {
                 </div>
                 <div className="ml-auto">
                   <i
-                    class={
+                    className={
                       isLight
                         ? "fas fa-filter mr-4 text-gray-700"
                         : "fas fa-filter mr-4 text-white"
@@ -537,14 +537,14 @@ export default function App(props) {
                 onClick={() => gotoPage(0)}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-step-backward"></i>
+                <i className="fas fa-step-backward"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left"></i>
               </button>{" "}
               <span className="mx-4">
                 <strong>{pageIndex + 1}</strong>{" "}
@@ -554,14 +554,14 @@ export default function App(props) {
                 onClick={() => nextPage()}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => gotoPage(pageCount - 1)}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-step-forward"></i>
+                <i className="fas fa-step-forward"></i>
               </button>{" "}
             </div>
             <div className="ml-auto mr-4 mt-1 overflow">

@@ -30,7 +30,7 @@ function GlobalFilter({
     <span className="text-gray-700 font-normal ml-2 ">
       {/* Search:{" "} */}
       <i
-        class={
+        className={
           isLight
             ? "fas fa-search mr-4 text-gray-700"
             : "fas fa-search mr-4 text-white"
@@ -165,7 +165,7 @@ export default function App(props) {
           }
           // return (
           //   <span
-          //     class={
+          //     className={
           //       "relative inline-block px-3 py-1 font-semibold text-" +
           //       myColor +
           //       "-900 leading-tight"
@@ -173,13 +173,13 @@ export default function App(props) {
           //   >
           //     <span
           //       aria-hidden
-          //       class={
+          //       className={
           //         "absolute inset-0 bg-" +
           //         myColor +
           //         "-200 opacity-50 rounded-full"
           //       }
           //     ></span>
-          //     <span class="relative">{value}</span>
+          //     <span className="relative">{value}</span>
           //   </span>
           // );
           return (
@@ -204,7 +204,7 @@ export default function App(props) {
               className="ml-4 mr-2"
               onClick={() => openModal(value)}
             >
-              <i class="fas fa-reply text-blue-500  focus:outline-none text-lg "></i>
+              <i className="fas fa-reply text-blue-500  focus:outline-none text-lg "></i>
             </button>
 
             <button
@@ -212,7 +212,7 @@ export default function App(props) {
               title="Delete"
               onClick={() => deleteObject(value)}
             >
-              <i class="fas fa-trash text-red-500 text-lg"></i>
+              <i className="fas fa-trash text-red-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -310,7 +310,7 @@ export default function App(props) {
                 </div>
                 <div className="ml-auto">
                   <i
-                    class={
+                    className={
                       isLight
                         ? "fas fa-filter mr-4 text-gray-700"
                         : "fas fa-filter mr-4 text-white"
@@ -432,14 +432,14 @@ export default function App(props) {
                 onClick={() => gotoPage(0)}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-step-backward"></i>
+                <i className="fas fa-step-backward"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left"></i>
               </button>{" "}
               <span className="mx-4">
                 <strong>{pageIndex + 1}</strong>{" "}
@@ -449,14 +449,14 @@ export default function App(props) {
                 onClick={() => nextPage()}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => gotoPage(pageCount - 1)}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-step-forward"></i>
+                <i className="fas fa-step-forward"></i>
               </button>{" "}
             </div>
             <div className="ml-auto mr-4 mt-1 overflow">

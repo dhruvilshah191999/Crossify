@@ -9,8 +9,8 @@ export default class SweetAlertModal extends Component {
     this.state = {
       alert: null,
       club_id: this.props.club_id,
-      user_id:this.props.user_id,
-      isModerator:this.props.isModerator
+      user_id: this.props.user_id,
+      isModerator: this.props.isModerator,
     };
   }
 
@@ -20,7 +20,7 @@ export default class SweetAlertModal extends Component {
     });
   };
 
-  confirmProcess =async () => {
+  confirmProcess = async () => {
     const config = {
       method: "POST",
       header: {
@@ -68,11 +68,8 @@ export default class SweetAlertModal extends Component {
     return (
       <div>
         {this.state.isModerator ? (
-          <button
-            className="text-lg mr-2 "
-            type="button"
-          >
-            <i class="fas fa-chess-rook text-green-500 text-lg focus:outline-none"></i>
+          <button className="text-lg mr-2 " type="button">
+            <i className="fas fa-chess-rook text-green-500 text-lg focus:outline-none"></i>
           </button>
         ) : (
           <button
@@ -80,7 +77,7 @@ export default class SweetAlertModal extends Component {
             type="button"
             onClick={() => this.confirmArrival()}
           >
-            <i class="fas fa-chess-rook text-green-500 text-lg focus:outline-none"></i>
+            <i className="fas fa-chess-rook text-green-500 text-lg focus:outline-none"></i>
           </button>
         )}
         {this.state.alert}

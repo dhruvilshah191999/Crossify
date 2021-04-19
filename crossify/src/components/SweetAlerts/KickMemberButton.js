@@ -30,7 +30,11 @@ export default class SweetAlertModal extends Component {
       club_id: this.state.club_id,
       user_id: this.state.user_id,
     };
-    const finaldata = await axios.post("/api/admin/DeleteMember", object, config);
+    const finaldata = await axios.post(
+      "/api/admin/DeleteMember",
+      object,
+      config
+    );
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
@@ -72,7 +76,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.confirmArrival()}
         >
-          <i class="fas fa-trash-alt  "></i>
+          <i className="fas fa-trash-alt  "></i>
         </button>
 
         {this.state.alert}

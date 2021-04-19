@@ -9,12 +9,6 @@ import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
-import SweetAlert from "react-bootstrap-sweetalert";
-import RequestForEvent from "components/Modals/RequestForEvent";
-
-import { ModalManager } from "react-dynamic-modal";
-import { Redirect } from "react-router";
-
 //this is used to make custom view in calendar for event
 function renderEventContent(eventInfo) {
   return (
@@ -29,12 +23,9 @@ export default class DemoApp extends React.Component {
     super(props);
     this.calendarRef = React.createRef();
     this.state = {
-      alert: null,
       currentSelectionInfo: null,
       events: [],
       loading: false,
-      club_id: this.props.club_id,
-      isAdmin: this.props.isAdmin,
     };
   }
 
@@ -83,52 +74,9 @@ export default class DemoApp extends React.Component {
     calendarApi.setOption("eventDisplay", circleOfLife[newI]);
   };
 
-  redirectToRequestModal = () => {
-    ModalManager.open(
-      <RequestForEvent
-        onRequestClose={() => true}
-        startDate={this.state.currentSelectionInfo.startStr}
-        endDate={this.state.currentSelectionInfo.endStr}
-        club_id={this.state.club_id}
-        isAdmin={this.state.isAdmin}
-      />
-    );
-    this.setState({ alert: null, currentSelectionInfo: null });
-  };
-
-  selectedDates = (selectionInfo) => {
-    console.log(selectionInfo);
-    const getAlert = () => (
-      <SweetAlert
-        customClass="text-black"
-        success
-        showCancel
-        confirmBtnText="Let's Fill the Details."
-        confirmBtnBsStyle="success"
-        title="Apply for Event "
-        focusCancelBtn
-        confirmBtnCssClass="text-base rounded px-4 py-2 bg-green-500"
-        confirmBtnStyle={{ color: "white" }}
-        cancelBtnCssClass="text-base"
-        cancelBtnBsStyle="default"
-        onConfirm={this.redirectToRequestModal}
-        onCancel={() => {
-          this.setState({ alert: null });
-        }}
-        closeAnim={{ name: "hideSweetAlert", duration: 300 }}
-      >
-        You are requesting to host Event for {selectionInfo.startStr} to{" "}
-        {selectionInfo.endStr}.
-      </SweetAlert>
-    );
-    this.setState({
-      alert: getAlert(),
-      currentSelectionInfo: selectionInfo,
-    });
-  };
   render() {
     return (
-      <div className="mt-6">
+      <div>
         <FullCalendar
           ref={this.calendarRef}
           height="800px"
@@ -153,8 +101,6 @@ export default class DemoApp extends React.Component {
           }}
           eventClick={this.redirectToEventPage}
           eventMouseEnter={this.popOver}
-          selectable={true}
-          select={this.selectedDates}
           dayMaxEventRows={true}
           dayMaxEvents={true}
         />

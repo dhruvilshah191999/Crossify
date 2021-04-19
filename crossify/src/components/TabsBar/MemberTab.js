@@ -15,44 +15,44 @@ class Contact extends React.Component {
     return (
       <>
         <div
-          class="flex items-center justify-between my-4"
+          className="flex items-center justify-between my-4"
           onClick={() => this.openModal(this.props.user_id, this.props.name)}
           style={{ cursor: "pointer" }}
         >
-          <div class="w-16">
+          <div className="w-16">
             <img
-              class="w-12 h-12 rounded-full"
+              className="w-12 h-12 rounded-full"
               src={this.props.image}
               alt="img"
             />
           </div>
-          <div class="flex-1 pl-2">
+          <div className="flex-1 pl-2">
             <div
-              class="text-gray-700 font-semibold text-lg"
+              className="text-gray-700 font-semibold text-lg"
               style={{ textTransform: "capitalize", lineHeight: "1rem" }}
             >
               {this.props.name}
             </div>
 
             <div
-              class="text-gray-600 font-thin text-sm"
+              className="text-gray-600 font-thin text-sm"
               style={{ textTransform: "capitalize" }}
             >
               {"Joined "}
               {Moment(this.props.date).format("MMM YYYY")}
               <div
-                class="text-gray-600 font-thin text-sm"
+                className="text-gray-600 font-thin text-sm"
                 style={{ textTransform: "capitalize", lineHeight: "0.75rem" }}
               >
                 {this.props.phone}
               </div>
             </div>
           </div>
-          {/*<div class="text-red-400 mr-4">
+          {/*<div className="text-red-400 mr-4">
             <MemberUserDropdown />
             </div>*/}
         </div>
-        <hr class="boder-b-0 my-4" />
+        <hr className="boder-b-0 my-4" />
       </>
     );
   }
@@ -160,17 +160,17 @@ class ContactList extends React.Component {
             {this.renderSideMenu()}
           </ul>
         </div>
-        <div class="bg-white w-2/3 rounded px-6 shadow ml-auto">
-          <div class="border-l-4 border-red-400 -ml-6 pl-6 flex items-center justify-between my-4">
-            <div class="font-semibold text-gray-800">Member List</div>
+        <div className="bg-white w-2/3 rounded px-6 shadow ml-auto">
+          <div className="border-l-4 border-red-400 -ml-6 pl-6 flex items-center justify-between my-4">
+            <div className="font-semibold text-gray-800">Member List</div>
           </div>
 
-          <div class="bg-white w-full shadow  ml-auto mr-8 flex border border-beta rounded-lg my-2">
-            <span class="w-auto flex justify-end items-center text-gray-500 p-2">
+          <div className="bg-white w-full shadow  ml-auto mr-8 flex border border-beta rounded-lg my-2">
+            <span className="w-auto flex justify-end items-center text-gray-500 p-2">
               <i className="fas fa-search text-beta"></i>
             </span>
             <input
-              class="w-full rounded-lg py-2"
+              className="w-full rounded-lg py-2"
               type="text"
               placeholder="Search Club Stakeholders"
               onChange={this.searchHandler}

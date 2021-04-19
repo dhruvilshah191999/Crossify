@@ -13,9 +13,9 @@ export default class SweetAlertModal extends Component {
       description: this.props.description,
       club_id: this.props.club_id,
       old_file: this.props.link,
-      link:this.props.link,
+      link: this.props.link,
       size: this.props.size,
-      name:this.props.name,
+      name: this.props.name,
     };
   }
 
@@ -80,15 +80,14 @@ export default class SweetAlertModal extends Component {
           }
         })
         .catch((err) => console.log(err));
-    }
-    else {
+    } else {
       var object = {
         club_id: this.state.club_id,
         description: this.state.description,
         photo: this.state.old_file,
         name: this.state.name,
         size: this.state.size,
-        link:this.state.link
+        link: this.state.link,
       };
       const config = {
         method: "POST",
@@ -188,7 +187,7 @@ export default class SweetAlertModal extends Component {
     return (
       <>
         <button title="Edit" onClick={() => this.confirmArrival()}>
-          <i class="fas fa-edit text-blue-500 text-lg focus:outline-none mr-4 "></i>
+          <i className="fas fa-edit text-blue-500 text-lg focus:outline-none mr-4 "></i>
         </button>
 
         {this.state.alert}

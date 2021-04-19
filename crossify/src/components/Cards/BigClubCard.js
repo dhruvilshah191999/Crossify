@@ -35,7 +35,7 @@ const ResultWindow = (props) => {
             {props.data.city},{props.data.state}
           </div>
           <div className="text-sm font-semibold  text-gray-600 tracking-wider">
-            <i class="fas fa-calendar-day mr-1"></i>{" "}
+            <i className="fas fa-calendar-day mr-1"></i>{" "}
             {moment(props.data.date).format("DD MMM YYYY")}
           </div>
 

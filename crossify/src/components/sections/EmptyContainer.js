@@ -7,7 +7,7 @@ function EmptyContainer(props) {
         {" "}
         <div>
           {" "}
-          <i class="far fa-dizzy text-5xl mr-4 mt-2"></i>
+          <i className="far fa-dizzy text-5xl mr-4 mt-2"></i>
         </div>
         <div>
           <h1 className="text-2xl text-gray-700 ">Oops Such Empty Place...</h1>
