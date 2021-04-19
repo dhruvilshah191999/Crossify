@@ -225,7 +225,7 @@ export default function Landing() {
                     Upcoming Nearby Events
                   </h4>
                   <motion.button
-                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                    className="text-white font-semibold ml-auto mr-2 bg-alpha rounded p-2"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -254,7 +254,7 @@ export default function Landing() {
                     Explore Local Clubs
                   </h4>
                   <motion.button
-                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                    className="text-white font-semibold ml-auto mr-2 bg-alpha rounded p-2"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -285,7 +285,7 @@ export default function Landing() {
                         {el.category_name}
                       </h4>
                       <motion.button
-                        className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                        className="text-white font-semibold ml-auto mr-2 bg-alpha rounded p-2"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >

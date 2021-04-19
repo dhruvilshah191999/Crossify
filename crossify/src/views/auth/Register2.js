@@ -15,6 +15,7 @@ export default function Register2() {
   let history = useHistory();
   const watch = true;
   const [errorStatus, setError] = useState(false);
+  const [usernameStatus, setUsername] = useState(false);
   const [message, setMessage] = useState("");
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -29,6 +30,9 @@ export default function Register2() {
     username: "",
     address: "",
     pincode: "",
+    occupation: "",
+    dob: "",
+    about_me: "",
   });
   var decryptedData;
   var localemail = localStorage.getItem("email");
@@ -39,9 +43,27 @@ export default function Register2() {
     history.push("/auth/register");
   }
 
-  var { username, address, pincode } = formData;
-  const onChange = (e) =>
+  var { username, address, pincode, occupation, dob, about_me } = formData;
+  const onChange = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+
+    axios
+      .post("/api/manage/UserNameCheck", { username: e.target.value }, config)
+      .then((res) => {
+        if (!res.data.is_error) {
+          setUsername(true);
+        } else {
+          setUsername(false);
+        }
+      });
+  };
 
   var districts = [];
   if (statename !== "") {
@@ -79,24 +101,37 @@ export default function Register2() {
                   initialValues={formData}
                   validate={() => {
                     const errors = {};
+
                     if (!username) {
-                      errors.username = "User Name is Required !!!";
+                      errors.username = "Username is required !";
+                    } else if (usernameStatus) {
+                      errors.username = "Username is already exists !";
+                    } else if (!usernameStatus) {
+                      errors.username = "Username is available !";
+                    } else if (!dob) {
+                      errors.dob = "Date of birth is reuired !";
                     } else if (!address) {
-                      errors.address = "Address is Required !!!";
+                      errors.address = "Address is required !";
                     } else if (
                       statename === "Select Option" ||
                       statename === ""
                     ) {
-                      errors.statename = "State Name is Required !!!";
+                      errors.statename = "State name is required !";
                     } else if (
                       cityname === "Select Option" ||
                       cityname === ""
                     ) {
-                      errors.cityname = "City Name is Required !!!";
+                      errors.cityname = "City name is required !";
                     } else if (!pincode) {
-                      errors.pincode = "Pin Code is Required !!!";
+                      errors.pincode = "Pin code is required !";
                     } else if (pincode.length != 6) {
-                      errors.pincode = "Pin Code Should Be in 6 Digits !!!";
+                      errors.pincode = "Pin code should be in 6 digits !!!";
+                    } else if (!occupation) {
+                      errors.occupation = "Occupation is required !";
+                    } else if (!about_me) {
+                      errors.about_me = "About me is required !";
+                    } else if (about_me.length < 30) {
+                      errors.about_me = "Minimum 30 words are required !!!";
                     }
                     return errors;
                   }}
@@ -168,10 +203,40 @@ export default function Register2() {
                           placeholder="Enter Username"
                           onBlur={handleBlur}
                         />
-                        <p style={{ color: "#fb8090" }}>
+                        <p className="FormError">
                           {errors.username &&
                             touched.username &&
                             errors.username}
+                        </p>
+                        if (!usernameStatus)
+                        {
+                          <p className="FormSuccess">
+                            {errors.username &&
+                              touched.username &&
+                              errors.username}
+                          </p>
+                        }
+                      </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-country"
+                        >
+                          Date Of Birth
+                        </label>
+                        <input
+                          id="reg-country"
+                          type="date"
+                          name="dob"
+                          value={dob}
+                          onChange={(e) => onChange(e)}
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Select Your Date Of Birth"
+                          onBlur={handleBlur}
+                        />
+                        <p className="FormError">
+                          {errors.dob && touched.dob && errors.dob}
                         </p>
                       </div>
 
@@ -189,8 +254,9 @@ export default function Register2() {
                           onBlur={handleBlur}
                           value={address}
                           className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Enter Your Address"
                         />
-                        <p style={{ color: "#fb8090" }}>
+                        <p className="FormError">
                           {errors.address && touched.address && errors.address}
                         </p>
                       </div>
@@ -262,12 +328,60 @@ export default function Register2() {
                       </div>
 
                       <div className="text-center">
-                        <p style={{ color: "#fb8090" }}>
+                        <p className="FormError">
                           {errors.statename}
                           {errors.cityname}
                           {errors.pincode && touched.pincode && errors.pincode}
                         </p>
                       </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-country"
+                        >
+                          Occupation
+                        </label>
+                        <input
+                          id="reg-country"
+                          type="text"
+                          name="occupation"
+                          value={occupation}
+                          onChange={(e) => onChange(e)}
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Enter Your Occupation"
+                          onBlur={handleBlur}
+                        />
+                        <p className="FormError">
+                          {errors.occupation &&
+                            touched.occupation &&
+                            errors.occupation}
+                        </p>
+                      </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-address"
+                        >
+                          About Me
+                        </label>
+                        <textarea
+                          id="reg-address"
+                          name="about_me"
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                          value={about_me}
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Write About Yourself."
+                        />
+                        <p className="FormError">
+                          {errors.about_me &&
+                            touched.about_me &&
+                            errors.about_me}
+                        </p>
+                      </div>
+
                       <div className="-mx-3 md:flex mt-6">
                         <div className="md:w-1/2 md:mb-0 w-full w-1/2 mr-3">
                           <button
