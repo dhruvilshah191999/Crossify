@@ -52,7 +52,7 @@ const NotificationDropdown = (props) => {
         .off("Notify")
         .on(
           "Notify",
-          ({ date, description, title, profile_photo, report_id, user_id }) => {
+          ({ date, description, title, profile_photo, user_id }) => {
             var object = {
               date: date,
               description: description,
