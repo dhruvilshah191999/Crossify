@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import harshilImg from "assets/img/harshilImg.jpg";
-import dhruvilImg from "assets/img/pp3.jpg";
-import sagarImg from "assets/img/pp4.jpg";
+import dhruvilImg from "assets/img/pp1.jpg";
+import sagarImg from "assets/img/sagar.jpeg";
 import bhargavImg from "assets/img/bhargavImage.jpg";
 
 class Creators extends Component {
