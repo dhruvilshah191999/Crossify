@@ -34,7 +34,7 @@ export default class DemoApp extends React.Component {
       events: [],
       loading: false,
       club_id: this.props.club_id,
-      isAdmin:this.props.isAdmin
+      isAdmin: this.props.isAdmin,
     };
   }
 
@@ -128,7 +128,7 @@ export default class DemoApp extends React.Component {
   };
   render() {
     return (
-      <div>
+      <div className="mt-6">
         <FullCalendar
           ref={this.calendarRef}
           height="800px"
@@ -174,7 +174,7 @@ export default class DemoApp extends React.Component {
               whileTap={{ scale: 0.9 }}
             >
               {" "}
-              <i class="fas fa-wrench text-sm"></i> Toggle View
+              <i className="fas fa-wrench text-sm"></i> Toggle View
             </motion.button>
           </div>
         </div>

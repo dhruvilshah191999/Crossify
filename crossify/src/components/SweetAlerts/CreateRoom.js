@@ -27,10 +27,10 @@ export default class SweetAlertModal extends Component {
       },
     };
     var object = {
-      club_id:this.state.club_id,
+      club_id: this.state.club_id,
       name: this.state.name,
       readable: this.state.readable,
-      writable:this.state.writable,
+      writable: this.state.writable,
       description: this.state.description,
     };
     const finaldata = await axios.post("/api/admin/Addchannel", object, config);
@@ -164,7 +164,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.confirmArrival()}
         >
-          <i class="fas fa-plus"></i>&nbsp; Create Room
+          <i className="fas fa-plus"></i>&nbsp; Create Room
         </button>
 
         {this.state.alert}

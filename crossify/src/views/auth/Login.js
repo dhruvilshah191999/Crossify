@@ -75,13 +75,13 @@ function Login() {
                 validate={() => {
                   const errors = {};
                   if (!email) {
-                    errors.email = "Email is Required!!!";
+                    errors.email = "Email is required !";
                   } else if (
                     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
                   ) {
-                    errors.email = "Invalid email address";
+                    errors.email = "Invalid email address !";
                   } else if (!password) {
-                    errors.password = "Password is Required !!!";
+                    errors.password = "Password is required !";
                   }
                   return errors;
                 }}
@@ -147,7 +147,7 @@ function Login() {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#fb8090" }}>
+                      <p className="FormError">
                         {errors.email && touched.email && errors.email}
                       </p>
                     </div>
@@ -168,7 +168,7 @@ function Login() {
                         onChange={(e) => onChange(e)}
                         onBlur={handleBlur}
                       />
-                      <p style={{ color: "#fb8090" }}>
+                      <p className="FormError">
                         {errors.password && touched.password && errors.password}
                       </p>
                     </div>

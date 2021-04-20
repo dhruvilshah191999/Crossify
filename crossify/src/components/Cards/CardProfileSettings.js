@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { store } from "react-notifications-component";
 import City from "../../views/auth/states-and-districts.json";
+import $ from "jquery";
+import MultipleSelect from "components/Inputs/MultiSelect";
 export default function CardSettings() {
   const token = localStorage.getItem("jwt");
   const [statename, setStateName] = useState("");
@@ -73,6 +75,23 @@ export default function CardSettings() {
     }
 
     fetchData();
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#imagePreview").css(
+            "background-image",
+            "url(" + e.target.result + ")"
+          );
+          $("#imagePreview").hide();
+          $("#imagePreview").fadeIn(650);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#imageUpload").change(function () {
+      readURL(this);
+    });
   }, []);
 
   const onSubmit = async (e) => {
@@ -141,77 +160,101 @@ export default function CardSettings() {
               User Information
             </h6>
             <div className="flex flex-wrap">
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue="lucky.jesse"
-                    name="username"
-                    value={username}
-                    onChange={(e) => onChange(e)}
-                  />
+              <div className="px-4 mt-6">
+                <div class="avatar-upload">
+                  <div class="avatar-edit">
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      accept=".png, .jpg, .jpeg"
+                    />
+                    <label for="imageUpload">
+                      <i class="fas fa-pen ml-2  text-sm"></i>
+                    </label>
+                  </div>
+                  <div className="avatar-preview">
+                    <div
+                      id="imagePreview"
+                      style={{
+                        backgroundImage: "url(http://i.pravatar.cc/500?img=7)",
+                      }}
+                    ></div>
+                  </div>
                 </div>
               </div>
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Email address
-                  </label>
-                  <input
-                    type="email"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue="jesse@example.com"
-                    name="email"
-                    value={email}
-                    onChange={(e) => onChange(e)}
-                    readOnly={true}
-                  />
+              <div className="w-full lg:w-10/12 flex flex-wrap">
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      defaultValue="Lucky"
+                      name="fname"
+                      value={fname}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue="Lucky"
-                    name="fname"
-                    value={fname}
-                    onChange={(e) => onChange(e)}
-                  />
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      defaultValue="Jesse"
+                      name="lname"
+                      value={lname}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="w-full lg:w-6/12 px-4">
-                <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue="Jesse"
-                    name="lname"
-                    value={lname}
-                    onChange={(e) => onChange(e)}
-                  />
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      defaultValue="lucky.jesse"
+                      name="username"
+                      value={username}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Email address
+                    </label>
+                    <input
+                      type="email"
+                      className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                      defaultValue="jesse@example.com"
+                      name="email"
+                      value={email}
+                      onChange={(e) => onChange(e)}
+                      readOnly={true}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -328,6 +371,26 @@ export default function CardSettings() {
                     name="occupation"
                     value={occupation}
                     onChange={(e) => onChange(e)}
+                  />
+                </div>
+              </div>
+              <div className="w-full lg:w-12/12 px-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Interests
+                  </label>
+                  {/* //todo here fetch already selected Categories and add it in selectedValue in below structure */}
+                  <MultipleSelect
+                    parentCallback={() => console.log("CHange here")}
+                    selectedValues={[
+                      {
+                        _id: "5fd8368178e2b0a7b26bdf16",
+                        category_name: "Dance",
+                      },
+                    ]}
                   />
                 </div>
               </div>

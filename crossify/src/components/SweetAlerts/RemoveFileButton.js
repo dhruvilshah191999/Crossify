@@ -72,7 +72,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.confirmArrival()}
         >
-          <i class="fas fa-trash-alt  "></i>
+          <i className="fas fa-trash-alt  "></i>
         </button>
 
         {this.state.alert}

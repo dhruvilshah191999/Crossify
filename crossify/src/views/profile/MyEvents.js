@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import axios from "axios";
 import { motion } from "framer-motion";
+import EventCalendar from "components/Calendar/MyEventsCalendar";
 import EmptyContainer from "components/sections/EmptyContainer";
 
 const getSegment = (totalEvents, curIndex, eventPerPage) => {
@@ -19,7 +20,7 @@ export default function MyClubs() {
   const [backIndex, setBackIndex] = useState(1);
   const [upcomingIndex, setUpcomingIndex] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const eventPerPage = 6;
+  const eventPerPage = 3;
   const handleClickLiked = (event) => {
     setLikedIndex(Number(event.target.id));
   };
@@ -184,7 +185,7 @@ export default function MyClubs() {
             {" "}
             <div>
               {" "}
-              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+              <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
             </div>
             <div>
               <h1 className="text-2xl text-gray-700 ">
@@ -212,7 +213,7 @@ export default function MyClubs() {
             {" "}
             <div>
               {" "}
-              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+              <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
             </div>
             <div>
               <h1 className="text-2xl text-gray-700 ">
@@ -240,7 +241,7 @@ export default function MyClubs() {
             {" "}
             <div>
               {" "}
-              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+              <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
             </div>
             <div>
               <h1 className="text-2xl text-gray-700 ">
@@ -341,7 +342,8 @@ export default function MyClubs() {
             }
             onClick={() => toggleTabIndex(0)}
           >
-            <i class="fas fa-history hover:text-white"></i>&nbsp; Past Events
+            <i className="fas fa-history hover:text-white"></i>&nbsp; Past
+            Events
           </button>
           <button
             className={
@@ -352,7 +354,7 @@ export default function MyClubs() {
             onClick={() => toggleTabIndex(1)}
           >
             {" "}
-            <i class="fas fa-heart hover:text-offwhite hover:text-offwhite"></i>{" "}
+            <i className="fas fa-heart hover:text-offwhite hover:text-offwhite"></i>{" "}
             Liked
           </button>
 
@@ -365,16 +367,16 @@ export default function MyClubs() {
             onClick={() => toggleTabIndex(2)}
           >
             {" "}
-            <i class="fas fa-glass-cheers hover:text-offwhite"></i>&nbsp;
+            <i className="fas fa-glass-cheers hover:text-offwhite"></i>&nbsp;
             Upcoming
           </button>
         </div>
-        <div class="bg-white shadow  ml-auto mr-8 flex border border-beta rounded-lg">
-          <span class="w-auto flex justify-end items-center text-gray-500 p-2">
+        <div className="bg-white shadow  ml-auto mr-8 flex border border-beta rounded-lg">
+          <span className="w-auto flex justify-end items-center text-gray-500 p-2">
             <i className="fas fa-search text-beta"></i>
           </span>
           <input
-            class="w-full rounded-lg py-2"
+            className="w-full rounded-lg py-2"
             type="text"
             placeholder="Search Event..."
             onChange={searchHandler}
@@ -382,7 +384,7 @@ export default function MyClubs() {
         </div>
       </div>
       <div>
-        <div class="ml-4 mt-10 bg-gray-200 flex flex-wrap flex-row">
+        <div className=" mt-10 bg-gray-200 flex flex-wrap flex-row gap-1">
           {tabIndex === 2
             ? renderUpcomingEvents
             : tabIndex === 1
@@ -390,9 +392,9 @@ export default function MyClubs() {
             : renderPastEvents}
         </div>
       </div>
-      <div className="py-2 justify-center flex">
+      <div className="my-2 justify-center flex">
         <div className="block">
-          <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
+          <ul className="flex pl-0 rounded list-none flex-wrap">
             {tabIndex === 0
               ? renderPageNumbersOld
               : tabIndex === 1
@@ -401,6 +403,16 @@ export default function MyClubs() {
           </ul>
         </div>
       </div>
+      {upcomingEvents.length > 0 && (
+        <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+          <span className="text-4xl font-semibold m-2 mb-10">
+            Upcoming Events{" "}
+          </span>
+          <div className="mt-4">
+            <EventCalendar EventData={upcomingEvents} />
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -198,10 +198,10 @@ export default function App(props) {
         Cell: ({ value }) => (
           <div>
             {/* <button title="Approve">
-              <i class="fas fa-vote-yea text-green-500 text-lg focus:outline-none"></i>
+              <i className="fas fa-vote-yea text-green-500 text-lg focus:outline-none"></i>
             </button>
             <button className="ml-2" title="Reject">
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
+              <i className="fas fa-window-close text-red-500 text-lg"></i>
             </button> 
              <div className="flex justify-center">
                   <button
@@ -218,7 +218,7 @@ export default function App(props) {
               title="More"
               onClick={() => redirect(value)}
             >
-              <i class="fas fa-cog text-blue-500 text-lg"></i>
+              <i className="fas fa-cog text-blue-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -441,14 +441,14 @@ export default function App(props) {
                 onClick={() => gotoPage(0)}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-step-backward"></i>
+                <i className="fas fa-step-backward"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left"></i>
               </button>{" "}
               <span className="mx-4">
                 <strong>{pageIndex + 1}</strong>{" "}
@@ -458,14 +458,14 @@ export default function App(props) {
                 onClick={() => nextPage()}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => gotoPage(pageCount - 1)}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-step-forward"></i>
+                <i className="fas fa-step-forward"></i>
               </button>{" "}
             </div>
             <div className="ml-auto mr-4 mt-1 overflow">

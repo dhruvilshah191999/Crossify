@@ -196,7 +196,7 @@ export default class SweetAlertModal extends Component {
           whileTap={{ scale: 0.9 }}
         >
           <i
-            class="fas fa-share-alt"
+            className="fas fa-share-alt"
             // style={{ fontSize: "14px" }}
           ></i>
         </motion.button>

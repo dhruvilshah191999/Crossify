@@ -9,7 +9,7 @@ export default class SweetAlertModal extends Component {
     this.state = {
       alert: null,
       club_id: this.props.club_id,
-      link:this.props.link
+      link: this.props.link,
     };
   }
 
@@ -19,7 +19,7 @@ export default class SweetAlertModal extends Component {
     });
   };
 
-  confirmProcess = async() => {
+  confirmProcess = async () => {
     const config = {
       method: "POST",
       header: {
@@ -28,9 +28,13 @@ export default class SweetAlertModal extends Component {
     };
     var object = {
       club_id: this.state.club_id,
-      link:this.state.link
+      link: this.state.link,
     };
-    const finaldata = await axios.post("/api/admin/DeletePhoto", object, config);
+    const finaldata = await axios.post(
+      "/api/admin/DeletePhoto",
+      object,
+      config
+    );
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
@@ -72,7 +76,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.confirmArrival()}
         >
-          <i class="fas fa-trash-alt  "></i>
+          <i className="fas fa-trash-alt  "></i>
         </button>
 
         {this.state.alert}

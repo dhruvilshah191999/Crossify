@@ -76,27 +76,26 @@ export default function Register() {
                   validate={() => {
                     const errors = {};
                     if (!fname) {
-                      errors.fname = "First Name is Required !!!";
+                      errors.fname = "First name is required !";
                     } else if (!lname) {
-                      errors.lname = "Last Name is Required !!!";
+                      errors.lname = "Last name is required !";
                     } else if (!email) {
-                      errors.email = "Email is Required!!!";
+                      errors.email = "Email is Required !";
                     } else if (
                       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
                     ) {
-                      errors.email = "Invalid email address";
+                      errors.email = "Invalid email address !";
                     } else if (!password) {
-                      errors.password = "Password is Required !!!";
+                      errors.password = "Password is required !";
                     } else if (password.length < 6) {
-                      errors.password = "Minimim 6 Characters are Required !!!";
+                      errors.password = "Minimim 6 characters are required !";
                     } else if (!repassword) {
-                      errors.repassword = "Re Enter Your Password !!!";
+                      errors.repassword = "Re enter your password !";
                     } else if (password != repassword) {
-                      errors.repassword =
-                        "Re Password and Password Does Not Match!!!";
+                      errors.repassword = "Password does not match !";
                     } else if (!checked) {
                       errors.checkbox =
-                        "You Must Have to Agree Our Terms and Conditions";
+                        "You must have to agree our terms and conditions";
                     }
                     return errors;
                   }}
@@ -187,7 +186,7 @@ export default function Register() {
                             onChange={(e) => onChange(e)}
                             onBlur={handleBlur}
                           />
-                          <p style={{ color: "#fb8090" }}>
+                          <p className="FormError">
                             {errors.fname && touched.fname && errors.fname}
                           </p>
                         </div>
@@ -208,7 +207,7 @@ export default function Register() {
                             onChange={(e) => onChange(e)}
                             onBlur={handleBlur}
                           />
-                          <p style={{ color: "#fb8090" }}>
+                          <p className="FormError">
                             {errors.lname && touched.lname && errors.lname}
                           </p>
                         </div>
@@ -231,7 +230,7 @@ export default function Register() {
                           onChange={(e) => onChange(e)}
                           onBlur={handleBlur}
                         />
-                        <p style={{ color: "#fb8090" }}>
+                        <p className="FormError">
                           {errors.email && touched.email && errors.email}
                         </p>
                       </div>
@@ -253,7 +252,7 @@ export default function Register() {
                           onChange={(e) => onChange(e)}
                           onBlur={handleBlur}
                         />
-                        <p style={{ color: "#fb8090" }}>
+                        <p className="FormError">
                           {errors.password &&
                             touched.password &&
                             errors.password}
@@ -277,7 +276,7 @@ export default function Register() {
                           onChange={(e) => onChange(e)}
                           onBlur={handleBlur}
                         />
-                        <p style={{ color: "#fb8090" }}>
+                        <p className="FormError">
                           {errors.repassword &&
                             touched.repassword &&
                             errors.repassword}
@@ -323,7 +322,7 @@ export default function Register() {
                             </a>
                           </span>
                         </label>
-                        <p style={{ color: "#fb8090" }}>{errors.checkbox}</p>
+                        <p className="FormError">{errors.checkbox}</p>
                       </div>
 
                       <div className="text-center mt-6">

@@ -25,6 +25,7 @@ const Tag = (props) => {
 
 export default function EventPage(props) {
   let history = useHistory();
+  const [isAdmin, setIsAdmin] = useState(false);
   var { id } = useParams();
   const [loading, setloading] = useState(false);
   const [like, setLike] = useState(false);
@@ -33,6 +34,9 @@ export default function EventPage(props) {
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
+  const gotoAdmin = () => {
+    history.push("/admin/" + id);
+  };
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     async function event_details() {
@@ -168,6 +172,7 @@ export default function EventPage(props) {
     history.push("/club/" + club_id);
   };
 
+  console.log(eventdetails);
   if (loading) {
     return (
       <>
@@ -208,12 +213,25 @@ export default function EventPage(props) {
                   {" "}
                   <ReportEventButton event_id={id}></ReportEventButton>
                 </div>
+                {/* TODO: setting as club page */}
+                <div className="ml-auto mt-4 mr-3">
+                  {isAdmin ? (
+                    <button
+                      className="float-right text-lg"
+                      onClick={() => gotoAdmin()}
+                    >
+                      <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">
                 {" "}
                 <div className="ml-2 flex">
                   <div>
-                    <i class="fas fa-map-marker-alt text-lg "></i>
+                    <i className="fas fa-map-marker-alt text-lg "></i>
                   </div>
                   <div className="ml-3">
                     {eventdetails.location},{eventdetails.city}
@@ -222,7 +240,7 @@ export default function EventPage(props) {
                 <div className="mt-2 ml-2 flex">
                   <div>
                     {" "}
-                    <i class="fas fa-clock"></i>
+                    <i className="fas fa-clock"></i>
                   </div>
 
                   <div className="ml-2">
@@ -232,8 +250,20 @@ export default function EventPage(props) {
                     )}
                   </div>
                 </div>
+                {/* <button type="button" onClick={handleClick}>
+                  Click me
+                </button> */}
+                {/* <div title="Add to Calendar" className="addeventatc">
+                  Add to Calendar
+                  <span className="start">05/02/2021 08:00 AM</span>
+                  <span className="end">05/02/2021 10:00 AM</span>
+                  <span className="timezone">America/Los_Angeles</span>
+                  <span className="title">Summary of the event</span>
+                  <span className="description">Description of the event</span>
+                  <span className="location">Location of the event</span>
+                </div> */}
                 <div
-                  className="mt-6 cursor-pointer"
+                  className="mt-2 cursor-pointer"
                   onClick={() => showClubs(eventdetails.club_id)}
                 >
                   <div className="flex flex-col ml-1 mb-1">
@@ -262,6 +292,7 @@ export default function EventPage(props) {
                   </div>
                 </div>
               </div>
+
               <div className="flex flex-row  mt-2 lg:mt-auto  ">
                 <div className="w-6/12">
                   <motion.button
@@ -287,6 +318,30 @@ export default function EventPage(props) {
                     tags={eventdetails.tags}
                   ></BigShareButton>
                 </div>
+              </div>
+              <div
+                title="Add to Calendar"
+                className="addeventatc mt-1  text-xs rounded-lg"
+                style={{ fontSize: "smaller !important" }}
+                data-styling="none"
+              >
+                <span className="uppercase">
+                  <i className="far fa-calendar-plus text-base"></i> &nbsp;Add
+                  to Calendar
+                </span>
+                <span className="arrow">&nbsp;</span>
+                <span className="start">{eventdetails.startdate}</span>
+                <span className="end">{eventdetails.date}</span>
+                <span className="timezone">Asia/Kolkata</span>
+                <span className="title">{eventdetails.event_name}</span>
+                <span className="description">{eventdetails.description}</span>
+                <span className="location">
+                  {eventdetails.location +
+                    ", " +
+                    eventdetails.city +
+                    ", " +
+                    eventdetails.state}
+                </span>
               </div>
               <div className="flex justify-center mt-2">
                 <JoinEventButton

@@ -50,7 +50,7 @@ const SearchNavbar = (props) => {
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
                     {
-                      onSubmit(e)
+                      onSubmit(e);
                     }
                   }
                 }}
@@ -65,7 +65,7 @@ const SearchNavbar = (props) => {
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
                     {
-                      onSubmit(e)
+                      onSubmit(e);
                     }
                   }
                 }}
@@ -77,7 +77,7 @@ const SearchNavbar = (props) => {
                 className="bg-alpha shadow-lg text-lg hover:bg-alpha rounded text-white p-2 pl-4 pr-4"
                 onClick={(e) => onSubmit(e)}
               >
-                <i class="fa fa-search"></i>
+                <i className="fa fa-search"></i>
               </button>
             </div>
           </div>

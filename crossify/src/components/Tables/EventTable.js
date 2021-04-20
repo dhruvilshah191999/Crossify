@@ -30,7 +30,7 @@ function GlobalFilter({
     <span className="text-gray-700 font-normal ml-2 ">
       {/* Search:{" "} */}
       <i
-        class={
+        className={
           isLight
             ? "fas fa-search mr-4 text-gray-700"
             : "fas fa-search mr-4 text-white"
@@ -99,9 +99,14 @@ function SelectColumnFilter({
 export default function App(props) {
   const [clubId, setClubId] = useState(props.club_id);
   const [eventFile, setEventFile] = useState(props.data);
+  console.log(eventFile);
   const openModal = (event) => {
     ModalManager.open(
-      <EventReview onRequestClose={() => true} eventData={event} />
+      <EventReview
+        onRequestClose={() => true}
+        eventData={event}
+        club_id={clubId}
+      />
     );
   };
   const openModal2 = () => {
@@ -155,7 +160,7 @@ export default function App(props) {
           }
           // return (
           //   <span
-          //     class={
+          //     className={
           //       "relative inline-block px-3 py-1 font-semibold text-" +
           //       myColor +
           //       "-900 leading-tight"
@@ -163,13 +168,13 @@ export default function App(props) {
           //   >
           //     <span
           //       aria-hidden
-          //       class={
+          //       className={
           //         "absolute inset-0 bg-" +
           //         myColor +
           //         "-200 opacity-50 rounded-full"
           //       }
           //     ></span>
-          //     <span class="relative">{value}</span>
+          //     <span className="relative">{value}</span>
           //   </span>
           // );
           return (
@@ -202,7 +207,7 @@ export default function App(props) {
               title="More"
               onClick={() => openModal(value)}
             >
-              <i class="fas fa-ellipsis-h text-blue-500 text-lg"></i>
+              <i className="fas fa-ellipsis-h text-blue-500 text-lg"></i>
             </button>
           </div>
         ),
@@ -317,10 +322,10 @@ export default function App(props) {
                     type="button"
                     onClick={() => openModal2()}
                   >
-                    <i class="fas fa-plus"></i>&nbsp; Create Event
+                    <i className="fas fa-plus"></i>&nbsp; Create Event
                   </button>
                   <i
-                    class={
+                    className={
                       isLight
                         ? "fas fa-filter mr-4 text-gray-700"
                         : "fas fa-filter mr-4 text-white"
@@ -442,14 +447,14 @@ export default function App(props) {
                 onClick={() => gotoPage(0)}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-step-backward"></i>
+                <i className="fas fa-step-backward"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left"></i>
               </button>{" "}
               <span className="mx-4">
                 <strong>{pageIndex + 1}</strong>{" "}
@@ -459,14 +464,14 @@ export default function App(props) {
                 onClick={() => nextPage()}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => gotoPage(pageCount - 1)}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-step-forward"></i>
+                <i className="fas fa-step-forward"></i>
               </button>{" "}
             </div>
             <div className="ml-auto mr-4 mt-1 overflow">

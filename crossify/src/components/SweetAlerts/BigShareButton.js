@@ -193,7 +193,7 @@ export default class SweetAlertModal extends Component {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.9 }}
         >
-          <i class="fas fa-share-alt"></i> Share
+          <i className="fas fa-share-alt"></i> Share
         </motion.button>
 
         {this.state.alert}

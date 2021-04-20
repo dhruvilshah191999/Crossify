@@ -234,7 +234,7 @@ export default class SweetAlertModal extends Component {
                 type="button"
                 onClick={this.state.readonly ? "" : () => this.removeWaiting()}
               >
-                <i class="fas fa-business-time"></i> &nbsp;Queued Up
+                <i className="fas fa-business-time"></i> &nbsp;Queued Up
               </button>
             ) : (
               <button
@@ -244,7 +244,7 @@ export default class SweetAlertModal extends Component {
                   this.state.readonly ? "" : () => this.removeRegisteration()
                 }
               >
-                <i class="fas fa-file-signature"></i> Joined
+                <i className="fas fa-file-signature"></i> Joined
               </button>
             )
           ) : this.state.isFull ? (
@@ -253,7 +253,7 @@ export default class SweetAlertModal extends Component {
               type="button"
               onClick={this.state.readonly ? "" : () => this.successWaiting()}
             >
-              <i class="fas fa-user-clock"></i> &nbsp;Join Waiting List
+              <i className="fas fa-user-clock"></i> &nbsp;Join Waiting List
             </button>
           ) : (
             <motion.button
@@ -263,7 +263,7 @@ export default class SweetAlertModal extends Component {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.9 }}
             >
-              <i class="fas fa-user-plus "></i> Attend
+              <i className="fas fa-user-plus "></i> Attend
             </motion.button>
           )}
 

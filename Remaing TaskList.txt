@@ -1,14 +1,13 @@
 Merge (Member_details,file_details) into club_details
 Club Page          => Open Profile in new Page
 FAQ 		   => Send only public ones
-AdminPage          =>  Rooms Table , Dashboard , filter is not working
+AdminPage          =>   Dashboard 
 Attendees   	   => Broadcast button
 Sign Up from  	   => Make it stylish , Check for username availability
-Forgot Password => Require to build
 Can add Calendar view of all the events in MyEvents
 Is it possible to login with facebook and Google without writing login password
 MySettings    => Needs to add section to modify Interest , Change Profile Photo
-Add Google Reminder of the Event option
 Auto suggestion in location search field
 Navbar options in manage pages
-Problem while login with facebook and google
+Backend connection in Profile PHoto update and interest update 
+In maps add booked seat and total seats dynamically (Currently it is hard coded)

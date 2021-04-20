@@ -37,11 +37,7 @@ export default class SweetAlertModal extends Component {
         },
         validateStatus: () => true,
       };
-      const finaldata = await axios.post(
-        "/api/admin/AddFile",
-        object,
-        config
-      );
+      const finaldata = await axios.post("/api/admin/AddFile", object, config);
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
@@ -60,7 +56,7 @@ export default class SweetAlertModal extends Component {
       />
     );
     this.setState({
-      alert: uploadOverlay
+      alert: uploadOverlay,
     });
   };
   confirmProcess = () => {
@@ -127,7 +123,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.confirmArrival()}
         >
-          <i class="fas fa-plus"></i>&nbsp; Upload File
+          <i className="fas fa-plus"></i>&nbsp; Upload File
         </button>
 
         {this.state.alert}

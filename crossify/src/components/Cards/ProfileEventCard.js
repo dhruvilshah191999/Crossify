@@ -86,8 +86,11 @@ function ProfileClubCard(props) {
 
   return (
     <div
-      className="relative bg-white flex-shrink-0 hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-2 mb-4 rounded shadow "
-      style={{ width: 310, marginLeft: "0.5rem", marginRight: "0.5rem" }}
+      className="relative bg-white flex-shrink-0 hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-2  rounded shadow "
+      style={{
+        flex: "1 1 30%",
+        maxWidth: "380px",
+      }}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.9 }}
     >
@@ -133,7 +136,7 @@ function ProfileClubCard(props) {
           {props.data.event_name}
         </h3>
         <div className="text-sm flex items-center">
-          <i class="fas fa-map-marker-alt text-sm mr-2"></i>
+          <i className="fas fa-map-marker-alt text-sm mr-2"></i>
           <p className="leading-none">
             {" "}
             {props.data.location},{props.data.city}
@@ -153,7 +156,7 @@ ProfileClubCard.defaultProps = {
   data: {
     club_name: "Badshah Gang",
     tags: ["Tech", "Science"],
-    photo:"1.jpg",
+    photo: "1.jpg",
     place: "Ahmedabad , GJ",
     date: "July 14",
     photo: "1.jpg",

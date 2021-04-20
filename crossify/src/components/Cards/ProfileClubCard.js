@@ -132,7 +132,7 @@ function ProfileClubCard(props) {
           {props.data.club_name}
         </h3>
         <div className="text-sm flex items-center">
-          <i class="fas fa-map-marker-alt text-sm mr-2"></i>
+          <i className="fas fa-map-marker-alt text-sm mr-2"></i>
           <p className="leading-none">
             {" "}
             {props.data.location},{props.data.city}

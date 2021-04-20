@@ -20,14 +20,18 @@ export default class SweetAlertModal extends Component {
   };
 
   handlePhotoCallback = (childData) => {
-    this.setState({file:childData });
+    this.setState({ file: childData });
   };
 
   onRecievedInput = () => {
     const token = localStorage.getItem("jwt");
     if (this.state.file != null) {
       var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
-      var path = "ClubPhoto/" + this.state.club_id + "/" + this.state.file.name.split(".")[0];
+      var path =
+        "ClubPhoto/" +
+        this.state.club_id +
+        "/" +
+        this.state.file.name.split(".")[0];
       var data = new FormData();
       data.append("file", this.state.file);
       data.append("upload_preset", "crossify-project");
@@ -70,7 +74,6 @@ export default class SweetAlertModal extends Component {
         })
         .catch((err) => console.log(err));
     }
-
   };
   confirmProcess = () => {
     this.props.handleRejection();
@@ -107,7 +110,9 @@ export default class SweetAlertModal extends Component {
                   >
                     File
                   </label>
-                  <UploadPic parentCallback={this.handlePhotoCallback}></UploadPic>
+                  <UploadPic
+                    parentCallback={this.handlePhotoCallback}
+                  ></UploadPic>
                 </div>
               </div>
               <div className="w-full px-4">
@@ -145,7 +150,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.confirmArrival()}
         >
-          <i class="fas fa-plus"></i>&nbsp; Upload Media
+          <i className="fas fa-plus"></i>&nbsp; Upload Media
         </button>
 
         {this.state.alert}

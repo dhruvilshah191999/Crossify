@@ -59,7 +59,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.BroadcastMessage()}
         >
-          <i class="fas fa-bullhorn "></i> Broadcast{" "}
+          <i className="fas fa-bullhorn "></i> Broadcast{" "}
         </button>
         {this.state.alert}
       </div>

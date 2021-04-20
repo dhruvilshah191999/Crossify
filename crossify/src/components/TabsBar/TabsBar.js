@@ -24,7 +24,7 @@ const Tabs = (props) => {
                   "text-xs font-bold uppercase px-5 py-3  rounded block leading-normal " +
                   (openTab === 1
                     ? "text-white bg-alpha"
-                    : "text-alpha bg-white")
+                    : "text-alpha2 bg-white")
                 }
                 onClick={(e) => {
                   e.preventDefault();
@@ -34,7 +34,7 @@ const Tabs = (props) => {
                 href="#link1"
                 role="tablist"
               >
-                <i class="fas fa-info-circle text-base mr-1"></i> Profile
+                <i className="fas fa-info-circle text-base mr-1"></i> Profile
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -43,7 +43,7 @@ const Tabs = (props) => {
                   "text-xs font-bold uppercase px-5 py-3  rounded block leading-normal " +
                   (openTab === 2
                     ? "text-white bg-alpha"
-                    : "text-alpha bg-white")
+                    : "text-alpha2 bg-white")
                 }
                 onClick={(e) => {
                   e.preventDefault();
@@ -53,7 +53,7 @@ const Tabs = (props) => {
                 href="#link2"
                 role="tablist"
               >
-                <i class="fas fa-calendar-alt text-base mr-1"></i> Events
+                <i className="fas fa-calendar-alt text-base mr-1"></i> Events
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -62,7 +62,7 @@ const Tabs = (props) => {
                   "text-xs font-bold uppercase px-5 py-3  rounded block leading-normal " +
                   (openTab === 3
                     ? "text-white bg-alpha"
-                    : "text-alpha bg-white")
+                    : "text-alpha2 bg-white")
                 }
                 onClick={(e) => {
                   e.preventDefault();
@@ -72,7 +72,7 @@ const Tabs = (props) => {
                 href="#link3"
                 role="tablist"
               >
-                <i class="fas fa-comments text-base mr-1"></i> Rooms
+                <i className="fas fa-comments text-base mr-1"></i> Rooms
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -81,7 +81,7 @@ const Tabs = (props) => {
                   "text-xs font-bold uppercase px-5 py-3  rounded block leading-normal " +
                   (openTab === 4
                     ? "text-white bg-alpha"
-                    : "text-alpha bg-white")
+                    : "text-alpha2 bg-white")
                 }
                 onClick={(e) => {
                   e.preventDefault();
@@ -91,7 +91,7 @@ const Tabs = (props) => {
                 href="#link4"
                 role="tablist"
               >
-                <i class="fas fa-sitemap text-base mr-1"></i> Members
+                <i className="fas fa-sitemap text-base mr-1"></i> Members
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -100,7 +100,7 @@ const Tabs = (props) => {
                   "text-xs font-bold uppercase px-5 py-3  rounded block leading-normal " +
                   (openTab === 5
                     ? "text-white bg-alpha"
-                    : "text-alpha bg-white")
+                    : "text-alpha2 bg-white")
                 }
                 onClick={(e) => {
                   e.preventDefault();
@@ -111,7 +111,7 @@ const Tabs = (props) => {
                 href="#link5"
                 role="tablist"
               >
-                <i class="fas fa-images text-base mr-1"></i>
+                <i className="fas fa-images text-base mr-1"></i>
                 Photos
               </a>
             </li>
@@ -121,7 +121,7 @@ const Tabs = (props) => {
                   "text-xs font-bold uppercase px-5 py-3  rounded block leading-normal " +
                   (openTab === 6
                     ? "text-white bg-alpha"
-                    : "text-alpha bg-white")
+                    : "text-alpha2 bg-white")
                 }
                 onClick={(e) => {
                   e.preventDefault();

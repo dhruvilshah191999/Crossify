@@ -7,7 +7,7 @@ function RestrictAccessNotice(props) {
         {" "}
         <div>
           {" "}
-          <i class="fas fa-lock text-5xl mr-4 mt-2"></i>
+          <i className="fas fa-lock text-5xl mr-4 mt-2"></i>
         </div>
         <div>
           <h1 className="text-2xl text-gray-700 ">

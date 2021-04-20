@@ -19,7 +19,12 @@ import RejectButton from "components/SweetAlerts/RejectMemberButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 import EmptyTable from "components/sections/EmptyTable";
 import dataTable from "./demorequests";
-
+import urlObject from "../../config/default.json";
+import io from "socket.io-client";
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
+  transport: ["websocket", "polling", "flashsocket"],
+});
 function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
@@ -36,7 +41,7 @@ function GlobalFilter({
     <span className="text-gray-700 font-normal ml-2 ">
       {/* Search:{" "} */}
       <i
-        class={
+        className={
           isLight
             ? "fas fa-search mr-4 text-gray-700"
             : "fas fa-search mr-4 text-white"
@@ -124,17 +129,40 @@ export default function App(props) {
   const [isLight, setIsLight] = useState(1);
   const [clubId, setClubId] = useState(props.club_id);
   const [userData, setuserData] = useState(props.data);
+  console.log(userData);
   const getSelectedAndReject = async (e) => {
     const profilelist = selectedFlatRows.map((el) => el.values.id);
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = clubId;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var des = ` Your Request of joining ${clubName} club has been rejected by ${firstName}`;
+    userData.forEach((el) => {
+      socket.emit("sendNotification", {
+        date: new Date(),
+        description: des,
+        title: "offo..! You request has been rejected ☹️",
+        profile_photo: profile_photo,
+        user_id: el.id,
+      });
+    });
+
     var object = {
       club_id: clubId,
       userArray: profilelist,
+      profile_photo: profile_photo,
+      token: token,
+      description: des,
     };
     const finaldata = await axios.post(
       "/api/admin/RemoveRequests",
@@ -149,15 +177,37 @@ export default function App(props) {
   };
   const getSelectedAndAccept = async (e) => {
     const profilelist = selectedFlatRows.map((el) => el.values.id);
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = clubId;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var des = ` Your Request of joining ${clubName} club has been accepted by ${firstName}`;
+    userData.forEach((el) => {
+      socket.emit("sendNotification", {
+        date: new Date(),
+        description: des,
+        title: "Congratulations! On your new role 🥳",
+        profile_photo: profile_photo,
+        user_id: el.id,
+      });
+    });
+
     var object = {
       club_id: clubId,
       userArray: profilelist,
+      profile_photo: profile_photo,
+      token: token,
+      description: des,
     };
     const finaldata = await axios.post(
       "/api/admin/AcceptRequests",
@@ -182,14 +232,33 @@ export default function App(props) {
   };
 
   const acceptRequest = async (user_id) => {
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = clubId;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var des = ` Your Request of joining ${clubName} club has been accepted by ${firstName}`;
+    socket.emit("sendNotification", {
+      date: new Date(),
+      description: des,
+      title: "Congratulations! On your new role 🥳",
+      profile_photo: profile_photo,
+      user_id: user_id,
+    });
     var object = {
       club_id: clubId,
+      token: token,
+      profile_photo: profile_photo,
+      description: des,
       user_id,
     };
     const finaldata = await axios.post(
@@ -205,14 +274,33 @@ export default function App(props) {
   };
 
   const RejectedRequest = async (user_id) => {
+    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const user = await axios.post("/api/profile/get-user", { token }, config);
+    var firstName = user.data.data.fname;
+    var profile_photo = user.data.data.profile_photo;
+    var club_id = clubId;
+    var club = await axios.post("/api/events/getclub", { club_id }, config);
+    console.log(club);
+    var clubName = club.data.data.club_name;
+    var des = ` Your Request of joining ${clubName} club has been rejected by ${firstName}`;
+    socket.emit("sendNotification", {
+      date: new Date(),
+      description: des,
+      title: "offo..! You request has been rejected ☹️",
+      profile_photo: profile_photo,
+      user_id: user_id,
+    });
     var object = {
       club_id: clubId,
+      token: token,
+      profile_photo: profile_photo,
+      description: des,
       user_id,
     };
     const finaldata = await axios.post(
@@ -312,21 +400,21 @@ export default function App(props) {
         }) => (
           <div className="flex flex-row  justify-evenly">
             <button title="Arrived" onClick={(e) => acceptRequest(value)}>
-              <i class="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
+              <i className="fas fa-calendar-check text-green-500 text-lg focus:outline-none"></i>
             </button>
             <button
               className="ml-2"
               title="Remove"
               onClick={(e) => RejectedRequest(value)}
             >
-              <i class="fas fa-window-close text-red-500 text-lg"></i>
+              <i className="fas fa-window-close text-red-500 text-lg"></i>
             </button>
             <button
               className=""
               title="View"
               onClick={(e) => openModal(value, name)}
             >
-              <i class="fas fa-eye text-blue-500 text-lg ml-2"></i>
+              <i className="fas fa-eye text-blue-500 text-lg ml-2"></i>
             </button>
           </div>
         ),
@@ -576,14 +664,14 @@ export default function App(props) {
                 onClick={() => gotoPage(0)}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-step-backward"></i>
+                <i className="fas fa-step-backward"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left"></i>
               </button>{" "}
               <span className="mx-4">
                 <strong>{pageIndex + 1}</strong>{" "}
@@ -593,14 +681,14 @@ export default function App(props) {
                 onClick={() => nextPage()}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => gotoPage(pageCount - 1)}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-step-forward"></i>
+                <i className="fas fa-step-forward"></i>
               </button>{" "}
             </div>
             <div className="ml-auto mr-4 mt-1 overflow">

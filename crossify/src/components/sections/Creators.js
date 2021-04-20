@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import harshilImg from "assets/img/harshilImg.jpg";
-import dhruvilImg from "assets/img/pp3.jpg";
-import sagarImg from "assets/img/pp4.jpg";
+import dhruvilImg from "assets/img/pp1.jpg";
+import sagarImg from "assets/img/sagar.jpeg";
 import bhargavImg from "assets/img/bhargavImage.jpg";
 
 class Creators extends Component {
@@ -80,7 +80,7 @@ class Creators extends Component {
                         return false;
                       }}
                     >
-                      <i class="fab fa-github"></i>
+                      <i className="fab fa-github"></i>
                     </button>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ class Creators extends Component {
                   </p>
                   <div className="mt-6">
                     <button
-                      className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-linkedin text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                       onClick={() => {
                         window.open(
@@ -179,7 +179,7 @@ class Creators extends Component {
                         return false;
                       }}
                     >
-                      <i class="fab fa-github"></i>
+                      <i className="fab fa-github"></i>
                     </button>
                   </div>
                 </div>

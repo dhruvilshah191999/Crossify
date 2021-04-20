@@ -42,7 +42,7 @@ const MemberDropdown = () => {
           }
           onClick={(e) => e.preventDefault()}
         >
-          <i class="fas fa-magic text-green-500 mr-2 "></i>{" "}
+          <i className="fas fa-magic text-green-500 mr-2 "></i>{" "}
           <span className="text-green-500 "> Promote</span>
         </a> */}
         <a
@@ -52,7 +52,7 @@ const MemberDropdown = () => {
           }
           onClick={(e) => e.preventDefault()}
         >
-          <i class="fas fa-eye text-blue-500 mr-2"></i>{" "}
+          <i className="fas fa-eye text-blue-500 mr-2"></i>{" "}
           <span className="text-blue-500 "> &nbsp;View</span>
         </a>
         <a
@@ -62,7 +62,7 @@ const MemberDropdown = () => {
           }
           onClick={(e) => e.preventDefault()}
         >
-          <i class="far fa-flag text-red-500 mr-2"></i>{" "}
+          <i className="far fa-flag text-red-500 mr-2"></i>{" "}
           <span className="text-red-500"> Report</span>
         </a>
       </div>

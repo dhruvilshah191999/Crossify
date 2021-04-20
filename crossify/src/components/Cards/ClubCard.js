@@ -57,7 +57,7 @@ const ClubCard = (props) => {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        console.log(finaldata.data.data)
+        console.log(finaldata.data.data);
         setCount(finaldata.data.data);
       }
     }
@@ -163,7 +163,7 @@ const ClubCard = (props) => {
           <div className="text-xs text-gray-600 flex flex-row mt-1">
             <div>
               {" "}
-              <i class="fas fa-user-lock"></i> : {props.data.status}
+              <i className="fas fa-user-lock"></i> : {props.data.status}
             </div>
             <div className="ml-auto">
               {" "}
@@ -173,7 +173,7 @@ const ClubCard = (props) => {
           <div className="text-xs text-gray-600 flex flex-row mt-1 mb-1">
             <div className="truncate" style={{ width: "30ch" }}>
               {" "}
-              <i class="fas fa-compass "></i> : {props.data.location},
+              <i className="fas fa-compass "></i> : {props.data.location},
               {props.data.city}
             </div>
             <div className="ml-auto">
