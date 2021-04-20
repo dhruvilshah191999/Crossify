@@ -294,14 +294,11 @@ export default function EventPage(props) {
     history.push("/club/" + club_id);
   };
 
-<<<<<<< HEAD
   const gotoAdmin = () => {
     history.push("/admin/" + id);
   };
 
-=======
   console.log(eventdetails);
->>>>>>> c25b0589f1c16e9541bac9acd5c97003651c052b
   if (loading) {
     return (
       <>

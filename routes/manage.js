@@ -851,8 +851,7 @@ router.post("/Broadcast", async function (req, res,next)
                        pass: mail_file.password
                 }
             });
-          
-            readHTMLFile("E:/CROSSIFY/Crossify Web App/views/BroadcastEmail.html", function(err, html) {
+            readHTMLFile("views/BroadcastEmail.html", function(err, html) {
               var template = handlebars.compile(html);
               for (let index = 0; index < result.length; index++) {
                 var replacements = {

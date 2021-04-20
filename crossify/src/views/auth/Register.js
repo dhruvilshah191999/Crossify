@@ -37,6 +37,18 @@ export default function Register() {
     }
     setError(false);
   };
+  function photoName(event) {
+    //var name = ;
+    document.getElementById(
+      "DP_Name"
+    ).textContent = `${event.target.files[0].name}`;
+
+    //$("#my_image").attr("src", "second.jpg");
+
+    document.getElementById("my_image").src =
+      "../../assets/img/bg_crossify.png";
+    // console.log(`Selected file - ${event.target.files[0].name}`);
+  }
 
   return (
     <>
@@ -288,7 +300,21 @@ export default function Register() {
                           className="block uppercase text-gray-700 text-xs font-bold mb-2"
                           htmlFor="reg-photo"
                         >
-                          Your Profile Photo
+                          <span className="fa-stack fa-2x mt-3 mb-2">
+                            <i className="fas fa-circle fa-stack-2x" />
+                            <i className="fas fa-angle-double-up fa-stack-1x fa-inverse" />
+                          </span>
+                          Upload Profile Photo
+                          <span
+                            id="DP_Name"
+                            style={{
+                              float: "right",
+                              marginTop: "24px",
+                              marginRight: "10px",
+                            }}
+                          >
+                            <img id="my_image" src=""></img>
+                          </span>
                         </label>
 
                         <input
@@ -297,9 +323,18 @@ export default function Register() {
                           accept="image/*"
                           className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                           onChange={(e) => setImage(e.target.files[0])}
+                          onChange={photoName}
                           required
+                          hidden
                         />
                       </div>
+
+                      <img
+                        src={
+                          "file:///E:/CROSSIFY/Crossify%20Web%20App/crossify/src/assets/logos/google.png"
+                        }
+                      ></img>
+
                       <div>
                         <label className="inline-flex items-center cursor-pointer">
                           <input
