@@ -383,7 +383,9 @@ router.post('/step2', async function (req, res, next) {
 });
 
 router.post('/auth', auth, async function (req, res, next) {
-  return res.status(200).send(req.user);
+  user_details.findOne({ _id: ObjectId(req.user._id), is_active: 1 }, { _id: 1, profile_photo: 1,username:1 }).exec((err, data)=>{
+    return res.status(200).send(data);
+  })
 });
 
 router.post('/notification', auth, async function (req, res, next) {

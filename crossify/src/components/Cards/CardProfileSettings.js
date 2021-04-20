@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { store } from "react-notifications-component";
 import City from "../../views/auth/states-and-districts.json";
 import $ from "jquery";
 import MultipleSelect from "components/Inputs/MultiSelect";
+import { UserContext } from "context/usercontext";
 export default function CardSettings() {
+  const { users, dispatch } = useContext(UserContext);
   const token = localStorage.getItem("jwt");
   const [statename, setStateName] = useState("");
+  const [category, setCategory] = useState([]);
+  const [loading, setloading] = useState(false);
   const [cityname, setCityName] = useState("");
+  const [photo, setPhoto] = useState("");
   const [formData, SetformData] = useState({
     username: "",
     email: "",
@@ -17,9 +22,9 @@ export default function CardSettings() {
     postalcode: "",
     about_me: "",
     occupation: "",
+    oldPhoto: "",
   });
 
-  //todo GOLU added occupation in the form as well
   const {
     username,
     email,
@@ -29,16 +34,21 @@ export default function CardSettings() {
     postalcode,
     about_me,
     occupation,
+    oldPhoto,
   } = formData;
 
   const onChange = (e) =>
     SetformData({ ...formData, [e.target.name]: e.target.value });
 
   var districts = [];
-  if (statename !== "") {
+  if (statename !== "" && statename) {
     const citylist = City.states.find((city) => city.state === statename);
     districts = citylist.districts;
   }
+
+  const handleCategory = (childData) => {
+    setCategory(childData);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -52,7 +62,7 @@ export default function CardSettings() {
         token: token,
       };
       const finaldata = await axios.post(
-        "/api/profile/get-user",
+        "/api/profile/get-profile-user",
         object,
         config
       );
@@ -68,9 +78,15 @@ export default function CardSettings() {
           postalcode: finaldata.data.data.pincode,
           about_me: finaldata.data.data.about_me,
           occupation: finaldata.data.data.occupation,
+          oldPhoto: finaldata.data.data.profile_photo,
         });
+        setPhoto(finaldata.data.data.profile_photo)
         setStateName(finaldata.data.data.state);
         setCityName(finaldata.data.data.city);
+        setCategory(finaldata.data.data.category_data);
+        setTimeout(() => {
+          setloading(true);
+        }, 300);
       }
     }
 
@@ -96,47 +112,110 @@ export default function CardSettings() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    var object = {
-      username,
-      fname,
-      lname,
-      email,
-      address,
-      city: cityname,
-      state: statename,
-      about_me,
-      pincode: postalcode,
-      occupation,
-      token,
-    };
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-    const finaldata = await axios.post(
-      "/api/profile/update-user",
-      object,
-      config
-    );
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      window.location.reload();
-      store.addNotification({
-        title: "Succesfully Copied to Clipboard",
-        message: "Share the event with your friends ! ",
-        type: "info",
-        insert: "top",
-        container: "bottom-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 3000,
-          // onScreen: true,
+    if (photo != oldPhoto) {
+      var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
+      var path = "User_Profile/" + photo.name;
+      var data = new FormData();
+      data.append("file", photo);
+      data.append("upload_preset", "crossify-project");
+      data.append("public_id", path);
+      const config = {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      };
+      axios
+        .post(url, data, config)
+        .then(async (res) => {
+          var object = {
+            username,
+            fname,
+            lname,
+            email,
+            address,
+            city: cityname,
+            state: statename,
+            about_me,
+            pincode: postalcode,
+            occupation,
+            token,
+            category,
+            photo: res.data.url,
+          };
+          const config = {
+            method: "POST",
+            header: {
+              "Content-Type": "application/json",
+            },
+          };
+          const finaldata = await axios.post(
+            "/api/profile/update-user",
+            object,
+            config
+          );
+          if (finaldata.data.is_error) {
+            console.log(finaldata.data.message);
+          } else {
+            window.location.reload();
+            store.addNotification({
+              title: "Succesfully Copied to Clipboard",
+              message: "Share the event with your friends ! ",
+              type: "info",
+              insert: "top",
+              container: "bottom-right",
+              animationIn: ["animate__animated", "animate__fadeIn"],
+              animationOut: ["animate__animated", "animate__fadeOut"],
+              dismiss: {
+                duration: 3000,
+                // onScreen: true,
+              },
+            });
+          }
+        });
+    }
+    else {
+      var object = {
+        username,
+        fname,
+        lname,
+        email,
+        address,
+        city: cityname,
+        state: statename,
+        about_me,
+        pincode: postalcode,
+        occupation,
+        token,
+        category,
+        photo:oldPhoto
+      };
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
         },
-      });
+      };
+      const finaldata = await axios.post(
+        "/api/profile/update-user",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        window.location.reload();
+        store.addNotification({
+          title: "Succesfully Copied to Clipboard",
+          message: "Share the event with your friends ! ",
+          type: "info",
+          insert: "top",
+          container: "bottom-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 3000,
+            // onScreen: true,
+          },
+        });
+      }
     }
   };
   return (
@@ -167,6 +246,7 @@ export default function CardSettings() {
                       type="file"
                       id="imageUpload"
                       accept=".png, .jpg, .jpeg"
+                      onChange={(e) => setPhoto(e.target.files[0])}
                     />
                     <label for="imageUpload">
                       <i class="fas fa-pen ml-2  text-sm"></i>
@@ -176,7 +256,7 @@ export default function CardSettings() {
                     <div
                       id="imagePreview"
                       style={{
-                        backgroundImage: "url(http://i.pravatar.cc/500?img=7)",
+                        backgroundImage: "url(" + photo + ")",
                       }}
                     ></div>
                   </div>
@@ -382,16 +462,14 @@ export default function CardSettings() {
                   >
                     Interests
                   </label>
-                  {/* //todo here fetch already selected Categories and add it in selectedValue in below structure */}
-                  <MultipleSelect
-                    parentCallback={() => console.log("CHange here")}
-                    selectedValues={[
-                      {
-                        _id: "5fd8368178e2b0a7b26bdf16",
-                        category_name: "Dance",
-                      },
-                    ]}
-                  />
+                  {loading ? (
+                    <MultipleSelect
+                      selectedValues={category}
+                      parentCallback={handleCategory}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               <div className="w-full lg:w-12/12 px-4">

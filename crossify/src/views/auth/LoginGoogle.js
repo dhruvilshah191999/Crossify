@@ -23,10 +23,6 @@ export default function LoginGoogle() {
     setError(false);
   };
   var responseGoogle = async (response) => {
-<<<<<<< HEAD
-=======
-    console.log(response);
->>>>>>> d8b9cee3d196a1c12bdac84de0ffd06ffb45cbc3
     if (!response.error) {
       const data = {
         socialId: response.googleId,
@@ -48,12 +44,7 @@ export default function LoginGoogle() {
         islogin_dispatch({ type: "Login-Status", status: true });
         dispatch({ type: "ADD_USER", payload: finaldata.data.data });
         history.push("/");
-<<<<<<< HEAD
         const name = finaldata.data.data.fname + " " + finaldata.data.data.lname;
-=======
-        const name =
-          finaldata.data.data.fname + " " + finaldata.data.data.lname;
->>>>>>> d8b9cee3d196a1c12bdac84de0ffd06ffb45cbc3
         notifySuccessLogin(name);
       }
     }

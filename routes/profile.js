@@ -36,6 +36,46 @@ router.post("/get-user", auth, async function (req, res, next) {
   });
 });
 
+router.post('/get-profile-user', auth, async function (req, res, next) {
+  user_details.aggregate([
+    {
+      $lookup: {
+        from: 'category_details',
+        localField: 'interest_id',
+        foreignField: '_id',
+        as: 'category_data',
+      },
+    },
+    {
+      $match: {
+        _id: ObjectId(req.user._id),
+        is_active: true,
+      },
+    },
+  ]).exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data.length === 0) {
+      var error = {
+        is_error: true,
+        message: 'User Not Found',
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        data: data[0],
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 router.post("/update-user", auth, async function (req, res, next) {
   var {
     username,
@@ -48,9 +88,12 @@ router.post("/update-user", auth, async function (req, res, next) {
     about_me,
     pincode,
     occupation,
+    category,
+    photo
   } = req.body;
+  let objectIdArray = category.map((s) => ObjectId(s._id));
   var result = user_details.updateOne(
-    { _id: req.user._id, is_active: 1 },
+    {_id: req.user._id, is_active: 1},
     {
       username,
       email,
@@ -62,6 +105,8 @@ router.post("/update-user", auth, async function (req, res, next) {
       about_me,
       pincode,
       occupation,
+      interest_id: objectIdArray,
+      profile_photo:photo
     }
   );
   await result.exec((err, data) => {
@@ -471,6 +516,96 @@ router.post("/MyProfile", auth, async function (req, res, next) {
           return res.status(200).send(finaldata);
         }
       });
+    }
+  });
+});
+
+router.post('/MemberProfile', async function (req, res, next) {
+  const { user_id } = req.body;
+  var check = user_details.findOne(
+    {_id: ObjectId(user_id)},
+    {
+      _id: 0,
+      fav_club: 0,
+      fav_event: 0,
+      inbox: 0,
+      clubs: 0,
+      events: 0,
+      password: 0,
+    }
+  );
+
+  await check.exec(async (err, data) => {
+    if (err) {
+      var err = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(err);
+    } else if (data == null) {
+      var err = {
+        is_error: true,
+        message: 'wrong event id or you may not have access to update ',
+      };
+      return res.status(404).send(err);
+    } else {
+      let tag = [];
+      var tags = category_details.find(
+        {_id: {$in: data.interest_id}},
+        {tags: 1}
+      );
+      await tags.exec((err, data2) => {
+        if (err) {
+          var error = {
+            is_error: true,
+            message: err,
+          };
+          return res.status(500).send(error);
+        } else {
+          data2.forEach((element) => {
+            tag.push.apply(tag, element.tags);
+          });
+          var finaldata = {
+            data: data,
+            tag: tag,
+            is_error: false,
+            message: 'value send succesfully',
+          };
+          return res.status(200).send(finaldata);
+        }
+      });
+    }
+  });
+});
+
+router.post('/member-admin', async function (req, res, next) {
+  const {user_id} = req.body;
+  var result = club_details.find({
+    creator_id: ObjectId(user_id),
+  });
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data === null || data.length === 0) {
+      var error = {
+        check: false,
+        is_error: true,
+        message: "You hasn't created any club",
+      };
+      return res.status(200).send(error);
+    } else {
+      var finaldata = {message: [], is_error: false};
+      data.forEach((element) => {
+        finaldata.message.push({
+          profile_photo: element.profile_photo,
+          club_name: element.club_name,
+        });
+      });
+      return res.status(200).send(finaldata);
     }
   });
 });

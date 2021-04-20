@@ -3,6 +3,9 @@ import pp1 from "assets/img/pp1.jpg";
 import moment from "moment";
 
 function Message(props) {
+  const openModal = (user_id) => {
+    window.open("/profilepage/" + user_id);
+  };
   if (props.self) {
     return (
       <>
@@ -40,8 +43,9 @@ function Message(props) {
           >
             <img
               src={props.profilePic}
-              className="rounded-full"
+              className="rounded-full cursor-pointer"
               alt="profile"
+              onClick={() => openModal(props.userId)}
             />
           </div>
         </div>
@@ -80,8 +84,9 @@ function Message(props) {
           >
             <img
               src={props.profilePic}
-              className="rounded-full"
+              className="rounded-full cursor-pointer"
               alt="profile"
+              onClick={() => openModal(props.userId)}
             />
           </div>
         </div>
