@@ -62,7 +62,6 @@ class MyModal extends Component {
     const user = await axios.post("/api/profile/get-user", { token }, config);
     var firstName = user.data.data.fname;
     var profile_photo = user.data.data.profile_photo;
-    console.log(profile_photo);
     socket.emit(
       "sendReport",
       {
@@ -130,7 +129,11 @@ class MyModal extends Component {
               <ChatMessage
                 message={el.report}
                 time={el.date}
-                username={this.state.data.user_data[0]}
+                username={
+                  this.state.data.user_data[0].fname +
+                  " " +
+                  this.state.data.user_data[0].lname
+                }
                 profilePic={this.state.data.user_data[0].profile_photo}
               />
             ))}

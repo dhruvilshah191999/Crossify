@@ -97,7 +97,12 @@ function SelectColumnFilter({
 }
 
 export default function App(props) {
+
+  const [isLight, setIsLight] = useState(1);
+  const data = React.useMemo(() => props.finaldata, []);
+
   const openModal = (value) => {
+    console.log(value);
     ModalManager.open(<ViewReport onRequestClose={() => true} data={value} />);
   };
 
@@ -122,8 +127,6 @@ export default function App(props) {
       window.location.reload();
     }
   };
-  const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(() => props.finaldata, []);
 
   const columns = React.useMemo(
     () => [

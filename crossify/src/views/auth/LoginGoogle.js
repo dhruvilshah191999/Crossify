@@ -23,28 +23,30 @@ export default function LoginGoogle() {
     setError(false);
   };
   var responseGoogle = async (response) => {
-    const data = {
-      socialId: response.googleId,
-      email: response.profileObj.email,
-    };
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-      validateStatus: () => true,
-    };
-    const finaldata = await axios.post("/api/socialsignin", data, config);
-    if (finaldata.data.is_error) {
-      setError(true);
-      setMessage(finaldata.data.message);
-    } else {
-      localStorage.setItem("jwt", finaldata.data.token);
-      islogin_dispatch({ type: "Login-Status", status: true });
-      dispatch({ type: "ADD_USER", payload: finaldata.data.data });
-      history.push("/");
-      const name = finaldata.data.data.fname + " " + finaldata.data.data.lname;
-      notifySuccessLogin(name);
+    if (!response.error) {
+      const data = {
+        socialId: response.googleId,
+        email: response.profileObj.email,
+      };
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      const finaldata = await axios.post("/api/socialsignin", data, config);
+      if (finaldata.data.is_error) {
+        setError(true);
+        setMessage(finaldata.data.message);
+      } else {
+        localStorage.setItem("jwt", finaldata.data.token);
+        islogin_dispatch({ type: "Login-Status", status: true });
+        dispatch({ type: "ADD_USER", payload: finaldata.data.data });
+        history.push("/");
+        const name = finaldata.data.data.fname + " " + finaldata.data.data.lname;
+        notifySuccessLogin(name);
+      }
     }
   };
   let googleContent;
@@ -69,7 +71,6 @@ export default function LoginGoogle() {
       )}
       onSuccess={responseGoogle}
       onFailure={responseGoogle}
-      cookiePolicy={"single_host_origin"}
     />
   );
   return (
