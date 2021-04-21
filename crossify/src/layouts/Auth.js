@@ -12,6 +12,7 @@ import SocialRegister2 from "views/auth/SocialRegister2";
 import Register3 from "views/auth/Register3";
 import ChangePassword from "views/auth/ChangePassword";
 import ForgotPassword from "views/auth/ForgotPassword";
+import VerifiedWindow from "views/auth/VerifiedWindow";
 import SetPassword from "views/auth/SetPassword";
 import Particles from "react-particles-js";
 
@@ -135,7 +136,8 @@ export default function Auth() {
               exact
               component={ForgotPassword}
             />
-            <Route path="/auth/setpassword" exact component={SetPassword} />
+            <Route path="/auth/setpassword/:id" exact component={SetPassword} />
+            <Route path="/auth/verify/:id" exact component={VerifiedWindow} />
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
         </section>

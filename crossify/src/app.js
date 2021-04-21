@@ -78,7 +78,7 @@ const Routing = () => {
       <Route path="/search" exact component={SearchPage} />
       <Route path="/clubsearch" exact component={ClubSearchPage} />
       <Route path="/createclub" exact component={CreateClub} />
-      <Route path="/profilepage" exact component={ProfilePage} />
+      <Route path="/profilepage/:id" exact component={ProfilePage} />
       <Route path="/playground" exact component={PlayGround} />
       {!token ? (
         <>
@@ -162,7 +162,6 @@ export default function App() {
           }
         } catch (error) {
           window.localStorage.removeItem("jwt");
-          history.push("/auth");
         }
       }
     }

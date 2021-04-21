@@ -1,68 +1,22 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
-import { Link } from "react-router-dom";
-import { UserContext } from "context/usercontext";
-import { notifySuccessLogin } from "notify";
+import { notifyWrongEmail, notifySuccessMail } from "notify";
 import { Formik } from "formik";
-
-var vertical = "top";
-var horizontal = "center";
 
 function ForgotPassword() {
   let history = useHistory();
-  const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
     email: "",
-    password: "",
   });
 
-  const [errorStatus, setError] = useState(false);
-  const [successStatus, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
-  const { email, password } = formData;
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  });
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setError(false);
-    setSuccess(false);
-  };
+  const { email } = formData;
 
   const onChange = (e) =>
     setData({ ...formData, [e.target.name]: e.target.value });
 
   return (
     <div className="container mx-auto px-4 h-full">
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={errorStatus}
-        autoHideDuration={2000}
-        onClose={handleClose}
-      >
-        <Alert severity="error" onClose={handleClose}>
-          {message}
-        </Alert>
-      </Snackbar>
-      {/* password mail successfully send */}
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={successStatus}
-        autoHideDuration={2000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose}>{message}</Alert>
-      </Snackbar>
       <div className="flex content-center items-center justify-center h-full">
         <div className="w-full lg:w-4/12 px-4">
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
@@ -87,11 +41,10 @@ function ForgotPassword() {
                   }
                   return errors;
                 }}
-                //ahiya golu tare API call karwani when click on onsubmit
                 onSubmit={async ({ setSubmitting }) => {
                   const Credentials = {
-                    login_username: email,
-                    password,
+                    email: email,
+                    url: window.location.origin
                   };
                   try {
                     const config = {
@@ -102,24 +55,15 @@ function ForgotPassword() {
                       validateStatus: () => true,
                     };
                     const res = await axios.post(
-                      "/api/login",
+                      "/api/manage/ForgotMail",
                       Credentials,
                       config
                     );
                     if (res.data.is_error) {
-                      setError(true);
-                      setMessage(res.data.message);
+                      notifyWrongEmail();
                     } else {
-                      /*show alert when successfully mail sent */
-                      setSuccess(true);
-                      setMessage("Email Sent For Password Change.");
-                      localStorage.setItem("jwt", res.data.token);
-                      islogin_dispatch({ type: "Login-Status", status: true });
-                      dispatch({ type: "ADD_USER", payload: res.data.data });
-                      history.push("/");
-                      const name =
-                        res.data.data.fname + " " + res.data.data.lname;
-                      notifySuccessLogin(name);
+                      notifySuccessMail();
+                      history.push("/auth/login");
                     }
                   } catch (error) {
                     console.log(error);
@@ -159,11 +103,11 @@ function ForgotPassword() {
                     </div>
                     <div className="text-center mt-6">
                       <button
-                        className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        className="bg-beta hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                         type="submit"
                         disabled={isSubmitting}
                       >
-                        Submit
+                        Reset Password
                       </button>
                     </div>
                   </form>

@@ -2,13 +2,11 @@ import MemberUserDropdown from "components/Dropdowns/MemberUserDropdown";
 import Moment from "moment";
 import axios from "axios";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import ViewProfile from "components/Modals/ViewProfile";
+import ProfilePage from "views/explore/ProfilePage";
 var React = require("react");
 class Contact extends React.Component {
   openModal = (user_id, name) => {
-    ModalManager.open(
-      <ViewProfile name={name} user_id={user_id} onRequestClose={() => true} />
-    );
+    window.open("/profilepage/" + user_id);
   };
 
   render() {

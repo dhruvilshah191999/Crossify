@@ -1,7 +1,4 @@
 import React from "react";
-
-// components
-
 import CardProfileSettings from "components/Cards/CardProfileSettings.js";
 
 export default function Settings() {

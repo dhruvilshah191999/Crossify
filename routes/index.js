@@ -221,7 +221,7 @@ router.post('/socialstep2', async function (req, res, next) {
     } else if (data === null || data.length === 0) {
       password = bcrypt.hashSync(password, 10);
       var update = user_details.findOneAndUpdate(
-        {email: email, is_active: 1},
+        {email: email},
         {
           username: username,
           password: password,
@@ -329,7 +329,18 @@ router.post('/change-password', async function (req, res, next) {
 });
 
 router.post('/step2', async function (req, res, next) {
-  var {email, username, city, state, pincode, address, lat, long} = req.body;
+  var {
+    email,
+    username,
+    city,
+    state,
+    pincode,
+    address,
+    lat,
+    long,
+    about_me,
+    occupation,
+  } = req.body;
   var check = user_details.findOne({username: username, is_active: 1});
   await check.exec((err, data) => {
     if (err) {
@@ -346,7 +357,7 @@ router.post('/step2', async function (req, res, next) {
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
       var update = user_details.findOneAndUpdate(
-        {email: email, is_active: 1},
+        {email: email},
         {
           username: username,
           address: address,
@@ -355,6 +366,8 @@ router.post('/step2', async function (req, res, next) {
           pincode: pincode,
           latitude: lat,
           longitude: long,
+          occupation,
+          about_me,
         }
       );
       update.exec((err, ans) => {
@@ -383,7 +396,9 @@ router.post('/step2', async function (req, res, next) {
 });
 
 router.post('/auth', auth, async function (req, res, next) {
-  return res.status(200).send(req.user);
+  user_details.findOne({ _id: ObjectId(req.user._id), is_active: 1 }, { _id: 1, profile_photo: 1,username:1 }).exec((err, data)=>{
+    return res.status(200).send(data);
+  })
 });
 
 router.post('/notification', auth, async function (req, res, next) {

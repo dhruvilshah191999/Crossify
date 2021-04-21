@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const {ObjectID, ObjectId} = require('bson');
 const config = require("config");
 var Schema = require("mongoose").Schema;
 
@@ -94,7 +95,7 @@ var user_details = new Schema({
   },
   is_active: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   about_me: {
     type: String,
@@ -106,6 +107,10 @@ var user_details = new Schema({
   },
   club_answer: {
     type: Array,
+    required: false,
+  },
+  generate_code: {
+    type: ObjectId,
     required: false,
   },
 });

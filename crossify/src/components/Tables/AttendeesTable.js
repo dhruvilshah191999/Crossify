@@ -139,11 +139,26 @@ export default function App(props) {
       window.location.reload();
     }
   };
-  const getSelectedAndBroadcast = (broadcastMessage) => {
-    console.log(broadcastMessage);
-    //todo GOLU broadcast/Notification to added to all the selected users
-    const IDlist = selectedFlatRows.map((el) => el.values);
-    console.log(IDlist);
+  const getSelectedAndBroadcast = async (broadcastMessage) => {
+    const IDlist = selectedFlatRows.map((el) => el.values.id);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    var object = {
+      event_id: id,
+      userIds: IDlist,
+      message: broadcastMessage,
+      path: window.location.origin,
+    };
+    const finaldata = await axios.post("/api/manage/Broadcast", object, config);
+    if (finaldata.data.is_error) {
+      console.log(finaldata.data.message);
+    } else {
+      window.location.reload();
+    }
   };
 
   const Coming = async (userid) => {

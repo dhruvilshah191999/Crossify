@@ -64,10 +64,8 @@ export default class RoomTab extends React.Component {
     );
     var fetchInitial = [];
     var pagesInitial = [];
-    console.log(allRoomsInfo.data);
     var temp = 0;
     allRoomsInfo.data.roomsData.forEach((el) => {
-      console.log(el);
       if (el.messages.length >= limit) {
         fetchInitial[temp] = true;
         pagesInitial[temp] = 1;
@@ -77,7 +75,6 @@ export default class RoomTab extends React.Component {
       }
       temp++;
     });
-    console.log(fetchInitial);
     var uniqueUsers = {};
     allRoomsInfo.data.roomsData.forEach((el) => {
       el.users.forEach(({ _id, profile_photo, username }) => {
@@ -217,11 +214,12 @@ export default class RoomTab extends React.Component {
           }
           this.setState({ curRoomMsgs: msgs });
         }
-      );
-    return msgs.map(({ message, username, profilePic, senttime }) => (
+    );
+    return msgs.map(({ message, username, profilePic, senttime, user_id }) => (
       <ChatMessage
         self={username === this.state.username}
         message={message}
+        userId={user_id}
         username={username}
         profilePic={profilePic}
         time={senttime}
