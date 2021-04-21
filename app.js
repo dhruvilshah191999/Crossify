@@ -7,6 +7,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const connectDB = require('./db/db');
 const socketio = require('socket.io');
+// var interest_exports = require('./modules/interest_category');
+// var user_exports = require('./modules/user_details');
+
+// var club_exports = require('./modules/club_details');
+// var event_exports = require('./modules/event_details');
+// var members_exports = require('./modules/members_details');
+// var file_exports = require('./modules/file_details');
+// var reports_exports = require('./modules/reports_details');
+// var channel_exports = require('./modules/channel_details');
 var indexRouter = require('./routes/index');
 var eventsRouter = require('./routes/events');
 var filterRouter = require('./routes/filter');
@@ -15,8 +24,6 @@ var clubRouter = require('./routes/clubs');
 var profileRouter = require('./routes/profile');
 var manageRouter = require('./routes/manage');
 var adminRouter = require('./routes/admin');
-const reports_exports = require('./modules/reports_details');
-const channel_exports = require('./modules/channel_details');
 var chatRouter = require('./routes/chat');
 const app = express();
 
