@@ -912,7 +912,7 @@ router.post("/WelcomeMail", async function (req, res, next) {
     service: "gmail",
     name: "SAGAR18-11",
     host: "smtp.gmail.com",
-    port: 465, //587
+    port: 465,
     secure: true, //for true 465,
     auth: {
       user: process.env.MAIL,
