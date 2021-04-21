@@ -14,7 +14,6 @@ dotenv.config();
 
 var adminPass = process.env.PASSWORD;
 var adminMail = process.env.MAIL;
-console.log(adminMail, adminPass);
 
 var handlebars = require("handlebars");
 var fs = require("fs");

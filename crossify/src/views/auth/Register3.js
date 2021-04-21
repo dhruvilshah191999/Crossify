@@ -93,10 +93,9 @@ export default function Register5() {
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
               <div className="rounded-t mb-0 px-6 py-6">
                 <div className="text-center mb-3">
-                  <h6 className="text-gray-700 text-sm font-bold uppercase">
+                  <h6 className="text-gray-700 text-2xl font-semibold ">
                     <i className="fa fa-heart mr-2" aria-hidden="true"></i>
                     Choose Your Interest
-                    <i className="fa fa-heart ml-2" aria-hidden="true"></i>
                   </h6>
                 </div>
                 <hr className="mt-6 border-b-1 border-gray-400" />

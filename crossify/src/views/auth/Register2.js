@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import City from "./states-and-districts.json";
@@ -9,12 +9,14 @@ import Key from "config/default.json";
 import CryptoJS from "crypto-js";
 import { Formik, useField } from "formik";
 import { setEmitFlags } from "typescript";
+import $ from "jquery";
 
 export default function Register2() {
   var vertical = "top";
   var horizontal = "center";
   let history = useHistory();
   const watch = true;
+  const [photo, setPhoto] = useState(null);
   const [errorStatus, setError] = useState(false);
   const [usernameStatus, setUsername] = useState(false);
   const [message, setMessage] = useState("");
@@ -44,6 +46,27 @@ export default function Register2() {
     history.push("/auth/register");
   }
 
+  useEffect(() => {
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#imagePreview").css(
+            "background-image",
+            "url(" + e.target.result + ")"
+          );
+          $(".avatar-preview").css("border", "3px solid #94e097");
+
+          $("#imagePreview").hide();
+          $("#imagePreview").fadeIn(650);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#imageUpload").change(function () {
+      readURL(this);
+    });
+  });
   var { username, address, pincode, occupation, about_me, dob } = formData;
   const onChange = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
@@ -74,7 +97,7 @@ export default function Register2() {
 
   return (
     <>
-      <div className="container mx-auto px-4 h-full mt-10">
+      <div className="container mx-auto px-4 h-full ">
         <Snackbar
           anchorOrigin={{ vertical, horizontal }}
           open={errorStatus}
@@ -90,8 +113,9 @@ export default function Register2() {
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300">
               <div className="rounded-t mb-0 px-6 py-6">
                 <div className="text-center mb-3">
-                  <h6 className="text-gray-700 text-sm font-bold">
-                    For Your Better Experience
+                  <h6 className="text-gray-700 text-2xl font-semibold">
+                    <i className="far fa-address-card text-2xl"></i>&nbsp;
+                    Personal Info
                   </h6>
                 </div>
                 <hr className="mt-6 border-b-1 border-gray-400" />
@@ -102,7 +126,9 @@ export default function Register2() {
                   initialValues={formData}
                   validate={() => {
                     const errors = {};
-                    if (!username) {
+                    if (!photo) {
+                      errors.username = "Please Upload your avatar";
+                    } else if (!username) {
                       errors.username = "Username is required !";
                     } else if (usernameStatus) {
                       errors.username = "Username is already exists !";
@@ -184,51 +210,81 @@ export default function Register2() {
                     isSubmitting,
                   }) => (
                     <form>
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                          htmlFor="reg-country"
-                        >
-                          Username
-                        </label>
-                        <input
-                          id="reg-country"
-                          type="text"
-                          name="username"
-                          value={username}
-                          onChange={(e) => onChange(e)}
-                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                          placeholder="Enter Username"
-                          onBlur={handleBlur}
-                        />
+                      <div className="flex ">
+                        <div className="px-4 mt-6 flex justify-center w-4/12">
+                          <div class="avatar-upload">
+                            <div class="avatar-edit">
+                              <input
+                                type="file"
+                                id="imageUpload"
+                                accept=".png, .jpg, .jpeg"
+                                onChange={(e) => setPhoto(e.target.files[0])}
+                              />
+                              <label for="imageUpload">
+                                <i class="fas fa-pen ml-2  text-sm"></i>
+                              </label>
+                            </div>
+                            <div
+                              className="avatar-preview"
+                              style={{ border: "3px solid #FFAF91" }}
+                            >
+                              <div
+                                id="imagePreview"
+                                style={{
+                                  backgroundImage: "url(" + photo + ")",
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="w-full ml-2">
+                          <div className="relative w-full mb-3">
+                            <label
+                              className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                              htmlFor="reg-country"
+                            >
+                              Username
+                            </label>
+                            <input
+                              id="reg-country"
+                              type="text"
+                              name="username"
+                              value={username}
+                              onChange={(e) => onChange(e)}
+                              className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                              placeholder="Enter Username"
+                              onBlur={handleBlur}
+                            />
 
-                        <p className="FormError">
-                          {errors.username &&
-                            touched.username &&
-                            errors.username}
-                        </p>
-                      </div>
+                            <p className="FormError">
+                              {errors.username &&
+                                touched.username &&
+                                errors.username}
+                            </p>
+                          </div>
 
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                          htmlFor="reg-country"
-                        >
-                          Date Of Birth
-                        </label>
-                        <input
-                          id="reg-country"
-                          type="date"
-                          name="dob"
-                          value={dob}
-                          onChange={(e) => onChange(e)}
-                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                          placeholder="Select Your Date Of Birth"
-                          onBlur={handleBlur}
-                        />
-                        <p className="FormError">
-                          {errors.dob && touched.dob && errors.dob}
-                        </p>
+                          <div className="relative w-full mb-3">
+                            <label
+                              className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                              htmlFor="reg-country"
+                            >
+                              Date Of Birth
+                            </label>
+                            <input
+                              id="reg-country"
+                              type="date"
+                              name="dob"
+                              value={dob}
+                              onChange={(e) => onChange(e)}
+                              className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                              placeholder="Select Your Date Of Birth"
+                              onBlur={handleBlur}
+                            />
+                            <p className="FormError">
+                              {errors.dob && touched.dob && errors.dob}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                       <div className="relative w-full mb-3">
                         <label
