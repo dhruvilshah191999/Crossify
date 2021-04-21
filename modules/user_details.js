@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const {ObjectID, ObjectId} = require('bson');
+const { ObjectID, ObjectId } = require("bson");
 const config = require("config");
 var Schema = require("mongoose").Schema;
 
@@ -125,7 +125,7 @@ user_details.methods.generateAuthToken = function () {
       latitude: this.latitude,
       longitude: this.longitude,
     },
-    config.get("jwtSecret")
+    process.env.JWTSECRET
   );
 };
 
