@@ -25,18 +25,14 @@ const NotificationDropdown = (props) => {
 
       const user = await axios.post("/api/profile/get-user", { token }, config);
       const user_id = user.data.data._id;
-      console.log(user);
-      socket.emit("open", { user_id }, console.log("opened"));
+      socket.emit("open", { user_id });
       var object = {
         token,
       };
       const finaldata = await axios.post("/api/notification", object, config);
-
-      console.log(finaldata);
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        console.log(finaldata.data.data);
         setData(finaldata.data.data);
         setTimeout(setloding(true), 1000);
       }
@@ -45,9 +41,7 @@ const NotificationDropdown = (props) => {
   }, []);
   useEffect(() => {
     const token = localStorage.getItem("jwt");
-    console.log("in function");
     if (token) {
-      console.log("in function after login");
       socket
         .off("Notify")
         .on(
@@ -61,11 +55,8 @@ const NotificationDropdown = (props) => {
               title: title,
               sender_id: user_id,
             };
-            console.log("Notification received");
-            console.log(data);
             var updatedData = data;
             updatedData[0].inbox.push(object);
-            console.log(updatedData);
 
             addNotification({
               title: "A new Notification",

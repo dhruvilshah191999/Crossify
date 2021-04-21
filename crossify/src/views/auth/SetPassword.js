@@ -1,42 +1,45 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
-import { Link } from "react-router-dom";
-import { UserContext } from "context/usercontext";
-import { notifySuccessLogin } from "notify";
+import { useParams } from "react-router";
+import { notifyWrongLink, notifySuccessPassword } from "notify";
 import { Formik } from "formik";
 
-var vertical = "top";
-var horizontal = "center";
-
 function SetPassword() {
+  const { id } = useParams();
   let history = useHistory();
-  const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
-    email: "",
     password: "",
+    confirm_password:"",
   });
 
-  const [errorStatus, setError] = useState(false);
-  const [successStatus, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
-  const { email, password, confirm_password } = formData;
+  const { password, confirm_password } = formData;
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  });
+    async function check() {
+      const Credentials = {
+        generate:id,
+      };
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      const res = await axios.post("/api/manage/check-code", Credentials, config);
+      if (res.data.is_error) {
+        notifyWrongLink();
+        history.push("/auth/login")
+      }
+    }
+    check();
+  },[]);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setError(false);
-    setSuccess(false);
   };
 
   const onChange = (e) =>
@@ -44,25 +47,6 @@ function SetPassword() {
 
   return (
     <div className="container mx-auto px-4 h-full">
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={errorStatus}
-        autoHideDuration={2000}
-        onClose={handleClose}
-      >
-        <Alert severity="error" onClose={handleClose}>
-          {message}
-        </Alert>
-      </Snackbar>
-      {/* alert show when password set successfully */}
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={successStatus}
-        autoHideDuration={2000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose}>{message}</Alert>
-      </Snackbar>
       <div className="flex content-center items-center justify-center h-full">
         <div className="w-full lg:w-4/12 px-4">
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
@@ -82,7 +66,7 @@ function SetPassword() {
                     errors.password = "Password is required !";
                   } else if (password.length < 6) {
                     errors.password = "Minimim 6 characters are required !";
-                  } else if (confirm_password) {
+                  } else if (!confirm_password) {
                     errors.confirm_password = "Confirm password is required !";
                   } else if (password != confirm_password) {
                     errors.confirm_password = "Password does not match !";
@@ -91,8 +75,8 @@ function SetPassword() {
                 }}
                 onSubmit={async ({ setSubmitting }) => {
                   const Credentials = {
-                    login_username: email,
                     password,
+                    generate:id,
                   };
                   try {
                     const config = {
@@ -103,29 +87,15 @@ function SetPassword() {
                       validateStatus: () => true,
                     };
                     const res = await axios.post(
-                      "/api/login",
+                      "/api/manage/reset_password",
                       Credentials,
                       config
                     );
                     if (res.data.is_error) {
-                      setError(true);
-                      setMessage(res.data.message);
+                      notifyWrongLink();
                     } else {
-                      // password successfully set thai jay ana mate
-                      setSuccess(true);
-                      setMessage("Your Password Set Successfully !!!");
-                      setTimeout(() => {
-                        localStorage.setItem("jwt", res.data.token);
-                        islogin_dispatch({
-                          type: "Login-Status",
-                          status: true,
-                        });
-                        dispatch({ type: "ADD_USER", payload: res.data.data });
-                        history.push("/");
-                        const name =
-                          res.data.data.fname + " " + res.data.data.lname;
-                        notifySuccessLogin(name);
-                      }, 3000);
+                      notifySuccessPassword();
+                      history.push("/auth/login")
                     }
                   } catch (error) {
                     console.log(error);

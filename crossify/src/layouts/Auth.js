@@ -135,7 +135,7 @@ export default function Auth() {
               exact
               component={ForgotPassword}
             />
-            <Route path="/auth/setpassword" exact component={SetPassword} />
+            <Route path="/auth/setpassword/:id" exact component={SetPassword} />
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
         </section>

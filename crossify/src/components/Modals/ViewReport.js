@@ -78,7 +78,6 @@ class MyModal extends Component {
     const user = await axios.post("/api/profile/get-user", { token }, config);
     var firstName = user.data.data.fname;
     var profile_photo = user.data.data.profile_photo;
-    console.log(profile_photo);
     socket.emit(
       "sendNotification",
       {

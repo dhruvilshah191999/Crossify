@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-
 import Navbar from "components/Navbars/ClubNavbar";
-import ProfileDetails from "components/Cards/ProfileDetails";
+import MemberDetails from "components/Cards/MemberDetails";
 class ProfilePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user_id: this.props.match.params.id,
+    };
+  }
   render() {
     return (
       <>
@@ -10,7 +15,7 @@ class ProfilePage extends Component {
         <div className="flex justify-center">
           <div className="container mx-8 w-full">
             <div className="mt-20">
-              <ProfileDetails></ProfileDetails>
+              <MemberDetails user_id={this.state.user_id}></MemberDetails>
             </div>
           </div>
         </div>
