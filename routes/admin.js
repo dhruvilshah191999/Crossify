@@ -880,9 +880,6 @@ router.post('/LocationGraphs', async function (req, res, next) {
     {
       $sort: { count: -1 },
     },
-    {
-      $limit: 5,
-    },
   ]);
   await result.exec((err, data) => {
     if (err) {
@@ -894,10 +891,23 @@ router.post('/LocationGraphs', async function (req, res, next) {
     } else if (data.length != 0) {
       var label = [];
       var count = [];
-      data.forEach((e) => {
-        label.push(e._id);
-        count.push(e.count);
-      });
+      if (data.length <= 5) {
+        data.forEach((e) => {
+          label.push(e._id);
+          count.push(e.count);
+        });
+      } else {
+        for (var i = 0; i < 4; i++) {
+          label.push(data[i]._id);
+          count.push(data[i].count);
+        }
+        label.push('Other');
+        var sum = 0;
+        for (var i = 4; i < data.length; i++) {
+          sum = sum + data[i].count;
+        }
+        count.push(sum);
+      }
       var finaldata = {
         label,
         data: count,
@@ -1701,6 +1711,94 @@ router.post('/ExtentionsGraphs', async function (req, res, next) {
     } else {
       var finaldata = {
         label: [],
+        data: [],
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/channelGraphs', async function (req, res, next) {
+  var { club_id } = req.body;
+  var result = channel_details.find({
+    club_id: ObjectId(club_id),
+  });
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data.length != 0) {
+      var label = [];
+      var count = [];
+      data.forEach((e) => {
+        label.push(e.channel_name);
+        count.push(e.messages.length);
+      });
+      var finaldata = {
+        label: label,
+        data: count,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var finaldata = {
+        label: [],
+        data: [],
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/eventsGraphs', async function (req, res, next) {
+  var { club_id } = req.body;
+  var result = event_details.find({
+    club_id: ObjectId(club_id),
+  });
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (data.length != 0) {
+      var count = [];
+      var approved = 0,
+        completed = 0,
+        pending = 0,
+        rejected = 0;
+      data.forEach((e) => {
+        if (new Date(e.date) > new Date() && e.is_active) {
+          approved = approved + 1;
+        } else if (new Date(e.date) < new Date() && e.is_active) {
+          completed = completed + 1;
+        } else if (e.visibility != 'rejected' && !e.is_active) {
+          pending = pending + 1;
+        } else {
+          rejected = rejected + 1;
+        }
+      });
+      count.push(pending);
+      count.push(approved);
+      count.push(rejected);
+      count.push(completed);
+      var finaldata = {
+        data: count,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    } else {
+      var finaldata = {
         data: [],
         is_error: false,
         message: 'Data Send',

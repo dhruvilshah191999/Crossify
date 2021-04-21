@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "context/usercontext";
 import { Redirect } from "react-router-dom";
 import hobbyImg from "assets/img/hobbyImg.jpg";
+import four_boys from "assets/img/four_boys.jpg";
 import { store } from "react-notifications-component";
 // components
 import { motion } from "framer-motion";
@@ -367,13 +368,13 @@ export default function Landing() {
               </svg>
             </div>
 
-            <div className="container mx-auto px-4">
+            <div className="w-full container mx-auto px-4">
               <div className="items-center flex flex-wrap">
-                <div className="w-full md:w-4/12 ml-auto mr-auto px-4">
+                <div className="w-full md:w-6/12 ml-auto mr-auto px-4 mb-8">
                   <img
                     alt="..."
-                    className="max-w-full rounded-lg shadow-lg"
-                    src={hobbyImg}
+                    className="max-w-full rounded-lg shadow-lg text-center"
+                    src={four_boys}
                     style={{ maxHeight: "600px" }}
 
                     // src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"

@@ -58,6 +58,7 @@ export default function Register5() {
     var data = {
       email: decryptedData.email,
       interest_array: array,
+      url: window.location.origin,
     };
     try {
       const config = {
@@ -68,7 +69,7 @@ export default function Register5() {
         validateStatus: () => true,
       };
       const finaldata = await axios.post(
-        "/api/events/add-interest",
+        "/api/manage/WelcomeMail",
         data,
         config
       );

@@ -34,9 +34,9 @@ export default function EventPage(props) {
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
-  const gotoAdmin = () => {
-    history.push("/admin/" + id);
-  };
+  // const gotoAdmin = () => {
+  //   history.push("/admin/" + id);
+  // };
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     async function event_details() {
@@ -170,6 +170,10 @@ export default function EventPage(props) {
 
   const showClubs = (club_id) => {
     history.push("/club/" + club_id);
+  };
+
+  const gotoAdmin = () => {
+    history.push("/admin/" + id);
   };
 
   console.log(eventdetails);

@@ -7,6 +7,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
+import { Formik, useField } from "formik";
 
 export default function SocialRegister2() {
   var vertical = "top";
@@ -23,6 +24,7 @@ export default function SocialRegister2() {
   };
   let { latitude, longitude } = usePosition(watch);
   const [statename, setStateName] = useState("");
+  const [usernameStatus, setUsername] = useState(false);
   const [cityname, setCityName] = useState("");
   const [formData, setformData] = useState({
     username: "",
@@ -41,8 +43,26 @@ export default function SocialRegister2() {
   }
 
   var { username, address, pincode, password, repassword } = formData;
-  const onChange = (e) =>
+  const onChange = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+
+    axios
+      .post("/api/manage/UserNameCheck", { username: e.target.value }, config)
+      .then((res) => {
+        if (!res.data.is_error) {
+          setUsername(true);
+        } else {
+          setUsername(false);
+        }
+      });
+  };
 
   var districts = [];
   if (statename !== "") {
@@ -136,153 +156,273 @@ export default function SocialRegister2() {
               </div>
 
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form>
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                      htmlFor="reg-country"
-                    >
-                      Username
-                    </label>
-                    <input
-                      id="reg-country"
-                      type="text"
-                      name="username"
-                      value={username}
-                      onChange={(e) => onChange(e)}
-                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                      placeholder="Enter Username"
-                      required
-                    />
-                  </div>
+                <Formik
+                  initialValues={formData}
+                  validate={() => {
+                    const errors = {};
+                    if (!username) {
+                      errors.username = "Username is required !";
+                    } else if (usernameStatus) {
+                      errors.username = "Username is already exists !";
+                    } else if (!password) {
+                      errors.password = "Password is required !";
+                    } else if (password.length < 6) {
+                      errors.password = "Minimim 6 characters are required !";
+                    } else if (!repassword) {
+                      errors.repassword = "Re-Password is required !";
+                    } else if (password != repassword) {
+                      errors.repassword = "Password does not match !";
+                    } else if (!address) {
+                      errors.address = "Address is required !";
+                    } else if (
+                      statename === "Select Option" ||
+                      statename === ""
+                    ) {
+                      errors.state = "State name is required !";
+                    } else if (
+                      cityname === "Select Option" ||
+                      cityname === ""
+                    ) {
+                      errors.cityname = "City name is required !";
+                    } else if (!pincode) {
+                      errors.pincode = "Pin code is required !";
+                    } else if (pincode.length != 6) {
+                      errors.pincode = "Pin code should be in 6 digits !!!";
+                    }
+                    return errors;
+                  }}
+                  onSubmit={async ({ setSubmitting }) => {
+                    if (latitude === undefined || longitude === undefined) {
+                      longitude = 0;
+                      latitude = 0;
+                    }
 
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                      htmlFor="reg-password"
-                    >
-                      Password
-                    </label>
-                    <input
-                      id="reg-password"
-                      type="password"
-                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                      placeholder="Password"
-                      name="password"
-                      value={password}
-                      onChange={(e) => onChange(e)}
-                    ></input>
-                  </div>
+                    var data = {
+                      username,
+                      password,
+                      address,
+                      pincode,
+                      city: cityname,
+                      state: statename,
+                      lat: latitude,
+                      long: longitude,
+                      email: decryptedData.email,
+                    };
+                    try {
+                      const config = {
+                        method: "POST",
+                        header: {
+                          "Content-Type": "application/json",
+                        },
+                        validateStatus: () => true,
+                      };
+                      const finaldata = await axios.post(
+                        "/api/socialstep2",
+                        data,
+                        config
+                      );
+                      if (finaldata.data.is_error) {
+                        setError(true);
+                        setMessage(finaldata.data.message);
+                      } else {
+                        history.push("/auth/register/step3");
+                      }
+                    } catch (err) {
+                      console.log(err);
+                    }
+                    setSubmitting(false);
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                  }) => (
+                    <form>
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-country"
+                        >
+                          Username
+                        </label>
+                        <input
+                          id="reg-country"
+                          type="text"
+                          name="username"
+                          value={username}
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Enter Username"
+                          required
+                        />
+                        <p className="FormError">
+                          {errors.username &&
+                            touched.username &&
+                            errors.username}
+                        </p>
+                      </div>
 
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                      htmlFor="reg-re-password"
-                    >
-                      Re-Type Password
-                    </label>
-                    <input
-                      id="reg-re-password"
-                      type="password"
-                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                      placeholder="Re-Type Password"
-                      name="repassword"
-                      value={repassword}
-                      onChange={(e) => onChange(e)}
-                    ></input>
-                  </div>
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-password"
+                        >
+                          Password
+                        </label>
+                        <input
+                          id="reg-password"
+                          type="password"
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Password"
+                          name="password"
+                          value={password}
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                        ></input>
+                        <p className="FormError">
+                          {errors.password &&
+                            touched.password &&
+                            errors.password}
+                        </p>
+                      </div>
 
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                      htmlFor="reg-address"
-                    >
-                      address
-                    </label>
-                    <textarea
-                      id="reg-address"
-                      name="address"
-                      onChange={(e) => onChange(e)}
-                      value={address}
-                      className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    />
-                  </div>
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-re-password"
+                        >
+                          Re-Type Password
+                        </label>
+                        <input
+                          id="reg-re-password"
+                          type="password"
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Re-Type Password"
+                          name="repassword"
+                          value={repassword}
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                        ></input>
+                        <p className="FormError">
+                          {errors.repassword &&
+                            touched.repassword &&
+                            errors.repassword}
+                        </p>
+                      </div>
 
-                  <div className="-mx-6 md:flex">
-                    <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3 mr-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="reg-state"
-                      >
-                        State
-                      </label>
-                      <select
-                        id="reg-state"
-                        name="state"
-                        autoComplete="state"
-                        className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
-                        onChange={(e) => setStateName(e.target.value)}
-                      >
-                        {City.states.map((city) => (
-                          <option value={city.state} key={city.state}>
-                            {city.state}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-address"
+                        >
+                          address
+                        </label>
+                        <textarea
+                          id="reg-address"
+                          name="address"
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                          value={address}
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                        />
+                        <p className="FormError">
+                          {errors.address && touched.address && errors.address}
+                        </p>
+                      </div>
 
-                    <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3 mr-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="reg-city"
-                      >
-                        City
-                      </label>
-                      <select
-                        id="reg-city"
-                        name="city"
-                        autoComplete="city"
-                        className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
-                        onChange={(e) => setCityName(e.target.value)}
-                      >
-                        {districts.map((element) => (
-                          <option value={element} key={element}>
-                            {element}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                      <div className="-mx-6 md:flex">
+                        <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3 mr-3">
+                          <label
+                            className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            htmlFor="reg-state"
+                          >
+                            State
+                          </label>
+                          <select
+                            id="reg-state"
+                            name="state"
+                            autoComplete="state"
+                            className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
+                            onChange={(e) => setStateName(e.target.value)}
+                            onBlur={handleBlur}
+                          >
+                            {City.states.map((city) => (
+                              <option value={city.state} key={city.state}>
+                                {city.state}
+                              </option>
+                            ))}
+                          </select>
+                          <p className="FormError">{errors.state}</p>
+                        </div>
 
-                    <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="reg-pin-code"
-                      >
-                        pin code
-                      </label>
-                      <input
-                        id="reg-pin-code"
-                        type="number"
-                        name="pincode"
-                        value={pincode}
-                        onChange={(e) => onChange(e)}
-                        className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
-                      />
-                    </div>
-                  </div>
+                        <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3 mr-3">
+                          <label
+                            className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            htmlFor="reg-city"
+                          >
+                            City
+                          </label>
+                          <select
+                            id="reg-city"
+                            name="city"
+                            autoComplete="city"
+                            className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
+                            onChange={(e) => setCityName(e.target.value)}
+                            onBlur={handleBlur}
+                          >
+                            {districts.map((element) => (
+                              <option value={element} key={element}>
+                                {element}
+                              </option>
+                            ))}
+                          </select>
+                          <p className="FormError">{errors.cityname}</p>
+                        </div>
 
-                  <div className="-mx-3 md:flex mt-6">
-                    <div className="md:w-1/2 md:mb-0 w-full w-1/2 mr-3">
-                      <button
-                        className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={(e) => onSubmit(e)}
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </div>
-                </form>
+                        <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3">
+                          <label
+                            className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            htmlFor="reg-pin-code"
+                          >
+                            pin code
+                          </label>
+                          <input
+                            id="reg-pin-code"
+                            type="number"
+                            name="pincode"
+                            value={pincode}
+                            onChange={(e) => onChange(e)}
+                            onBlur={handleBlur}
+                            className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
+                          />
+                          <p className="FormError">
+                            {errors.pincode &&
+                              touched.pincode &&
+                              errors.pincode}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="-mx-3 md:flex mt-6">
+                        <div className="md:w-1/2 md:mb-0 w-full w-1/2 mr-3">
+                          <button
+                            className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={handleSubmit}
+                          >
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  )}
+                </Formik>
               </div>
             </div>
           </div>
