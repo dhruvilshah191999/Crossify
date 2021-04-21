@@ -60,7 +60,7 @@ var user_details = new Schema({
   },
   profile_photo: {
     type: String,
-    required: true,
+    required: false,
   },
   date: {
     type: Date,

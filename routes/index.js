@@ -89,7 +89,6 @@ router.post("/signup", async function (req, res, next) {
         fname,
         lname,
         password,
-        profile_photo: photo,
       });
       user.save((err) => {
         if (err) {

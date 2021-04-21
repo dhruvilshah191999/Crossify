@@ -83,8 +83,8 @@ router.post('/create-club', auth, async (req, res) => {
             };
             return res.status(500).send(error);
           } else if (data3) {
-            console.log(data3);
             var finaldata = {
+              club_id:club._id,
               message: 'club created',
               is_error: false,
             };

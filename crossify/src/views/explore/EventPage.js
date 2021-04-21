@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Moment from "moment";
 import { useHistory } from "react-router-dom";
@@ -10,6 +10,7 @@ import AskQuestion from "components/SweetAlerts/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/SweetAlerts/JoinEventButton";
 import ReportEventButton from "components/SweetAlerts/ReportEventButton";
+import { UserContext } from "context/usercontext";
 import { notifyLiked, notifyWentWrong } from "notify";
 import { motion } from "framer-motion";
 import GridLoader from "react-spinners/GridLoader";
@@ -25,6 +26,7 @@ const Tag = (props) => {
 
 export default function EventPage(props) {
   let history = useHistory();
+  const { users } = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState(false);
   var { id } = useParams();
   const [loading, setloading] = useState(false);
@@ -34,9 +36,7 @@ export default function EventPage(props) {
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
-  // const gotoAdmin = () => {
-  //   history.push("/admin/" + id);
-  // };
+
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     async function event_details() {
@@ -67,7 +67,7 @@ export default function EventPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-        }, 300);
+        }, 500);
       }
     }
 
@@ -122,6 +122,9 @@ export default function EventPage(props) {
     fetchData();
     CheckEvent();
     event_details();
+    if (users._id === eventdetails.oragnizer_id) {
+      setIsAdmin(true);
+    }
   }, []);
 
   const addlike = async (e) => {
@@ -173,10 +176,9 @@ export default function EventPage(props) {
   };
 
   const gotoAdmin = () => {
-    history.push("/admin/" + id);
+    history.push("/manage/event/" + id);
   };
 
-  console.log(eventdetails);
   if (loading) {
     return (
       <>
@@ -215,11 +217,15 @@ export default function EventPage(props) {
                 </div>
                 <div className="ml-auto mt-4 mr-3">
                   {" "}
-                  <ReportEventButton event_id={id}></ReportEventButton>
+                  {users._id === eventdetails.oragnizer_id ? (
+                    ""
+                  ) : (
+                    <ReportEventButton event_id={id}></ReportEventButton>
+                  )}
                 </div>
                 {/* TODO: setting as club page */}
                 <div className="ml-auto mt-4 mr-3">
-                  {isAdmin ? (
+                  {users._id === eventdetails.oragnizer_id ? (
                     <button
                       className="float-right text-lg"
                       onClick={() => gotoAdmin()}
@@ -325,7 +331,9 @@ export default function EventPage(props) {
               </div>
               <div
                 title="Add to Calendar"
-                className="addeventatc mt-1  text-xs rounded-lg"
+                className={
+                  loading ? "addeventatc mt-1  text-xs rounded-lg" : "hidden"
+                }
                 style={{ fontSize: "smaller !important" }}
                 data-styling="none"
               >

@@ -191,13 +191,10 @@ router.post("/get-faq", async function (req, res, next) {
     } else {
       var final = [];
       data.faq.forEach((e) => {
-        var d = new Date(e.date);
-        var date =
-          d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
         var object = {
           que: e.question,
           ownerName: e.askedby,
-          date: date,
+          date: moment(e.date).format("DD MMM YYYY"),
           status: e.status,
           privacy: e.privacy,
           id: e._id,
