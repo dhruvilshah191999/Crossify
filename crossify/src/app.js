@@ -34,6 +34,7 @@ import ClubPage from "views/explore/ClubPage";
 import CreateClub from "views/create/CreateClub";
 import { UserContext } from "context/usercontext";
 import ProfilePage from "views/explore/ProfilePage";
+import ERROR from "views/Error/404";
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
@@ -71,6 +72,7 @@ const Routing = () => {
   var token = localStorage.getItem("jwt");
   return (
     <Switch>
+      <Route path="/error" exact component={ERROR} />
       <Route path="/landing" exact component={Landing} />
       <Route path="/" exact component={Index} />
       <Route path="/search" exact component={SearchPage} />
