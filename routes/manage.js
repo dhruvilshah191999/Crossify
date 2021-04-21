@@ -12,6 +12,10 @@ const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
 
+var adminPass = process.env.PASSWORD;
+var adminMail = process.env.MAIL;
+console.log(adminMail, adminPass);
+
 var handlebars = require("handlebars");
 var fs = require("fs");
 var router = express.Router();
@@ -781,6 +785,7 @@ router.post("/check-club", auth, async function (req, res, next) {
 });
 
 router.post("/Broadcast", async function (req, res, next) {
+  console.log(adminPass);
   var { userIds, event_id, message, path } = req.body;
   let objectIdArray = userIds.map((s) => mongoose.Types.ObjectId(s));
   var check = await user_details.find({
@@ -851,8 +856,8 @@ router.post("/Broadcast", async function (req, res, next) {
     port: 465, //587
     secure: true, //for true 465,
     auth: {
-      user: process.env.MAIL,
-      pass: process.env.PASSWORD,
+      user: adminMail,
+      pass: adminPass,
     },
   });
 
@@ -876,6 +881,7 @@ router.post("/Broadcast", async function (req, res, next) {
         event: path + "/events/event=" + event_id,
         finaldate: moment(event[0].startdate).format("MMMM Do, YYYY | h:mm a"),
       };
+      console.log(check[index]);
       var htmlToSend = template(replacements);
       const mailOptions = {
         from: "crossify.vgec@gmail.com",
@@ -896,6 +902,7 @@ router.post("/Broadcast", async function (req, res, next) {
 
 router.post("/WelcomeMail", async function (req, res, next) {
   var { email, interest_array, url } = req.body;
+
   let objectIdArray = interest_array.map((s) => mongoose.Types.ObjectId(s));
   var x = ObjectId();
   var readHTMLFile = function (path, callback) {
@@ -916,8 +923,8 @@ router.post("/WelcomeMail", async function (req, res, next) {
     port: 465,
     secure: true, //for true 465,
     auth: {
-      user: process.env.MAIL,
-      pass: process.env.PASSWORD,
+      user: adminMail,
+      pass: adminPass,
     },
   });
 
@@ -1002,8 +1009,8 @@ router.post("/ForgotMail", async function (req, res, next) {
         port: 465,
         secure: true,
         auth: {
-          user: process.env.MAIL,
-          pass: process.env.PASSWORD,
+          user: adminMail,
+          pass: adminPass,
         },
       });
       readHTMLFile("views/ForgotPasswordMail.html", function (err, html) {
