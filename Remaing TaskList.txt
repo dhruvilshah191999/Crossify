@@ -3,7 +3,6 @@ Club Page          => Open Profile in new Page
 FAQ 		   => Send only public ones
 AdminPage          =>   Dashboard 
 Attendees   	   => Broadcast button
-Sign Up from  	   => Make it stylish , Check for username availability
 Can add Calendar view of all the events in MyEvents
 Is it possible to login with facebook and Google without writing login password
 MySettings    => Needs to add section to modify Interest , Change Profile Photo
