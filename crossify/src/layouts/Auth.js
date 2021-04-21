@@ -14,6 +14,7 @@ import ChangePassword from "views/auth/ChangePassword";
 import ForgotPassword from "views/auth/ForgotPassword";
 import SetPassword from "views/auth/SetPassword";
 import Particles from "react-particles-js";
+import PlayGround from "views/demo/PlayGround";
 
 export default function Auth() {
   return (
@@ -136,6 +137,7 @@ export default function Auth() {
               component={ForgotPassword}
             />
             <Route path="/auth/setpassword" exact component={SetPassword} />
+            <Route path="/auth/verified" exact component={PlayGround} />
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
         </section>
