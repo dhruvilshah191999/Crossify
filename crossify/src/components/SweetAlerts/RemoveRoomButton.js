@@ -6,7 +6,7 @@ export default class SweetAlertModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id:this.props.id,
+      id: this.props.id,
       alert: null,
     };
   }
@@ -73,7 +73,7 @@ export default class SweetAlertModal extends Component {
           type="button"
           onClick={() => this.confirmArrival()}
         >
-          <i class="fas fa-trash-alt  "></i>
+          <i className="fas fa-trash-alt  "></i>
         </button>
 
         {this.state.alert}

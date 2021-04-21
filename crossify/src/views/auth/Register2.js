@@ -8,6 +8,7 @@ import Alert from "@material-ui/lab/Alert";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
 import { Formik, useField } from "formik";
+import { setEmitFlags } from "typescript";
 
 export default function Register2() {
   var vertical = "top";
@@ -203,19 +204,18 @@ export default function Register2() {
                           placeholder="Enter Username"
                           onBlur={handleBlur}
                         />
-                        <p className="FormError">
+
+                        <p
+                          className={
+                            errors.username == "Username is available !"
+                              ? "FormSuccess"
+                              : "FormError"
+                          }
+                        >
                           {errors.username &&
                             touched.username &&
                             errors.username}
                         </p>
-                        if (!usernameStatus)
-                        {
-                          <p className="FormSuccess">
-                            {errors.username &&
-                              touched.username &&
-                              errors.username}
-                          </p>
-                        }
                       </div>
 
                       <div className="relative w-full mb-3">

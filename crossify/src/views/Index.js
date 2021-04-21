@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "context/usercontext";
 import { Redirect } from "react-router-dom";
 import hobbyImg from "assets/img/hobbyImg.jpg";
+import four_boys from "assets/img/four_boys.jpg";
 import { store } from "react-notifications-component";
 // components
 import { motion } from "framer-motion";
@@ -217,6 +218,7 @@ export default function Landing() {
               ></svg>
             </div>
           </div>
+
           <section className="bg-white block m-4 ">
             <div className="p-8 mx-6">
               <div className="mb-6">
@@ -225,7 +227,7 @@ export default function Landing() {
                     Upcoming Nearby Events
                   </h4>
                   <motion.button
-                    className="text-white font-semibold ml-auto mr-2 bg-alpha rounded p-2"
+                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -254,7 +256,7 @@ export default function Landing() {
                     Explore Local Clubs
                   </h4>
                   <motion.button
-                    className="text-white font-semibold ml-auto mr-2 bg-alpha rounded p-2"
+                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -285,7 +287,7 @@ export default function Landing() {
                         {el.category_name}
                       </h4>
                       <motion.button
-                        className="text-white font-semibold ml-auto mr-2 bg-alpha rounded p-2"
+                        className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -366,13 +368,13 @@ export default function Landing() {
               </svg>
             </div>
 
-            <div className="container mx-auto px-4">
+            <div className="w-full container mx-auto px-4">
               <div className="items-center flex flex-wrap">
-                <div className="w-full md:w-4/12 ml-auto mr-auto px-4">
+                <div className="w-full md:w-6/12 ml-auto mr-auto px-4 mb-8">
                   <img
                     alt="..."
-                    className="max-w-full rounded-lg shadow-lg"
-                    src={hobbyImg}
+                    className="max-w-full rounded-lg shadow-lg text-center"
+                    src={four_boys}
                     style={{ maxHeight: "600px" }}
 
                     // src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
@@ -398,7 +400,7 @@ export default function Landing() {
                         <div className="flex items-center">
                           <div>
                             <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 mr-3">
-                              <i class="fas fa-bullhorn"></i>
+                              <i className="fas fa-bullhorn"></i>
                             </span>
                           </div>
                           <div>
@@ -412,7 +414,7 @@ export default function Landing() {
                         <div className="flex items-center">
                           <div>
                             <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 mr-3">
-                              <i class="fas fa-chart-line"></i>
+                              <i className="fas fa-chart-line"></i>
                             </span>
                           </div>
                           <div>
@@ -426,7 +428,7 @@ export default function Landing() {
                         <div className="flex items-center">
                           <div>
                             <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 mr-3">
-                              <i class="fas fa-bolt"></i>
+                              <i className="fas fa-bolt"></i>
                             </span>
                           </div>
                           <div>

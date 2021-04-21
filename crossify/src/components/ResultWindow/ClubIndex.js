@@ -5,7 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 const ResultWindow2 = ({ getclub, loading }) => {
   return (
     <>
-      <div className={loading?"":"flex  md:mt-10"}>
+      <div className={loading ? "" : "flex  md:mt-10"}>
         {loading ? (
           <div
             className="flex justify-center items-center"
@@ -26,7 +26,7 @@ const ResultWindow2 = ({ getclub, loading }) => {
                   {" "}
                   <div>
                     {" "}
-                    <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+                    <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
                   </div>
                   <div>
                     <h1 className="text-2xl text-gray-700 ">

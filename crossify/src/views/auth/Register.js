@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -8,6 +8,7 @@ import Google from "./Google";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
 import { Formik, useField } from "formik";
+import $ from "jquery";
 
 var vertical = "top";
 var horizontal = "center";
@@ -49,6 +50,28 @@ export default function Register() {
       "../../assets/img/bg_crossify.png";
     // console.log(`Selected file - ${event.target.files[0].name}`);
   }
+
+  useEffect(() => {
+    function readURL(input) {
+      console.log("inside");
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#imagePreview").css(
+            "background-image",
+            "url(" + e.target.result + ")"
+          );
+          $("#imagePreview").hide();
+          $("#imagePreview").fadeIn(650);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#reg-photo").change(function () {
+      readURL(this);
+    });
+  });
 
   return (
     <>
@@ -294,7 +317,7 @@ export default function Register() {
                             errors.repassword}
                         </p>
                       </div>
-
+                      {/* 
                       <div className="relative w-full mb-3">
                         <label
                           className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -333,7 +356,35 @@ export default function Register() {
                         src={
                           "file:///E:/CROSSIFY/Crossify%20Web%20App/crossify/src/assets/logos/google.png"
                         }
-                      ></img>
+                      ></img> */}
+
+                      <div className="px-4 mt-6 mb-6">
+                        <div class="avatar-upload">
+                          <div class="avatar-edit">
+                            <input
+                              type="file"
+                              id="reg-photo"
+                              accept=".png, .jpg, .jpeg"
+                              onChange={(e) => setImage(e.target.files[0])}
+                            />
+                            <label
+                              for="reg-photo"
+                              style={{ border: "1px solid black" }}
+                            >
+                              <i class="fas fa-pen ml-2 text-sm"></i>
+                            </label>
+                          </div>
+                          <div className="avatar-preview">
+                            <div
+                              id="imagePreview"
+                              style={{
+                                backgroundImage:
+                                  "url(http://i.pravatar.cc/500?img=7)",
+                              }}
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
 
                       <div>
                         <label className="inline-flex items-center cursor-pointer">

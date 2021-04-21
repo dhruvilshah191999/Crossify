@@ -162,8 +162,8 @@ const EventCard = (props) => {
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1 ">
             <div className="truncate max-ch-30">
-              <i class="fas fa-map-marker-alt "></i> : {props.data.location},
-              {props.data.city},{props.data.state}
+              <i className="fas fa-map-marker-alt "></i> : {props.data.location}
+              ,{props.data.city},{props.data.state}
             </div>
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1">

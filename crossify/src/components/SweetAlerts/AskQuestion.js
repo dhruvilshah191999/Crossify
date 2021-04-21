@@ -97,7 +97,7 @@ export default class SweetAlertModal extends Component {
           onClick={() => this.deleteThisGoal()}
           className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta"
         >
-          <i class="fas fa-user-plus"></i> Ask
+          <i className="fas fa-user-plus"></i> Ask
         </button>
 
         {this.state.alert}

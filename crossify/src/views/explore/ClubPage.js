@@ -244,19 +244,20 @@ function ClubPage(props) {
                   )}
                 </div>
                 <div className="text-base mt-2 text-gray-600 ml-2">
-                  &nbsp;<i class="fas fa-map-marker-alt text-sm"></i>
-                  &nbsp;&nbsp;&nbsp; {clubData.city},{clubData.state} <br />
-                  <i class="fas fa-users text-sm"></i> &nbsp;&nbsp;
+                  &nbsp;<i className="fas fa-map-marker-alt text-sm"></i>
+                  &nbsp;&nbsp; {clubData.city},{clubData.state} <br />
+                  <i className="fas fa-users text-sm"></i> &nbsp;&nbsp;
                   {count.member + " "}
                   Members
                   <br />
-                  <i class="fas fa-couch text-sm"></i> &nbsp;&nbsp;
+                  <i className="fas fa-couch text-sm"></i> &nbsp;&nbsp;
                   {clubData.status + " Club"}
                   <br />
-                  <i class="fas fa-user-shield text-sm"></i> &nbsp;&nbsp;
+                  <i className="fas fa-user-shield text-sm"></i> &nbsp;&nbsp;
                   {clubData.user_data[0].fname} {clubData.user_data[0].lname}
                   <br />
-                  <i class="fas fa-calendar-day text-sm"></i>&nbsp;&nbsp;&nbsp;
+                  <i className="fas fa-calendar-day text-sm"></i>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
                   {Moment(clubData.date).format("DD MMM YYYY")}
                 </div>
                 <div className="p-1 my-2 leading-wide">

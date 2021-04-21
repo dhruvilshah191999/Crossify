@@ -47,6 +47,10 @@
   .lg\:minH80 {
     min-height: 80vh;
   }
+
+  .lg\:w-10\/12 {
+    width: 84%;
+  }
 }
 
 @media (min-width: 1450px) {

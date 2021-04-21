@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import harshilImg from "assets/img/harshilImg.jpg";
 import dhruvilImg from "assets/img/pp1.jpg";
-import sagarImg from "assets/img/sagar.jpeg";
+import sagarImg from "assets/img/sagar_.jpg";
 import bhargavImg from "assets/img/bhargavImage.jpg";
 
 class Creators extends Component {
@@ -73,14 +73,14 @@ class Creators extends Component {
                       <i className="fab fa-instagram"></i>
                     </button>
                     <button
-                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1 border border-white"
                       type="button"
                       onClick={() => {
                         window.open("https://github.com/hackershil", "_blank");
                         return false;
                       }}
                     >
-                      <i class="fab fa-github"></i>
+                      <i className="fab fa-github"></i>
                     </button>
                   </div>
                 </div>
@@ -172,14 +172,14 @@ class Creators extends Component {
                       <i className="fab fa-instagram"></i>
                     </button>
                     <button
-                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1 border border-white"
                       type="button"
                       onClick={() => {
                         window.open("https://github.com/bhargu-27", "_blank");
                         return false;
                       }}
                     >
-                      <i class="fab fa-github"></i>
+                      <i className="fab fa-github"></i>
                     </button>
                   </div>
                 </div>
@@ -201,26 +201,54 @@ class Creators extends Component {
                   </p>
                   <div className="mt-6">
                     <button
-                      className="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-linkedin text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://www.linkedin.com/in/sagar-solanki-6857561a0/",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
-                      <i className="fab fa-dribbble"></i>
+                      <i className="fab fa-linkedin"></i>
                     </button>
                     <button
-                      className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1 border border-white"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://github.com/sagarsolanki1811",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
-                      <i className="fab fa-google"></i>
+                      <i className="fab fa-github"></i>
                     </button>
                     <button
                       className="bg-blue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://twitter.com/sagar_solanki18",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
                       <i className="fab fa-twitter"></i>
                     </button>
                     <button
-                      className="bg-gray-800 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-instagram text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://www.instagram.com/sagarsolanki1811/",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
                       <i className="fab fa-instagram"></i>
                     </button>

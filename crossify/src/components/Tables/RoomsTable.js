@@ -29,7 +29,7 @@ function GlobalFilter({
     <span className="text-gray-700 font-normal ml-2 ">
       {/* Search:{" "} */}
       <i
-        class={
+        className={
           isLight
             ? "fas fa-search mr-4 text-gray-700"
             : "fas fa-search mr-4 text-white"
@@ -165,9 +165,7 @@ export default function App(props) {
               writable={is_writable}
               id={value}
             />
-            <RemoveRoomButton
-              id={value}
-            ></RemoveRoomButton>
+            <RemoveRoomButton id={value}></RemoveRoomButton>
           </div>
         ),
         disableFilters: true,
@@ -264,7 +262,7 @@ export default function App(props) {
                 </div>
                 <div className="ml-auto">
                   <div className="inline-block">
-                    <CreateRoomButton club_id={clubId}/>
+                    <CreateRoomButton club_id={clubId} />
                   </div>
                   <span className="ml-2 "></span>
                   <GlobalFilter
@@ -359,14 +357,14 @@ export default function App(props) {
                 onClick={() => gotoPage(0)}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-step-backward"></i>
+                <i className="fas fa-step-backward"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
               >
-                <i class="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left"></i>
               </button>{" "}
               <span className="mx-4">
                 <strong>{pageIndex + 1}</strong>{" "}
@@ -376,14 +374,14 @@ export default function App(props) {
                 onClick={() => nextPage()}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </button>{" "}
               <button
                 className="rounded-lg shadow bg-blue-600 text-white px-2 py-1"
                 onClick={() => gotoPage(pageCount - 1)}
                 disabled={!canNextPage}
               >
-                <i class="fas fa-step-forward"></i>
+                <i className="fas fa-step-forward"></i>
               </button>{" "}
             </div>
             <div className="ml-auto mr-4 mt-1 overflow">

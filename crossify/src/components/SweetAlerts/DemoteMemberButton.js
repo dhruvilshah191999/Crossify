@@ -101,7 +101,7 @@ export default class SweetAlertModal extends Component {
             type="button"
             onClick={() => this.confirmArrival()}
           >
-            <i class="fas fa-level-down-alt text-orange-500 text-lg"></i>
+            <i className="fas fa-level-down-alt text-orange-500 text-lg"></i>
           </button>
         )}
 

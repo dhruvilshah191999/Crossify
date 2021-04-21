@@ -55,14 +55,14 @@ class MultipleInputs extends Component {
                 type="button"
                 onClick={() => this.addBelow(index)}
               >
-                <i class="fas fa-plus-square text-green-500 text-xl"></i>
+                <i className="fas fa-plus-square text-green-500 text-xl"></i>
               </button>
               <button
                 className="p-2"
                 type="button"
                 onClick={() => this.removeCurrent(index)}
               >
-                <i class="fas fa-minus-square text-red-500 text-xl"></i>
+                <i className="fas fa-minus-square text-red-500 text-xl"></i>
               </button>
             </div>
           ))}
@@ -77,4 +77,3 @@ export default MultipleInputs;
 MultipleInputs.defaultProps = {
   questions: [""],
 };
-

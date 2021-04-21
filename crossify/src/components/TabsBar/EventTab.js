@@ -1,4 +1,3 @@
-import { withMobileDialog } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import Photo from "assets/img/team-4-470x470.png";
 import axios from "axios";
@@ -6,6 +5,7 @@ import ProfileEventClub from "components/Cards/ProfileEventCard";
 import EventCalendar from "components/Calendar/EventCalendar";
 import { motion } from "framer-motion";
 import EmptyContainer from "components/sections/EmptyContainer";
+import MapwithEvents from "components/Maps/EventsOfClubsMap";
 //khatar banayu bhai harshil
 export default function EventTab(props) {
   const eventPerPage = 3;
@@ -122,7 +122,7 @@ export default function EventTab(props) {
             {" "}
             <div>
               {" "}
-              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+              <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
             </div>
             <div>
               <h1 className="text-2xl text-gray-700 ">
@@ -176,7 +176,7 @@ export default function EventTab(props) {
             {" "}
             <div>
               {" "}
-              <i class="far fa-calendar-times text-5xl mr-4 mt-2"></i>
+              <i className="far fa-calendar-times text-5xl mr-4 mt-2"></i>
             </div>
             <div>
               <h1 className="text-2xl text-gray-700 ">
@@ -243,7 +243,7 @@ export default function EventTab(props) {
     getData();
     getpastdata();
   }, []);
-
+  console.log(rawUpcomingEvents);
   return (
     <>
       <div className="flex   text-sm">
@@ -256,7 +256,7 @@ export default function EventTab(props) {
             }
             onClick={() => toggleTabIndex(0)}
           >
-            <i class="fas fa-history hover:"></i>&nbsp; Past Events
+            <i className="fas fa-history hover:"></i>&nbsp; Past Events
           </button>
 
           <button
@@ -268,16 +268,16 @@ export default function EventTab(props) {
             onClick={() => toggleTabIndex(1)}
           >
             {" "}
-            <i class="fas fa-glass-cheers hover:text-lightbeta"></i>&nbsp;
+            <i className="fas fa-glass-cheers hover:text-lightbeta"></i>&nbsp;
             Upcoming
           </button>
         </div>{" "}
-        <div class="bg-white w-1/4 shadow  ml-auto mr-8 flex border border-beta rounded-lg">
-          <span class="w-auto flex justify-end items-center text-gray-500 p-2">
+        <div className="bg-white w-1/4 shadow  ml-auto mr-8 flex border border-beta rounded-lg">
+          <span className="w-auto flex justify-end items-center text-gray-500 p-2">
             <i className="fas fa-search text-beta"></i>
           </span>
           <input
-            class="w-full rounded-lg py-2"
+            className="w-full rounded-lg py-2"
             type="text"
             placeholder="Search Event..."
             onChange={searchHandler}
@@ -285,7 +285,7 @@ export default function EventTab(props) {
         </div>
       </div>
       <div>
-        <div class="ml-4 mt-10 flex flex-col flex-wrap lg:flex-row">
+        <div className="gap-1 mx-4 mt-10 flex flex-col flex-wrap lg:flex-row">
           {tabIndex === 0 ? renderpastEvents : renderupcomingEvents}
         </div>
       </div>
@@ -300,14 +300,28 @@ export default function EventTab(props) {
         </div>
       </div>
       <hr className="mt-6 border-b-1 border-gray-400 mb-6" />
-      <div style={{ height: 1000 }} className="px-16">
+      <div className="px-12 text-center">
         {loading && (
-          <EventCalendar
-            EventData={rawUpcomingEvents}
-            club_id={clubId}
-            isAdmin={props.isAdmin}
-          />
+          <>
+            <span className="text-4xl font-semibold">
+              {" "}
+              Calendar View for Upcoming Events{" "}
+            </span>
+            <EventCalendar
+              EventData={rawUpcomingEvents}
+              club_id={clubId}
+              isAdmin={props.isAdmin}
+            />
+          </>
         )}
+      </div>
+      <hr className="my-4" />
+      <div className="mt-8 text-center">
+        <span className="text-4xl my-4 font-semibold">
+          {" "}
+          Map View for Upcoming Events{" "}
+        </span>
+        <MapwithEvents data={rawUpcomingEvents}></MapwithEvents>
       </div>
     </>
   );

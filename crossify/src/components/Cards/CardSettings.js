@@ -278,7 +278,7 @@ export default function CardSettings(props) {
                         Privacy
                       </label>
                       <select
-                        class="block shadow focus:shadow-outline pr-2  text-sm appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded ease-linear transition-all duration-150"
+                        className="block shadow focus:shadow-outline pr-2  text-sm appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-2half px-4 pr-8 rounded ease-linear transition-all duration-150"
                         id="grid-state"
                         placeholder="Select your relevant Categories"
                         name="privacy"

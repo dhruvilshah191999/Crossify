@@ -111,7 +111,7 @@ class ProfileDetails extends Component {
               </div>
               <div className="flex">
                 <div className="text-gray-600 mt-1 inline-block text-lg flex-shrink-0">
-                  <i class="fas fa-map-marker-alt  "></i> {this.props.place}
+                  <i className="fas fa-map-marker-alt  "></i> {this.props.place}
                 </div>
               </div>
               <div
@@ -189,14 +189,14 @@ class ProfileDetails extends Component {
           </div>
           <div className="flex flex-col">
             <div className="text-2xl text-alpha p-2 ">
-              <i class="fas fa-info-circle"></i> About
+              <i className="fas fa-info-circle"></i> About
             </div>
             <hr></hr>
             <div className="p-2 mt-1  text-lg text-gray-800">
               {this.state.profile.about_me}
             </div>
             <div className="text-2xl text-alpha p-2 mt-2 ">
-              <i class="fab fa-gratipay "></i> Interests
+              <i className="fab fa-gratipay "></i> Interests
             </div>
             <hr></hr>
             <div className="p-2 mt-1">
@@ -205,7 +205,7 @@ class ProfileDetails extends Component {
               ))}
             </div>
             <div className="text-2xl text-alpha p-2 mt-2 ">
-              <i class="fas fa-users"></i> Clubs
+              <i className="fas fa-users"></i> Clubs
             </div>
             <hr></hr>
             <div className="p-2 mt-1 flex flex-wrap mb-2 mt-2 gap-1">

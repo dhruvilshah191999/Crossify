@@ -137,7 +137,7 @@ export class MapContainer extends Component {
                   target="_blank"
                   type="button"
                 >
-                  <i class="fas fa-directions"></i>
+                  <i className="fas fa-directions"></i>
                 </a>
               </div>
             </div>

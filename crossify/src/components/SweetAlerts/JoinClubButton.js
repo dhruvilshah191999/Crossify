@@ -11,11 +11,11 @@ class SweetAlertModal extends Component {
       alert: null,
       isJoined: this.props.isJoin,
       club_id: this.props.club_id,
-      isAdmin:this.props.isAdmin,
-      isRequested:this.props.isRequest,
+      isAdmin: this.props.isAdmin,
+      isRequested: this.props.isRequest,
       isPublic: this.props.isPublic,
-      isReply:[],
-      questions:this.props.question,
+      isReply: [],
+      questions: this.props.question,
       answers: [],
     };
   }
@@ -73,9 +73,7 @@ class SweetAlertModal extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-       this.props.history.go(
-         0
-       );
+      this.props.history.go(0);
     }
   };
 
@@ -108,9 +106,9 @@ class SweetAlertModal extends Component {
     var reply = this.state.isReply;
     var object = {
       question: que[index],
-      answer:value,
-    }
-    reply[index]=object
+      answer: value,
+    };
+    reply[index] = object;
     this.setState({
       isReply: reply,
     });
@@ -153,7 +151,7 @@ class SweetAlertModal extends Component {
     var send_data = {
       token,
       club_id: this.state.club_id,
-      isReply:this.state.isReply
+      isReply: this.state.isReply,
     };
     const finaldata = await axios.post(
       "/api/club/AddRequestMember",
@@ -284,7 +282,8 @@ class SweetAlertModal extends Component {
             type="button"
             onClick={() => this.removeRegisteration()}
           >
-            <i class="fas fa-file-signature"></i>{this.state.isAdmin?"Admin":"Member"}
+            <i className="fas fa-file-signature"></i>
+            &nbsp;{this.state.isAdmin ? "Admin" : "Member"}
           </button>
         ) : this.state.isRequested ? (
           <button
@@ -292,7 +291,7 @@ class SweetAlertModal extends Component {
             type="button"
             onClick={() => this.cancleRequest()}
           >
-            <i class="fas fa-envelope"></i>&nbsp; Requested
+            <i className="fas fa-envelope"></i>&nbsp; Requested
           </button>
         ) : this.state.isPublic ? (
           <button
@@ -300,7 +299,7 @@ class SweetAlertModal extends Component {
             type="button"
             onClick={() => this.successJoined()}
           >
-            <i class="fas fa-user-plus "></i> Join
+            <i className="fas fa-user-plus "></i>&nbsp; Join
           </button>
         ) : (
           <button
@@ -308,7 +307,7 @@ class SweetAlertModal extends Component {
             type="button"
             onClick={() => this.requestForJoining()}
           >
-            <i class="fas fa-id-card-alt"></i>&nbsp; Request to join
+            <i className="fas fa-id-card-alt"></i>&nbsp; Request to join
           </button>
         )}
 

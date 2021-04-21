@@ -101,7 +101,7 @@ export default function EventPreview(props) {
                 <div className="flex flex-col mt-4 text-md text-gray-700 ">
                   {" "}
                   <div>
-                    <i class="fas fa-map-marker-alt text-lg "></i>
+                    <i className="fas fa-map-marker-alt text-lg "></i>
                     <span className="ml-2">
                       {" "}
                       {eventdetails.location},{eventdetails.city}
@@ -109,7 +109,7 @@ export default function EventPreview(props) {
                   </div>
                   <div className="mt-2">
                     {" "}
-                    <i class="fas fa-clock"></i>
+                    <i className="fas fa-clock"></i>
                     <span className="ml-2">
                       {" "}
                       {Moment(eventdetails.date).format(
@@ -163,7 +163,7 @@ export default function EventPreview(props) {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      <i class="fas fa-share-alt"></i> Share
+                      <i className="fas fa-share-alt"></i> Share
                     </motion.button>
                   </div>
                 </div>
@@ -223,7 +223,7 @@ export default function EventPreview(props) {
                     FAQs <br />
                     <AskQuestion></AskQuestion>
                     {/* <button className="font-semibold border shadow hover:bg-lightbeta focus:outline-none border-beta hover:border-beta text-white text-sm px-4 py-1 rounded bg-beta">
-                    <i class="fas fa-user-plus"></i> Ask
+                    <i className="fas fa-user-plus"></i> Ask
                   </button> */}
                   </div>
                   <div

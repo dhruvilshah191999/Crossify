@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
@@ -9,26 +9,22 @@ const ResultWindow = (props) => {
   const [clubName, setClub] = useState("");
   useEffect(() => {
     async function getName() {
-       const config = {
-         method: "POST",
-         header: {
-           "Content-Type": "application/json",
-         },
-         validateStatus: () => true,
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
       };
       var object = {
         club_id: props.data.club_id,
       };
-       const finaldata = await axios.post(
-         "/api/events/getclub",
-         object,
-         config
-       );
-       if (finaldata.data.is_error) {
-         console.log(finaldata.data.message);
-       } else {
-         setClub(finaldata.data.data.club_name);
-       }
+      const finaldata = await axios.post("/api/events/getclub", object, config);
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        setClub(finaldata.data.data.club_name);
+      }
     }
 
     getName();
@@ -63,7 +59,7 @@ const ResultWindow = (props) => {
             <span className="text-gray-800 font-semibold">&bull;</span>
             <span className="text-beta font-semibold">
               {"  "}
-              <i class="fas fa-glass-cheers"></i> :{" "}
+              <i className="fas fa-glass-cheers"></i> :{" "}
               {props.data.current_participants} /{" "}
               {props.data.maximum_participants}
             </span>

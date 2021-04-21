@@ -7,7 +7,7 @@ const EmptyTable = ({ isLight }) => {
       <div className="flex">
         <div>
           {" "}
-          <i class="far fa-dizzy text-5xl mr-4 mt-2"></i>
+          <i className="far fa-dizzy text-5xl mr-4 mt-2"></i>
         </div>
         <div>
           <h1
