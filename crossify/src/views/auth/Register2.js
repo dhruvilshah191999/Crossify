@@ -102,13 +102,10 @@ export default function Register2() {
                   initialValues={formData}
                   validate={() => {
                     const errors = {};
-
                     if (!username) {
                       errors.username = "Username is required !";
                     } else if (usernameStatus) {
                       errors.username = "Username is already exists !";
-                    } else if (!usernameStatus) {
-                      errors.username = "Username is available !";
                     } else if (!address) {
                       errors.address = "Address is required !";
                     } else if (
@@ -205,13 +202,7 @@ export default function Register2() {
                           onBlur={handleBlur}
                         />
 
-                        <p
-                          className={
-                            errors.username == "Username is available !"
-                              ? "FormSuccess"
-                              : "FormError"
-                          }
-                        >
+                        <p className="FormError">
                           {errors.username &&
                             touched.username &&
                             errors.username}
