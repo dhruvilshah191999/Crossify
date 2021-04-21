@@ -2,6 +2,7 @@ var express = require('express');
 var auth = require('../middleware/auth');
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
+var moment = require('moment');
 var category_details = require('../modules/interest_category');
 var event_details = require('../modules/event_details');
 var user_details = require('../modules/user_details');
@@ -780,175 +781,192 @@ router.post('/check-club', auth, async function (req, res, next) {
 });
 
 router.post('/Broadcast', async function (req, res, next) {
-  var {users_array, event_id, broadcact_mess} = req.body;
-
-  let objectIdArray = users_array.map((s) => mongoose.Types.ObjectId(s));
-
-  var check = user_details.find({_id: objectIdArray});
-
-  var event = event_details.findOne({_id: ObjectId(event_id)});
-  var eventName;
-  await event.exec((err, data) => {
-    if (err) {
-      var err = {
-        is_error: true,
-        message: err.message,
-      };
-    } else if (data) {
-      eventName = data.event_name;
-    }
-  });
-
-  await check.exec((err, data) => {
-    if (err) {
-      var err = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(500).send(err);
-    } else if (data) {
-      var finaldata = {
-        is_error: false,
-        message: 'value updated succesfully',
-      };
-      let result = data.map((a) => a.email); //email id no array
-      let result1 = data.map((a) => a.fname); //fname no array no array
-
-      var readHTMLFile = function (path, callback) {
-        fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
-          if (err) {
-            throw err;
-            callback(err);
-          } else {
-            callback(null, html);
-          }
-        });
-      };
-
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        name: 'SAGAR18-11',
-        host: 'smtp.gmail.com',
-        port: 465, //587
-        secure: true, //for true 465,
-        auth: {
-          user: mail_file.email,
-          pass: mail_file.password,
+  var {userIds, event_id, message,path} = req.body;
+  let objectIdArray = userIds.map((s) => mongoose.Types.ObjectId(s));
+  var check = await user_details.find({ _id: { $in: objectIdArray},is_active:1});
+  var event = await event_details
+    .aggregate([
+      {
+        $lookup: {
+          from: 'club_details',
+          localField: 'club_id',
+          foreignField: '_id',
+          as: 'club_data',
         },
-      });
+      },
+      {
+        $lookup: {
+          from: 'user_details',
+          localField: 'oragnizer_id',
+          foreignField: '_id',
+          as: 'user_data',
+        },
+      },
+      {
+        $match: {
+          _id: ObjectId(event_id),
+          is_active: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          event_name: 1,
+          photo: 1,
+          startdate: 1,
+          'club_data.club_name': 1,
+          'club_data._id': 1,
+          'club_data.profile_photo': 1,
+          'user_data.fname': 1,
+          'user_data.lname': 1,
+          'user_data._id': 1,
+          'user_data.profile_photo': 1,
+        },
+      },
+    ])
+    .exec();
+    var finaldata = {
+      is_error: false,
+      message: 'value updated succesfully',
+  };
 
-      readHTMLFile(
-        'E:/CROSSIFY/Crossify Web App/views/BroadcastEmail.html',
-        function (err, html) {
-          var template = handlebars.compile(html);
-          for (let index = 0; index < result.length; index++) {
-            var replacements = {
-              username: result1[index],
-              broadcast_mess: broadcact_mess,
-            };
-            var htmlToSend = template(replacements);
-            const mailOptions = {
-              from: 'crossify.vgec@gmail.com',
-              to: result[index],
-              subject: `Something For You From ${eventName}`,
-              html: htmlToSend,
-              // attachments: [
-              //  { filename: "crossify.pptx", path: "../Crossify Web App/Crossify.pptx", cid: "crossify@ppt" }
-              // ]
-            };
-            transporter.sendMail(mailOptions, function (error) {
-              if (error) {
-                console.log(error);
-                callback(error);
-              }
-            });
-          }
-        }
-      );
+  var readHTMLFile = function (path, callback) {
+    fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+      if (err) {
+        throw err;
+        callback(err);
+      } else {
+        callback(null, html);
+      }
+    });
+  };
 
-      return res.status(200).send(finaldata);
-    } else {
-      var err = {
-        is_error: true,
-        message: 'wrong event id or you may not have access to update ',
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    name: 'SAGAR18-11',
+    host: 'smtp.gmail.com',
+    port: 465, //587
+    secure: true, //for true 465,
+    auth: {
+      user: mail_file.email,
+      pass: mail_file.password,
+    },
+  });
+
+  readHTMLFile('views/BroadcastMessage.html', function (err, html) {
+    var template = handlebars.compile(html);
+    for (let index = 0; index < check.length; index++) {
+      var replacements = {
+        fname: check[index].fname,
+        lname: check[index].lname,
+        message: message,
+        event_name: event[0].event_name,
+        owner_name:
+          event[0].user_data[0].fname + ' ' + event[0].user_data[0].lname,
+        owner_photo: event[0].user_data[0].profile_photo,
+        club_name: event[0].club_data[0].club_name,
+        club_photo: event[0].club_data[0].profile_photo,
+        start_date: moment(event[0].startdate).format('MMMM Do, YYYY'),
+        time: moment(event[0].startdate).format('LT'),
+        profile: path + '/profilepage/' + event[0].user_data[0]._id,
+        club: path + '/club/' + event[0].club_data[0]._id,
+        event: path + '/events/event=' + event_id,
+        finaldate: moment(event[0].startdate).format(
+          'MMMM Do, YYYY | h:mm a'
+        ),
       };
-      return res.status(404).send(err);
+      var htmlToSend = template(replacements);
+      const mailOptions = {
+        from: 'crossify.vgec@gmail.com',
+        to: check[index].email,
+        subject: `Notice From ${event[0].event_name}`,
+        html: htmlToSend,
+      };
+      transporter.sendMail(mailOptions, function (error) {
+        if (error) {
+          console.log(error);
+          callback(error);
+        }
+      });
     }
   });
+  return res.status(200).send(finaldata);
 });
 
 router.post('/WelcomeMail', async function (req, res, next) {
-  var {username} = req.body;
-  var check = user_details.findOne({username: username});
-  await check.exec((err, data) => {
+  var {email, interest_array, url} = req.body;
+  let objectIdArray = interest_array.map((s) => mongoose.Types.ObjectId(s));
+  var x = ObjectId();
+  var readHTMLFile = function (path, callback) {
+    fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+      if (err) {
+        throw err;
+        callback(err);
+      } else {
+        callback(null, html);
+      }
+    });
+  };
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    name: 'SAGAR18-11',
+    host: 'smtp.gmail.com',
+    port: 465, //587
+    secure: true, //for true 465,
+    auth: {
+      user: mail_file.email,
+      pass: mail_file.password,
+    },
+  });
+
+  readHTMLFile('views/WelcomeMail.html', function (err, html) {
+    var template = handlebars.compile(html);
+    var replacements = {
+      verify_link: url + '/auth/verify/' + x,
+      home: url,
+      club: url + '/clubsearch',
+    };
+    var htmlToSend = template(replacements);
+    const mailOptions = {
+      from: 'crossify.vgec@gmail.com',
+      to: email,
+      subject: 'Welcome To Crossify',
+      html: htmlToSend,
+    };
+    transporter.sendMail(mailOptions, function (error) {
+      if (error) {
+        console.log(error);
+        callback(error);
+      }
+    });
+  });
+  var update = user_details.findOneAndUpdate(
+    { email: email },
+    {
+      interest_id: objectIdArray,
+      generate_code: ObjectId(x)
+    }
+  );
+  update.exec((err, ans) => {
     if (err) {
-      var err = {
+      var error = {
         is_error: true,
         message: err.message,
       };
-      return res.status(500).send(err);
-    } else if (data) {
+      return res.status(500).send(error);
+    } else if (!ans) {
+      var error = {
+        is_error: true,
+        message: "Please First Complete Registration Step 1",
+      };
+      return res.status(500).send(error);
+    } else {
       var finaldata = {
         is_error: false,
-        message: 'value updated succesfully',
+        message: "User Data Updated",
       };
-
-      var readHTMLFile = function (path, callback) {
-        fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
-          if (err) {
-            throw err;
-            callback(err);
-          } else {
-            callback(null, html);
-          }
-        });
-      };
-
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        name: 'SAGAR18-11',
-        host: 'smtp.gmail.com',
-        port: 465, //587
-        secure: true, //for true 465,
-        auth: {
-          user: mail_file.email,
-          pass: mail_file.password,
-        },
-      });
-
-      readHTMLFile(
-        'E:/CROSSIFY/Crossify Web App/views/WelcomeEmail.html',
-        function (err, html) {
-          var template = handlebars.compile(html);
-          var replacements = {
-            username: username,
-          };
-          var htmlToSend = template(replacements);
-          const mailOptions = {
-            from: 'crossify.vgec@gmail.com',
-            to: data.email,
-            subject: 'Welcome To Crossify',
-            html: htmlToSend,
-            // attachments: [
-            //  { filename: "crossify.pptx", path: "../Crossify Web App/Crossify.pptx", cid: "crossify@ppt" }
-            // ]
-          };
-          transporter.sendMail(mailOptions, function (error) {
-            if (error) {
-              console.log(error);
-              callback(error);
-            }
-          });
-        }
-      );
-
       return res.status(200).send(finaldata);
-    } else {
-      var err = {
-        is_error: true,
-        message: 'wrong event id or you may not have access to update ',
-      };
-      return res.status(404).send(err);
     }
   });
 });
@@ -1034,7 +1052,7 @@ router.post('/ForgotMail', async function (req, res, next) {
 
 router.post('/UserNameCheck', async function (req, res, next) {
   var {username} = req.body;
-  var check = user_details.findOne({username: username});
+  var check = user_details.findOne({username: username,is_active:true});
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -1125,6 +1143,50 @@ router.post('/reset_password', async function (req, res, next) {
       return res.status(200).send(finaldata);
     }
   });
+});
+
+router.post('/update-code', async function (req, res, next) {
+  var {generate} = req.body;
+  if (generate.length != 24) {
+    var error = {
+      check: false,
+      is_error: true,
+      message: 'User Not Found',
+    };
+    return res.status(200).send(error);
+  } else {
+    var result = user_details.findOne({
+      generate_code: ObjectId(generate),
+    });
+    await result.exec((err, data) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(600).send(error);
+      } else if (!data) {
+        var error = {
+          check: false,
+          is_error: true,
+          message: 'User Not Found',
+        };
+        return res.status(200).send(error);
+      } else {
+        user_details.updateOne({
+          generate_code: ObjectId(generate),
+        }, {
+          is_active: true,
+        }).exec();
+        var finaldata = {
+          check: true,
+          is_error: false,
+          message: 'Data Send',
+        };
+        return res.status(200).send(finaldata);
+      }
+    });
+  }
 });
 
 module.exports = router;
