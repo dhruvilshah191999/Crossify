@@ -95,7 +95,7 @@ var user_details = new Schema({
   },
   is_active: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   about_me: {
     type: String,

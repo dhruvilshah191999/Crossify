@@ -160,7 +160,6 @@ export default function App() {
           }
         } catch (error) {
           window.localStorage.removeItem("jwt");
-          history.push("/auth");
         }
       }
     }
