@@ -28,24 +28,15 @@ export default function CardBarChart() {
           "Intiative", //how many request recieved for event
           "Curiosity", //question asked
           "Enthusiasm", //shared the event
+          "Enthusiasm", //shared the event
         ],
         datasets: [
           {
             label: monthNames[new Date().getMonth()],
             backgroundColor: "#ed64a6",
             borderColor: "#ed64a6",
-            data: [30, 78, 56, 34, 100],
+            data: [30, 78, 56, 34, 120,80],
             fill: false,
-            barThickness: 8,
-          },
-          {
-            label: monthNames[new Date().getMonth() - 1],
-            //   .toLocaleString("default", { month: "long" }),
-            //   Date().setMonth(new Date().getMonth() + 1)
-            fill: false,
-            backgroundColor: "#4c51bf",
-            borderColor: "#4c51bf",
-            data: [27, 68, 86, 74, 10],
             barThickness: 8,
           },
         ],

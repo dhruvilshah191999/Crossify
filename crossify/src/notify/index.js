@@ -110,3 +110,67 @@ export const notifySuccessLogin = (name) => {
     },
   });
 };
+
+export const notifyWrongEmail = () => {
+  store.addNotification({
+    title: "This Email doesn't exist",
+    message: "your enter emailId don't found in our data",
+    type: "danger",
+    insert: "top",
+    container: "top-center",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 3000,
+      onScreen: true,
+    },
+  });
+};
+
+export const notifySuccessMail = (name) => {
+  store.addNotification({
+    title: "Email Sent Successfully",
+    message: "We send the reset password link in mail",
+    type: "success",
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 5000,
+      onScreen: true,
+    },
+  });
+};
+
+export const notifyWrongLink = () => {
+  store.addNotification({
+    title: "This Link doesn't exist",
+    message: "your enter link is Wrong",
+    type: "danger",
+    insert: "top",
+    container: "top-center",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 3000,
+      onScreen: true,
+    },
+  });
+};
+
+export const notifySuccessPassword = () => {
+  store.addNotification({
+    title: "Password Reset",
+    message: "Your password successfully changed",
+    type: "success",
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 5000,
+      onScreen: true,
+    },
+  });
+};

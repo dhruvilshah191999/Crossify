@@ -25,12 +25,10 @@ class App extends React.Component {
   }
 
   componentDidMount = async () => {
-    console.log(this.state.selectedValues);
     const finaldata = await axios.get("/api/events/get-interest");
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      console.log(finaldata.data.data);
       this.setState({ objectArray: finaldata.data.data });
     }
   };
