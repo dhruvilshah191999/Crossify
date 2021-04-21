@@ -3,3 +3,4 @@ crossify/.eslintcache
 config/
 .env.local
 crossify/src/config
+.env
