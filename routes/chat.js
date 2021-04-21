@@ -1,19 +1,19 @@
 var express = require("express");
 var auth = require("../middleware/auth");
-var mongoose = require("mongoose");
-var CryptoJS = require("crypto-js");
-var Cryptr = require("cryptr");
-const config = require("config");
-const mykey = process.env.MYKEY;
-var cryptr = new Cryptr(mykey);
-var category_details = require("../modules/interest_category");
-var event_details = require("../modules/event_details");
-var user_details = require("../modules/user_details");
+// var mongoose = require("mongoose");
+// var CryptoJS = require("crypto-js");
+// var Cryptr = require("cryptr");
+// const config = require("config");
+// const mykey = process.env.MYKEY;
+// var cryptr = new Cryptr(mykey);
+// var category_details = require("../modules/interest_category");
+// var event_details = require("../modules/event_details");
+// var user_details = require("../modules/user_details");
 var member_details = require("../modules/members_details");
 var club_details = require("../modules/club_details");
 var channel_details = require("../modules/channel_details");
-const { ObjectID, ObjectId } = require("bson");
-var { io } = require("../app");
+const { ObjectId } = require("bson");
+
 var router = express.Router();
 router.post("/createRoom", async function (req, res, next) {
   var { club_id, channel_name, is_readable, is_writable } = req.body;
@@ -446,38 +446,38 @@ router.post("/getParticularroom", async function (req, res) {
   });
 });
 
-router.get("/getAllchat", async function (req, res) {
-  var { club_id, room_id } = req.body;
-  var check = channel_details.findOne(
-    { _id: ObjectId(room_id), club_id: ObjectId(club_id) },
-    ["messages"]
-  );
-  await check.exec((error, data) => {
-    if (error) {
-      var error = {
-        is_error: true,
-        message: error,
-      };
-      return res.status(501).send(error);
-    } else if (data) {
-      for (var i in data.messages) {
-        var message = data.messages[i].message;
-        var originalmessage = cryptr.decrypt(message);
-        data.messages[i].message = originalmessage;
-      }
-      var finaldata = {
-        is_error: false,
-        message: data,
-      };
-      return res.status(200).send(finaldata);
-    } else {
-      var error = {
-        is_error: true,
-        message:
-          "Either there are no messages or you might not be part of this chatroom",
-      };
-      return res.status(404).send(error);
-    }
-  });
-});
+// router.get("/getAllchat", async function (req, res) {
+//   var { club_id, room_id } = req.body;
+//   var check = channel_details.findOne(
+//     { _id: ObjectId(room_id), club_id: ObjectId(club_id) },
+//     ["messages"]
+//   );
+//   await check.exec((error, data) => {
+//     if (error) {
+//       var error = {
+//         is_error: true,
+//         message: error,
+//       };
+//       return res.status(501).send(error);
+//     } else if (data) {
+//       for (var i in data.messages) {
+//         var message = data.messages[i].message;
+//         var originalmessage = cryptr.decrypt(message);
+//         data.messages[i].message = originalmessage;
+//       }
+//       var finaldata = {
+//         is_error: false,
+//         message: data,
+//       };
+//       return res.status(200).send(finaldata);
+//     } else {
+//       var error = {
+//         is_error: true,
+//         message:
+//           "Either there are no messages or you might not be part of this chatroom",
+//       };
+//       return res.status(404).send(error);
+//     }
+//   });
+// });
 module.exports = router;

@@ -3,13 +3,14 @@ var auth = require("../middleware/auth");
 var mongoose = require("mongoose");
 var bcrypt = require("bcryptjs");
 var moment = require("moment");
-var category_details = require("../modules/interest_category");
 var event_details = require("../modules/event_details");
 var user_details = require("../modules/user_details");
 var club_details = require("../modules/club_details");
 var reports_details = require("../modules/reports_details");
 const { ObjectId } = require("bson");
 const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+dotenv.config();
 
 var handlebars = require("handlebars");
 var fs = require("fs");

@@ -1,11 +1,12 @@
 var express = require("express");
 var bcrypt = require("bcryptjs");
 var auth = require("../middleware/auth");
-var category_details = require("../modules/interest_category");
 var user_details = require("../modules/user_details");
-const { check, validationResult } = require("express-validator");
+
 var CryptoJS = require("crypto-js");
-const { ObjectID, ObjectId } = require("bson");
+const dotenv = require("dotenv");
+dotenv.config();
+const { ObjectId } = require("bson");
 const config = require("config");
 const secret = process.env.SECRET;
 
@@ -13,6 +14,7 @@ var router = express.Router();
 
 router.post("/login", async function (req, res, next) {
   let { login_username, password } = req.body;
+  console.log(login_username, password);
   var check = user_details.findOne(
     {
       $and: [
@@ -23,6 +25,7 @@ router.post("/login", async function (req, res, next) {
     { _id: 1, fname: 1, lname: 1, profile_photo: 1, password: 1 }
   );
   await check.exec((err, data) => {
+    console.log(err, data);
     if (err) {
       var error = {
         is_error: true,

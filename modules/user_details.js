@@ -1,7 +1,8 @@
 var mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 const jwt = require("jsonwebtoken");
-const { ObjectID, ObjectId } = require("bson");
-const config = require("config");
+const { ObjectId } = require("bson");
 var Schema = require("mongoose").Schema;
 
 var user_details = new Schema({

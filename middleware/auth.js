@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
+const dotenv = require("dotenv");
+dotenv.config();
 var CryptoJS = require("crypto-js");
 const secret = process.env.SECRET;
 
