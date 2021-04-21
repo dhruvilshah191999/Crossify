@@ -15,6 +15,7 @@ import ForgotPassword from "views/auth/ForgotPassword";
 import VerifiedWindow from "views/auth/VerifiedWindow";
 import SetPassword from "views/auth/SetPassword";
 import Particles from "react-particles-js";
+import PlayGround from "views/demo/PlayGround";
 
 export default function Auth() {
   return (

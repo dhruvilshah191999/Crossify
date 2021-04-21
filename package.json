@@ -22,6 +22,7 @@
     "crypto-js": "^4.0.0",
     "cryptr": "^6.0.2",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
     "email-templates": "^8.0.4",
     "express": "~4.16.1",

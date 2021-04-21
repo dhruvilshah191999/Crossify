@@ -152,6 +152,9 @@ router.post("/get-event-byuser", auth, async function (req, res, next) {
             }
           }
         });
+        if (distancearray.length < 4) {
+          return res.status(200).send({});
+        }
         var eventsrecords = event_details.find({
           _id: {
             $in: [
@@ -242,6 +245,9 @@ router.post("/get-club-byuser", auth, async function (req, res, next) {
             }
           }
         });
+        if (distancearray.length < 4) {
+          return res.status(200).send({});
+        }
         var eventsrecords = club_details.find({
           _id: {
             $in: [

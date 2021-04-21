@@ -239,9 +239,10 @@ export default function Landing() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-1">
-                {eventState.map((data) => (
-                  <EventCard key={data._id} data={data}></EventCard>
-                ))}
+                {eventState &&
+                  eventState.map((data) => (
+                    <EventCard key={data._id} data={data}></EventCard>
+                  ))}
               </div>
             </div>
           </section>
@@ -268,53 +269,55 @@ export default function Landing() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-1">
-                {clubState.map((data) => (
-                  <ClubCard key={data._id} data={data}></ClubCard>
-                ))}
+                {clubState &&
+                  clubState.map((data) => (
+                    <ClubCard key={data._id} data={data}></ClubCard>
+                  ))}
               </div>
             </div>
           </section>
-          {insterestState.map((el) =>
-            el.event.length != 0 ? (
-              <section
-                className="bg-white block m-4"
-                style={{ marginBottom: "0px" }}
-              >
-                <div className="p-8 mx-6 pt-0">
-                  <div className=" mb-6">
-                    <div className="flex flex-row ">
-                      <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
-                        {el.category_name}
-                      </h4>
-                      <motion.button
-                        className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <Link to="/search">
-                          {" "}
-                          Load More{" "}
-                          <i className="fas fa-angle-double-right"></i>{" "}
-                        </Link>
-                      </motion.button>
+          {insterestState &&
+            insterestState.map((el) =>
+              el.event.length != 0 ? (
+                <section
+                  className="bg-white block m-4"
+                  style={{ marginBottom: "0px" }}
+                >
+                  <div className="p-8 mx-6 pt-0">
+                    <div className=" mb-6">
+                      <div className="flex flex-row ">
+                        <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
+                          {el.category_name}
+                        </h4>
+                        <motion.button
+                          className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <Link to="/search">
+                            {" "}
+                            Load More{" "}
+                            <i className="fas fa-angle-double-right"></i>{" "}
+                          </Link>
+                        </motion.button>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {/* to do Here after backend implementation eventState. changes to el.events. */}
+                      {el.event.map((data) =>
+                        data.is_active ? (
+                          <EventCard key={data._id} data={data}></EventCard>
+                        ) : (
+                          ""
+                        )
+                      )}
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-1">
-                    {/* to do Here after backend implementation eventState. changes to el.events. */}
-                    {el.event.map((data) =>
-                      data.is_active ? (
-                        <EventCard key={data._id} data={data}></EventCard>
-                      ) : (
-                        ""
-                      )
-                    )}
-                  </div>
-                </div>
-              </section>
-            ) : (
-              ""
-            )
-          )}
+                </section>
+              ) : (
+                ""
+              )
+            )}
 
           <section className="pb-4 bg-gray-100 ">
             <div className="container mx-auto px-4">
@@ -328,20 +331,21 @@ export default function Landing() {
                 </div>
                 <div className="flex flex-row flex-wrap container p-4 mx-5">
                   {" "}
-                  {categoryState.map((el) => {
-                    return (
-                      <motion.button
-                        type="button"
-                        className=" rounded-lg shadow p-4 mr-6 category-container mb-4 text-center   hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
-                        style={{ outline: "none" }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => SearchFilter(el.category_name)}
-                      >
-                        {el.category_name}
-                      </motion.button>
-                    );
-                  })}
+                  {categoryState &&
+                    categoryState.map((el) => {
+                      return (
+                        <motion.button
+                          type="button"
+                          className=" rounded-lg shadow p-4 mr-6 category-container mb-4 text-center   hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
+                          style={{ outline: "none" }}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => SearchFilter(el.category_name)}
+                        >
+                          {el.category_name}
+                        </motion.button>
+                      );
+                    })}
                 </div>
               </div>
             </div>
