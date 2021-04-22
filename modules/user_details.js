@@ -1,9 +1,9 @@
-var mongoose = require("mongoose");
-const dotenv = require("dotenv");
+var mongoose = require('mongoose');
+const dotenv = require('dotenv');
 dotenv.config();
-const jwt = require("jsonwebtoken");
-const { ObjectId } = require("bson");
-var Schema = require("mongoose").Schema;
+const jwt = require('jsonwebtoken');
+const { ObjectId } = require('bson');
+var Schema = require('mongoose').Schema;
 
 var user_details = new Schema({
   socialId: {
@@ -114,6 +114,10 @@ var user_details = new Schema({
     type: ObjectId,
     required: false,
   },
+  is_verified: {
+    type: Boolean,
+    required: false,
+  },
 });
 
 user_details.methods.generateAuthToken = function () {
@@ -130,7 +134,7 @@ user_details.methods.generateAuthToken = function () {
   );
 };
 
-var user_exports = mongoose.model("user_details", user_details);
+var user_exports = mongoose.model('user_details', user_details);
 module.exports = user_exports;
 
 // var user = new user_exports({
