@@ -24,9 +24,6 @@ export default function Google() {
       const data = {
         socialId: response.googleId,
         email: response.profileObj.email,
-        fname: response.profileObj.givenName,
-        lname: response.profileObj.familyName,
-        photo: response.profileObj.imageUrl,
       };
       const config = {
         method: "POST",
@@ -40,11 +37,18 @@ export default function Google() {
         setError(true);
         setMessage(finaldata.data.message);
       } else {
+          const userdata = {
+            socialId: response.googleId,
+            email: response.profileObj.email,
+            fname: response.profileObj.givenName,
+            lname: response.profileObj.familyName,
+            photo: response.profileObj.imageUrl,
+          };
         var ciphertext = CryptoJS.AES.encrypt(
-          JSON.stringify(finaldata.data),
+          JSON.stringify(userdata),
           Key.Secret
         ).toString();
-        localStorage.setItem("email", ciphertext);
+        localStorage.setItem("RegisterData", ciphertext);
         history.push("/auth/register/socialstep2");
       }
     }

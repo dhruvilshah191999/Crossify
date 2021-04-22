@@ -961,6 +961,7 @@ router.post("/WelcomeMail", async function (req, res, next) {
     state: data.state,
     about_me: data.about_me,
     occupation: data.occupation,
+    socialId: data.socialId,
     generate_code: ObjectId(x),
     latitude: data.latitude,
     longitude: data.longitude,
@@ -1219,6 +1220,7 @@ router.post("/update-code", async function (req, res, next) {
               generate_code: ObjectId(generate),
             },
             {
+              is_verified: true,
               is_active: true,
             }
           )

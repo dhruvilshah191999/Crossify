@@ -131,6 +131,7 @@ export default function Register() {
                       lname,
                       email,
                       password,
+                      socialId:"",
                     };
                     var ciphertext = CryptoJS.AES.encrypt(
                       JSON.stringify(userdata),

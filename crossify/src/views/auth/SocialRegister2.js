@@ -25,26 +25,38 @@ export default function SocialRegister2() {
   let { latitude, longitude } = usePosition(watch);
   const [statename, setStateName] = useState("");
   const [usernameStatus, setUsername] = useState(false);
+  const [username, setusername] = useState(null);
   const [cityname, setCityName] = useState("");
   const [formData, setformData] = useState({
-    username: "",
     address: "",
     pincode: "",
     password: "",
+    dob: "",
+    occupation: "",
+    about_me: "",
     repassword: "",
   });
+
   var decryptedData;
-  var localemail = localStorage.getItem("email");
-  if (localemail) {
-    var bytes = CryptoJS.AES.decrypt(localemail, Key.Secret);
+  var RegisterData = localStorage.getItem("RegisterData");
+  if (RegisterData) {
+    var bytes = CryptoJS.AES.decrypt(RegisterData, Key.Secret);
     decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   } else {
     history.push("/auth/register");
   }
 
-  var { username, address, pincode, password, repassword } = formData;
-  const onChange = (e) => {
-    setformData({ ...formData, [e.target.name]: e.target.value });
+  var {
+    address,
+    pincode,
+    password,
+    repassword,
+    dob,
+    about_me,
+    occupation,
+  } = formData;
+  var onUsernameChange = (e) => {
+    setusername(e.target.value);
     const config = {
       method: "POST",
       header: {
@@ -63,73 +75,15 @@ export default function SocialRegister2() {
         }
       });
   };
+  const onChange = (e) => {
+    setformData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   var districts = [];
   if (statename !== "") {
     const citylist = City.states.find((city) => city.state === statename);
     districts = citylist.districts;
   }
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (latitude === undefined || longitude === undefined) {
-      longitude = 0;
-      latitude = 0;
-    }
-
-    if (
-      username === "" ||
-      password === "" ||
-      repassword === "" ||
-      pincode === "" ||
-      address === ""
-    ) {
-      setError(true);
-      setMessage("Please Enter Your Details");
-    } else if (
-      cityname === "Select Option" ||
-      statename === "Select Option" ||
-      cityname === "" ||
-      statename === ""
-    ) {
-      setError(true);
-      setMessage("Please Select the State,City");
-    } else if (password !== repassword) {
-      setError(true);
-      setMessage("Password and Re-type Password Not Matched");
-    } else {
-      var data = {
-        username,
-        password,
-        address,
-        pincode,
-        city: cityname,
-        state: statename,
-        lat: latitude,
-        long: longitude,
-        email: decryptedData.email,
-      };
-      try {
-        const config = {
-          method: "POST",
-          header: {
-            "Content-Type": "application/json",
-          },
-          validateStatus: () => true,
-        };
-        const finaldata = await axios.post("/api/socialstep2", data, config);
-        if (finaldata.data.is_error) {
-          setError(true);
-          setMessage(finaldata.data.message);
-        } else {
-          history.push("/auth/register/step3");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-
   return (
     <>
       <div className="container mx-auto px-4 h-full mt-10">
@@ -148,8 +102,9 @@ export default function SocialRegister2() {
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300">
               <div className="rounded-t mb-0 px-6 py-6">
                 <div className="text-center mb-3">
-                  <h6 className="text-gray-700 text-sm font-bold">
-                    For Your Better Experience
+                  <h6 className="text-gray-700 text-2xl font-semibold">
+                    <i className="far fa-address-card text-2xl"></i>&nbsp;
+                    Personal Info
                   </h6>
                 </div>
                 <hr className="mt-6 border-b-1 border-gray-400" />
@@ -164,7 +119,8 @@ export default function SocialRegister2() {
                       errors.username = "Username is required !";
                     } else if (usernameStatus) {
                       errors.username = "Username is already exists !";
-                    } else if (!password) {
+                    }
+                    if (!password) {
                       errors.password = "Password is required !";
                     } else if (password.length < 6) {
                       errors.password = "Minimim 6 characters are required !";
@@ -172,7 +128,8 @@ export default function SocialRegister2() {
                       errors.repassword = "Re-Password is required !";
                     } else if (password != repassword) {
                       errors.repassword = "Password does not match !";
-                    } else if (!address) {
+                    }
+                    if (!address) {
                       errors.address = "Address is required !";
                     } else if (
                       statename === "Select Option" ||
@@ -189,6 +146,17 @@ export default function SocialRegister2() {
                     } else if (pincode.length != 6) {
                       errors.pincode = "Pin code should be in 6 digits !!!";
                     }
+                    if (!dob) {
+                      errors.dob = "Date of Birth is required !";
+                    }
+                    if (!occupation) {
+                      errors.occupation = "Occupation is required !";
+                    }
+                    if (!about_me) {
+                      errors.about_me = "About me is required !";
+                    } else if (about_me.length < 30) {
+                      errors.about_me = "Minimum 30 words are required !!!";
+                    }
                     return errors;
                   }}
                   onSubmit={async ({ setSubmitting }) => {
@@ -196,40 +164,30 @@ export default function SocialRegister2() {
                       longitude = 0;
                       latitude = 0;
                     }
-
                     var data = {
                       username,
-                      password,
                       address,
                       pincode,
+                      dob,
                       city: cityname,
                       state: statename,
                       lat: latitude,
                       long: longitude,
                       email: decryptedData.email,
+                      occupation,
+                      photo: decryptedData.photo,
+                      socialId:decryptedData.socialId,
+                      about_me,
+                      fname: decryptedData.fname,
+                      lname: decryptedData.lname,
+                      password,
                     };
-                    try {
-                      const config = {
-                        method: "POST",
-                        header: {
-                          "Content-Type": "application/json",
-                        },
-                        validateStatus: () => true,
-                      };
-                      const finaldata = await axios.post(
-                        "/api/socialstep2",
-                        data,
-                        config
-                      );
-                      if (finaldata.data.is_error) {
-                        setError(true);
-                        setMessage(finaldata.data.message);
-                      } else {
-                        history.push("/auth/register/step3");
-                      }
-                    } catch (err) {
-                      console.log(err);
-                    }
+                    var ciphertext = CryptoJS.AES.encrypt(
+                      JSON.stringify(data),
+                      Key.Secret
+                    ).toString();
+                    localStorage.setItem("RegisterData", ciphertext);
+                    history.push("/auth/register/step3");
                     setSubmitting(false);
                   }}
                 >
@@ -255,7 +213,7 @@ export default function SocialRegister2() {
                           type="text"
                           name="username"
                           value={username}
-                          onChange={(e) => onChange(e)}
+                          onChange={(e) => onUsernameChange(e)}
                           onBlur={handleBlur}
                           className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                           placeholder="Enter Username"
@@ -313,6 +271,28 @@ export default function SocialRegister2() {
                           {errors.repassword &&
                             touched.repassword &&
                             errors.repassword}
+                        </p>
+                      </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-country"
+                        >
+                          Date Of Birth
+                        </label>
+                        <input
+                          id="reg-country"
+                          type="date"
+                          name="dob"
+                          value={dob}
+                          onChange={(e) => onChange(e)}
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Select Your Date Of Birth"
+                          onBlur={handleBlur}
+                        />
+                        <p className="FormError">
+                          {errors.dob && touched.dob && errors.dob}
                         </p>
                       </div>
 
@@ -409,10 +389,57 @@ export default function SocialRegister2() {
                         </div>
                       </div>
 
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-country"
+                        >
+                          Occupation
+                        </label>
+                        <input
+                          id="reg-country"
+                          type="text"
+                          name="occupation"
+                          value={occupation}
+                          onChange={(e) => onChange(e)}
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Enter Your Occupation"
+                          onBlur={handleBlur}
+                        />
+                        <p className="FormError">
+                          {errors.occupation &&
+                            touched.occupation &&
+                            errors.occupation}
+                        </p>
+                      </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="reg-address"
+                        >
+                          About Me
+                        </label>
+                        <textarea
+                          id="reg-address"
+                          name="about_me"
+                          onChange={(e) => onChange(e)}
+                          onBlur={handleBlur}
+                          value={about_me}
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          placeholder="Write About Yourself."
+                        />
+                        <p className="FormError">
+                          {errors.about_me &&
+                            touched.about_me &&
+                            errors.about_me}
+                        </p>
+                      </div>
+
                       <div className="-mx-3 md:flex mt-6">
                         <div className="md:w-1/2 md:mb-0 w-full w-1/2 mr-3">
                           <button
-                            className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                            className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                             type="button"
                             onClick={handleSubmit}
                           >
