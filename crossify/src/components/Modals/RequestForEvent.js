@@ -8,6 +8,8 @@ import UploadPic from "components/Inputs/UploadPic";
 import City from "../../views/auth/states-and-districts.json";
 import { InputTagsContainer } from "react-input-tags";
 import { Formik } from "formik";
+import $ from "jquery";
+import { Timepicker } from "materialize-css";
 
 Modal.defaultStyles = {};
 
@@ -138,10 +140,21 @@ function MyModal(props) {
                 errors.capacity = "Capacity should be greater than zero !";
               } else if (!last_registraiton_date) {
                 errors.last_registraiton_date = "Last date is required !";
+              } else if (
+                new Date(last_registraiton_date) > new Date(starting_date) ||
+                new Date(starting_date) < new Date(last_registraiton_date)
+              ) {
+                errors.last_registraiton_date =
+                  "Give proper last registration date !";
               } else if (!starting_date) {
                 errors.starting_date = "Starting date is required !";
               } else if (!ending_date) {
                 errors.ending_date = "Ending date is required !";
+              } else if (
+                new Date(starting_date) > new Date(ending_date) ||
+                new Date(ending_date) < new Date(starting_date)
+              ) {
+                errors.ending_date = "Give proper starting_date !";
               } else if (!starting_time) {
                 errors.starting_time = "Starting time is required !";
               } else if (!ending_time) {
