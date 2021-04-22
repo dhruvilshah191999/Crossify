@@ -13,17 +13,39 @@ var horizontal = "center";
 
 export default function Register() {
   let history = useHistory();
+  const [email, setEmail] = useState("");
+  const [checkemail, setcheckEmail] = useState(false);
   const [formData, SetFormData] = useState({
-    email: "",
     password: "",
     repassword: "",
     fname: "",
     lname: "",
   });
-  const { email, password, repassword, fname, lname } = formData;
+  const { password, repassword, fname, lname } = formData;
 
   const onChange = (e) =>
     SetFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onEmailChange = (e) => {
+    setEmail(e.target.value);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+
+    axios
+      .post("/api/manage/EmailCheck", { email: e.target.value }, config)
+      .then((res) => {
+        if (!res.data.is_error) {
+          setcheckEmail(true);
+        } else {
+          setcheckEmail(false);
+        }
+      });
+  };
 
   const [checked, setChecked] = useState(false);
   const handleCheck = (e) => setChecked(!checked);
@@ -75,23 +97,29 @@ export default function Register() {
                     const errors = {};
                     if (!fname) {
                       errors.fname = "First name is required !";
-                    } else if (!lname) {
+                    }
+                    if (!lname) {
                       errors.lname = "Last name is required !";
-                    } else if (!email) {
+                    }
+                    if (!email) {
                       errors.email = "Email is Required !";
                     } else if (
                       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
                     ) {
                       errors.email = "Invalid email address !";
-                    } else if (!password) {
+                    } else if (checkemail) {
+                      errors.email = "Email is already exists ! !";
+                    }
+                    if (!password) {
                       errors.password = "Password is required !";
                     } else if (password.length < 6) {
                       errors.password = "Minimim 6 characters are required !";
-                    } else if (!repassword) {
+                    }
+                    if (!repassword) {
                       errors.repassword = "Re enter your password !";
                     } else if (password != repassword) {
                       errors.repassword = "Password does not match !";
-                    } else if (!checked) {
+                    }else if (!checked) {
                       errors.checkbox =
                         "You must have to agree our terms and conditions";
                     }
@@ -104,33 +132,12 @@ export default function Register() {
                       email,
                       password,
                     };
-                    try {
-                      const config = {
-                        method: "POST",
-                        header: {
-                          "Content-Type": "application/json",
-                        },
-                        validateStatus: () => true,
-                      };
-                      const finaldata = await axios.post(
-                        "/api/signup",
-                        userdata,
-                        config
-                      );
-                      if (finaldata.data.is_error) {
-                        setError(true);
-                        setMessage(finaldata.data.message);
-                      } else {
-                        var ciphertext = CryptoJS.AES.encrypt(
-                          JSON.stringify(finaldata.data),
-                          Key.Secret
-                        ).toString();
-                        localStorage.setItem("email", ciphertext);
-                        history.push("/auth/register/step2");
-                      }
-                    } catch (err) {
-                      console.log(err);
-                    }
+                    var ciphertext = CryptoJS.AES.encrypt(
+                      JSON.stringify(userdata),
+                      Key.Secret
+                    ).toString();
+                    localStorage.setItem("RegisterData", ciphertext);
+                    history.push("/auth/register/step2");
                     setSubmitting(false);
                   }}
                 >
@@ -203,7 +210,7 @@ export default function Register() {
                           placeholder="Email"
                           name="email"
                           value={email}
-                          onChange={(e) => onChange(e)}
+                          onChange={(e) => onEmailChange(e)}
                           onBlur={handleBlur}
                         />
                         <p className="FormError">

@@ -110,6 +110,10 @@ var user_details = new Schema({
     type: Array,
     required: false,
   },
+  birth_date: {
+    type: Date,
+    required: false,
+  },
   generate_code: {
     type: ObjectId,
     required: false,

@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import PulseLoader from "react-spinners/PulseLoader";
 import Key from "config/default.json";
 import { notifySuccessSignUp } from "notify";
 import CryptoJS from "crypto-js";
 
 export default function Register5() {
   let history = useHistory();
+  const [loading, setloading] = useState(false);
   const [interestState, setInterestState] = useState([]);
-  var decryptedData;
-  var localemail = localStorage.getItem("email");
-  if (localemail) {
-    var bytes = CryptoJS.AES.decrypt(localemail, Key.Secret);
+  var decryptedData
+  var RegisterData = localStorage.getItem("RegisterData");
+  if (RegisterData) {
+    var bytes = CryptoJS.AES.decrypt(RegisterData, Key.Secret);
     decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   } else {
     history.push("/auth/register");
@@ -49,6 +51,7 @@ export default function Register5() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setloading(true);
     let array = [];
     await interestState.map((data) => {
       if (data.select === true) {
@@ -56,7 +59,7 @@ export default function Register5() {
       }
     });
     var data = {
-      email: decryptedData.email,
+      data: decryptedData,
       interest_array: array,
       url: window.location.origin,
     };
@@ -74,11 +77,9 @@ export default function Register5() {
         config
       );
       if (finaldata.data.is_error) {
-        localStorage.removeItem("email");
-        history.push("/auth");
       } else {
         notifySuccessSignUp();
-        localStorage.removeItem("email");
+        localStorage.removeItem("RegisterData");
         history.push("/auth");
       }
     } catch (err) {
@@ -129,13 +130,19 @@ export default function Register5() {
                     ))}
                   </div>
                   <div className="w-full mt-6">
-                    <button
-                      className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={(e) => onSubmit(e)}
-                    >
-                      Submit
-                    </button>
+                    {loading ? (
+                      <div align="center">
+                        <PulseLoader color="#e82953" size={10} />
+                      </div>
+                    ) : (
+                      <button
+                        className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={(e) => onSubmit(e)}
+                      >
+                        Submit
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>

@@ -329,11 +329,10 @@ export default function EventPage(props) {
                   ></BigShareButton>
                 </div>
               </div>
+              {loading &&
               <div
                 title="Add to Calendar"
-                className={
-                  loading ? "addeventatc mt-1  text-xs rounded-lg" : "hidden"
-                }
+                className="addeventatc mt-1  text-xs rounded-lg"
                 style={{ fontSize: "smaller !important" }}
                 data-styling="none"
               >
@@ -354,7 +353,7 @@ export default function EventPage(props) {
                     ", " +
                     eventdetails.state}
                 </span>
-              </div>
+              </div>}
               <div className="flex justify-center mt-2">
                 <JoinEventButton
                   eventid={eventdetails._id}

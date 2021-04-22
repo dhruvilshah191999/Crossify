@@ -934,11 +934,12 @@ router.post('/WelcomeMail', async function (req, res, next) {
       verify_link: url + '/auth/verify/' + x,
       home: url,
       club: url + '/clubsearch',
+      name: data.fname + ' ' + data.lname,
     };
     var htmlToSend = template(replacements);
     const mailOptions = {
       from: 'crossify.vgec@gmail.com',
-      to: email,
+      to: data.email,
       subject: 'Welcome To Crossify',
       html: htmlToSend,
     };
@@ -949,25 +950,32 @@ router.post('/WelcomeMail', async function (req, res, next) {
       }
     });
   });
-  var update = user_details.findOneAndUpdate(
-    { email: email },
-    {
-      interest_id: objectIdArray,
-      generate_code: ObjectId(x),
-      is_active: true,
-    }
-  );
-  update.exec((err, ans) => {
+  data.password = bcrypt.hashSync(data.password, 10);
+  var user = new user_details({
+    email: data.email,
+    fname: data.fname,
+    lname: data.lname,
+    password: data.password,
+    profile_photo: data.photo,
+    interest_id: objectIdArray,
+    username: data.username,
+    address: data.address,
+    birth_date: data.dob,
+    city: data.city,
+    state: data.state,
+    about_me: data.about_me,
+    occupation: data.occupation,
+    generate_code: ObjectId(x),
+    latitude: data.latitude,
+    longitude: data.longitude,
+    pincode: data.pincode,
+    is_verified: true,
+  });
+  user.save((err, ans) => {
     if (err) {
       var error = {
         is_error: true,
         message: err.message,
-      };
-      return res.status(500).send(error);
-    } else if (!ans) {
-      var error = {
-        is_error: true,
-        message: 'Please First Complete Registration Step 1',
       };
       return res.status(500).send(error);
     } else {
@@ -1062,6 +1070,34 @@ router.post('/ForgotMail', async function (req, res, next) {
 router.post('/UserNameCheck', async function (req, res, next) {
   var { username } = req.body;
   var check = user_details.findOne({ username: username, is_active: true });
+  await check.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else if (!data) {
+      var error = {
+        check: true,
+        is_error: true,
+        message: 'not found',
+      };
+      return res.status(200).send(error);
+    } else {
+      var finaldata = {
+        check: true,
+        is_error: false,
+        message: 'data send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/EmailCheck', async function (req, res, next) {
+  var { email } = req.body;
+  var check = user_details.findOne({ email: email, is_active: true });
   await check.exec((err, data) => {
     if (err) {
       var error = {

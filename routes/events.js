@@ -119,7 +119,6 @@ router.post("/get-event-byuser", auth, async function (req, res, next) {
       ending_date_registration: { $gt: today },
     });
     let distancearray = [];
-    let idstring = "";
     await records.exec(async (err, data) => {
       if (err) {
         var error = {
@@ -152,17 +151,10 @@ router.post("/get-event-byuser", auth, async function (req, res, next) {
             }
           }
         });
-        if (distancearray.length < 4) {
-          return res.status(200).send({});
-        }
+        let objectIdArray = distancearray.map((s) => ObjectId(s.id));
         var eventsrecords = event_details.find({
           _id: {
-            $in: [
-              ObjectId(distancearray[0].id),
-              ObjectId(distancearray[1].id),
-              ObjectId(distancearray[2].id),
-              ObjectId(distancearray[3].id),
-            ],
+            $in: objectIdArray,
           },
         });
         await eventsrecords.exec((err, data2) => {
@@ -245,17 +237,10 @@ router.post("/get-club-byuser", auth, async function (req, res, next) {
             }
           }
         });
-        if (distancearray.length < 4) {
-          return res.status(200).send({});
-        }
+        let objectIdArray = distancearray.map((s) => ObjectId(s.id));
         var eventsrecords = club_details.find({
           _id: {
-            $in: [
-              ObjectId(distancearray[0].id),
-              ObjectId(distancearray[1].id),
-              ObjectId(distancearray[2].id),
-              ObjectId(distancearray[3].id),
-            ],
+            $in: objectIdArray,
           },
         });
         await eventsrecords.exec((err, data2) => {

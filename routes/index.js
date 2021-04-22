@@ -28,6 +28,9 @@ router.post('/login', async function (req, res, next) {
       lname: 1,
       profile_photo: 1,
       password: 1,
+      latitude: 1,
+      longitude: 1,
+      username: 1,
       is_verified: 1,
     }
   );
@@ -80,50 +83,95 @@ router.post('/login', async function (req, res, next) {
   });
 });
 
-router.post('/signup', async function (req, res, next) {
-  var { fname, lname, password, email, photo } = req.body;
-  var check = user_details.findOne({ email: email, is_active: 1 });
-  await check.exec((err, data) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err,
-      };
-      return res.status(501).send(error);
-    } else if (data) {
-      var error = {
-        is_error: true,
-        message: 'This EmailId Already Exists.',
-      };
-      return res.status(500).send(error);
-    } else if (data === null || data.length === 0) {
-      password = bcrypt.hashSync(password, 10);
-      var user = new user_details({
-        email,
-        fname,
-        lname,
-        password,
-        is_verified: false,
-      });
-      user.save((err) => {
-        if (err) {
-          var error = {
-            is_error: true,
-            message: err.message,
-          };
-          return res.status(500).send(error);
-        } else {
-          var finaldata = {
-            email,
-            message: 'Signup Successfully',
-            is_error: false,
-          };
-          return res.send(finaldata);
-        }
-      });
-    }
-  });
-});
+//sign up commented by bhargav
+// router.post('/signup', async function (req, res, next) {
+//   var { fname, lname, password, email, photo } = req.body;
+//   var check = user_details.findOne({ email: email, is_active: 1 });
+//   await check.exec((err, data) => {
+//     if (err) {
+//       var error = {
+//         is_error: true,
+//         message: err,
+//       };
+//       return res.status(501).send(error);
+//     } else if (data) {
+//       var error = {
+//         is_error: true,
+//         message: 'This EmailId Already Exists.',
+//       };
+//       return res.status(500).send(error);
+//     } else if (data === null || data.length === 0) {
+//       password = bcrypt.hashSync(password, 10);
+//       var user = new user_details({
+//         email,
+//         fname,
+//         lname,
+//         password,
+//         is_verified: false,
+//       });
+//       user.save((err) => {
+//         if (err) {
+//           var error = {
+//             is_error: true,
+//             message: err.message,
+//           };
+//           return res.status(500).send(error);
+//         } else {
+//           var finaldata = {
+//             email,
+//             message: 'Signup Successfully',
+//             is_error: false,
+//           };
+//           return res.send(finaldata);
+//         }
+//       });
+//     }
+//   });
+// });
+
+// router.post("/signup", async function (req, res, next) {
+//   var { fname, lname, password, email, photo } = req.body;
+//   var check = user_details.findOne({ email: email, is_active: 1 });
+//   await check.exec((err, data) => {
+//     if (err) {
+//       var error = {
+//         is_error: true,
+//         message: err,
+//       };
+//       return res.status(501).send(error);
+//     } else if (data) {
+//       var error = {
+//         is_error: true,
+//         message: "This EmailId Already Exists.",
+//       };
+//       return res.status(500).send(error);
+//     } else if (data === null || data.length === 0) {
+//       password = bcrypt.hashSync(password, 10);
+//       var user = new user_details({
+//         email,
+//         fname,
+//         lname,
+//         password,
+//       });
+//       user.save((err) => {
+//         if (err) {
+//           var error = {
+//             is_error: true,
+//             message: err.message,
+//           };
+//           return res.status(500).send(error);
+//         } else {
+//           var finaldata = {
+//             email,
+//             message: "Signup Successfully",
+//             is_error: false,
+//           };
+//           return res.send(finaldata);
+//         }
+//       });
+//     }
+//   });
+// });
 
 router.post('/socialsignin', async function (req, res, next) {
   var { socialId, email } = req.body;
