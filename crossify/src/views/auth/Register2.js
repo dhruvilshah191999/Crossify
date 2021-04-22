@@ -7,6 +7,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
+import PulseLoader from "react-spinners/PulseLoader";
 import { Formik, useField } from "formik";
 import { setEmitFlags } from "typescript";
 import $ from "jquery";
@@ -17,8 +18,10 @@ export default function Register2() {
   let history = useHistory();
   const watch = true;
   const [photo, setPhoto] = useState(null);
+  const [loading, setloading] = useState(false);
   const [errorStatus, setError] = useState(false);
   const [usernameStatus, setUsername] = useState(false);
+  const [username, setusername] = useState(null);
   const [message, setMessage] = useState("");
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -30,7 +33,6 @@ export default function Register2() {
   const [statename, setStateName] = useState("");
   const [cityname, setCityName] = useState("");
   const [formData, setformData] = useState({
-    username: "",
     address: "",
     pincode: "",
     occupation: "",
@@ -38,9 +40,9 @@ export default function Register2() {
     dob: "",
   });
   var decryptedData;
-  var localemail = localStorage.getItem("email");
-  if (localemail) {
-    var bytes = CryptoJS.AES.decrypt(localemail, Key.Secret);
+  var RegisterData = localStorage.getItem("RegisterData");
+  if (RegisterData) {
+    var bytes = CryptoJS.AES.decrypt(RegisterData, Key.Secret);
     decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   } else {
     history.push("/auth/register");
@@ -67,9 +69,9 @@ export default function Register2() {
       readURL(this);
     });
   });
-  var { username, address, pincode, occupation, about_me, dob } = formData;
-  const onChange = (e) => {
-    setformData({ ...formData, [e.target.name]: e.target.value });
+  var { address, pincode, occupation, about_me, dob } = formData;
+  var onUsernameChange = (e) => {
+    setusername(e.target.value);
     const config = {
       method: "POST",
       header: {
@@ -87,6 +89,9 @@ export default function Register2() {
           setUsername(false);
         }
       });
+  };
+  const onChange = (e) => {
+    setformData({ ...formData, [e.target.name]: e.target.value });
   };
 
   var districts = [];
@@ -126,13 +131,12 @@ export default function Register2() {
                   initialValues={formData}
                   validate={() => {
                     const errors = {};
-                    if (!photo) {
-                      errors.username = "Please Upload your avatar";
-                    } else if (!username) {
+                    if (!username) {
                       errors.username = "Username is required !";
                     } else if (usernameStatus) {
                       errors.username = "Username is already exists !";
-                    } else if (!address) {
+                    }
+                    if (!address) {
                       errors.address = "Address is required !";
                     } else if (
                       statename === "Select Option" ||
@@ -144,13 +148,19 @@ export default function Register2() {
                       cityname === ""
                     ) {
                       errors.cityname = "City name is required !";
-                    } else if (!pincode) {
+                    }
+                    if (!dob) {
+                      errors.dob = "Date of Birth is required !";
+                    }
+                    if (!pincode) {
                       errors.pincode = "Pin code is required !";
                     } else if (pincode.length != 6) {
                       errors.pincode = "Pin code should be in 6 digits !!!";
-                    } else if (!occupation) {
+                    }
+                    if (!occupation) {
                       errors.occupation = "Occupation is required !";
-                    } else if (!about_me) {
+                    }
+                    if (!about_me) {
                       errors.about_me = "About me is required !";
                     } else if (about_me.length < 30) {
                       errors.about_me = "Minimum 30 words are required !!!";
@@ -158,44 +168,75 @@ export default function Register2() {
                     return errors;
                   }}
                   onSubmit={async ({ setSubmitting }) => {
-                    if (latitude === undefined || longitude === undefined) {
-                      longitude = 0;
-                      latitude = 0;
+                    setloading(true);
+                    if (photo) {
+                      var url =
+                        "https://api.cloudinary.com/v1_1/crossify/image/upload/";
+                      var path = "User_Profile/" + username;
+                      var data = new FormData();
+                      data.append("file", photo);
+                      data.append("upload_preset", "crossify-project");
+                      data.append("public_id", path);
+                      const config = {
+                        headers: { "X-Requested-With": "XMLHttpRequest" },
+                      };
+                      axios.post(url, data, config).then(async (res) => {
+                        if (latitude === undefined || longitude === undefined) {
+                          longitude = 0;
+                          latitude = 0;
+                        }
+                        var data = {
+                          username,
+                          address,
+                          pincode,
+                          city: cityname,
+                          state: statename,
+                          lat: latitude,
+                          long: longitude,
+                          email: decryptedData.email,
+                          occupation,
+                          photo: res.data.url,
+                          about_me,
+                          fname: decryptedData.fname,
+                          lname: decryptedData.lname,
+                          password: decryptedData.password,
+                        };
+                        var ciphertext = CryptoJS.AES.encrypt(
+                          JSON.stringify(data),
+                          Key.Secret
+                        ).toString();
+                        localStorage.setItem("RegisterData", ciphertext);
+                        history.push("/auth/register/step3");
+                      });
                     } else {
+                      if (latitude === undefined || longitude === undefined) {
+                        longitude = 0;
+                        latitude = 0;
+                      }
                       var data = {
                         username,
                         address,
                         pincode,
+                        dob,
                         city: cityname,
                         state: statename,
                         lat: latitude,
                         long: longitude,
                         email: decryptedData.email,
                         occupation,
+                        photo:
+                          "https://res.cloudinary.com/crossify/image/upload/v1618999735/User_Profile/aab.png",
                         about_me,
+                        fname: decryptedData.fname,
+                        lname: decryptedData.lname,
+                        password: decryptedData.password,
                       };
-                      try {
-                        const config = {
-                          method: "POST",
-                          header: {
-                            "Content-Type": "application/json",
-                          },
-                          validateStatus: () => true,
-                        };
-                        const finaldata = await axios.post(
-                          "/api/step2",
-                          data,
-                          config
-                        );
-                        if (finaldata.data.is_error) {
-                          setError(true);
-                          setMessage(finaldata.data.message);
-                        } else {
-                          history.push("/auth/register/step3");
-                        }
-                      } catch (err) {
-                        console.log(err);
-                      }
+                      var ciphertext = CryptoJS.AES.encrypt(
+                        JSON.stringify(data),
+                        Key.Secret
+                      ).toString();
+                      localStorage.setItem("RegisterData", ciphertext);
+                      history.push("/auth/register/step3");
                     }
                     setSubmitting(false);
                   }}
@@ -212,12 +253,13 @@ export default function Register2() {
                     <form>
                       <div className="flex ">
                         <div className="px-4 mt-6 flex justify-center w-4/12">
-                          <div class="avatar-upload">
-                            <div class="avatar-edit">
+                          <div className="avatar-upload">
+                            <div className="avatar-edit">
                               <input
                                 type="file"
                                 id="imageUpload"
                                 accept=".png, .jpg, .jpeg"
+                                name="photo"
                                 onChange={(e) => setPhoto(e.target.files[0])}
                               />
                               <label for="imageUpload">
@@ -250,7 +292,7 @@ export default function Register2() {
                               type="text"
                               name="username"
                               value={username}
-                              onChange={(e) => onChange(e)}
+                              onChange={(e) => onUsernameChange(e)}
                               className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                               placeholder="Enter Username"
                               onBlur={handleBlur}
@@ -329,6 +371,7 @@ export default function Register2() {
                               </option>
                             ))}
                           </select>
+                          <p className="FormError">{errors.statename}</p>
                         </div>
 
                         <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3 mr-3">
@@ -352,6 +395,7 @@ export default function Register2() {
                               </option>
                             ))}
                           </select>
+                          <p className="FormError">{errors.cityname}</p>
                         </div>
 
                         <div className="md:w-1/2 md:mb-0 w-full w-1/2 mb-3">
@@ -370,17 +414,13 @@ export default function Register2() {
                             onBlur={handleBlur}
                             className="w-full rounded py-3 px-3 text-gray-700 bg-white shadow focus:outline-none focus:shadow-outline text-sm ease-linear transition-all duration-150"
                           />
+                          <p className="FormError">
+                            {errors.pincode &&
+                              touched.pincode &&
+                              errors.pincode}
+                          </p>
                         </div>
                       </div>
-
-                      <div className="text-center">
-                        <p className="FormError">
-                          {errors.statename}
-                          {errors.cityname}
-                          {errors.pincode && touched.pincode && errors.pincode}
-                        </p>
-                      </div>
-
                       <div className="relative w-full mb-3">
                         <label
                           className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -430,14 +470,20 @@ export default function Register2() {
 
                       <div className="-mx-3 md:flex mt-6">
                         <div className="md:w-1/2 md:mb-0 w-full w-1/2 mr-3">
-                          <button
-                            className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={handleSubmit}
-                            disabled={isSubmitting}
-                          >
-                            Next
-                          </button>
+                          {loading ? (
+                            <div align="center">
+                              <PulseLoader color="#e82953" size={10} />
+                            </div>
+                          ) : (
+                            <button
+                              className="bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                              type="button"
+                              onClick={handleSubmit}
+                              disabled={isSubmitting}
+                            >
+                              Next
+                            </button>
+                          )}
                         </div>
                       </div>
                     </form>

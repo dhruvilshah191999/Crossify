@@ -19,7 +19,6 @@ export default function Navbar(props) {
   const [notification, setnotification] = React.useState(false);
   const [userdrop, setuserdrop] = React.useState(false);
   const { isLogin } = useContext(UserContext);
-  console.log("in function");
   if (isLogin) {
     console.log("in function after login");
     socket.on("Notify", ({ date, description, title, report_id }) => {
@@ -29,8 +28,6 @@ export default function Navbar(props) {
         title: title,
         report_id: report_id,
       };
-      console.log("Notification received");
-      console.log(object);
     });
   }
   return (
