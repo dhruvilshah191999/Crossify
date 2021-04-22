@@ -35,6 +35,13 @@ router.post('/login', async function (req, res, next) {
           message: 'Username or Password invalid',
         };
         return res.status(500).send(error);
+      } else if (!data.is_verified) {
+        console.log(data);
+        var error = {
+          is_error: true,
+          message: 'Check your email and verify first',
+        };
+        return res.status(401).send(error);
       } else {
         if (!data.is_verified && data.is_active) {
           var error = {
@@ -77,6 +84,52 @@ router.post('/login', async function (req, res, next) {
     }
   });
 });
+
+//sign up commented by bhargav
+// router.post('/signup', async function (req, res, next) {
+//   var { fname, lname, password, email, photo } = req.body;
+//   var check = user_details.findOne({ email: email, is_active: 1 });
+//   await check.exec((err, data) => {
+//     if (err) {
+//       var error = {
+//         is_error: true,
+//         message: err,
+//       };
+//       return res.status(501).send(error);
+//     } else if (data) {
+//       var error = {
+//         is_error: true,
+//         message: 'This EmailId Already Exists.',
+//       };
+//       return res.status(500).send(error);
+//     } else if (data === null || data.length === 0) {
+//       password = bcrypt.hashSync(password, 10);
+//       var user = new user_details({
+//         email,
+//         fname,
+//         lname,
+//         password,
+//         is_verified: false,
+//       });
+//       user.save((err) => {
+//         if (err) {
+//           var error = {
+//             is_error: true,
+//             message: err.message,
+//           };
+//           return res.status(500).send(error);
+//         } else {
+//           var finaldata = {
+//             email,
+//             message: 'Signup Successfully',
+//             is_error: false,
+//           };
+//           return res.send(finaldata);
+//         }
+//       });
+//     }
+//   });
+// });
 
 // router.post("/signup", async function (req, res, next) {
 //   var { fname, lname, password, email, photo } = req.body;
@@ -137,6 +190,13 @@ router.post('/socialsignin', async function (req, res, next) {
         message: err,
       };
       return res.status(500).send(error);
+    } else if (!data.is_verified) {
+      console.log(data);
+      var error = {
+        is_error: true,
+        message: 'please check your mail and verify first',
+      };
+      return res.status(401).send(error);
     } else if (data) {
       if (!data.is_verified && data.is_active) {
         var error = {

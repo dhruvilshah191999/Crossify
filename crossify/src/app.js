@@ -34,7 +34,7 @@ import ClubPage from "views/explore/ClubPage";
 import CreateClub from "views/create/CreateClub";
 import { UserContext } from "context/usercontext";
 import ProfilePage from "views/explore/ProfilePage";
-import ERROR from "views/Error/404";
+import PageNotFound from "views/Error/404";
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
@@ -72,7 +72,6 @@ const Routing = () => {
   var token = localStorage.getItem("jwt");
   return (
     <Switch>
-      <Route path="/error" exact component={ERROR} />
       <Route path="/landing" exact component={Landing} />
       <Route path="/" exact component={Index} />
       <Route path="/search" exact component={SearchPage} />
@@ -80,6 +79,7 @@ const Routing = () => {
       <Route path="/createclub" exact component={CreateClub} />
       <Route path="/profilepage/:id" exact component={ProfilePage} />
       <Route path="/playground" exact component={PlayGround} />
+
       {!token ? (
         <>
           <PrivateRoute authed={false} path="/profile" component={Profile} />
@@ -125,9 +125,13 @@ const Routing = () => {
           <LoginRoute authed={false} path="/auth" component={Auth} />
         </>
       )}
+      <Route component={PageNotFound} />
 
       {/* add redirect for first page */}
-      <Redirect from="*" to="/" />
+      {/* <Redirect from="*" to="/" /> */}
+      {/* <Route path="*" component={PageNotFound} />
+      <Redirect to="/404" /> */}
+      {/* <NotFoundRoute handler={PageNotFound} /> */}
     </Switch>
   );
 };

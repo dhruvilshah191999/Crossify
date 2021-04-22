@@ -73,6 +73,22 @@ const UserDropdown = () => {
             Manage Events
           </Link>
 
+          <a
+            href="https://forms.gle/JPfRcA3FYgqqBeip6"
+            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+            target="_blank"
+          >
+            Rate our Website
+          </a>
+
+          <a
+            href="https://forms.gle/mf5rCqLFSDeikiYT6"
+            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+            target="_blank"
+          >
+            Be a Bug Report
+          </a>
+
           <div className="h-0 my-2 border border-solid border-gray-200" />
           <Link
             to="/"
