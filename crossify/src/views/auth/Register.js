@@ -8,25 +8,44 @@ import Google from "./Google";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
 import { Formik, useField } from "formik";
-import $ from "jquery";
-
 var vertical = "top";
 var horizontal = "center";
 
 export default function Register() {
   let history = useHistory();
-  const [image, setImage] = useState("");
+  const [email, setEmail] = useState("");
+  const [checkemail, setcheckEmail] = useState(false);
   const [formData, SetFormData] = useState({
-    email: "",
     password: "",
     repassword: "",
     fname: "",
     lname: "",
   });
-  const { email, password, repassword, fname, lname } = formData;
+  const { password, repassword, fname, lname } = formData;
 
   const onChange = (e) =>
     SetFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onEmailChange = (e) => {
+    setEmail(e.target.value);
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+
+    axios
+      .post("/api/manage/EmailCheck", { email: e.target.value }, config)
+      .then((res) => {
+        if (!res.data.is_error) {
+          setcheckEmail(true);
+        } else {
+          setcheckEmail(false);
+        }
+      });
+  };
 
   const [checked, setChecked] = useState(false);
   const handleCheck = (e) => setChecked(!checked);
@@ -38,40 +57,6 @@ export default function Register() {
     }
     setError(false);
   };
-  function photoName(event) {
-    //var name = ;
-    document.getElementById(
-      "DP_Name"
-    ).textContent = `${event.target.files[0].name}`;
-
-    //$("#my_image").attr("src", "second.jpg");
-
-    document.getElementById("my_image").src =
-      "../../assets/img/bg_crossify.png";
-    // console.log(`Selected file - ${event.target.files[0].name}`);
-  }
-
-  useEffect(() => {
-    function readURL(input) {
-      console.log("inside");
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          $("#imagePreview").css(
-            "background-image",
-            "url(" + e.target.result + ")"
-          );
-          $("#imagePreview").hide();
-          $("#imagePreview").fadeIn(650);
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    $("#reg-photo").change(function () {
-      readURL(this);
-    });
-  });
 
   return (
     <>
@@ -112,84 +97,47 @@ export default function Register() {
                     const errors = {};
                     if (!fname) {
                       errors.fname = "First name is required !";
-                    } else if (!lname) {
+                    }
+                    if (!lname) {
                       errors.lname = "Last name is required !";
-                    } else if (!email) {
+                    }
+                    if (!email) {
                       errors.email = "Email is Required !";
                     } else if (
                       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
                     ) {
                       errors.email = "Invalid email address !";
-                    } else if (!password) {
+                    } else if (checkemail) {
+                      errors.email = "Email is already exists ! !";
+                    }
+                    if (!password) {
                       errors.password = "Password is required !";
                     } else if (password.length < 6) {
                       errors.password = "Minimim 6 characters are required !";
-                    } else if (!repassword) {
+                    }
+                    if (!repassword) {
                       errors.repassword = "Re enter your password !";
                     } else if (password != repassword) {
                       errors.repassword = "Password does not match !";
-                    } else if (!checked) {
+                    }else if (!checked) {
                       errors.checkbox =
                         "You must have to agree our terms and conditions";
                     }
                     return errors;
                   }}
                   onSubmit={async ({ setSubmitting }) => {
-                    if (image === "") {
-                      setError(true);
-                      setMessage("Please Enter Your Details");
-                    } else {
-                      var emailname = email.split("@");
-                      var url =
-                        "https://api.cloudinary.com/v1_1/crossify/image/upload/";
-                      var path = "User_Profile/" + emailname[0];
-                      var data = new FormData();
-                      data.append("file", image);
-                      data.append("upload_preset", "crossify-project");
-                      data.append("public_id", path);
-                      const config = {
-                        headers: { "X-Requested-With": "XMLHttpRequest" },
-                      };
-                      axios
-                        .post(url, data, config)
-                        .then(async (res) => {
-                          const userdata = {
-                            fname,
-                            lname,
-                            email,
-                            password,
-                            photo: res.data.url,
-                          };
-                          try {
-                            const config = {
-                              method: "POST",
-                              header: {
-                                "Content-Type": "application/json",
-                              },
-                              validateStatus: () => true,
-                            };
-                            const finaldata = await axios.post(
-                              "/api/signup",
-                              userdata,
-                              config
-                            );
-                            if (finaldata.data.is_error) {
-                              setError(true);
-                              setMessage(finaldata.data.message);
-                            } else {
-                              var ciphertext = CryptoJS.AES.encrypt(
-                                JSON.stringify(finaldata.data),
-                                Key.Secret
-                              ).toString();
-                              localStorage.setItem("email", ciphertext);
-                              history.push("/auth/register/step2");
-                            }
-                          } catch (err) {
-                            console.log(err);
-                          }
-                        })
-                        .catch((err) => console.log(err));
-                    }
+                    const userdata = {
+                      fname,
+                      lname,
+                      email,
+                      password,
+                    };
+                    var ciphertext = CryptoJS.AES.encrypt(
+                      JSON.stringify(userdata),
+                      Key.Secret
+                    ).toString();
+                    localStorage.setItem("RegisterData", ciphertext);
+                    history.push("/auth/register/step2");
                     setSubmitting(false);
                   }}
                 >
@@ -262,7 +210,7 @@ export default function Register() {
                           placeholder="Email"
                           name="email"
                           value={email}
-                          onChange={(e) => onChange(e)}
+                          onChange={(e) => onEmailChange(e)}
                           onBlur={handleBlur}
                         />
                         <p className="FormError">
@@ -317,75 +265,6 @@ export default function Register() {
                             errors.repassword}
                         </p>
                       </div>
-                      {/* 
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                          htmlFor="reg-photo"
-                        >
-                          <span className="fa-stack fa-2x mt-3 mb-2">
-                            <i className="fas fa-circle fa-stack-2x" />
-                            <i className="fas fa-angle-double-up fa-stack-1x fa-inverse" />
-                          </span>
-                          Upload Profile Photo
-                          <span
-                            id="DP_Name"
-                            style={{
-                              float: "right",
-                              marginTop: "24px",
-                              marginRight: "10px",
-                            }}
-                          >
-                            <img id="my_image" src=""></img>
-                          </span>
-                        </label>
-
-                        <input
-                          id="reg-photo"
-                          type="file"
-                          accept="image/*"
-                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                          onChange={(e) => setImage(e.target.files[0])}
-                          onChange={photoName}
-                          required
-                          hidden
-                        />
-                      </div>
-
-                      <img
-                        src={
-                          "file:///E:/CROSSIFY/Crossify%20Web%20App/crossify/src/assets/logos/google.png"
-                        }
-                      ></img> */}
-
-                      <div className="px-4 mt-6 mb-6">
-                        <div class="avatar-upload">
-                          <div class="avatar-edit">
-                            <input
-                              type="file"
-                              id="reg-photo"
-                              accept=".png, .jpg, .jpeg"
-                              onChange={(e) => setImage(e.target.files[0])}
-                            />
-                            <label
-                              for="reg-photo"
-                              style={{ border: "1px solid black" }}
-                            >
-                              <i class="fas fa-pen ml-2 text-sm"></i>
-                            </label>
-                          </div>
-                          <div className="avatar-preview">
-                            <div
-                              id="imagePreview"
-                              style={{
-                                backgroundImage:
-                                  "url(http://i.pravatar.cc/500?img=7)",
-                              }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
-
                       <div>
                         <label className="inline-flex items-center cursor-pointer">
                           <input

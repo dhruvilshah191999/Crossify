@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { InputTagsContainer } from "react-input-tags";
+import { notifySuccessClub } from "notify";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import { usePosition } from "use-position";
 import MapContainer from "components/Maps/AddMapCode";
@@ -12,14 +13,8 @@ import MultiSelect from "components/Inputs/MultiSelect";
 import UploadPic from "components/Inputs/UploadPic";
 import MultipleInputs from "components/Inputs/MultipleInputs";
 import { Formik } from "formik";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
 
-var vertical = "bottom";
-var horizontal = "center";
 function CreateClub(props) {
-  const [successStatus, setSuccess] = useState(false);
-  const [message, setMessage] = useState("");
   let history = useHistory();
   const [tags, setTags] = useState([]);
   const [question1, setquestion] = useState([]);
@@ -87,14 +82,6 @@ function CreateClub(props) {
     setPhoto(childData);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSuccess(false);
-  };
-
-  if (loading) {
     return (
       <>
         <Navbar></Navbar>
@@ -114,14 +101,6 @@ function CreateClub(props) {
                   </h6>
                 </div>
               </div>
-              <Snackbar
-                anchorOrigin={{ vertical, horizontal }}
-                open={successStatus}
-                autoHideDuration={2000}
-                onClose={handleClose}
-              >
-                <Alert onClose={handleClose}>{message}</Alert>
-              </Snackbar>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <Formik
                   initialValues={formData}
@@ -209,11 +188,10 @@ function CreateClub(props) {
                             if (finaldata.data.is_error) {
                               console.log(finaldata.data.message);
                             } else {
-                              setSuccess(true);
-                              setMessage("Club Created Successfully !!!");
+                              notifySuccessClub();
                               setTimeout(() => {
-                                history.push("/clubsearch");
-                              }, 3000);
+                                history.push("/club/"+finaldata.data.club_id);
+                              }, 300);
                             }
                           } catch (err) {
                             console.log(err);
@@ -581,9 +559,6 @@ function CreateClub(props) {
         </div>
       </>
     );
-  } else {
-    return <></>;
-  }
 }
 
 CreateClub.defaultProps = {
