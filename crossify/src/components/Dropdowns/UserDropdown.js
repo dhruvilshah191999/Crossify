@@ -18,9 +18,7 @@ const UserDropdown = (props) => {
     window.localStorage.removeItem("jwt");
     window.location.reload();
   };
-  if (!props.isLogin) {
-    return <div></div>;
-  }
+
   return (
     <>
       <div
