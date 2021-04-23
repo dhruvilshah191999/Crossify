@@ -36,6 +36,7 @@ router.post("/general-update", async function (req, res, next) {
     starting_time,
     ending_date,
     ending_time,
+    ending_date_registration,
   } = req.body;
   var startdate = new Date(starting_date + " " + starting_time);
   var date = new Date(ending_date + " " + ending_time);
@@ -54,6 +55,7 @@ router.post("/general-update", async function (req, res, next) {
       longitude,
       latitude,
       startdate,
+      ending_date_registration,
       date,
     }
   );
@@ -865,17 +867,13 @@ router.post("/Broadcast", async function (req, res, next) {
   };
 
   var transporter = nodemailer.createTransport({
-    service: "gmail",
-    name: "SAGAR18-11",
-    host: "smtp.gmail.com",
-    port: 465, //587
-    secure: true, //for true 465,
+    host: "smtp.mailgun.org",
+    port: 587,
+    secure: false,
+    tls: { ciphers: "SSLv3" },
     auth: {
       user: adminMail,
       pass: adminPass,
-    },
-    tls: {
-      rejectUnauthorized: false,
     },
   });
 
@@ -902,7 +900,7 @@ router.post("/Broadcast", async function (req, res, next) {
       console.log(check[index]);
       var htmlToSend = template(replacements);
       const mailOptions = {
-        from: "crossify.vgec@gmail.com",
+        from: "Crossify Support <postmaster@crossify.tech>",
         to: check[index].email,
         subject: `Notice From ${event[0].event_name}`,
         html: htmlToSend,
@@ -935,18 +933,13 @@ router.post("/WelcomeMail", async function (req, res, next) {
   };
 
   var transporter = nodemailer.createTransport({
-    service: "gmail",
-    name: "SAGAR18-11",
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, //for true 465,
+    host: "smtp.mailgun.org",
+    port: 587,
+    secure: false,
+    tls: { ciphers: "SSLv3" },
     auth: {
       user: adminMail,
       pass: adminPass,
-    },
-    tls: {
-      // do not fail on invalid certs
-      rejectUnauthorized: false,
     },
   });
 
@@ -960,7 +953,7 @@ router.post("/WelcomeMail", async function (req, res, next) {
     };
     var htmlToSend = template(replacements);
     const mailOptions = {
-      from: "crossify.vgec@gmail.com",
+      from: "Crossify Support <postmaster@crossify.tech>",
       to: data.email,
       subject: "Welcome To Crossify",
       html: htmlToSend,
@@ -1034,18 +1027,13 @@ router.post("/ForgotMail", async function (req, res, next) {
       };
 
       var transporter = nodemailer.createTransport({
-        service: "gmail",
-        name: "SAGAR18-11",
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
+        host: "smtp.mailgun.org",
+        port: 587,
+        secure: false,
+        tls: { ciphers: "SSLv3" },
         auth: {
           user: adminMail,
           pass: adminPass,
-        },
-
-        tls: {
-          rejectUnauthorized: false,
         },
       });
       readHTMLFile("views/ForgotPasswordMail.html", function (err, html) {
@@ -1060,15 +1048,17 @@ router.post("/ForgotMail", async function (req, res, next) {
         };
         var htmlToSend = template(replacements);
         const mailOptions = {
-          from: "crossify.vgec@gmail.com",
+          from: "Crossify Support <postmaster@crossify.tech>",
           to: email,
-          subject: "Forgot Password",
+          subject: "Recovery Mail for Forgotten Password : Crossify",
           html: htmlToSend,
         };
         transporter.sendMail(mailOptions, function (error) {
           if (error) {
             console.log(error);
             callback(error);
+          } else {
+            console.log("No error");
           }
         });
       });

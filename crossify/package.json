@@ -28,6 +28,7 @@
     "google-maps-react": "^2.0.6",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
+    "http-proxy-middleware": "^1.2.0",
     "jquery": "^3.6.0",
     "js-file-download": "^0.4.12",
     "materialize-css": "^1.0.0-rc.2",

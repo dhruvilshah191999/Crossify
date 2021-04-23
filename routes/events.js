@@ -1032,6 +1032,7 @@ router.post('/reports', auth, async function (req, res, next) {
 });
 
 router.get('/get-interest-data', async function (req, res, next) {
+  var today = new Date();
   category_details
     .aggregate([
       {
@@ -1079,6 +1080,7 @@ router.get('/get-interest-data', async function (req, res, next) {
           'event.city': 1,
           'event.state': 1,
           'event.is_active': 1,
+          'event.ending_date_registration':1,
           category_name: 1,
         },
       },
@@ -1095,7 +1097,7 @@ router.get('/get-interest-data', async function (req, res, next) {
         data.forEach((d) => {
           var eventarray = [];
           d.event.forEach((e) => {
-            if (e.is_active) {
+            if (e.is_active && e.ending_date_registration >= today) {
               var result = d.club_data.filter((obj) => {
                 return obj._id.equals(ObjectId(e.club_id));
               });
@@ -1120,6 +1122,7 @@ router.get('/get-interest-data', async function (req, res, next) {
 });
 
 router.post('/user-interest-data', auth, async function (req, res, next) {
+  var today = new Date();
   var data = await user_details
     .findOne({_id: ObjectId(req.user._id), is_active: true})
     .exec();
@@ -1172,6 +1175,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
             'event.city': 1,
             'event.state': 1,
             'event.is_active': 1,
+            'event.ending_date_registration':1,
             category_name: 1,
           },
         },
@@ -1188,7 +1192,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
           data.forEach((d) => {
             var eventarray = [];
             d.event.forEach((e) => {
-              if (e.is_active) {
+              if (e.is_active && e.ending_date_registration >= today) {
                 var result = d.club_data.filter((obj) => {
                   return obj._id.equals(ObjectId(e.club_id));
                 });

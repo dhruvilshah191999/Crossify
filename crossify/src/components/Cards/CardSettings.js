@@ -8,15 +8,20 @@ import UploadPic from "components/Inputs/UploadPic";
 import MultipleInputs from "components/Inputs/MultipleInputs";
 import { Formik } from "formik";
 import Snackbar from "@material-ui/core/Snackbar";
+import PulseLoader from "react-spinners/PulseLoader";
 import Alert from "@material-ui/lab/Alert";
 
 var vertical = "top";
 var horizontal = "center";
 export default function CardSettings(props) {
   let history = useHistory();
+  const showclubs = (club_id) => {
+    history.push("/club/" + club_id);
+  };
   const [successStatus, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const [photo, setPhoto] = useState(null);
+  const [loading, setloading] = useState(false);
   const [privacy, setPrivacy] = useState(props.data.status);
   const [question1, setquestion] = useState(props.data.question);
   const [latitude, setlatitude] = useState(props.data.latitude);
@@ -98,6 +103,7 @@ export default function CardSettings(props) {
           return errors;
         }}
         onSubmit={async ({ setSubmitting }) => {
+          setloading(true);
           if (photo != null) {
             var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
             var path = "Club/" + photo.name;
@@ -145,9 +151,7 @@ export default function CardSettings(props) {
                   } else {
                     setSuccess(true);
                     setMessage("Club Updated Successfully !!!");
-                    setTimeout(() => {
-                      history.go(0);
-                    }, 3000);
+                    history.go(0);
                   }
                 } catch (err) {
                   console.log(err);
@@ -189,9 +193,7 @@ export default function CardSettings(props) {
               } else {
                 setSuccess(true);
                 setMessage("Club Updated Successfully !!!");
-                setTimeout(() => {
-                  history.go(0);
-                }, 3000);
+                history.go(0);
               }
             } catch (err) {
               console.log(err);
@@ -218,17 +220,22 @@ export default function CardSettings(props) {
                   <button
                     className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-2 ease-linear transition-all duration-150"
                     type="button"
+                    onClick={() => showclubs(props.data._id)}
                   >
                     Go to Club
                   </button>
-                  <button
-                    className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={handleSubmit}
-                    disabled={isSubmitting}
-                  >
-                    Save &nbsp; <i className="fas fa-save"></i>
-                  </button>
+                  {loading ? (
+                      <PulseLoader color="#4299e1" size={10} />
+                  ) : (
+                    <button
+                      className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={isSubmitting}
+                    >
+                      Save &nbsp; <i className="fas fa-save"></i>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

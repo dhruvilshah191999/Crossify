@@ -96,35 +96,8 @@ export default function EventPage(props) {
       }
     }
 
-    async function fetchData() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        token: token,
-        event_id: id,
-      };
-      const finaldata = await axios.post(
-        "/api/events/checklikes",
-        object,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setLike(finaldata.data.Like);
-      }
-    }
-
-    fetchData();
     CheckEvent();
     event_details();
-    if (users._id === eventdetails.oragnizer_id) {
-      setIsAdmin(true);
-    }
   }, []);
 
   const addlike = async (e) => {
@@ -307,12 +280,16 @@ export default function EventPage(props) {
                 <div className="w-6/12">
                   <motion.button
                     className={
-                      !like
+                      !users.fav_event.find((e) => e === id)
                         ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     }
                     type="button"
-                    onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
+                    onClick={
+                      users.fav_event.find((e) => e === id)
+                        ? (e) => deletelike(e)
+                        : (e) => addlike(e)
+                    }
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}
                   >

@@ -21,6 +21,7 @@ export default class SweetAlertModal extends Component {
   };
 
   onRecievedInput = async () => {
+    this.props.parentCallback(true);
     const config = {
       method: "POST",
       header: {

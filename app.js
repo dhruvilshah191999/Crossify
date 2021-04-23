@@ -35,23 +35,6 @@ app.use("/users", usersRouter);
 app.use("/api/club", clubRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/club/chat", chatRouter);
-const mailgun = require("mailgun-js");
-const DOMAIN = "crossify.tech";
-const mg = mailgun({
-  apiKey: "7b708f1c058fc3d850b246fc836d17be-71b35d7e-8c13b5bd",
-  domain: DOMAIN,
-});
-const data = {
-  from: "Mr.Postmaster <postmaster2@crossify.tech>",
-  to: "hackwithharshil@gmail.com",
-  subject: "Hello",
-  text: "Testing some Mailgun awesomness!",
-};
-mg.messages().send(data, function (error, body) {
-  console.log(body);
-});
-
-// catch 404 and forward to error handler
 
 app.use(function (req, res, next) {
   next(createError(404));

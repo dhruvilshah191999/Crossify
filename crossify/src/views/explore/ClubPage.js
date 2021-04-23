@@ -20,7 +20,7 @@ import BigShareButton from "components/SweetAlerts/BigShareButton";
 function ClubPage(props) {
   let history = useHistory();
   var { id } = useParams();
-  const { category } = useContext(UserContext);
+  const { category, users } = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setloading] = useState(false);
   const [isRequest, setRequest] = useState(false);
@@ -63,7 +63,7 @@ function ClubPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-        }, 500);
+        }, 500)
       }
     }
 
@@ -87,29 +87,6 @@ function ClubPage(props) {
         console.log(finaldata.data.message);
       } else {
         setCount(finaldata.data.data);
-      }
-    }
-
-    async function fetchData() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        token: token,
-        club_id: id,
-      };
-      const finaldata = await axios.post(
-        "/api/club/checklikes",
-        object,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setLike(finaldata.data.Like);
       }
     }
 
@@ -162,10 +139,10 @@ function ClubPage(props) {
 
     CheckMember();
     CheckRequestMember();
-    fetchData();
     event_details();
     get_count();
   }, []);
+
 
   const addlike = async (e) => {
     const config = {
@@ -272,12 +249,16 @@ function ClubPage(props) {
                   <div className="w-6/12">
                     <motion.button
                       className={
-                        !like
+                        !users.fav_club.find((e) => e === id)
                           ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                           : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       }
                       type="button"
-                      onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
+                      onClick={
+                        users.fav_club.find((e) => e === id)
+                          ? (e) => deletelike(e)
+                          : (e) => addlike(e)
+                      }
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.9 }}
                     >

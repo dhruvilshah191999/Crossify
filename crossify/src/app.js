@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect ,useState} from "react";
 import axios from "axios";
 import ContextData from "./ContextData";
 import {
@@ -142,9 +142,8 @@ export default function App() {
     UserContext
   );
   let history = useHistory();
-
+  const [loading, setloading] = useState(false);
   useEffect(() => {
-    
   }, []);
   return (
     <BrowserRouter>

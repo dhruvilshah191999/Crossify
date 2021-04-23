@@ -1,22 +1,58 @@
-const React = require("react");
+import React, { Component } from "react";
+import { store } from "react-notifications-component";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 class UploadPic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       file: this.props.file || null,
+      errorStatus: false,
+      message:"",
     };
     this.handleChange = this.handleChange.bind(this);
   }
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ errorStatus: false });
+  };
+
   handleChange(event) {
-    this.setState({
-      file: URL.createObjectURL(event.target.files[0]),
-    });
-    this.props.parentCallback(event.target.files[0]);
+    if (
+      event.target.files[0].type === "image/jpeg" ||
+      event.target.files[0].type === "image/jpg" ||
+      event.target.files[0].type === "image/png"
+    ) {
+      this.setState({
+        file: URL.createObjectURL(event.target.files[0]),
+      });
+      this.props.parentCallback(event.target.files[0]);
+    } else {
+      this.setState({
+        errorStatus: true,
+        message: "Only .jpg,.jpeg and .png file are accepted",
+      });
+    }
   }
   render() {
+    var vertical = "top";
+    var horizontal = "center";
     return (
       <div>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={this.state.errorStatus}
+          autoHideDuration={4000}
+          onClose={this.handleClose}
+        >
+          <Alert severity="error" onClose={this.handleClose}>
+            {this.state.message}
+          </Alert>
+        </Snackbar>
         <input
           type="file"
           className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
