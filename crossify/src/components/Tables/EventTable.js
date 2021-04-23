@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   useTable,
   useFilters,
@@ -97,8 +97,8 @@ function SelectColumnFilter({
 }
 
 export default function App(props) {
-  const [clubId, setClubId] = useState(props.club_id);
-  const [eventFile, setEventFile] = useState(props.data);
+  const clubId = useState(props.club_id);
+  const eventFile = useState(props.data);
   console.log(eventFile);
   const openModal = (event) => {
     ModalManager.open(
@@ -247,10 +247,8 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     state,
-    visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
     setFilter,
@@ -363,7 +361,7 @@ export default function App(props) {
           </div>
         </div>
         <div className="block w-full overflow-x-auto relative">
-          {page.length == 0 && <EmptyTable isLight={isLight} />}
+          {page.length === 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -418,7 +416,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
-            {page.length == 0 && <div className="empty-table-space"></div>}
+            {page.length === 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

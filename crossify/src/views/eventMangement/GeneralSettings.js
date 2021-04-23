@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import UploadPic from "components/Inputs/UploadPic";
 import { useParams } from "react-router";
 import Moment from "moment";
 import City from "../auth/states-and-districts.json";
@@ -10,10 +9,9 @@ import dummyPF from "assets/img/demopf.png";
 import { Formik } from "formik";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import { ModalManager } from "react-dynamic-modal";
 import ViewFeedback from "components/Modals/ViewFeedback";
 import ScaleLoader from "react-spinners/ScaleLoader";
-import { set } from "mongoose";
 
 var vertical = "top";
 var horizontal = "center";
