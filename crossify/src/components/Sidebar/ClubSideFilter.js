@@ -29,19 +29,8 @@ export default function Sidebar(props) {
 
   React.useEffect(() => {
     async function fetchData() {
-      let InterestArray = [];
-      try {
-        const finaldata = await axios.get("/api/events/get-interest");
-        if (finaldata.data.is_error) {
-          console.log(finaldata.data.message);
-        } else {
-          InterestArray = finaldata.data.data;
-        }
-      } catch (err) {
-        console.log(err);
-      }
       setInterestState(
-        InterestArray.map((data) => {
+        props.category.map((data) => {
           return {
             select: false,
             id: data._id,

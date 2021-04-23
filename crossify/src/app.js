@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
+import ContextData from "./ContextData";
 import {
   BrowserRouter,
   Route,
@@ -125,7 +126,7 @@ const Routing = () => {
           <LoginRoute authed={false} path="/auth" component={Auth} />
         </>
       )}
-      <Route component={PageNotFound} />
+      {/* <Route component={PageNotFound} /> */}
 
       {/* add redirect for first page */}
       {/* <Redirect from="*" to="/" /> */}
@@ -137,42 +138,17 @@ const Routing = () => {
 };
 
 export default function App() {
-  const { islogin_dispatch, dispatch } = useContext(UserContext);
+  const { islogin_dispatch, dispatch, category_dispatch } = useContext(
+    UserContext
+  );
   let history = useHistory();
 
   useEffect(() => {
-    async function checkLogin() {
-      var token = localStorage.getItem("jwt");
-      if (!token) {
-        islogin_dispatch({ type: "Login-Status", status: false });
-      } else {
-        islogin_dispatch({ type: "Login-Status", status: true });
-        try {
-          const data = {
-            token: token,
-          };
-          const config = {
-            method: "POST",
-            header: {
-              "Content-Type": "application/json",
-            },
-          };
-          const res = await axios.post("/api/auth", data, config);
-          if (res.data.is_error) {
-            window.localStorage.removeItem("jwt");
-            history.push("/auth");
-          } else {
-            dispatch({ type: "ADD_USER", payload: res.data });
-          }
-        } catch (error) {
-          window.localStorage.removeItem("jwt");
-        }
-      }
-    }
-    checkLogin();
+    
   }, []);
   return (
     <BrowserRouter>
+      <ContextData />
       <Routing />
     </BrowserRouter>
   );

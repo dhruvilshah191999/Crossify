@@ -43,7 +43,7 @@ export default function LoginGoogle() {
         localStorage.setItem("jwt", finaldata.data.token);
         islogin_dispatch({ type: "Login-Status", status: true });
         dispatch({ type: "ADD_USER", payload: finaldata.data.data });
-        history.push("/");
+        window.location.replace("/");
         const name = finaldata.data.data.fname + " " + finaldata.data.data.lname;
         notifySuccessLogin(name);
       }

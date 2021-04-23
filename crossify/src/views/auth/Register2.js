@@ -223,6 +223,7 @@ export default function Register2() {
                         lat: latitude,
                         long: longitude,
                         email: decryptedData.email,
+                        socialId: decryptedData.socialId,
                         occupation,
                         photo:
                           "https://res.cloudinary.com/crossify/image/upload/v1618999735/User_Profile/aab.png",

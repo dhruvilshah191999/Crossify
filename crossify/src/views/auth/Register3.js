@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "context/usercontext";
 import PulseLoader from "react-spinners/PulseLoader";
 import Key from "config/default.json";
 import { notifySuccessSignUp } from "notify";
@@ -9,37 +10,26 @@ import CryptoJS from "crypto-js";
 export default function Register5() {
   let history = useHistory();
   const [loading, setloading] = useState(false);
+  const [categoryloading, setcategoryloading] = useState(false);
+  const { category } = useContext(UserContext);
   const [interestState, setInterestState] = useState([]);
-  var decryptedData
+  var decryptedData;
   var RegisterData = localStorage.getItem("RegisterData");
   if (RegisterData) {
     var bytes = CryptoJS.AES.decrypt(RegisterData, Key.Secret);
     decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   } else {
-    history.push("/auth/register");
+    //history.push("/auth/register");
   }
 
   useEffect(async () => {
-    let InterestArray = [];
-    try {
-      const config = {
-        method: "GET",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      const finaldata = await axios.get("/api/events/get-interest", config);
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        InterestArray = finaldata.data.data;
-      }
-    } catch (err) {
-      console.log(err);
-    }
-
+    setTimeout(() => {
+      setcategoryloading(true);
+    }, 500);
+  },[]);
+  useEffect(async () => {
     setInterestState(
-      InterestArray.map((data) => {
+      category.map((data) => {
         return {
           select: false,
           id: data._id,
@@ -47,7 +37,7 @@ export default function Register5() {
         };
       })
     );
-  }, []);
+  }, [categoryloading]);
 
   const onSubmit = async (e) => {
     e.preventDefault();

@@ -14,6 +14,10 @@ var user_details = new Schema({
     type: String,
     required: false,
   },
+  is_verified: {
+    type: Boolean,
+    default: false,
+  },
   password: {
     type: String,
     required: false,
@@ -116,10 +120,6 @@ var user_details = new Schema({
   },
   generate_code: {
     type: ObjectId,
-    required: false,
-  },
-  is_verified: {
-    type: Boolean,
     required: false,
   },
 });

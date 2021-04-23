@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import PulseLoader from "react-spinners/PulseLoader";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { Formik } from "formik";
@@ -17,6 +18,7 @@ function ChangePassword() {
   });
 
   const [errorStatus, setError] = useState(false);
+  const [submitted, isSubmitting] = useState(false);
   const [successStatus, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const { email, password, new_password, confirm_new_password } = formData;
@@ -62,12 +64,6 @@ function ChangePassword() {
               <h6 className="text-gray-800 text-xl font-bold">
                 Change Password
               </h6>
-              <button
-                className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                type="button"
-              >
-                Settings
-              </button>
             </div>
           </div>
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0 mt-2">
@@ -81,14 +77,17 @@ function ChangePassword() {
                   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
                 ) {
                   errors.email = "Invalid email address !";
-                } else if (!password) {
+                }
+                if (!password) {
                   errors.password = "Old password is required !";
-                } else if (!new_password) {
+                }
+                if (!new_password) {
                   errors.new_password = "New password is required !";
                 } else if (password === new_password) {
                   errors.new_password =
                     "New password is same as old password !";
-                } else if (!confirm_new_password) {
+                }
+                if (!confirm_new_password) {
                   errors.confirm_new_password = "Confirm password required !";
                 } else if (new_password != confirm_new_password) {
                   errors.confirm_new_password =
@@ -97,6 +96,7 @@ function ChangePassword() {
                 return errors;
               }}
               onSubmit={async ({ setSubmitting }) => {
+                isSubmitting(true);
                 var object = {
                   email,
                   password,
@@ -114,6 +114,7 @@ function ChangePassword() {
                   config
                 );
                 if (finaldata.data.is_error) {
+                  isSubmitting(false);
                   setError(true);
                   setMessage(finaldata.data.message);
                 } else {
@@ -121,7 +122,7 @@ function ChangePassword() {
                   setMessage("Password Successfully Updated !!!");
                   setTimeout(function () {
                     window.location.reload();
-                  }, 3000);
+                  }, 300);
                 }
                 setSubmitting(false);
               }}
@@ -225,13 +226,17 @@ function ChangePassword() {
                   </div>
 
                   <div className="text-center mt-6">
-                    <button
-                      className="bg-blue-500 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      SUBMIT
-                    </button>
+                    {submitted ? (
+                      <PulseLoader color="#4299e1" size={10} />
+                    ) : (
+                      <button
+                        className="bg-blue-500 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        type="submit"
+                        disabled={isSubmitting}
+                      >
+                        SUBMIT
+                      </button>
+                    )}
                   </div>
                 </form>
               )}

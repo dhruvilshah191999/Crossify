@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Moment from "moment";
 import { useHistory } from "react-router-dom";
@@ -8,21 +8,23 @@ import { motion } from "framer-motion";
 import GridLoader from "react-spinners/GridLoader";
 import TabsBar from "components/TabsBar/TabsBar";
 import Navbar from "components/Navbars/ClubNavbar";
+import { UserContext } from "context/usercontext";
 import demopf from "assets/img/demobg.jpg";
 import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
 import { notifyClubLiked, notifyWentWrong } from "notify";
 import JoinClubButton from "components/SweetAlerts/JoinClubButton";
-
 import BigShareButton from "components/SweetAlerts/BigShareButton";
 
 function ClubPage(props) {
   let history = useHistory();
   var { id } = useParams();
+  const { category } = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setloading] = useState(false);
   const [isRequest, setRequest] = useState(false);
+  const [moderator, setmoderator] = useState(false);
   const [isPublic, setPublic] = useState(true);
   const [isJoin, setIsJoin] = useState(false);
   const [like, setLike] = useState(false);
@@ -131,6 +133,7 @@ function ClubPage(props) {
         console.log(finaldata.data.message);
       } else {
         setIsJoin(finaldata.data.join);
+        setmoderator(finaldata.data.moderator);
       }
     }
 
@@ -204,7 +207,7 @@ function ClubPage(props) {
   };
   const openModal = () => {
     ModalManager.open(
-      <MyModal onRequestClose={() => true} club_id={id} isAdmin={isAdmin} />
+      <MyModal onRequestClose={() => true} club_id={id} isAdmin={isAdmin} category={category }/>
     );
   };
   const gotoAdmin = () => {
@@ -232,7 +235,7 @@ function ClubPage(props) {
                   {clubData.club_name}
                   {/* //todo GOLU just redirect to the /admin page for control or
                   manage this club (ONLY IF HE IS MOD OR CREATOR OF THE CLUB) */}
-                  {isAdmin ? (
+                  {isAdmin || moderator ? (
                     <button
                       className="float-right text-lg"
                       onClick={() => gotoAdmin()}

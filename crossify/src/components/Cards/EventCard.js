@@ -1,6 +1,7 @@
 import Moment from "react-moment";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "context/usercontext";
 import { store } from "react-notifications-component";
 import { useHistory } from "react-router-dom";
 import { notifyLiked } from "notify";
@@ -9,6 +10,7 @@ import ShareButton from "components/SweetAlerts/ShareButton";
 
 const EventCard = (props) => {
   let history = useHistory();
+  const { users } = useContext(UserContext);
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const [clubname, Setclub] = useState("");
@@ -19,29 +21,6 @@ const EventCard = (props) => {
   };
 
   useEffect(() => {
-    async function fetchData() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        token: token,
-        event_id: props.data._id,
-      };
-      const finaldata = await axios.post(
-        "/api/events/checklikes",
-        object,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setLike(finaldata.data.Like);
-      }
-    }
-
     async function fetchclub() {
       const config = {
         method: "POST",
@@ -62,9 +41,12 @@ const EventCard = (props) => {
 
     if (token) {
       setLogin(true);
-      fetchData();
+      const b = users.fav_event.find((e) => e === props.data._id);
+      if (b) {
+        setLike(true);
+      };
     }
-    fetchclub();
+    //fetchclub();
   }, []);
 
   const addlike = async (e) => {
@@ -101,6 +83,7 @@ const EventCard = (props) => {
         });
       } else {
         notifyLiked();
+        users.fav_event.push(props.data._id);
         setLike(true);
       }
     }
@@ -126,6 +109,7 @@ const EventCard = (props) => {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
+        users.fav_event.pop(props.data._id);
         setLike(false);
       }
     }
@@ -149,7 +133,8 @@ const EventCard = (props) => {
         />
         <div className="px-2 py-1">
           <div className="text-xs text-gray-600 font-semibold">
-            <i className="fas fa-user-shield"></i> : {clubname}
+            <i className="fas fa-user-shield"></i> : {props.data.club_name}
+            {/* props.data.club_data[0].club_name */}
           </div>
           <div
             className="text-xl  mt-1 font-semibold truncate leading-snug"

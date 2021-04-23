@@ -17,101 +17,20 @@ import Creators from "components/sections/Creators";
 
 export default function Landing() {
   let history = useHistory();
-  const { isLogin, search_dispatch } = useContext(UserContext);
+  const {
+    isLogin,
+    search_dispatch,
+    category,
+    EventData,
+    ClubData,
+    InterestEventData,
+  } = useContext(UserContext);
   const [loading, isLoading] = useState(false);
-  const [eventState, setEventstate] = useState([]);
-  const [clubState, setClubstate] = useState([]);
   const [search, setSearch] = useState("");
   const [location, setlocation] = useState("");
   const [readNotification, setreadNotification] = React.useState(false);
 
-  //todo GOLU : get all the event which is related to users interest otherwise show popular 3 (if he didn't add any interest yet or NOT LOGGED IN )
-  const [insterestState, setInterests] = useState([]);
-
-  //todo GOLU : fetch all category list here
-  const [categoryState, setCategory] = useState([]);
-
   useEffect(async () => {
-    const token = localStorage.getItem("jwt");
-    if (!token) {
-      try {
-        const config = {
-          method: "GET",
-          header: {
-            "Content-Type": "application/json",
-          },
-        };
-        const finaldata = await axios.get("/api/events/get-event", config);
-        if (finaldata.data.is_error) {
-          console.log(finaldata.data.message);
-        } else {
-          setEventstate(finaldata.data.data);
-        }
-
-        const finaldata2 = await axios.get("/api/events/get-club", config);
-        if (finaldata2.data.is_error) {
-          console.log(finaldata2.data.message);
-        } else {
-          setClubstate(finaldata2.data.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      try {
-        const config = {
-          method: "POST",
-          header: {
-            "Content-Type": "application/json",
-          },
-        };
-        var object = {
-          token: token,
-        };
-        const finaldata = await axios.post(
-          "/api/events/get-event-byuser",
-          object,
-          config
-        );
-        if (finaldata.data.is_error) {
-          console.log(finaldata.data.message);
-        } else {
-          setEventstate(finaldata.data.data);
-        }
-
-        const finaldata2 = await axios.post(
-          "/api/events/get-club-byuser",
-          object,
-          config
-        );
-        if (finaldata2.data.is_error) {
-          console.log(finaldata2.data.message);
-        } else {
-          setClubstate(finaldata2.data.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    async function get_interest() {
-      const finaldata = await axios.get("/api/events/get-interest");
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setCategory(finaldata.data.data);
-      }
-    }
-
-    async function get_interest_data() {
-      const finaldata = await axios.get("/api/events/get-interest-data");
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setInterests(finaldata.data.data);
-      }
-    }
-    get_interest();
-    get_interest_data();
     setTimeout(() => {
       isLoading(true);
     }, 400);
@@ -269,55 +188,53 @@ export default function Landing() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-1">
-                {clubState &&
-                  clubState.map((data) => (
-                    <ClubCard key={data._id} data={data}></ClubCard>
-                  ))}
+                {ClubData.map((data) => (
+                  <ClubCard key={data._id} data={data}></ClubCard>
+                ))}
               </div>
             </div>
           </section>
-          {insterestState &&
-            insterestState.map((el) =>
-              el.event.length != 0 ? (
-                <section
-                  className="bg-white block m-4"
-                  style={{ marginBottom: "0px" }}
-                >
-                  <div className="p-8 mx-6 pt-0">
-                    <div className=" mb-6">
-                      <div className="flex flex-row ">
-                        <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
-                          {el.category_name}
-                        </h4>
-                        <motion.button
-                          className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <Link to="/search">
-                            {" "}
-                            Load More{" "}
-                            <i className="fas fa-angle-double-right"></i>{" "}
-                          </Link>
-                        </motion.button>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {/* to do Here after backend implementation eventState. changes to el.events. */}
-                      {el.event.map((data) =>
-                        data.is_active ? (
-                          <EventCard key={data._id} data={data}></EventCard>
-                        ) : (
-                          ""
-                        )
-                      )}
+
+          {InterestEventData.map((el) =>
+            el.event.length !== 0 ? (
+              <section
+                className="bg-white block m-4"
+                style={{ marginBottom: "0px" }}
+              >
+                <div className="p-8 mx-6 pt-0">
+                  <div className=" mb-6">
+                    <div className="flex flex-row ">
+                      <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
+                        {el.category_name}
+                      </h4>
+                      <motion.button
+                        className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Link to="/search">
+                          {" "}
+                          Load More{" "}
+                          <i className="fas fa-angle-double-right"></i>{" "}
+                        </Link>
+                      </motion.button>
                     </div>
                   </div>
-                </section>
-              ) : (
-                ""
-              )
-            )}
+                  <div className="flex flex-wrap gap-1">
+                    {el.event.map((data) =>
+                      data.is_active ? (
+                        <EventCard key={data._id} data={data}></EventCard>
+                      ) : (
+                        ""
+                      )
+                    )}
+                  </div>
+                </div>
+              </section>
+            ) : (
+              ""
+            )
+          )}
 
           <section className="pb-4 bg-gray-100 ">
             <div className="container mx-auto px-4">
@@ -331,21 +248,20 @@ export default function Landing() {
                 </div>
                 <div className="flex flex-row justify-center flex-wrap container p-4">
                   {" "}
-                  {categoryState &&
-                    categoryState.map((el) => {
-                      return (
-                        <motion.button
-                          type="button"
-                          className=" rounded-lg shadow p-4 mr-6 category-container mb-4 text-center   hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
-                          style={{ outline: "none" }}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.9 }}
-                          onClick={() => SearchFilter(el.category_name)}
-                        >
-                          {el.category_name}
-                        </motion.button>
-                      );
-                    })}
+                  {category.map((el) => {
+                    return (
+                      <motion.button
+                        type="button"
+                        className=" rounded-lg shadow p-4 mr-6 category-container mb-4 text-center   hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
+                        style={{ outline: "none" }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => SearchFilter(el.category_name)}
+                      >
+                        {el.category_name}
+                      </motion.button>
+                    );
+                  })}
                 </div>
               </div>
             </div>

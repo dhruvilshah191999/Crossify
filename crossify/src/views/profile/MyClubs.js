@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ProfileClubCard from "components/Cards/ProfileClubCard";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { UserContext } from "context/usercontext";
 import EmptyContainer from "components/sections/EmptyContainer";
 
 const getSegment = (totalEvents, curIndex, eventPerPage) => {
@@ -11,6 +12,7 @@ const getSegment = (totalEvents, curIndex, eventPerPage) => {
 };
 export default function MyClubs() {
   const token = localStorage.getItem("jwt");
+  const { users } = useContext(UserContext);
   const [tabIndex, toggleTabIndex] = useState(1);
   const [likedClubs, setLikedClubs] = useState([]);
   const [manageClubs, setManageClubs] = useState([]);
@@ -94,15 +96,33 @@ export default function MyClubs() {
   );
 
   const renderjoinedClubs = currentjoinedClubs.map((el, index) => {
-    return <ProfileClubCard data={el} key={el._id}></ProfileClubCard>;
+    return (
+      <ProfileClubCard
+        data={el}
+        key={el._id}
+        fav_club={users.fav_club}
+      ></ProfileClubCard>
+    );
   });
   const renderfilteredManageClubs = currentfilteredManageClubs.map(
     (el, index) => {
-      return <ProfileClubCard data={el} key={el._id}></ProfileClubCard>;
+      return (
+        <ProfileClubCard
+          data={el}
+          key={el._id}
+          fav_club={users.fav_club}
+        ></ProfileClubCard>
+      );
     }
   );
   const renderlikedClubs = currentlikedClubs.map((el, index) => {
-    return <ProfileClubCard data={el} key={el._id}></ProfileClubCard>;
+    return (
+      <ProfileClubCard
+        data={el}
+        key={el._id}
+        fav_club={users.fav_club}
+      ></ProfileClubCard>
+    );
   });
 
   // Logic for displaying page numbers

@@ -14,7 +14,7 @@ import { helpers } from "chart.js";
 
 export default function Sidebar(props) {
   const watch = true;
-  const { isLogin, users, searchResult, search_dispatch } = useContext(
+  const { isLogin, users, searchResult, search_dispatch  } = useContext(
     UserContext
   );
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -27,22 +27,10 @@ export default function Sidebar(props) {
   const [showCategory, setCategory] = React.useState(false);
   const [startDate, SetstartDate] = React.useState(new Date());
   const [endDate, SetendDate] = React.useState(new Date());
-
   React.useEffect(() => {
     async function fetchData() {
-      let InterestArray = [];
-      try {
-        const finaldata = await axios.get("/api/events/get-interest");
-        if (finaldata.data.is_error) {
-          console.log(finaldata.data.message);
-        } else {
-          InterestArray = finaldata.data.data;
-        }
-      } catch (err) {
-        console.log(err);
-      }
       setInterestState(
-        InterestArray.map((data) => {
+        props.category.map((data) => {
           return {
             select: false,
             id: data._id,

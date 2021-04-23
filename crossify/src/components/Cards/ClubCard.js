@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import defImg from "../../assets/img/event_1.jpeg";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "context/usercontext";
 import { store } from "react-notifications-component";
 import { notifyLiked } from "notify";
 import axios from "axios";
@@ -9,35 +10,13 @@ import ShareButton from "components/SweetAlerts/ShareButton";
 
 const ClubCard = (props) => {
   let history = useHistory();
+  const { users } = useContext(UserContext);
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const [count, setCount] = useState({});
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
-    async function fetchData() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        token: token,
-        club_id: props.data._id,
-      };
-      const finaldata = await axios.post(
-        "/api/club/checklikes",
-        object,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setLike(finaldata.data.Like);
-      }
-    }
-
     async function get_count() {
       const config = {
         method: "POST",
@@ -65,7 +44,10 @@ const ClubCard = (props) => {
     get_count();
     if (token) {
       setLogin(true);
-      fetchData();
+      const b = users.fav_club.find((e) => e === props.data._id);
+      if (b) {
+        setLike(true);
+      }
     }
   }, []);
 
@@ -99,6 +81,7 @@ const ClubCard = (props) => {
         });
       } else {
         notifyLiked();
+        users.fav_club.push(props.data._id);
         setLike(true);
       }
     }
@@ -124,6 +107,7 @@ const ClubCard = (props) => {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
+        users.fav_club.pop(props.data._id);
         setLike(false);
       }
     }

@@ -110,7 +110,7 @@ function Login() {
                       localStorage.setItem("jwt", res.data.token);
                       islogin_dispatch({ type: "Login-Status", status: true });
                       dispatch({ type: "ADD_USER", payload: res.data.data });
-                      history.push("/");
+                      window.location.replace("/");
                       const name =
                         res.data.data.fname + " " + res.data.data.lname;
                       notifySuccessLogin(name);
