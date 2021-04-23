@@ -157,11 +157,10 @@ export default function Landing() {
                   </motion.button>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1 justify-start xs:justify-center">
-                {eventState &&
-                  eventState.map((data) => (
-                    <EventCard key={data._id} data={data}></EventCard>
-                  ))}
+              <div className="flex flex-wrap gap-1">
+                {EventData.map((data) => (
+                  <EventCard key={data._id} data={data}></EventCard>
+                ))}
               </div>
             </div>
           </section>
