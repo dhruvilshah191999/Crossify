@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
 import UploadPic from "components/Inputs/UploadPic";
 import { useHistory } from "react-router-dom";
-=======
->>>>>>> 499e0cf7376fe6501283f0633242587d272aedde
 import { useParams } from "react-router";
 import Moment from "moment";
 import City from "../auth/states-and-districts.json";
@@ -12,18 +9,10 @@ import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import MapContainer from "components/Maps/MapCode";
 import dummyPF from "assets/img/demopf.png";
 import { Formik } from "formik";
-<<<<<<< HEAD
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import ViewFeedback from "components/Modals/ViewFeedback";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import PulseLoader from "react-spinners/PulseLoader";
-=======
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
-import { ModalManager } from "react-dynamic-modal";
-import ViewFeedback from "components/Modals/ViewFeedback";
-import ScaleLoader from "react-spinners/ScaleLoader";
->>>>>>> 499e0cf7376fe6501283f0633242587d272aedde
 
 export default function GeneralSettings(props) {
   let history = useHistory();
