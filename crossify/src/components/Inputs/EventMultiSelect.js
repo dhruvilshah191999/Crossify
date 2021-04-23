@@ -1,14 +1,12 @@
 import React from "react";
 import { Multiselect } from "multiselect-react-dropdown";
 import axios from "axios";
-import { UserContext } from "context/usercontext";
 
 class App extends React.Component {
-  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
-      objectArray: [],
+      objectArray: this.props.category,
       selectedValues: this.props.selectedValues,
     };
     this.style = {
@@ -35,11 +33,11 @@ class App extends React.Component {
   };
   render() {
     const { objectArray, selectedValues } = this.state;
-    console.log(this.context)
+    console.log(this.context);
     return (
       <>
         <Multiselect
-          options={this.context.category}
+          options={objectArray}
           selectedValues={selectedValues}
           displayValue="category_name"
           onSelect={this.onSelect}

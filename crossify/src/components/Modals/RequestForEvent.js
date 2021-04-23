@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import MultiSelect from "components/Inputs/MultiSelect";
+import MultiSelect from "components/Inputs/EventMultiSelect";
 import axios from "axios";
 import MapContainer from "../Maps/AddMapCode";
 import { usePosition } from "use-position";
@@ -71,10 +71,11 @@ function MyModal(props) {
     districts = citylist.districts;
   }
   let { latitude, longitude } = usePosition(true);
-
-  useEffect(() => {
-    setTimeout(setLoading(true), 1000);
-  }, []);
+    useEffect(() => {
+      setTimeout(() => {
+        setLoading(true);
+      }, 100);
+    }, []);
 
   const handleUpdateTags = (tags) => {
     setTags(tags);
@@ -306,6 +307,7 @@ function MyModal(props) {
                       <MultiSelect
                         placeholder="Select your relevant Categories"
                         parentCallback={handleCategory}
+                        category={props.category}
                       ></MultiSelect>
                     </div>
                     <p className="FormError">

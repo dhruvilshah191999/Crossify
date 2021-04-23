@@ -7,6 +7,7 @@ var event_details = require('../modules/event_details');
 var user_details = require('../modules/user_details');
 var club_details = require('../modules/club_details');
 var reports_details = require('../modules/reports_details');
+var member_details = require('../modules/members_details');
 const { ObjectId } = require('bson');
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
@@ -754,7 +755,7 @@ router.post('/check-club', auth, async function (req, res, next) {
       creator_id: ObjectId(req.user._id),
       is_active: 1,
     });
-    await result.exec((err, data) => {
+    await result.exec(async (err, data) => {
       if (err) {
         var error = {
           is_error: true,
@@ -762,12 +763,29 @@ router.post('/check-club', auth, async function (req, res, next) {
         };
         return res.status(600).send(error);
       } else if (!data) {
-        var error = {
-          check: false,
-          is_error: true,
-          message: 'User Not Found',
-        };
-        return res.status(200).send(error);
+        var result3 = await member_details.findOne({
+            club_id: ObjectId(club_id),
+            member_list: {
+              $elemMatch: {user: ObjectId(req.user._id), level: 'moderator'},
+            },
+            is_active: 1,
+          }).exec();
+        if (result3) {
+          var finaldata = {
+            check: true,
+            is_error: false,
+            message: 'Data Send',
+          };
+          return res.status(200).send(finaldata);
+        }
+        else {
+          var error = {
+            check: false,
+            is_error: true,
+            message: 'User Not Found',
+          };
+          return res.status(200).send(error);
+        }
       } else {
         var finaldata = {
           check: true,
@@ -897,7 +915,7 @@ router.post('/Broadcast', async function (req, res, next) {
 });
 
 router.post('/WelcomeMail', async function (req, res, next) {
-  var { email, interest_array, url } = req.body;
+  var { data,interest_array, url } = req.body;
 
   let objectIdArray = interest_array.map((s) => mongoose.Types.ObjectId(s));
   var x = ObjectId();
@@ -970,7 +988,6 @@ router.post('/WelcomeMail', async function (req, res, next) {
     latitude: data.latitude,
     longitude: data.longitude,
     pincode: data.pincode,
-    is_verified: true,
   });
   user.save((err, ans) => {
     if (err) {

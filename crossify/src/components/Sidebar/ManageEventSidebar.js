@@ -31,10 +31,6 @@ export default function Sidebar() {
       );
       if (finaldata.data.is_error) {
         history.push("/");
-      } else {
-        if (!finaldata.data.check) {
-          history.push("/");
-        }
       }
     }
     fetchData();

@@ -29,35 +29,26 @@ router.post('/login', async function (req, res, next) {
       };
       return res.status(400).send(error);
     } else {
-      if (data === null || data.length === 0) {
+      if (data === null) {
         var error = {
           is_error: true,
           message: 'Username or Password invalid',
         };
         return res.status(500).send(error);
-      } else if (!data.is_verified) {
-        console.log(data);
-        var error = {
-          is_error: true,
-          message: 'Check your email and verify first',
-        };
-        return res.status(401).send(error);
       } else {
-        if (!data.is_verified && data.is_active) {
+        if (!data.is_verified) {
           var error = {
             is_error: true,
-            message: 'Username or Password invalid',
+            message: 'Verify Your Account First ',
           };
           return res.status(500).send(error);
-        }
-        else if (!data.is_verified && !data.is_active) {
+        } else if (!data.is_active) {
           var error = {
             is_error: true,
-            message: 'Verify Your Account First',
+            message: "Account doesn't Exists",
           };
           return res.status(500).send(error);
-        }
-        else {
+        } else {
           var check_pass = data.password;
           if (bcrypt.compareSync(password, check_pass)) {
             let token = data.generateAuthToken();
@@ -190,28 +181,20 @@ router.post('/socialsignin', async function (req, res, next) {
         message: err,
       };
       return res.status(500).send(error);
-    } else if (!data.is_verified) {
-      console.log(data);
-      var error = {
-        is_error: true,
-        message: 'please check your mail and verify first',
-      };
-      return res.status(401).send(error);
     } else if (data) {
-      if (!data.is_verified && data.is_active) {
+      if (!data.is_verified) {
         var error = {
           is_error: true,
-          message: 'Username or Password invalid',
+          message: 'Verify Your Account First ',
         };
         return res.status(500).send(error);
-      } else if (!data.is_verified && !data.is_active) {
+      } else if (!data.is_active) {
         var error = {
           is_error: true,
-          message: 'Verify Your Account First',
+          message: "Account doesn't Exists",
         };
         return res.status(500).send(error);
-      }
-      else {
+      }else {
         let token = data.generateAuthToken();
         var ciphertext = CryptoJS.AES.encrypt(
           JSON.stringify(token),
@@ -228,7 +211,7 @@ router.post('/socialsignin', async function (req, res, next) {
     } else {
       var error = {
         is_error: true,
-        message: "This Account don't Exists",
+        message: "This Account doesn't Exists",
       };
       return res.status(500).send(error);
     }
@@ -470,7 +453,7 @@ router.post('/auth', auth, async function (req, res, next) {
   user_details
     .findOne(
       {_id: ObjectId(req.user._id), is_active: 1},
-      {_id: 1, profile_photo: 1, username: 1}
+      {_id: 1, profile_photo: 1, username: 1 , fav_event:1 , fav_club:1}
     )
     .exec((err, data) => {
       return res.status(200).send(data);

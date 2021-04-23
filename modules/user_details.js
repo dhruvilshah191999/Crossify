@@ -122,10 +122,6 @@ var user_details = new Schema({
     type: ObjectId,
     required: false,
   },
-  is_verified: {
-    type: Boolean,
-    required: false,
-  },
 });
 
 user_details.methods.generateAuthToken = function () {

@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Photo from "assets/img/team-4-470x470.png";
 import axios from "axios";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import EventCalendar from "components/Calendar/EventCalendar";
 import { motion } from "framer-motion";
+import { UserContext } from "context/usercontext";
 import EmptyContainer from "components/sections/EmptyContainer";
 import MapwithEvents from "components/Maps/EventsOfClubsMap";
 //khatar banayu bhai harshil
 export default function EventTab(props) {
   const eventPerPage = 3;
   const [pastIndex, setpastIndex] = useState(1);
+  const { users } = useContext(UserContext);
   const [clubId, setclubId] = useState(props.club_id);
   const [upcomingIndex, setUpcomingIndex] = useState(1);
   const [tabIndex, toggleTabIndex] = useState(1);
@@ -79,10 +81,22 @@ export default function EventTab(props) {
   );
 
   const renderupcomingEvents = currentupcomingEvents.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
+    return (
+      <ProfileEventClub
+        data={el}
+        key={el._id}
+        fav_event={users.fav_event}
+      ></ProfileEventClub>
+    );
   });
   const renderpastEvents = currentpastEvents.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
+    return (
+      <ProfileEventClub
+        data={el}
+        key={el._id}
+        fav_event={users.fav_event}
+      ></ProfileEventClub>
+    );
   });
   // Logic for displaying page numbers
   const pageNumbers = [];

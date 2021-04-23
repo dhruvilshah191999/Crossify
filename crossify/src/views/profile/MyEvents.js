@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { UserContext } from "context/usercontext";
 import EventCalendar from "components/Calendar/MyEventsCalendar";
 import EmptyContainer from "components/sections/EmptyContainer";
 
@@ -12,6 +13,7 @@ const getSegment = (totalEvents, curIndex, eventPerPage) => {
 };
 export default function MyClubs() {
   const token = localStorage.getItem("jwt");
+  const { users } = useContext(UserContext);
   const [tabIndex, toggleTabIndex] = useState(1);
   const [likedEvents, setlikedEvents] = useState([]);
   const [backEvents, setBackEvents] = useState([]);
@@ -78,7 +80,6 @@ export default function MyClubs() {
       search3.some(isPresent)
     );
   });
-  console.log(likeEvents);
   const currentPastEvents = getSegment(pastEvents, backIndex, eventPerPage);
   const currentUpcomingEvents = getSegment(
     newEvents,
@@ -88,13 +89,25 @@ export default function MyClubs() {
   const currentLikedEvents = getSegment(likeEvents, likedIndex, eventPerPage);
 
   const renderUpcomingEvents = currentUpcomingEvents.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
+    return <ProfileEventClub data={el} key={el._id} fav_event={users.fav_event}></ProfileEventClub>;
   });
   const renderPastEvents = currentPastEvents.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
+    return (
+      <ProfileEventClub
+        data={el}
+        key={el._id}
+        fav_event={users.fav_event}
+      ></ProfileEventClub>
+    );
   });
   const renderLikedEvents = currentLikedEvents.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id}></ProfileEventClub>;
+    return (
+      <ProfileEventClub
+        data={el}
+        key={el._id}
+        fav_event={users.fav_event}
+      ></ProfileEventClub>
+    );
   });
 
   // Logic for displaying page numbers

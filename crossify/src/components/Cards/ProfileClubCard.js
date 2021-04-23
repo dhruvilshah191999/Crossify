@@ -9,30 +9,10 @@ function ProfileClubCard(props) {
   const token = localStorage.getItem("jwt");
   const [checklike, setcheck] = useState(false);
   useEffect(() => {
-    async function getData() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        token: token,
-        club_id: props.data._id,
-      };
-      const finaldata = await axios.post(
-        "/api/club/checklikes",
-        object,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setcheck(finaldata.data.Like);
-      }
+    const b = props.fav_club.find((e) => e === props.data._id);
+    if (b) {
+      setcheck(true);
     }
-
-    getData();
   });
 
   const addlike = async (e) => {
@@ -51,6 +31,7 @@ function ProfileClubCard(props) {
       console.log(finaldata.data.message);
     } else {
       setcheck(true);
+      props.fav_club.push(props.data._id);
       history.go(0);
     }
   };
@@ -71,6 +52,7 @@ function ProfileClubCard(props) {
       console.log(finaldata.data.message);
     } else {
       setcheck(false);
+      props.fav_club.pop(props.data._id);
       history.go(0);
     }
   };
