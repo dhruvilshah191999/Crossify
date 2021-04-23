@@ -10,6 +10,7 @@ import { InputTagsContainer } from "react-input-tags";
 import { Formik } from "formik";
 import $ from "jquery";
 import { Timepicker } from "materialize-css";
+import moment from "moment";
 
 Modal.defaultStyles = {};
 
@@ -135,8 +136,8 @@ function MyModal(props) {
                 errors.postalcode = "PostalCode is required !";
               } else if (postalcode.length != 6) {
                 errors.postalcode = "PostalCode should be in 6 digits !";
-              } else if (!capacity) {
-                errors.capacity = "Capacity is required !";
+              } else if (capacity == "0") {
+                errors.capacity = "Valid Capacity is required !";
               } else if (!(capacity > 0)) {
                 errors.capacity = "Capacity should be greater than zero !";
               } else if (!last_registraiton_date) {
@@ -146,7 +147,7 @@ function MyModal(props) {
                 new Date(starting_date) < new Date(last_registraiton_date)
               ) {
                 errors.last_registraiton_date =
-                  "Give proper last registration date !";
+                  "Give proper last registration date with respect to starting date.!";
               } else if (!starting_date) {
                 errors.starting_date = "Starting date is required !";
               } else if (!ending_date) {
@@ -155,11 +156,23 @@ function MyModal(props) {
                 new Date(starting_date) > new Date(ending_date) ||
                 new Date(ending_date) < new Date(starting_date)
               ) {
-                errors.ending_date = "Give proper starting_date !";
+                errors.ending_date = "Give proper ending date !";
               } else if (!starting_time) {
                 errors.starting_time = "Starting time is required !";
               } else if (!ending_time) {
                 errors.ending_time = "Ending time is required !";
+              } else if (
+                new Date(starting_date).getDate() ==
+                  new Date(ending_date).getDate() &&
+                new Date(starting_date).getMonth() ==
+                  new Date(ending_date).getMonth() &&
+                new Date(starting_date).getFullYear() ==
+                  new Date(ending_date).getFullYear() &&
+                moment(starting_time, "h:mma").isAfter(
+                  moment(ending_time, "h:mma")
+                )
+              ) {
+                errors.ending_time = "Give proper ending time!";
               } else if (!description) {
                 errors.description = "Description is required !";
               } else if (!eligibility) {

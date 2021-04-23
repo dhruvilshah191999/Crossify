@@ -60,7 +60,7 @@ export default function Landing() {
       <>
         <Navbar transparent />
         <main>
-          <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
+          <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75 w-full">
             <div
               className="absolute top-0 w-full h-full bg-center bg-cover"
               style={{
@@ -83,37 +83,37 @@ export default function Landing() {
               </div>
               <br />
               <form>
-                <div className="flex justify-center flex-wrap">
-                  <div
-                    style={{ width: "60%" }}
-                    className="bg-white p-2 align-center"
-                  >
-                    <input
-                      style={{
-                        width: "65%",
-                        outline: "none",
-                        borderRight: "2px solid gray",
-                      }}
-                      className="p-2 text-lg"
-                      type="text"
-                      name="search"
-                      onChange={(e) => setSearch(e.target.value)}
-                      value={search}
-                      placeholder="Find your club"
-                    />
-                    <input
-                      style={{ width: "30%", outline: "none" }}
-                      className="p-2  text-lg"
-                      type="text"
-                      name="location"
-                      onChange={(e) => setlocation(e.target.value)}
-                      value={location}
-                      placeholder="Select Location"
-                    />
+                <div className="flex justify-center flex-wrap w-full">
+                  <div className="bg-white p-2 align-center flex w-full xs:p-1 w-65">
+                    <div style={{ flex: "1 1 60%" }}>
+                      <input
+                        style={{
+                          outline: "none",
+                          borderRight: "2px solid gray",
+                        }}
+                        className="p-2 text-lg w-full"
+                        type="text"
+                        name="search"
+                        onChange={(e) => setSearch(e.target.value)}
+                        value={search}
+                        placeholder="Find your club"
+                      />
+                    </div>
+                    <div style={{ flex: "1 1 35%", overflow: "hidden" }}>
+                      <input
+                        style={{ outline: "none" }}
+                        className="p-2  text-lg w-full"
+                        type="text"
+                        name="location"
+                        onChange={(e) => setlocation(e.target.value)}
+                        value={location}
+                        placeholder="Select Location"
+                      />
+                    </div>
                   </div>
                   <button
                     style={{ marginLeft: "10px" }}
-                    className="bg-alpha hover:bg-brightalpha hover:shadow-md rounded text-white p-2 pl-4 pr-4"
+                    className="bg-alpha hover:bg-brightalpha hover:shadow-md rounded text-white p-2 pl-4 pr-4 xs:block"
                     onClick={(e) => onSubmit(e)}
                   >
                     <p className="font-semibold text-md">Search</p>
@@ -138,11 +138,11 @@ export default function Landing() {
             </div>
           </div>
 
-          <section className="bg-white block m-4 ">
-            <div className="p-8 mx-6">
+          <section className="bg-white block m-4">
+            <div className="p-8 mx-6 sm:p-10 mx-0">
               <div className="mb-6">
-                <div className="flex flex-row ">
-                  <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
+                <div className="flex flex-row xs:flex-column">
+                  <h4 className="text-3xl xs:text-2xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     Upcoming Nearby Events
                   </h4>
                   <motion.button
@@ -157,10 +157,11 @@ export default function Landing() {
                   </motion.button>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1">
-                {EventData.map((data) => (
-                  <EventCard key={data._id} data={data}></EventCard>
-                ))}
+              <div className="flex flex-wrap gap-1 justify-start xs:justify-center">
+                {eventState &&
+                  eventState.map((data) => (
+                    <EventCard key={data._id} data={data}></EventCard>
+                  ))}
               </div>
             </div>
           </section>
@@ -168,7 +169,7 @@ export default function Landing() {
             className="bg-white block m-4"
             style={{ marginBottom: "20px" }}
           >
-            <div className="p-8 mx-6 pt-0">
+            <div className="p-8 mx-6 sm:p-10 mx-0">
               <div className="mb-6">
                 <div className="flex flex-row ">
                   <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
@@ -193,7 +194,7 @@ export default function Landing() {
               </div>
             </div>
           </section>
-          
+
           {InterestEventData.map((el) =>
             el.event.length !== 0 ? (
               <section
@@ -237,7 +238,7 @@ export default function Landing() {
 
           <section className="pb-4 bg-gray-100 ">
             <div className="container mx-auto px-4">
-              <div className="flex flex-col ">
+              <div className="flex flex-col">
                 <div className="flex flex-row justify-center ">
                   {" "}
                   <div className="text-2xl m-4 font-bold text-alpha  pt-6">
@@ -245,7 +246,7 @@ export default function Landing() {
                     Browse Clubs by Category
                   </div>
                 </div>
-                <div className="flex flex-row flex-wrap container p-4 mx-5">
+                <div className="flex flex-row justify-center flex-wrap container p-4">
                   {" "}
                   {category.map((el) => {
                     return (

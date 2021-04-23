@@ -1,6 +1,5 @@
 import React from "react";
 import ChatMessage from "components/Message/Message";
-import addNotification from "react-push-notification";
 import urlObject from "../../config/default.json";
 import io from "socket.io-client";
 import axios from "axios";
@@ -214,7 +213,7 @@ export default class RoomTab extends React.Component {
           }
           this.setState({ curRoomMsgs: msgs });
         }
-    );
+      );
     return msgs.map(({ message, username, profilePic, senttime, user_id }) => (
       <ChatMessage
         self={username === this.state.username}

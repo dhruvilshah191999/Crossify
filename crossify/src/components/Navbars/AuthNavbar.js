@@ -4,13 +4,13 @@ import { Link, Redirect } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import { motion } from "framer-motion";
 // component
-
-import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
 import logo from "../../assets/logos/logo_light.png";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
 import { UserContext } from "context/usercontext";
 import io from "socket.io-client";
-let socket = io("http://localhost:5000", {
+import urlObject from "../../config/default.json";
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
   transport: ["websocket", "polling", "flashsocket"],
 });
 
