@@ -86,7 +86,7 @@ const UserDropdown = () => {
             className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
             target="_blank"
           >
-            Be a Bug Report
+            Be a Bug Police
           </a>
 
           <div className="h-0 my-2 border border-solid border-gray-200" />
