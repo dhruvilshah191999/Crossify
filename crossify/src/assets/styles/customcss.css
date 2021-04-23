@@ -617,10 +617,6 @@
   height: 60px;
 }
 
-.content-end {
-  align-content: flex-end;
-}
-
 .event-side-container {
   min-width: 100px;
   max-width: 400px;
@@ -1036,7 +1032,9 @@ input.react-input-tags-input {
 .flex-row-reverse {
   flex-direction: row-reverse;
 }
-
+.flex-column {
+  flex-direction: column;
+}
 /* File Page 
 
 table,
@@ -1752,4 +1750,17 @@ form .page .btns button.next {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+.justify-evenly{
+  justify-content: space-evenly;
+}
+.flex-nowrap{
+  flex-wrap: nowrap;
+}
+.w-65{
+  width: 65%;
 }

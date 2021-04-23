@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { createPopper } from "@popperjs/core";
 import { UserContext } from "context/usercontext";
-const UserDropdown = () => {
+const UserDropdown = (props) => {
   const { users } = useContext(UserContext);
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -18,6 +18,9 @@ const UserDropdown = () => {
     window.localStorage.removeItem("jwt");
     window.location.reload();
   };
+  if (!props.isLogin) {
+    return <div></div>;
+  }
   return (
     <>
       <div

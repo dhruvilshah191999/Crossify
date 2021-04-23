@@ -102,14 +102,20 @@ const SearchNavbar = (props) => {
                 </button>
               </Link>
             </li>
-
-            <li className={isLogin ? " " : "hidden " + "flex items-center "}>
+            {/* <li className={isLogin ? " " : "hidden " + "flex items-center"}>
               <NotificationDropdown bgWhite={true} />
-            </li>
+            </li> */}
 
-            <li className={isLogin ? " " : "hidden " + "flex items-center"}>
-              <UserDropdown />
-            </li>
+            {isLogin && (
+              <li className="flex items-center">
+                <NotificationDropdown bgWhite={true} />
+              </li>
+            )}
+            {isLogin && (
+              <li className="flex items-center">
+                <UserDropdown isLogin={isLogin} />
+              </li>
+            )}
           </ul>
         </div>
       </div>

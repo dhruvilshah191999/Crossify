@@ -1,7 +1,4 @@
 import React from "react";
-
-import Navbar from "components/Navbars/IndexNavbar.js";
-import Footer from "components/Footers/Footer.js";
 import ProfileDetails from "components/Cards/ProfileDetails";
 export default function Profile() {
   const onreturn = () => {

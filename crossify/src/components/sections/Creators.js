@@ -73,7 +73,7 @@ class Creators extends Component {
                       <i className="fab fa-instagram"></i>
                     </button>
                     <button
-                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1 border border-white"
+                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                       onClick={() => {
                         window.open("https://github.com/hackershil", "_blank");
@@ -172,7 +172,7 @@ class Creators extends Component {
                       <i className="fab fa-instagram"></i>
                     </button>
                     <button
-                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1 border border-white"
+                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                       onClick={() => {
                         window.open("https://github.com/bhargu-27", "_blank");
@@ -214,7 +214,7 @@ class Creators extends Component {
                       <i className="fab fa-linkedin"></i>
                     </button>
                     <button
-                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1 border border-white"
+                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                       onClick={() => {
                         window.open(
