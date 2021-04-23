@@ -329,31 +329,34 @@ export default function EventPage(props) {
                   ></BigShareButton>
                 </div>
               </div>
-              {loading &&
-              <div
-                title="Add to Calendar"
-                className="addeventatc mt-1  text-xs rounded-lg"
-                style={{ fontSize: "smaller !important" }}
-                data-styling="none"
-              >
-                <span className="uppercase">
-                  <i className="far fa-calendar-plus text-base"></i> &nbsp;Add
-                  to Calendar
-                </span>
-                <span className="arrow">&nbsp;</span>
-                <span className="start">{eventdetails.startdate}</span>
-                <span className="end">{eventdetails.date}</span>
-                <span className="timezone">Asia/Kolkata</span>
-                <span className="title">{eventdetails.event_name}</span>
-                <span className="description">{eventdetails.description}</span>
-                <span className="location">
-                  {eventdetails.location +
-                    ", " +
-                    eventdetails.city +
-                    ", " +
-                    eventdetails.state}
-                </span>
-              </div>}
+              {loading && (
+                <div
+                  title="Add to Calendar"
+                  className="addeventatc mt-1  text-xs rounded-lg"
+                  style={{ fontSize: "smaller !important" }}
+                  data-styling="none"
+                >
+                  <span className="uppercase">
+                    <i className="far fa-calendar-plus text-base"></i> &nbsp;Add
+                    to Calendar
+                  </span>
+                  <span className="arrow">&nbsp;</span>
+                  <span className="start">{eventdetails.startdate}</span>
+                  <span className="end">{eventdetails.date}</span>
+                  <span className="timezone">Asia/Kolkata</span>
+                  <span className="title">{eventdetails.event_name}</span>
+                  <span className="description">
+                    {eventdetails.description}
+                  </span>
+                  <span className="location">
+                    {eventdetails.location +
+                      ", " +
+                      eventdetails.city +
+                      ", " +
+                      eventdetails.state}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-center mt-2">
                 <JoinEventButton
                   eventid={eventdetails._id}
