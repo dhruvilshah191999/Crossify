@@ -36,6 +36,7 @@ router.post('/general-update', async function (req, res, next) {
     starting_time,
     ending_date,
     ending_time,
+    ending_date_registration,
   } = req.body;
   var startdate = new Date(starting_date + ' ' + starting_time);
   var date = new Date(ending_date + ' ' + ending_time);
@@ -54,6 +55,7 @@ router.post('/general-update', async function (req, res, next) {
       longitude,
       latitude,
       startdate,
+      ending_date_registration,
       date,
     }
   );

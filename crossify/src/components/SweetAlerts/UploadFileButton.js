@@ -20,6 +20,7 @@ export default class SweetAlertModal extends Component {
   };
 
   onSubmit = async (res) => {
+    this.props.parentCallback(true);
     const token = localStorage.getItem("jwt");
     var object = {
       token,

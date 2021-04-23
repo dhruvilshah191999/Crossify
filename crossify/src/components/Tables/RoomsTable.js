@@ -12,6 +12,7 @@ import RoomUpdation from "components/SweetAlerts/RoomUpdation";
 import EmptyTable from "components/sections/EmptyTable";
 import CreateRoomButton from "components/SweetAlerts/CreateRoom";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -100,7 +101,11 @@ export default function App(props) {
   const [roomData, setRoomData] = useState(props.data);
   const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(() => roomData, []);
+  const [loading, setloading] = useState(false);
 
+  const getLoading = (childData) => {
+    setloading(childData);
+  };
   const columns = React.useMemo(
     () => [
       {
@@ -164,6 +169,7 @@ export default function App(props) {
               readable={is_readable}
               writable={is_writable}
               id={value}
+              parentCallback={getLoading}
             />
             <RemoveRoomButton id={value}></RemoveRoomButton>
           </div>
@@ -261,9 +267,16 @@ export default function App(props) {
                   />
                 </div>
                 <div className="ml-auto">
-                  <div className="inline-block">
-                    <CreateRoomButton club_id={clubId} />
-                  </div>
+                  {loading ? (
+                      <PulseLoader color="#48bb78" size={10} />
+                  ) : (
+                    <div className="inline-block">
+                      <CreateRoomButton
+                        club_id={clubId}
+                        parentCallback={getLoading}
+                      />
+                    </div>
+                  )}
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     isLight={isLight}

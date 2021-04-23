@@ -15,9 +15,9 @@ import Moment from "moment";
 import fileDownload from "js-file-download";
 import axios from "axios";
 import EmptyTable from "components/sections/EmptyTable";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const handleDownload = (url, filename) => {
-  console.log(url);
   axios
     .get(url, {
       responseType: "blob",
@@ -115,6 +115,11 @@ export default function App(props) {
   const [mediaPhoto, setmediaPhoto] = useState(props.data);
   const [clubId, setClubId] = useState(props.club_id);
   const data = React.useMemo(() => mediaPhoto, []);
+  const [loading, setloading] = useState(false);
+
+  const getLoading = (childData) => {
+    setloading(childData);
+  };
 
   const columns = React.useMemo(
     () => [
@@ -183,6 +188,7 @@ export default function App(props) {
                 description={description}
                 name={name}
                 size={size}
+                parentCallback={getLoading}
               ></EditMediaButton>
               <RemoveMediaButton
                 club_id={clubId}
@@ -284,9 +290,16 @@ export default function App(props) {
                   />
                 </div>
                 <div className="ml-auto">
-                  <div className="inline-block">
-                    <UploadMediaButton club_id={clubId} />
-                  </div>
+                  {loading ? (
+                    <PulseLoader color="#48bb78" size={10} />
+                  ) : (
+                    <div className="inline-block">
+                      <UploadMediaButton
+                        club_id={clubId}
+                        parentCallback={getLoading}
+                      />
+                    </div>
+                  )}
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     isLight={isLight}
