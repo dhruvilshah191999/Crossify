@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import Facebook from "./Facebook";
+import Facebook from "./LoginFacebook";
 import Google from "./LoginGoogle";
 import { Link } from "react-router-dom";
 import { UserContext } from "context/usercontext";
