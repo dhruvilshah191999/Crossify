@@ -1,5 +1,4 @@
 import React from "react";
-import "./Pagination.css";
 import { motion } from "framer-motion";
 
 const Pagination = ({ postPerPage, totalPosts, paginate }) => {
