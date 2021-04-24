@@ -51,7 +51,6 @@ export default class SweetAlertModal extends Component {
         showCancel
         confirmBtnText="Create"
         confirmBtnBsStyle="success"
-        title="Are you sure?"
         focusCancelBtn
         confirmBtnCssClass="text-base rounded px-4 py-2 bg-green-500 "
         confirmBtnStyle={{ color: "white" }}

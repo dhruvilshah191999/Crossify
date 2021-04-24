@@ -5,84 +5,73 @@ import { useParams } from "react-router";
 
 export default function CardBarChart() {
   var { id } = useParams();
-  React.useEffect(async() => {
-    const config2 = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-      validateStatus: () => true,
-    };
-    var send_data = {
-      club_id: id,
-    };
-    const finaldata = await axios.post(
-      "/api/admin/channelGraphs",
-      send_data,
-      config2
-    );
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      var date = new Date();
-      date.setMonth(date.getMonth() + 1);
-      const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      let config = {
-        type: "radar",
-        data: {
-          labels: finaldata.data.label,
-          datasets: [
-            {
-              backgroundColor: "#ed64a6",
-              borderColor: "#ed64a6",
-              data: finaldata.data.data,
-              fill: false,
-              barThickness: 8,
-            },
-          ],
+  React.useEffect(() => {
+    async function getData() {
+      const config2 = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
         },
-        options: {
-          maintainAspectRatio: false,
-          responsive: true,
-          title: {
-            display: false,
-            text: "Orders Chart",
-          },
-          tooltips: {
-            mode: "index",
-            intersect: false,
-          },
-          hover: {
-            mode: "nearest",
-            intersect: true,
-          },
-          legend: {
-            display:false,
-            labels: {
-              fontColor: "rgba(0,0,0,.4)",
-            },
-            align: "end",
-            position: "bottom",
-          },
-        },
+        validateStatus: () => true,
       };
-      let ctx = document.getElementById("radar-chart").getContext("2d");
-      window.myRadar = new Chart(ctx, config);
+      var send_data = {
+        club_id: id,
+      };
+      const finaldata = await axios.post(
+        "/api/admin/channelGraphs",
+        send_data,
+        config2
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        var date = new Date();
+        date.setMonth(date.getMonth() + 1);
+        let config = {
+          type: "radar",
+          data: {
+            labels: finaldata.data.label,
+            datasets: [
+              {
+                backgroundColor: "#ed64a6",
+                borderColor: "#ed64a6",
+                data: finaldata.data.data,
+                fill: false,
+                barThickness: 8,
+              },
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            title: {
+              display: false,
+              text: "Orders Chart",
+            },
+            tooltips: {
+              mode: "index",
+              intersect: false,
+            },
+            hover: {
+              mode: "nearest",
+              intersect: true,
+            },
+            legend: {
+              display: false,
+              labels: {
+                fontColor: "rgba(0,0,0,.4)",
+              },
+              align: "end",
+              position: "bottom",
+            },
+          },
+        };
+        let ctx = document.getElementById("radar-chart").getContext("2d");
+        window.myRadar = new Chart(ctx, config);
+      }
     }
-  }, []);
+    getData();
+  }, [id]);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">

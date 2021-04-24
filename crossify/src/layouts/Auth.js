@@ -1,11 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-
-// components
-
 import Navbar from "components/Navbars/AuthNavbar.js";
 import Login from "views/auth/Login.js";
-import Background from "assets/img/register_bg_2.png";
 import Register from "views/auth/Register.js";
 import Register2 from "views/auth/Register2";
 import SocialRegister2 from "views/auth/SocialRegister2";
@@ -15,7 +11,6 @@ import ForgotPassword from "views/auth/ForgotPassword";
 import VerifiedWindow from "views/auth/VerifiedWindow";
 import SetPassword from "views/auth/SetPassword";
 import Particles from "react-particles-js";
-import PlayGround from "views/demo/PlayGround";
 
 export default function Auth() {
   return (

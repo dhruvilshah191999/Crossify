@@ -27,7 +27,6 @@ function ClubPage(props) {
   const [moderator, setmoderator] = useState(false);
   const [isPublic, setPublic] = useState(true);
   const [isJoin, setIsJoin] = useState(false);
-  const [like, setLike] = useState(false);
   const [count, setCount] = useState({});
   const [clubData, setClubData] = useState([]);
   const token = localStorage.getItem("jwt");
@@ -141,7 +140,7 @@ function ClubPage(props) {
     CheckRequestMember();
     event_details();
     get_count();
-  }, []);
+  }, [id,token]);
 
 
   const addlike = async (e) => {
@@ -160,7 +159,8 @@ function ClubPage(props) {
       notifyWentWrong();
     } else {
       notifyClubLiked();
-      setLike(true);
+      users.fav_club.push(id);
+      history.go(0);
     }
   };
 
@@ -179,7 +179,8 @@ function ClubPage(props) {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      setLike(false);
+      users.fav_club.pop(id);
+      history.go(0);
     }
   };
   const openModal = () => {

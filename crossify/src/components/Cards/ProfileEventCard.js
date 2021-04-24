@@ -14,7 +14,7 @@ function ProfileClubCard(props) {
     if (b) {
       setcheck(true);
     }
-  }, []);
+  }, [props]);
   const addlike = async (e) => {
     const config = {
       method: "POST",
@@ -144,7 +144,7 @@ ProfileClubCard.defaultProps = {
     photo: "1.jpg",
     place: "Ahmedabad , GJ",
     date: "July 14",
-    photo: "1.jpg",
+    photo1: "1.jpg",
     duration: "8 PM to 11 PM",
   },
 };

@@ -1,6 +1,5 @@
 import React from "react";
 import { Multiselect } from "multiselect-react-dropdown";
-import axios from "axios";
 
 class App extends React.Component {
   constructor(props) {

@@ -22,32 +22,36 @@ export default function Register5() {
     history.push("/auth/register");
   }
 
-  useEffect(async () => {
-    setTimeout(() => {
-      setcategoryloading(true);
-    }, 500);
+  useEffect(() => {
+    async function setTime() {
+      setTimeout(() => {
+        setcategoryloading(true);
+      }, 500);
+    }
+    setTime();
   }, []);
-  useEffect(async () => {
-    setInterestState(
-      category.map((data) => {
-        return {
-          select: false,
-          id: data._id,
-          name: data.category_name,
-        };
-      })
-    );
-  }, [categoryloading]);
+
+  useEffect(() => {
+    async function setData() {
+      setInterestState(
+        category.map((data) => {
+          return {
+            select: false,
+            id: data._id,
+            name: data.category_name,
+          };
+        })
+      );
+    }
+    setData();
+  }, [categoryloading, category]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setloading(true);
-    let array = [];
-    await interestState.map((data) => {
-      if (data.select === true) {
-        array.push(data.id);
-      }
-    });
+    const array = await interestState
+      .filter(({ select }) => select)
+      .map(({ id }) => ( id ));
     var data = {
       data: decryptedData,
       interest_array: array,

@@ -34,7 +34,7 @@ export default function Sidebar() {
       }
     }
     fetchData();
-  }, []);
+  }, [history, id, token]);
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -54,7 +54,11 @@ export default function Sidebar() {
           >
             <div className="flex flex-row items-center ">
               <div>
-                <img className="w-8 ml-4 inline-block pt-2 " src={logo} />
+                <img
+                  className="w-8 ml-4 inline-block pt-2 "
+                  src={logo}
+                  alt="logo"
+                />
               </div>
               <div>
                 <span className="font-semibold text-xl tracking-tight text-gray-600 px-2 ml-2">
@@ -89,7 +93,11 @@ export default function Sidebar() {
                     to="/"
                   >
                     <div className="flex flex-row ">
-                      <img className="w-10 inline-block pt-4" src={logo} />
+                      <img
+                        className="w-10 inline-block pt-4"
+                        src={logo}
+                        alt="logo"
+                      />
                       <span className="font-semibold text-2xl tracking-tight px-2">
                         CROSSIFY
                       </span>

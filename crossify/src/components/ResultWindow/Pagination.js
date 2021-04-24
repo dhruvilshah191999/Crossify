@@ -4,11 +4,9 @@ import { motion } from "framer-motion";
 
 const Pagination = ({ postPerPage, totalPosts, paginate }) => {
   const [current, setcurrent] = React.useState(1);
-  let checkpage = false;
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalPosts / postPerPage); i++) {
     pageNumbers.push(i);
-    if (i === current) checkpage = true;
   }
 
   return (

@@ -42,6 +42,11 @@ export default function Navbar(props) {
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
               <i className="text-gray-600 fas fa-bars"></i>
+              {/* <i
+                className={
+                  "text-gray-600 fas" + (navbarOpen ? "fa-times" : "fa-bars")
+                }
+              /> */}
             </button>
           </div>
           <div

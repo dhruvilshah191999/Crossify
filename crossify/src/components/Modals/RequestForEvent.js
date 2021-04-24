@@ -8,8 +8,6 @@ import UploadPic from "components/Inputs/UploadPic";
 import City from "../../views/auth/states-and-districts.json";
 import { InputTagsContainer } from "react-input-tags";
 import { Formik } from "formik";
-import $ from "jquery";
-import { Timepicker } from "materialize-css";
 import moment from "moment";
 
 Modal.defaultStyles = {};
@@ -134,9 +132,9 @@ function MyModal(props) {
                 errors.cityname = "City is required !";
               } else if (!postalcode) {
                 errors.postalcode = "PostalCode is required !";
-              } else if (postalcode.length != 6) {
+              } else if (postalcode.length !== 6) {
                 errors.postalcode = "PostalCode should be in 6 digits !";
-              } else if (capacity == "0") {
+              } else if (capacity === "0") {
                 errors.capacity = "Valid Capacity is required !";
               } else if (!(capacity > 0)) {
                 errors.capacity = "Capacity should be greater than zero !";
@@ -162,11 +160,11 @@ function MyModal(props) {
               } else if (!ending_time) {
                 errors.ending_time = "Ending time is required !";
               } else if (
-                new Date(starting_date).getDate() ==
+                new Date(starting_date).getDate() ===
                   new Date(ending_date).getDate() &&
-                new Date(starting_date).getMonth() ==
+                new Date(starting_date).getMonth() ===
                   new Date(ending_date).getMonth() &&
-                new Date(starting_date).getFullYear() ==
+                new Date(starting_date).getFullYear() ===
                   new Date(ending_date).getFullYear() &&
                 moment(starting_time, "h:mma").isAfter(
                   moment(ending_time, "h:mma")

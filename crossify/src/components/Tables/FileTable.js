@@ -75,42 +75,9 @@ function DefaultColumnFilter({
   );
 }
 
-function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id },
-}) {
-  // Calculate the options for filtering
-  // using the preFilteredRows
-  const options = React.useMemo(() => {
-    const options = new Set();
-    preFilteredRows.forEach((row) => {
-      options.add(row.values[id]);
-    });
-    return [...options.values()];
-  }, [id, preFilteredRows]);
-
-  // Render a multi-select box
-  return (
-    <select
-      value={filterValue}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  );
-}
-
 export default function App(props) {
   const [isLight, setIsLight] = useState(1);
-  const [clubId, setClubId] = useState(props.club_id);
-  const [mediaFile, setmediaFile] = useState(props.data);
-  const data = React.useMemo(() => mediaFile, []);
+  const data = React.useMemo(() => props.data, [props.data]);
 
   const columns = React.useMemo(
     () => [
@@ -281,7 +248,7 @@ export default function App(props) {
           </div>
         </div>
         <div className="block w-full overflow-x-auto relative">
-          {page.length == 0 && <EmptyTable isLight={isLight} />}
+          {page.length === 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -336,7 +303,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
-            {page.length == 0 && <div className="empty-table-space"></div>}
+            {page.length === 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

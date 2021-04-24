@@ -3,25 +3,13 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import City from "./states-and-districts.json";
 import { usePosition } from "use-position";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
-import { Formik, useField } from "formik";
+import { Formik } from "formik";
 
 export default function SocialRegister2() {
-  var vertical = "top";
-  var horizontal = "center";
   let history = useHistory();
   const watch = true;
-  const [errorStatus, setError] = useState(false);
-  const [message, setMessage] = useState("");
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setError(false);
-  };
   let { latitude, longitude } = usePosition(watch);
   const [statename, setStateName] = useState("");
   const [usernameStatus, setUsername] = useState(false);
@@ -55,6 +43,7 @@ export default function SocialRegister2() {
     about_me,
     occupation,
   } = formData;
+
   var onUsernameChange = (e) => {
     setusername(e.target.value);
     const config = {
@@ -87,16 +76,6 @@ export default function SocialRegister2() {
   return (
     <>
       <div className="container mx-auto px-4 h-full mt-10">
-        <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
-          open={errorStatus}
-          autoHideDuration={2000}
-          onClose={handleClose}
-        >
-          <Alert severity="error" onClose={handleClose}>
-            {message}
-          </Alert>
-        </Snackbar>
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-6/12 px-4">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300">
@@ -126,7 +105,7 @@ export default function SocialRegister2() {
                       errors.password = "Minimim 6 characters are required !";
                     } else if (!repassword) {
                       errors.repassword = "Re-Password is required !";
-                    } else if (password != repassword) {
+                    } else if (password !== repassword) {
                       errors.repassword = "Password does not match !";
                     }
                     if (!address) {
@@ -143,7 +122,7 @@ export default function SocialRegister2() {
                       errors.cityname = "City name is required !";
                     } else if (!pincode) {
                       errors.pincode = "Pin code is required !";
-                    } else if (pincode.length != 6) {
+                    } else if (pincode.length !== 6) {
                       errors.pincode = "Pin code should be in 6 digits !!!";
                     }
                     if (!dob) {

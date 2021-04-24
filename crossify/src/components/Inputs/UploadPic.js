@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { store } from "react-notifications-component";
+import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 
@@ -73,6 +72,7 @@ class UploadPic extends React.Component {
               className=""
               onChange={this.handleChange2}
               src={this.state.file}
+              alt="Upload Pics"
               style={{
                 height: 400,
                 width: 902,

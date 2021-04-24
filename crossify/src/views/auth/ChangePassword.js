@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
@@ -89,7 +88,7 @@ function ChangePassword() {
                 }
                 if (!confirm_new_password) {
                   errors.confirm_new_password = "Confirm password required !";
-                } else if (new_password != confirm_new_password) {
+                } else if (new_password !== confirm_new_password) {
                   errors.confirm_new_password =
                     "Confirm password does not match !";
                 }

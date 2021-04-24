@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import meme from "../../assets/img/error.png";
 import Navbar from "components/Navbars/ClubNavbar";
-import Footer from "components/Footers/Footer.js";
 class ErrorPage extends Component {
   render() {
     return (
@@ -23,9 +22,6 @@ class ErrorPage extends Component {
               />
             </div>
             <div class="w-full lg:w-6/12 text-center md:text-left p-4 text-black">
-              <div class="text-5xl lg:text-5xl mb-4 font-semibold">
-                Oops! Page not found !
-              </div>
               <div class="text-lg mb-8">
                 You may have mistyped the address or the page may have moved. We
                 are very sorry for inconvenience. It looks like you're trying to

@@ -4,7 +4,6 @@ import UploadPic from "components/Inputs/UploadPic";
 import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import dummyPF from "assets/img/demopf.png";
 import { InputTagsContainer } from "react-input-tags";
-import { render } from "react-dom";
 import PulseLoader from "react-spinners/PulseLoader";
 
 export default class DetailsSettings extends React.Component {

@@ -70,8 +70,7 @@
 //   long: 72.59482,
 // };
 import React, { Component } from "react";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-import currentPosIcon from "assets/img/marker.png";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import Keys from "config/default.json";
 const GOOGLE_MAPS_API = Keys.GOOGLE_MAPS_API;
 export class MapContainer extends Component {
@@ -95,7 +94,7 @@ export class MapContainer extends Component {
   };
 
   render() {
-    const { position, name, currentLocation } = this.state;
+    const { position, name } = this.state;
     return (
       <Map
         className="view-map w-full overflow-hidden rounded"

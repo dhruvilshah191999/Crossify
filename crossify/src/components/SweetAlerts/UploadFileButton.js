@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
-import { PickerOverlay, PickerDropPane } from "filestack-react";
+import { PickerOverlay } from "filestack-react";
 import axios from "axios";
 
 export default class SweetAlertModal extends Component {
@@ -72,7 +72,6 @@ export default class SweetAlertModal extends Component {
         showCancel
         confirmBtnText="Select My File"
         confirmBtnBsStyle="success"
-        title="Are you sure?"
         focusCancelBtn
         confirmBtnCssClass="text-base rounded px-4 py-2 bg-green-500"
         confirmBtnStyle={{ color: "white" }}

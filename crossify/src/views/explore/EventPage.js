@@ -27,10 +27,8 @@ const Tag = (props) => {
 export default function EventPage(props) {
   let history = useHistory();
   const { users } = useContext(UserContext);
-  const [isAdmin, setIsAdmin] = useState(false);
   var { id } = useParams();
   const [loading, setloading] = useState(false);
-  const [like, setLike] = useState(false);
   const [isInWaiting, SetisInWaiting] = useState(false);
   const [IsFull, SetIsFull] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
@@ -38,7 +36,6 @@ export default function EventPage(props) {
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
     async function event_details() {
       const config = {
         method: "POST",
@@ -98,7 +95,7 @@ export default function EventPage(props) {
 
     CheckEvent();
     event_details();
-  }, []);
+  }, [id,token]);
 
   const addlike = async (e) => {
     const config = {
@@ -117,7 +114,8 @@ export default function EventPage(props) {
       notifyWentWrong();
     } else {
       notifyLiked();
-      setLike(true);
+      users.fav_event.push(id);
+      history.go(0);
     }
   };
 
@@ -140,7 +138,8 @@ export default function EventPage(props) {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      setLike(false);
+      users.fav_event.pop(id);
+      history.go(0);
     }
   };
 
@@ -394,7 +393,6 @@ export default function EventPage(props) {
                   ""
                 )}
               </div>
-              {/* // ! showing FAQ even tho there is no FAQs */}
               <div className="flex flex-col lg:flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   FAQs <br />
@@ -406,11 +404,11 @@ export default function EventPage(props) {
                 >
                   {eventdetails.faq.some(
                     (cur) =>
-                      cur.privacy === "public" && cur.status == "answered"
+                      cur.privacy === "public" && cur.status === "answered"
                   ) ? (
                     eventdetails.faq.map((el, i) => {
-                      if (el.privacy == "public" && el.status == "answered") {
-                        if (i == 0) {
+                      if (el.privacy === "public" && el.status === "answered") {
+                        if (i === 0) {
                           return (
                             <details>
                               <summary className="pt-0">{el.question}</summary>
@@ -424,6 +422,9 @@ export default function EventPage(props) {
                             <p>{el.answer}</p>
                           </details>
                         );
+                      }
+                      else {
+                        return <></>;
                       }
                     })
                   ) : (

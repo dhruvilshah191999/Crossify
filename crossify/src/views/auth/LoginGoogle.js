@@ -1,18 +1,14 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { GoogleLogin } from "react-google-login";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { UserContext } from "context/usercontext";
 import { notifySuccessLogin } from "notify";
-import Key from "config/default.json";
-import CryptoJS from "crypto-js";
 
 export default function LoginGoogle() {
   var vertical = "top";
   var horizontal = "center";
-  let history = useHistory();
   const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [errorStatus, setError] = useState(false);
   const [message, setMessage] = useState("");

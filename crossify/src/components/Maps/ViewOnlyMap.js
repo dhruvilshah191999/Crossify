@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import currentPosIcon from "assets/img/marker.png";
-import { Link } from "react-router-dom";
 import moment from "moment";
 import Keys from "config/default.json";
 const GOOGLE_MAPS_API = Keys.GOOGLE_MAPS_API;
@@ -105,6 +104,7 @@ export class MapContainer extends Component {
               <img
                 src={this.state.selectedPlace.photo}
                 className="rounded-lg"
+                alt="google"
                 style={{ width: 200, height: 130 }}
               ></img>
             </div>
@@ -124,6 +124,7 @@ export class MapContainer extends Component {
                   }
                   target="_blank"
                   type="button"
+                  rel="noreferrer"
                 >
                   <i className="fas fa-directions"></i>
                 </a>
