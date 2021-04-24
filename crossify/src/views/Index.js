@@ -80,7 +80,7 @@ export default function Landing() {
               <br />
               <form>
                 <div className="flex justify-center flex-wrap w-full">
-                  <div className="bg-white p-2 align-center flex w-full xs:p-1 w-65">
+                  <div className="bg-white p-2 align-center flex w-80 xs:p-1 xs:w-65">
                     <div style={{ flex: "1 1 60%" }}>
                       <input
                         style={{

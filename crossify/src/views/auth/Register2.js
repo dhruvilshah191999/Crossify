@@ -169,6 +169,7 @@ export default function Register2() {
                           city: cityname,
                           state: statename,
                           lat: latitude,
+                          dob,
                           long: longitude,
                           email: decryptedData.email,
                           occupation,
