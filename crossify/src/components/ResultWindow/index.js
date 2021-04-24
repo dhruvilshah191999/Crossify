@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import BigEventCard from "components/Cards/BigEventCard";
 import MapwithEvents from "components/Maps/MapWithEvents";
 import ClipLoader from "react-spinners/ClipLoader";

@@ -1,14 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-// components
-
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
-import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import HeaderStats from "components/Headers/HeaderStats.js";
 import FooterAdmin from "components/Footers/FooterAdmin.js";
-
-// views
-
 import BroadcastSettings from "views/eventMangement/BroadcastSettings";
 import Preview from "views/eventMangement/PreviewSettings";
 import QnASettings from "views/eventMangement/QnASettings";
@@ -16,10 +10,6 @@ import General from "views/eventMangement/GeneralSettings";
 import Details from "views/eventMangement/DetailsSettings";
 import Reports from "views/eventMangement/ReportSettings";
 import Attendees from "views/eventMangement/AttendeesSettings";
-
-// import Tables from "views/admin/Tables.js";
-// import MemberList from "views/admin/MemberList";
-
 export default function Admin() {
   return (
     <>

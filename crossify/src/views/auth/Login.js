@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import Facebook from "./Facebook";
+import Facebook from "./LoginFacebook";
 import Google from "./LoginGoogle";
 import { Link } from "react-router-dom";
 import { UserContext } from "context/usercontext";
@@ -14,7 +13,6 @@ var vertical = "top";
 var horizontal = "center";
 
 function Login() {
-  let history = useHistory();
   const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [formData, setData] = useState({
     email: "",
@@ -22,15 +20,8 @@ function Login() {
   });
 
   const [errorStatus, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const { email, password } = formData;
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  });
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {

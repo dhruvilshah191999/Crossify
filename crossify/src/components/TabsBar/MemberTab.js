@@ -1,8 +1,5 @@
-import MemberUserDropdown from "components/Dropdowns/MemberUserDropdown";
 import Moment from "moment";
 import axios from "axios";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import ProfilePage from "views/explore/ProfilePage";
 var React = require("react");
 class Contact extends React.Component {
   openModal = (user_id, name) => {
@@ -123,6 +120,7 @@ class ContactList extends React.Component {
     return section.map((el, index) => {
       return (
         <a
+          href={() => false}
           onClick={() => {
             this.setState({
               currentTab: index,
@@ -137,7 +135,10 @@ class ContactList extends React.Component {
                 : "p-2 m-2 text-gray-900 hover:text-white hover:bg-lightbeta  rounded-lg pointer mb-2 "
             }
           >
-            <a className="flex items-center justify-between mx-3">
+            <a
+              href={() => false}
+              className="flex items-center justify-between mx-3"
+            >
               <span>{el.name}</span> <span>{el.val.length}</span>
             </a>
           </li>

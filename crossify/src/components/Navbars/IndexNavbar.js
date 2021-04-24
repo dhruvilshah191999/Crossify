@@ -42,7 +42,14 @@ export default function Navbar(props) {
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <i className="text-white fas fa-bars"></i>
+              {/* <i className="text-white fas fa-bars"></i> */}
+              <i
+                className={
+                  navbarOpen
+                    ? "text-white fas fa-times"
+                    : "text-white fas fa-bars"
+                }
+              />
             </button>
           </div>
           <div

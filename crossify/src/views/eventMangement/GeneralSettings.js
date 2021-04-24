@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import UploadPic from "components/Inputs/UploadPic";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 import Moment from "moment";
@@ -9,7 +8,7 @@ import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import MapContainer from "components/Maps/MapCode";
 import dummyPF from "assets/img/demopf.png";
 import { Formik } from "formik";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import { ModalManager } from "react-dynamic-modal";
 import ViewFeedback from "components/Modals/ViewFeedback";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import PulseLoader from "react-spinners/PulseLoader";
@@ -99,7 +98,7 @@ export default function GeneralSettings(props) {
         ) {
           setStatus("completed");
         } else if (
-          finaldata.data.event_data.visibility != "rejected" &&
+          finaldata.data.event_data.visibility !== "rejected" &&
           !finaldata.data.event_data.is_active
         ) {
           setStatus("pending");
@@ -137,7 +136,7 @@ export default function GeneralSettings(props) {
       }
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleCallback = (childData) => {
     setlatitude(childData.lat);
@@ -145,11 +144,11 @@ export default function GeneralSettings(props) {
   };
 
   var color = "orange";
-  if (status == "rejected") {
+  if (status === "rejected") {
     color = "red";
-  } else if (status == "completed") {
+  } else if (status === "completed") {
     color = "blue";
-  } else if (status == "approved") {
+  } else if (status === "approved") {
     color = "green";
   }
   return (
@@ -247,7 +246,7 @@ export default function GeneralSettings(props) {
                         </span>
                         <button
                           className={
-                            status == "rejected"
+                            status === "rejected"
                               ? "text-red-500 text-sm ml-2"
                               : "hidden"
                           }

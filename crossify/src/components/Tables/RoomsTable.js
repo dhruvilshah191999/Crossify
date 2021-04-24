@@ -65,42 +65,9 @@ function DefaultColumnFilter({
   );
 }
 
-function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id },
-}) {
-  // Calculate the options for filtering
-  // using the preFilteredRows
-  const options = React.useMemo(() => {
-    const options = new Set();
-    preFilteredRows.forEach((row) => {
-      options.add(row.values[id]);
-    });
-    return [...options.values()];
-  }, [id, preFilteredRows]);
-
-  // Render a multi-select box
-  return (
-    <select
-      value={filterValue}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  );
-}
-
 export default function App(props) {
-  const [clubId, setClubId] = useState(props.club_id);
-  const [roomData, setRoomData] = useState(props.data);
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(() => roomData, []);
+  const data = React.useMemo(() => props.data, [props.data]);
   const [loading, setloading] = useState(false);
 
   const getLoading = (childData) => {
@@ -268,11 +235,11 @@ export default function App(props) {
                 </div>
                 <div className="ml-auto">
                   {loading ? (
-                      <PulseLoader color="#48bb78" size={10} />
+                    <PulseLoader color="#48bb78" size={10} />
                   ) : (
                     <div className="inline-block">
                       <CreateRoomButton
-                        club_id={clubId}
+                        club_id={props.club_id}
                         parentCallback={getLoading}
                       />
                     </div>
@@ -290,7 +257,7 @@ export default function App(props) {
           </div>
         </div>
         <div className="block w-full overflow-x-auto relative">
-          {page.length == 0 && <EmptyTable isLight={isLight} />}
+          {page.length === 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -345,7 +312,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
-            {page.length == 0 && <div className="empty-table-space"></div>}
+            {page.length === 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

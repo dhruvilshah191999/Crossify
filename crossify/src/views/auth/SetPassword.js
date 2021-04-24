@@ -34,13 +34,7 @@ function SetPassword() {
       }
     }
     check();
-  },[]);
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-  };
+  },[history,id]);
 
   const onChange = (e) =>
     setData({ ...formData, [e.target.name]: e.target.value });
@@ -68,7 +62,7 @@ function SetPassword() {
                     errors.password = "Minimim 6 characters are required !";
                   } else if (!confirm_password) {
                     errors.confirm_password = "Confirm password is required !";
-                  } else if (password != confirm_password) {
+                  } else if (password !== confirm_password) {
                     errors.confirm_password = "Password does not match !";
                   }
                   return errors;

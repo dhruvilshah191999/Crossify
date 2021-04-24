@@ -36,7 +36,7 @@ export default function Tables() {
      }
    }
    event_details();
- }, []);
+ }, [id]);
   return (
     <>
       <Sidebar />

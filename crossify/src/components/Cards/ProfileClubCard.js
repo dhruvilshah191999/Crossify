@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { notifyCopied, notifyLiked } from "notify";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -13,7 +12,7 @@ function ProfileClubCard(props) {
     if (b) {
       setcheck(true);
     }
-  });
+  },[props]);
 
   const addlike = async (e) => {
     const config = {
@@ -76,7 +75,7 @@ function ProfileClubCard(props) {
       <div className="p-4 md:p-6">
         <p className="text-blue-500 font-semibold text-xs mb-1 leading-none">
           {props.data.tags.map((el, i) => {
-            if (i == props.data.tags.length - 1) {
+            if (i === props.data.tags.length - 1) {
               return <span>{el} </span>;
             }
             return <span>{el} &bull; </span>;

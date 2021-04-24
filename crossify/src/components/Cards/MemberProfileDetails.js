@@ -245,7 +245,7 @@ class MemberProfileDetails extends Component {
           </div>
           <div className="p-2 mt-1 flex flex-wrap flex-col">
             {this.state.question.map((el) =>
-              el.club == this.props.club_id
+              el.club === this.props.club_id
                 ? el.reply.map((e) => (
                     <QA question={e.question} answer={e.answer}></QA>
                   ))

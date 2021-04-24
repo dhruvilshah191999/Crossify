@@ -38,7 +38,7 @@ export default function Settings() {
     }
 
     fetchData();
-  }, []);
+  }, [id,token]);
   return (
     <>
       <Sidebar />

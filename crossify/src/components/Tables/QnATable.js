@@ -179,7 +179,7 @@ export default function App(props) {
   };
 
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(() => props.finaldata, []);
+  const data = React.useMemo(() => props.finaldata, [props.finaldata]);
   const columns = React.useMemo(
     () => [
       {
@@ -251,7 +251,7 @@ export default function App(props) {
         disableSortBy: true,
       },
     ],
-    []
+    [id]
   );
   const defaultColumn = React.useMemo(
     () => ({
@@ -283,10 +283,8 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     state,
-    visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
     setFilter,
@@ -303,7 +301,7 @@ export default function App(props) {
     previousPage,
     setPageSize,
     selectedFlatRows,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -423,7 +421,7 @@ export default function App(props) {
           </div>
         </div>
         <div className="block w-full overflow-x-auto relative">
-          {page.length == 0 && <EmptyTable isLight={isLight} />}
+          {page.length === 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -478,7 +476,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
-            {page.length == 0 && <div className="empty-table-space"></div>}
+            {page.length === 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

@@ -16,9 +16,7 @@ export default function EventPreview(props) {
   var { id } = useParams();
   const [eventdetails, Seteventsdetails] = useState({});
   const [loading, setloading] = useState(false);
-  const token = localStorage.getItem("jwt");
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
     async function event_details() {
       const config = {
         method: "POST",
@@ -45,7 +43,7 @@ export default function EventPreview(props) {
       }
     }
     event_details();
-  }, []);
+  }, [id]);
 
   if (loading) {
     return (
@@ -245,6 +243,9 @@ export default function EventPreview(props) {
                               <p>{el.answer}</p>
                             </details>
                           );
+                        }
+                        else {
+                          return <></>
                         }
                       })
                     ) : (

@@ -4,7 +4,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { InputTagsContainer } from "react-input-tags";
 import { notifySuccessClub } from "notify";
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import PulseLoader from "react-spinners/PulseLoader";
 import { usePosition } from "use-position";
 import MapContainer from "components/Maps/AddMapCode";
@@ -122,7 +121,7 @@ function CreateClub(props) {
                     errors.cityname = "City is required !";
                   } else if (!postalcode) {
                     errors.postalcode = "PostalCode is required !";
-                  } else if (postalcode.length != 6) {
+                  } else if (postalcode.length !== 6) {
                     errors.postalcode = "PostalCode should be in 6 digits !!!";
                   } else if (!description) {
                     errors.description = "Description is required !";

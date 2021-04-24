@@ -8,7 +8,7 @@ import {
   usePagination,
 } from "react-table";
 
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import { ModalManager } from "react-dynamic-modal";
 import ViewProfile from "components/Modals/ViewProfile";
 import PromoteMemberButton from "components/SweetAlerts/PromoteMemberButton";
 import DemoteMemberButton from "components/SweetAlerts/DemoteMemberButton";
@@ -104,16 +104,14 @@ export default function App(props) {
     ModalManager.open(
       <ViewProfile
         name={name}
-        club_id={clubId}
+        club_id={props.club_id}
         user_id={user_id}
         onRequestClose={() => true}
       />
     );
   };
-  const [clubId, setClubId] = useState(props.club_id);
-  const [memberFile, setmemberFile] = useState(props.data);
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(() => memberFile, []);
+  const data = React.useMemo(() => props.data, [props.data]);
 
   const columns = React.useMemo(
     () => [
@@ -177,16 +175,6 @@ export default function App(props) {
               </span>
             </span>
           );
-          return (
-            <>
-              <i
-                className={
-                  "fas fa-circle text-xs text-" + myColor + "-500 mr-2"
-                }
-              ></i>{" "}
-              {value}
-            </>
-          );
         },
         disableFilters: true,
       },
@@ -212,16 +200,20 @@ export default function App(props) {
             <PromoteMemberButton
               name={name}
               user_id={value}
-              club_id={clubId}
+              club_id={props.club_id}
               isModerator={role === "moderator"}
             />
             <DemoteMemberButton
               name={name}
               user_id={value}
-              club_id={clubId}
+              club_id={props.club_id}
               isMember={role === "member"}
             />
-            <KickMemberButton name={name} user_id={value} club_id={clubId} />
+            <KickMemberButton
+              name={name}
+              user_id={value}
+              club_id={props.club_id}
+            />
 
             <button
               className=""
@@ -236,7 +228,7 @@ export default function App(props) {
         disableSortBy: true,
       },
     ],
-    []
+    [props.club_id]
   );
   const defaultColumn = React.useMemo(
     () => ({
@@ -268,10 +260,8 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     state,
-    visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
     setFilter,
@@ -374,7 +364,7 @@ export default function App(props) {
           </div>
         </div>
         <div className="block w-full overflow-x-auto relative">
-          {page.length == 0 && <EmptyTable isLight={isLight} />}
+          {page.length === 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -429,7 +419,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
-            {page.length == 0 && <div className="empty-table-space"></div>}
+            {page.length === 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

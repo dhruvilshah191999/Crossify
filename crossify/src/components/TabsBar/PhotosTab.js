@@ -137,7 +137,7 @@ export default class GridGallery extends Component {
   render() {
     return (
       <>
-        {this.state.photos.length != 0 ? (
+        {this.state.photos.length !== 0 ? (
           <div>
             <Lightbox
               toggler={this.state.isVisible}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "context/usercontext";
 
@@ -11,7 +11,8 @@ export default function ContextData() {
     dispatch,
     interestevent_dispatch,
   } = useContext(UserContext);
-  useEffect(async () => {
+
+  useEffect(() => {
     const token = localStorage.getItem("jwt");
     async function checkLogin() {
       if (!token) {

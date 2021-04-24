@@ -38,7 +38,7 @@ const NotificationDropdown = (props) => {
       }
     }
     fetchData();
-  }, []);
+  }, [token]);
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
@@ -76,8 +76,6 @@ const NotificationDropdown = (props) => {
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
   const openDropdownPopover = () => {
-    console.log("hey");
-
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
       placement: "bottom-start",
     });
@@ -86,9 +84,6 @@ const NotificationDropdown = (props) => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
-
-  const check = (e) => {};
-
   if (loading) {
     return (
       <>
@@ -142,6 +137,7 @@ const NotificationDropdown = (props) => {
                       <img
                         className="w-12 h-12 rounded-full ml-2 "
                         src={el.photo}
+                        alt="notification"
                       />
                     </div>
                     <div className="flex flex-col ml-6 mr-4">

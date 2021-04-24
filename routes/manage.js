@@ -801,8 +801,7 @@ router.post("/check-club", auth, async function (req, res, next) {
   }
 });
 
-router.post("/Broadcast", async function (req, res, next) {
-  console.log(adminPass);
+router.post("/Broadcast", async function (req, res, next) {s
   var { userIds, event_id, message, path } = req.body;
   let objectIdArray = userIds.map((s) => mongoose.Types.ObjectId(s));
   var check = await user_details.find({

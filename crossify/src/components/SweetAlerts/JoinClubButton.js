@@ -3,7 +3,6 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import SweetAlert from "react-bootstrap-sweetalert";
 
-//todo GOLU all the things are created you just have to make backend code for api/join-club and api/undo-join-club
 class SweetAlertModal extends Component {
   constructor(props) {
     super(props);
@@ -101,7 +100,6 @@ class SweetAlertModal extends Component {
   }
 
   updateValues = (value, index) => {
-    var ans = this.state.answers;
     var que = this.state.questions;
     var reply = this.state.isReply;
     var object = {
@@ -167,13 +165,11 @@ class SweetAlertModal extends Component {
   requestForJoining() {
     const getAlert = () => (
       <SweetAlert
-        customClass="text-black "
+        customClass="text-black"
         success
         showCancel
         confirmBtnText="Submit"
         confirmBtnBsStyle="success"
-        customClass="text-black"
-        title="Are you sure?"
         focusCancelBtn
         confirmBtnCssClass="text-base rounded px-4 py-2 bg-green-500"
         confirmBtnStyle={{ color: "white" }}

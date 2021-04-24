@@ -1,18 +1,14 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "context/usercontext";
 import FacebookLogin from "react-facebook-login";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { notifySuccessLogin } from "notify";
-import Key from "config/default.json";
-import CryptoJS from "crypto-js";
 
 export default function Facebook() {
   var vertical = "top";
   var horizontal = "center";
-  let history = useHistory();
   const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [errorStatus, setError] = useState(false);
   const [message, setMessage] = useState("");
@@ -27,13 +23,6 @@ export default function Facebook() {
       const data = {
         socialId: response.userID,
         email: response.email,
-      };
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        validateStatus: () => true,
       };
       const config = {
         method: "POST",

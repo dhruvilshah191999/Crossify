@@ -1,12 +1,10 @@
-import React, { useContext, useEffect ,useState} from "react";
-import axios from "axios";
+import React  from "react";
 import ContextData from "./ContextData";
 import {
   BrowserRouter,
   Route,
   Switch,
   Redirect,
-  useHistory,
 } from "react-router-dom";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -33,9 +31,8 @@ import ClubSearchPage from "views/searchPages/ClubSearchPage";
 import PlayGround from "views/demo/PlayGround";
 import ClubPage from "views/explore/ClubPage";
 import CreateClub from "views/create/CreateClub";
-import { UserContext } from "context/usercontext";
 import ProfilePage from "views/explore/ProfilePage";
-import PageNotFound from "views/Error/404";
+//import PageNotFound from "views/Error/404";
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
@@ -138,13 +135,6 @@ const Routing = () => {
 };
 
 export default function App() {
-  const { islogin_dispatch, dispatch, category_dispatch } = useContext(
-    UserContext
-  );
-  let history = useHistory();
-  const [loading, setloading] = useState(false);
-  useEffect(() => {
-  }, []);
   return (
     <BrowserRouter>
       <ContextData />

@@ -3,10 +3,10 @@ import axios from "axios";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import ManageEventsTable from "components/Tables/ManageEventsTable";
 export default function Tables() {
-  const token = localStorage.getItem("jwt");
   const [data, setdata] = useState([]);
   const [loading, setloading] = useState(false);
   useEffect(() => {
+  const token = localStorage.getItem("jwt");
     async function fetchData() {
       const config = {
         method: "POST",

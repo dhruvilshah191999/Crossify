@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import BigClubCard from "components/Cards/BigClubCard";
 import MapWithClubs from "components/Maps/MapWithClubs";
 import ClipLoader from "react-spinners/ClipLoader";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   useTable,
   useFilters,
@@ -9,7 +9,7 @@ import {
   usePagination,
 } from "react-table";
 
-import { Modal, ModalManager, Effect } from "react-dynamic-modal";
+import { ModalManager } from "react-dynamic-modal";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import ProfileReview from "components/SweetAlerts/ProfileReview.js";
@@ -18,7 +18,6 @@ import AcceptButton from "components/SweetAlerts/AcceptMemberButton";
 import RejectButton from "components/SweetAlerts/RejectMemberButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 import EmptyTable from "components/sections/EmptyTable";
-import dataTable from "./demorequests";
 import urlObject from "../../config/default.json";
 import io from "socket.io-client";
 var BackendURL = urlObject.BackendURL;
@@ -129,7 +128,6 @@ export default function App(props) {
   const [isLight, setIsLight] = useState(1);
   const [clubId, setClubId] = useState(props.club_id);
   const [userData, setuserData] = useState(props.data);
-  console.log(userData);
   const getSelectedAndReject = async (e) => {
     const profilelist = selectedFlatRows.map((el) => el.values.id);
     const token = localStorage.getItem("jwt");
@@ -315,7 +313,7 @@ export default function App(props) {
     }
   };
 
-  const data = React.useMemo(() => userData, []);
+  const data = React.useMemo(() => userData, [userData]);
   const columns = React.useMemo(
     () => [
       {
@@ -422,7 +420,7 @@ export default function App(props) {
         disableSortBy: true,
       },
     ],
-    []
+    [openModal]
   );
   const defaultColumn = React.useMemo(
     () => ({
@@ -454,10 +452,8 @@ export default function App(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     state,
-    visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
     setFilter,
@@ -474,7 +470,7 @@ export default function App(props) {
     previousPage,
     setPageSize,
     selectedFlatRows,
-    state: { pageIndex, pageSize, selectedRowprofiles },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -580,7 +576,7 @@ export default function App(props) {
           </div>
         </div>
         <div className="block w-full overflow-x-auto relative">
-          {page.length == 0 && <EmptyTable isLight={isLight} />}
+          {page.length === 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -635,7 +631,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
-            {page.length == 0 && <div className="empty-table-space"></div>}
+            {page.length === 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

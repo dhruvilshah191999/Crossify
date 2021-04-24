@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import City from "../../views/auth/states-and-districts.json";
 import $ from "jquery";
 import MultipleSelect from "components/Inputs/MultiSelect";
-import { UserContext } from "context/usercontext";
 export default function CardSettings() {
-  const { users, dispatch } = useContext(UserContext);
   const token = localStorage.getItem("jwt");
   const [statename, setStateName] = useState("");
   const [category, setCategory] = useState([]);
@@ -109,12 +107,12 @@ export default function CardSettings() {
     $("#imageUpload").change(function () {
       readURL(this);
     });
-  }, []);
+  }, [token]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     isSubmitting(true);
-    if (photo != oldPhoto) {
+    if (photo !== oldPhoto) {
       var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
       var path = "User_Profile/" + photo.name;
       var data = new FormData();
