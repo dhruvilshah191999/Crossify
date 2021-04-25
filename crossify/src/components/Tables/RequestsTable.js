@@ -78,8 +78,6 @@ function DefaultColumnFilter({
 function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, profile },
 }) {
-  // Calculate the options for filtering
-  // using the preFilteredRows
   const options = React.useMemo(() => {
     const options = new Set();
     preFilteredRows.forEach((row) => {
@@ -142,7 +140,6 @@ export default function App(props) {
     var profile_photo = user.data.data.profile_photo;
     var club_id = clubId;
     var club = await axios.post("/api/events/getclub", { club_id }, config);
-    console.log(club);
     var clubName = club.data.data.club_name;
     var des = ` Your Request of joining ${clubName} club has been rejected by ${firstName}`;
     userData.forEach((el) => {
@@ -173,6 +170,7 @@ export default function App(props) {
       history.go(0);
     }
   };
+
   const getSelectedAndAccept = async (e) => {
     const profilelist = selectedFlatRows.map((el) => el.values.id);
     const token = localStorage.getItem("jwt");
@@ -187,7 +185,6 @@ export default function App(props) {
     var profile_photo = user.data.data.profile_photo;
     var club_id = clubId;
     var club = await axios.post("/api/events/getclub", { club_id }, config);
-    console.log(club);
     var clubName = club.data.data.club_name;
     var des = ` Your Request of joining ${clubName} club has been accepted by ${firstName}`;
     userData.forEach((el) => {
@@ -218,6 +215,7 @@ export default function App(props) {
       history.go(0);
     }
   };
+
   const openModal = (user_id, name) => {
     ModalManager.open(
       <ProfileReview
@@ -242,7 +240,6 @@ export default function App(props) {
     var profile_photo = user.data.data.profile_photo;
     var club_id = clubId;
     var club = await axios.post("/api/events/getclub", { club_id }, config);
-    console.log(club);
     var clubName = club.data.data.club_name;
     var des = ` Your Request of joining ${clubName} club has been accepted by ${firstName}`;
     socket.emit("sendNotification", {
@@ -284,7 +281,6 @@ export default function App(props) {
     var profile_photo = user.data.data.profile_photo;
     var club_id = clubId;
     var club = await axios.post("/api/events/getclub", { club_id }, config);
-    console.log(club);
     var clubName = club.data.data.club_name;
     var des = ` Your Request of joining ${clubName} club has been rejected by ${firstName}`;
     socket.emit("sendNotification", {
@@ -420,7 +416,7 @@ export default function App(props) {
         disableSortBy: true,
       },
     ],
-    [openModal]
+    []
   );
   const defaultColumn = React.useMemo(
     () => ({

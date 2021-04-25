@@ -5,7 +5,6 @@ var category_details = require('../modules/interest_category');
 var event_details = require('../modules/event_details');
 var user_details = require('../modules/user_details');
 var club_details = require('../modules/club_details');
-var member_details = require('../modules/members_details');
 var channel_details = require('../modules/channel_details');
 const {ObjectID, ObjectId} = require('bson');
 var router = express.Router();
@@ -268,7 +267,7 @@ router.post('/AddFile', auth, async function (req, res, next) {
     addedBy: ObjectId(req.user._id),
   };
 
-   var check = club_details.updateOne(
+  var check = club_details.updateOne(
     {
       _id: ObjectId(club_id),
       is_active: 1,
@@ -370,7 +369,7 @@ router.post('/DeleteFile', async function (req, res, next) {
 
 router.post('/GetMembers', async function (req, res, next) {
   var {club_id} = req.body;
-  member_details
+  club_details
     .aggregate([
       {
         $lookup: {
@@ -390,7 +389,7 @@ router.post('/GetMembers', async function (req, res, next) {
       },
       {
         $match: {
-          club_id: ObjectId(club_id),
+          _id: ObjectId(club_id),
           is_active: true,
         },
       },
@@ -577,8 +576,8 @@ router.post('/Promotion', auth, async function (req, res, next) {
         };
         return res.status(404).send(finaldata);
       } else {
-        var check = member_details.updateOne(
-          {club_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
+        var check = club_details.updateOne(
+          {_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
           {$set: {'member_list.$.level': 'moderator'}}
         );
         check.exec((err, data) => {
@@ -646,8 +645,8 @@ router.post('/Demotion', auth, async function (req, res, next) {
         };
         return res.status(404).send(finaldata);
       } else {
-        var check = member_details.updateOne(
-          {club_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
+        var check = club_details.updateOne(
+          {_id: ObjectId(club_id), 'member_list.user': ObjectId(user_id)},
           {$set: {'member_list.$.level': 'member'}}
         );
         check.exec((err, data) => {
@@ -715,8 +714,8 @@ router.post('/DeleteMember', auth, async function (req, res, next) {
         };
         return res.status(404).send(finaldata);
       } else {
-        var check = member_details.updateOne(
-          {club_id: ObjectId(club_id), is_active: 1},
+        var check = club_details.updateOne(
+          {_id: ObjectId(club_id), is_active: 1},
           {$pull: {member_list: {user: ObjectId(user_id)}}}
         );
         check.exec((err, data) => {
@@ -735,6 +734,7 @@ router.post('/DeleteMember', auth, async function (req, res, next) {
                 },
                 {
                   $pull: {clubs: ObjectId(club_id)},
+                  $pull: {club_answer: {club: ObjectId(club_id)}},
                 }
               )
               .exec();
@@ -1171,8 +1171,8 @@ router.post('/getCount', async function (req, res, next) {
   } else {
     object.event = 0;
   }
-  var member_data = await member_details
-    .findOne({club_id: ObjectId(club_id), is_active: true})
+  var member_data = await club_details
+    .findOne({_id: ObjectId(club_id), is_active: true})
     .exec();
 
   if (member_data) {
@@ -1264,19 +1264,21 @@ router.post('/getRequested', async function (req, res, next) {
     } else if (data.length != 0) {
       var array = [];
       data.forEach((e) => {
-        var result = e.club_answer.filter((obj) => {
-          return obj.club.equals(ObjectId(club_id));
-        });
-        var object = {
-          photo: e.profile_photo,
-          name: e.fname + ' ' + e.lname,
-          date: result[0].date,
-          occupation: e.occupation,
-          status: result[0].status,
-          location: e.city,
-          id: e._id,
-        };
-        array.push(object);
+          var result = e.club_answer.filter((obj) => {
+            return (
+              obj.club.equals(ObjectId(club_id)) && obj.status === 'Pending'
+            );
+          });
+          var object = {
+            photo: e.profile_photo,
+            name: e.fname + ' ' + e.lname,
+            date: result[0].date,
+            occupation: e.occupation,
+            status: result[0].status,
+            location: e.city,
+            id: e._id,
+          };
+          array.push(object);
       });
       var finaldata = {
         data: array,
@@ -1317,9 +1319,11 @@ router.post('/AcceptRequested', auth, async function (req, res, next) {
     level: 'member',
     date: new Date(),
   };
-  var result = member_details.findOne({
+
+  var result = club_details.updateOne({
     club_id: ObjectId(club_id),
     is_active: true,
+    $push: {member_list: object},
   });
   await result.exec((err, data) => {
     if (err) {
@@ -1328,54 +1332,20 @@ router.post('/AcceptRequested', auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (data === null) {
-      var array = [];
-      array.push(object);
-      var Members = new member_details({
-        club_id: ObjectId(club_id),
-        is_active: true,
-        member_list: array,
-      });
-      Members.save().then((data) => {
-        user_details
-          .updateOne(
-            {_id: ObjectId(user_id)},
-            {$push: {clubs: ObjectId(club_id)}}
-          )
-          .exec((err, data2) => {
-            var finaldata = {
-              participated: true,
-              is_error: false,
-              message: 'Data Send',
-            };
-            return res.status(200).send(finaldata);
-          });
-      });
     } else {
-      var Members = member_details.update(
-        {
-          club_id: ObjectId(club_id),
-          is_active: true,
-        },
-        {
-          $push: {member_list: object},
-        }
-      );
-      Members.exec((err, data) => {
-        user_details
-          .updateOne(
-            {_id: ObjectId(user_id)},
-            {$push: {clubs: ObjectId(club_id)}}
-          )
-          .exec((err, data2) => {
-            var finaldata = {
-              participated: true,
-              is_error: false,
-              message: 'Data Send',
-            };
-            return res.status(200).send(finaldata);
-          });
-      });
+      user_details
+        .updateOne(
+          {_id: ObjectId(user_id)},
+          {$push: {clubs: ObjectId(club_id)}}
+        )
+        .exec((err, data2) => {
+          var finaldata = {
+            participated: true,
+            is_error: false,
+            message: 'Data Send',
+          };
+          return res.status(200).send(finaldata);
+        });
     }
   });
 });
@@ -1415,8 +1385,8 @@ router.post('/RemoveRequested', auth, async function (req, res, next) {
 });
 
 router.post('/AcceptRequests', auth, async function (req, res, next) {
-  var {club_id, userArray, description, profile_photo} = req.body;
-  userArray = userArray.map((s) => mongoose.Types.ObjectId(s));
+  var { club_id, userArray, description, profile_photo } = req.body;
+  userArray = userArray.map((s) => ObjectId(s));
   var object = {
     date: new Date(),
     title: 'Congratulations! On your new role 🥳',
@@ -1425,8 +1395,8 @@ router.post('/AcceptRequests', auth, async function (req, res, next) {
     photo: profile_photo,
     isRead: false,
   };
-  user_details
-    .updateMany(
+  await user_details
+    .update(
       {_id: {$in: userArray}, 'club_answer.club': ObjectId(club_id)},
       {$set: {'club_answer.$.status': 'Approved'}, $push: {inbox: object}}
     )
@@ -1442,10 +1412,15 @@ router.post('/AcceptRequests', auth, async function (req, res, next) {
     array.push(object);
   });
 
-  var result = member_details.findOne({
-    club_id: ObjectId(club_id),
-    is_active: true,
-  });
+  var result = club_details.update(
+    {
+      _id: ObjectId(club_id),
+      is_active: true,
+    },
+    {
+      $addToSet: {member_list: {$each: array}},
+    }
+  );
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -1453,52 +1428,20 @@ router.post('/AcceptRequests', auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (data === null) {
-      var Members = new member_details({
-        club_id: ObjectId(club_id),
-        is_active: true,
-        member_list: array,
-      });
-      Members.save().then((data) => {
-        user_details
-          .updateMany(
-            {_id: {$in: userArray}},
-            {$push: {clubs: ObjectId(club_id)}}
-          )
-          .exec((err, data2) => {
-            var finaldata = {
-              participated: true,
-              is_error: false,
-              message: 'Data Send',
-            };
-            return res.status(200).send(finaldata);
-          });
-      });
     } else {
-      var Members = member_details.update(
-        {
-          club_id: ObjectId(club_id),
-          is_active: true,
-        },
-        {
-          $addToSet: {member_list: {$each: array}},
-        }
-      );
-      Members.exec((err, data) => {
-        user_details
-          .updateMany(
-            {_id: {$in: userArray}},
-            {$push: {clubs: ObjectId(club_id)}}
-          )
-          .exec((err, data2) => {
-            var finaldata = {
-              participated: true,
-              is_error: false,
-              message: 'Data Send',
-            };
-            return res.status(200).send(finaldata);
-          });
-      });
+      user_details
+        .updateMany(
+          { _id: { $in: userArray } },
+          { $push: { clubs: ObjectId(club_id) } }
+        )
+        .exec((err, data2) => {
+          var finaldata = {
+            participated: true,
+            is_error: false,
+            message: 'Data Send',
+          };
+          return res.status(200).send(finaldata);
+        });
     }
   });
 });

@@ -93,6 +93,10 @@ var clubSchema = new Schema({
     type: Array,
     required: false,
   },
+  member_list: {
+    type: Array,
+    required: false,
+  },
 });
 
 var club_exports = mongoose.model('club_details', clubSchema);

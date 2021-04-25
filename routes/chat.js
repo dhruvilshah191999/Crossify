@@ -1,14 +1,5 @@
 var express = require("express");
 var auth = require("../middleware/auth");
-// var mongoose = require("mongoose");
-// var CryptoJS = require("crypto-js");
-// var Cryptr = require("cryptr");
-// const config = require("config");
-// const mykey = process.env.MYKEY;
-// var cryptr = new Cryptr(mykey);
-// var category_details = require("../modules/interest_category");
-// var event_details = require("../modules/event_details");
-// var user_details = require("../modules/user_details");
 var member_details = require("../modules/members_details");
 var club_details = require("../modules/club_details");
 var channel_details = require("../modules/channel_details");
@@ -17,7 +8,6 @@ const { ObjectId } = require("bson");
 var router = express.Router();
 router.post("/createRoom", async function (req, res, next) {
   var { club_id, channel_name, is_readable, is_writable } = req.body;
-  console.log("in api");
   var check = club_details.findOne({
     _id: ObjectId(club_id),
     channel_list: { $in: channel_name },
