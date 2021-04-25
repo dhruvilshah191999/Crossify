@@ -14,13 +14,9 @@ var router = express.Router();
 
 router.post('/login', async function (req, res, next) {
   let {login_username, password} = req.body;
-  var check = user_details.findOne(
-    {
-      $and: [
-        {$or: [{username: login_username}, {email: login_username}]},
-      ],
-    }
-  );
+  var check = user_details.findOne({
+    $and: [{$or: [{username: login_username}, {email: login_username}]}],
+  });
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -168,12 +164,10 @@ router.post('/login', async function (req, res, next) {
 
 router.post('/socialsignin', async function (req, res, next) {
   var {socialId, email} = req.body;
-  var check = user_details.findOne(
-    {
-      email: email,
-      socialId: socialId,
-    },
-  );
+  var check = user_details.findOne({
+    email: email,
+    socialId: socialId,
+  });
   await check.exec((err, data) => {
     if (err) {
       var error = {
@@ -194,7 +188,7 @@ router.post('/socialsignin', async function (req, res, next) {
           message: "Account doesn't Exists",
         };
         return res.status(500).send(error);
-      }else {
+      } else {
         let token = data.generateAuthToken();
         var ciphertext = CryptoJS.AES.encrypt(
           JSON.stringify(token),
@@ -453,7 +447,16 @@ router.post('/auth', auth, async function (req, res, next) {
   user_details
     .findOne(
       {_id: ObjectId(req.user._id), is_active: 1},
-      {_id: 1, profile_photo: 1, username: 1 , fav_event:1 , fav_club:1}
+      {
+        _id: 1,
+        profile_photo: 1,
+        username: 1,
+        fav_event: 1,
+        fav_club: 1,
+        latitude: 1,
+        longitude: 1,
+        inbox:1
+      }
     )
     .exec((err, data) => {
       return res.status(200).send(data);

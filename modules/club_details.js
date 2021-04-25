@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
-const { ObjectID, ObjectId } = require("bson");
-var Schema = require("mongoose").Schema;
+var mongoose = require('mongoose');
+const {ObjectID, ObjectId} = require('bson');
+var Schema = require('mongoose').Schema;
 
 var clubSchema = new Schema({
   club_name: {
@@ -13,7 +13,7 @@ var clubSchema = new Schema({
   },
   question: {
     type: Array,
-    required:false,
+    required: false,
   },
   creator_id: {
     type: ObjectId,
@@ -25,7 +25,7 @@ var clubSchema = new Schema({
   },
   rules: {
     type: String,
-    default:"no rules",
+    default: 'no rules',
     required: true,
   },
   profile_photo: {
@@ -50,7 +50,7 @@ var clubSchema = new Schema({
   },
   joining_criteria: {
     type: String,
-    default:"no criteria",
+    default: 'no criteria',
     required: true,
   },
   date: {
@@ -79,15 +79,23 @@ var clubSchema = new Schema({
   },
   status: {
     type: String,
-    required:true,
+    required: true,
   },
-  likes:{
-    type:Array,
-    required:false,
-  }
+  likes: {
+    type: Array,
+    required: false,
+  },
+  photo: {
+    type: Array,
+    required: false,
+  },
+  file: {
+    type: Array,
+    required: false,
+  },
 });
 
-var club_exports = mongoose.model("club_details", clubSchema);
+var club_exports = mongoose.model('club_details', clubSchema);
 
 // var club = new club_exports({
 //     club_name: "Kakarot Club",

@@ -39,8 +39,44 @@ function getdistance(lat1, lon1, lat2, lon2, unit) {
 
 router.get("/get-event", async function (req, res, next) {
   var today = new Date();
-  var records = event_details.find({ is_active: true,date:{$gt:today} }).sort({ date: -1 });
-  await records.exec((err, data) => {
+  event_details.aggregate([
+    {
+      $lookup: {
+        from: 'club_details',
+        localField: 'club_id',
+        foreignField: '_id',
+        as: 'club_data',
+      },
+    },
+    {
+      $match: {
+        is_active: true,
+        date: {$gt: today},
+      },
+    },
+    {
+      $project: {
+        photo: 1,
+        event_name: 1,
+        'club_data.club_name': 1,
+        date: 1,
+        _id: 1,
+        club_id: 1,
+        description: 1,
+        tags: 1,
+        location: 1,
+        city: 1,
+        maximum_participants: 1,
+        current_participants: 1,
+        latitude: 1,
+        longitude: 1,
+        state: 1,
+      },
+    },
+    {
+      $sort: {date: -1},
+    },
+  ]).exec((err, data) => {
     if (err) {
       var error = {
         is_error: true,
@@ -138,58 +174,95 @@ router.post("/", async function (req, res, nex) {
   if (interestarray.length !== 0) {
     interest_array = interestarray.map((s) => mongoose.Types.ObjectId(s));
     if (startingDate !== today && endingDate !== today) {
-      query = event_details.find({
+      query = {
         is_active: true,
         category_list: {
           $in: interest_array,
         },
-        date: { $gt: startingDate, $lt: endingDate },
-      });
+        startdate: {$gt: new Date(startingDate)},
+        date: {$lt: new Date(endingDate)},
+      };
     } else if (startingDate === today && endingDate !== today) {
-      query = event_details.find({
+      query = {
         is_active: true,
         category_list: {
           $in: interest_array,
         },
-        date: { $lt: endingDate },
-      });
+        date: {$lt: new Date(endingDate)},
+      };
     } else if (startingDate !== today && endingDate === today) {
-      query = event_details.find({
+      query = {
         is_active: true,
         category_list: {
           $in: interest_array,
         },
-        date: { $gt: startingDate },
-      });
+        startdate: {$gt: new Date(startingDate)},
+      };
     } else {
-      query = event_details.find({
+      query = {
         is_active: true,
         category_list: {
           $in: interest_array,
         },
-      });
+      };
     }
   } else {
     if (startingDate !== today && endingDate !== today) {
-      query = event_details.find({
-        date: { $gt: startingDate, $lt: endingDate },
+      query = {
+        startdate: {$gt: new Date(startingDate)},
+        date: {$lt: new Date(endingDate)},
         is_active: true,
-      });
+      };
     } else if (startingDate === today && endingDate !== today) {
-      query = event_details.find({
-        date: { $lt: endingDate },
+      query = {
+        date: {$lt: new Date(endingDate)},
         is_active: true,
-      });
+      };
     } else if (startingDate !== today && endingDate === today) {
-      query = event_details.find({
-        date: { $gt: startingDate },
+      query = {
+        startdate: {$gt: new Date(startingDate)},
         is_active: true,
-      });
+      };
     } else {
-      query = event_details.find({ is_active: true });
+      query = { is_active: true };
     }
   }
-  query.exec((err, data) => {
+
+  event_details.aggregate([
+    {
+      $lookup: {
+        from: 'club_details',
+        localField: 'club_id',
+        foreignField: '_id',
+        as: 'club_data',
+      },
+    },
+    {
+      $match: query
+    },
+    {
+      $project: {
+        photo: 1,
+        event_name: 1,
+        'club_data.club_name': 1,
+        date: 1,
+        _id: 1,
+        club_id: 1,
+        description: 1,
+        tags: 1,
+        location: 1,
+        city: 1,
+        maximum_participants: 1,
+        current_participants: 1,
+        latitude: 1,
+        longitude: 1,
+        state: 1,
+      },
+    },
+    {
+      $sort: {date: -1},
+    },
+  ]).exec((err, data) => {
     if (err) {
       var error = {
         is_error: true,
@@ -234,7 +307,6 @@ router.post("/", async function (req, res, nex) {
 router.post("/search", async function (req, res, nex) {
   var { search, location } = req.body;
   let categoryarray = [];
-
   if (
     (search == null || search == "") &&
     (location == null || location == "")
@@ -244,10 +316,7 @@ router.post("/search", async function (req, res, nex) {
   async function getids() {
     var ids = category_details.find(
       {
-        $or: [
-          { category_name: { $regex: ".*" + search + ".*", $options: "i" } },
-          { description: { $regex: ".*" + search + ".*", $options: "i" } },
-        ],
+        category_name: { $regex: ".*" + search + ".*", $options: "i" },
       },
       { _id: 1 }
     );
@@ -282,7 +351,7 @@ router.post("/search", async function (req, res, nex) {
     } else {
       var tags;
       if (location === "") {
-        tags = event_details.find({
+        tags = {
           $or: [
             {
               event_name: {
@@ -290,22 +359,21 @@ router.post("/search", async function (req, res, nex) {
                 $options: "i",
               },
             },
-            { description: { $regex: ".*" + search + ".*", $options: "i" } },
             { category_list: { $in: categoryarray } },
           ],
           is_active: true,
-        });
+        };
       } else if (search === "" && location !== "") {
-        tags = event_details.find({
+        tags = {
           $or: [
             { location: { $regex: ".*" + location + ".*", $options: "i" } },
             { city: { $regex: ".*" + location + ".*", $options: "i" } },
             { state: { $regex: ".*" + location + ".*", $options: "i" } },
           ],
           is_active: true,
-        });
+        };
       } else {
-        tags = event_details.find({
+        tags = {
           $or: [
             {
               event_name: {
@@ -313,16 +381,49 @@ router.post("/search", async function (req, res, nex) {
                 $options: "i",
               },
             },
-            { description: { $regex: ".*" + search + ".*", $options: "i" } },
             { location: { $regex: ".*" + location + ".*", $options: "i" } },
             { city: { $regex: ".*" + location + ".*", $options: "i" } },
             { state: { $regex: ".*" + location + ".*", $options: "i" } },
             { category_list: { $in: categoryarray } },
           ],
           is_active: true,
-        });
+        };
       }
-      await tags.exec((err, data) => {
+      event_details.aggregate([
+    {
+      $lookup: {
+        from: 'club_details',
+        localField: 'club_id',
+        foreignField: '_id',
+        as: 'club_data',
+      },
+    },
+    {
+      $match: tags
+    },
+    {
+      $project: {
+        photo: 1,
+        event_name: 1,
+        'club_data.club_name': 1,
+        date: 1,
+        _id: 1,
+        club_id: 1,
+        description: 1,
+        tags: 1,
+        location: 1,
+        city: 1,
+        maximum_participants: 1,
+        current_participants: 1,
+        latitude: 1,
+        longitude: 1,
+        state: 1,
+      },
+    },
+    {
+      $sort: {date: -1},
+    },
+  ]).exec((err, data) => {
         if (err) {
           var error = {
             is_error: true,

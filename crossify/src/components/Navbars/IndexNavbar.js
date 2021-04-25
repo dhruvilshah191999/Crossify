@@ -115,14 +115,7 @@ export default function Navbar(props) {
                 </Link>
               </li>
 
-              <li
-                className={
-                  isLogin
-                    ? "hover:text-yellow text-yellow px-3 py-4 lg:py-2 flex items-center"
-                    : "hidden " + "flex items-center "
-                }
-              >
-                <i className="fas fa-bell rounded-full text-xl leading-lg mr-2" />{" "}
+              <li className={isLogin ? "" : "hidden " + "flex items-center "}>
                 <div className=" ml-2 lg:ml-0 ">
                   {isLogin ? <NotificationDropdown /> : ""}
                 </div>

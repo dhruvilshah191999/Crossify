@@ -166,14 +166,14 @@ const Tabs = (props) => {
                 </div>
                 <div className={openTab === 5 ? "block" : "hidden"} id="link3">
                   {props.isJoin && openTab === 5 ? (
-                    <PhotosTab club_id={props.club_id} />
+                    <PhotosTab club_id={props.club_id} photo={props.photo} />
                   ) : (
                     <RestrictAccessNotice></RestrictAccessNotice>
                   )}
                 </div>
                 <div className={openTab === 6 ? "block" : "hidden"} id="link3">
                   {props.isJoin && openTab === 6 ? (
-                    <FilesTab club_id={props.club_id} />
+                    <FilesTab club_id={props.club_id} file={props.file} />
                   ) : (
                     <RestrictAccessNotice></RestrictAccessNotice>
                   )}
