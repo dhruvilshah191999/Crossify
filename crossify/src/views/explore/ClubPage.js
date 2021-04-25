@@ -65,11 +65,7 @@ function ClubPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-<<<<<<< HEAD
-        }, 500);
-=======
         }, 1000)
->>>>>>> 1216d1effee4dc4401b7731c974867ece9aba872
       }
     }
 
@@ -97,13 +93,8 @@ function ClubPage(props) {
     }
 
     event_details();
-<<<<<<< HEAD
   }, [id,token]);
 
-=======
-    get_count();
-  }, [id, token]);
->>>>>>> 0be2f8ce4d4773b8cfcb7c7161093b12557ecdde
 
   const addlike = async (e) => {
     const config = {

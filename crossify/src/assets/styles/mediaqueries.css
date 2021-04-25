@@ -104,13 +104,13 @@
   .sm\:mx-0 {
     margin-left: 0%;
     margin-right: 0%;
+  }
    .sm\:items-center{
      align-items: center;
    } 
    .event-image {
     width: 100%;
   }
-  
   .event-side-container {
     width: 70%;
 
@@ -157,9 +157,9 @@
   .event-image {
     width: 95%;
   }
-  
   .event-side-container {
     width: 70%;
+  }
   .privacy-container {
     margin: 4rem 10rem;
   }
