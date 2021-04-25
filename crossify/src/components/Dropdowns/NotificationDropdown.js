@@ -11,8 +11,18 @@ var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
   transport: ["websocket", "polling", "flashsocket"],
 });
+
+const Setunread = (props) => {
+  var countUnread = 0;
+  props.data.forEach((el) => {
+    if (!el.isRead) {
+      countUnread++;
+    }
+  });
+  props.returnData(countUnread);
+  return <></>;
+};
 const NotificationDropdown = (props) => {
-  const [data, setData] = useState([]);
   const [unread, setUnread] = useState(0);
   const [loading, setloding] = useState(false);
   const { users } = useContext(UserContext);
@@ -31,22 +41,12 @@ const NotificationDropdown = (props) => {
     async function fetchData() {
       setTimeout(() => {
         setloding(true);
-      }, 1000);
-      if (loading) {
-        var user_id = users._id;
-        console.log(users);
-        var countUnread = 0;
-        users.inbox.map((el) => {
-          if (!el.isRead) {
-            countUnread++;
-          }
-        });
-        setUnread(countUnread);
-        socket.emit("open", { user_id });
-      }
+      }, 500);
+      var user_id = users._id;
+      socket.emit("open", { user_id });
     }
     fetchData();
-  }, [token, users]);
+  }, [token]);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -81,7 +81,6 @@ const NotificationDropdown = (props) => {
           }
         );
     }
-    return () => {};
   }, [socket]);
 
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
@@ -114,8 +113,20 @@ const NotificationDropdown = (props) => {
       console.log(feed.data.message);
     } else {
       setUnread(0);
+      users.inbox
+        .map((e) => {
+          if (!e.isRead) {
+            e.isRead = true;
+          }
+        })
+        .reverse()
+        .slice(0, 10);
     }
   };
+
+  const setUnreadData = (chilData) => {
+    setUnread(chilData);
+  }
   if (loading) {
     return (
       <>
@@ -129,12 +140,13 @@ const NotificationDropdown = (props) => {
           {" "}
           add{" "}
         </button> */}
+        <Setunread data={users.inbox} returnData={setUnreadData} />
         <div
           ref={notifyNow}
           className={
             animationFinished
-              ? "notification  relative"
-              : "notification notify relative"
+              ? "notification2  relative"
+              : "notification2 notify relative"
           }
           onMouseEnter={(e) => {
             e.preventDefault();
@@ -183,10 +195,8 @@ const NotificationDropdown = (props) => {
             >
               <div className="px-4 py-2 text-base mb-1 text-muted font-semibold">
                 {" "}
-                You have
-                <span className="font-semibold text-beta">
-                  {users.inbox.length}
-                </span>{" "}
+                You have new {" "}
+                <span className="font-semibold text-beta">{unread}</span>{" "}
                 Notifications.
                 <span className="float-right">
                   <button
@@ -225,7 +235,7 @@ const NotificationDropdown = (props) => {
                         <div className="font-semibold">{el.title}</div>
                         <div className="ml-1">
                           <span className="text-xs text-gray-400 flex-shrink-0">
-                            {Moment(el.date, "YYYYMMDDHHmmss").fromNow()}
+                            {Moment(el.date).fromNow()}
                           </span>{" "}
                         </div>
                       </div>
