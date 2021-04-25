@@ -48,7 +48,7 @@ const SearchNavbar = (props) => {
                 value={search}
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
-                      onSubmit(e);
+                    onSubmit(e);
                   }
                 }}
                 placeholder="Find your club,events"
@@ -61,7 +61,7 @@ const SearchNavbar = (props) => {
                 onChange={(e) => setlocation(e.target.value)}
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
-                      onSubmit(e);
+                    onSubmit(e);
                   }
                 }}
                 value={location}

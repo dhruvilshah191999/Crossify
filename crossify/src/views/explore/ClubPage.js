@@ -16,6 +16,7 @@ import MyTag from "components/Tag";
 import { notifyClubLiked, notifyWentWrong } from "notify";
 import JoinClubButton from "components/SweetAlerts/JoinClubButton";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
+import Footer from "components/Footers/FooterAdmin";
 
 function ClubPage(props) {
   let history = useHistory();
@@ -62,7 +63,7 @@ function ClubPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-        }, 500)
+        }, 500);
       }
     }
 
@@ -140,8 +141,7 @@ function ClubPage(props) {
     CheckRequestMember();
     event_details();
     get_count();
-  }, [id,token]);
-
+  }, [id, token]);
 
   const addlike = async (e) => {
     const config = {
@@ -185,7 +185,12 @@ function ClubPage(props) {
   };
   const openModal = () => {
     ModalManager.open(
-      <MyModal onRequestClose={() => true} club_id={id} isAdmin={isAdmin} category={category }/>
+      <MyModal
+        onRequestClose={() => true}
+        club_id={id}
+        isAdmin={isAdmin}
+        category={category}
+      />
     );
   };
   const gotoAdmin = () => {
@@ -200,15 +205,12 @@ function ClubPage(props) {
             <div className="flex flex-row flex-wrap mt-2 ">
               <div className="club-bg mx-4 my-2">
                 <img
-                  className="w-full h-full overflow-hidden object-contain rounded-lg"
+                  className="w-full h-full overflow-hidden object-contain rounded-lg event-image"
                   alt="club_background_photo"
                   src={clubData.profile_photo}
                 />
               </div>
-              <div
-                className="bg-white rounded  mx-2 my-2 p-6 border leading-relaxed max-w-370-px"
-                style={{ width: 370 }}
-              >
+              <div className="bg-white rounded  mx-2 my-2 p-6 border leading-relaxed max-w-370-px event-side-container">
                 <div className="text-3xl font-bold">
                   {clubData.club_name}
                   {/* //todo GOLU just redirect to the /admin page for control or
@@ -321,6 +323,7 @@ function ClubPage(props) {
             </div>
           </div>
         </div>
+        <Footer />
       </>
     );
   } else {

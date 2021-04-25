@@ -61,6 +61,12 @@ export default function Footer() {
                     <button
                       className="bg-white text-blue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          " https://twitter.com/CrossifyWeb",
+                          "_blank"
+                        );
+                      }}
                     >
                       <i className="fab fa-facebook-square"></i>
                     </button>
