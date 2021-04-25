@@ -29,6 +29,9 @@
  .xs\:p-1{
   padding: 0.15rem;
  }
+ .xs\:flex-row{
+  flex-direction: row;
+ }
 }
 @media (min-width: 640px) and (max-width: 768px) {
   .sm\:p-10 {
