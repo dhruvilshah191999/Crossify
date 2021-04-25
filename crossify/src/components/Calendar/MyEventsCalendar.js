@@ -10,14 +10,7 @@ import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
 //this is used to make custom view in calendar for event
-function renderEventContent(eventInfo) {
-  return (
-    <button className="p-2 bg-alpha w-full" onClick={() => alert("Working")}>
-      <div className="font-semibold ">{eventInfo.timeText}</div>
-      <div>{eventInfo.event.title}</div>
-    </button>
-  );
-}
+
 export default class DemoApp extends React.Component {
   constructor(props) {
     super(props);

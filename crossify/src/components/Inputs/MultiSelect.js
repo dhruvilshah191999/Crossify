@@ -1,6 +1,5 @@
 import React from "react";
 import { Multiselect } from "multiselect-react-dropdown";
-import axios from "axios";
 import { UserContext } from "context/usercontext";
 
 class App extends React.Component {
@@ -34,8 +33,7 @@ class App extends React.Component {
     this.props.parentCallback(selectedList);
   };
   render() {
-    const { objectArray, selectedValues } = this.state;
-    console.log(this.context)
+    const { selectedValues } = this.state;
     return (
       <>
         <Multiselect

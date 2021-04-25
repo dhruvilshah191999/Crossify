@@ -13,7 +13,6 @@ const EventCard = (props) => {
   const { users } = useContext(UserContext);
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
-  const [clubname, Setclub] = useState("");
   const token = localStorage.getItem("jwt");
 
   const showEvents = (event_id) => {
@@ -21,24 +20,6 @@ const EventCard = (props) => {
   };
 
   useEffect(() => {
-    async function fetchclub() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        club_id: props.data.club_id,
-      };
-      const finaldata = await axios.post("/api/events/getclub", object, config);
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        if (finaldata.data.data != null) Setclub(finaldata.data.data.club_name);
-      }
-    }
-
     if (token) {
       setLogin(true);
       const b = users.fav_event.find((e) => e === props.data._id);
@@ -46,8 +27,7 @@ const EventCard = (props) => {
         setLike(true);
       };
     }
-    //fetchclub();
-  }, []);
+  }, [props,token,users]);
 
   const addlike = async (e) => {
     if (loginstate) {

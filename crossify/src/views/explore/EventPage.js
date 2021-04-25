@@ -27,10 +27,8 @@ const Tag = (props) => {
 export default function EventPage(props) {
   let history = useHistory();
   const { users } = useContext(UserContext);
-  const [isAdmin, setIsAdmin] = useState(false);
   var { id } = useParams();
   const [loading, setloading] = useState(false);
-  const [like, setLike] = useState(false);
   const [isInWaiting, SetisInWaiting] = useState(false);
   const [IsFull, SetIsFull] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
@@ -38,7 +36,6 @@ export default function EventPage(props) {
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
     async function event_details() {
       const config = {
         method: "POST",
@@ -96,36 +93,9 @@ export default function EventPage(props) {
       }
     }
 
-    async function fetchData() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        token: token,
-        event_id: id,
-      };
-      const finaldata = await axios.post(
-        "/api/events/checklikes",
-        object,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setLike(finaldata.data.Like);
-      }
-    }
-
-    fetchData();
     CheckEvent();
     event_details();
-    if (users._id === eventdetails.oragnizer_id) {
-      setIsAdmin(true);
-    }
-  }, []);
+  }, [id,token]);
 
   const addlike = async (e) => {
     const config = {
@@ -144,7 +114,8 @@ export default function EventPage(props) {
       notifyWentWrong();
     } else {
       notifyLiked();
-      setLike(true);
+      users.fav_event.push(id);
+      history.go(0);
     }
   };
 
@@ -167,7 +138,8 @@ export default function EventPage(props) {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      setLike(false);
+      users.fav_event.pop(id);
+      history.go(0);
     }
   };
 
@@ -307,12 +279,16 @@ export default function EventPage(props) {
                 <div className="w-6/12">
                   <motion.button
                     className={
-                      !like
+                      !users.fav_event.find((e) => e === id)
                         ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     }
                     type="button"
-                    onClick={like ? (e) => deletelike(e) : (e) => addlike(e)}
+                    onClick={
+                      users.fav_event.find((e) => e === id)
+                        ? (e) => deletelike(e)
+                        : (e) => addlike(e)
+                    }
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -417,7 +393,6 @@ export default function EventPage(props) {
                   ""
                 )}
               </div>
-              {/* // ! showing FAQ even tho there is no FAQs */}
               <div className="flex flex-col lg:flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
                   FAQs <br />
@@ -429,11 +404,11 @@ export default function EventPage(props) {
                 >
                   {eventdetails.faq.some(
                     (cur) =>
-                      cur.privacy === "public" && cur.status == "answered"
+                      cur.privacy === "public" && cur.status === "answered"
                   ) ? (
                     eventdetails.faq.map((el, i) => {
-                      if (el.privacy == "public" && el.status == "answered") {
-                        if (i == 0) {
+                      if (el.privacy === "public" && el.status === "answered") {
+                        if (i === 0) {
                           return (
                             <details>
                               <summary className="pt-0">{el.question}</summary>
@@ -447,6 +422,9 @@ export default function EventPage(props) {
                             <p>{el.answer}</p>
                           </details>
                         );
+                      }
+                      else {
+                        return <></>;
                       }
                     })
                   ) : (

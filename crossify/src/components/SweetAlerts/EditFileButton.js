@@ -23,9 +23,6 @@ export default class SweetAlertModal extends Component {
     });
   };
   onRecievedInput = () => {
-    const updatedQ = this.state.file;
-    const updatedA = this.state.description;
-    //todo GOLU we have file and description in state you just make any axios request to update the current value
     this.setState({
       alert: null,
       file: null,

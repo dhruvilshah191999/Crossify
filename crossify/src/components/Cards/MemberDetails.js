@@ -33,7 +33,6 @@ class MemberDetails extends Component {
   }
 
   async componentDidMount() {
-    const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
       header: {

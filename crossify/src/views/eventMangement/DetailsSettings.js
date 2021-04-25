@@ -4,8 +4,7 @@ import UploadPic from "components/Inputs/UploadPic";
 import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import dummyPF from "assets/img/demopf.png";
 import { InputTagsContainer } from "react-input-tags";
-import { render } from "react-dom";
-// components
+import PulseLoader from "react-spinners/PulseLoader";
 
 export default class DetailsSettings extends React.Component {
   constructor(props) {
@@ -16,6 +15,7 @@ export default class DetailsSettings extends React.Component {
       description: "",
       eligibility: "",
       event_data: null,
+      loading: false,
     };
   }
 
@@ -60,6 +60,7 @@ export default class DetailsSettings extends React.Component {
   };
 
   onSubmit = async (e) => {
+    this.setState({ loading: true });
     e.preventDefault();
     if (this.state.photo != null) {
       var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
@@ -143,13 +144,19 @@ export default class DetailsSettings extends React.Component {
                   <h6 className="text-gray-800 text-xl font-bold">
                     Event Details
                   </h6>
-                  <button
-                    className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={this.onSubmit}
-                  >
-                    Save &nbsp; <i className="fas fa-save"></i>
-                  </button>
+                  {this.state.loading ? (
+                    <div align="center">
+                      <PulseLoader color="#48bb78" size={10} />
+                    </div>
+                  ) : (
+                    <button
+                      className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={this.onSubmit}
+                    >
+                      Save &nbsp; <i className="fas fa-save"></i>
+                    </button>
+                  )}
                 </div>
               </div>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">

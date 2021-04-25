@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPopper } from "@popperjs/core";
 import axios from "axios";
 import Moment from "moment";
@@ -12,8 +12,23 @@ let socket = io(BackendURL, {
 });
 const NotificationDropdown = (props) => {
   const [data, setData] = useState([]);
+  const [unread, setUnread] = useState(0);
   const [loading, setloding] = useState(false);
   const token = localStorage.getItem("jwt");
+  const [animationFinished, setAnimationFinished] = useState(true);
+
+  const onAnimationStart = () => {
+    setAnimationFinished(false);
+  };
+
+  const onAnimationEnd = () => {
+    setAnimationFinished(true);
+  };
+
+  //todo Bhagu set unread as number of message which are yet read not read
+  // ! whenever you want show the shake animation just call setAnimationFinished(false) function
+
+  // to get infomation about user and its notification
   useEffect(() => {
     async function fetchData() {
       const config = {
@@ -38,7 +53,8 @@ const NotificationDropdown = (props) => {
       }
     }
     fetchData();
-  }, []);
+  }, [token]);
+
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
@@ -66,6 +82,10 @@ const NotificationDropdown = (props) => {
               theme: "darkblue",
               silent: false,
             });
+            if (!dropdownPopoverShow) {
+              setAnimationFinished(false);
+            }
+            setUnread((prev) => prev + 1);
           }
         );
     }
@@ -75,9 +95,8 @@ const NotificationDropdown = (props) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
+  const notifyNow = React.createRef();
   const openDropdownPopover = () => {
-    console.log("hey");
-
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
       placement: "bottom-start",
     });
@@ -86,13 +105,26 @@ const NotificationDropdown = (props) => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
-
-  const check = (e) => {};
-
   if (loading) {
     return (
       <>
+        {/* <button
+          type="button"
+          id="notifyNow"
+          onClick={() => {
+            setAnimationFinished(false);
+          }}
+        >
+          {" "}
+          add{" "}
+        </button> */}
         <div
+          ref={notifyNow}
+          className={
+            animationFinished
+              ? "notification  relative"
+              : "notification notify relative"
+          }
           onMouseEnter={(e) => {
             e.preventDefault();
             openDropdownPopover();
@@ -101,10 +133,27 @@ const NotificationDropdown = (props) => {
             e.preventDefault();
             closeDropdownPopover();
           }}
+          onAnimationEnd={onAnimationEnd}
+          onAnimationStart={onAnimationStart}
         >
+          {unread > 0 && (
+            <div
+              className="absolute rounded-full bg-alpha text-white flex justify-center items-center"
+              style={{
+                right: "5px",
+                top: 0,
+                width: "15px",
+                height: "15px",
+                overflow: "hidden",
+                fontSize: "10px",
+              }}
+            >
+              <span style={{ marginLeft: "-1px" }}>{unread}</span>
+            </div>
+          )}
           <a
             className="hover:text-yellow text-yellow px-3 py-4 lg:py-2 flex items-center"
-            href="#pablo"
+            href="#notifications"
             ref={btnDropdownRef}
           >
             <i className="fas fa-bell rounded-full text-xl leading-lg mr-2" />{" "}
@@ -128,6 +177,19 @@ const NotificationDropdown = (props) => {
                   {data[0].inbox.length}
                 </span>{" "}
                 Notifications.
+                <span className="float-right">
+                  <button
+                    type="button"
+                    className="text-beta text-sm font-semibold rounded px-2 hover:bg-beta  hover:text-white"
+                    style={{
+                      border: "1px solid #00838f",
+                      paddingTop: "3px",
+                      paddingBottom: "3px",
+                    }}
+                  >
+                    Mark all as Read{" "}
+                  </button>
+                </span>
               </div>
               {data[0].inbox
                 .map((el) => (
@@ -142,6 +204,7 @@ const NotificationDropdown = (props) => {
                       <img
                         className="w-12 h-12 rounded-full ml-2 "
                         src={el.photo}
+                        alt="notification"
                       />
                     </div>
                     <div className="flex flex-col ml-6 mr-4">
@@ -167,7 +230,12 @@ const NotificationDropdown = (props) => {
       </>
     );
   } else {
-    return <></>;
+    return (
+      <>
+        {" "}
+        <div id="pop-pop"></div>
+      </>
+    );
   }
 };
 

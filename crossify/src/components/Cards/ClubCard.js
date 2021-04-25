@@ -36,7 +36,6 @@ const ClubCard = (props) => {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        console.log(finaldata.data.data);
         setCount(finaldata.data.data);
       }
     }

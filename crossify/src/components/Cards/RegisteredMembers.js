@@ -1,5 +1,4 @@
-import React, { Component, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
 import axios from "axios";
 import demoImg1 from "../../assets/img/pp1.jpg";
 import demoImg2 from "../../assets/img/pp3.jpg";

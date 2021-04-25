@@ -1,13 +1,10 @@
 import React from "react";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-import currentPosIcon from "assets/img/marker.png";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import hello from "config/default.json";
 const GOOGLE_MAPS_API = hello.GOOGLE_MAPS_API;
-console.log(GOOGLE_MAPS_API);
 export class MapContainer extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.lat);
     this.state = {
       name: "Current position",
       position: {
@@ -44,7 +41,7 @@ export class MapContainer extends React.Component {
   };
 
   render() {
-    const { position, name, currentLocation } = this.state;
+    const { position, name } = this.state;
     return (
       <Map
         className="view-map w-full overflow-hidden rounded"

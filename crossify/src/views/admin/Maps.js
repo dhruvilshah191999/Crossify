@@ -33,7 +33,7 @@ export default function Maps() {
       }
     }
     getData();
-  }, [])
+  }, [id])
 
   const handleCallback = (childData) => {
     setlatitude(childData.lat);

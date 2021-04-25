@@ -3,32 +3,19 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import City from "./states-and-districts.json";
 import { usePosition } from "use-position";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
 import PulseLoader from "react-spinners/PulseLoader";
-import { Formik, useField } from "formik";
-import { setEmitFlags } from "typescript";
+import { Formik } from "formik";
 import $ from "jquery";
 
 export default function Register2() {
-  var vertical = "top";
-  var horizontal = "center";
   let history = useHistory();
   const watch = true;
   const [photo, setPhoto] = useState(null);
   const [loading, setloading] = useState(false);
-  const [errorStatus, setError] = useState(false);
   const [usernameStatus, setUsername] = useState(false);
   const [username, setusername] = useState(null);
-  const [message, setMessage] = useState("");
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setError(false);
-  };
   let { latitude, longitude } = usePosition(watch);
   const [statename, setStateName] = useState("");
   const [cityname, setCityName] = useState("");
@@ -103,16 +90,6 @@ export default function Register2() {
   return (
     <>
       <div className="container mx-auto px-4 h-full ">
-        <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
-          open={errorStatus}
-          autoHideDuration={2000}
-          onClose={handleClose}
-        >
-          <Alert severity="error" onClose={handleClose}>
-            {message}
-          </Alert>
-        </Snackbar>
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-6/12 px-4">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300">
@@ -154,7 +131,7 @@ export default function Register2() {
                     }
                     if (!pincode) {
                       errors.pincode = "Pin code is required !";
-                    } else if (pincode.length != 6) {
+                    } else if (pincode.length !== 6) {
                       errors.pincode = "Pin code should be in 6 digits !!!";
                     }
                     if (!occupation) {
@@ -185,13 +162,14 @@ export default function Register2() {
                           longitude = 0;
                           latitude = 0;
                         }
-                        var data = {
+                        var userdata = {
                           username,
                           address,
                           pincode,
                           city: cityname,
                           state: statename,
                           lat: latitude,
+                          dob,
                           long: longitude,
                           email: decryptedData.email,
                           occupation,
@@ -202,7 +180,7 @@ export default function Register2() {
                           password: decryptedData.password,
                         };
                         var ciphertext = CryptoJS.AES.encrypt(
-                          JSON.stringify(data),
+                          JSON.stringify(userdata),
                           Key.Secret
                         ).toString();
                         localStorage.setItem("RegisterData", ciphertext);
@@ -213,7 +191,7 @@ export default function Register2() {
                         longitude = 0;
                         latitude = 0;
                       }
-                      var data = {
+                      var userdata = {
                         username,
                         address,
                         pincode,
@@ -233,7 +211,7 @@ export default function Register2() {
                         password: decryptedData.password,
                       };
                       var ciphertext = CryptoJS.AES.encrypt(
-                        JSON.stringify(data),
+                        JSON.stringify(userdata),
                         Key.Secret
                       ).toString();
                       localStorage.setItem("RegisterData", ciphertext);

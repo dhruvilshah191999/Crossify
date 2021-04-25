@@ -36,7 +36,7 @@ export default function Settings() {
     }
 
     fetchData();
-  }, []);
+  }, [id]);
   return (
     <>
       <Sidebar />

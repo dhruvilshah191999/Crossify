@@ -16,9 +16,7 @@ export default function EventPreview(props) {
   var { id } = useParams();
   const [eventdetails, Seteventsdetails] = useState({});
   const [loading, setloading] = useState(false);
-  const token = localStorage.getItem("jwt");
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
     async function event_details() {
       const config = {
         method: "POST",
@@ -45,7 +43,7 @@ export default function EventPreview(props) {
       }
     }
     event_details();
-  }, []);
+  }, [id]);
 
   if (loading) {
     return (
@@ -57,13 +55,6 @@ export default function EventPreview(props) {
                 {" "}
                 Event Preview
               </h6>
-              <button
-                className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                type="button"
-                // onClick={(e) => onSubmit(e)}
-              >
-                Edit &nbsp; <i className="fas fa-edit"></i>
-              </button>
             </div>
           </div>
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -252,6 +243,9 @@ export default function EventPreview(props) {
                               <p>{el.answer}</p>
                             </details>
                           );
+                        }
+                        else {
+                          return <></>
                         }
                       })
                     ) : (

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 function EditSocialMedia() {
-  const token = localStorage.getItem("jwt");
   const [SformData, SetSformData] = useState({
     facebook: "",
     linkedin: "",
@@ -15,6 +14,7 @@ function EditSocialMedia() {
     SetSformData({ ...SformData, [e.target.name]: e.target.value });
 
   useEffect(() => {
+  const token = localStorage.getItem("jwt");
     async function fetchData() {
       const config = {
         method: "POST",
@@ -48,6 +48,7 @@ function EditSocialMedia() {
   }, []);
 
   const onSubmit = async (e) => {
+    const token = localStorage.getItem("jwt");
     e.preventDefault();
     var object = {
       facebook,

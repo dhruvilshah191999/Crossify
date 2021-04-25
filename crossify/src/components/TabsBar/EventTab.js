@@ -7,12 +7,10 @@ import { motion } from "framer-motion";
 import { UserContext } from "context/usercontext";
 import EmptyContainer from "components/sections/EmptyContainer";
 import MapwithEvents from "components/Maps/EventsOfClubsMap";
-//khatar banayu bhai harshil
 export default function EventTab(props) {
   const eventPerPage = 3;
   const [pastIndex, setpastIndex] = useState(1);
   const { users } = useContext(UserContext);
-  const [clubId, setclubId] = useState(props.club_id);
   const [upcomingIndex, setUpcomingIndex] = useState(1);
   const [tabIndex, toggleTabIndex] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,7 +28,6 @@ export default function EventTab(props) {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
-  // Logic for displayingpastEvents
   const isPresent = (val) => {
     if (val.toLowerCase().indexOf(searchQuery) !== -1) {
       return true;
@@ -63,7 +60,6 @@ export default function EventTab(props) {
       return true;
     }
     search3.forEach((el) => {
-      console.log(el);
       if (el.toLowerCase().indexOf(searchQuery) !== -1) {
         return true;
       }
@@ -217,7 +213,7 @@ export default function EventTab(props) {
         },
       };
       var object = {
-        club_id: clubId,
+        club_id: props.club_id,
       };
       const finaldata = await axios.post(
         "/api/admin/get-upcoming-event",
@@ -240,7 +236,7 @@ export default function EventTab(props) {
         },
       };
       var object = {
-        club_id: clubId,
+        club_id: props.club_id,
       };
       const finaldata = await axios.post(
         "/api/admin/get-past-event",
@@ -256,8 +252,7 @@ export default function EventTab(props) {
 
     getData();
     getpastdata();
-  }, []);
-  console.log(rawUpcomingEvents);
+  }, [props.club_id]);
   return (
     <>
       <div className="flex   text-sm">
@@ -323,7 +318,7 @@ export default function EventTab(props) {
             </span>
             <EventCalendar
               EventData={rawUpcomingEvents}
-              club_id={clubId}
+              club_id={props.club_id}
               isAdmin={props.isAdmin}
             />
           </>

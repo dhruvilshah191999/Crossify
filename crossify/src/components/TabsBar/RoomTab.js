@@ -1,6 +1,5 @@
 import React from "react";
 import ChatMessage from "components/Message/Message";
-import addNotification from "react-push-notification";
 import urlObject from "../../config/default.json";
 import io from "socket.io-client";
 import axios from "axios";
@@ -8,13 +7,6 @@ var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
   transport: ["websocket", "polling", "flashsocket"],
 });
-
-function onlyUnique(value, index, self) {
-  return self.indexOf(value) === index;
-}
-
-const token = localStorage.getItem("jwt");
-
 export default class RoomTab extends React.Component {
   state = {
     currentTab: 0,
@@ -128,7 +120,6 @@ export default class RoomTab extends React.Component {
       const msgs = this.state.curRoomMsgs;
       var pages = this.state.pageonChat;
       const limit = 30;
-      console.log(fetch[index]);
       if (fetch[index]) {
         pages[index]++;
         const config = {
@@ -144,9 +135,7 @@ export default class RoomTab extends React.Component {
           { club_id, user_id, page, limit },
           config
         );
-        console.log(allRoomsInfo);
         var newMessages = allRoomsInfo.data.roomsData[index].messages;
-        console.log(newMessages);
         if (newMessages === null) {
           fetch[index] = false;
           this.setState({
@@ -154,19 +143,16 @@ export default class RoomTab extends React.Component {
             pageonChat: pages,
           });
         } else {
-          newMessages.map(({ user_id }, index) => {
+          newMessages.forEach(({ user_id }, index) => {
             const { username, profile_photo } = this.state.users[user_id];
             msgs[index].username = username;
             msgs[index].profilePic = profile_photo;
           });
-          console.log(openDatabase);
           var updatedArray = newMessages.concat(
             openDatabase.roomsData[index].messages
           );
           openDatabase.roomsData[index].messages = updatedArray;
-          console.log(openDatabase);
           var concetedMessages = newMessages.concat(msgs);
-          console.log(concetedMessages);
           this.setState({
             curRoomMsgs: concetedMessages,
             database: openDatabase,
@@ -178,7 +164,7 @@ export default class RoomTab extends React.Component {
   };
   renderMsgs = () => {
     var msgs = this.state.curRoomMsgs;
-    msgs.map(({ user_id }, index) => {
+    msgs.forEach(({ user_id }, index) => {
       const { username, profile_photo } = this.state.users[user_id];
       msgs[index].username = username;
       msgs[index].profilePic = profile_photo;
@@ -214,7 +200,7 @@ export default class RoomTab extends React.Component {
           }
           this.setState({ curRoomMsgs: msgs });
         }
-    );
+      );
     return msgs.map(({ message, username, profilePic, senttime, user_id }) => (
       <ChatMessage
         self={username === this.state.username}
@@ -230,9 +216,9 @@ export default class RoomTab extends React.Component {
   renderRoomList = () => {
     return this.state.rooms.map((el, index) => (
       <a
+        href={() => false}
         onClick={() => {
           const val = this.state.database.roomsData[index].messages;
-
           this.setState({
             currentTab: index,
             curRoomMsgs: val,
@@ -366,9 +352,7 @@ export default class RoomTab extends React.Component {
                         value={this.state.messagetoSend}
                         onKeyPress={(e) => {
                           if (e.key === "Enter") {
-                            {
-                              this.sendMessage();
-                            }
+                            this.sendMessage();
                           }
                         }}
                       ></input>
@@ -402,9 +386,7 @@ export default class RoomTab extends React.Component {
                       value={this.state.messagetoSend}
                       onKeyPress={(e) => {
                         if (e.key === "Enter") {
-                          {
-                            this.sendMessage();
-                          }
+                          this.sendMessage();
                         }
                       }}
                     ></input>

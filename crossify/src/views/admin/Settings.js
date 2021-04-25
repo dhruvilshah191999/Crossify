@@ -63,7 +63,7 @@ export default function Settings() {
     }
     get_count();
     club_details();
-  }, []);
+  }, [id]);
   return (
     <>
       <Sidebar />

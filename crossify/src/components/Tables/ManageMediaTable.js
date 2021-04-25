@@ -15,9 +15,9 @@ import Moment from "moment";
 import fileDownload from "js-file-download";
 import axios from "axios";
 import EmptyTable from "components/sections/EmptyTable";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const handleDownload = (url, filename) => {
-  console.log(url);
   axios
     .get(url, {
       responseType: "blob",
@@ -79,42 +79,14 @@ function DefaultColumnFilter({
   );
 }
 
-function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id },
-}) {
-  // Calculate the options for filtering
-  // using the preFilteredRows
-  const options = React.useMemo(() => {
-    const options = new Set();
-    preFilteredRows.forEach((row) => {
-      options.add(row.values[id]);
-    });
-    return [...options.values()];
-  }, [id, preFilteredRows]);
-
-  // Render a multi-select box
-  return (
-    <select
-      value={filterValue}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  );
-}
-
 export default function App(props) {
   const [isLight, setIsLight] = useState(1);
-  const [mediaPhoto, setmediaPhoto] = useState(props.data);
-  const [clubId, setClubId] = useState(props.club_id);
-  const data = React.useMemo(() => mediaPhoto, []);
+  const data = React.useMemo(() => props.data, [props.data]);
+  const [loading, setloading] = useState(false);
+
+  const getLoading = (childData) => {
+    setloading(childData);
+  };
 
   const columns = React.useMemo(
     () => [
@@ -178,14 +150,15 @@ export default function App(props) {
               </div>
 
               <EditMediaButton
-                club_id={clubId}
+                club_id={props.club_id}
                 link={value}
                 description={description}
                 name={name}
                 size={size}
+                parentCallback={getLoading}
               ></EditMediaButton>
               <RemoveMediaButton
-                club_id={clubId}
+                club_id={props.club_id}
                 link={value}
               ></RemoveMediaButton>
             </div>
@@ -195,7 +168,7 @@ export default function App(props) {
         disableSortBy: true,
       },
     ],
-    []
+    [props.club_id]
   );
   const defaultColumn = React.useMemo(
     () => ({
@@ -284,9 +257,16 @@ export default function App(props) {
                   />
                 </div>
                 <div className="ml-auto">
-                  <div className="inline-block">
-                    <UploadMediaButton club_id={clubId} />
-                  </div>
+                  {loading ? (
+                    <PulseLoader color="#48bb78" size={10} />
+                  ) : (
+                    <div className="inline-block">
+                      <UploadMediaButton
+                        club_id={props.club_id}
+                        parentCallback={getLoading}
+                      />
+                    </div>
+                  )}
                   <span className="ml-2 "></span>
                   <GlobalFilter
                     isLight={isLight}
@@ -300,7 +280,7 @@ export default function App(props) {
           </div>
         </div>
         <div className="block w-full overflow-x-auto relative">
-          {page.length == 0 && <EmptyTable isLight={isLight} />}
+          {page.length === 0 && <EmptyTable isLight={isLight} />}
           <table
             {...getTableProps()}
             className="items-center w-full bg-transparent border-collapse"
@@ -355,7 +335,7 @@ export default function App(props) {
                 );
               })}
             </tbody>
-            {page.length == 0 && <div className="empty-table-space"></div>}
+            {page.length === 0 && <div className="empty-table-space"></div>}
           </table>
           <div className="mt-2 flex flex-row justify-center">
             <div className="mr-auto pl-4">

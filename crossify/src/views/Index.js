@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "context/usercontext";
-import { Redirect } from "react-router-dom";
-import hobbyImg from "assets/img/hobbyImg.jpg";
 import four_boys from "assets/img/four_boys.jpg";
-import { store } from "react-notifications-component";
-// components
 import { motion } from "framer-motion";
 import GridLoader from "react-spinners/GridLoader";
 import Navbar from "components/Navbars/IndexNavbar.js";
@@ -18,7 +13,6 @@ import Creators from "components/sections/Creators";
 export default function Landing() {
   let history = useHistory();
   const {
-    isLogin,
     search_dispatch,
     category,
     EventData,
@@ -28,12 +22,14 @@ export default function Landing() {
   const [loading, isLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [location, setlocation] = useState("");
-  const [readNotification, setreadNotification] = React.useState(false);
 
-  useEffect(async () => {
-    setTimeout(() => {
-      isLoading(true);
-    }, 400);
+  useEffect(() => {
+    async function setTime() {
+      setTimeout(() => {
+        isLoading(true);
+      }, 400);
+    }
+    setTime();
   }, []);
 
   const SearchFilter = async (category_name) => {
@@ -84,7 +80,7 @@ export default function Landing() {
               <br />
               <form>
                 <div className="flex justify-center flex-wrap w-full">
-                  <div className="bg-white p-2 align-center flex w-full xs:p-1 w-65">
+                  <div className="bg-white p-2 align-center flex w-80 xs:p-1 xs:w-65">
                     <div style={{ flex: "1 1 60%" }}>
                       <input
                         style={{
@@ -158,10 +154,9 @@ export default function Landing() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-1 justify-start xs:justify-center">
-                {eventState &&
-                  eventState.map((data) => (
-                    <EventCard key={data._id} data={data}></EventCard>
-                  ))}
+                {EventData.map((data) => (
+                  <EventCard key={data._id} data={data}></EventCard>
+                ))}
               </div>
             </div>
           </section>
@@ -171,7 +166,7 @@ export default function Landing() {
           >
             <div className="p-8 mx-6 sm:p-10 mx-0">
               <div className="mb-6">
-                <div className="flex flex-row ">
+                <div className="flex flex-row xs:flex-column">
                   <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     Explore Local Clubs
                   </h4>
@@ -201,9 +196,9 @@ export default function Landing() {
                 className="bg-white block m-4"
                 style={{ marginBottom: "0px" }}
               >
-                <div className="p-8 mx-6 pt-0">
+                <div className="p-8 mx-6 sm:p-10 mx-0">
                   <div className=" mb-6">
-                    <div className="flex flex-row ">
+                    <div className="flex flex-row xs:flex-column">
                       <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                         {el.category_name}
                       </h4>

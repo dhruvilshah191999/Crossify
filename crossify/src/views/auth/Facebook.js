@@ -20,40 +20,46 @@ export default function Facebook() {
     setError(false);
   };
   var responseFacebook = async (response) => {
-    var splitname = response.name.split(" ");
-    var fname, lname;
-    if (splitname.length === 2) {
-      fname = splitname[0];
-      lname = splitname[1];
-    } else if (splitname.length === 3) {
-      fname = splitname[0];
-      lname = splitname[2];
-    }
-    const data = {
-      socialId: response.userID,
-      email: response.email,
-      fname: fname,
-      lname: lname,
-      photo: response.picture.data.url,
-    };
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-      validateStatus: () => true,
-    };
-    const finaldata = await axios.post("/api/socialsignup", data, config);
-    if (finaldata.data.is_error) {
-      setError(true);
-      setMessage(finaldata.data.message);
-    } else {
-      var ciphertext = CryptoJS.AES.encrypt(
-        JSON.stringify(finaldata.data),
-        Key.Secret
-      ).toString();
-      localStorage.setItem("email", ciphertext);
-      history.push("/auth/register/socialstep2");
+    if (!response.error) {
+      const data = {
+        socialId: response.userID,
+        email: response.email,
+      };
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        validateStatus: () => true,
+      };
+      const finaldata = await axios.post("/api/socialsignup", data, config);
+      if (finaldata.data.is_error) {
+        setError(true);
+        setMessage(finaldata.data.message);
+      } else {
+        var splitname = response.name.split(" ");
+        var fname, lname;
+        if (splitname.length === 2) {
+          fname = splitname[0];
+          lname = splitname[1];
+        } else if (splitname.length === 3) {
+          fname = splitname[0];
+          lname = splitname[2];
+        }
+        const userdata = {
+          socialId: response.userID,
+          email: response.email,
+          fname: fname,
+          lname: lname,
+          photo: response.picture.data.url,
+        };
+        var ciphertext = CryptoJS.AES.encrypt(
+          JSON.stringify(userdata),
+          Key.Secret
+        ).toString();
+        localStorage.setItem("RegisterData", ciphertext);
+        history.push("/auth/register/socialstep2");
+      }
     }
   };
   let fbContent;

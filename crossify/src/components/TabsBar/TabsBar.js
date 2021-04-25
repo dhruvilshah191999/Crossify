@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AboutTab from "./AboutTab";
 import EventTab from "./EventTab";
 import RoomTab from "./RoomTab";
@@ -146,7 +146,7 @@ const Tabs = (props) => {
                   />
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                  {openTab == 2 && (
+                  {openTab === 2 && (
                     <EventTab club_id={props.club_id} isAdmin={props.isAdmin} />
                   )}
                 </div>

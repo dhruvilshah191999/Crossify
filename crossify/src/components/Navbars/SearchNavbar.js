@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import logo from "../../assets/logos/logo_final.png";
 import { Link } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
@@ -15,7 +14,7 @@ const SearchNavbar = (props) => {
       setSearch(searchResult.search);
       setlocation(searchResult.location);
     }
-  }, []);
+  }, [searchResult]);
   const onSubmit = async (e) => {
     e.preventDefault();
     var object = {
@@ -49,9 +48,7 @@ const SearchNavbar = (props) => {
                 value={search}
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
-                    {
                       onSubmit(e);
-                    }
                   }
                 }}
                 placeholder="Find your club,events"
@@ -64,9 +61,7 @@ const SearchNavbar = (props) => {
                 onChange={(e) => setlocation(e.target.value)}
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
-                    {
                       onSubmit(e);
-                    }
                   }
                 }}
                 value={location}
@@ -92,7 +87,7 @@ const SearchNavbar = (props) => {
                 </button>
               </Link>
             </li>
-            <li className={isLogin ? "hidden " : " " + "flex items-center"}>
+            <li className={isLogin ? "hidden " : "flex items-center"}>
               <Link to="/auth/register">
                 <button
                   className="bg-alpha hover:bg-alpha text-white active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"

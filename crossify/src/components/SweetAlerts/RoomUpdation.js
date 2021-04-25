@@ -21,6 +21,7 @@ export default class SweetAlertModal extends Component {
   };
 
   onRecievedInput = async () => {
+    this.props.parentCallback(true);
     const config = {
       method: "POST",
       header: {
@@ -59,13 +60,12 @@ export default class SweetAlertModal extends Component {
         showCancel
         confirmBtnText="Update"
         confirmBtnBsStyle="success"
-        title="Are you sure?"
         focusCancelBtn
         confirmBtnCssClass="text-base rounded px-4 py-2 bg-blue-500 "
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
-        title="Update Room Info    "
+        title="Update Room Info"
         onConfirm={this.onRecievedInput}
         onCancel={this.hideAlert}
         type={"controlled"}

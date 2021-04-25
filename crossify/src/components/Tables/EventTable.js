@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   useTable,
   useFilters,
@@ -10,6 +10,7 @@ import {
 import EmptyTable from "components/sections/EmptyTable";
 import { ModalManager } from "react-dynamic-modal";
 import Moment from "moment";
+import { UserContext } from "context/usercontext";
 import EventReview from "components/Modals/EventReview";
 import RequestForEvent from "components/Modals/RequestForEvent";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
@@ -97,15 +98,13 @@ function SelectColumnFilter({
 }
 
 export default function App(props) {
-  const clubId = useState(props.club_id);
-  const eventFile = useState(props.data);
-  console.log(eventFile);
+  const { category } = useContext(UserContext);
   const openModal = (event) => {
     ModalManager.open(
       <EventReview
         onRequestClose={() => true}
         eventData={event}
-        club_id={clubId}
+        club_id={props.club_id}
       />
     );
   };
@@ -113,13 +112,14 @@ export default function App(props) {
     ModalManager.open(
       <RequestForEvent
         onRequestClose={() => true}
-        club_id={clubId}
+        club_id={props.club_id}
         isAdmin={true}
+        category={category}
       />
     );
   };
   const [isLight, setIsLight] = useState(1);
-  const data = React.useMemo(() => eventFile, []);
+  const data = React.useMemo(() => props.data, [props.data]);
 
   const columns = React.useMemo(
     () => [

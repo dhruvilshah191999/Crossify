@@ -24,6 +24,7 @@ export default class SweetAlertModal extends Component {
   };
 
   onRecievedInput = () => {
+    this.props.parentCallback(true);
     const token = localStorage.getItem("jwt");
     if (this.state.file != null) {
       var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
@@ -86,7 +87,6 @@ export default class SweetAlertModal extends Component {
         showCancel
         confirmBtnText="Upload"
         confirmBtnBsStyle="success"
-        title="Are you sure?"
         focusCancelBtn
         customClass="w-800px text-black"
         confirmBtnCssClass="text-base rounded px-4 py-2 bg-green-500"

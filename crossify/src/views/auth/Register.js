@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
 import Facebook from "./Facebook";
 import Google from "./Google";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
-import { Formik, useField } from "formik";
-var vertical = "top";
-var horizontal = "center";
+import { Formik } from "formik";
 
 export default function Register() {
   let history = useHistory();
@@ -49,28 +45,9 @@ export default function Register() {
 
   const [checked, setChecked] = useState(false);
   const handleCheck = (e) => setChecked(!checked);
-  const [errorStatus, setError] = useState(false);
-  const [message, setMessage] = useState("");
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setError(false);
-  };
-
   return (
     <>
       <div className="container mx-auto px-4 h-full">
-        <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
-          open={errorStatus}
-          autoHideDuration={2000}
-          onClose={handleClose}
-        >
-          <Alert severity="error" onClose={handleClose}>
-            {message}
-          </Alert>
-        </Snackbar>
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-6/12 px-4">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
@@ -117,7 +94,7 @@ export default function Register() {
                     }
                     if (!repassword) {
                       errors.repassword = "Re enter your password !";
-                    } else if (password != repassword) {
+                    } else if (password !== repassword) {
                       errors.repassword = "Password does not match !";
                     }else if (!checked) {
                       errors.checkbox =

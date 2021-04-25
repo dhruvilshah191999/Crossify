@@ -29,9 +29,10 @@ export default class SweetAlertModal extends Component {
     });
   };
   onRecievedInput = async () => {
+    this.props.parentCallback(true);
     var file = this.state.file;
     var desc = this.state.description;
-    if (this.state.file != null && this.state.file != this.state.old_file) {
+    if (this.state.file != null && this.state.file !== this.state.old_file) {
       var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
       var path =
         "ClubPhoto/" +
@@ -125,7 +126,6 @@ export default class SweetAlertModal extends Component {
         showCancel
         confirmBtnText="Update"
         confirmBtnBsStyle="success"
-        title="Are you sure?"
         focusCancelBtn
         customClass="w-800px text-black"
         confirmBtnCssClass="text-base rounded px-4 py-2 bg-blue-500"

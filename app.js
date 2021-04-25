@@ -36,8 +36,6 @@ app.use("/api/club", clubRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/club/chat", chatRouter);
 
-// catch 404 and forward to error handler
-
 app.use(function (req, res, next) {
   next(createError(404));
 });

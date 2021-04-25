@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import axios from "axios";
 import Moment from "moment";
-import { withRouter } from "react-router-dom";
 import demobg from "assets/img/demopf.png";
 import Tag from "components/Tag";
 import MapContainer from "components/Maps/ViewOnlyMap";
-import AskQuestion from "components/SweetAlerts/AskQuestion";
 import ChatMessage from "components/Cards/ChatMessage";
 import urlObject from "../../config/default.json";
 import io from "socket.io-client";
@@ -333,14 +331,14 @@ class MyModal extends Component {
 
               <div
                 className={
-                  this.state.message.length != 0
+                  this.state.message.length !== 0
                     ? "text-lg text-alpha my-4"
                     : "hidden"
                 }
               >
                 Feedback
               </div>
-              <div className={this.state.message.length != 0 ? "" : "hidden"}>
+              <div className={this.state.message.length !== 0 ? "" : "hidden"}>
                 <hr></hr>
                 <div className="flex w-full ml-4 px-4 py-2">
                   <div className="w-1/4 font-semibold  "> Review </div>

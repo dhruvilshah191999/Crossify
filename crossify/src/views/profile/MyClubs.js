@@ -11,7 +11,6 @@ const getSegment = (totalEvents, curIndex, eventPerPage) => {
   return totalEvents.slice(start, end);
 };
 export default function MyClubs() {
-  const token = localStorage.getItem("jwt");
   const { users } = useContext(UserContext);
   const [tabIndex, toggleTabIndex] = useState(1);
   const [likedClubs, setLikedClubs] = useState([]);
@@ -299,6 +298,7 @@ export default function MyClubs() {
       );
   }
   useEffect(() => {
+  const token = localStorage.getItem("jwt");
     async function getData() {
       const config = {
         method: "POST",

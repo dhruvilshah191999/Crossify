@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { GoogleLogin } from "react-google-login";
+import { UserContext } from "context/usercontext";
+import FacebookLogin from "react-facebook-login";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import { UserContext } from "context/usercontext";
 import { notifySuccessLogin } from "notify";
 
-export default function LoginGoogle() {
+export default function Facebook() {
   var vertical = "top";
   var horizontal = "center";
   const { islogin_dispatch, dispatch } = useContext(UserContext);
@@ -18,11 +18,11 @@ export default function LoginGoogle() {
     }
     setError(false);
   };
-  var responseGoogle = async (response) => {
+  var responseFacebook = async (response) => {
     if (!response.error) {
       const data = {
-        socialId: response.googleId,
-        email: response.profileObj.email,
+        socialId: response.userID,
+        email: response.email,
       };
       const config = {
         method: "POST",
@@ -40,37 +40,27 @@ export default function LoginGoogle() {
         islogin_dispatch({ type: "Login-Status", status: true });
         dispatch({ type: "ADD_USER", payload: finaldata.data.data });
         window.location.replace("/");
-        const name = finaldata.data.data.fname + " " + finaldata.data.data.lname;
+        const name =
+          finaldata.data.data.fname + " " + finaldata.data.data.lname;
         notifySuccessLogin(name);
       }
     }
   };
-  let googleContent;
-  googleContent = (
-    <GoogleLogin
-      clientId="368003567815-p9au9e07ev68n06bbjddv77dn4oftbjs.apps.googleusercontent.com"
-      render={(renderProps) => (
-        <button
-          className="hover:shadow-md bg-white rounded"
-          onClick={renderProps.onClick}
-          style={{
-            width: "107px",
-            height: "42px",
-            textAlign: "center",
-
-            marginBottom: "3px",
-          }}
-        >
-          <i className="fab fa-google text-lg" style={{ height: 18 }}></i>
-          &nbsp;&nbsp;Google
-        </button>
-      )}
-      onSuccess={responseGoogle}
-      onFailure={responseGoogle}
+  let fbContent;
+  fbContent = (
+    <FacebookLogin
+      cssClass="btnFacebook hover:shadow-lg "
+      appId="393912875359725"
+      autoLoad={false}
+      fields="name,email,picture"
+      callback={responseFacebook}
+      icon={<i className="fab fa-facebook-f"> </i>}
+      textButton="&nbsp;&nbsp;Facebook"
     />
   );
+
   return (
-    <div className="inline-block mr-2">
+    <div className="inline-block">
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={errorStatus}
@@ -81,7 +71,7 @@ export default function LoginGoogle() {
           {message}
         </Alert>
       </Snackbar>
-      {googleContent}
+      {fbContent}
     </div>
   );
 }

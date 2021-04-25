@@ -13,17 +13,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import RequestForEvent from "components/Modals/RequestForEvent";
 
 import { ModalManager } from "react-dynamic-modal";
-import { Redirect } from "react-router";
 
-//this is used to make custom view in calendar for event
-function renderEventContent(eventInfo) {
-  return (
-    <button className="p-2 bg-alpha w-full" onClick={() => alert("Working")}>
-      <div className="font-semibold ">{eventInfo.timeText}</div>
-      <div>{eventInfo.event.title}</div>
-    </button>
-  );
-}
 export default class DemoApp extends React.Component {
   constructor(props) {
     super(props);
