@@ -1864,3 +1864,6 @@ form .page .btns button.next {
   color: #ffffff;
 }
 
+.border-b-beta {
+  border-bottom: 2px solid var(--color-beta);
+}

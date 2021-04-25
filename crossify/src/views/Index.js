@@ -307,8 +307,8 @@ export default function Landing() {
                       The application connects users with their interest to
                       explore new inspiration and ideas of the related
                       industries. Focuses on building keen, strong and united
-                      communities to prospore and flourish our interest whether
-                      it is career related or just a healthi hobby
+                      communities to prosper and flourish our interest whether
+                      it is career related or just a typical hobby.
                     </p>
                     <ul className="list-none mt-6">
                       <li className="py-2">
