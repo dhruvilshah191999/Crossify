@@ -89,10 +89,12 @@
   .event-image {
     width: 100%;
   }
-  
     .event-side-container {
       width: 85%;
     }
+  .privacy-container {
+    margin: 4rem 1rem;
+  }
 }
 
 @media (min-width: 640px) and (max-width: 768px) {
@@ -102,10 +104,6 @@
   .sm\:mx-0 {
     margin-left: 0%;
     margin-right: 0%;
-  }
-  /* .sm\:flex-row{
-    flex-direction: row;
-   }*/
    .sm\:items-center{
      align-items: center;
    } 
@@ -115,6 +113,10 @@
   
   .event-side-container {
     width: 70%;
+
+  } */
+  .privacy-container {
+    margin: 4rem 2rem;
   }
 }
 
@@ -158,6 +160,8 @@
   
   .event-side-container {
     width: 70%;
+  .privacy-container {
+    margin: 4rem 10rem;
   }
 }
 
@@ -237,6 +241,7 @@
   .xl2\:ml-2 {
     margin-left: 0.5rem;
   }
+
   /* .event-image {
     width: 850px !important;
   } */
