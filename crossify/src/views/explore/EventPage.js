@@ -15,6 +15,7 @@ import { notifyLiked, notifyWentWrong } from "notify";
 import { motion } from "framer-motion";
 import GridLoader from "react-spinners/GridLoader";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
+import Footer from "components/Footers/FooterAdmin";
 
 const Tag = (props) => {
   return (
@@ -95,7 +96,7 @@ export default function EventPage(props) {
 
     CheckEvent();
     event_details();
-  }, [id,token]);
+  }, [id, token]);
 
   const addlike = async (e) => {
     const config = {
@@ -155,16 +156,16 @@ export default function EventPage(props) {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col justify-start  lg:mx-28">
+        <div className="flex flex-col md:mx-0 lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
             // style={{ minHeight: "" }}
-            className="flex flex-row flex-wrap  mt-16  justify-center items-start flex-shrink-0"
+            className="flex flex-col md:flex-row flex-nowrap  mt-16 justify-between xs:items-center sm:items-center items-start flex-shrink-0"
           >
-            <div className="mr-6 text-black bg-white rounded-md">
+            <div className="text-black bg-white rounded-md">
               <img
                 src={eventdetails.photo}
-                className="event-image  rounded mt-2"
+                className="event-image rounded mt-2"
                 alt="event_pic"
               />
             </div>
@@ -216,7 +217,7 @@ export default function EventPage(props) {
                     <i className="fas fa-map-marker-alt text-lg "></i>
                   </div>
                   <div className="ml-3">
-                    {eventdetails.location},{eventdetails.city}
+                    {eventdetails.location}, {eventdetails.city}
                   </div>
                 </div>
                 <div className="mt-2 ml-2 flex">
@@ -345,7 +346,7 @@ export default function EventPage(props) {
               </div>
             </div>
           </div>
-          <div className="mx-6 my-4">
+          <div className="mx-4 lg:mx-0 my-4">
             <div className="flex flex-col">
               <div className="flex flex-col lg:flex-row py-4">
                 <div className="font-semibold text-gray-800 text-2xl lg:w-1/4">
@@ -422,8 +423,7 @@ export default function EventPage(props) {
                             <p>{el.answer}</p>
                           </details>
                         );
-                      }
-                      else {
+                      } else {
                         return <></>;
                       }
                     })
@@ -445,6 +445,7 @@ export default function EventPage(props) {
         </div>
         <br />
         <br />
+        <Footer />
       </>
     );
   } else {

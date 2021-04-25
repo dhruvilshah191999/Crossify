@@ -100,18 +100,46 @@ class Creators extends Component {
                   <p className="mt-1 text-sm text-gray-500 uppercase font-semibold">
                     Backend Dev
                   </p>
-                  <div className="mt-6">
+                  <div className="mt-6 text-lg">
                     <button
-                      className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-linkedin text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://www.linkedin.com/in/dhruvil-shah-834851192/",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
-                      <i className="fab fa-google"></i>
+                      <i className="fab fa-linkedin"></i>
                     </button>
                     <button
-                      className="bg-blue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-blue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://twitter.com/Dhruvil12268331",
+                          "_blank"
+                        );
+                        return false;
+                      }}
                     >
-                      <i className="fab fa-facebook-f"></i>
+                      <i className="fab fa-twitter"></i>
+                    </button>
+
+                    <button
+                      className="bg-github text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      type="button"
+                      onClick={() => {
+                        window.open(
+                          "https://github.com/dhruvilshah191999",
+                          "_blank"
+                        );
+                        return false;
+                      }}
+                    >
+                      <i className="fab fa-github"></i>
                     </button>
                   </div>
                 </div>
