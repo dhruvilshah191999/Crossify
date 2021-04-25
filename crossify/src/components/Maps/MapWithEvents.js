@@ -8,7 +8,7 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentLocation: { lat: this.props.lat, lng: this.props.lng },
+      currentLocation: { lat: this.props.lat, lng: this.props.lng},
       activeMarker: {},
       selectedPlace: {},
       showingInfoWindow: false,
@@ -53,7 +53,6 @@ export class MapContainer extends Component {
   };
 
   render() {
-    // try to this in componentDidMount /Update
     var bounds = new this.props.google.maps.LatLngBounds();
     this.props.data.forEach((el) => {
       bounds.extend({ lat: el.latitude, lng: el.longitude });
@@ -74,14 +73,23 @@ export class MapContainer extends Component {
         ></Marker>
         {this.props.data &&
           this.props.data.map(
-            ({ event_name, latitude, longitude, _id, date, photo }) => (
+            ({
+              event_name,
+              latitude,
+              longitude,
+              _id,
+              date,
+              photo,
+              current_participants,
+              maximum_participants,
+            }) => (
               <Marker
                 // animation={this.props.google.maps.Animation.BOUNCE}
                 name={event_name}
                 photo={photo}
                 date={moment(date).format("LLL")}
-                bookedSeats={12}
-                totalSeats={43}
+                bookedSeats={current_participants}
+                totalSeats={maximum_participants}
                 key={_id}
                 onClick={this.onMarkerClick}
                 position={{ lat: latitude, lng: longitude }}

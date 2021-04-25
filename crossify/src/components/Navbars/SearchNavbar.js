@@ -10,11 +10,12 @@ const SearchNavbar = (props) => {
   const { isLogin, search_dispatch, searchResult } = useContext(UserContext);
 
   useEffect(() => {
-    if (searchResult != null) {
+    if (searchResult) {
       setSearch(searchResult.search);
       setlocation(searchResult.location);
     }
-  }, [searchResult]);
+  }, []);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     var object = {
@@ -46,11 +47,14 @@ const SearchNavbar = (props) => {
                 name="search"
                 onChange={(e) => setSearch(e.target.value)}
                 value={search}
+<<<<<<< HEAD
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
                     onSubmit(e);
                   }
                 }}
+=======
+>>>>>>> 1216d1effee4dc4401b7731c974867ece9aba872
                 placeholder="Find your club,events"
               />
               <input
@@ -59,11 +63,14 @@ const SearchNavbar = (props) => {
                 type="text"
                 name="location"
                 onChange={(e) => setlocation(e.target.value)}
+<<<<<<< HEAD
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
                     onSubmit(e);
                   }
                 }}
+=======
+>>>>>>> 1216d1effee4dc4401b7731c974867ece9aba872
                 value={location}
                 placeholder="Select Location"
               />

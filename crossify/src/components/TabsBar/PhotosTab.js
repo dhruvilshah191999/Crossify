@@ -94,32 +94,24 @@ export default class GridGallery extends Component {
       isVisible: false,
       slide: 0,
       club_id: this.props.club_id,
-      photos: [],
+      photos: this.props.photo || [],
     };
   }
 
   async componentDidMount() {
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-    var object = {
-      club_id: this.state.club_id,
-    };
-    const finaldata = await axios.post(
-      "/api/admin/GetPhotosClub",
-      object,
-      config
-    );
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      console.log(finaldata.data.data);
-      this.setState({
-        photos: finaldata.data.data,
+    var count = 1;
+    var array = [];
+    if (this.state.photos.length !== 0) {
+      this.state.photos.forEach((e) => {
+        var object = {
+          id: count,
+          photo: e.link,
+          description: e.description,
+        };
+        array.push(object);
+        count = count + 1;
       });
+      this.setState({ photos: array });
     }
   }
 

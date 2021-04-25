@@ -9,6 +9,7 @@ import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
 import logo from "../../assets/logos/logo_light.png";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
 import { UserContext } from "context/usercontext";
+import { TextareaAutosize } from "@material-ui/core";
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -114,7 +115,7 @@ export default function Navbar(props) {
                 </Link>
               </li>
 
-              <li className={isLogin ? " " : "hidden " + "flex items-center "}>
+              <li className={isLogin ? "" : "hidden " + "flex items-center "}>
                 <div className=" ml-2 lg:ml-0 ">
                   {isLogin ? <NotificationDropdown /> : ""}
                 </div>

@@ -72,7 +72,6 @@ class UploadPic extends React.Component {
               className=""
               onChange={this.handleChange2}
               src={this.state.file}
-              alt="Upload Pics"
               style={{
                 height: 400,
                 width: 902,
