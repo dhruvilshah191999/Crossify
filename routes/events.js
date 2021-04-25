@@ -6,7 +6,7 @@ var event_details = require('../modules/event_details');
 var user_details = require('../modules/user_details');
 var club_details = require('../modules/club_details');
 var reports_details = require('../modules/reports_details');
-const {ObjectID, ObjectId} = require('bson');
+const { ObjectID, ObjectId } = require('bson');
 var router = express.Router();
 
 function getYs(distancearray) {
@@ -42,8 +42,8 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 
 router.get('/get-interest', async function (req, res, next) {
   var records = category_details.find(
-    {is_active: true},
-    {category_name: 1, _id: 1}
+    { is_active: true },
+    { category_name: 1, _id: 1 }
   );
   await records.exec((err, data) => {
     if (err) {
@@ -78,7 +78,7 @@ router.get('/get-event', async function (req, res, next) {
       {
         $match: {
           is_active: true,
-          ending_date_registration: {$gt: today},
+          ending_date_registration: { $gt: today },
         },
       },
       {
@@ -97,7 +97,7 @@ router.get('/get-event', async function (req, res, next) {
         },
       },
       {
-        $sort: {date: -1},
+        $sort: { date: -1 },
       },
       {
         $limit: 4,
@@ -125,7 +125,10 @@ router.get('/get-event', async function (req, res, next) {
 });
 
 router.get('/get-club', async function (req, res, next) {
-  var records = club_details.find({is_active: true}).sort({date: -1}).limit(4);
+  var records = club_details
+    .find({ is_active: true })
+    .sort({ date: -1 })
+    .limit(4);
   await records.exec((err, data) => {
     if (err) {
       var error = {
@@ -146,11 +149,11 @@ router.get('/get-club', async function (req, res, next) {
 
 router.post('/get-event-byuser', auth, async function (req, res, next) {
   var today = new Date();
-  var {latitude, longitude} = req.user;
+  var { latitude, longitude } = req.user;
   if (latitude !== 0 && longitude !== 0) {
     var records = event_details.find({
       is_active: true,
-      ending_date_registration: {$gt: today},
+      ending_date_registration: { $gt: today },
     });
     let distancearray = [];
     await records.exec(async (err, data) => {
@@ -255,7 +258,7 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
         {
           $match: {
             is_active: true,
-            ending_date_registration: {$gt: today},
+            ending_date_registration: { $gt: today },
           },
         },
         {
@@ -274,7 +277,7 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
           },
         },
         {
-          $sort: {date: -1},
+          $sort: { date: -1 },
         },
         {
           $limit: 4,
@@ -303,9 +306,9 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
 });
 
 router.post('/get-club-byuser', auth, async function (req, res, next) {
-  var {latitude, longitude} = req.user;
+  var { latitude, longitude } = req.user;
   if (latitude !== 0 && longitude !== 0) {
-    var records = club_details.find({is_active: true});
+    var records = club_details.find({ is_active: true });
     let distancearray = [];
     let idstring = '';
     await records.exec(async (err, data) => {
@@ -366,8 +369,8 @@ router.post('/get-club-byuser', auth, async function (req, res, next) {
     });
   } else {
     var records = club_details
-      .find({is_active: true})
-      .sort({date: -1})
+      .find({ is_active: true })
+      .sort({ date: -1 })
       .limit(4);
     await records.exec((err, data) => {
       if (err) {
@@ -389,10 +392,10 @@ router.post('/get-club-byuser', auth, async function (req, res, next) {
 });
 
 router.post('/add-interest', async function (req, res, next) {
-  var {email, interest_array} = req.body;
+  var { email, interest_array } = req.body;
   let objectIdArray = interest_array.map((s) => mongoose.Types.ObjectId(s));
   var update = user_details.findOneAndUpdate(
-    {email: email, is_active: 1},
+    { email: email, is_active: 1 },
     {
       interest_id: objectIdArray,
     }
@@ -421,7 +424,7 @@ router.post('/add-interest', async function (req, res, next) {
 });
 
 router.post('/event-details', async function (req, res, next) {
-  let {event_id} = req.body;
+  let { event_id } = req.body;
   event_details
     .aggregate([
       {
@@ -447,6 +450,20 @@ router.post('/event-details', async function (req, res, next) {
         };
         return res.status(500).send(error);
       } else {
+        var arrayToAppend = [];
+        data[0].faq.forEach((el) => {
+          console.log(el);
+          if (el.privacy == 'public') {
+            arrayToAppend.push(el);
+            // var index = data[0].faq.indexOf(el);
+            // console.log(index);
+            // if (index > -1) {
+            //   data[0].faq.splice(index, 1);
+            // }
+          }
+        });
+        data[0].faq = arrayToAppend;
+        console.log(data[0]);
         var finaldata = {
           event_data: data[0],
           is_error: false,
@@ -458,7 +475,7 @@ router.post('/event-details', async function (req, res, next) {
 });
 
 router.post('/checklikes', auth, async function (req, res, next) {
-  let {event_id} = req.body;
+  let { event_id } = req.body;
   var checks = event_details.findOne({
     _id: ObjectId(event_id),
     likes: ObjectId(req.user._id),
@@ -490,14 +507,14 @@ router.post('/checklikes', auth, async function (req, res, next) {
 });
 
 router.post('/addlikes', auth, async function (req, res, next) {
-  let {event_id} = req.body;
+  let { event_id } = req.body;
   var checks = event_details.updateOne(
     {
       _id: ObjectId(event_id),
       is_active: 1,
     },
     {
-      $push: {likes: ObjectId(req.user._id)},
+      $push: { likes: ObjectId(req.user._id) },
     }
   );
   await checks.exec((err, data2) => {
@@ -514,7 +531,7 @@ router.post('/addlikes', auth, async function (req, res, next) {
           is_active: 1,
         },
         {
-          $push: {fav_event: ObjectId(event_id)},
+          $push: { fav_event: ObjectId(event_id) },
         }
       );
       add.exec((err, data) => {
@@ -538,14 +555,14 @@ router.post('/addlikes', auth, async function (req, res, next) {
 });
 
 router.post('/deletelikes', auth, async function (req, res, next) {
-  let {event_id} = req.body;
+  let { event_id } = req.body;
   var checks = event_details.updateOne(
     {
       _id: ObjectId(event_id),
       is_active: 1,
     },
     {
-      $pull: {likes: ObjectId(req.user._id)},
+      $pull: { likes: ObjectId(req.user._id) },
     }
   );
   await checks.exec((err, data2) => {
@@ -562,7 +579,7 @@ router.post('/deletelikes', auth, async function (req, res, next) {
           is_active: 1,
         },
         {
-          $pull: {fav_event: ObjectId(event_id)},
+          $pull: { fav_event: ObjectId(event_id) },
         }
       );
       remove.exec((err, data) => {
@@ -586,7 +603,7 @@ router.post('/deletelikes', auth, async function (req, res, next) {
 });
 
 router.post('/participate-event', auth, async function (req, res, next) {
-  let {event_id, current_participants} = req.body;
+  let { event_id, current_participants } = req.body;
   current_participants += 1;
   var object = {
     user: ObjectId(req.user._id),
@@ -599,7 +616,7 @@ router.post('/participate-event', auth, async function (req, res, next) {
       is_active: 1,
     },
     {
-      $push: {participants_list: object},
+      $push: { participants_list: object },
       current_participants: current_participants,
     }
   );
@@ -617,7 +634,7 @@ router.post('/participate-event', auth, async function (req, res, next) {
           is_active: true,
         },
         {
-          $push: {events: ObjectId(event_id)},
+          $push: { events: ObjectId(event_id) },
         }
       );
       check2.exec((err) => {
@@ -641,7 +658,7 @@ router.post('/participate-event', auth, async function (req, res, next) {
 });
 
 router.post('/participate-event2', auth, async function (req, res, next) {
-  let {event_id, current_participants} = req.body;
+  let { event_id, current_participants } = req.body;
   var object = {
     user: ObjectId(req.user._id),
     date: new Date(),
@@ -653,7 +670,7 @@ router.post('/participate-event2', auth, async function (req, res, next) {
       is_active: 1,
     },
     {
-      $push: {participants_list: object},
+      $push: { participants_list: object },
     }
   );
   await checks.exec((err, data2) => {
@@ -670,7 +687,7 @@ router.post('/participate-event2', auth, async function (req, res, next) {
           is_active: true,
         },
         {
-          $push: {events: ObjectId(event_id)},
+          $push: { events: ObjectId(event_id) },
         }
       );
       check2.exec((err) => {
@@ -694,11 +711,11 @@ router.post('/participate-event2', auth, async function (req, res, next) {
 });
 
 router.post('/undo-participation-event', auth, async function (req, res, next) {
-  let {event_id, current_participants} = req.body;
+  let { event_id, current_participants } = req.body;
   var check = event_details.findOne({
     _id: ObjectId(event_id),
     participants_list: {
-      $elemMatch: {user: ObjectId(req.user._id), status: 'waiting'},
+      $elemMatch: { user: ObjectId(req.user._id), status: 'waiting' },
     },
     is_active: 1,
   });
@@ -716,7 +733,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
           is_active: 1,
         },
         {
-          $pull: {participants_list: {user: ObjectId(req.user._id)}},
+          $pull: { participants_list: { user: ObjectId(req.user._id) } },
         }
       );
       await checks.exec((err, data2) => {
@@ -733,7 +750,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
               is_active: true,
             },
             {
-              $pull: {events: ObjectId(event_id)},
+              $pull: { events: ObjectId(event_id) },
             }
           );
           check2.exec((err) => {
@@ -762,7 +779,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
           is_active: 1,
         },
         {
-          $pull: {participants_list: {user: ObjectId(req.user._id)}},
+          $pull: { participants_list: { user: ObjectId(req.user._id) } },
           current_participants,
         }
       );
@@ -780,7 +797,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
               is_active: true,
             },
             {
-              $pull: {events: ObjectId(event_id)},
+              $pull: { events: ObjectId(event_id) },
             }
           );
           check2.exec((err) => {
@@ -806,7 +823,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
 });
 
 router.post('/getclub', async function (req, res, next) {
-  let {club_id} = req.body;
+  let { club_id } = req.body;
   var checks = club_details.findOne({
     _id: ObjectId(club_id),
     is_active: 1,
@@ -830,7 +847,7 @@ router.post('/getclub', async function (req, res, next) {
 });
 
 router.post('/checkevent', auth, async function (req, res, next) {
-  let {event_id} = req.body;
+  let { event_id } = req.body;
   var checks = event_details.findOne({
     _id: ObjectId(event_id),
     'participants_list.user': ObjectId(req.user._id),
@@ -872,7 +889,7 @@ router.post('/checkevent', auth, async function (req, res, next) {
 });
 
 router.post('/get-profiles-of-events', async function (req, res, next) {
-  let {event_id} = req.body;
+  let { event_id } = req.body;
   event_details
     .aggregate([
       {
@@ -925,11 +942,11 @@ router.post('/get-profiles-of-events', async function (req, res, next) {
 });
 
 router.post('/ask-question', auth, async function (req, res, next) {
-  var {event_id, question} = req.body;
+  var { event_id, question } = req.body;
 
   try {
     var user_name = await user_details
-      .findById({_id: ObjectId(req.user._id)})
+      .findById({ _id: ObjectId(req.user._id) })
       .then(function (data) {
         return data.fname + ' ' + data.lname;
       });
@@ -944,9 +961,9 @@ router.post('/ask-question', auth, async function (req, res, next) {
     privacy: 'public',
   };
   var update = event_details.updateOne(
-    {_id: ObjectId(event_id)},
+    { _id: ObjectId(event_id) },
     {
-      $push: {faq: object},
+      $push: { faq: object },
     }
   );
   await update.exec((err, data) => {
@@ -967,7 +984,7 @@ router.post('/ask-question', auth, async function (req, res, next) {
 });
 
 router.post('/reports', auth, async function (req, res, next) {
-  var {event_id, description} = req.body;
+  var { event_id, description } = req.body;
   var object = {
     report: description,
     date: new Date(),
@@ -1050,7 +1067,7 @@ router.get('/get-interest-data', async function (req, res, next) {
       },
       {
         $project: {
-          event: {$slice: ['$event_data', 4]},
+          event: { $slice: ['$event_data', 4] },
           category_name: 1,
         },
       },
@@ -1080,7 +1097,7 @@ router.get('/get-interest-data', async function (req, res, next) {
           'event.city': 1,
           'event.state': 1,
           'event.is_active': 1,
-          'event.ending_date_registration':1,
+          'event.ending_date_registration': 1,
           category_name: 1,
         },
       },
@@ -1124,7 +1141,7 @@ router.get('/get-interest-data', async function (req, res, next) {
 router.post('/user-interest-data', auth, async function (req, res, next) {
   var today = new Date();
   var data = await user_details
-    .findOne({_id: ObjectId(req.user._id), is_active: true})
+    .findOne({ _id: ObjectId(req.user._id), is_active: true })
     .exec();
   if (data.interest_id.length !== 0) {
     category_details
@@ -1140,12 +1157,12 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
         {
           $match: {
             is_active: true,
-            _id: {$in: data.interest_id},
+            _id: { $in: data.interest_id },
           },
         },
         {
           $project: {
-            event: {$slice: ['$event_data', 4]},
+            event: { $slice: ['$event_data', 4] },
             category_name: 1,
           },
         },
@@ -1175,7 +1192,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
             'event.city': 1,
             'event.state': 1,
             'event.is_active': 1,
-            'event.ending_date_registration':1,
+            'event.ending_date_registration': 1,
             category_name: 1,
           },
         },
@@ -1232,7 +1249,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
         },
         {
           $project: {
-            event: {$slice: ['$event_data', 4]},
+            event: { $slice: ['$event_data', 4] },
             category_name: 1,
           },
         },

@@ -4,7 +4,9 @@ import App from "./app";
 import UserContextProvider from "context/usercontext";
 import ReactNotification from "react-notifications-component";
 import axios from "axios";
-//axios.defaults.baseURL = "https://crossifyback.herokuapp.com";
+const object = require("./config/default.json");
+const BackendURL = object.BackendURL;
+axios.defaults.baseURL = BackendURL;
 
 ReactDOM.render(
   <React.StrictMode>

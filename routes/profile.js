@@ -521,8 +521,30 @@ router.post('/MyProfile', auth, async function (req, res, next) {
   });
 });
 
+router.post('/readNotifications', auth, async function (req, res, next) {
+  var check = user_details.updateMany(
+    { _id: ObjectId(req.user._id) },
+    { $set: { 'inbox.$[].isRead': true } }
+  );
+  await check.exec((err, data) => {
+    if (err) {
+      var err = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(err);
+    } else if (data) {
+      var finaldata = {
+        is_error: false,
+        message: 'Marked successfully',
+      };
+      return res.status(201).send(finaldata);
+    }
+  });
+});
+
 router.post('/MemberProfile', async function (req, res, next) {
-  const {user_id} = req.body;
+  const { user_id } = req.body;
   var check = user_details.findOne(
     {_id: ObjectId(user_id)},
     {
