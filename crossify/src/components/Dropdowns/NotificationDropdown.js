@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { createPopper } from "@popperjs/core";
 import axios from "axios";
 import Moment from "moment";
+import { UserContext } from "context/usercontext";
 import demopf from "assets/img/pp1.jpg";
 import addNotification from "react-push-notification";
 import urlObject from "../../config/default.json";
@@ -14,6 +15,7 @@ const NotificationDropdown = (props) => {
   const [data, setData] = useState([]);
   const [unread, setUnread] = useState(0);
   const [loading, setloding] = useState(false);
+  const { users } = useContext(UserContext);
   const token = localStorage.getItem("jwt");
   const [animationFinished, setAnimationFinished] = useState(true);
 
@@ -25,32 +27,13 @@ const NotificationDropdown = (props) => {
     setAnimationFinished(true);
   };
 
-  //todo Bhagu set unread as number of message which are yet read not read
-  // ! whenever you want show the shake animation just call setAnimationFinished(false) function
-
-  // to get infomation about user and its notification
   useEffect(() => {
     async function fetchData() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const user = await axios.post("/api/profile/get-user", { token }, config);
-      const user_id = user.data.data._id;
+      setTimeout(() => {
+        setloding(true);
+      }, 500);
+      var user_id = users._id;
       socket.emit("open", { user_id });
-      var object = {
-        token,
-      };
-      const finaldata = await axios.post("/api/notification", object, config);
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setData(finaldata.data.data);
-        setTimeout(setloding(true), 1000);
-      }
     }
     fetchData();
   }, [token]);
@@ -71,8 +54,7 @@ const NotificationDropdown = (props) => {
               title: title,
               sender_id: user_id,
             };
-            var updatedData = data;
-            updatedData[0].inbox.push(object);
+            users.inbox.push(object);
 
             addNotification({
               title: "A new Notification",
@@ -90,7 +72,7 @@ const NotificationDropdown = (props) => {
         );
     }
     return () => {};
-  }, [socket, data]);
+  }, [socket]);
 
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -172,9 +154,9 @@ const NotificationDropdown = (props) => {
             >
               <div className="px-4 py-2 text-base mb-1 text-muted font-semibold">
                 {" "}
-                You have{" "}
+                You have {console.log(data)}
                 <span className="font-semibold text-beta">
-                  {data[0].inbox.length}
+                  {users.inbox.length}
                 </span>{" "}
                 Notifications.
                 <span className="float-right">
@@ -191,7 +173,7 @@ const NotificationDropdown = (props) => {
                   </button>
                 </span>
               </div>
-              {data[0].inbox
+              {users.inbox
                 .map((el) => (
                   <div
                     className={
@@ -223,7 +205,7 @@ const NotificationDropdown = (props) => {
                     </div>
                   </div>
                 ))
-                .reverse()}
+                .reverse().slice(0,10)}
             </div>
           </div>
         </div>

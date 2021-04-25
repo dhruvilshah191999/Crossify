@@ -9,7 +9,7 @@ const SearchPage = () => {
   useEffect(() => {
     setTimeout(() => {
       setloading(true);
-    }, 500);
+    }, 700);
   }, []);
   var change = (check) => {
     setChange(!checking);

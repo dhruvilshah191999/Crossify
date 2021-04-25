@@ -112,7 +112,6 @@ export default function Sidebar(props) {
         latitude = users.latitude;
         longitude = users.longitude;
       }
-
       if (latitude === undefined || longitude === undefined) {
         longitude = 0;
         latitude = 0;

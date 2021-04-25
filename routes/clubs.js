@@ -121,6 +121,8 @@ router.post('/get-club', auth, async (req, res) => {
           date: 1,
           tags: 1,
           club_name: 1,
+          photo: 1,
+          file:1,
           profile_photo: 1,
           status: 1,
           creator_id: 1,

@@ -62,7 +62,7 @@ function ClubPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-        }, 500)
+        }, 1000)
       }
     }
 
@@ -314,6 +314,8 @@ function ClubPage(props) {
                 club_id={id}
                 description={clubData.description}
                 rules={clubData.rules}
+                photo={clubData.photo}
+                file={clubData.file}
                 joining_criteria={clubData.joining_criteria}
                 isJoin={isJoin}
                 isAdmin={isAdmin}

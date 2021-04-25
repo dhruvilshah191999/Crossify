@@ -27,7 +27,7 @@ const ResultWindow = (props) => {
       }
     }
 
-    getName();
+    //getName();
   }, []);
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);
@@ -65,7 +65,7 @@ const ResultWindow = (props) => {
             </span>
           </div>
           <div className="mt-1 text-gray-700 text-sm ">
-            <i className="fas fa-users"></i> {clubName}
+            <i className="fas fa-users"></i> {props.data.club_data[0].club_name}
           </div>
 
           <div className="mt-2">

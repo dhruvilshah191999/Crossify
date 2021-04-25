@@ -6,32 +6,20 @@ class FilesTab extends Component {
     super(props);
     this.state = {
       club_id: this.props.club_id,
-      mediaData: [],
+      mediaData: this.props.file || [],
       loding: false,
     };
   }
 
   async componentDidMount() {
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-    var object = {
-      club_id: this.state.club_id,
-    };
-    const finaldata = await axios.post("/api/admin/GetFiles", object, config);
-    if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
-    } else {
-      this.setState({
-        mediaData: finaldata.data.data,
-      });
-      setTimeout(() => {
-        this.setState({ loding: true });
-      }, 100);
-    }
+    this.state.mediaData.sort(function compare(a, b) {
+      var dateA = new Date(a.date);
+      var dateB = new Date(b.date);
+      return dateB - dateA;
+    });
+    setTimeout(() => {
+      this.setState({ loding: true });
+    }, 100);
   }
   render() {
     return (
