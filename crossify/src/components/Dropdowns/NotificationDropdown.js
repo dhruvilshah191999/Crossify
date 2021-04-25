@@ -31,12 +31,22 @@ const NotificationDropdown = (props) => {
     async function fetchData() {
       setTimeout(() => {
         setloding(true);
-      }, 500);
-      var user_id = users._id;
-      socket.emit("open", { user_id });
+      }, 1000);
+      if (loading) {
+        var user_id = users._id;
+        console.log(users);
+        var countUnread = 0;
+        users.inbox.map((el) => {
+          if (!el.isRead) {
+            countUnread++;
+          }
+        });
+        setUnread(countUnread);
+        socket.emit("open", { user_id });
+      }
     }
     fetchData();
-  }, [token]);
+  }, [token, users]);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -86,6 +96,25 @@ const NotificationDropdown = (props) => {
   };
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
+  };
+  const NotificationRead = async () => {
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    const feed = await axios.post(
+      "/api/profile/readNotifications",
+      { token },
+      config
+    );
+    if (feed.data.is_error) {
+      console.log(feed.data.message);
+    } else {
+      setUnread(0);
+    }
   };
   if (loading) {
     return (
@@ -154,7 +183,7 @@ const NotificationDropdown = (props) => {
             >
               <div className="px-4 py-2 text-base mb-1 text-muted font-semibold">
                 {" "}
-                You have {console.log(data)}
+                You have
                 <span className="font-semibold text-beta">
                   {users.inbox.length}
                 </span>{" "}
@@ -168,6 +197,7 @@ const NotificationDropdown = (props) => {
                       paddingTop: "3px",
                       paddingBottom: "3px",
                     }}
+                    onClick={NotificationRead}
                   >
                     Mark all as Read{" "}
                   </button>
@@ -191,7 +221,7 @@ const NotificationDropdown = (props) => {
                     </div>
                     <div className="flex flex-col ml-6 mr-4">
                       {" "}
-                      <div className="flex flex-row w-full text-sm">
+                      <div className="flex flex-row w-full text-sm  text-black">
                         <div className="font-semibold">{el.title}</div>
                         <div className="ml-1">
                           <span className="text-xs text-gray-400 flex-shrink-0">
@@ -205,7 +235,8 @@ const NotificationDropdown = (props) => {
                     </div>
                   </div>
                 ))
-                .reverse().slice(0,10)}
+                .reverse()
+                .slice(0, 10)}
             </div>
           </div>
         </div>
