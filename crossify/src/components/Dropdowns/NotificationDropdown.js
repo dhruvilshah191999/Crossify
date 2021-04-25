@@ -30,6 +30,7 @@ const NotificationDropdown = (props) => {
 
   // to get infomation about user and its notification
   useEffect(() => {
+    console.log("in dropdown");
     async function fetchData() {
       const config = {
         method: "POST",
