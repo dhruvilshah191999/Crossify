@@ -32,18 +32,16 @@ const NotificationDropdown = (props) => {
       setTimeout(() => {
         setloding(true);
       }, 1000);
-      if (loading) {
-        var user_id = users._id;
-        console.log(users);
-        var countUnread = 0;
-        users.inbox.map((el) => {
-          if (!el.isRead) {
-            countUnread++;
-          }
-        });
-        setUnread(countUnread);
-        socket.emit("open", { user_id });
-      }
+      var user_id = users._id;
+      console.log(users);
+      var countUnread = 0;
+      users.inbox.forEach((el) => {
+        if (!el.isRead) {
+          countUnread++;
+        }
+      });
+      setUnread(countUnread);
+      socket.emit("open", { user_id });
     }
     fetchData();
   }, [token, users]);
