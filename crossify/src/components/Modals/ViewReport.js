@@ -32,12 +32,14 @@ class MyModal extends Component {
 
   getRejected = async () => {
     const token = localStorage.getItem("jwt");
+    console.log(this.state.data);
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+    const event_id = this.state.data.event_id;
     const user = await axios.post("/api/profile/get-user", { token }, config);
     var firstName = user.data.data.fname;
     var profile_photo = user.data.data.profile_photo;
@@ -47,11 +49,15 @@ class MyModal extends Component {
       title: "Your Reports is rejected by " + firstName,
       profile_photo: profile_photo,
       user_id: this.state.data.user_id,
+      target_id: event_id,
+      target_val: "event",
     });
     var object = {
       token,
       report_id: this.state.data._id,
       user_id: this.state.data.user_id,
+      target_id: event_id,
+      target_val: "event",
     };
     const finaldata = await axios.post(
       "/api/manage/rejected-reports",
@@ -76,6 +82,7 @@ class MyModal extends Component {
       },
     };
     const user = await axios.post("/api/profile/get-user", { token }, config);
+    const event_id = this.state.data.event_id;
     var firstName = user.data.data.fname;
     var profile_photo = user.data.data.profile_photo;
     socket.emit(
@@ -86,6 +93,8 @@ class MyModal extends Component {
         title: "Your Reports is answered by " + firstName,
         profile_photo: profile_photo,
         user_id: this.state.data.user_id,
+        target_id: event_id,
+        target_val: "event",
       }
       //console.log("in send Report")
     );
@@ -95,6 +104,8 @@ class MyModal extends Component {
       answer: this.state.answer,
       report_id: this.state.data._id,
       user_id: this.state.data.user_id,
+      target_id: event_id,
+      target_val: "event",
     };
     const finaldata = await axios.post(
       "/api/manage/send-reports",

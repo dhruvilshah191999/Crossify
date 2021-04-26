@@ -38,11 +38,19 @@ function Login() {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={errorStatus}
-        autoHideDuration={2000}
+        autoHideDuration={
+          message.split(" ")[0].toLowerCase() == "verify" ? 10000 : 3000
+        }
         onClose={handleClose}
       >
         <Alert severity="error" onClose={handleClose}>
           {message}
+          {message.split(" ")[0].toLowerCase() == "verify" && (
+            <button className="font-semibold ml-2 text-beta border-b-beta ">
+              {" "}
+              Resend Mail
+            </button>
+          )}
         </Alert>
       </Snackbar>
       <div className="flex content-center items-center justify-center h-full">
@@ -66,11 +74,7 @@ function Login() {
                 validate={() => {
                   const errors = {};
                   if (!email) {
-                    errors.email = "Email is required !";
-                  } else if (
-                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
-                  ) {
-                    errors.email = "Invalid email address !";
+                    errors.email = "Email or username is required !";
                   } else if (!password) {
                     errors.password = "Password is required !";
                   }
@@ -127,7 +131,7 @@ function Login() {
                         className="block uppercase text-gray-700 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        Email
+                        Username or Email
                       </label>
                       <input
                         type="text"

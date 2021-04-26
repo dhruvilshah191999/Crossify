@@ -52,6 +52,8 @@ class MyModal extends Component {
       title: "Congratulations! On your new role 🥳",
       profile_photo: profile_photo,
       user_id: this.props.user_id,
+      target_id: club_id,
+      target_val: "club",
     });
     var object = {
       club_id: this.props.club_id,
@@ -59,6 +61,8 @@ class MyModal extends Component {
       token: token,
       profile_photo: profile_photo,
       description: des,
+      target_id: club_id,
+      target_val: "club",
     };
     const finaldata = await axios.post(
       "/api/admin/AcceptRequested",
@@ -94,6 +98,8 @@ class MyModal extends Component {
       title: "offo..! You request has been rejected ☹️",
       profile_photo: profile_photo,
       user_id: this.props.user_id,
+      target_id: club_id,
+      target_val: "club",
     });
     var object = {
       club_id: this.props.club_id,
@@ -101,6 +107,8 @@ class MyModal extends Component {
       token: token,
       profile_photo: profile_photo,
       description: des,
+      target_id: club_id,
+      target_val: "club",
     };
     const finaldata = await axios.post(
       "/api/admin/RemoveRequested",

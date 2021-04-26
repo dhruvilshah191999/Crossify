@@ -80,11 +80,15 @@ class MyModal extends Component {
     const user = await axios.post("/api/profile/get-user", { token }, config);
     var firstName = user.data.data.fname;
     var profile_photo = user.data.data.profile_photo;
-    var club_id = this.props.club_id;
+    var eventData = this.state.event_data;
+    var userId = eventData.oragnizer_id;
+    console.log(this.state.event_data);
+    var club_id = this.state.clubId;
+    console.log(club_id);
     var club = await axios.post("/api/events/getclub", { club_id }, config);
     console.log(club);
     var clubName = club.data.data.club_name;
-    var userId = this.state.event_data.organizer_id;
+    console.log(userId);
     var eventName = this.state.event_data.event_name;
     var des = ` Your Request of Event ${eventName} in  ${clubName} club has been accepted by ${firstName}, BTW we need a pass 😉`;
     socket.emit("sendNotification", {
@@ -93,6 +97,8 @@ class MyModal extends Component {
       title: "Congratulations! your event just got approval🥳",
       profile_photo: profile_photo,
       user_id: userId,
+      target_id: this.state.event_data._id,
+      target_val: "event",
     });
     var send_data = {
       event_id: this.state.event_data._id,
@@ -100,6 +106,8 @@ class MyModal extends Component {
       token: token,
       profile_photo: profile_photo,
       description: des,
+      target_id: this.state.event_data._id,
+      target_val: "event",
     };
     const finaldata = await axios.post(
       "/api/admin/acceptEvent",
@@ -124,28 +132,35 @@ class MyModal extends Component {
       validateStatus: () => true,
     };
     const user = await axios.post("/api/profile/get-user", { token }, config);
+    var desC = this.state.description;
     var firstName = user.data.data.fname;
     var profile_photo = user.data.data.profile_photo;
-    var club_id = this.props.club_id;
+    var club_id = this.state.clubId;
     var club = await axios.post("/api/events/getclub", { club_id }, config);
     console.log(club);
     var clubName = club.data.data.club_name;
-    var userId = this.state.event_data.organizer_id;
+    var userId = this.state.event_data.oragnizer_id;
     var eventName = this.state.event_data.event_name;
     var des = ` Your Request of Event ${eventName} in  ${clubName} club has been rejected by ${firstName}, Bring Something more interesting next time 😊`;
     socket.emit("sendNotification", {
       date: new Date(),
-      description: des,
+      description: des + desC,
       title: "alas! your event just got rejected ☹️",
       profile_photo: profile_photo,
       user_id: userId,
+      target_id: club_id,
+      target_val: "club",
     });
+
     var send_data = {
       event_id: this.state.event_data._id,
       user_id: userId,
       token: token,
       profile_photo: profile_photo,
       description: des,
+      feed: desC,
+      target_id: club_id,
+      target_val: "club",
     };
     const finaldata = await axios.post(
       "/api/admin/rejectedEvent",
@@ -329,16 +344,8 @@ class MyModal extends Component {
                   )
                 : ""}
 
-              <div
-                className={
-                  this.state.message.length !== 0
-                    ? "text-lg text-alpha my-4"
-                    : "hidden"
-                }
-              >
-                Feedback
-              </div>
-              <div className={this.state.message.length !== 0 ? "" : "hidden"}>
+              <div className={"text-lg text-alpha my-4"}>Feedback</div>
+              <div className={""}>
                 <hr></hr>
                 <div className="flex w-full ml-4 px-4 py-2">
                   <div className="w-1/4 font-semibold  "> Review </div>

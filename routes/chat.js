@@ -1,15 +1,5 @@
 var express = require('express');
 var auth = require('../middleware/auth');
-// var mongoose = require("mongoose");
-// var CryptoJS = require("crypto-js");
-// var Cryptr = require("cryptr");
-// const config = require("config");
-// const mykey = process.env.MYKEY;
-// var cryptr = new Cryptr(mykey);
-// var category_details = require("../modules/interest_category");
-// var event_details = require("../modules/event_details");
-// var user_details = require("../modules/user_details");
-var member_details = require('../modules/members_details');
 var club_details = require('../modules/club_details');
 var channel_details = require('../modules/channel_details');
 const { ObjectId } = require('bson');
@@ -17,7 +7,6 @@ const { ObjectId } = require('bson');
 var router = express.Router();
 router.post('/createRoom', async function (req, res, next) {
   var { club_id, channel_name, is_readable, is_writable } = req.body;
-  console.log('in api');
   var check = club_details.findOne({
     _id: ObjectId(club_id),
     channel_list: { $in: channel_name },
@@ -60,7 +49,6 @@ router.post('/createRoom', async function (req, res, next) {
               };
               return res.status(500).send(error);
             } else if (data3) {
-              console.log(data3);
               var finaldata = {
                 message: 'channel created',
                 is_error: false,
@@ -150,7 +138,6 @@ router.post('/getMsgWithUsers', async function (req, res, next) {
     var is_mod = false;
     var userIsPartofClub = await club_details.findOne({
       _id: ObjectId(club_id),
-
       $or: [
         { member_list: { $elemMatch: { user: ObjectId(user_id) } } },
         { creator_id: ObjectId(user_id) },
@@ -158,7 +145,6 @@ router.post('/getMsgWithUsers', async function (req, res, next) {
     });
     if (userIsPartofClub) {
       if (userIsPartofClub.creator_id == user_id) {
-        console.log('i am Admin');
         is_admin = true;
       } else {
         userIsPartofClub.member_list.forEach((el) => {
@@ -214,7 +200,6 @@ router.post('/getMsgWithUsers', async function (req, res, next) {
               var totalPages = Math.ceil(totalfloatPages);
               if (message_length > limit) {
                 if (page == totalPages) {
-                  console.log('from if');
                   var messagestoAppend = element.messages.slice(
                     0,
                     message_length - limit * (page - 1)

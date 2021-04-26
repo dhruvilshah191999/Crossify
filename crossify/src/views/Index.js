@@ -134,15 +134,15 @@ export default function Landing() {
             </div>
           </div>
 
-          <section className="bg-white block m-4">
-            <div className="p-8 mx-6 sm:p-10 mx-0">
+          <section className="bg-white block m-4 xs:m-0 xs:mt-2">
+            <div className="p-8 mx-6 sm:p-10 xs:p-0 sm:mx-0">
               <div className="mb-6">
-                <div className="flex flex-row xs:flex-column">
+                <div className="flex flex-row xs:flex-col xs:justify-center xs:items-center">
                   <h4 className="text-3xl xs:text-2xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     Upcoming Nearby Events
                   </h4>
                   <motion.button
-                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                    className="text-beta font-semibold ml-auto xs:ml-1 mr-2 hover:text-lightbeta"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -161,17 +161,17 @@ export default function Landing() {
             </div>
           </section>
           <section
-            className="bg-white block m-4"
+            className="bg-white block m-4 xs:m-0 xs:mt-2"
             style={{ marginBottom: "20px" }}
           >
-            <div className="p-8 mx-6 sm:p-10 mx-0">
+            <div className="p-8 mx-6 sm:p-10 xs:p-0 sm:mx-0">
               <div className="mb-6">
-                <div className="flex flex-row xs:flex-column">
-                  <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
+                <div className="flex flex-row xs:flex-col xs:justify-center xs:items-center">
+                  <h4 className="text-3xl xs:text-2xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                     Explore Local Clubs
                   </h4>
                   <motion.button
-                    className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                    className="text-beta font-semibold ml-auto xs:ml-1 mr-2 hover:text-lightbeta"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -182,7 +182,7 @@ export default function Landing() {
                   </motion.button>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1">
+              <div className="flex flex-wrap gap-1 justify-start xs:justify-center">
                 {ClubData.map((data) => (
                   <ClubCard key={data._id} data={data}></ClubCard>
                 ))}
@@ -193,17 +193,17 @@ export default function Landing() {
           {InterestEventData.map((el) =>
             el.event.length !== 0 ? (
               <section
-                className="bg-white block m-4"
+                className="bg-white block m-4 xs:m-0 xs:mt-2"
                 style={{ marginBottom: "0px" }}
               >
-                <div className="p-8 mx-6 sm:p-10 mx-0">
-                  <div className=" mb-6">
-                    <div className="flex flex-row xs:flex-column">
-                      <h4 className="text-3xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
+                <div className="p-8 mx-6 sm:p-10 xs:p-0 sm:mx-0">
+                  <div className="mb-6">
+                    <div className="flex flex-row xs:flex-col xs:justify-center xs:items-center">
+                      <h4 className="text-3xl xs:text-2xl ml-1 font-semibold leading-normal mt-0 mb-2 text-alpha">
                         {el.category_name}
                       </h4>
                       <motion.button
-                        className="text-beta font-semibold ml-auto mr-2 hover:text-lightbeta"
+                        className="text-beta font-semibold ml-auto xs:ml-1 mr-2 hover:text-lightbeta"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -215,7 +215,7 @@ export default function Landing() {
                       </motion.button>
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1 justify-start xs:justify-center">
                     {el.event.map((data) =>
                       data.is_active ? (
                         <EventCard key={data._id} data={data}></EventCard>
@@ -232,22 +232,22 @@ export default function Landing() {
           )}
 
           <section className="pb-4 bg-gray-100 ">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto">
               <div className="flex flex-col">
-                <div className="flex flex-row justify-center ">
+                <div className="flex flex-row justify-center">
                   {" "}
-                  <div className="text-2xl m-4 font-bold text-alpha  pt-6">
+                  <div className="text-2xl m-4 font-semibold text-alpha text-center pt-6">
                     {" "}
                     Browse Clubs by Category
                   </div>
                 </div>
-                <div className="flex flex-row justify-center flex-wrap container p-4">
+                <div className="flex flex-row justify-around flex-wrap container p-4">
                   {" "}
                   {category.map((el) => {
                     return (
                       <motion.button
                         type="button"
-                        className=" rounded-lg shadow p-4 mr-6 category-container mb-4 text-center   hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
+                        className="rounded-lg shadow p-4 category-container mb-4 text-center hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
                         style={{ outline: "none" }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.9 }}
@@ -307,8 +307,8 @@ export default function Landing() {
                       The application connects users with their interest to
                       explore new inspiration and ideas of the related
                       industries. Focuses on building keen, strong and united
-                      communities to prospore and flourish our interest whether
-                      it is career related or just a healthi hobby
+                      communities to prosper and flourish our interest whether
+                      it is career related or just a typical hobby.
                     </p>
                     <ul className="list-none mt-6">
                       <li className="py-2">

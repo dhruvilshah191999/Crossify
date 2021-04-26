@@ -17,30 +17,6 @@ const ClubCard = (props) => {
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
-    async function get_count() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        validateStatus: () => true,
-      };
-      var send_data = {
-        club_id: props.data._id,
-      };
-      const finaldata = await axios.post(
-        "/api/admin/getCount",
-        send_data,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setCount(finaldata.data.data);
-      }
-    }
-
-    get_count();
     if (token) {
       setLogin(true);
       const b = users.fav_club.find((e) => e === props.data._id);
@@ -148,10 +124,10 @@ const ClubCard = (props) => {
               {" "}
               <i className="fas fa-user-lock"></i> : {props.data.status}
             </div>
-            <div className="ml-auto">
+            {/* <div className="ml-auto">
               {" "}
-              <i className="fas fa-user-friends"></i> : {count.member}
-            </div>
+              <i className="fas fa-user-friends"></i> : {props.data.member_list.length}
+            </div> */}
           </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1 mb-1">
             <div className="truncate" style={{ width: "30ch" }}>
@@ -161,8 +137,13 @@ const ClubCard = (props) => {
             </div>
             <div className="ml-auto">
               {" "}
-              <i className="fas fa-calendar-check"></i> : {count.event}
+              <i className="fas fa-user-friends"></i> :{" "}
+              {props.data.member_list.length}
             </div>
+            {/* <div className="ml-auto">
+              {" "}
+              <i className="fas fa-calendar-check"></i> : {count.event}
+            </div> */}
           </div>
 
           <div
