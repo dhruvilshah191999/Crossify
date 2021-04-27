@@ -30,6 +30,27 @@ function Login() {
     setError(false);
   };
 
+
+  const sendMail = async () => {
+    var data = {
+      email: email,
+      url: window.location.origin,
+    };
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    await axios.post(
+      "/api/manage/ResendMail",
+      data,
+      config
+    )
+    setError(false);
+  };
+
   const onChange = (e) =>
     setData({ ...formData, [e.target.name]: e.target.value });
 
@@ -46,7 +67,7 @@ function Login() {
         <Alert severity="error" onClose={handleClose}>
           {message}
           {message.split(" ")[0].toLowerCase() == "verify" && (
-            <button className="font-semibold ml-2 text-beta border-b-beta ">
+            <button className="font-semibold ml-2 text-beta border-b-beta" onClick={sendMail}>
               {" "}
               Resend Mail
             </button>
