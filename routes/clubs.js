@@ -5,9 +5,7 @@ var category_details = require('../modules/interest_category');
 var event_details = require('../modules/event_details');
 var channel_details = require('../modules/channel_details');
 var user_details = require('../modules/user_details');
-var member_details = require('../modules/members_details');
 var club_details = require('../modules/club_details');
-var member_details = require('../modules/members_details');
 const {ObjectID, ObjectId} = require('bson');
 var router = express.Router();
 
@@ -122,7 +120,7 @@ router.post('/get-club', auth, async (req, res) => {
           tags: 1,
           club_name: 1,
           photo: 1,
-          file:1,
+          file: 1,
           profile_photo: 1,
           status: 1,
           creator_id: 1,
@@ -131,6 +129,7 @@ router.post('/get-club', auth, async (req, res) => {
           _id: 1,
           description: 1,
           joining_criteria: 1,
+          member_list:1,
           rules: 1,
           question: 1,
         },
@@ -145,12 +144,27 @@ router.post('/get-club', auth, async (req, res) => {
         return res.status(500).send(error);
       } else {
         var isAdmin = false;
+        var isMember = false;
+        var isModerator = false;
         if (data[0].creator_id == req.user._id) {
           isAdmin = true;
+        }
+
+        if (data[0].member_list) {
+          data[0].member_list.forEach((e) => {
+            if (e.user == req.user._id && e.level === 'moderator') {
+              isModerator = true;
+              isMember = true;
+            } else if (e.user == req.user._id && e.level === 'member') {
+              isMember = true;
+            }
+          })
         }
         var finaldata = {
           data: data,
           isAdmin,
+          isMember,
+          isModerator,
           is_error: false,
           message: 'Data Send',
         };
@@ -188,9 +202,9 @@ router.post('/create-event', auth, async (req, res) => {
     status = true;
   }
 
-  var check = await member_details
+  var check = await club_details
     .findOne({
-      club_id: ObjectId(club_id),
+      _id: ObjectId(club_id),
       member_list: {
         $elemMatch: {
           user: ObjectId(req.user._id),
@@ -378,10 +392,15 @@ router.post('/AddClubMember', auth, async function (req, res, next) {
     level: 'member',
     date: new Date(),
   };
-  var result = member_details.findOne({
-    club_id: ObjectId(club_id),
-    is_active: true,
-  });
+  var result = club_details.updateOne(
+    {
+      _id: ObjectId(club_id),
+      is_active: true,
+    },
+    {
+      $push: {member_list: object},
+    }
+  );
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -389,63 +408,28 @@ router.post('/AddClubMember', auth, async function (req, res, next) {
         message: err.message,
       };
       return res.status(600).send(error);
-    } else if (data === null) {
-      var array = [];
-      array.push(object);
-      var Members = new member_details({
-        club_id: ObjectId(club_id),
-        is_active: true,
-        member_list: array,
-      });
-      Members.save().then((data) => {
-        user_details
-          .updateOne(
-            {_id: ObjectId(req.user._id)},
-            {$push: {clubs: ObjectId(club_id)}}
-          )
-          .exec((err, data2) => {
-            var finaldata = {
-              participated: true,
-              is_error: false,
-              message: 'Data Send',
-            };
-            return res.status(200).send(finaldata);
-          });
-      });
     } else {
-      var Members = member_details.updateOne(
-        {
-          club_id: ObjectId(club_id),
-          is_active: true,
-        },
-        {
-          $push: {member_list: object},
-        }
-      );
-      Members.exec((err, data) => {
-        user_details
-          .updateOne(
-            {_id: ObjectId(req.user._id)},
-            {$push: {clubs: ObjectId(club_id)}}
-          )
-          .exec((err, data2) => {
-            var finaldata = {
-              participated: true,
-              is_error: false,
-              message: 'Data Send',
-            };
-            return res.status(200).send(finaldata);
-          });
-      });
+      user_details
+        .updateOne(
+          {_id: ObjectId(req.user._id)},
+          {$push: {clubs: ObjectId(club_id)}}
+        )
+        .exec((err, data2) => {
+          var finaldata = {
+            participated: true,
+            is_error: false,
+            message: 'Data Send',
+          };
+          return res.status(200).send(finaldata);
+        });
     }
   });
 });
 
 router.post('/RemoveClubMember', auth, async function (req, res, next) {
   var {club_id} = req.body;
-
-  var result = member_details.findOneAndUpdate(
-    {club_id: ObjectId(club_id)},
+  var result = club_details.findOneAndUpdate(
+    {_id: ObjectId(club_id)},
     {$pull: {member_list: {user: ObjectId(req.user._id)}}}
   );
 
@@ -469,51 +453,6 @@ router.post('/RemoveClubMember', auth, async function (req, res, next) {
         message: 'Data Send',
       };
       return res.status(200).send(finaldata);
-    }
-  });
-});
-
-router.post('/IsMemberExist', auth, async function (req, res, next) {
-  var {club_id} = req.body;
-  var result = member_details.findOne({
-    club_id: ObjectId(club_id),
-    'member_list.user': ObjectId(req.user._id),
-    is_active: 1,
-  });
-  await result.exec(async (err, data) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(600).send(error);
-    } else {
-      if (data) {
-        var check = false;
-        var result3 = await member_details.findOne({
-          club_id: ObjectId(club_id),
-          member_list: {
-            $elemMatch: {user: ObjectId(req.user._id), level: "moderator"},
-          },
-          is_active: 1,
-        }).exec();
-        if (result3) {
-          check = true;
-        }
-          var finaldata = {
-            join: true,
-            moderator:check,
-            is_error: false,
-          };
-        return res.status(200).send(finaldata);
-      } else {
-        var finaldata = {
-          join: false,
-          moderator:false,
-          is_error: false,
-        };
-        return res.status(200).send(finaldata);
-      }
     }
   });
 });
@@ -610,7 +549,7 @@ router.post('/RemoveRequest', auth, async function (req, res, next) {
 
 router.post('/GetMembers', async function (req, res, next) {
   var {club_id} = req.body;
-  member_details
+  club_details
     .aggregate([
       {
         $lookup: {
@@ -622,7 +561,7 @@ router.post('/GetMembers', async function (req, res, next) {
       },
       {
         $match: {
-          club_id: ObjectId(club_id),
+          _id: ObjectId(club_id),
           is_active: true,
         },
       },

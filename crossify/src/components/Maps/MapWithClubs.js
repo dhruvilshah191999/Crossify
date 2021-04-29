@@ -82,7 +82,7 @@ export class MapContainer extends Component {
               _id,
               date,
               profile_photo,
-              isActive,
+              status,
               max_members,
             }) => (
               <Marker
@@ -98,7 +98,7 @@ export class MapContainer extends Component {
                 position={{ lat: latitude, lng: longitude }}
                 lat={latitude}
                 lng={longitude}
-                isPublic={isActive}
+                isPublic={status}
                 membersLen={max_members}
               />
             )
@@ -149,8 +149,8 @@ export class MapContainer extends Component {
                 {this.state.selectedPlace.membersLen}
               </span>
               <span className="font-bold "> &bull; </span>
-              <span className="text-gray-700 font-semibold ml-1">
-                {this.state.selectedPlace.isPublic ? "Public" : "Private"} Club
+              <span className="text-gray-700 font-semibold ml-1" >
+                {this.state.selectedPlace.isPublic} Club
               </span>
             </div>
           </div>

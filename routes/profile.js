@@ -7,11 +7,11 @@ var event_details = require('../modules/event_details');
 var user_details = require('../modules/user_details');
 var club_details = require('../modules/club_details');
 var members_details = require('../modules/members_details');
-const { ObjectID, ObjectId } = require('bson');
+const {ObjectID, ObjectId} = require('bson');
 var router = express.Router();
 
 router.post('/get-user', auth, async function (req, res, next) {
-  var result = user_details.findOne({ _id: req.user._id, is_active: 1 });
+  var result = user_details.findOne({_id: req.user._id, is_active: 1});
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -95,7 +95,7 @@ router.post('/update-user', auth, async function (req, res, next) {
   } = req.body;
   let objectIdArray = category.map((s) => ObjectId(s._id));
   var result = user_details.updateOne(
-    { _id: req.user._id, is_active: 1 },
+    {_id: req.user._id, is_active: 1},
     {
       username,
       email,
@@ -136,8 +136,8 @@ router.post('/update-user', auth, async function (req, res, next) {
 });
 
 router.post('/update-password', async function (req, res, next) {
-  var { email, password, new_password } = req.body;
-  var result = user_details.findOne({ email, is_active: 1 });
+  var {email, password, new_password} = req.body;
+  var result = user_details.findOne({email, is_active: 1});
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -155,8 +155,8 @@ router.post('/update-password', async function (req, res, next) {
       if (bcrypt.compareSync(password, data.password)) {
         new_password = bcrypt.hashSync(new_password, 10);
         var final = user_details.updateOne(
-          { email, is_active: 1 },
-          { password: new_password }
+          {email, is_active: 1},
+          {password: new_password}
         );
         final.exec((err, data) => {
           if (err) {
@@ -186,7 +186,7 @@ router.post('/update-password', async function (req, res, next) {
 });
 
 router.post('/update-social', auth, async function (req, res, next) {
-  var { facebook, linkedin, twitter, instagram } = req.body;
+  var {facebook, linkedin, twitter, instagram} = req.body;
 
   var object = {
     facebook,
@@ -196,7 +196,7 @@ router.post('/update-social', auth, async function (req, res, next) {
   };
 
   var result = user_details.updateOne(
-    { _id: req.user._id, is_active: 1 },
+    {_id: req.user._id, is_active: 1},
     {
       social_media: object,
     }
@@ -229,7 +229,7 @@ router.post('/get-upcoming-event', auth, async function (req, res, next) {
   var result = event_details.find(
     {
       'participants_list.user': ObjectId(req.user._id),
-      date: { $gt: new Date() },
+      date: {$gt: new Date()},
       is_active: 1,
     },
     {
@@ -298,7 +298,7 @@ router.post('/get-past-event', auth, async function (req, res, next) {
   var result = event_details.find(
     {
       'participants_list.user': ObjectId(req.user._id),
-      date: { $lt: new Date() },
+      date: {$lt: new Date()},
       is_active: 1,
     },
     {
@@ -381,7 +381,7 @@ router.post('/get-all-event', auth, async function (req, res, next) {
 });
 
 router.get('/get-photo-name', async function (req, res, next) {
-  var { user_id } = req.body;
+  var {user_id} = req.body;
   var result = club_details.find({
     creator_id: user_id,
   });
@@ -401,7 +401,7 @@ router.get('/get-photo-name', async function (req, res, next) {
       return res.status(200).send(error);
     } else {
       if (data instanceof Array) {
-        var finaldata = { message: [], is_error: false };
+        var finaldata = {message: [], is_error: false};
 
         data.forEach((element) => {
           finaldata.message.push({
@@ -425,7 +425,7 @@ router.get('/get-photo-name', async function (req, res, next) {
 });
 
 router.post('/check-event', auth, async function (req, res, next) {
-  var { event_id } = req.body;
+  var {event_id} = req.body;
   if (event_id.length != 24) {
     var error = {
       check: false,
@@ -466,7 +466,7 @@ router.post('/check-event', auth, async function (req, res, next) {
 
 router.post('/MyProfile', auth, async function (req, res, next) {
   var check = user_details.findOne(
-    { _id: ObjectId(req.user._id) },
+    {_id: ObjectId(req.user._id)},
     {
       _id: 0,
       fav_club: 0,
@@ -494,8 +494,8 @@ router.post('/MyProfile', auth, async function (req, res, next) {
     } else {
       let tag = [];
       var tags = category_details.find(
-        { _id: { $in: data.interest_id } },
-        { tags: 1 }
+        {_id: {$in: data.interest_id}},
+        {tags: 1}
       );
       await tags.exec((err, data2) => {
         if (err) {
@@ -520,6 +520,7 @@ router.post('/MyProfile', auth, async function (req, res, next) {
     }
   });
 });
+
 router.post('/readNotifications', auth, async function (req, res, next) {
   var check = user_details.updateMany(
     { _id: ObjectId(req.user._id) },
@@ -541,10 +542,11 @@ router.post('/readNotifications', auth, async function (req, res, next) {
     }
   });
 });
+
 router.post('/MemberProfile', async function (req, res, next) {
   const { user_id } = req.body;
   var check = user_details.findOne(
-    { _id: ObjectId(user_id) },
+    {_id: ObjectId(user_id)},
     {
       _id: 0,
       fav_club: 0,
@@ -572,8 +574,8 @@ router.post('/MemberProfile', async function (req, res, next) {
     } else {
       let tag = [];
       var tags = category_details.find(
-        { _id: { $in: data.interest_id } },
-        { tags: 1 }
+        {_id: {$in: data.interest_id}},
+        {tags: 1}
       );
       await tags.exec((err, data2) => {
         if (err) {
@@ -600,7 +602,7 @@ router.post('/MemberProfile', async function (req, res, next) {
 });
 
 router.post('/member-admin', async function (req, res, next) {
-  const { user_id } = req.body;
+  const {user_id} = req.body;
   var result = club_details.find({
     creator_id: ObjectId(user_id),
   });
@@ -619,7 +621,7 @@ router.post('/member-admin', async function (req, res, next) {
       };
       return res.status(200).send(error);
     } else {
-      var finaldata = { message: [], is_error: false };
+      var finaldata = {message: [], is_error: false};
       data.forEach((element) => {
         finaldata.message.push({
           profile_photo: element.profile_photo,
@@ -650,7 +652,7 @@ router.post('/get-photo-name', auth, async function (req, res, next) {
       };
       return res.status(200).send(error);
     } else {
-      var finaldata = { message: [], is_error: false };
+      var finaldata = {message: [], is_error: false};
       data.forEach((element) => {
         finaldata.message.push({
           profile_photo: element.profile_photo,
@@ -696,54 +698,36 @@ router.post('/get-like-club', auth, async function (req, res, next) {
 });
 
 router.post('/get-join-club', auth, async function (req, res, next) {
-  members_details
-    .aggregate([
-      {
-        $lookup: {
-          from: 'club_details',
-          localField: 'club_id',
-          foreignField: '_id',
-          as: 'club_data',
-        },
-      },
-      {
-        $match: {
-          'member_list.user': ObjectId(req.user._id),
-          is_active: true,
-        },
-      },
-      {
-        $project: {
-          'club_data._id': 1,
-          'club_data.city': 1,
-          'club_data.location': 1,
-          'club_data.profile_photo': 1,
-          'club_data.tags': 1,
-          'club_data.club_name': 1,
-        },
-      },
-    ])
-    .exec((err, data) => {
-      if (err) {
-        var error = {
-          is_error: true,
-          message: err.message,
-        };
-        return res.status(600).send(error);
-      } else {
-        var array = [];
-        data.forEach((e) => {
-          array.push(e.club_data[0]);
-        });
-
-        var finaldata = {
-          data: array,
-          is_error: false,
-          message: 'Data Send',
-        };
-        return res.status(200).send(finaldata);
-      }
-    });
+  var result = club_details.find(
+    {
+      'member_list.user': ObjectId(req.user._id),
+      is_active: true,
+    },
+    {
+      _id: 1,
+      city: 1,
+      location: 1,
+      profile_photo: 1,
+      tags: 1,
+      club_name: 1,
+    }
+  );
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        data: data,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
 });
 
 router.post('/get-manage-club', auth, async function (req, res, next) {
@@ -780,7 +764,7 @@ router.post('/get-manage-club', auth, async function (req, res, next) {
 });
 
 router.post('/event-details', async function (req, res, next) {
-  let { event_id } = req.body;
+  let {event_id} = req.body;
   event_details
     .aggregate([
       {

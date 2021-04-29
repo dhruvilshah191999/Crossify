@@ -28,7 +28,6 @@ function ClubPage(props) {
   const [moderator, setmoderator] = useState(false);
   const [isPublic, setPublic] = useState(true);
   const [isJoin, setIsJoin] = useState(false);
-  const [count, setCount] = useState({});
   const [clubData, setClubData] = useState([]);
   const token = localStorage.getItem("jwt");
 
@@ -55,62 +54,18 @@ function ClubPage(props) {
       } else {
         setClubData(finaldata.data.data[0]);
         setIsAdmin(finaldata.data.isAdmin);
+        setIsJoin(finaldata.data.isMember);
+        setmoderator(finaldata.data.isModerator);
         if (finaldata.data.isAdmin) {
           setIsJoin(true);
         }
         if (finaldata.data.data[0].status === "Private") {
           setPublic(false);
+          CheckRequestMember();
         }
         setTimeout(() => {
           setloading(true);
         }, 1000);
-      }
-    }
-
-    async function get_count() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        validateStatus: () => true,
-      };
-      var send_data = {
-        club_id: id,
-      };
-      const finaldata = await axios.post(
-        "/api/admin/getCount",
-        send_data,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setCount(finaldata.data.data);
-      }
-    }
-
-    async function CheckMember() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        token: token,
-        club_id: id,
-      };
-      const finaldata = await axios.post(
-        "/api/club/IsMemberExist",
-        object,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setIsJoin(finaldata.data.join);
-        setmoderator(finaldata.data.moderator);
       }
     }
 
@@ -137,10 +92,7 @@ function ClubPage(props) {
       }
     }
 
-    CheckMember();
-    CheckRequestMember();
     event_details();
-    get_count();
   }, [id, token]);
 
   const addlike = async (e) => {
@@ -213,8 +165,6 @@ function ClubPage(props) {
               <div className="bg-white rounded p-6 border leading-relaxed club-side-container">
                 <div className="text-3xl font-bold">
                   {clubData.club_name}
-                  {/* //todo GOLU just redirect to the /admin page for control or
-                  manage this club (ONLY IF HE IS MOD OR CREATOR OF THE CLUB) */}
                   {isAdmin || moderator ? (
                     <button
                       className="float-right text-lg"
@@ -230,7 +180,7 @@ function ClubPage(props) {
                   &nbsp;<i className="fas fa-map-marker-alt text-sm"></i>
                   &nbsp;&nbsp; {clubData.city},{clubData.state} <br />
                   <i className="fas fa-users text-sm"></i> &nbsp;&nbsp;
-                  {count.member + " "}
+                  {clubData.member_list ? clubData.member_list.length : 0}{" "}
                   Members
                   <br />
                   <i className="fas fa-couch text-sm"></i> &nbsp;&nbsp;

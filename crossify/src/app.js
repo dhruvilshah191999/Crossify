@@ -1,11 +1,6 @@
-import React  from "react";
+import React from "react";
 import ContextData from "./ContextData";
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
@@ -32,6 +27,7 @@ import PlayGround from "views/demo/PlayGround";
 import ClubPage from "views/explore/ClubPage";
 import CreateClub from "views/create/CreateClub";
 import ProfilePage from "views/explore/ProfilePage";
+import PrivacyPolicy from "views/misc/PrivacyPolicy";
 //import PageNotFound from "views/Error/404";
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
@@ -77,7 +73,7 @@ const Routing = () => {
       <Route path="/createclub" exact component={CreateClub} />
       <Route path="/profilepage/:id" exact component={ProfilePage} />
       <Route path="/playground" exact component={PlayGround} />
-
+      <Route path="/privacypolicy" exact component={PrivacyPolicy} />
       {!token ? (
         <>
           <PrivateRoute authed={false} path="/profile" component={Profile} />

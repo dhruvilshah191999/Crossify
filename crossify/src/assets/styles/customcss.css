@@ -1793,7 +1793,7 @@ form .page .btns button.next {
   width: 65%;
 }
 
-.notification {
+.notification2 {
   width: 50px;
   height: inherit;
   color: #f2f2f2;
@@ -1803,7 +1803,7 @@ form .page .btns button.next {
   position: relative;
 }
 
-.notification.notify {
+.notification2.notify {
   animation: bell 1s ease-out;
   transform-origin: center top;
 }
@@ -1947,3 +1947,6 @@ form .page .btns button.next {
   width: 60%;
 }
 
+.border-b-beta {
+  border-bottom: 2px solid var(--color-beta);
+}

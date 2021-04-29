@@ -100,7 +100,6 @@
   .event-image {
     width: 100%;
   }
-  
   .event-side-container {
     width: 85%;
   }
@@ -113,6 +112,9 @@
   .club-side-container {
     width: 70%;
   }  
+  .privacy-container {
+    margin: 4rem 1rem;
+  }
 }
 
 @media (min-width: 640px) and (max-width: 768px) {
@@ -123,18 +125,18 @@
     margin-left: 0%;
     margin-right: 0%;
   }
-  /* .sm\:flex-row{
-    flex-direction: row;
-   }*/
    .sm\:items-center{
      align-items: center;
    } 
    .event-image {
     width: 100%;
   }
-  
   .event-side-container {
     width: 70%;
+
+  } */
+  .privacy-container {
+    margin: 4rem 2rem;
   }
   .category-width{
     width: 100%;
@@ -198,6 +200,9 @@
   }
   .sm\:p-0{
     padding: 0%;
+  }
+  .privacy-container {
+    margin: 4rem 10rem;
   }
 }
 
@@ -298,6 +303,7 @@
   .xl2\:ml-2 {
     margin-left: 0.5rem;
   }
+
   /* .event-image {
     width: 850px !important;
   } */
