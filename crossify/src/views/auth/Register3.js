@@ -165,8 +165,8 @@ export default function Register5() {
         </div>
       </div> */}
 
-      <div className="container relative mx-auto" style={{ width: "60%" }}>
-        <div className="p-8 flex flex-row flex-wrap justify-between">
+      <div className="container relative mx-auto category-width">
+        <div className="p-8 sm:p-0 flex flex-row flex-wrap justify-center items-center">
           <div className="p-4 m-2 text-center rounded-lg icon-class">
             <div>
               <img src={businessIcon} className="imgIcon" />
@@ -262,7 +262,10 @@ export default function Register5() {
             <div>
               <img src={languageIcon} className="imgIcon"></img>
             </div>
-            <div className="text-black">Language & Culture</div>
+            <div className="text-black">
+              <p>Language</p>
+              <p>& Culture</p>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -306,6 +309,21 @@ export default function Register5() {
             </div>
             <div className="text-black">Open Mic</div>
           </div>
+        </div>
+        <div className="text-center mt-6">
+          {loading ? (
+            <div align="center">
+              <PulseLoader color="#e82953" size={10} />
+            </div>
+          ) : (
+            <button
+              className="w-1/3 bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+              type="button"
+              onClick={(e) => onSubmit(e)}
+            >
+              Submit
+            </button>
+          )}
         </div>
       </div>
     </>

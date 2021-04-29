@@ -575,8 +575,16 @@
 
 .event-side-container {
   min-width: 100px;
-  /* max-width: 400px; */
   width: 30%;
+}
+
+.club-image {
+  width: 800px;
+  height: 420px;
+}
+
+.club-side-container {
+  width: 400px;
 }
 
 .border-red-500 {
@@ -1934,5 +1942,8 @@ form .page .btns button.next {
 }
 .pagination li.active a:hover {
   color: #ffffff;
+}
+.category-width{
+  width: 60%;
 }
 

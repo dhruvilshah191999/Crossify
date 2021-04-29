@@ -63,11 +63,7 @@ function ClubPage(props) {
         }
         setTimeout(() => {
           setloading(true);
-<<<<<<< HEAD
-        }, 500);
-=======
-        }, 1000)
->>>>>>> 1216d1effee4dc4401b7731c974867ece9aba872
+        }, 1000);
       }
     }
 
@@ -205,16 +201,16 @@ function ClubPage(props) {
       <>
         <Navbar />
         <div style={{ marginTop: 65, backgroundColor: "#fafafa" }}>
-          <div className="flex flex-col items-center flex-wrap">
-            <div className="flex flex-row flex-wrap mt-2 ">
-              <div className="club-bg mx-4 my-2">
+          <div className="flex flex-col flex-wrap">
+            <div className="flex flex-row flex-wrap md:flex-nowrap mt-2 justify-around items-center">
+              <div className="ml-4 my-2">
                 <img
-                  className="w-full h-full overflow-hidden object-contain rounded-lg event-image"
+                  className="overflow-hidden object-contain rounded-lg club-image"
                   alt="club_background_photo"
                   src={clubData.profile_photo}
                 />
               </div>
-              <div className="bg-white rounded  mx-2 my-2 p-6 border leading-relaxed max-w-370-px event-side-container">
+              <div className="bg-white rounded p-6 border leading-relaxed club-side-container">
                 <div className="text-3xl font-bold">
                   {clubData.club_name}
                   {/* //todo GOLU just redirect to the /admin page for control or
@@ -312,10 +308,7 @@ function ClubPage(props) {
                 </div>
               </div>
             </div>
-            <div
-              className="bg-white rounded border ml-4 mt-2 p-2"
-              style={{ width: 1225 }}
-            >
+            <div className="bg-white rounded border ml-4 mt-2 p-2">
               <TabsBar
                 club_id={id}
                 description={clubData.description}
