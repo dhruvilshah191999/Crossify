@@ -1,23 +1,12 @@
-var express = require("express");
-var auth = require("../middleware/auth");
-// var mongoose = require("mongoose");
-// var CryptoJS = require("crypto-js");
-// var Cryptr = require("cryptr");
-// const config = require("config");
-// const mykey = process.env.MYKEY;
-// var cryptr = new Cryptr(mykey);
-// var category_details = require("../modules/interest_category");
-// var event_details = require("../modules/event_details");
-// var user_details = require("../modules/user_details");
-var member_details = require("../modules/members_details");
-var club_details = require("../modules/club_details");
-var channel_details = require("../modules/channel_details");
-const { ObjectId } = require("bson");
+var express = require('express');
+var auth = require('../middleware/auth');
+var club_details = require('../modules/club_details');
+var channel_details = require('../modules/channel_details');
+const { ObjectId } = require('bson');
 
 var router = express.Router();
-router.post("/createRoom", async function (req, res, next) {
+router.post('/createRoom', async function (req, res, next) {
   var { club_id, channel_name, is_readable, is_writable } = req.body;
-  console.log("in api");
   var check = club_details.findOne({
     _id: ObjectId(club_id),
     channel_list: { $in: channel_name },
@@ -60,9 +49,8 @@ router.post("/createRoom", async function (req, res, next) {
               };
               return res.status(500).send(error);
             } else if (data3) {
-              console.log(data3);
               var finaldata = {
-                message: "channel created",
+                message: 'channel created',
                 is_error: false,
               };
               return res.status(200).send(finaldata);
@@ -72,7 +60,7 @@ router.post("/createRoom", async function (req, res, next) {
       });
     } else {
       var error = {
-        message: "this room already exists",
+        message: 'this room already exists',
         is_error: true,
       };
       res.status(403).send(error);
@@ -80,11 +68,15 @@ router.post("/createRoom", async function (req, res, next) {
   });
 });
 
-router.post("/send", async function (req, res) {
+router.post('/send', async function (req, res) {
   var { messagetext, user_id, room_id, club_id } = req.body;
-  var check = member_details.findOne({
-    club_id: ObjectId(club_id),
-    member_list: { $elemMatch: { user: ObjectId(user_id) } },
+  var check = club_details.findOne({
+    _id: ObjectId(club_id),
+
+    $or: [
+      { member_list: { $elemMatch: { user: ObjectId(user_id) } } },
+      { creator_id: ObjectId(user_id) },
+    ],
   });
   await check.exec((err, data) => {
     if (err) {
@@ -94,60 +86,11 @@ router.post("/send", async function (req, res) {
       };
       return res.status(500).send(error);
     } else if (data === null || data.length === 0) {
-      var user_is_admin = club_details.findOne({
-        _id: ObjectId(club_id),
-        creator_id: ObjectId(user_id),
-      });
-      user_is_admin.exec((err, admin) => {
-        if (err) {
-          var error = {
-            is_error: true,
-            message: err.message,
-          };
-          return res.status(500).send(error);
-        } else if (admin) {
-          var update = channel_details.update(
-            { _id: ObjectId(room_id) },
-            {
-              $push: {
-                messages: {
-                  message: messagetext,
-                  user_id: ObjectId(user_id),
-                  senttime: new Date(),
-                },
-              },
-            },
-            { upsert: true, new: true }
-          );
-          update.exec((err, messageSent) => {
-            if (err) {
-              var error = {
-                is_error: true,
-                message: err.message,
-              };
-              return res.status(500).send(error);
-            } else if (messageSent) {
-              var finaldata = {
-                is_error: false,
-                message: "value inserted succesfully",
-              };
-              return res.status(200).send(finaldata);
-            } else {
-              var error = {
-                is_error: true,
-                message: "you are not part of this room or room doesn't exists",
-              };
-              return res.status(404).send(error);
-            }
-          });
-        } else {
-          var error = {
-            is_error: true,
-            message: "you are not part of this club",
-          };
-          return res.status(404).send(error);
-        }
-      });
+      var error = {
+        is_error: true,
+        message: 'you are not part of this club',
+      };
+      return res.status(404).send(error);
     } else {
       var update = channel_details.update(
         { _id: ObjectId(room_id) },
@@ -172,7 +115,7 @@ router.post("/send", async function (req, res) {
         } else if (data2) {
           var finaldata = {
             is_error: false,
-            message: "value inserted succesfully",
+            message: 'value inserted succesfully',
           };
           return res.status(200).send(finaldata);
         } else {
@@ -187,49 +130,41 @@ router.post("/send", async function (req, res) {
   });
 });
 
-router.post("/getMsgWithUsers", async function (req, res, next) {
+router.post('/getMsgWithUsers', async function (req, res, next) {
   try {
     var { club_id, user_id, page, limit } = req.body;
     var is_admin = false;
-    var user_is_member = await member_details.findOne({
-      club_id: ObjectId(club_id),
-      member_list: {
-        $elemMatch: { user: ObjectId(user_id), level: "member" },
-      },
+    var is_member = false;
+    var is_mod = false;
+    var userIsPartofClub = await club_details.findOne({
+      _id: ObjectId(club_id),
+      $or: [
+        { member_list: { $elemMatch: { user: ObjectId(user_id) } } },
+        { creator_id: ObjectId(user_id) },
+      ],
     });
-    if (!user_is_member) {
-      var user_is_moderator = await member_details.findOne({
-        club_id: ObjectId(club_id),
-        member_list: {
-          $elemMatch: { user: ObjectId(user_id), level: "moderator" },
-        },
-      });
-      if (!user_is_moderator) {
-        var user_is_admin = await club_details.findOne({
-          _id: ObjectId(club_id),
-          creator_id: ObjectId(user_id),
+    if (userIsPartofClub) {
+      if (userIsPartofClub.creator_id == user_id) {
+        is_admin = true;
+      } else {
+        userIsPartofClub.member_list.forEach((el) => {
+          if (el.user == user_id && el.level == 'member') {
+            is_member = true;
+          } else if (el.user == user_id && el.level == 'moderator') {
+            is_mod = true;
+          }
         });
-
-        if (!user_is_admin) {
-          var error = {
-            is_error: true,
-            message: "You are not part of this club",
-          };
-          return res.status(503).send(error);
-        } else {
-          is_admin = true;
-        }
       }
     }
-    if (user_is_member) {
+    if (is_member) {
       channel_details
         .aggregate([
           {
             $lookup: {
-              from: "user_details",
-              localField: "messages.user_id",
-              foreignField: "_id",
-              as: "users",
+              from: 'user_details',
+              localField: 'messages.user_id',
+              foreignField: '_id',
+              as: 'users',
             },
           },
           {
@@ -240,9 +175,9 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
           },
           {
             $project: {
-              "users.profile_photo": 1,
-              "users._id": 1,
-              "users.username": 1,
+              'users.profile_photo': 1,
+              'users._id': 1,
+              'users.username': 1,
               messages: 1,
               channel_name: 1,
               is_readable: 1,
@@ -252,6 +187,7 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
         ])
         .exec((err, chatdata) => {
           if (err) {
+            console.log('in errrrr');
             var error = {
               is_error: true,
               message: err.message,
@@ -264,7 +200,6 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
               var totalPages = Math.ceil(totalfloatPages);
               if (message_length > limit) {
                 if (page == totalPages) {
-                  console.log("from if");
                   var messagestoAppend = element.messages.slice(
                     0,
                     message_length - limit * (page - 1)
@@ -287,14 +222,14 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
             });
             var finaldata = {
               is_error: false,
-              level: "member",
+              level: 'member',
               roomsData: chatdata,
             };
             return res.status(200).send(finaldata);
           } else {
             var error = {
               is_error: true,
-              message: "No channel found",
+              message: 'No channel found',
             };
             return res.status(404).send(error);
           }
@@ -304,10 +239,10 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
         .aggregate([
           {
             $lookup: {
-              from: "user_details",
-              localField: "messages.user_id",
-              foreignField: "_id",
-              as: "users",
+              from: 'user_details',
+              localField: 'messages.user_id',
+              foreignField: '_id',
+              as: 'users',
             },
           },
           {
@@ -317,9 +252,9 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
           },
           {
             $project: {
-              "users.profile_photo": 1,
-              "users._id": 1,
-              "users.username": 1,
+              'users.profile_photo': 1,
+              'users._id': 1,
+              'users.username': 1,
               messages: 1,
               channel_name: 1,
               is_readable: 1,
@@ -329,6 +264,7 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
         ])
         .exec((err, chatdata) => {
           if (err) {
+            console.log('in error 1');
             var error = {
               is_error: true,
               message: err.message,
@@ -364,14 +300,14 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
             if (is_admin) {
               var finaldata = {
                 is_error: false,
-                level: "admin",
+                level: 'admin',
                 roomsData: chatdata,
               };
               return res.status(200).send(finaldata);
             } else {
               var finaldata = {
                 is_error: false,
-                level: "moderator",
+                level: 'moderator',
                 roomsData: chatdata,
               };
               return res.status(200).send(finaldata);
@@ -379,13 +315,14 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
           } else {
             var error = {
               is_error: true,
-              message: "No channel found",
+              message: 'No channel found',
             };
             return res.status(404).send(error);
           }
         });
     }
   } catch (err) {
+    console.log('in catch');
     var error = {
       is_error: true,
       message: err.message,
@@ -394,7 +331,7 @@ router.post("/getMsgWithUsers", async function (req, res, next) {
   }
 });
 
-router.post("/getRooms", async function (req, res) {
+router.post('/getRooms', async function (req, res) {
   var { club_id } = req.body;
   var check = channel_details.find({ club_id });
   await check.exec((err, data) => {
@@ -420,7 +357,7 @@ router.post("/getRooms", async function (req, res) {
   });
 });
 
-router.post("/getParticularroom", async function (req, res) {
+router.post('/getParticularroom', async function (req, res) {
   var { room_id } = req.body;
   var check = channel_details.findOne({ _id: ObjectId(room_id) });
   await check.exec((error, data) => {
@@ -439,7 +376,7 @@ router.post("/getParticularroom", async function (req, res) {
     } else {
       var error = {
         is_error: true,
-        message: "cannot find chat room currently with this name ",
+        message: 'cannot find chat room currently with this name ',
       };
       return res.status(404).send(error);
     }

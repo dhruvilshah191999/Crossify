@@ -12,10 +12,10 @@ const Tabs = (props) => {
 
   return (
     <>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap justify-center">
         <div className="w-full">
           <ul
-            className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row border-b border-alpha"
+            className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row xxs:flex-col border-b border-alpha"
             role="tablist"
           >
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">

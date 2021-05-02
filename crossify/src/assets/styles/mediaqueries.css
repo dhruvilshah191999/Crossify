@@ -8,40 +8,141 @@
   /* .xs\:flex-column{
   flex-direction: column;
  } */
-  .xs\:text-2xl {
-    font-size: 1.3rem;
+  .xs\:text-2xl{
+  font-size: 1.5rem;
+ }
+ .xs\:justify-center{
+  justify-content: center;
+ }
+ .xs\:justify-start{
+  justify-content: flex-start;
+ }
+ .xs\:items-start{
+ align-items: flex-start;
+ }
+ .xs\:items-center{
+  align-items: center;
   }
-  .xs\:justify-center {
-    justify-content: center;
+
+ .xs\:justify-start{
+  justify-content: flex-start;
+ }
+ .xs\:text-center{
+  text-align: center;
+ }
+ .xs\:flex-col{
+  flex-direction: column;
+ }
+ .xs\:w-full{
+  width: 100%;
+ }
+ .xs\:ml-0{
+  margin-left: 0%;
+ }
+ .xs\:ml-1{
+  margin-left: 0.25rem;
+ }
+ .xs\:block{
+  display: block;
+  width: 40%;
+  margin-top: 10px;
+ }
+ .xs\:p-1{
+  padding: 0.15rem;
+ }
+ .xs\:p-0{
+  padding: 0%;
+ }
+ .xs\:m-0{
+  margin: 0%;
+ }
+ .xs\:mt-2{
+  margin-top: 5rem;
+ }
+ .xs\:flex-row{
+  flex-direction: row;
+ }
+ .xs\:items-center{
+   align-items: center;
+ }
+ 
+}
+
+@media (min-width: 320px) and (max-width: 475px) {
+  .xxs\:flex-wrap{
+    flex-wrap: wrap;
   }
-  .xs\:flex-col {
-    flex-direction: column;
+  .xxs\:text-center{
+    text-align: center;
   }
-  .xs\:w-full {
+  .event-image {
     width: 100%;
   }
-  .xs\:block {
-    display: block;
-    width: 40%;
-    margin-top: 10px;
+  .event-side-container {
+    width: 100%;
   }
-  .xs\:p-1 {
-    padding: 0.15rem;
+  .category-width{
+    width: 100%;
   }
+  .sm\:p-0{
+    padding: 0%;
+  }
+  .club-side-container {
+    width: 100%;
+  }  
+  .xxs\:flex-col{
+    flex-direction: column;
+  }
+}
+
+
+@media (min-width: 475px) and (max-width: 640px) {
+  .event-image {
+    width: 100%;
+  }
+  .event-side-container {
+    width: 85%;
+  }
+  .category-width{
+    width: 100%;
+  }
+  .sm\:p-0{
+    padding: 0%;
+  }
+  .club-side-container {
+    width: 70%;
+  }  
   .privacy-container {
     margin: 4rem 1rem;
   }
 }
+
 @media (min-width: 640px) and (max-width: 768px) {
   .sm\:p-10 {
     padding: 2.5rem;
   }
-  /* .sm\:mx-0 {
+  .sm\:mx-0 {
     margin-left: 0%;
     margin-right: 0%;
+  }
+   .sm\:items-center{
+     align-items: center;
+   } 
+   .event-image {
+    width: 100%;
+  }
+  .event-side-container {
+    width: 70%;
+
   } */
   .privacy-container {
     margin: 4rem 2rem;
+  }
+  .category-width{
+    width: 100%;
+  }
+  .sm\:p-0{
+    padding: 0%;
   }
 }
 
@@ -60,6 +161,45 @@
   }
   .xs\:w-65 {
     width: 65%;
+  }
+  .md\:justify-between{
+    justify-content: space-between;
+  }
+  .md\:flex-row{
+    flex-direction: row;
+  }
+  .md\:flex-nowrap{
+    flex-wrap: nowrap;
+  }
+  /* .lg\:mx-28 {
+    margin-left: 5rem;
+    margin-right: 5rem;
+  } */
+  /* .md\:mx-4 {
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+  } */
+  /* .md\:mx-2 {
+    margin-left: 0%;
+    margin-right: 0%;
+  } */
+  .event-image {
+    width: 95%;
+  }
+  .event-side-container {
+    width: 70%;
+  }
+  .club-image {
+    width: 90%;
+  }
+  .club-side-container {
+    width: 100%;
+  }  
+  .category-width{
+    width: 100%;
+  }
+  .sm\:p-0{
+    padding: 0%;
   }
   .privacy-container {
     margin: 4rem 10rem;
@@ -98,6 +238,59 @@
   .lg\:w-10\/12 {
     width: 82%;
   }
+
+  /* this below both css for club page */
+  .lg\:w-1\/4{
+    width: 20%;
+  }
+  .lg\:w-3\/4{
+    width: 80%;
+  }
+  .lg\:mx-0 {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .lg\:justify-around {
+    justify-content: space-around;
+  }
+  .event-image {
+    width: 95%;
+  }
+  
+  .event-side-container {
+    width: 55%;
+  }
+  .category-width{
+    width: 80%;
+  }
+  .sm\:p-0{
+    padding: 2rem;
+  }
+  .club-image {
+    width: 100%;
+  }
+  .club-side-container {
+    width: 70%;
+  }  
+}
+
+@media (min-width: 1200px) {
+  .event-image {
+    width: 95%;
+  }
+  
+  .event-side-container {
+    width: 40%;
+  }
+  .category-width{
+    width: 60%;
+  }
+  .club-image {
+    width: 90%;
+  }
+  .club-side-container {
+    width: 40%;
+  }  
 }
 
 @media (min-width: 1450px) {
@@ -114,4 +307,17 @@
   /* .event-image {
     width: 850px !important;
   } */
+  .event-image {
+    width: 95%;
+  }
+  
+  .event-side-container {
+    width: 30%;
+  }
+  .club-image {
+    width: 100%;
+  }
+  .club-side-container {
+    width: 30%;
+  }  
 }

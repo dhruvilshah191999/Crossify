@@ -16,6 +16,7 @@ import MyTag from "components/Tag";
 import { notifyClubLiked, notifyWentWrong } from "notify";
 import JoinClubButton from "components/SweetAlerts/JoinClubButton";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
+import Footer from "components/Footers/FooterAdmin";
 
 function ClubPage(props) {
   let history = useHistory();
@@ -27,7 +28,6 @@ function ClubPage(props) {
   const [moderator, setmoderator] = useState(false);
   const [isPublic, setPublic] = useState(true);
   const [isJoin, setIsJoin] = useState(false);
-  const [count, setCount] = useState({});
   const [clubData, setClubData] = useState([]);
   const token = localStorage.getItem("jwt");
 
@@ -54,62 +54,18 @@ function ClubPage(props) {
       } else {
         setClubData(finaldata.data.data[0]);
         setIsAdmin(finaldata.data.isAdmin);
+        setIsJoin(finaldata.data.isMember);
+        setmoderator(finaldata.data.isModerator);
         if (finaldata.data.isAdmin) {
           setIsJoin(true);
         }
         if (finaldata.data.data[0].status === "Private") {
           setPublic(false);
+          CheckRequestMember();
         }
         setTimeout(() => {
           setloading(true);
-        }, 1000)
-      }
-    }
-
-    async function get_count() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        validateStatus: () => true,
-      };
-      var send_data = {
-        club_id: id,
-      };
-      const finaldata = await axios.post(
-        "/api/admin/getCount",
-        send_data,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setCount(finaldata.data.data);
-      }
-    }
-
-    async function CheckMember() {
-      const config = {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      var object = {
-        token: token,
-        club_id: id,
-      };
-      const finaldata = await axios.post(
-        "/api/club/IsMemberExist",
-        object,
-        config
-      );
-      if (finaldata.data.is_error) {
-        console.log(finaldata.data.message);
-      } else {
-        setIsJoin(finaldata.data.join);
-        setmoderator(finaldata.data.moderator);
+        }, 1000);
       }
     }
 
@@ -136,12 +92,8 @@ function ClubPage(props) {
       }
     }
 
-    CheckMember();
-    CheckRequestMember();
     event_details();
-    get_count();
-  }, [id,token]);
-
+  }, [id, token]);
 
   const addlike = async (e) => {
     const config = {
@@ -185,7 +137,12 @@ function ClubPage(props) {
   };
   const openModal = () => {
     ModalManager.open(
-      <MyModal onRequestClose={() => true} club_id={id} isAdmin={isAdmin} category={category }/>
+      <MyModal
+        onRequestClose={() => true}
+        club_id={id}
+        isAdmin={isAdmin}
+        category={category}
+      />
     );
   };
   const gotoAdmin = () => {
@@ -196,23 +153,18 @@ function ClubPage(props) {
       <>
         <Navbar />
         <div style={{ marginTop: 65, backgroundColor: "#fafafa" }}>
-          <div className="flex flex-col items-center flex-wrap">
-            <div className="flex flex-row flex-wrap mt-2 ">
-              <div className="club-bg mx-4 my-2">
+          <div className="flex flex-col flex-wrap">
+            <div className="flex flex-row flex-wrap md:flex-nowrap mt-2 justify-around items-center">
+              <div className="ml-4 my-2">
                 <img
-                  className="w-full h-full overflow-hidden object-contain rounded-lg"
+                  className="overflow-hidden object-contain rounded-lg club-image"
                   alt="club_background_photo"
                   src={clubData.profile_photo}
                 />
               </div>
-              <div
-                className="bg-white rounded  mx-2 my-2 p-6 border leading-relaxed max-w-370-px"
-                style={{ width: 370 }}
-              >
+              <div className="bg-white rounded p-6 border leading-relaxed club-side-container">
                 <div className="text-3xl font-bold">
                   {clubData.club_name}
-                  {/* //todo GOLU just redirect to the /admin page for control or
-                  manage this club (ONLY IF HE IS MOD OR CREATOR OF THE CLUB) */}
                   {isAdmin || moderator ? (
                     <button
                       className="float-right text-lg"
@@ -228,7 +180,7 @@ function ClubPage(props) {
                   &nbsp;<i className="fas fa-map-marker-alt text-sm"></i>
                   &nbsp;&nbsp; {clubData.city},{clubData.state} <br />
                   <i className="fas fa-users text-sm"></i> &nbsp;&nbsp;
-                  {count.member + " "}
+                  {clubData.member_list ? clubData.member_list.length : 0}{" "}
                   Members
                   <br />
                   <i className="fas fa-couch text-sm"></i> &nbsp;&nbsp;
@@ -306,10 +258,7 @@ function ClubPage(props) {
                 </div>
               </div>
             </div>
-            <div
-              className="bg-white rounded border ml-4 mt-2 p-2"
-              style={{ width: 1225 }}
-            >
+            <div className="bg-white rounded border ml-4 mt-2 p-2">
               <TabsBar
                 club_id={id}
                 description={clubData.description}
@@ -323,6 +272,7 @@ function ClubPage(props) {
             </div>
           </div>
         </div>
+        <Footer />
       </>
     );
   } else {

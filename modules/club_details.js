@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-const {ObjectID, ObjectId} = require('bson');
+const { ObjectID, ObjectId } = require('bson');
 var Schema = require('mongoose').Schema;
 
 var clubSchema = new Schema({
@@ -90,6 +90,10 @@ var clubSchema = new Schema({
     required: false,
   },
   file: {
+    type: Array,
+    required: false,
+  },
+  member_list: {
     type: Array,
     required: false,
   },

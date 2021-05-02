@@ -15,13 +15,23 @@ io.on('connect', (socket) => {
   });
   socket.on(
     'sendNotification',
-    ({ date, description, title, user_id, profile_photo }) => {
+    ({
+      date,
+      description,
+      title,
+      user_id,
+      profile_photo,
+      target_id,
+      target_val,
+    }) => {
       io.to(socketIds.get(user_id)).emit('Notify', {
         date,
         description,
         title,
         profile_photo,
         user_id,
+        target_id,
+        target_val,
       });
     }
   );

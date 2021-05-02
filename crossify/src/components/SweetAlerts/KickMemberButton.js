@@ -46,12 +46,16 @@ export default class SweetAlertModal extends Component {
       title: "Oops...! you got kicked 🥺",
       profile_photo: profile_photo,
       user_id: this.state.user_id,
+      target_id: club_id,
+      target_val: "club",
     });
     var object = {
       club_id: this.state.club_id,
       user_id: this.state.user_id,
       token: token,
       description: des,
+      target_id: club_id,
+      target_val: "club",
     };
     const finaldata = await axios.post(
       "/api/admin/DeleteMember",

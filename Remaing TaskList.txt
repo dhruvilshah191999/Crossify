@@ -10,3 +10,7 @@ Notification panel to add listen onclick to set isRead false for that event
 Make the Email such that it does not go in spam
 setup 404 PAGE
 Imporve UI of dropdown
+
+
+
+EventReview => change the spelling of organizer_id

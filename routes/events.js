@@ -452,18 +452,11 @@ router.post('/event-details', async function (req, res, next) {
       } else {
         var arrayToAppend = [];
         data[0].faq.forEach((el) => {
-          console.log(el);
           if (el.privacy == 'public') {
             arrayToAppend.push(el);
-            // var index = data[0].faq.indexOf(el);
-            // console.log(index);
-            // if (index > -1) {
-            //   data[0].faq.splice(index, 1);
-            // }
           }
         });
         data[0].faq = arrayToAppend;
-        console.log(data[0]);
         var finaldata = {
           event_data: data[0],
           is_error: false,

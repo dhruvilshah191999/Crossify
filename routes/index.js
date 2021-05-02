@@ -25,7 +25,7 @@ router.post('/login', async function (req, res, next) {
       };
       return res.status(400).send(error);
     } else {
-      if (data === null) {
+      if (!data) {
         var error = {
           is_error: true,
           message: 'Username or Password invalid',
@@ -37,7 +37,7 @@ router.post('/login', async function (req, res, next) {
             is_error: true,
             message: 'Verify Your Account First ',
           };
-          return res.status(500).send(error);
+          return res.status(200).send(error);
         } else if (!data.is_active) {
           var error = {
             is_error: true,
