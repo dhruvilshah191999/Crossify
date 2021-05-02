@@ -23,6 +23,7 @@ class PrivacyPolicy extends Component {
             <a
               href="https://www.termsfeed.com/privacy-policy-generator/"
               target="_blank"
+              rel="noreferrer"
             >
               Privacy Policy Generator
             </a>
@@ -115,7 +116,7 @@ class PrivacyPolicy extends Component {
                 <strong>Website</strong> refers to Crossify, accessible from{" "}
                 <a
                   href="https://crossify.netlify.app/"
-                  rel="external nofollow noopener"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   https://crossify.netlify.app/
@@ -219,7 +220,11 @@ class PrivacyPolicy extends Component {
             mobile device when You go offline, while Session Cookies are deleted
             as soon as You close Your web browser. You can learn more about
             cookies here:{" "}
-            <a href="https://www.termsfeed.com/blog/cookies/" target="_blank">
+            <a
+              href="https://www.termsfeed.com/blog/cookies/"
+              target="_blank"
+              rel="noreferrer"
+            >
               All About Cookies by TermsFeed
             </a>
             .
@@ -505,7 +510,7 @@ class PrivacyPolicy extends Component {
                 with the Privacy Policy of Google:{" "}
                 <a
                   href="https://www.google.com/intl/en/policies/privacy/"
-                  rel="external nofollow noopener"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   https://www.google.com/intl/en/policies/privacy/

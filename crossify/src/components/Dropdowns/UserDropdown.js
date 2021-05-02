@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { createPopper } from "@popperjs/core";
 import { UserContext } from "context/usercontext";
 const UserDropdown = (props) => {
@@ -47,68 +47,70 @@ const UserDropdown = (props) => {
             ref={popoverDropdownRef}
             className={
               (dropdownPopoverShow ? "block " : "hidden ") +
-              "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+              "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 font-semibold"
             }
           >
             <Link
               to="/profile"
-              className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
             >
-              Settings
+              <i className="fas fa-tools text-gray-700 mr-2"></i> Settings
             </Link>
             <Link
               to="/profile/myclubs"
-              className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
             >
-              My Clubs
+              <i className="fas fa-users text-gray-700 mr-2"></i> My Clubs
             </Link>
             <Link
               to="/profile/myevents"
-              className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
             >
-              My Events
+              <i className="fas fa-calendar-day text-gray-700 mr-2"></i> My
+              Events
             </Link>
             <Link
               to="/profile/manage/events"
-              className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
             >
-              Manage Events
+              <i className="fas fa-sliders-h text-gray-700 mr-2"></i> Manage
+              Events
             </Link>
-
+            <div className="h-0 my-1 border border-solid border-gray-200" />
             <a
               href="https://forms.gle/JPfRcA3FYgqqBeip6"
-              className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
               target="_blank"
               rel="noreferrer"
             >
-              Rate our Website
+              <i className="fas fa-star-half-alt text-gray-700 mr-2"></i> Rate
+              our Website
             </a>
 
             <a
               href="https://forms.gle/mf5rCqLFSDeikiYT6"
-              className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
               target="_blank"
               rel="noreferrer"
             >
-              Be a Bug Police
+              <i className="fas fa-bug text-gray-700 mr-2"></i> Be a Bug Police
             </a>
 
-            <div className="h-0 my-2 border border-solid border-gray-200" />
+            <div className="h-0 my-1 border border-solid border-gray-200" />
             <Link
               to="/"
               className={
-                "text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
+                "text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-alpha"
               }
               onClick={(e) => Logout(e)}
             >
-              Log Out
+              <i className="fas fa-sign-out-alt text-alpha mr-2"></i> Log Out
             </Link>
           </div>
         </div>
       </>
     );
-  }
-  else {
+  } else {
     return <></>;
   }
 };

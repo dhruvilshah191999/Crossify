@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import Facebook from "./Facebook";
 import Google from "./Google";
@@ -96,7 +96,7 @@ export default function Register() {
                       errors.repassword = "Re enter your password !";
                     } else if (password !== repassword) {
                       errors.repassword = "Password does not match !";
-                    }else if (!checked) {
+                    } else if (!checked) {
                       errors.checkbox =
                         "You must have to agree our terms and conditions";
                     }
@@ -108,7 +108,7 @@ export default function Register() {
                       lname,
                       email,
                       password,
-                      socialId:"",
+                      socialId: "",
                     };
                     var ciphertext = CryptoJS.AES.encrypt(
                       JSON.stringify(userdata),
@@ -256,13 +256,13 @@ export default function Register() {
                           />
                           <span className="ml-2 text-sm font-semibold text-gray-700">
                             I agree with the{" "}
-                            <a
+                            <Link
                               href="#pablo"
                               className="text-blue-500"
-                              onClick={(e) => e.preventDefault()}
+                              to="/privacypolicy"
                             >
                               Privacy Policy
-                            </a>
+                            </Link>
                           </span>
                         </label>
                         <p className="FormError">{errors.checkbox}</p>

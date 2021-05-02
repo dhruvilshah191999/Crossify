@@ -94,13 +94,13 @@ export default function LoginGoogle() {
         anchorOrigin={{ vertical, horizontal }}
         open={errorStatus}
         autoHideDuration={
-          message.split(" ")[0].toLowerCase() == "verify" ? 10000 : 3000
+          message.split(" ")[0].toLowerCase() === "verify" ? 10000 : 3000
         }
         onClose={handleClose}
       >
         <Alert severity="error" onClose={handleClose}>
           {message}
-          {message.split(" ")[0].toLowerCase() == "verify" && (
+          {message.split(" ")[0].toLowerCase() === "verify" && (
             <button
               className="font-semibold ml-2 text-beta border-b-beta "
               onClick={sendMail}

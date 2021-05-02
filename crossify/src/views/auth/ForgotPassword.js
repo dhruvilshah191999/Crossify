@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { notifyWrongEmail, notifySuccessMail } from "notify";
 import { Formik } from "formik";
 
@@ -44,7 +44,7 @@ function ForgotPassword() {
                 onSubmit={async ({ setSubmitting }) => {
                   const Credentials = {
                     email: email,
-                    url: window.location.origin
+                    url: window.location.origin,
                   };
                   try {
                     const config = {
@@ -113,6 +113,19 @@ function ForgotPassword() {
                   </form>
                 )}
               </Formik>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap relative text-lg font-semibold">
+            <div className="w-1/2">
+              <Link to="/auth/login" className="text-gray-300">
+                <small>Sign In as existing User</small>
+              </Link>
+            </div>
+            <div className="w-1/2 text-right">
+              <Link to="/auth/register" className="text-gray-300">
+                <small>Create new account</small>
+              </Link>
             </div>
           </div>
         </div>

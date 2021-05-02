@@ -5,6 +5,7 @@
   --color-lightalpha: #e05a77;
   --color-lightbeta: #a4eef5;
   --color-wild: #b388dd;
+  --color-tomato: #e03933;
 }
 
 .bg-beta {
@@ -167,6 +168,10 @@
 
 .opacity-50 {
   opacity: 50%;
+}
+
+.text-tomato {
+  color: var(--color-tomato);
 }
 
 .text-green-900 {
@@ -644,7 +649,6 @@
   width: 60px;
   height: 60px;
 }
-
 
 .text-md {
   font-size: 1.1rem;
@@ -1835,69 +1839,69 @@ form .page .btns button.next {
   }
 }
 
-.imgIcon{
+.imgIcon {
   /* width: fit-content;
   max-width: 100px; */
   width: 100px;
 }
-.icon-class:nth-child(1){
+.icon-class:nth-child(1) {
   background-color: #b3e8c8;
 }
-.icon-class:nth-child(2){
+.icon-class:nth-child(2) {
   background-color: #fc9696;
 }
-.icon-class:nth-child(3){
+.icon-class:nth-child(3) {
   background-color: #f8d3b2;
 }
-.icon-class:nth-child(4){
+.icon-class:nth-child(4) {
   background-color: #76aaf8;
 }
-.icon-class:nth-child(5){
+.icon-class:nth-child(5) {
   background-color: #a6ffd2;
 }
-.icon-class:nth-child(6){
+.icon-class:nth-child(6) {
   background-color: #fee900;
 }
-.icon-class:nth-child(7){
+.icon-class:nth-child(7) {
   background-color: #76aaf8;
 }
-.icon-class:nth-child(8){
+.icon-class:nth-child(8) {
   background-color: #a4dff8;
 }
-.icon-class:nth-child(9){
+.icon-class:nth-child(9) {
   background-color: #c1b3be;
 }
-.icon-class:nth-child(10){
+.icon-class:nth-child(10) {
   background-color: #f7f7f7;
 }
-.icon-class:nth-child(11){
+.icon-class:nth-child(11) {
   background-color: #c8fd3d;
 }
-.icon-class:nth-child(12){
+.icon-class:nth-child(12) {
   background-color: #55c5a3;
 }
-.icon-class:nth-child(13){
+.icon-class:nth-child(13) {
   background-color: #abfd7f;
 }
-.icon-class:nth-child(14){
+.icon-class:nth-child(14) {
   background-color: #30aadc;
 }
-.icon-class:nth-child(15){
+.icon-class:nth-child(15) {
   background-color: #f85406;
 }
-.icon-class:nth-child(16){
+.icon-class:nth-child(16) {
   background-color: #1db954;
 }
-.icon-class:nth-child(17){
+.icon-class:nth-child(17) {
   background-color: #b3e8c8;
 }
-.icon-class:nth-child(18){
+.icon-class:nth-child(18) {
   background-color: #ffbb45;
 }
-.icon-class:nth-child(19){
+.icon-class:nth-child(19) {
   background-color: #a6ffd2;
 }
-.icon-class:nth-child(20){
+.icon-class:nth-child(20) {
   background-color: #76aaf8;
 }
 .pagination {
@@ -1943,7 +1947,7 @@ form .page .btns button.next {
 .pagination li.active a:hover {
   color: #ffffff;
 }
-.category-width{
+.category-width {
   width: 60%;
 }
 

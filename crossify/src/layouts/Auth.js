@@ -17,7 +17,7 @@ export default function Auth() {
     <>
       <Navbar transparent />
       <main>
-        <section className="relative w-full h-full py-40 min-h-screen">
+        <section className="relative w-full h-full py-40 pb-6 min-h-screen">
           <div
             className="absolute top-0 w-full h-full bg-gradient-alpha bg-no-repeat bg-full"
             // style={{

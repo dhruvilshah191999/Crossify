@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import FileTable from "components/Tables/FileTable";
-import axios from "axios";
+
 class FilesTab extends Component {
   constructor(props) {
     super(props);
