@@ -1,6 +1,7 @@
 import React from "react";
 import demopf from "assets/img/profilepic.jpg";
 import Tag from "components/Tag";
+import DeleteMyClub from "components/SweetAlerts/DeleteMyClubButton";
 // components
 
 export default function CardProfile(props) {
@@ -14,7 +15,8 @@ export default function CardProfile(props) {
                 <img
                   alt="..."
                   src={props.clubData.profile_photo}
-                  className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                  className="shadow-xl rounded-lg h-auto align-middle border-none absolute -m-18 -ml-22 lg:-ml-16 "
+                  style={{ maxWidth: 200 }}
                 />
               </div>
             </div>
@@ -57,6 +59,9 @@ export default function CardProfile(props) {
             <div className="text-sm leading-normal mt-0 mb-4 text-gray-500 font-bold uppercase">
               <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
               {props.clubData.city},{props.clubData.state}
+            </div>
+            <div>
+              <DeleteMyClub />
             </div>
           </div>
         </div>

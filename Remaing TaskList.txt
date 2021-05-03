@@ -1,5 +1,7 @@
-Auto suggestion in location search field
 Navbar options in manage pages
+
+
+Auto suggestion in location search field
 Reduce mobile view margin and padding for index page
 Add social media link in footer
 add footer in club and event page

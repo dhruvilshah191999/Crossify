@@ -79,7 +79,7 @@ export default function CardSettings() {
           occupation: finaldata.data.data.occupation,
           oldPhoto: finaldata.data.data.profile_photo,
         });
-        setPhoto(finaldata.data.data.profile_photo)
+        setPhoto(finaldata.data.data.profile_photo);
         setStateName(finaldata.data.data.state);
         setCityName(finaldata.data.data.city);
         setCategory(finaldata.data.data.category_data);
@@ -122,43 +122,40 @@ export default function CardSettings() {
       const config = {
         headers: { "X-Requested-With": "XMLHttpRequest" },
       };
-      axios
-        .post(url, data, config)
-        .then(async (res) => {
-          var object = {
-            username,
-            fname,
-            lname,
-            email,
-            address,
-            city: cityname,
-            state: statename,
-            about_me,
-            pincode: postalcode,
-            occupation,
-            token,
-            category,
-            photo: res.data.url,
-          };
-          const config = {
-            method: "POST",
-            header: {
-              "Content-Type": "application/json",
-            },
-          };
-          const finaldata = await axios.post(
-            "/api/profile/update-user",
-            object,
-            config
-          );
-          if (finaldata.data.is_error) {
-            console.log(finaldata.data.message);
-          } else {
-            window.location.reload();
-          }
-        });
-    }
-    else {
+      axios.post(url, data, config).then(async (res) => {
+        var object = {
+          username,
+          fname,
+          lname,
+          email,
+          address,
+          city: cityname,
+          state: statename,
+          about_me,
+          pincode: postalcode,
+          occupation,
+          token,
+          category,
+          photo: res.data.url,
+        };
+        const config = {
+          method: "POST",
+          header: {
+            "Content-Type": "application/json",
+          },
+        };
+        const finaldata = await axios.post(
+          "/api/profile/update-user",
+          object,
+          config
+        );
+        if (finaldata.data.is_error) {
+          console.log(finaldata.data.message);
+        } else {
+          window.location.reload();
+        }
+      });
+    } else {
       var object = {
         username,
         fname,
@@ -172,7 +169,7 @@ export default function CardSettings() {
         occupation,
         token,
         category,
-        photo:oldPhoto
+        photo: oldPhoto,
       };
       const config = {
         method: "POST",

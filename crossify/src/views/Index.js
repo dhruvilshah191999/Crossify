@@ -9,7 +9,7 @@ import Footer from "components/Footers/Footer.js";
 import EventCard from "components/Cards/EventCard";
 import ClubCard from "components/Cards/ClubCard";
 import Creators from "components/sections/Creators";
-
+import AutoSuggetion from "views/demo/PlayGround";
 export default function Landing() {
   let history = useHistory();
   const {
@@ -49,6 +49,10 @@ export default function Landing() {
     };
     search_dispatch({ type: "Add-Search", add: object });
     history.push("/clubsearch");
+  };
+
+  const onLocationChange = (newValue) => {
+    setlocation(newValue);
   };
 
   if (loading) {
@@ -95,8 +99,8 @@ export default function Landing() {
                         placeholder="Find your club"
                       />
                     </div>
-                    <div style={{ flex: "1 1 35%", overflow: "hidden" }}>
-                      <input
+                    <div style={{ flex: "1 1 35%" }}>
+                      {/* <input
                         style={{ outline: "none" }}
                         className="p-2  text-lg w-full"
                         type="text"
@@ -104,6 +108,10 @@ export default function Landing() {
                         onChange={(e) => setlocation(e.target.value)}
                         value={location}
                         placeholder="Select Location"
+                      /> */}
+                      <AutoSuggetion
+                        onLocationChange={onLocationChange}
+                        value={location}
                       />
                     </div>
                   </div>

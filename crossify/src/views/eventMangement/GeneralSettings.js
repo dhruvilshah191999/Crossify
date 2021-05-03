@@ -12,6 +12,7 @@ import { ModalManager } from "react-dynamic-modal";
 import ViewFeedback from "components/Modals/ViewFeedback";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import PulseLoader from "react-spinners/PulseLoader";
+import DeleteMyEvent from "components/SweetAlerts/DeleteMyEventButton";
 
 export default function GeneralSettings(props) {
   let history = useHistory();
@@ -195,7 +196,7 @@ export default function GeneralSettings(props) {
                 starting_time,
                 ending_time,
                 maximum_participants,
-                ending_date_registration:endregister_date
+                ending_date_registration: endregister_date,
               };
 
               const config = {
@@ -561,6 +562,9 @@ export default function GeneralSettings(props) {
                         </div>
                       </div>
                     </form>
+                    <div className="px-4 mt-2 text-right">
+                      <DeleteMyEvent />
+                    </div>
                   </div>
                 </div>
               </div>
