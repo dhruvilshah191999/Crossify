@@ -634,4 +634,31 @@ router.post('/GetMembers', async function (req, res, next) {
       }
     });
 });
+
+router.post('/deleteclub', async function (req, res, next) {
+  let {club_id} = req.body;
+  var checks = club_details.updateOne(
+    {
+      _id: ObjectId(club_id),
+    },
+    {
+      is_active: 0,
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
 module.exports = router;

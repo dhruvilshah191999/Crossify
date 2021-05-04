@@ -488,6 +488,10 @@
   max-width: 30ch;
 }
 
+.width-30{
+  width: 30%;
+}
+
 .max-ch-20 {
   max-width: 20ch;
 }

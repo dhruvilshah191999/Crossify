@@ -70,7 +70,6 @@ class UploadPic extends React.Component {
           <div className=" ">
             <img
               className=""
-              alt="uploaded Photo"
               onChange={this.handleChange2}
               src={this.state.file}
               style={{

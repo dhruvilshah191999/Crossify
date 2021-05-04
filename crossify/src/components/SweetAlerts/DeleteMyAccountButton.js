@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 export default class DeleteMyAccount extends Component {
@@ -41,11 +42,33 @@ export default class DeleteMyAccount extends Component {
     });
   };
 
-  removeThisUser(answer) {
+  removeThisUser=async(answer)=> {
     if (answer !== "DELETE") {
       return;
     }
-    //TODO HERE GRAB THE ID OF USER AND DO DELETE QUERY
+    else {
+      const token = localStorage.getItem("jwt");
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        token,
+      };
+      const finaldata = await axios.post(
+        "/api/deleteuser",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        window.localStorage.removeItem("jwt");
+        window.location.replace("/");
+      }
+    }
   }
   render() {
     return (

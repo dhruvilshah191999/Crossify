@@ -1313,4 +1313,26 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
   }
 });
 
+router.post('/deleteevent', async function (req, res, next) {
+  let {event_id} = req.body;
+  var checks = event_details.deleteOne({
+    _id: ObjectId(event_id),
+  });
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
 module.exports = router;

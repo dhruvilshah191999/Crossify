@@ -1,8 +1,15 @@
 import React, { Component } from "react";
+import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 export default class DeleteMyEvent extends Component {
-  state = { alert: null };
+  constructor(props) {
+    super(props);
+    this.state = {
+      alert: null,
+      event_id: this.props.event_id,
+    };
+  }
   deleteAccount() {
     const getAlert = () => (
       <SweetAlert
@@ -30,7 +37,6 @@ export default class DeleteMyEvent extends Component {
         <strong className="mt-2"> Write 'DELETE' to proceed. </strong>
       </SweetAlert>
     );
-    console.log(getAlert());
     this.setState({
       alert: getAlert(),
     });
@@ -42,11 +48,31 @@ export default class DeleteMyEvent extends Component {
     });
   };
 
-  removeThisEvent(answer) {
+  removeThisEvent=async (answer)=> {
     if (answer !== "DELETE") {
       return;
     }
-    //TODO HERE GRAB THE ID OF USER AND DO DELETE QUERY
+    else {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        event_id:this.state.event_id
+      };
+      const finaldata = await axios.post(
+        "/api/events/deleteevent",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        window.location.replace("/");
+      }
+    }
   }
   render() {
     return (

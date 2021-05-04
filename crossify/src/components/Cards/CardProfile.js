@@ -61,7 +61,7 @@ export default function CardProfile(props) {
               {props.clubData.city},{props.clubData.state}
             </div>
             <div>
-              <DeleteMyClub />
+              <DeleteMyClub club_id={props.club_id}/>
             </div>
           </div>
         </div>

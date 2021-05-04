@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
 import { UserContext } from "context/usercontext";
+import AutoSuggetion from "views/demo/PlayGround";
 const SearchNavbar = (props) => {
   const [changing, setchanging] = useState(false);
   const [search, setSearch] = useState("");
@@ -15,6 +16,11 @@ const SearchNavbar = (props) => {
       setlocation(searchResult.location);
     }
   }, []);
+
+  const onLocationChange = (newValue) => {
+    setlocation(newValue);
+  };
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +41,7 @@ const SearchNavbar = (props) => {
           id="example-navbar-warning"
         >
           <div className="w-full flex " style={{ marginLeft: "17rem" }}>
-            <div className="bg-white p-2 w-full">
+            <div className="bg-white p-2 w-full flex">
               <input
                 style={{
                   width: "50%",
@@ -49,7 +55,7 @@ const SearchNavbar = (props) => {
                 value={search}
                 placeholder="Find your club,events"
               />
-              <input
+              {/* <input
                 style={{ width: "30%", outline: "none" }}
                 className="px-3 py-2  text-lg shadow-lg"
                 type="text"
@@ -57,6 +63,12 @@ const SearchNavbar = (props) => {
                 onChange={(e) => setlocation(e.target.value)}
                 value={location}
                 placeholder="Select Location"
+              /> */}
+
+              <AutoSuggetion
+                onLocationChange={onLocationChange}
+                value={location}
+                className="px-3 py-2 text-lg shadow-lg"
               />
 
               <button
