@@ -1,20 +1,25 @@
 import React, { Component } from "react";
+import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 export default class DeleteMyClub extends Component {
-  state = { alert: null };
+  constructor(props) {
+    super(props);
+    this.state = {
+      alert: null,
+      club_id:this.props.club_id
+    };
+  }
+
   deleteAccount() {
     const getAlert = () => (
       <SweetAlert
         customClass="text-black"
-        //   danger
         input
         showCancel
         confirmBtnText="Delete Club"
         confirmBtnBsStyle="danger"
         title="Are you sure?"
-        // onConfirm={this.deleteFile}
-        // onCancel={this.onCancel}
         focusCancelBtn
         confirmBtnCssClass="text-base rounded px-4 px-2"
         confirmBtnStyle={{ color: "white" }}
@@ -30,7 +35,6 @@ export default class DeleteMyClub extends Component {
         <strong> Write 'DELETE' to proceed. </strong>
       </SweetAlert>
     );
-    console.log(getAlert());
     this.setState({
       alert: getAlert(),
     });
@@ -42,11 +46,30 @@ export default class DeleteMyClub extends Component {
     });
   };
 
-  removeThisUser(answer) {
+  removeThisUser=async(answer)=> {
     if (answer !== "DELETE") {
       return;
+    } else {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        club_id:this.state.club_id
+      };
+      const finaldata = await axios.post(
+        "/api/club/deleteclub",
+        object,
+        config
+      );
+      if (finaldata.data.is_error) {
+        console.log(finaldata.data.message);
+      } else {
+        window.location.replace("/");
+      }
     }
-    //TODO HERE GRAB THE ID OF USER AND DO DELETE QUERY
   }
   render() {
     return (

@@ -494,4 +494,29 @@ router.post('/notification', auth, async function (req, res, next) {
     });
 });
 
+router.post('/deleteuser', auth,async function (req, res, next) {
+  var checks = user_details.updateOne(
+    {
+      _id: ObjectId(req.user._id),
+    },
+    {
+      is_active: 0,
+    }
+  );
+  await checks.exec((err, data2) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
 module.exports = router;

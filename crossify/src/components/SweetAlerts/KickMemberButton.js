@@ -37,7 +37,6 @@ export default class SweetAlertModal extends Component {
     var profile_photo = user.data.data.profile_photo;
     var club_id = this.state.club_id;
     var club = await axios.post("/api/events/getclub", { club_id }, config);
-    console.log(club);
     var clubName = club.data.data.club_name;
     var des = ` You got removed in ${clubName} club by ${firstName}`;
     socket.emit("sendNotification", {

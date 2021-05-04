@@ -73,7 +73,7 @@ export default function Settings() {
             <CardSettings data={clubData} />
           </div>
           <div className="w-full lg:w-3/10 px-4">
-            <CardProfile clubData={clubData} count={count} />
+            <CardProfile clubData={clubData} count={count} club_id={id}/>
           </div>
         </div>
       ) : (

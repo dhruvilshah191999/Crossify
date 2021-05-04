@@ -218,12 +218,11 @@ export default class App extends React.Component {
     //   style="outline: none;"
     // ></input>;
     const { value, suggestions } = this.state;
-
     const inputProps = {
       placeholder: "Select City",
       value,
       onChange: this.onChange,
-      className: "p-2  text-lg w-full",
+      className:this.props.className,
     };
 
     return (

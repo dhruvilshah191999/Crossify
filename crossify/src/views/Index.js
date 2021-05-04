@@ -112,6 +112,7 @@ export default function Landing() {
                       <AutoSuggetion
                         onLocationChange={onLocationChange}
                         value={location}
+                        className="p-2 text-lg w-full"
                       />
                     </div>
                   </div>

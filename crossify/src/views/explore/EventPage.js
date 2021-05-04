@@ -25,6 +25,15 @@ const Tag = (props) => {
   );
 };
 
+const SetLiked = (props) => {
+  if (props.fav_event.find((e) => e === props.id)) {
+    props.returnData(true);
+  }
+  else {
+    props.returnData(false);
+  }
+  return <></>;
+}
 export default function EventPage(props) {
   let history = useHistory();
   const { users } = useContext(UserContext);
@@ -32,6 +41,7 @@ export default function EventPage(props) {
   const [loading, setloading] = useState(false);
   const [isInWaiting, SetisInWaiting] = useState(false);
   const [IsFull, SetIsFull] = useState(false);
+  const [isLike, setLike] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
@@ -116,7 +126,7 @@ export default function EventPage(props) {
     } else {
       notifyLiked();
       users.fav_event.push(id);
-      history.go(0);
+      setLike(true);
     }
   };
 
@@ -140,7 +150,7 @@ export default function EventPage(props) {
       console.log(finaldata.data.message);
     } else {
       users.fav_event.pop(id);
-      history.go(0);
+      setLike(false);
     }
   };
 
@@ -152,10 +162,18 @@ export default function EventPage(props) {
     history.push("/manage/event/" + id);
   };
 
+  const setUnreadData = (chilData) => {
+    setLike(chilData);
+  };
   if (loading) {
     return (
       <>
         <Navbar />
+        <SetLiked
+          id={id}
+          fav_event={users.fav_event}
+          returnData={setUnreadData}
+        />
         <div className="flex flex-col md:mx-0 lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
@@ -280,16 +298,12 @@ export default function EventPage(props) {
                 <div className="w-6/12">
                   <motion.button
                     className={
-                      !users.fav_event.find((e) => e === id)
+                      !isLike
                         ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     }
                     type="button"
-                    onClick={
-                      users.fav_event.find((e) => e === id)
-                        ? (e) => deletelike(e)
-                        : (e) => addlike(e)
-                    }
+                    onClick={isLike ? (e) => deletelike(e) : (e) => addlike(e)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}
                   >

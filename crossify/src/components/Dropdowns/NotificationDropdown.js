@@ -43,7 +43,7 @@ const NotificationDropdown = (props) => {
     async function fetchData() {
       setTimeout(() => {
         setloding(true);
-      }, 500);
+      }, 1000);
       var user_id = users._id;
       socket.emit("open", { user_id });
     }
