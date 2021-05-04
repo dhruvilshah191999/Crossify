@@ -88,7 +88,13 @@ export default function MyClubs() {
   const currentLikedEvents = getSegment(likeEvents, likedIndex, eventPerPage);
 
   const renderUpcomingEvents = currentUpcomingEvents.map((el, index) => {
-    return <ProfileEventClub data={el} key={el._id} fav_event={users.fav_event}></ProfileEventClub>;
+    return (
+      <ProfileEventClub
+        data={el}
+        key={el._id}
+        fav_event={users.fav_event}
+      ></ProfileEventClub>
+    );
   });
   const renderPastEvents = currentPastEvents.map((el, index) => {
     return (
@@ -416,6 +422,8 @@ export default function MyClubs() {
           </ul>
         </div>
       </div>
+      <hr className="mt-6 mb-6 border-b-1 border-gray-400" />
+
       {upcomingEvents.length > 0 && (
         <div className="bg-white rounded-lg shadow-lg p-4 text-center">
           <span className="text-4xl font-semibold m-2 mb-10">

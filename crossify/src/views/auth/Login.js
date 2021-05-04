@@ -30,6 +30,22 @@ function Login() {
     setError(false);
   };
 
+  const sendMail = async () => {
+    var data = {
+      email: email,
+      url: window.location.origin,
+    };
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    await axios.post("/api/manage/ResendMail", data, config);
+    setError(false);
+  };
+
   const onChange = (e) =>
     setData({ ...formData, [e.target.name]: e.target.value });
 
@@ -39,14 +55,17 @@ function Login() {
         anchorOrigin={{ vertical, horizontal }}
         open={errorStatus}
         autoHideDuration={
-          message.split(" ")[0].toLowerCase() == "verify" ? 10000 : 3000
+          message.split(" ")[0].toLowerCase() === "verify" ? 10000 : 3000
         }
         onClose={handleClose}
       >
         <Alert severity="error" onClose={handleClose}>
           {message}
-          {message.split(" ")[0].toLowerCase() == "verify" && (
-            <button className="font-semibold ml-2 text-beta border-b-beta ">
+          {message.split(" ")[0].toLowerCase() === "verify" && (
+            <button
+              className="font-semibold ml-2 text-beta border-b-beta"
+              onClick={sendMail}
+            >
               {" "}
               Resend Mail
             </button>
@@ -55,7 +74,7 @@ function Login() {
       </Snackbar>
       <div className="flex content-center items-center justify-center h-full">
         <div className="w-full lg:w-4/12 px-4">
-          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
+          <div className="relative flex flex-col min-w-0 break-words w-full mb-4 shadow-lg rounded-lg bg-gray-300 border-0">
             <div className="rounded-t mb-0 px-6 py-6">
               <div className="text-center">
                 <h1 className="text-gray-600 text-sm font-bold">
@@ -181,7 +200,7 @@ function Login() {
               </Formik>
             </div>
           </div>
-          <div className="flex flex-wrap mt-6 relative">
+          <div className="flex flex-wrap relative text-lg font-semibold">
             <div className="w-1/2">
               <Link to="/auth/forgotpassword" className="text-gray-300">
                 <small>Forgot password?</small>

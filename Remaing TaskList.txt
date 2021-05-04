@@ -1,18 +1,15 @@
-Merge (Member_details,file_details) into club_details
-FAQ 		   => Send only public ones
-Auto suggestion in location search field
 Navbar options in manage pages
-In maps add booked seat and total seats dynamically (Currently it is hard coded)
+
+
+Auto suggestion in location search field
 Reduce mobile view margin and padding for index page
 Add social media link in footer
 add footer in club and event page
 change style of tabsbar
 Resend Verification functionality
 Change UI of Interest Select Step in Sign up
-Render Notification icon first and then fetch data for it and add loading div when data is not available 
 Notification panel to add listen onclick to set isRead false for that event
 Make the Email such that it does not go in spam
-Add Privacy Policy page
 setup 404 PAGE
 Imporve UI of dropdown
 

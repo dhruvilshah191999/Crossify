@@ -1071,8 +1071,6 @@ router.post('/ForgotMail', async function (req, res, next) {
           if (error) {
             console.log(error);
             callback(error);
-          } else {
-            console.log('No error');
           }
         });
       });
@@ -1268,6 +1266,71 @@ router.post('/update-code', async function (req, res, next) {
       }
     });
   }
+});
+
+router.post('/ResendMail', async function (req, res, next) {
+  var { email, url } = req.body;
+  var users = user_details.findOne({ email: email });
+  await users.exec((err, data) => {
+    if (err) {
+      var err = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(500).send(err);
+    }
+    else if(data){
+      var readHTMLFile = function (path, callback) {
+        fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+          if (err) {
+            throw err;
+            callback(err);
+          } else {
+            callback(null, html);
+          }
+        });
+      };
+
+      var transporter = nodemailer.createTransport({
+        host: 'smtp.mailgun.org',
+        port: 587,
+        secure: false,
+        tls: {ciphers: 'SSLv3'},
+        auth: {
+          user: adminMail,
+          pass: adminPass,
+        },
+      });
+
+      readHTMLFile('views/WelcomeMail.html', function (err, html) {
+        var template = handlebars.compile(html);
+        var replacements = {
+          verify_link: url + '/auth/verify/' + data.generate_code,
+          home: url,
+          club: url + '/clubsearch',
+          name: data.fname,
+        };
+        var htmlToSend = template(replacements);
+        const mailOptions = {
+          from: 'Crossify Support <postmaster@crossify.tech>',
+          to: data.email,
+          subject: 'Welcome To Crossify',
+          html: htmlToSend,
+        };
+        transporter.sendMail(mailOptions, function (error) {
+          if (error) {
+            console.log(error);
+            callback(error);
+          }
+        });
+      });
+      var finaldata = {
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  })
 });
 
 module.exports = router;

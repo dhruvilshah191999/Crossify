@@ -13,7 +13,7 @@ const ClubCard = (props) => {
   const { users } = useContext(UserContext);
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
-  const [count, setCount] = useState({});
+
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {

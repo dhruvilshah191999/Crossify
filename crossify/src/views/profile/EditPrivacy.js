@@ -1,3 +1,4 @@
+import DeleteMyAccount from "components/SweetAlerts/DeleteMyAccountButton";
 import React, { Component } from "react";
 
 class EditSocialMedia extends Component {
@@ -82,6 +83,9 @@ class EditSocialMedia extends Component {
                 </div>
               </div>
             </form>
+            <hr className="mt-6 mb-4 border-b-1 border-gray-400" />
+
+            <DeleteMyAccount />
           </div>
         </div>
       </div>

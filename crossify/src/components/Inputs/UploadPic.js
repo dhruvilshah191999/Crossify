@@ -8,7 +8,7 @@ class UploadPic extends React.Component {
     this.state = {
       file: this.props.file || null,
       errorStatus: false,
-      message:"",
+      message: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -70,6 +70,7 @@ class UploadPic extends React.Component {
           <div className=" ">
             <img
               className=""
+              alt="uploaded Photo"
               onChange={this.handleChange2}
               src={this.state.file}
               style={{

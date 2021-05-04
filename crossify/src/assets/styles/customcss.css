@@ -5,6 +5,7 @@
   --color-lightalpha: #e05a77;
   --color-lightbeta: #a4eef5;
   --color-wild: #b388dd;
+  --color-tomato: #e03933;
 }
 
 .bg-beta {
@@ -167,6 +168,10 @@
 
 .opacity-50 {
   opacity: 50%;
+}
+
+.text-tomato {
+  color: var(--color-tomato);
 }
 
 .text-green-900 {
@@ -575,8 +580,16 @@
 
 .event-side-container {
   min-width: 100px;
-  /* max-width: 400px; */
   width: 30%;
+}
+
+.club-image {
+  width: 800px;
+  height: 420px;
+}
+
+.club-side-container {
+  width: 400px;
 }
 
 .border-red-500 {
@@ -620,6 +633,9 @@
   margin-left: 1rem;
 }
 
+.-m-18 {
+  margin: -3rem -6rem;
+}
 .mr-6 {
   margin-right: 1.5rem;
 }
@@ -636,7 +652,6 @@
   width: 60px;
   height: 60px;
 }
-
 
 .text-md {
   font-size: 1.1rem;
@@ -1827,69 +1842,69 @@ form .page .btns button.next {
   }
 }
 
-.imgIcon{
+.imgIcon {
   /* width: fit-content;
   max-width: 100px; */
   width: 100px;
 }
-.icon-class:nth-child(1){
+.icon-class:nth-child(1) {
   background-color: #b3e8c8;
 }
-.icon-class:nth-child(2){
+.icon-class:nth-child(2) {
   background-color: #fc9696;
 }
-.icon-class:nth-child(3){
+.icon-class:nth-child(3) {
   background-color: #f8d3b2;
 }
-.icon-class:nth-child(4){
+.icon-class:nth-child(4) {
   background-color: #76aaf8;
 }
-.icon-class:nth-child(5){
+.icon-class:nth-child(5) {
   background-color: #a6ffd2;
 }
-.icon-class:nth-child(6){
+.icon-class:nth-child(6) {
   background-color: #fee900;
 }
-.icon-class:nth-child(7){
+.icon-class:nth-child(7) {
   background-color: #76aaf8;
 }
-.icon-class:nth-child(8){
+.icon-class:nth-child(8) {
   background-color: #a4dff8;
 }
-.icon-class:nth-child(9){
+.icon-class:nth-child(9) {
   background-color: #c1b3be;
 }
-.icon-class:nth-child(10){
+.icon-class:nth-child(10) {
   background-color: #f7f7f7;
 }
-.icon-class:nth-child(11){
+.icon-class:nth-child(11) {
   background-color: #c8fd3d;
 }
-.icon-class:nth-child(12){
+.icon-class:nth-child(12) {
   background-color: #55c5a3;
 }
-.icon-class:nth-child(13){
+.icon-class:nth-child(13) {
   background-color: #abfd7f;
 }
-.icon-class:nth-child(14){
+.icon-class:nth-child(14) {
   background-color: #30aadc;
 }
-.icon-class:nth-child(15){
+.icon-class:nth-child(15) {
   background-color: #f85406;
 }
-.icon-class:nth-child(16){
+.icon-class:nth-child(16) {
   background-color: #1db954;
 }
-.icon-class:nth-child(17){
+.icon-class:nth-child(17) {
   background-color: #b3e8c8;
 }
-.icon-class:nth-child(18){
+.icon-class:nth-child(18) {
   background-color: #ffbb45;
 }
-.icon-class:nth-child(19){
+.icon-class:nth-child(19) {
   background-color: #a6ffd2;
 }
-.icon-class:nth-child(20){
+.icon-class:nth-child(20) {
   background-color: #76aaf8;
 }
 .pagination {
@@ -1935,7 +1950,85 @@ form .page .btns button.next {
 .pagination li.active a:hover {
   color: #ffffff;
 }
+.category-width {
+  width: 60%;
+}
 
 .border-b-beta {
   border-bottom: 2px solid var(--color-beta);
+}
+
+.react-autosuggest__container {
+  position: relative;
+}
+
+.react-autosuggest__input {
+  width: 240px;
+  height: 30px;
+  padding: 10px 20px;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+.react-autosuggest__input--focused {
+  outline: none;
+}
+
+.react-autosuggest__input--open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+}
+
+.react-autosuggest__suggestions-container--open {
+  display: block;
+  position: absolute;
+  top: 51px;
+  width: 280px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 2;
+  max-height: 300px;
+  overflow-x: scroll;
+}
+
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: var(--color-alpha);
+  color: white;
+}
+
+.react-autosuggest__section-container {
+  border-top: 1px dashed #ccc;
+}
+
+.react-autosuggest__section-container--first {
+  border-top: 0;
+}
+
+.react-autosuggest__section-title {
+  padding: 8px 0 0 8px;
+  font-size: 11px;
+  color: #777;
 }

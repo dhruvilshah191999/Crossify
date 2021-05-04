@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { createPopper } from "@popperjs/core";
 import axios from "axios";
@@ -126,7 +126,7 @@ const NotificationDropdown = (props) => {
     } else {
       setUnread(0);
       users.inbox
-        .map((e) => {
+        .forEach((e) => {
           if (!e.isRead) {
             e.isRead = true;
           }

@@ -12,12 +12,30 @@ export default function Facebook() {
   const { islogin_dispatch, dispatch } = useContext(UserContext);
   const [errorStatus, setError] = useState(false);
   const [message, setMessage] = useState("");
+  const [emailAddress, setEmailaddress] = useState(null);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setError(false);
   };
+
+  const sendMail = async () => {
+    var data = {
+      email: emailAddress,
+      url: window.location.origin,
+    };
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    };
+    await axios.post("/api/manage/ResendMail", data, config);
+    setError(false);
+  };
+
   var responseFacebook = async (response) => {
     if (!response.error) {
       const data = {
@@ -35,6 +53,7 @@ export default function Facebook() {
       if (finaldata.data.is_error) {
         setError(true);
         setMessage(finaldata.data.message);
+        setEmailaddress(response.email);
       } else {
         localStorage.setItem("jwt", finaldata.data.token);
         islogin_dispatch({ type: "Login-Status", status: true });
@@ -64,11 +83,22 @@ export default function Facebook() {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={errorStatus}
-        autoHideDuration={2000}
+        autoHideDuration={
+          message.split(" ")[0].toLowerCase() === "verify" ? 10000 : 3000
+        }
         onClose={handleClose}
       >
         <Alert severity="error" onClose={handleClose}>
           {message}
+          {message.split(" ")[0].toLowerCase() === "verify" && (
+            <button
+              className="font-semibold ml-2 text-beta border-b-beta "
+              onClick={sendMail}
+            >
+              {" "}
+              Resend Mail
+            </button>
+          )}
         </Alert>
       </Snackbar>
       {fbContent}
