@@ -31,7 +31,13 @@ router.post('/create-club', auth, async (req, res) => {
   category.map((e) => {
     array.push(ObjectId(e._id));
   });
-
+  var adminArray = [];
+  var admin = {
+    user:ObjectId(req.user._id),
+    level:'admin',
+    date: new Date(),
+  }
+  adminArray.push(admin)
   var club = new club_details({
     club_name,
     description,
@@ -42,6 +48,7 @@ router.post('/create-club', auth, async (req, res) => {
     location: address,
     state,
     city,
+    member_list:adminArray,
     pincode: postalcode,
     joining_criteria: criteria,
     latitude,
@@ -146,13 +153,13 @@ router.post('/get-club', auth, async (req, res) => {
         var isAdmin = false;
         var isMember = false;
         var isModerator = false;
-        if (data[0].creator_id == req.user._id) {
-          isAdmin = true;
-        }
 
         if (data[0].member_list) {
           data[0].member_list.forEach((e) => {
-            if (e.user == req.user._id && e.level === 'moderator') {
+            if(e.user == req.user._id && e.level === 'admin'){
+              isAdmin= true;
+            }
+            else if (e.user == req.user._id && e.level === 'moderator') {
               isModerator = true;
               isMember = true;
             } else if (e.user == req.user._id && e.level === 'member') {
@@ -425,7 +432,41 @@ router.post('/AddClubMember', auth, async function (req, res, next) {
     }
   });
 });
+router.post('/RemoveClubAdmin',auth,async function(req,res,next){
+  var {club_id,user_id} = req.body;
+  var result = club_details.findOneAndUpdate(
+    {_id: ObjectId(club_id)},
+    {$pull: {member_list: {user: ObjectId(req.user._id)}}}
+  );
 
+  await result.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      result.update({
+        'member_list.user':ObjectId(user_id)
+      },{
+        $set:{'member_list.$.level':'admin'}
+      })
+      user_details
+        .findOneAndUpdate(
+          {_id: ObjectId(req.user._id)},
+          {$pull: {clubs: ObjectId(club_id)}}
+        )
+        .exec();
+      var finaldata = {
+        participated: false,
+        is_error: false,
+        message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+})
 router.post('/RemoveClubMember', auth, async function (req, res, next) {
   var {club_id} = req.body;
   var result = club_details.findOneAndUpdate(

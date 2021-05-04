@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import { CSVLink } from "react-csv";
@@ -18,6 +18,13 @@ import BroadcastButton from "components/SweetAlerts/BroadcastButton";
 import ArrivedButton from "components/SweetAlerts/ArrivedButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 import moment from "moment";
+import urlObject from "../../config/default.json";
+import io from "socket.io-client";
+import { UserContext } from "context/usercontext";
+var BackendURL = urlObject.BackendURL;
+let socket = io(BackendURL, {
+  transport: ["websocket", "polling", "flashsocket"],
+});
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -120,6 +127,8 @@ const IndeterminateCheckbox = React.forwardRef(
 
 export default function App(props) {
   const { id } = useParams();
+  const { users } = useContext(UserContext);
+  console.log(props);
   const getSelectedAndArrived = async (e) => {
     const IDlist = selectedFlatRows.map((el) => el.values.id);
     const config = {
@@ -140,24 +149,46 @@ export default function App(props) {
     }
   };
   const getSelectedAndBroadcast = async (broadcastMessage) => {
+    //Find Event Name
+    const token = localStorage.getItem("jwt");
     const IDlist = selectedFlatRows.map((el) => el.values.id);
+    console.log(users);
+    const firstName = users.fname;
+    const profilePhoto = users.profile_photo;
+    IDlist.forEach((el) => {
+      socket.emit("sendNotification", {
+        date: new Date(),
+        description: broadcastMessage,
+        title: `Heyya...! New Message in EventName by ${firstName}🔊`,
+        profile_photo: profilePhoto,
+        user_id: el,
+        token,
+        target_id: id,
+        target_val: "event",
+      });
+    });
     const config = {
       method: "POST",
       header: {
         "Content-Type": "application/json",
       },
     };
+
     var object = {
       event_id: id,
+      firstName,
       userIds: IDlist,
+      profile_photo: profilePhoto,
+      target_val: "event",
       message: broadcastMessage,
       path: window.location.origin,
+      token,
     };
     const finaldata = await axios.post("/api/manage/Broadcast", object, config);
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      window.location.reload();
+      //window.location.reload();
     }
   };
 

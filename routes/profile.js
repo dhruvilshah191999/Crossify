@@ -701,6 +701,7 @@ router.post('/get-join-club', auth, async function (req, res, next) {
   var result = club_details.find(
     {
       'member_list.user': ObjectId(req.user._id),
+      $or:[{'member_list.level':'member'},{'member_list.level':'moderator'}],
       is_active: true,
     },
     {

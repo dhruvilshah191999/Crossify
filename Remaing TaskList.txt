@@ -18,4 +18,4 @@ Imporve UI of dropdown
 
 
 
-EventReview => change the spelling of organizer_id
+EventReview, admin.js(deleteEvent), club.js(create-event) modules => change the spelling of organizer_id

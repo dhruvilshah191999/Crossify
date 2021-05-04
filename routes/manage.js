@@ -793,14 +793,36 @@ router.post('/check-club', auth, async function (req, res, next) {
   }
 });
 
-router.post('/Broadcast', async function (req, res, next) {
-  s;
-  var { userIds, event_id, message, path } = req.body;
+router.post('/Broadcast', auth, async function (req, res, next) {
+  var {
+    userIds,
+    event_id,
+    message,
+    path,
+    firstName,
+    profile_photo,
+    target_val,
+  } = req.body;
   let objectIdArray = userIds.map((s) => mongoose.Types.ObjectId(s));
-  var check = await user_details.find({
-    _id: { $in: objectIdArray },
-    is_active: 1,
-  });
+  var object = {
+    date: new Date(),
+    title: `Heyya...! New Message in EventName by ${firstName}🔊`,
+    description: message,
+    sender_id: ObjectId(req.user._id),
+    photo: profile_photo,
+    isRead: false,
+    target_id: event_id,
+    target_val: target_val,
+  };
+  var check = await user_details.updateMany(
+    {
+      _id: { $in: objectIdArray },
+      is_active: 1,
+    },
+    {
+      $push: { inbox: object },
+    }
+  );
   var event = await event_details
     .aggregate([
       {

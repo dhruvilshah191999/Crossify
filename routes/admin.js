@@ -7,7 +7,6 @@ var user_details = require('../modules/user_details');
 var club_details = require('../modules/club_details');
 var channel_details = require('../modules/channel_details');
 const { ObjectID, ObjectId } = require('bson');
-const { updateOne } = require('../modules/interest_category');
 var router = express.Router();
 
 const countUnique = (arr) => {
@@ -1521,7 +1520,6 @@ router.post('/AcceptRequests', auth, async function (req, res, next) {
     }
   });
 });
-
 router.post('/RemoveRequests', auth, async function (req, res, next) {
   var {
     club_id,
@@ -1887,6 +1885,87 @@ router.post('/addMessage', auth, async function (req, res, next) {
       var finaldata = {
         is_error: false,
         message: 'Data Send',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+router.post('/deleteMyAccount', auth, async (req, res, next) => {
+  var del = user_details.updateOne(
+    {
+      _id: ObjectId(req.user._id),
+    },
+    {
+      is_active: false,
+    }
+  );
+  await del.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        is_error: false,
+        message: 'Account Deactivated',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/deleteClub', auth, async (req, res, next) => {
+  var { club_id } = req.body;
+  var del = club_details.updateOne(
+    {
+      _id: ObjectId(club_id),
+      creator_id: ObjectId(req.user._id),
+    },
+    {
+      is_active: false,
+    }
+  );
+  await del.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        is_error: false,
+        message: 'Club Deactivated',
+      };
+      return res.status(200).send(finaldata);
+    }
+  });
+});
+
+router.post('/deleteEvent', auth, async (req, res, next) => {
+  var { event_id } = req.body;
+  var del = event_details.updateOne(
+    {
+      _id: ObjectId(event_id),
+      oragnizer_id: ObjectId(req.user._id),
+    },
+    {
+      is_active: false,
+    }
+  );
+  await del.exec((err, data) => {
+    if (err) {
+      var error = {
+        is_error: true,
+        message: err.message,
+      };
+      return res.status(600).send(error);
+    } else {
+      var finaldata = {
+        is_error: false,
+        message: 'Event Deactivated',
       };
       return res.status(200).send(finaldata);
     }
