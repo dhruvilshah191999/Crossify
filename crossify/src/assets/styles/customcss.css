@@ -1842,11 +1842,42 @@ form .page .btns button.next {
   }
 }
 
+.icon-class {
+  position: relative;
+}
+
 .imgIcon {
   /* width: fit-content;
   max-width: 100px; */
   width: 100px;
 }
+.overlay {
+  background: rgba(0, 0, 0, 0.3);
+
+  position: absolute;
+  height: 156px;
+  width: 132px;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  border-radius: 0.5rem;
+}
+
+/* .overlay1 {
+  background: rgba(0, 0, 0, 0.3);
+} */
+
+.overlay i {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  padding: 5px;
+  background-color: #080808;
+  color: white;
+  border-radius: 50%;
+}
+
 .icon-class:nth-child(1) {
   background-color: #b3e8c8;
 }

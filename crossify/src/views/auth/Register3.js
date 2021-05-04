@@ -172,6 +172,9 @@ export default function Register5() {
               <img src={businessIcon} className="imgIcon" />
             </div>
             <div className="text-black">Business</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -179,6 +182,9 @@ export default function Register5() {
               <img src={danceIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Dance</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -186,6 +192,9 @@ export default function Register5() {
               <img src={entertainmentIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Entertainment</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -193,6 +202,9 @@ export default function Register5() {
               <img src={fashionIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Fashion</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -200,6 +212,9 @@ export default function Register5() {
               <img src={foodIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Food</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -207,6 +222,9 @@ export default function Register5() {
               <img src={fitnessIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Fitness</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -214,6 +232,9 @@ export default function Register5() {
               <img src={sportIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Sports</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -221,6 +242,9 @@ export default function Register5() {
               <img src={techIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Technology</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -228,6 +252,9 @@ export default function Register5() {
               <img src={travelIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Travel</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -235,6 +262,9 @@ export default function Register5() {
               <img src={artIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Arts</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -242,6 +272,9 @@ export default function Register5() {
               <img src={bookIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Books</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -249,6 +282,9 @@ export default function Register5() {
               <img src={careerIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Career</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -256,6 +292,9 @@ export default function Register5() {
               <img src={beautyIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Beauty</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -264,7 +303,9 @@ export default function Register5() {
             </div>
             <div className="text-black">
               <p>Language</p>
-              <p>& Culture</p>
+            </div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
             </div>
           </div>
 
@@ -273,6 +314,9 @@ export default function Register5() {
               <img src={learningIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Learning</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -280,6 +324,9 @@ export default function Register5() {
               <img src={musicIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Music</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -287,6 +334,9 @@ export default function Register5() {
               <img src={photoIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Photography</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -294,6 +344,9 @@ export default function Register5() {
               <img src={scifiIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Sci-fi & Games</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -301,6 +354,9 @@ export default function Register5() {
               <img src={writingIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Writing</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
 
           <div className="p-4 m-2 text-center rounded-lg icon-class">
@@ -308,6 +364,9 @@ export default function Register5() {
               <img src={openmicIcon} className="imgIcon"></img>
             </div>
             <div className="text-black">Open Mic</div>
+            <div className="overlay">
+              <i class="fas fa-check"></i>
+            </div>
           </div>
         </div>
         <div className="text-center mt-6">

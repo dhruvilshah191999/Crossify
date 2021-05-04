@@ -162,7 +162,7 @@ export default function EventPage(props) {
             // style={{ minHeight: "" }}
             className="flex flex-col md:flex-row flex-nowrap  mt-16 justify-between xs:items-center sm:items-center items-start flex-shrink-0"
           >
-            <div className="text-black bg-white rounded-md">
+            <div className="text-black bg-white rounded-md event-image-div">
               <img
                 src={eventdetails.photo}
                 className="event-image rounded mt-2"
