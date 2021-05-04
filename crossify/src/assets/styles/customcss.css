@@ -226,6 +226,10 @@
   background-color: #6fa8b6;
 }
 
+.hover\:bg-semibeta:hover {
+  background-color: #4c979e;
+}
+
 .hover\:bg-black:hover {
   background-color: #000;
 }
@@ -488,7 +492,7 @@
   max-width: 30ch;
 }
 
-.width-30{
+.width-30 {
   width: 30%;
 }
 
@@ -1846,11 +1850,56 @@ form .page .btns button.next {
   }
 }
 
+.icon-class {
+  position: relative;
+}
+
+.transition {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 1000ms;
+}
+
 .imgIcon {
   /* width: fit-content;
   max-width: 100px; */
   width: 100px;
 }
+.overlay {
+  background: rgba(0, 0, 0, 0.3);
+
+  position: absolute;
+  height: 156px;
+  width: 132px;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  border-radius: 0.5rem;
+  transition-timing-function: ease-out;
+  transition: 0.6s;
+}
+
+/* .easeIn {
+  transition-timing-function: ease-in;
+  transition: all;
+  transition: 10s;
+} */
+
+/* .overlay1 {
+  background: rgba(0, 0, 0, 0.3);
+} */
+
+.overlay2 i {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  padding: 5px;
+  background-color: #48bb78;
+  color: white;
+  border-radius: 50%;
+}
+
 .icon-class:nth-child(1) {
   background-color: #b3e8c8;
 }

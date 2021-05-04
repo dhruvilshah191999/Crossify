@@ -19,17 +19,41 @@ import artIcon from "../../assets/icons/art.svg";
 import bookIcon from "../../assets/icons/reading.svg";
 import careerIcon from "../../assets/icons/goal.svg";
 import beautyIcon from "../../assets/icons/cosmetics.svg";
-import languageIcon from "../../assets/icons/languages.svg";
-import learningIcon from "../../assets/icons/knowledge.svg";
+import tradingIcon from "../../assets/icons/exchange-rate.svg";
+import adventureIcon from "../../assets/icons/adventure.svg";
 import musicIcon from "../../assets/icons/music.svg";
 import photoIcon from "../../assets/icons/camera.svg";
 import scifiIcon from "../../assets/icons/controller.svg";
 import writingIcon from "../../assets/icons/writing.svg";
-import openmicIcon from "../../assets/icons/microphone.svg";
+import othersIcon from "../../assets/icons/direction.svg";
+import { Button } from "@material-ui/core";
+
+let intersetMap = {
+  Business: businessIcon,
+  Dance: danceIcon,
+  Entertainment: entertainmentIcon,
+  Fashion: fashionIcon,
+  Food: foodIcon,
+  Fitness: fitnessIcon,
+  Sports: sportIcon,
+  Technology: techIcon,
+  Travel: travelIcon,
+  "Art & Crafts": artIcon,
+  Books: bookIcon,
+  Career: careerIcon,
+  Beauty: beautyIcon,
+  Trading: tradingIcon,
+  Adventure: adventureIcon,
+  Music: musicIcon,
+  Photography: photoIcon,
+  "Sci-Fi & Games": scifiIcon,
+  Writing: writingIcon,
+  Others: othersIcon,
+};
 
 export default function Register5() {
   let history = useHistory();
-  const design = false;
+  const design = true;
   const [loading, setloading] = useState(false);
   const [categoryloading, setcategoryloading] = useState(false);
   const { category } = useContext(UserContext);
@@ -70,9 +94,12 @@ export default function Register5() {
   const onSubmit = async (e) => {
     e.preventDefault();
     setloading(true);
-    const array = await interestState
+    const array = interestState
       .filter(({ select }) => select)
       .map(({ id }) => id);
+
+    console.log(array);
+
     var data = {
       data: decryptedData,
       interest_array: array,
@@ -169,163 +196,48 @@ export default function Register5() {
       ) : (
         <div className="container relative mx-auto category-width">
           <div className="p-8 sm:p-0 flex flex-row flex-wrap justify-center items-center">
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={businessIcon} className="imgIcon" />
-              </div>
-              <div className="text-black">Business</div>
-            </div>
+            {interestState.map((el) => {
+              return (
+                <div
+                  className="p-4 m-2 text-center rounded-lg icon-class"
+                  onClick={() => {
+                    setInterestState(
+                      interestState.map((records) => {
+                        if (records.id === el.id) {
+                          records.select = !records.select;
+                        }
+                        return records;
+                      })
+                    );
+                  }}
+                >
+                  <div>
+                    <img
+                      src={intersetMap[el.name]}
+                      className="imgIcon cursor-pointer"
+                      alt="category_name"
+                    />
+                  </div>
+                  <div className="text-black">{el.name}</div>
 
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={danceIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Dance</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={entertainmentIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Entertainment</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={fashionIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Fashion</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={foodIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Food</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={fitnessIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Fitness</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={sportIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Sports</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={techIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Technology</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={travelIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Travel</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={artIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Arts</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={bookIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Books</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={careerIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Career</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={beautyIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Beauty</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={languageIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">
-                <p>Language</p>
-                <p>& Culture</p>
-              </div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={learningIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Learning</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={musicIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Music</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={photoIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Photography</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={scifiIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Sci-fi & Games</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={writingIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Writing</div>
-            </div>
-
-            <div className="p-4 m-2 text-center rounded-lg icon-class">
-              <div>
-                <img src={openmicIcon} className="imgIcon"></img>
-              </div>
-              <div className="text-black">Open Mic</div>
-            </div>
+                  {el.select ? (
+                    <div className="overlay2">
+                      <i class="fas fa-check"></i>
+                    </div>
+                  ) : (
+                    <div className="overlay cursor-pointer"></div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          <div className="text-center mt-6">
-            {loading ? (
-              <div align="center">
-                <PulseLoader color="#e82953" size={10} />
-              </div>
-            ) : (
-              <button
-                className="w-1/3 bg-lightalpha hover:bg-alpha text-white active:bg-gray-700 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
-                type="button"
-                onClick={(e) => onSubmit(e)}
-              >
-                Submit
-              </button>
-            )}
+          <div className="w-full flex justify-center">
+            <button
+              className="px-12 font-semibold hover:bg-semibeta py-4 bg-beta rounded-lg text-white"
+              onClick={onSubmit}
+            >
+              SUBMIT
+            </button>
           </div>
         </div>
       )}
