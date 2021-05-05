@@ -581,7 +581,8 @@
 }
 
 /* 850 for gaming scrren */
-.event-image {
+.event-image,
+.club-image {
   width: 100%;
   height: 420px;
 }
@@ -589,11 +590,6 @@
 .event-side-container {
   min-width: 100px;
   width: 30%;
-}
-
-.club-image {
-  width: 800px;
-  height: 420px;
 }
 
 .club-side-container {

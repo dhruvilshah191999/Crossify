@@ -174,7 +174,7 @@ function ClubPage(props) {
         <div style={{ marginTop: 65, backgroundColor: "#fafafa" }}>
           <div className="flex flex-col flex-wrap">
             <div className="flex flex-row flex-wrap md:flex-nowrap mt-2 justify-around items-center">
-              <div className="ml-4 my-2">
+              <div className="my-2 club-image-div">
                 <img
                   className="overflow-hidden object-contain rounded-lg club-image"
                   alt="club_background_photo"

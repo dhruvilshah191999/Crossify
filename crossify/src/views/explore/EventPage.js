@@ -28,12 +28,11 @@ const Tag = (props) => {
 const SetLiked = (props) => {
   if (props.fav_event.find((e) => e === props.id)) {
     props.returnData(true);
-  }
-  else {
+  } else {
     props.returnData(false);
   }
   return <></>;
-}
+};
 export default function EventPage(props) {
   let history = useHistory();
   const { users } = useContext(UserContext);
@@ -189,24 +188,24 @@ export default function EventPage(props) {
             </div>
 
             <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container">
-              <div className="flex flex-row">
-                <div className="flex flex-col justify-center">
+              <div className="flex flex-row justify-between items-center">
+                <div className="flex flex-col items-center">
                   <div className="text-alpha text-xl font-semibold uppercase pl-1  pt-2">
                     {Moment(eventdetails.date).format("MMM")}
                   </div>
-                  <div className=" text-3xl ">
+                  <div className="text-3xl ">
                     {Moment(eventdetails.date).format("DD")}
                   </div>
                 </div>
                 <div>
                   <h1
-                    className="mt-3 font-semibold text-2xl text-center ml-6"
+                    className="font-semibold text-2xl text-center ml-4"
                     style={{ textTransform: "capitalize" }}
                   >
                     {eventdetails.event_name}
                   </h1>
                 </div>
-                <div className="ml-auto mt-4 mr-3">
+                <div>
                   {" "}
                   {users._id === eventdetails.oragnizer_id ? (
                     ""
@@ -215,18 +214,18 @@ export default function EventPage(props) {
                   )}
                 </div>
                 {/* TODO: setting as club page */}
-                <div className="ml-auto mt-4 mr-3">
-                  {users._id === eventdetails.oragnizer_id ? (
+                {users._id === eventdetails.oragnizer_id ? (
+                  <div>
                     <button
                       className="float-right text-lg"
                       onClick={() => gotoAdmin()}
                     >
-                      <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
+                      <i className=" text-md text-gray-700 fas fa-cog"></i>
                     </button>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">
                 {" "}
