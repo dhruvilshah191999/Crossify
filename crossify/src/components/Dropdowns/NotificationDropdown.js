@@ -125,14 +125,11 @@ const NotificationDropdown = (props) => {
       console.log(feed.data.message);
     } else {
       setUnread(0);
-      users.inbox
-        .forEach((e) => {
-          if (!e.isRead) {
-            e.isRead = true;
-          }
-        })
-        .reverse()
-        .slice(0, 10);
+      users.inbox.forEach((e) => {
+        if (!e.isRead) {
+          e.isRead = true;
+        }
+      });
     }
   };
   const clickOnNotification = (el) => {

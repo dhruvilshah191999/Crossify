@@ -157,10 +157,12 @@ function getSuggestions(value) {
     .map((el) => {
       return {
         state: el.state,
-        cities: el.districts.filter((city) => regex.test(city)),
+        cities: el.districts.filter(
+          (city) => regex.test(city) && city !== "Select Option"
+        ),
       };
     })
-    .filter((el) => el.cities.length > 0);
+    .filter((el) => el.cities.length > 0 );
 }
 
 function getSuggestionValue(suggestion) {

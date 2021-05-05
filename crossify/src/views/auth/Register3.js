@@ -64,7 +64,7 @@ export default function Register5() {
     var bytes = CryptoJS.AES.decrypt(RegisterData, Key.Secret);
     decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   } else {
-    // history.push("/auth/register");
+    history.push("/auth/register");
   }
 
   useEffect(() => {
@@ -97,8 +97,6 @@ export default function Register5() {
     const array = interestState
       .filter(({ select }) => select)
       .map(({ id }) => id);
-
-    console.log(array);
 
     var data = {
       data: decryptedData,
