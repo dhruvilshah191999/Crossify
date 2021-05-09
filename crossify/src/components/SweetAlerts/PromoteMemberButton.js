@@ -3,6 +3,8 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import axios from "axios";
 import urlObject from "../../config/default.json";
 import io from "socket.io-client";
+
+import { notifyIncorrectInput } from "notify";
 var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
   transport: ["websocket", "polling", "flashsocket"],
@@ -17,6 +19,7 @@ export default class SweetAlertModal extends Component {
       club_id: this.props.club_id,
       user_id: this.props.user_id,
       isModerator: this.props.isModerator,
+      isHeAdmin: false,
     };
   }
 
@@ -66,7 +69,7 @@ export default class SweetAlertModal extends Component {
       window.location.reload();
     }
   };
-  confirmArrival() {
+  confirmArrival = () => {
     const getAlert = () => (
       <SweetAlert
         customClass="text-black"
@@ -90,24 +93,88 @@ export default class SweetAlertModal extends Component {
     this.setState({
       alert: getAlert(),
     });
-  }
+  };
+  giveUpThrone = () => {
+    const getAlert = () => (
+      <SweetAlert
+        customClass="text-black"
+        input
+        showCancel
+        confirmBtnText="Resign as Creator"
+        confirmBtnBsStyle="danger"
+        title="Are you sure?"
+        focusCancelBtn
+        confirmBtnCssClass="text-base rounded px-4 px-2"
+        confirmBtnStyle={{ color: "white" }}
+        cancelBtnCssClass="text-base"
+        cancelBtnBsStyle="default"
+        onConfirm={this.resignAndPromote}
+        onCancel={this.hideAlert}
+        closeAnim={{ name: "hideSweetAlert", duration: 300 }}
+      >
+        You will be demoted to Moderator. <br />
+        {this.props.name} will be promoted to the Creator role.
+        <br />
+        <strong>
+          {" "}
+          Write{" "}
+          <span class="font-semibold">
+            'RESIGN AND PROMOTE {this.props.name}'
+          </span>{" "}
+          to proceed.{" "}
+        </strong>
+      </SweetAlert>
+    );
+    this.setState({
+      alert: getAlert(),
+    });
+  };
+
+  resignAndPromote = async (answer) => {
+    if (answer !== "RESIGN AND PROMOTE " + this.props.name) {
+      notifyIncorrectInput();
+      return;
+    } else {
+      const config = {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      var object = {
+        club_id: this.state.club_id,
+      };
+
+      // * isHeAdmin = Regarding the current user who is operating (is he admin)
+      // * isAdmin = is the selected dude is moderator or not
+      // TODO UPDATE HERE THE QUERY TO MAKE THE SELECTED DUDE CREATOR AND THE CURRENT ADMIN TO MODERATOR
+      //   const finaldata = await axios.post(
+      //     "/api/club/YOURAPINAME",
+      //     object,
+      //     config
+      //   );
+      //   if (finaldata.data.is_error) {
+      //     console.log(finaldata.data.message);
+      //   } else {
+      //     window.location.replace("/");
+      //   }
+    }
+  };
 
   render() {
+    const { isModerator, isHeAdmin } = this.props;
+    const shouldRun = true
+      ? isModerator
+        ? this.giveUpThrone
+        : this.confirmArrival
+      : isModerator
+      ? () => console.log("NOT ALLOWED")
+      : this.confirmArrival;
     return (
       <div>
-        {this.state.isModerator ? (
-          <button className="text-lg mr-2 " type="button">
-            <i class="fas fa-chess-rook text-green-500 text-lg focus:outline-none"></i>
-          </button>
-        ) : (
-          <button
-            className="text-lg mr-2 "
-            type="button"
-            onClick={() => this.confirmArrival()}
-          >
-            <i className="fas fa-chess-rook text-green-500 text-lg focus:outline-none"></i>
-          </button>
-        )}
+        <button className="text-lg mr-2 " type="button" onClick={shouldRun}>
+          <i className="fas fa-chess-rook text-green-500 text-lg focus:outline-none"></i>
+        </button>
         {this.state.alert}
       </div>
     );

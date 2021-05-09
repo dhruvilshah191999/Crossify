@@ -13,6 +13,7 @@ class SweetAlertModal extends Component {
       isAdmin: this.props.isAdmin,
       isRequested: this.props.isRequest,
       isPublic: this.props.isPublic,
+      isHeAdmin: false, //TODO set according to your need
       isReply: [],
       questions: this.props.question,
       answers: [],
@@ -235,7 +236,31 @@ class SweetAlertModal extends Component {
         onCancel={this.hideAlert}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
-        You are canceling your Club Membership.
+        You are leaving this Club. <br />
+        You will no longer hold any roles in this club.
+      </SweetAlert>
+    );
+    this.setState({
+      alert: getAlert(),
+    });
+  }
+
+  adminLeaveInfo() {
+    const getAlert = () => (
+      <SweetAlert
+        customClass="text-black"
+        info
+        confirmBtnText="OK"
+        confirmBtnBsStyle="info"
+        title="Action is prohibited."
+        focusCancelBtn
+        confirmBtnCssClass="text-base rounded bg-beta text-white px-4 py-1"
+        cancelBtnCssClass="text-base"
+        cancelBtnBsStyle="default"
+        onConfirm={this.hideAlert}
+      >
+        Creator can not leave the club. You require to appoint someone as a new
+        creator before leaving the club.
       </SweetAlert>
     );
     this.setState({
@@ -276,7 +301,11 @@ class SweetAlertModal extends Component {
           <button
             className=" w-full  hover:bg-lightalpha shadow border border-solid  bg-lightalpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
-            onClick={() => this.removeRegisteration()}
+            onClick={() =>
+              this.state.isHeAdmin
+                ? this.adminLeaveInfo()
+                : this.removeRegisteration()
+            }
           >
             <i className="fas fa-file-signature"></i>
             &nbsp;{this.state.isAdmin ? "Admin" : "Member"}

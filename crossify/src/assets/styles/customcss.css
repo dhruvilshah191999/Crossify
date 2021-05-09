@@ -225,6 +225,9 @@
 .hover\:bg-blue-300:hover {
   background-color: #6fa8b6;
 }
+.hover\:bg-blue-100:hover {
+  background-color: #dcebf5;
+}
 
 .hover\:bg-semibeta:hover {
   background-color: #4c979e;

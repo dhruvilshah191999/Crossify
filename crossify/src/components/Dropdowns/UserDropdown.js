@@ -47,31 +47,31 @@ const UserDropdown = (props) => {
             ref={popoverDropdownRef}
             className={
               (dropdownPopoverShow ? "block " : "hidden ") +
-              "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 font-semibold"
+              "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-xl min-w-48 font-semibold"
             }
           >
             <Link
               to="/profile"
-              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700 hover:bg-blue-100"
             >
               <i className="fas fa-tools text-gray-700 mr-2"></i> Settings
             </Link>
             <Link
               to="/profile/myclubs"
-              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700 hover:bg-blue-100"
             >
               <i className="fas fa-users text-gray-700 mr-2"></i> My Clubs
             </Link>
             <Link
               to="/profile/myevents"
-              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700 hover:bg-blue-100"
             >
               <i className="fas fa-calendar-day text-gray-700 mr-2"></i> My
               Events
             </Link>
             <Link
               to="/profile/manage/events"
-              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700 hover:bg-blue-100"
             >
               <i className="fas fa-sliders-h text-gray-700 mr-2"></i> Manage
               Events
@@ -79,7 +79,7 @@ const UserDropdown = (props) => {
             <div className="h-0 my-1 border border-solid border-gray-200" />
             <a
               href="https://forms.gle/JPfRcA3FYgqqBeip6"
-              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700 hover:bg-blue-100"
               target="_blank"
               rel="noreferrer"
             >
@@ -89,7 +89,7 @@ const UserDropdown = (props) => {
 
             <a
               href="https://forms.gle/mf5rCqLFSDeikiYT6"
-              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700"
+              className="text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-gray-700 hover:bg-blue-100"
               target="_blank"
               rel="noreferrer"
             >
@@ -100,11 +100,11 @@ const UserDropdown = (props) => {
             <Link
               to="/"
               className={
-                "text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-alpha"
+                "text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-alpha "
               }
               onClick={(e) => Logout(e)}
             >
-              <i className="fas fa-sign-out-alt text-alpha mr-2"></i> Log Out
+              <i className="fas fa-sign-out-alt text-alpha mr-2 "></i> Log Out
             </Link>
           </div>
         </div>
