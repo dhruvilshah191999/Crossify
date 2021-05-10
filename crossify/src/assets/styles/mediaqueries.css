@@ -94,6 +94,9 @@
   .xxs\:flex-col {
     flex-direction: column;
   }
+  .xxs\:text-center {
+    text-align: center;
+  }
 }
 
 @media (min-width: 475px) and (max-width: 640px) {
