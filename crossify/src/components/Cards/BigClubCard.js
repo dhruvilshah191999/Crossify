@@ -10,11 +10,11 @@ const ResultWindow = (props) => {
   };
   return (
     <div
-      className="h-custom rounded-lg shadow p-4 flex mx-2 mt-4 mr-4 ml-2 hover:shadow-lg"
-      style={{ width: "97%", cursor: "pointer" }}
+      className="h-custom rounded-lg shadow p-4 flex xxs:flex-col xxs:text-center sm:flex-wrap mx-2 mt-4 mr-4 ml-2 hover:shadow-lg"
+      style={{ width: "97%", cursor: "pointer", overflow: "hidden" }}
       onClick={() => showClubs(props.data._id)}
     >
-      <div className="eventPhoto flex-shrink-0">
+      <div className="eventPhoto flex-shrink-0 mx-auto">
         <img
           alt="Profile"
           className="card-image rounded-lg"
@@ -29,8 +29,10 @@ const ResultWindow = (props) => {
           <div className=" text-sm font-semibold text-beta ">
             <i className="fas fa-users"></i> {props.data.status} Group
           </div>
-          <div className="text-sm font-semibold  text-alpha">
-            {" "}
+          <div
+            className="text-sm font-semibold text-alpha"
+            style={{ width: "70%" }}
+          >
             <i className="fas fa-map-marker-alt"></i> {props.data.location},
             {props.data.city},{props.data.state}
           </div>
