@@ -100,11 +100,15 @@ const UserDropdown = (props) => {
             <Link
               to="/"
               className={
-                "text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-alpha "
+                "text-sm py-2 px-4 font-semibold block w-full whitespace-no-wrap bg-transparent text-alpha hover:bg-alpha hover:text-white"
               }
               onClick={(e) => Logout(e)}
             >
-              <i className="fas fa-sign-out-alt text-alpha mr-2 "></i> Log Out
+              <i
+                className="fas fa-sign-out-alt  mr-2 "
+                style={{ color: "inherit" }}
+              ></i>{" "}
+              Log Out
             </Link>
           </div>
         </div>

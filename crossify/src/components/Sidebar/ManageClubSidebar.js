@@ -46,7 +46,7 @@ export default function Sidebar() {
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-no-wrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
           <button
-            className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+            className="cursor-pointer text-black  md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
             type="button"
             onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
           >
@@ -92,13 +92,13 @@ export default function Sidebar() {
                     className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
                     to="/"
                   >
-                    Notus React
+                    CROSSIFY
                   </Link>
                 </div>
                 <div className="w-6/12 flex justify-end">
                   <button
                     type="button"
-                    className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+                    className="cursor-pointer text-black  md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
                     onClick={() => setCollapseShow("hidden")}
                   >
                     <i className="fas fa-times"></i>
@@ -134,7 +134,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/dashboard/"+id}
+                  to={"/admin/dashboard/" + id}
                 >
                   <i
                     className={
@@ -156,7 +156,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/settings/"+id}
+                  to={"/admin/settings/" + id}
                 >
                   <i
                     className={
@@ -177,7 +177,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/maps/"+id}
+                  to={"/admin/maps/" + id}
                 >
                   <i
                     className={
@@ -210,7 +210,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/requests/"+id}
+                  to={"/admin/requests/" + id}
                 >
                   <i
                     className={
@@ -233,7 +233,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/events/"+id}
+                  to={"/admin/events/" + id}
                 >
                   <i
                     className={
@@ -254,7 +254,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/memberlist/"+id}
+                  to={"/admin/memberlist/" + id}
                 >
                   <i
                     className={
@@ -276,7 +276,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/rooms/"+id}
+                  to={"/admin/rooms/" + id}
                 >
                   <i
                     className={
@@ -297,7 +297,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/media/"+id}
+                  to={"/admin/media/" + id}
                 >
                   <i
                     className={
@@ -318,7 +318,7 @@ export default function Sidebar() {
                       ? "text-blue-500 hover:text-blue-600"
                       : "text-gray-800 hover:text-gray-600")
                   }
-                  to={"/admin/files/"+id}
+                  to={"/admin/files/" + id}
                 >
                   <i
                     className={

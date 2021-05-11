@@ -159,7 +159,7 @@ const NotificationDropdown = (props) => {
           {" "}
           add{" "}
         </button> */}
-        <Setunread data={users.inbox} returnData={setUnreadData} />
+        <Setunread data={users.inbox || []} returnData={setUnreadData} />
         <div
           ref={notifyNow}
           className={
@@ -232,41 +232,42 @@ const NotificationDropdown = (props) => {
                   </button>
                 </span>
               </div>
-              {users.inbox
-                .map((el) => (
-                  <div
-                    className={
-                      el.isRead
-                        ? "w-full flex p-2 pt-2 border-b2 pb-4"
-                        : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4"
-                    }
-                    onClick={() => clickOnNotification(el)}
-                  >
-                    <div className="flex-shrink-0">
-                      <img
-                        className="w-12 h-12 rounded-full ml-2 "
-                        src={el.photo}
-                        alt="notification"
-                      />
-                    </div>
-                    <div className="flex flex-col ml-6 mr-4">
-                      {" "}
-                      <div className="flex flex-row w-full text-sm  text-black">
-                        <div className="font-semibold">{el.title}</div>
-                        <div className="ml-1">
-                          <span className="text-xs text-gray-400 flex-shrink-0">
-                            {Moment(el.date).fromNow()}
-                          </span>{" "}
+              {users.inbox &&
+                users.inbox
+                  .map((el) => (
+                    <div
+                      className={
+                        el.isRead
+                          ? "w-full flex p-2 pt-2 border-b2 pb-4"
+                          : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4"
+                      }
+                      onClick={() => clickOnNotification(el)}
+                    >
+                      <div className="flex-shrink-0">
+                        <img
+                          className="w-12 h-12 rounded-full ml-2 "
+                          src={el.photo}
+                          alt="notification"
+                        />
+                      </div>
+                      <div className="flex flex-col ml-6 mr-4">
+                        {" "}
+                        <div className="flex flex-row w-full text-sm  text-black">
+                          <div className="font-semibold">{el.title}</div>
+                          <div className="ml-1">
+                            <span className="text-xs text-gray-400 flex-shrink-0">
+                              {Moment(el.date).fromNow()}
+                            </span>{" "}
+                          </div>
+                        </div>
+                        <div className="text-xs text-muted pr-4 ">
+                          {el.description}
                         </div>
                       </div>
-                      <div className="text-xs text-muted pr-4 ">
-                        {el.description}
-                      </div>
                     </div>
-                  </div>
-                ))
-                .reverse()
-                .slice(0, 10)}
+                  ))
+                  .reverse()
+                  .slice(0, 10)}
             </div>
           </div>
         </div>
