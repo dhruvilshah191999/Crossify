@@ -563,7 +563,7 @@ export default function GeneralSettings(props) {
                       </div>
                     </form>
                     <div className="px-4 mt-2 text-right">
-                      <DeleteMyEvent />
+                      <DeleteMyEvent event_id={id}/>
                     </div>
                   </div>
                 </div>

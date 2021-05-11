@@ -190,3 +190,19 @@ export const notifySuccessClub = () => {
     },
   });
 };
+
+export const notifyIncorrectInput = () => {
+  store.addNotification({
+    title: "The Input is not correct.",
+    message: "The process is abonded due to wrong/incorrect Input.",
+    type: "danger",
+    insert: "top",
+    container: "bottom-right",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 3000,
+      // onScreen: true,
+    },
+  });
+};

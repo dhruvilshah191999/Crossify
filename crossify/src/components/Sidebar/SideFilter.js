@@ -14,7 +14,7 @@ import { helpers } from "chart.js";
 
 export default function Sidebar(props) {
   const watch = true;
-  const { isLogin, users, searchResult, search_dispatch  } = useContext(
+  const { isLogin, users, searchResult, search_dispatch } = useContext(
     UserContext
   );
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -177,14 +177,16 @@ export default function Sidebar(props) {
           </Link>
 
           {/* User */}
-          <ul className="md:hidden items-center flex flex-wrap list-none">
-            <li className="inline-block relative">
-              <NotificationDropdown />
-            </li>
-            <li className="inline-block relative">
-              <UserDropdown />
-            </li>
-          </ul>
+          {isLogin && (
+            <ul className="md:hidden items-center flex flex-wrap list-none">
+              <li className="inline-block relative">
+                <NotificationDropdown />
+              </li>
+              <li className="inline-block relative">
+                <UserDropdown />
+              </li>
+            </ul>
+          )}
           {/* Collapse */}
           <div
             className={
@@ -385,7 +387,7 @@ export default function Sidebar(props) {
         </div>
       </nav>
       <div>
-        <ResultWindow getevent={currentEvents} loading={loading}/>
+        <ResultWindow getevent={currentEvents} loading={loading} />
         <Pagination
           postPerPage={postPerPage}
           totalPosts={getevent.length}

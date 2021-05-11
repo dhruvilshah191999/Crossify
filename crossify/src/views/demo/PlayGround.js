@@ -157,10 +157,12 @@ function getSuggestions(value) {
     .map((el) => {
       return {
         state: el.state,
-        cities: el.districts.filter((city) => regex.test(city)),
+        cities: el.districts.filter(
+          (city) => regex.test(city) && city !== "Select Option"
+        ),
       };
     })
-    .filter((el) => el.cities.length > 0);
+    .filter((el) => el.cities.length > 0 );
 }
 
 function getSuggestionValue(suggestion) {
@@ -218,12 +220,11 @@ export default class App extends React.Component {
     //   style="outline: none;"
     // ></input>;
     const { value, suggestions } = this.state;
-
     const inputProps = {
       placeholder: "Select City",
       value,
       onChange: this.onChange,
-      className: "p-2  text-lg w-full",
+      className:this.props.className,
     };
 
     return (

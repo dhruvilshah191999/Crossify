@@ -2,22 +2,22 @@ import React, { Component } from "react";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 
-export default class DeleteMyClub extends Component {
+export default class MakeCreatorButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
       alert: null,
-      club_id:this.props.club_id
+      club_id: this.props.club_id,
     };
   }
 
-  deleteAccount() {
+  giveUpThrone() {
     const getAlert = () => (
       <SweetAlert
         customClass="text-black"
         input
         showCancel
-        confirmBtnText="Delete Club"
+        confirmBtnText="Resign As Creator"
         confirmBtnBsStyle="danger"
         title="Are you sure?"
         focusCancelBtn
@@ -25,14 +25,15 @@ export default class DeleteMyClub extends Component {
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
-        onConfirm={this.removeThisUser}
+        onConfirm={this.resignAndPromote}
         onCancel={this.hideAlert}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
-        Deleting your club will remove all of club information from our database
-        regarding documents/Chats/Photos. This cannot be undone.
+        Your will be no longer hold the position of creator & all the extra
+        privileges will be given to 'Selected' Modertor and your will serve as
+        Moderator.
         <br />
-        <strong> Write 'DELETE' to proceed. </strong>
+        <strong> Write 'I FULLY RESIGN' to proceed. </strong>
       </SweetAlert>
     );
     this.setState({
@@ -46,8 +47,8 @@ export default class DeleteMyClub extends Component {
     });
   };
 
-  removeThisUser=async(answer)=> {
-    if (answer !== "DELETE") {
+  resignAndPromote = async (answer) => {
+    if (answer !== "I FULLY RESIGN") {
       return;
     } else {
       const config = {
@@ -57,10 +58,10 @@ export default class DeleteMyClub extends Component {
         },
       };
       var object = {
-        club_id:this.state.club_id
+        club_id: this.state.club_id,
       };
       const finaldata = await axios.post(
-        "/api/club/deleteclub",
+        "/api/club/YOURAPINAME",
         object,
         config
       );
@@ -70,13 +71,13 @@ export default class DeleteMyClub extends Component {
         window.location.replace("/");
       }
     }
-  }
+  };
   render() {
     return (
       <>
         <button
           className="text-red-500 font-semibold mb-4 text-sm"
-          onClick={() => this.deleteAccount()}
+          onClick={() => this.giveUpThrone()}
         >
           Delete this Club <i class="fas fa-chevron-right text-xs"></i>
         </button>

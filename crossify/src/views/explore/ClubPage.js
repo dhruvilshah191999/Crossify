@@ -18,6 +18,15 @@ import JoinClubButton from "components/SweetAlerts/JoinClubButton";
 import BigShareButton from "components/SweetAlerts/BigShareButton";
 import Footer from "components/Footers/FooterAdmin";
 
+const SetLiked = (props) => {
+  if (props.fav_club.find((e) => e === props.id)) {
+    props.returnData(true);
+  } else {
+    props.returnData(false);
+  }
+  return <></>;
+};
+
 function ClubPage(props) {
   let history = useHistory();
   var { id } = useParams();
@@ -28,6 +37,7 @@ function ClubPage(props) {
   const [moderator, setmoderator] = useState(false);
   const [isPublic, setPublic] = useState(true);
   const [isJoin, setIsJoin] = useState(false);
+  const [isLike, setLike] = useState(false);
   const [clubData, setClubData] = useState([]);
   const token = localStorage.getItem("jwt");
 
@@ -112,7 +122,7 @@ function ClubPage(props) {
     } else {
       notifyClubLiked();
       users.fav_club.push(id);
-      history.go(0);
+      setLike(true);
     }
   };
 
@@ -132,7 +142,7 @@ function ClubPage(props) {
       console.log(finaldata.data.message);
     } else {
       users.fav_club.pop(id);
-      history.go(0);
+      setLike(false);
     }
   };
   const openModal = () => {
@@ -148,14 +158,23 @@ function ClubPage(props) {
   const gotoAdmin = () => {
     history.push("/admin/" + id);
   };
+
+  const setUnreadData = (chilData) => {
+    setLike(chilData);
+  };
   if (loading) {
     return (
       <>
         <Navbar />
+        <SetLiked
+          id={id}
+          fav_club={users.fav_club}
+          returnData={setUnreadData}
+        />
         <div style={{ marginTop: 65, backgroundColor: "#fafafa" }}>
-          <div className="flex flex-col flex-wrap">
-            <div className="flex flex-row flex-wrap md:flex-nowrap mt-2 justify-around items-center">
-              <div className="ml-4 my-2">
+          <div className="flex flex-col flex-wrap mx-4">
+            <div className="flex flex-col md:flex-row flex-wrap md:flex-nowrap mt-2 justify-between xs:items-center sm:items-center items-start flex-shrink-0">
+              <div className="my-2 club-image-div">
                 <img
                   className="overflow-hidden object-contain rounded-lg club-image"
                   alt="club_background_photo"
@@ -202,15 +221,13 @@ function ClubPage(props) {
                   <div className="w-6/12">
                     <motion.button
                       className={
-                        !users.fav_club.find((e) => e === id)
+                        !isLike
                           ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                           : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       }
                       type="button"
                       onClick={
-                        users.fav_club.find((e) => e === id)
-                          ? (e) => deletelike(e)
-                          : (e) => addlike(e)
+                        isLike ? (e) => deletelike(e) : (e) => addlike(e)
                       }
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.9 }}
@@ -258,7 +275,7 @@ function ClubPage(props) {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded border ml-4 mt-2 p-2">
+            <div className="bg-white rounded border mt-2 p-2">
               <TabsBar
                 club_id={id}
                 description={clubData.description}

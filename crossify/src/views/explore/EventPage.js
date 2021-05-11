@@ -25,6 +25,14 @@ const Tag = (props) => {
   );
 };
 
+const SetLiked = (props) => {
+  if (props.fav_event.find((e) => e === props.id)) {
+    props.returnData(true);
+  } else {
+    props.returnData(false);
+  }
+  return <></>;
+};
 export default function EventPage(props) {
   let history = useHistory();
   const { users } = useContext(UserContext);
@@ -32,6 +40,7 @@ export default function EventPage(props) {
   const [loading, setloading] = useState(false);
   const [isInWaiting, SetisInWaiting] = useState(false);
   const [IsFull, SetIsFull] = useState(false);
+  const [isLike, setLike] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
   const token = localStorage.getItem("jwt");
@@ -116,7 +125,7 @@ export default function EventPage(props) {
     } else {
       notifyLiked();
       users.fav_event.push(id);
-      history.go(0);
+      setLike(true);
     }
   };
 
@@ -140,7 +149,7 @@ export default function EventPage(props) {
       console.log(finaldata.data.message);
     } else {
       users.fav_event.pop(id);
-      history.go(0);
+      setLike(false);
     }
   };
 
@@ -152,17 +161,25 @@ export default function EventPage(props) {
     history.push("/manage/event/" + id);
   };
 
+  const setUnreadData = (chilData) => {
+    setLike(chilData);
+  };
   if (loading) {
     return (
       <>
         <Navbar />
+        <SetLiked
+          id={id}
+          fav_event={users.fav_event}
+          returnData={setUnreadData}
+        />
         <div className="flex flex-col md:mx-0 lg:mx-28">
           <div
             onLoadStart={(e) => setTimeout(10000)}
             // style={{ minHeight: "" }}
             className="flex flex-col md:flex-row flex-nowrap  mt-16 justify-between xs:items-center sm:items-center items-start flex-shrink-0"
           >
-            <div className="text-black bg-white rounded-md">
+            <div className="text-black bg-white rounded-md event-image-div">
               <img
                 src={eventdetails.photo}
                 className="event-image rounded mt-2"
@@ -171,24 +188,24 @@ export default function EventPage(props) {
             </div>
 
             <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container">
-              <div className="flex flex-row">
-                <div className="flex flex-col justify-center">
+              <div className="flex flex-row justify-between items-center">
+                <div className="flex flex-col items-center">
                   <div className="text-alpha text-xl font-semibold uppercase pl-1  pt-2">
                     {Moment(eventdetails.date).format("MMM")}
                   </div>
-                  <div className=" text-3xl ">
+                  <div className="text-3xl ">
                     {Moment(eventdetails.date).format("DD")}
                   </div>
                 </div>
                 <div>
                   <h1
-                    className="mt-3 font-semibold text-2xl text-center ml-6"
+                    className="font-semibold text-2xl text-center ml-4"
                     style={{ textTransform: "capitalize" }}
                   >
                     {eventdetails.event_name}
                   </h1>
                 </div>
-                <div className="ml-auto mt-4 mr-3">
+                <div>
                   {" "}
                   {users._id === eventdetails.oragnizer_id ? (
                     ""
@@ -197,18 +214,18 @@ export default function EventPage(props) {
                   )}
                 </div>
                 {/* TODO: setting as club page */}
-                <div className="ml-auto mt-4 mr-3">
-                  {users._id === eventdetails.oragnizer_id ? (
+                {users._id === eventdetails.oragnizer_id ? (
+                  <div>
                     <button
                       className="float-right text-lg"
                       onClick={() => gotoAdmin()}
                     >
-                      <i className=" text-md text-gray-700 fas fa-cog ml-auto"></i>
+                      <i className=" text-md text-gray-700 fas fa-cog"></i>
                     </button>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="flex flex-col mt-4 text-md text-gray-700 ">
                 {" "}
@@ -280,16 +297,12 @@ export default function EventPage(props) {
                 <div className="w-6/12">
                   <motion.button
                     className={
-                      !users.fav_event.find((e) => e === id)
+                      !isLike
                         ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     }
                     type="button"
-                    onClick={
-                      users.fav_event.find((e) => e === id)
-                        ? (e) => deletelike(e)
-                        : (e) => addlike(e)
-                    }
+                    onClick={isLike ? (e) => deletelike(e) : (e) => addlike(e)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}
                   >
