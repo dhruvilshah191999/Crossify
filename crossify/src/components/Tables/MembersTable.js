@@ -112,7 +112,7 @@ export default function App(props) {
   };
   const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(() => props.data, [props.data]);
-
+  console.log("props:-", props);
   const columns = React.useMemo(
     () => [
       {
@@ -201,6 +201,7 @@ export default function App(props) {
               name={name}
               user_id={value}
               club_id={props.club_id}
+              creatorId={props.creatorId}
               isModerator={role === "moderator"}
             />
             <DemoteMemberButton

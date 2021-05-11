@@ -19,7 +19,7 @@ export default class SweetAlertModal extends Component {
       club_id: this.props.club_id,
       user_id: this.props.user_id,
       isModerator: this.props.isModerator,
-      isHeAdmin: false,
+      creator_id: this.props.creatorId,
     };
   }
 
@@ -135,16 +135,53 @@ export default class SweetAlertModal extends Component {
       notifyIncorrectInput();
       return;
     } else {
+      const token = localStorage.getItem("jwt");
       const config = {
         method: "POST",
         header: {
           "Content-Type": "application/json",
         },
       };
-      var object = {
-        club_id: this.state.club_id,
-      };
-
+      const user = await axios.post("/api/profile/get-user", { token }, config);
+      var userId = user.data.data._id;
+      if (this.state.creator_id === userId) {
+        var firstName = user.data.data.fname;
+        var profile_photo = user.data.data.profile_photo;
+        var club_id = this.state.club_id;
+        var club = await axios.post("/api/events/getclub", { club_id }, config);
+        console.log(club);
+        var clubName = club.data.data.club_name;
+        var des = `Hardwork always pays off, You bacame Admin of ${clubName} club by ${firstName}`;
+        socket.emit("sendNotification", {
+          date: new Date(),
+          description: des,
+          title: "yaay..! You became Admin ❤️",
+          profile_photo: profile_photo,
+          user_id: this.state.user_id,
+          target_id: club_id,
+          target_val: "club",
+        });
+        var object = {
+          club_id: this.state.club_id,
+          user_id: this.state.user_id,
+          token: token,
+          description: des,
+          target_id: club_id,
+          target_val: "club",
+        };
+        const finaldata = await axios.post(
+          "/api/admin/promoteAndResign",
+          object,
+          config
+        );
+        if (finaldata.data.is_error) {
+          console.log(finaldata.data.message);
+        } else {
+          window.location.reload();
+        }
+      } else {
+        alert("you are not an admin");
+      }
       // * isHeAdmin = Regarding the current user who is operating (is he admin)
       // * isAdmin = is the selected dude is moderator or not
       // TODO UPDATE HERE THE QUERY TO MAKE THE SELECTED DUDE CREATOR AND THE CURRENT ADMIN TO MODERATOR
@@ -162,7 +199,7 @@ export default class SweetAlertModal extends Component {
   };
 
   render() {
-    const { isModerator, isHeAdmin } = this.props;
+    const { isModerator } = this.props;
     const shouldRun = true
       ? isModerator
         ? this.giveUpThrone

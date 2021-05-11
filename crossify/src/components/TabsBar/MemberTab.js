@@ -89,6 +89,7 @@ class ContactList extends React.Component {
         finalContacts: finaldata.data.data,
         members: finaldata.data.members,
         moderator: finaldata.data.moderator,
+        creatorId: finaldata.creator_id,
       });
     }
   }

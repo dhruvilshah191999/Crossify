@@ -7,6 +7,7 @@ var user_details = require('../modules/user_details');
 var club_details = require('../modules/club_details');
 var channel_details = require('../modules/channel_details');
 const { ObjectID, ObjectId } = require('bson');
+const { updateOne } = require('../modules/interest_category');
 var router = express.Router();
 
 const countUnique = (arr) => {
@@ -401,6 +402,7 @@ router.post('/GetMembers', async function (req, res, next) {
           'user_data.city': 1,
           member_list: 1,
           events: 1,
+          creator_id: 1,
         },
       },
     ])
@@ -413,6 +415,7 @@ router.post('/GetMembers', async function (req, res, next) {
         return res.status(500).send(error);
       } else if (data.length != 0) {
         var array = [];
+        var creatorId = data[0].creator_id;
         data[0].member_list.map((e) => {
           var result = data[0].user_data.filter((obj) => {
             return obj._id.equals(ObjectId(e.user));
@@ -430,8 +433,10 @@ router.post('/GetMembers', async function (req, res, next) {
           };
           array.push(object);
         });
+        // var adminId= club_details.findOne({_id:ObjectId(club_id)})
         var finaldata = {
           data: array,
+          creator_id: creatorId,
           is_error: false,
           message: 'Data Send',
         };
@@ -536,7 +541,86 @@ router.post('/get-photo-name', async function (req, res, next) {
     }
   });
 });
+router.post('/promoteAndResign', auth, async function (req, res, next) {
+  try {
+    var { user_id, club_id, description, target_id, target_val } = req.body;
 
+    var getdata = await user_details.findOne({ _id: ObjectId(req.user._id) });
+    if (getdata) {
+      var object = {
+        date: new Date(),
+        title: 'yaay..! You became Admin ❤️',
+        description: description,
+        sender_id: ObjectId(req.user._id),
+        photo: getdata.profile_photo,
+        isRead: false,
+        target_id: target_id,
+        target_val: target_val,
+      };
+      var update = await user_details.updateOne(
+        {
+          _id: ObjectId(user_id),
+        },
+        { $push: { inbox: object } }
+      );
+      if (update) {
+        console.log('in update');
+        var newModeObj = {
+          user: ObjectId(req.user._id),
+          level: 'moderator',
+          date: new Date(),
+        };
+        var setNewAdmin = await club_details.updateOne(
+          {
+            _id: ObjectId(club_id),
+          },
+          {
+            $pull: { member_list: { user: ObjectId(user_id) } },
+          }
+        );
+        if (setNewAdmin) {
+          console.log('inside set new admin');
+          var newMod = await club_details.updateOne(
+            { _id: ObjectId(club_id) },
+            {
+              $push: { member_list: newModeObj },
+            }
+          );
+          if (newMod) {
+            await club_details.updateOne(
+              { _id: ObjectId(club_id) },
+              { creator_id: ObjectId(user_id) }
+            );
+            console.log('setting new admin');
+            var finaldata = {
+              is_error: false,
+              message: 'value updated succesfully',
+            };
+            return res.status(200).send(finaldata);
+          }
+        } else {
+          var err = {
+            is_error: true,
+            message: 'wrong club id or you may not have access to update ',
+          };
+          return res.status(404).send(err);
+        }
+      } else {
+        var finaldata = {
+          is_error: true,
+          message: 'Error in notifying user',
+        };
+        return res.status(404).send(finaldata);
+      }
+    }
+  } catch (err) {
+    var error = {
+      is_error: true,
+      message: err.message,
+    };
+    return res.status(500).send(error);
+  }
+});
 router.post('/Promotion', auth, async function (req, res, next) {
   var { user_id, club_id, description, target_id, target_val } = req.body;
   var getdata = user_details.findOne({ _id: ObjectId(req.user._id) });
@@ -598,7 +682,7 @@ router.post('/Promotion', auth, async function (req, res, next) {
           } else {
             var err = {
               is_error: true,
-              message: 'wrong event id or you may not have access to update ',
+              message: 'wrong club id or you may not have access to update ',
             };
             return res.status(404).send(err);
           }
@@ -1076,14 +1160,8 @@ router.post('/getEvent', async function (req, res, next) {
 });
 
 router.post('/acceptEvent', auth, async function (req, res, next) {
-  var {
-    event_id,
-    user_id,
-    profile_photo,
-    description,
-    target_id,
-    target_val,
-  } = req.body;
+  var { event_id, user_id, profile_photo, description, target_id, target_val } =
+    req.body;
   console.log('accept event called');
   var object = {
     date: new Date(),
@@ -1346,14 +1424,8 @@ router.post('/getRequested', async function (req, res, next) {
 });
 
 router.post('/AcceptRequested', auth, async function (req, res, next) {
-  var {
-    club_id,
-    user_id,
-    description,
-    profile_photo,
-    target_id,
-    target_val,
-  } = req.body;
+  var { club_id, user_id, description, profile_photo, target_id, target_val } =
+    req.body;
   var object = {
     date: new Date(),
     title: 'Congratulations! On your new role 🥳',
@@ -1408,14 +1480,8 @@ router.post('/AcceptRequested', auth, async function (req, res, next) {
 });
 
 router.post('/RemoveRequested', auth, async function (req, res, next) {
-  var {
-    club_id,
-    user_id,
-    description,
-    profile_photo,
-    target_id,
-    target_val,
-  } = req.body;
+  var { club_id, user_id, description, profile_photo, target_id, target_val } =
+    req.body;
   var object = {
     date: new Date(),
     title: 'offo..! You request has been rejected ☹️',
@@ -1520,6 +1586,7 @@ router.post('/AcceptRequests', auth, async function (req, res, next) {
     }
   });
 });
+
 router.post('/RemoveRequests', auth, async function (req, res, next) {
   var {
     club_id,
@@ -1885,87 +1952,6 @@ router.post('/addMessage', auth, async function (req, res, next) {
       var finaldata = {
         is_error: false,
         message: 'Data Send',
-      };
-      return res.status(200).send(finaldata);
-    }
-  });
-});
-router.post('/deleteMyAccount', auth, async (req, res, next) => {
-  var del = user_details.updateOne(
-    {
-      _id: ObjectId(req.user._id),
-    },
-    {
-      is_active: false,
-    }
-  );
-  await del.exec((err, data) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(600).send(error);
-    } else {
-      var finaldata = {
-        is_error: false,
-        message: 'Account Deactivated',
-      };
-      return res.status(200).send(finaldata);
-    }
-  });
-});
-
-router.post('/deleteClub', auth, async (req, res, next) => {
-  var { club_id } = req.body;
-  var del = club_details.updateOne(
-    {
-      _id: ObjectId(club_id),
-      creator_id: ObjectId(req.user._id),
-    },
-    {
-      is_active: false,
-    }
-  );
-  await del.exec((err, data) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(600).send(error);
-    } else {
-      var finaldata = {
-        is_error: false,
-        message: 'Club Deactivated',
-      };
-      return res.status(200).send(finaldata);
-    }
-  });
-});
-
-router.post('/deleteEvent', auth, async (req, res, next) => {
-  var { event_id } = req.body;
-  var del = event_details.updateOne(
-    {
-      _id: ObjectId(event_id),
-      oragnizer_id: ObjectId(req.user._id),
-    },
-    {
-      is_active: false,
-    }
-  );
-  await del.exec((err, data) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(600).send(error);
-    } else {
-      var finaldata = {
-        is_error: false,
-        message: 'Event Deactivated',
       };
       return res.status(200).send(finaldata);
     }

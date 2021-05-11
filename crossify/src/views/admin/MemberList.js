@@ -10,6 +10,7 @@ class MemberList extends Component {
     this.state = {
       club_id: this.props.match.params.id,
       memberData: [],
+      creator_id: "",
       loading: false,
     };
   }
@@ -25,11 +26,13 @@ class MemberList extends Component {
       club_id: this.state.club_id,
     };
     const finaldata = await axios.post("/api/admin/GetMembers", object, config);
+
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
       this.setState({
         memberData: finaldata.data.data,
+        creator_id: finaldata.data.creator_id,
       });
       setTimeout(() => {
         this.setState({ loading: true });
@@ -46,6 +49,7 @@ class MemberList extends Component {
               <MembersTable
                 club_id={this.state.club_id}
                 data={this.state.memberData}
+                creatorId={this.state.creator_id}
               ></MembersTable>
             ) : (
               <div
