@@ -778,11 +778,12 @@ router.post('/check-club', auth, async function (req, res, next) {
         var error = {
           check: false,
           is_error: true,
-          message: 'User Not Found',
+          message: 'Club Not Found',
         };
         return res.status(200).send(error);
       } else {
         var finaldata = {
+          privacy: data.status,
           check: true,
           is_error: false,
           message: 'Data Send',
@@ -794,7 +795,6 @@ router.post('/check-club', auth, async function (req, res, next) {
 });
 
 router.post('/Broadcast', async function (req, res, next) {
-  s;
   var { userIds, event_id, message, path } = req.body;
   let objectIdArray = userIds.map((s) => mongoose.Types.ObjectId(s));
   var check = await user_details.find({
@@ -1256,10 +1256,9 @@ router.post('/ResendMail', async function (req, res, next) {
         message: err.message,
       };
       return res.status(500).send(err);
-    }
-    else if(data){
+    } else if (data) {
       var readHTMLFile = function (path, callback) {
-        fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+        fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
           if (err) {
             throw err;
             callback(err);
@@ -1273,7 +1272,7 @@ router.post('/ResendMail', async function (req, res, next) {
         host: 'smtp.mailgun.org',
         port: 587,
         secure: false,
-        tls: {ciphers: 'SSLv3'},
+        tls: { ciphers: 'SSLv3' },
         auth: {
           user: adminMail,
           pass: adminPass,
@@ -1308,7 +1307,7 @@ router.post('/ResendMail', async function (req, res, next) {
       };
       return res.status(200).send(finaldata);
     }
-  })
+  });
 });
 
 module.exports = router;

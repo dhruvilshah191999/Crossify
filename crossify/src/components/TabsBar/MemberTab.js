@@ -1,5 +1,6 @@
 import Moment from "moment";
 import axios from "axios";
+import { Link } from "react-router-dom";
 var React = require("react");
 class Contact extends React.Component {
   openModal = (user_id, name) => {
@@ -52,7 +53,6 @@ class Contact extends React.Component {
     );
   }
 }
-
 class ContactList extends React.Component {
   constructor(props) {
     super(props);

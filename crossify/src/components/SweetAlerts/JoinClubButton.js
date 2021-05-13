@@ -10,14 +10,15 @@ class SweetAlertModal extends Component {
       alert: null,
       isJoined: this.props.isJoin,
       club_id: this.props.club_id,
-      isAdmin: this.props.isAdmin,
       isRequested: this.props.isRequest,
+      isModerator: this.props.isMod,
       isPublic: this.props.isPublic,
-      isHeAdmin: false, //TODO set according to your need
+      isHeAdmin: this.props.isAdmin, //TODO set according to your need
       isReply: [],
       questions: this.props.question,
       answers: [],
     };
+    console.log(this.props);
   }
 
   hideAlert = () => {
@@ -308,7 +309,12 @@ class SweetAlertModal extends Component {
             }
           >
             <i className="fas fa-file-signature"></i>
-            &nbsp;{this.state.isAdmin ? "Admin" : "Member"}
+            &nbsp;
+            {this.state.isHeAdmin
+              ? "Admin"
+              : this.state.isModerator
+              ? "Moderator"
+              : "Member"}
           </button>
         ) : this.state.isRequested ? (
           <button
