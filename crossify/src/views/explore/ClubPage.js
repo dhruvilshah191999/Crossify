@@ -171,7 +171,13 @@ function ClubPage(props) {
           fav_club={users.fav_club}
           returnData={setUnreadData}
         />
-        <div style={{ marginTop: 65, backgroundColor: "#fafafa" }}>
+        <div
+          style={{
+            marginTop: 65,
+            marginBottom: "3rem",
+            backgroundColor: "#fafafa",
+          }}
+        >
           <div className="flex flex-col flex-wrap mx-4">
             <div className="flex flex-col md:flex-row flex-wrap md:flex-nowrap mt-2 justify-between xs:items-center sm:items-center items-start flex-shrink-0">
               <div className="my-2 club-image-div">
