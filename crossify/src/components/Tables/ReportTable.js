@@ -66,7 +66,6 @@ function DefaultColumnFilter({
 }
 
 export default function App(props) {
-
   const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(() => props.finaldata, [props.finaldata]);
 
@@ -147,7 +146,7 @@ export default function App(props) {
           //       className={
           //         "absolute inset-0 bg-" +
           //         myColor +
-          //         "-200 opacity-50 rounded-full"
+          //         "-200 opacity-75 rounded-full"
           //       }
           //     ></span>
           //     <span className="relative">{value}</span>

@@ -31,12 +31,11 @@ export default function Sidebar() {
         object,
         config
       );
-      console.log(finaldata.data.privacy);
       if (finaldata.data.is_error) {
         history.push("/");
       } else {
-        if (finaldata.data.privacy === "Public") {
-          setisPrivate(false);
+        if (finaldata.data.privacy === "Private") {
+          setisPrivate(true);
         }
         if (!finaldata.data.check) {
           history.push("/");
