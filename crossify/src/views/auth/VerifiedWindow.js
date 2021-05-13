@@ -31,7 +31,7 @@ function VerifiedWindow() {
       }
     }
     check();
-  }, [id,history]);
+  }, [id, history]);
 
   return (
     <div className="container mx-auto px-4 h-full">
@@ -56,7 +56,7 @@ function VerifiedWindow() {
               </span>
               <br />
               <button
-                class=" mt-6 bg-blue hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 uppercase text-base font-bold  px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                class=" mt-6 bg-alpha hover:bg-brightalpha text-white  ml-2 lg:ml-0  active:bg-gray-100 uppercase text-base font-bold  px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                 type="button"
                 onClick={() => history.push("/")}
               >
