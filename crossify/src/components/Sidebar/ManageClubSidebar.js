@@ -35,8 +35,8 @@ export default function Sidebar() {
       if (finaldata.data.is_error) {
         history.push("/");
       } else {
-        if (finaldata.data.privacy === "Public") {
-          setisPrivate(false);
+        if (finaldata.data.privacy === "Private") {
+          setisPrivate(true);
         }
         if (!finaldata.data.check) {
           history.push("/");
