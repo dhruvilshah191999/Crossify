@@ -128,7 +128,6 @@ const IndeterminateCheckbox = React.forwardRef(
 export default function App(props) {
   const { id } = useParams();
   const { users } = useContext(UserContext);
-  console.log(props);
   const getSelectedAndArrived = async (e) => {
     const IDlist = selectedFlatRows.map((el) => el.values.id);
     const config = {
@@ -152,7 +151,6 @@ export default function App(props) {
     //Find Event Name
     const token = localStorage.getItem("jwt");
     const IDlist = selectedFlatRows.map((el) => el.values.id);
-    console.log(users);
     const firstName = users.fname;
     const profilePhoto = users.profile_photo;
     IDlist.forEach((el) => {

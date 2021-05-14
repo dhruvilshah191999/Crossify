@@ -48,7 +48,6 @@ export default class RoomTab extends React.Component {
       { club_id, user_id, page, limit },
       config
     );
-    console.log(allRoomsInfo);
     const listOfChannels = allRoomsInfo.data.roomsData.map((el) => {
       return el.channel_name;
     });

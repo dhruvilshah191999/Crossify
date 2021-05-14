@@ -14,7 +14,6 @@ import axios from "axios";
 import EmptyTable from "components/sections/EmptyTable";
 
 const handleDownload = (url, filename) => {
-  console.log(url);
   axios
     .get(url, {
       responseType: "blob",

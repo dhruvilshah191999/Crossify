@@ -12,8 +12,6 @@ export default function Register5() {
       .then((response) => {
         const data = response.data;
         this.setState();
-        console.log(data);
-        console.log("Data recieved");
       })
       .catch(() => {
         console.log("error in data recieving");

@@ -12,7 +12,6 @@ export class MapContainer extends React.Component {
         lng: this.props.long,
       },
     };
-    console.log(GOOGLE_MAPS_API);
   }
 
   // componentDidMount = () => {

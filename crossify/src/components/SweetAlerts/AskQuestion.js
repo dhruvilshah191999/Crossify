@@ -15,7 +15,6 @@ export default class SweetAlertModal extends Component {
   }
 
   hideAlert = () => {
-    console.log("Hiding alert...");
     this.setState({
       alert: null,
     });

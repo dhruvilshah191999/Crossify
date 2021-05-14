@@ -112,7 +112,6 @@ export default function App(props) {
   };
   const [isLight, setIsLight] = useState(1);
   const data = React.useMemo(() => props.data, [props.data]);
-  console.log("props:-", props);
   const columns = React.useMemo(
     () => [
       {

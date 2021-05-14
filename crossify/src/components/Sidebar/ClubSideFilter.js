@@ -105,7 +105,6 @@ export default function Sidebar(props) {
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(member);
     let array = [];
     await interestState.map((data) => {
       if (data.select === true) {

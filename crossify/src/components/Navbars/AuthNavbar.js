@@ -20,7 +20,6 @@ export default function Navbar(props) {
   const [userdrop, setuserdrop] = React.useState(false);
   const { isLogin } = useContext(UserContext);
   if (isLogin) {
-    console.log("in function after login");
     socket.on("Notify", ({ date, description, title, report_id }) => {
       var object = {
         date: date,

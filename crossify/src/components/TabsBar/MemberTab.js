@@ -106,7 +106,6 @@ class ContactList extends React.Component {
   renderSideMenu() {
     const mods = this.state.moderator;
     const mem = this.state.members;
-    console.log("Mods : " + mods);
     let section = [
       { name: "All", val: [...mods, ...mem] },
       { name: "Moderators", val: [...mods] },

@@ -38,7 +38,6 @@ const getLocation = (x0, y0, radius) => {
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
-    console.log(props.data);
     this.state = {
       currentLocation: { lat: this.props.lat, lng: this.props.lng },
       activeMarker: {},

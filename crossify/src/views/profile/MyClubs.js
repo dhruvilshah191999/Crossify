@@ -298,7 +298,7 @@ export default function MyClubs() {
       );
   }
   useEffect(() => {
-  const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("jwt");
     async function getData() {
       const config = {
         method: "POST",
@@ -317,7 +317,6 @@ export default function MyClubs() {
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
-        console.log(finaldata);
         setJoinedClubs(finaldata.data.data);
       }
     }

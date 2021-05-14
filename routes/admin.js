@@ -33,7 +33,6 @@ router.post('/addInterestCategory', async function (req, res, next) {
       });
       category.save();
       if (category) {
-        console.log(category);
         var finaldata = {
           message: 'Interest added',
           is_error: false,
@@ -218,7 +217,6 @@ router.post('/DeletePhoto', async function (req, res, next) {
 
 router.post('/EditPhoto', async function (req, res, next) {
   var { description, photo, name, size, club_id, link } = req.body;
-  console.log(req.body);
   var check = club_details.updateMany(
     {
       _id: ObjectId(club_id),
@@ -564,7 +562,6 @@ router.post('/promoteAndResign', auth, async function (req, res, next) {
         { $push: { inbox: object } }
       );
       if (update) {
-        console.log('in update');
         var newModeObj = {
           user: ObjectId(req.user._id),
           level: 'moderator',
@@ -579,7 +576,6 @@ router.post('/promoteAndResign', auth, async function (req, res, next) {
           }
         );
         if (setNewAdmin) {
-          console.log('inside set new admin');
           var newMod = await club_details.updateOne(
             { _id: ObjectId(club_id) },
             {
@@ -591,7 +587,6 @@ router.post('/promoteAndResign', auth, async function (req, res, next) {
               { _id: ObjectId(club_id) },
               { creator_id: ObjectId(user_id) }
             );
-            console.log('setting new admin');
             var finaldata = {
               is_error: false,
               message: 'value updated succesfully',
@@ -1162,7 +1157,6 @@ router.post('/getEvent', async function (req, res, next) {
 router.post('/acceptEvent', auth, async function (req, res, next) {
   var { event_id, user_id, profile_photo, description, target_id, target_val } =
     req.body;
-  console.log('accept event called');
   var object = {
     date: new Date(),
     title: 'Congratulations! your event just got approval🥳',
@@ -1449,11 +1443,13 @@ router.post('/AcceptRequested', auth, async function (req, res, next) {
     date: new Date(),
   };
 
-  var result = club_details.updateOne({
-    club_id: ObjectId(club_id),
-    is_active: true,
-    $push: { member_list: object },
-  });
+  var result = club_details.updateOne(
+    {
+      _id: ObjectId(club_id),
+      is_active: true,
+    },
+    { $push: { member_list: object } }
+  );
   await result.exec((err, data) => {
     if (err) {
       var error = {
@@ -1468,12 +1464,20 @@ router.post('/AcceptRequested', auth, async function (req, res, next) {
           { $push: { clubs: ObjectId(club_id) } }
         )
         .exec((err, data2) => {
-          var finaldata = {
-            participated: true,
-            is_error: false,
-            message: 'Data Send',
-          };
-          return res.status(200).send(finaldata);
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(600).send(error);
+          } else {
+            var finaldata = {
+              participated: true,
+              is_error: false,
+              message: 'Data Send',
+            };
+            return res.status(200).send(finaldata);
+          }
         });
     }
   });
