@@ -164,7 +164,7 @@ export default function App(props) {
                 className={
                   "absolute inset-0 bg-" +
                   myColor +
-                  "-200 opacity-50 rounded-full"
+                  "-200 opacity-75 rounded-full"
                 }
               ></span>
               <span

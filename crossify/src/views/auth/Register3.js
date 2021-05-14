@@ -26,7 +26,6 @@ import photoIcon from "../../assets/icons/camera.svg";
 import scifiIcon from "../../assets/icons/controller.svg";
 import writingIcon from "../../assets/icons/writing.svg";
 import othersIcon from "../../assets/icons/direction.svg";
-import { Button } from "@material-ui/core";
 
 let intersetMap = {
   Business: businessIcon,

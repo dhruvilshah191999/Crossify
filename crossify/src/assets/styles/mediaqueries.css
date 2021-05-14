@@ -156,6 +156,12 @@
   .md\:test {
     width: 33%;
   }
+  .md\:w-25 {
+    width: 25%;
+  }
+  .md\:w-75 {
+    width: 75%;
+  }
   .md\:ml-50 {
     margin-left: 16.5rem;
   }

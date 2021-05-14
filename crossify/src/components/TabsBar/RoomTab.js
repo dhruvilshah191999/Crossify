@@ -194,9 +194,8 @@ export default class RoomTab extends React.Component {
             var oldRelatedMsgs =
               updatedDatabase.roomsData[relatedRoomIndex].messages;
             oldRelatedMsgs.push(newMsg);
-            updatedDatabase.roomsData[
-              relatedRoomIndex
-            ].messages = oldRelatedMsgs;
+            updatedDatabase.roomsData[relatedRoomIndex].messages =
+              oldRelatedMsgs;
             this.setState({ database: updatedDatabase });
           }
           this.setState({ curRoomMsgs: msgs });
@@ -305,9 +304,9 @@ export default class RoomTab extends React.Component {
 
     return (
       <>
-        <div className="flex flex-wrap  items-start">
+        <div className="flex flex-wrap flex-col md:flex-row   items-start">
           {/* left side */}
-          <div className="w-25">
+          <div className="w-full md:w-25 mb-4">
             <ul className="ml-4 mr-4 rounded-lg border">
               <div className="p-4 font-semibold text-lg mx-3 border-b">
                 Rooms
@@ -317,7 +316,7 @@ export default class RoomTab extends React.Component {
           </div>
           {/* right side */}
           <div
-            className="w-75  border border-gray-300 rounded-lg relative"
+            className=" w-full md:w-75  border border-gray-300 rounded-lg relative"
             style={{ height: 650 }}
           >
             <div className="bg-gray-1000 font-semibold text-lg p-4 mx-3 border-b">

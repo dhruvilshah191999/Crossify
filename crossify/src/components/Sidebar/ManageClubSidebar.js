@@ -31,7 +31,6 @@ export default function Sidebar() {
         object,
         config
       );
-      console.log(finaldata.data.privacy);
       if (finaldata.data.is_error) {
         history.push("/");
       } else {
