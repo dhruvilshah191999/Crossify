@@ -19,6 +19,7 @@ const UserContextProvider = (props) => {
     interest_reducer,
     []
   );
+
   return (
     <UserContext.Provider
       value={{

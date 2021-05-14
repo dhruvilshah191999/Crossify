@@ -794,9 +794,45 @@ router.post('/check-club', auth, async function (req, res, next) {
   }
 });
 
-router.post('/Broadcast', async function (req, res, next) {
-  var { userIds, event_id, message, path } = req.body;
+router.post('/Broadcast', auth, async function (req, res, next) {
+  var {
+    userIds,
+    event_id,
+    userName,
+    eventName,
+    profile_photo,
+    target_val,
+    message,
+    path,
+  } = req.body;
   let objectIdArray = userIds.map((s) => mongoose.Types.ObjectId(s));
+  var notificationObject = {
+    date: new Date(),
+    title: `Heyya...! New Message in Event ${eventName} by ${userName}🔊`,
+    description: message,
+    sender_id: ObjectId(req.user._id),
+    photo: profile_photo,
+    isRead: false,
+    target_id: event_id,
+    target_val: target_val,
+  };
+  var userUpdate = await user_details
+    .updateMany(
+      {
+        _id: { $in: objectIdArray },
+        is_active: 1,
+      },
+      { $push: { inbox: notificationObject } }
+    )
+    .exec((err, success) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      }
+    });
   var check = await user_details.find({
     _id: { $in: objectIdArray },
     is_active: 1,
@@ -842,6 +878,7 @@ router.post('/Broadcast', async function (req, res, next) {
       },
     ])
     .exec();
+
   var finaldata = {
     is_error: false,
     message: 'value updated succesfully',
@@ -899,7 +936,7 @@ router.post('/Broadcast', async function (req, res, next) {
       transporter.sendMail(mailOptions, function (error) {
         if (error) {
           console.log(error);
-          callback(error);
+          //callback(error);
         }
       });
     }
