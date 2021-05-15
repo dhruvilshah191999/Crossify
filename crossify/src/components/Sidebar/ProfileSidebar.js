@@ -22,7 +22,7 @@ export default function Sidebar() {
           </button>
           {/* Brand */}
           <Link
-            className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
+            className="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 pt-1 pb-0 px-0"
             to="/"
           >
             <div className="flex flex-row items-center ">
@@ -92,7 +92,7 @@ export default function Sidebar() {
             </form>
 
             {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
+            <hr className="mb-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
               My Preferences

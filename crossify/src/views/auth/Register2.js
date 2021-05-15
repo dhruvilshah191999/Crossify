@@ -173,7 +173,7 @@ export default function Register2() {
                           long: longitude,
                           email: decryptedData.email,
                           occupation,
-                          photo: res.data.url,
+                          photo: res.data.secure_url,
                           about_me,
                           fname: decryptedData.fname,
                           lname: decryptedData.lname,

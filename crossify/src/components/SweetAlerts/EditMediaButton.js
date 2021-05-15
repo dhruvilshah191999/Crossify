@@ -53,7 +53,7 @@ export default class SweetAlertModal extends Component {
           var object = {
             club_id: this.state.club_id,
             description: desc,
-            photo: res.data.url,
+            photo: res.data.secure_url,
             name: file.name,
             size: BytestoKB,
             link: this.state.link,

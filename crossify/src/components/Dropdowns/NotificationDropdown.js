@@ -236,8 +236,8 @@ const NotificationDropdown = (props) => {
                     <div
                       className={
                         el.isRead
-                          ? "w-full flex p-2 pt-2 border-b2 pb-4"
-                          : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4"
+                          ? "w-full flex p-2 pt-2 border-b2 pb-4 cursor-pointer"
+                          : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4 cursor-pointer"
                       }
                       onClick={() => clickOnNotification(el)}
                     >
@@ -281,129 +281,129 @@ const NotificationDropdown = (props) => {
   }
 };
 
-NotificationDropdown.defaultProps = {
-  topNotifications: [
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 0,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle:
-        "Q. The Event of Festival of Entereprenuer is free or not ?Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 0,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 1,
-    },
+// NotificationDropdown.defaultProps = {
+//   topNotifications: [
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 0,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle:
+//         "Q. The Event of Festival of Entereprenuer is free or not ?Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 0,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 1,
+//     },
 
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 1,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 0,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle:
-        "Q. The Event of Festival of Entereprenuer is free or not ?Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 0,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 1,
-    },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 1,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 0,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle:
+//         "Q. The Event of Festival of Entereprenuer is free or not ?Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 0,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 1,
+//     },
 
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 1,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 0,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle:
-        "Q. The Event of Festival of Entereprenuer is free or not ?Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 0,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 1,
-    },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 1,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 0,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle:
+//         "Q. The Event of Festival of Entereprenuer is free or not ?Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 0,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 1,
+//     },
 
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 1,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 0,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle:
-        "Q. The Event of Festival of Entereprenuer is free or not ?Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 0,
-    },
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 1,
-    },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 1,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 0,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle:
+//         "Q. The Event of Festival of Entereprenuer is free or not ?Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 0,
+//     },
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 1,
+//     },
 
-    {
-      title: "Query is answered from Harshil.",
-      photo: demopf,
-      time: "3 hours Ago",
-      semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
-      visited: 1,
-    },
-  ],
-};
+//     {
+//       title: "Query is answered from Harshil.",
+//       photo: demopf,
+//       time: "3 hours Ago",
+//       semiTitle: "Q. The Event of Festival of Entereprenuer is free or not ?",
+//       visited: 1,
+//     },
+//   ],
+// };
 
 export default NotificationDropdown;

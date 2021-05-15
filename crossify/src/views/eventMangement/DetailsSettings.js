@@ -3,7 +3,7 @@ import axios from "axios";
 import UploadPic from "components/Inputs/UploadPic";
 import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import dummyPF from "assets/img/demopf.png";
-import { InputTagsContainer } from "react-input-tags";
+import InputTagsContainer from "components/Inputs/InputTags";
 import PulseLoader from "react-spinners/PulseLoader";
 
 export default class DetailsSettings extends React.Component {
@@ -79,7 +79,7 @@ export default class DetailsSettings extends React.Component {
             description: this.state.description,
             eligibility: this.state.eligibility,
             tags: this.state.tags,
-            photo: res.data.url,
+            photo: res.data.secure_url,
             event_id: this.state.event_data,
           };
           try {

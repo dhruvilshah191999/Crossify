@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
 import { UserContext } from "context/usercontext";
-import AutoSuggetion from "views/demo/PlayGround";
+import AutoSuggetion from "components/Inputs/SearchBarCity";
 const SearchNavbar = (props) => {
   const [changing, setchanging] = useState(false);
   const [search, setSearch] = useState("");
@@ -20,7 +20,6 @@ const SearchNavbar = (props) => {
   const onLocationChange = (newValue) => {
     setlocation(newValue);
   };
-
 
   const onSubmit = async (e) => {
     e.preventDefault();

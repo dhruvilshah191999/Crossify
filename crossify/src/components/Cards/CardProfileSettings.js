@@ -136,7 +136,7 @@ export default function CardSettings() {
           occupation,
           token,
           category,
-          photo: res.data.url,
+          photo: res.data.secure_url,
         };
         const config = {
           method: "POST",

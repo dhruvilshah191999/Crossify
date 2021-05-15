@@ -2,7 +2,7 @@ import Navbar from "components/Navbars/ClubNavbar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { InputTagsContainer } from "react-input-tags";
+import InputTagsContainer from "components/Inputs/InputTags";
 import { notifySuccessClub } from "notify";
 import PulseLoader from "react-spinners/PulseLoader";
 import { usePosition } from "use-position";
@@ -63,6 +63,7 @@ function CreateClub(props) {
     SetformData({ ...formData, [e.target.name]: e.target.value });
 
   const handleUpdateTags = (tags) => {
+    console.log(tags);
     setTags(tags);
   };
 
@@ -170,7 +171,7 @@ function CreateClub(props) {
                           category,
                           tags,
                           token,
-                          photo: res.data.url,
+                          photo: res.data.secure_url,
                           question: question1,
                         };
                         try {

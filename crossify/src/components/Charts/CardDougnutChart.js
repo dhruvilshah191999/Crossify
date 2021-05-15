@@ -2,8 +2,10 @@ import React from "react";
 import Chart from "chart.js";
 import axios from "axios";
 import { useParams } from "react-router";
+import NoPreview from "components/sections/NoPreview";
 
 export default function CardDougnutChart() {
+  const [dataExist, setDataExist] = React.useState(false);
   var { id } = useParams();
   React.useEffect(() => {
     async function getData() {
@@ -24,7 +26,8 @@ export default function CardDougnutChart() {
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
-      } else {
+      } else if (finaldata.data.label && finaldata.data.label.length) {
+        setDataExist(true);
         var config = {
           type: "doughnut",
           data: {
@@ -149,7 +152,7 @@ export default function CardDougnutChart() {
         <div className="p-4 flex-auto">
           {/* Chart */}
           <div className="relative h-350-px">
-            <canvas id="dougnut-chart"></canvas>
+            {dataExist ? <canvas id="dougnut-chart"></canvas> : <NoPreview />}
           </div>
         </div>
       </div>

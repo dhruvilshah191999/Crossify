@@ -47,7 +47,7 @@ export default class SweetAlertModal extends Component {
             token,
             club_id: this.state.club_id,
             description: this.state.description,
-            photo: res.data.url,
+            photo: res.data.secure_url,
             name: this.state.file.name,
             size: this.state.file.size,
           };

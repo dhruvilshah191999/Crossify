@@ -213,6 +213,10 @@
   background-color: #fafafa;
 }
 
+.hover\:bg-gray-300:hover {
+  background-color: #f0f0f0;
+}
+
 .hover\:text-lightalpha:hover {
   color: var(--color-lightalpha);
 }
@@ -745,6 +749,10 @@
 
 .empty-table-space {
   height: 400px;
+}
+
+.pl-8 {
+  padding-left: 1.5rem;
 }
 
 .px-8 {

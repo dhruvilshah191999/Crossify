@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Chart from "chart.js";
 import axios from "axios";
 import { useParams } from "react-router";
+import NoPreview from "components/sections/NoPreview";
 
 export default function CardBarChart() {
+  const [dataExist, setDataExist] = useState(false);
   var { id } = useParams();
   React.useEffect(() => {
     async function getData() {
@@ -24,7 +26,8 @@ export default function CardBarChart() {
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
-      } else {
+      } else if (finaldata.data.label && finaldata.data.label.length) {
+        setDataExist(true);
         let config = {
           type: "horizontalBar",
           data: {
@@ -132,7 +135,7 @@ export default function CardBarChart() {
         <div className="p-4 flex-auto">
           {/* Chart */}
           <div className="relative h-350-px">
-            <canvas id="bar-chart"></canvas>
+            {dataExist ? <canvas id="bar-chart"></canvas> : <NoPreview />}
           </div>
         </div>
       </div>

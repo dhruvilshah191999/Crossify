@@ -1,12 +1,12 @@
-var express = require('express');
-var auth = require('../middleware/auth');
-var mongoose = require('mongoose');
-var category_details = require('../modules/interest_category');
-var event_details = require('../modules/event_details');
-var user_details = require('../modules/user_details');
-var club_details = require('../modules/club_details');
-var reports_details = require('../modules/reports_details');
-const { ObjectID, ObjectId } = require('bson');
+var express = require("express");
+var auth = require("../middleware/auth");
+var mongoose = require("mongoose");
+var category_details = require("../modules/interest_category");
+var event_details = require("../modules/event_details");
+var user_details = require("../modules/user_details");
+var club_details = require("../modules/club_details");
+var reports_details = require("../modules/reports_details");
+const { ObjectID, ObjectId } = require("bson");
 var router = express.Router();
 
 function getYs(distancearray) {
@@ -30,17 +30,17 @@ function distance(lat1, lon1, lat2, lon2, unit) {
     dist = Math.acos(dist);
     dist = (dist * 180) / Math.PI;
     dist = dist * 60 * 1.1515;
-    if (unit === 'K') {
+    if (unit === "K") {
       dist = dist * 1.609344;
     }
-    if (unit === 'N') {
+    if (unit === "N") {
       dist = dist * 0.8684;
     }
     return dist;
   }
 }
 
-router.get('/get-interest', async function (req, res, next) {
+router.get("/get-interest", async function (req, res, next) {
   var records = category_details.find(
     { is_active: true },
     { category_name: 1, _id: 1 }
@@ -56,23 +56,23 @@ router.get('/get-interest', async function (req, res, next) {
       var finaldata = {
         data: data,
         is_error: false,
-        message: 'Data Geted',
+        message: "Data Geted",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.get('/get-event', async function (req, res, next) {
+router.get("/get-event", async function (req, res, next) {
   var today = new Date();
   event_details
     .aggregate([
       {
         $lookup: {
-          from: 'club_details',
-          localField: 'club_id',
-          foreignField: '_id',
-          as: 'club_data',
+          from: "club_details",
+          localField: "club_id",
+          foreignField: "_id",
+          as: "club_data",
         },
       },
       {
@@ -85,7 +85,7 @@ router.get('/get-event', async function (req, res, next) {
         $project: {
           photo: 1,
           event_name: 1,
-          'club_data.club_name': 1,
+          "club_data.club_name": 1,
           date: 1,
           _id: 1,
           club_id: 1,
@@ -117,14 +117,14 @@ router.get('/get-event', async function (req, res, next) {
         var finaldata = {
           data: data,
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       }
     });
 });
 
-router.get('/get-club', async function (req, res, next) {
+router.get("/get-club", async function (req, res, next) {
   var records = club_details
     .find({ is_active: true })
     .sort({ date: -1 })
@@ -140,14 +140,14 @@ router.get('/get-club', async function (req, res, next) {
       var finaldata = {
         data: data,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/get-event-byuser', auth, async function (req, res, next) {
+router.post("/get-event-byuser", auth, async function (req, res, next) {
   var today = new Date();
   var { latitude, longitude } = req.user;
   if (latitude !== 0 && longitude !== 0) {
@@ -170,7 +170,7 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
             d.longitude,
             latitude,
             longitude,
-            'K'
+            "K"
           );
           let object = {
             id: d._id,
@@ -193,10 +193,10 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
           .aggregate([
             {
               $lookup: {
-                from: 'club_details',
-                localField: 'club_id',
-                foreignField: '_id',
-                as: 'club_data',
+                from: "club_details",
+                localField: "club_id",
+                foreignField: "_id",
+                as: "club_data",
               },
             },
             {
@@ -211,7 +211,7 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
               $project: {
                 photo: 1,
                 event_name: 1,
-                'club_data.club_name': 1,
+                "club_data.club_name": 1,
                 date: 1,
                 _id: 1,
                 club_id: 1,
@@ -237,7 +237,7 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
               var finaldata = {
                 data: data2,
                 is_error: false,
-                message: 'Data Send',
+                message: "Data Send",
               };
               return res.status(200).send(finaldata);
             }
@@ -249,10 +249,10 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
       .aggregate([
         {
           $lookup: {
-            from: 'club_details',
-            localField: 'club_id',
-            foreignField: '_id',
-            as: 'club_data',
+            from: "club_details",
+            localField: "club_id",
+            foreignField: "_id",
+            as: "club_data",
           },
         },
         {
@@ -265,7 +265,7 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
           $project: {
             photo: 1,
             event_name: 1,
-            'club_data.club_name': 1,
+            "club_data.club_name": 1,
             date: 1,
             _id: 1,
             club_id: 1,
@@ -297,7 +297,7 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
           var finaldata = {
             data: data,
             is_error: false,
-            message: 'Data Send',
+            message: "Data Send",
           };
           return res.status(200).send(finaldata);
         }
@@ -305,12 +305,12 @@ router.post('/get-event-byuser', auth, async function (req, res, next) {
   }
 });
 
-router.post('/get-club-byuser', auth, async function (req, res, next) {
+router.post("/get-club-byuser", auth, async function (req, res, next) {
   var { latitude, longitude } = req.user;
   if (latitude !== 0 && longitude !== 0) {
     var records = club_details.find({ is_active: true });
     let distancearray = [];
-    let idstring = '';
+    let idstring = "";
     await records.exec(async (err, data) => {
       if (err) {
         var error = {
@@ -325,7 +325,7 @@ router.post('/get-club-byuser', auth, async function (req, res, next) {
             d.longitude,
             latitude,
             longitude,
-            'K'
+            "K"
           );
           let object = {
             id: d._id,
@@ -360,7 +360,7 @@ router.post('/get-club-byuser', auth, async function (req, res, next) {
             var finaldata = {
               data: data2,
               is_error: false,
-              message: 'Data Send',
+              message: "Data Send",
             };
             return res.status(200).send(finaldata);
           }
@@ -383,7 +383,7 @@ router.post('/get-club-byuser', auth, async function (req, res, next) {
         var finaldata = {
           data: data,
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       }
@@ -391,7 +391,7 @@ router.post('/get-club-byuser', auth, async function (req, res, next) {
   }
 });
 
-router.post('/add-interest', async function (req, res, next) {
+router.post("/add-interest", async function (req, res, next) {
   var { email, interest_array } = req.body;
   let objectIdArray = interest_array.map((s) => mongoose.Types.ObjectId(s));
   var update = user_details.findOneAndUpdate(
@@ -410,29 +410,29 @@ router.post('/add-interest', async function (req, res, next) {
     } else if (!ans) {
       var error = {
         is_error: true,
-        message: 'Please First Complete Registration Step 1',
+        message: "Please First Complete Registration Step 1",
       };
       return res.status(500).send(error);
     } else {
       var finaldata = {
         is_error: false,
-        message: 'User Data Updated',
+        message: "User Data Updated",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/event-details', async function (req, res, next) {
+router.post("/event-details", async function (req, res, next) {
   let { event_id } = req.body;
   event_details
     .aggregate([
       {
         $lookup: {
-          from: 'club_details',
-          localField: 'club_id',
-          foreignField: '_id',
-          as: 'club_details',
+          from: "club_details",
+          localField: "club_id",
+          foreignField: "_id",
+          as: "club_details",
         },
       },
       {
@@ -452,7 +452,7 @@ router.post('/event-details', async function (req, res, next) {
       } else {
         var arrayToAppend = [];
         data[0].faq.forEach((el) => {
-          if (el.privacy == 'public') {
+          if (el.privacy == "public") {
             arrayToAppend.push(el);
           }
         });
@@ -460,14 +460,14 @@ router.post('/event-details', async function (req, res, next) {
         var finaldata = {
           event_data: data[0],
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       }
     });
 });
 
-router.post('/checklikes', auth, async function (req, res, next) {
+router.post("/checklikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.findOne({
     _id: ObjectId(event_id),
@@ -485,21 +485,21 @@ router.post('/checklikes', auth, async function (req, res, next) {
       var finaldata = {
         Like: true,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     } else {
       var finaldata = {
         Like: false,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/addlikes', auth, async function (req, res, next) {
+router.post("/addlikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.updateOne(
     {
@@ -538,7 +538,7 @@ router.post('/addlikes', auth, async function (req, res, next) {
           var finaldata = {
             Like: true,
             is_error: false,
-            message: 'Data Send',
+            message: "Data Send",
           };
           return res.status(200).send(finaldata);
         }
@@ -547,7 +547,7 @@ router.post('/addlikes', auth, async function (req, res, next) {
   });
 });
 
-router.post('/deletelikes', auth, async function (req, res, next) {
+router.post("/deletelikes", auth, async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.updateOne(
     {
@@ -586,7 +586,7 @@ router.post('/deletelikes', auth, async function (req, res, next) {
           var finaldata = {
             Like: true,
             is_error: false,
-            message: 'Data Send',
+            message: "Data Send",
           };
           return res.status(200).send(finaldata);
         }
@@ -595,13 +595,13 @@ router.post('/deletelikes', auth, async function (req, res, next) {
   });
 });
 
-router.post('/participate-event', auth, async function (req, res, next) {
+router.post("/participate-event", auth, async function (req, res, next) {
   let { event_id, current_participants } = req.body;
   current_participants += 1;
   var object = {
     user: ObjectId(req.user._id),
     date: new Date(),
-    status: 'coming',
+    status: "coming",
   };
   var checks = event_details.updateOne(
     {
@@ -641,7 +641,7 @@ router.post('/participate-event', auth, async function (req, res, next) {
           var finaldata = {
             participated: true,
             is_error: false,
-            message: 'Data Send',
+            message: "Data Send",
           };
           return res.status(200).send(finaldata);
         }
@@ -650,12 +650,12 @@ router.post('/participate-event', auth, async function (req, res, next) {
   });
 });
 
-router.post('/participate-event2', auth, async function (req, res, next) {
+router.post("/participate-event2", auth, async function (req, res, next) {
   let { event_id, current_participants } = req.body;
   var object = {
     user: ObjectId(req.user._id),
     date: new Date(),
-    status: 'waiting',
+    status: "waiting",
   };
   var checks = event_details.updateOne(
     {
@@ -694,7 +694,7 @@ router.post('/participate-event2', auth, async function (req, res, next) {
           var finaldata = {
             participated: true,
             is_error: false,
-            message: 'Data Send',
+            message: "Data Send",
           };
           return res.status(200).send(finaldata);
         }
@@ -703,12 +703,12 @@ router.post('/participate-event2', auth, async function (req, res, next) {
   });
 });
 
-router.post('/undo-participation-event', auth, async function (req, res, next) {
+router.post("/undo-participation-event", auth, async function (req, res, next) {
   let { event_id, current_participants } = req.body;
   var check = event_details.findOne({
     _id: ObjectId(event_id),
     participants_list: {
-      $elemMatch: { user: ObjectId(req.user._id), status: 'waiting' },
+      $elemMatch: { user: ObjectId(req.user._id), status: "waiting" },
     },
     is_active: 1,
   });
@@ -757,7 +757,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
               var finaldata = {
                 participated: false,
                 is_error: false,
-                message: 'Data Send',
+                message: "Data Send",
               };
               return res.status(200).send(finaldata);
             }
@@ -804,7 +804,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
               var finaldata = {
                 participated: false,
                 is_error: false,
-                message: 'Data Send',
+                message: "Data Send",
               };
               return res.status(200).send(finaldata);
             }
@@ -815,7 +815,7 @@ router.post('/undo-participation-event', auth, async function (req, res, next) {
   });
 });
 
-router.post('/getclub', async function (req, res, next) {
+router.post("/getclub", async function (req, res, next) {
   let { club_id } = req.body;
   var checks = club_details.findOne({
     _id: ObjectId(club_id),
@@ -832,18 +832,18 @@ router.post('/getclub', async function (req, res, next) {
       var finaldata = {
         data: data2,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/checkevent', auth, async function (req, res, next) {
+router.post("/checkevent", auth, async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.findOne({
     _id: ObjectId(event_id),
-    'participants_list.user': ObjectId(req.user._id),
+    "participants_list.user": ObjectId(req.user._id),
     is_active: 1,
   });
   await checks.exec((err, data2) => {
@@ -857,7 +857,7 @@ router.post('/checkevent', auth, async function (req, res, next) {
       var waiting = false;
       data2.participants_list.forEach((e) => {
         if (e.user === req.user._id) {
-          if (e.status === 'waiting') {
+          if (e.status === "waiting") {
             waiting = true;
           }
         }
@@ -866,7 +866,7 @@ router.post('/checkevent', auth, async function (req, res, next) {
         waiting,
         attend: true,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     } else {
@@ -874,23 +874,23 @@ router.post('/checkevent', auth, async function (req, res, next) {
         waiting: false,
         attend: false,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/get-profiles-of-events', async function (req, res, next) {
+router.post("/get-profiles-of-events", async function (req, res, next) {
   let { event_id } = req.body;
   event_details
     .aggregate([
       {
         $lookup: {
-          from: 'user_details',
-          localField: 'participants_list.user',
-          foreignField: '_id',
-          as: 'user_details',
+          from: "user_details",
+          localField: "participants_list.user",
+          foreignField: "_id",
+          as: "user_details",
         },
       },
       {
@@ -901,9 +901,10 @@ router.post('/get-profiles-of-events', async function (req, res, next) {
       },
       {
         $project: {
-          'user_details.profile_photo': 1,
-          'user_details.fname': 1,
-          'user_details.lname': 1,
+          "user_details.profile_photo": 1,
+          "user_details.fname": 1,
+          "user_details.lname": 1,
+          "user_details._id": 1,
         },
       },
     ])
@@ -915,33 +916,34 @@ router.post('/get-profiles-of-events', async function (req, res, next) {
         };
         return res.status(500).send(error);
       } else {
-        var array = [];
-        data[0].user_details.forEach((e) => {
-          var name = e.fname + ' ' + e.lname;
-          var object = {
-            profile_photo: e.profile_photo,
-            name,
-          };
-          array.push(object);
-        });
+        console.log(data[0].user_details);
+        const profilesList = data[0].user_details.map(
+          ({ profile_photo, fname, lname, _id }) => {
+            return {
+              profile_photo,
+              name: fname + " " + lname,
+              user_id: _id,
+            };
+          }
+        );
         var finaldata = {
-          event_data: array,
+          event_data: profilesList,
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       }
     });
 });
 
-router.post('/ask-question', auth, async function (req, res, next) {
+router.post("/ask-question", auth, async function (req, res, next) {
   var { event_id, question } = req.body;
 
   try {
     var user_name = await user_details
       .findById({ _id: ObjectId(req.user._id) })
       .then(function (data) {
-        return data.fname + ' ' + data.lname;
+        return data.fname + " " + data.lname;
       });
   } catch (e) {
     console.log(e);
@@ -950,8 +952,8 @@ router.post('/ask-question', auth, async function (req, res, next) {
     question: question,
     askedby: user_name,
     date: new Date(),
-    status: 'pending',
-    privacy: 'public',
+    status: "pending",
+    privacy: "public",
   };
   var update = event_details.updateOne(
     { _id: ObjectId(event_id) },
@@ -969,19 +971,19 @@ router.post('/ask-question', auth, async function (req, res, next) {
     } else {
       var finaldata = {
         is_error: false,
-        message: 'Data Updated',
+        message: "Data Updated",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/reports', auth, async function (req, res, next) {
+router.post("/reports", auth, async function (req, res, next) {
   var { event_id, description } = req.body;
   var object = {
     report: description,
     date: new Date(),
-    status: 'pending',
+    status: "pending",
   };
   var check = reports_details.find({
     event_id: ObjectId(event_id),
@@ -1018,7 +1020,7 @@ router.post('/reports', auth, async function (req, res, next) {
         } else {
           var finaldata = {
             is_error: false,
-            message: 'Data Added',
+            message: "Data Added",
           };
           return res.status(200).send(finaldata);
         }
@@ -1034,23 +1036,23 @@ router.post('/reports', auth, async function (req, res, next) {
       reports.save();
       var finaldata = {
         is_error: false,
-        message: 'Data Added',
+        message: "Data Added",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.get('/get-interest-data', async function (req, res, next) {
+router.get("/get-interest-data", async function (req, res, next) {
   var today = new Date();
   category_details
     .aggregate([
       {
         $lookup: {
-          from: 'event_details',
-          localField: '_id',
-          foreignField: 'category_list',
-          as: 'event_data',
+          from: "event_details",
+          localField: "_id",
+          foreignField: "category_list",
+          as: "event_data",
         },
       },
       {
@@ -1060,7 +1062,7 @@ router.get('/get-interest-data', async function (req, res, next) {
       },
       {
         $project: {
-          event: { $slice: ['$event_data', 4] },
+          event: { $slice: ["$event_data", 4] },
           category_name: 1,
         },
       },
@@ -1069,28 +1071,28 @@ router.get('/get-interest-data', async function (req, res, next) {
       },
       {
         $lookup: {
-          from: 'club_details',
-          localField: 'event.club_id',
-          foreignField: '_id',
-          as: 'club_data',
+          from: "club_details",
+          localField: "event.club_id",
+          foreignField: "_id",
+          as: "club_data",
         },
       },
       {
         $project: {
-          'event.photo': 1,
-          'event.event_name': 1,
-          'club_data.club_name': 1,
-          'club_data._id': 1,
-          'event.date': 1,
-          'event._id': 1,
-          'event.club_id': 1,
-          'event.description': 1,
-          'event.tags': 1,
-          'event.location': 1,
-          'event.city': 1,
-          'event.state': 1,
-          'event.is_active': 1,
-          'event.ending_date_registration': 1,
+          "event.photo": 1,
+          "event.event_name": 1,
+          "club_data.club_name": 1,
+          "club_data._id": 1,
+          "event.date": 1,
+          "event._id": 1,
+          "event.club_id": 1,
+          "event.description": 1,
+          "event.tags": 1,
+          "event.location": 1,
+          "event.city": 1,
+          "event.state": 1,
+          "event.is_active": 1,
+          "event.ending_date_registration": 1,
           category_name: 1,
         },
       },
@@ -1124,14 +1126,14 @@ router.get('/get-interest-data', async function (req, res, next) {
         var finaldata = {
           data: array,
           is_error: false,
-          message: 'Data Geted',
+          message: "Data Geted",
         };
         return res.status(200).send(finaldata);
       }
     });
 });
 
-router.post('/user-interest-data', auth, async function (req, res, next) {
+router.post("/user-interest-data", auth, async function (req, res, next) {
   var today = new Date();
   var data = await user_details
     .findOne({ _id: ObjectId(req.user._id), is_active: true })
@@ -1141,10 +1143,10 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
       .aggregate([
         {
           $lookup: {
-            from: 'event_details',
-            localField: '_id',
-            foreignField: 'category_list',
-            as: 'event_data',
+            from: "event_details",
+            localField: "_id",
+            foreignField: "category_list",
+            as: "event_data",
           },
         },
         {
@@ -1155,7 +1157,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
         },
         {
           $project: {
-            event: { $slice: ['$event_data', 4] },
+            event: { $slice: ["$event_data", 4] },
             category_name: 1,
           },
         },
@@ -1164,28 +1166,28 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
         },
         {
           $lookup: {
-            from: 'club_details',
-            localField: 'event.club_id',
-            foreignField: '_id',
-            as: 'club_data',
+            from: "club_details",
+            localField: "event.club_id",
+            foreignField: "_id",
+            as: "club_data",
           },
         },
         {
           $project: {
-            'event.photo': 1,
-            'event.event_name': 1,
-            'club_data.club_name': 1,
-            'club_data._id': 1,
-            'event.date': 1,
-            'event._id': 1,
-            'event.club_id': 1,
-            'event.description': 1,
-            'event.tags': 1,
-            'event.location': 1,
-            'event.city': 1,
-            'event.state': 1,
-            'event.is_active': 1,
-            'event.ending_date_registration': 1,
+            "event.photo": 1,
+            "event.event_name": 1,
+            "club_data.club_name": 1,
+            "club_data._id": 1,
+            "event.date": 1,
+            "event._id": 1,
+            "event.club_id": 1,
+            "event.description": 1,
+            "event.tags": 1,
+            "event.location": 1,
+            "event.city": 1,
+            "event.state": 1,
+            "event.is_active": 1,
+            "event.ending_date_registration": 1,
             category_name: 1,
           },
         },
@@ -1219,7 +1221,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
           var finaldata = {
             data: array,
             is_error: false,
-            message: 'Data Geted',
+            message: "Data Geted",
           };
           return res.status(200).send(finaldata);
         }
@@ -1229,10 +1231,10 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
       .aggregate([
         {
           $lookup: {
-            from: 'event_details',
-            localField: '_id',
-            foreignField: 'category_list',
-            as: 'event_data',
+            from: "event_details",
+            localField: "_id",
+            foreignField: "category_list",
+            as: "event_data",
           },
         },
         {
@@ -1242,7 +1244,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
         },
         {
           $project: {
-            event: { $slice: ['$event_data', 4] },
+            event: { $slice: ["$event_data", 4] },
             category_name: 1,
           },
         },
@@ -1251,27 +1253,27 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
         },
         {
           $lookup: {
-            from: 'club_details',
-            localField: 'event.club_id',
-            foreignField: '_id',
-            as: 'club_data',
+            from: "club_details",
+            localField: "event.club_id",
+            foreignField: "_id",
+            as: "club_data",
           },
         },
         {
           $project: {
-            'event.photo': 1,
-            'event.event_name': 1,
-            'club_data.club_name': 1,
-            'club_data._id': 1,
-            'event.date': 1,
-            'event._id': 1,
-            'event.club_id': 1,
-            'event.description': 1,
-            'event.tags': 1,
-            'event.location': 1,
-            'event.city': 1,
-            'event.state': 1,
-            'event.is_active': 1,
+            "event.photo": 1,
+            "event.event_name": 1,
+            "club_data.club_name": 1,
+            "club_data._id": 1,
+            "event.date": 1,
+            "event._id": 1,
+            "event.club_id": 1,
+            "event.description": 1,
+            "event.tags": 1,
+            "event.location": 1,
+            "event.city": 1,
+            "event.state": 1,
+            "event.is_active": 1,
             category_name: 1,
           },
         },
@@ -1305,7 +1307,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
           var finaldata = {
             data: array,
             is_error: false,
-            message: 'Data Geted',
+            message: "Data Geted",
           };
           return res.status(200).send(finaldata);
         }
@@ -1313,7 +1315,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
   }
 });
 
-router.post('/deleteevent', async function (req, res, next) {
+router.post("/deleteevent", async function (req, res, next) {
   let { event_id } = req.body;
   var checks = event_details.deleteOne({
     _id: ObjectId(event_id),
@@ -1328,13 +1330,13 @@ router.post('/deleteevent', async function (req, res, next) {
     } else {
       var finaldata = {
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
-router.post('/getEventName', async function (req, res, next) {
+router.post("/getEventName", async function (req, res, next) {
   var { id } = req.body;
   try {
     var event = await event_details.findOne({

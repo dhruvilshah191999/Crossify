@@ -66,14 +66,8 @@ export default function CardSettings(props) {
     setSuccess(false);
   };
 
-  const {
-    club_name,
-    address,
-    postalcode,
-    description,
-    criteria,
-    rules,
-  } = formData;
+  const { club_name, address, postalcode, description, criteria, rules } =
+    formData;
 
   return (
     <>
@@ -130,7 +124,7 @@ export default function CardSettings(props) {
                   description,
                   rules,
                   criteria,
-                  photo: res.data.url,
+                  photo: res.data.secure_url,
                   question: question1,
                 };
                 try {
@@ -225,7 +219,7 @@ export default function CardSettings(props) {
                     Go to Club
                   </button>
                   {loading ? (
-                      <PulseLoader color="#4299e1" size={10} />
+                    <PulseLoader color="#4299e1" size={10} />
                   ) : (
                     <button
                       className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"

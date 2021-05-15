@@ -1,15 +1,15 @@
-var express = require('express');
-var auth = require('../middleware/auth');
-var mongoose = require('mongoose');
-var category_details = require('../modules/interest_category');
-var event_details = require('../modules/event_details');
-var channel_details = require('../modules/channel_details');
-var user_details = require('../modules/user_details');
-var club_details = require('../modules/club_details');
-const { ObjectID, ObjectId } = require('bson');
+var express = require("express");
+var auth = require("../middleware/auth");
+var mongoose = require("mongoose");
+var category_details = require("../modules/interest_category");
+var event_details = require("../modules/event_details");
+var channel_details = require("../modules/channel_details");
+var user_details = require("../modules/user_details");
+var club_details = require("../modules/club_details");
+const { ObjectID, ObjectId } = require("bson");
 var router = express.Router();
 
-router.post('/create-club', auth, async (req, res) => {
+router.post("/create-club", auth, async (req, res) => {
   const {
     club_name,
     privacy,
@@ -53,7 +53,7 @@ router.post('/create-club', auth, async (req, res) => {
   club.save().then((data) => {
     var channel = new channel_details({
       club_id: ObjectId(club._id),
-      channel_name: 'general',
+      channel_name: "General",
       is_readable: true,
       is_writable: true,
     });
@@ -83,7 +83,7 @@ router.post('/create-club', auth, async (req, res) => {
           } else if (data3) {
             var finaldata = {
               club_id: club._id,
-              message: 'club created',
+              message: "club created",
               is_error: false,
             };
             return res.status(200).send(finaldata);
@@ -94,16 +94,16 @@ router.post('/create-club', auth, async (req, res) => {
   });
 });
 
-router.post('/get-club', auth, async (req, res) => {
+router.post("/get-club", auth, async (req, res) => {
   const { club_id } = req.body;
   club_details
     .aggregate([
       {
         $lookup: {
-          from: 'user_details',
-          localField: 'creator_id',
-          foreignField: '_id',
-          as: 'user_data',
+          from: "user_details",
+          localField: "creator_id",
+          foreignField: "_id",
+          as: "user_data",
         },
       },
       {
@@ -124,8 +124,8 @@ router.post('/get-club', auth, async (req, res) => {
           profile_photo: 1,
           status: 1,
           creator_id: 1,
-          'user_data.fname': 1,
-          'user_data.lname': 1,
+          "user_data.fname": 1,
+          "user_data.lname": 1,
           _id: 1,
           description: 1,
           joining_criteria: 1,
@@ -152,10 +152,10 @@ router.post('/get-club', auth, async (req, res) => {
 
         if (data[0].member_list) {
           data[0].member_list.forEach((e) => {
-            if (e.user == req.user._id && e.level === 'moderator') {
+            if (e.user == req.user._id && e.level === "moderator") {
               isModerator = true;
               isMember = true;
-            } else if (e.user == req.user._id && e.level === 'member') {
+            } else if (e.user == req.user._id && e.level === "member") {
               isMember = true;
             }
           });
@@ -166,14 +166,14 @@ router.post('/get-club', auth, async (req, res) => {
           isMember,
           isModerator,
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       }
     });
 });
 
-router.post('/create-event', auth, async (req, res) => {
+router.post("/create-event", auth, async (req, res) => {
   const {
     event_name,
     privacy,
@@ -208,7 +208,7 @@ router.post('/create-event', auth, async (req, res) => {
       member_list: {
         $elemMatch: {
           user: ObjectId(req.user._id),
-          level: 'moderator',
+          level: "moderator",
         },
       },
       is_active: true,
@@ -223,8 +223,8 @@ router.post('/create-event', auth, async (req, res) => {
   category.map((e) => {
     array.push(ObjectId(e._id));
   });
-  var startdate = new Date(starting_date + ' ' + starting_time);
-  var date = new Date(ending_date + ' ' + ending_time);
+  var startdate = new Date(starting_date + " " + starting_time);
+  var date = new Date(ending_date + " " + ending_time);
 
   var event = new event_details({
     event_name,
@@ -251,13 +251,13 @@ router.post('/create-event', auth, async (req, res) => {
   event.save().then((data) => {
     var finaldata = {
       is_error: false,
-      message: 'Data Added',
+      message: "Data Added",
     };
     return res.status(200).send(finaldata);
   });
 });
 
-router.post('/addlikes', auth, async function (req, res, next) {
+router.post("/addlikes", auth, async function (req, res, next) {
   let { club_id } = req.body;
   var checks = club_details.updateOne(
     {
@@ -296,7 +296,7 @@ router.post('/addlikes', auth, async function (req, res, next) {
           var finaldata = {
             Like: true,
             is_error: false,
-            message: 'Data Send',
+            message: "Data Send",
           };
           return res.status(200).send(finaldata);
         }
@@ -305,7 +305,7 @@ router.post('/addlikes', auth, async function (req, res, next) {
   });
 });
 
-router.post('/removelikes', auth, async function (req, res, next) {
+router.post("/removelikes", auth, async function (req, res, next) {
   let { club_id } = req.body;
   var checks = club_details.updateOne(
     {
@@ -344,7 +344,7 @@ router.post('/removelikes', auth, async function (req, res, next) {
           var finaldata = {
             Like: true,
             is_error: false,
-            message: 'Data Send',
+            message: "Data Send",
           };
           return res.status(200).send(finaldata);
         }
@@ -353,7 +353,7 @@ router.post('/removelikes', auth, async function (req, res, next) {
   });
 });
 
-router.post('/checklikes', auth, async function (req, res, next) {
+router.post("/checklikes", auth, async function (req, res, next) {
   let { club_id } = req.body;
   var checks = club_details.find({
     _id: ObjectId(club_id),
@@ -371,25 +371,25 @@ router.post('/checklikes', auth, async function (req, res, next) {
       var finaldata = {
         Like: true,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     } else {
       var finaldata = {
         Like: false,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/AddClubMember', auth, async function (req, res, next) {
+router.post("/AddClubMember", auth, async function (req, res, next) {
   var { club_id } = req.body;
   var object = {
     user: ObjectId(req.user._id),
-    level: 'member',
+    level: "member",
     date: new Date(),
   };
   var result = club_details.updateOne(
@@ -418,7 +418,7 @@ router.post('/AddClubMember', auth, async function (req, res, next) {
           var finaldata = {
             participated: true,
             is_error: false,
-            message: 'Data Send',
+            message: "Data Send",
           };
           return res.status(200).send(finaldata);
         });
@@ -426,7 +426,7 @@ router.post('/AddClubMember', auth, async function (req, res, next) {
   });
 });
 
-router.post('/RemoveClubMember', auth, async function (req, res, next) {
+router.post("/RemoveClubMember", auth, async function (req, res, next) {
   var { club_id } = req.body;
   var result = club_details.findOneAndUpdate(
     { _id: ObjectId(club_id) },
@@ -450,20 +450,20 @@ router.post('/RemoveClubMember', auth, async function (req, res, next) {
       var finaldata = {
         participated: false,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/AddRequestMember', auth, async function (req, res, next) {
+router.post("/AddRequestMember", auth, async function (req, res, next) {
   var { club_id, isReply } = req.body;
   var object = {
     club: ObjectId(club_id),
     date: new Date(),
     reply: isReply,
-    status: 'Pending',
+    status: "Pending",
   };
   var result = user_details.update(
     {
@@ -484,18 +484,18 @@ router.post('/AddRequestMember', auth, async function (req, res, next) {
     } else {
       var finaldata = {
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/IsMemberRequestExist', auth, async function (req, res, next) {
+router.post("/IsMemberRequestExist", auth, async function (req, res, next) {
   var { club_id } = req.body;
   var result = user_details.findOne({
     _id: ObjectId(req.user._id),
-    'club_answer.club': ObjectId(club_id),
+    "club_answer.club": ObjectId(club_id),
     is_active: 1,
   });
   await result.exec((err, data) => {
@@ -523,7 +523,7 @@ router.post('/IsMemberRequestExist', auth, async function (req, res, next) {
   });
 });
 
-router.post('/RemoveRequest', auth, async function (req, res, next) {
+router.post("/RemoveRequest", auth, async function (req, res, next) {
   var { club_id } = req.body;
   var result = user_details.findOneAndUpdate(
     { _id: ObjectId(req.user._id) },
@@ -540,23 +540,23 @@ router.post('/RemoveRequest', auth, async function (req, res, next) {
       var finaldata = {
         participated: false,
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }
   });
 });
 
-router.post('/GetMembers', async function (req, res, next) {
+router.post("/GetMembers", async function (req, res, next) {
   var { club_id } = req.body;
   club_details
     .aggregate([
       {
         $lookup: {
-          from: 'user_details',
-          localField: 'member_list.user',
-          foreignField: '_id',
-          as: 'user_data',
+          from: "user_details",
+          localField: "member_list.user",
+          foreignField: "_id",
+          as: "user_data",
         },
       },
       {
@@ -567,11 +567,11 @@ router.post('/GetMembers', async function (req, res, next) {
       },
       {
         $project: {
-          'user_data.fname': 1,
-          'user_data.lname': 1,
-          'user_data.profile_photo': 1,
-          'user_data._id': 1,
-          'user_data.username': 1,
+          "user_data.fname": 1,
+          "user_data.lname": 1,
+          "user_data.profile_photo": 1,
+          "user_data._id": 1,
+          "user_data.username": 1,
           member_list: 1,
         },
       },
@@ -587,12 +587,12 @@ router.post('/GetMembers', async function (req, res, next) {
         let members = [];
         let moderator = [];
         data[0].member_list.map((e) => {
-          if (e.level === 'member') {
+          if (e.level === "member") {
             var result = data[0].user_data.filter((obj) => {
               return obj._id.equals(ObjectId(e.user));
             });
             var object = {
-              name: result[0].fname + ' ' + result[0].lname,
+              name: result[0].fname + " " + result[0].lname,
               image: result[0].profile_photo,
               designation: e.level,
               date: e.date,
@@ -604,7 +604,7 @@ router.post('/GetMembers', async function (req, res, next) {
               return obj._id.equals(ObjectId(e.user));
             });
             var object = {
-              name: result[0].fname + ' ' + result[0].lname,
+              name: result[0].fname + " " + result[0].lname,
               image: result[0].profile_photo,
               designation: e.level,
               date: e.date,
@@ -619,7 +619,7 @@ router.post('/GetMembers', async function (req, res, next) {
           members,
           moderator,
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       } else {
@@ -628,14 +628,14 @@ router.post('/GetMembers', async function (req, res, next) {
           members: [],
           moderator: [],
           is_error: false,
-          message: 'Data Send',
+          message: "Data Send",
         };
         return res.status(200).send(finaldata);
       }
     });
 });
 
-router.post('/deleteclub', async function (req, res, next) {
+router.post("/deleteclub", async function (req, res, next) {
   let { club_id } = req.body;
   var checks = club_details.updateOne(
     {
@@ -655,7 +655,7 @@ router.post('/deleteclub', async function (req, res, next) {
     } else {
       var finaldata = {
         is_error: false,
-        message: 'Data Send',
+        message: "Data Send",
       };
       return res.status(200).send(finaldata);
     }

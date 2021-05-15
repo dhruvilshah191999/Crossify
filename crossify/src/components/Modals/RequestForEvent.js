@@ -6,7 +6,7 @@ import MapContainer from "../Maps/AddMapCode";
 import { usePosition } from "use-position";
 import UploadPic from "components/Inputs/UploadPic";
 import City from "../../views/auth/states-and-districts.json";
-import { InputTagsContainer } from "react-input-tags";
+import InputTagsContainer from "components/Inputs/InputTags";
 import { Formik } from "formik";
 import moment from "moment";
 
@@ -70,11 +70,11 @@ function MyModal(props) {
     districts = citylist.districts;
   }
   let { latitude, longitude } = usePosition(true);
-    useEffect(() => {
-      setTimeout(() => {
-        setLoading(true);
-      }, 100);
-    }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 100);
+  }, []);
 
   const handleUpdateTags = (tags) => {
     setTags(tags);
@@ -213,7 +213,7 @@ function MyModal(props) {
                       club_id: props.club_id,
                       tags,
                       token,
-                      photo: res.data.url,
+                      photo: res.data.secure_url,
                       capacity,
                       category,
                       isAdmin: props.isAdmin,

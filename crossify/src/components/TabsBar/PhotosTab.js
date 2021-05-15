@@ -14,21 +14,17 @@ export default class GridGallery extends Component {
     };
   }
 
-  async componentDidMount() {
-    var count = 1;
-    var array = [];
-    if (this.state.photos.length !== 0) {
-      this.state.photos.forEach((e) => {
-        var object = {
-          id: count,
-          photo: e.link,
-          description: e.description,
+  componentDidMount() {
+    const photosList =
+      this.state.photos.map((el, index) => {
+        return {
+          id: index + 1,
+          photo: el.link,
+          description: el.description,
         };
-        array.push(object);
-        count = count + 1;
-      });
-      this.setState({ photos: array });
-    }
+      }) || [];
+
+    this.setState({ photos: photosList });
   }
 
   showSlide = (slide) => {
@@ -51,6 +47,7 @@ export default class GridGallery extends Component {
               toggler={this.state.isVisible}
               slide={this.state.slide}
               sources={this.state.photos.map((el) => el.photo)}
+              types={[...new Array(this.state.photos.length).fill("image")]}
             />
             <MyGallery
               images={this.state.photos}

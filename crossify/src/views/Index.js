@@ -9,16 +9,11 @@ import Footer from "components/Footers/Footer.js";
 import EventCard from "components/Cards/EventCard";
 import ClubCard from "components/Cards/ClubCard";
 import Creators from "components/sections/Creators";
-import AutoSuggetion from "views/demo/PlayGround";
+import AutoSuggetion from "components/Inputs/SearchBarCity";
 export default function Landing() {
   let history = useHistory();
-  const {
-    search_dispatch,
-    category,
-    EventData,
-    ClubData,
-    InterestEventData,
-  } = useContext(UserContext);
+  const { search_dispatch, category, EventData, ClubData, InterestEventData } =
+    useContext(UserContext);
   const [loading, isLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [location, setlocation] = useState("");

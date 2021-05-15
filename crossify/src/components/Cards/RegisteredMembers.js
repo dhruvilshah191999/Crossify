@@ -1,28 +1,31 @@
 import React, { Component } from "react";
 import axios from "axios";
-import demoImg1 from "../../assets/img/pp1.jpg";
-import demoImg2 from "../../assets/img/pp3.jpg";
-import demoImg3 from "../../assets/img/pp4.jpg";
+import { Link } from "react-router-dom";
 
 const Member = (props) => {
+  console.log(props);
   return (
     //todo GOLU set profile link in this one
-    <div className="flex items-center justify-between my-4 w-24 hover:bg-gray-200 rounded-lg">
+    <Link
+      className="flex items-center justify-between my-2 hover:bg-gray-300 rounded-lg pl-8 py-2"
+      style={{ flex: "1 1 25%", maxWidth: 265, minWidth: 200 }}
+      to={"/profilepage/" + props.user_id}
+    >
       <div className="w-16">
         <img className="w-16 h-16 rounded-full" src={props.image} alt="img" />
       </div>
       <div className="flex-1 pl-4">
         <div className="text-gray-700 font-semibold">{props.name}</div>
-        <div className="text-gray-600 font-normal text-base">{"Member"}</div>
+        <div className="text-gray-600 font-normal text-base">Member</div>
       </div>
-    </div>
+    </Link>
   );
 };
 
 class RegisteredMembers extends Component {
   constructor(props) {
     super(props);
-    this.state = { eventid: this.props.eventid, Members: [], final: [] };
+    this.state = { eventid: this.props.eventid, members: [], final: [] };
   }
   async componentDidMount() {
     const config = {
@@ -41,11 +44,9 @@ class RegisteredMembers extends Component {
       config
     );
     if (finaldata.data.is_error) {
-      console.log(finaldata.data.message);
     } else {
-      console.log(finaldata.data.event_data);
       this.setState({
-        Members: finaldata.data.event_data,
+        members: finaldata.data.event_data,
         final: finaldata.data.event_data,
       });
     }
@@ -60,7 +61,7 @@ class RegisteredMembers extends Component {
         return false;
       });
     this.setState({
-      Members: displayedContacts,
+      members: displayedContacts,
     });
   };
   render() {
@@ -68,8 +69,8 @@ class RegisteredMembers extends Component {
       <div className="mt-1 text-lg text-gray-800 font-semibold lg:w-3/4 leading-relaxed">
         <div className="flex flex-row">
           <div className="mt-2">
-            {this.state.Members.length + "/" + this.props.capacity} slots booked
-            so far
+            {this.state.members.length + " / " + this.props.capacity} slots
+            booked so far
           </div>
           <div className="relative flex w-1/2 flex-wrap items-stretch mb-2 ml-auto">
             <span className=" h-full leading-snug font-normal z-2 text-center text-gray-700 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
@@ -85,9 +86,15 @@ class RegisteredMembers extends Component {
           </div>
         </div>
 
-        <div className="flex flex-row flex-wrap overflow-x-auto max-h-300-px mt-2">
-          {this.state.Members.map((el) => {
-            return <Member image={el.profile_photo} name={el.name} />;
+        <div className="flex flex-row flex-wrap overflow-x-auto max-h-300-px mt-2 ">
+          {this.state.members.map((el) => {
+            return (
+              <Member
+                image={el.profile_photo}
+                name={el.name}
+                user_id={el.user_id}
+              />
+            );
           })}
         </div>
       </div>
@@ -96,101 +103,3 @@ class RegisteredMembers extends Component {
 }
 
 export default RegisteredMembers;
-
-const JoinedMembers = [
-  {
-    name: "Harshil Patel",
-    profilPic: demoImg1,
-    designation: "Badshah",
-  },
-  {
-    name: "Ayush Patel",
-    profilPic: demoImg2,
-    designation: "Admin",
-  },
-  {
-    name: "Trupal Patel",
-    profilPic: demoImg3,
-    designation: "Member",
-  },
-  {
-    name: "Dhruvil Shah",
-    profilPic: demoImg2,
-    designation: "Member",
-  },
-  {
-    name: "Sagar Solanki",
-    profilPic: demoImg3,
-    designation: "Member",
-  },
-  {
-    name: "Bhargav Patel",
-    profilPic: demoImg1,
-    designation: "Member",
-  },
-  {
-    name: "Harshil Patel",
-    profilPic: demoImg1,
-    designation: "Badshah",
-  },
-  {
-    name: "Ayush Patel",
-    profilPic: demoImg2,
-    designation: "Admin",
-  },
-  {
-    name: "Trupal Patel",
-    profilPic: demoImg3,
-    designation: "Member",
-  },
-  {
-    name: "Dhruvil Shah",
-    profilPic: demoImg2,
-    designation: "Member",
-  },
-  {
-    name: "Sagar Solanki",
-    profilPic: demoImg3,
-    designation: "Member",
-  },
-  {
-    name: "Bhargav Patel",
-    profilPic: demoImg1,
-    designation: "Member",
-  },
-  {
-    name: "Harshil Patel",
-    profilPic: demoImg1,
-    designation: "Badshah",
-  },
-  {
-    name: "Ayush Patel",
-    profilPic: demoImg2,
-    designation: "Admin",
-  },
-  {
-    name: "Trupal Patel",
-    profilPic: demoImg3,
-    designation: "Member",
-  },
-  {
-    name: "Dhruvil Shah",
-    profilPic: demoImg2,
-    designation: "Member",
-  },
-  {
-    name: "Sagar Solanki",
-    profilPic: demoImg3,
-    designation: "Member",
-  },
-  {
-    name: "Bhargav Patel",
-    profilPic: demoImg1,
-    designation: "Member",
-  },
-];
-
-RegisteredMembers.defaultProps = {
-  Members: JoinedMembers,
-  peopleGoing: JoinedMembers.length,
-};

@@ -2,7 +2,10 @@ import React from "react";
 import Chart from "chart.js";
 import axios from "axios";
 import { useParams } from "react-router";
+import NoPreview from "components/sections/NoPreview";
+
 export default function CardLineChart() {
+  const [dataExist, setDataExist] = React.useState(false);
   var { id } = useParams();
   React.useEffect(() => {
     async function getData() {
@@ -23,7 +26,8 @@ export default function CardLineChart() {
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
-      } else {
+      } else if (finaldata.data.label && finaldata.data.label.length) {
+        setDataExist(true);
         finaldata.data.label = finaldata.data.label.map(function (x) {
           return x.toUpperCase();
         });
@@ -97,7 +101,7 @@ export default function CardLineChart() {
         <div className="p-4  flex-auto">
           {/* Chart */}
           <div className="relative h-350-px">
-            <canvas id="polar-chart"></canvas>
+            {dataExist ? <canvas id="polar-chart"></canvas> : <NoPreview />}
           </div>
         </div>
       </div>

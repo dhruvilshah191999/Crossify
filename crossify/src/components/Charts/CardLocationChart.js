@@ -2,8 +2,11 @@ import React from "react";
 import Chart from "chart.js";
 import axios from "axios";
 import { useParams } from "react-router";
+import NoPreview from "components/sections/NoPreview";
+
 export default function CardBarChart() {
   var { id } = useParams();
+  const [dataExist, setDataExist] = React.useState(false);
   React.useEffect(() => {
     async function getData() {
       const config2 = {
@@ -23,7 +26,8 @@ export default function CardBarChart() {
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
-      } else {
+      } else if (finaldata.data.label && finaldata.data.label.length) {
+        setDataExist(true);
         var config = {
           type: "pie",
           data: {
@@ -77,7 +81,7 @@ export default function CardBarChart() {
         <div className="p-4 flex-auto">
           {/* Chart */}
           <div className="relative h-350-px">
-            <canvas id="pie-chart"></canvas>
+            {dataExist ? <canvas id="pie-chart"></canvas> : <NoPreview />}
           </div>
         </div>
       </div>
