@@ -187,7 +187,6 @@ router.post('/getMsgWithUsers', async function (req, res, next) {
         ])
         .exec((err, chatdata) => {
           if (err) {
-            console.log('in errrrr');
             var error = {
               is_error: true,
               message: err.message,
@@ -264,7 +263,6 @@ router.post('/getMsgWithUsers', async function (req, res, next) {
         ])
         .exec((err, chatdata) => {
           if (err) {
-            console.log('in error 1');
             var error = {
               is_error: true,
               message: err.message,
@@ -322,7 +320,6 @@ router.post('/getMsgWithUsers', async function (req, res, next) {
         });
     }
   } catch (err) {
-    console.log('in catch');
     var error = {
       is_error: true,
       message: err.message,

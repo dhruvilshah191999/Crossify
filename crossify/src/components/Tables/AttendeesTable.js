@@ -127,8 +127,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
 export default function App(props) {
   const { id } = useParams();
-  const { users } = useContext(UserContext);
-  console.log(props);
+  const { users, EventData } = useContext(UserContext);
   const getSelectedAndArrived = async (e) => {
     const IDlist = selectedFlatRows.map((el) => el.values.id);
     const config = {
@@ -152,14 +151,25 @@ export default function App(props) {
     //Find Event Name
     const token = localStorage.getItem("jwt");
     const IDlist = selectedFlatRows.map((el) => el.values.id);
-    console.log(users);
-    const firstName = users.fname;
+    const config = {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const finalData = await axios.post(
+      "/api/events/getEventName",
+      { id },
+      config
+    );
+    const eventName = finalData.data.eventName;
+    const userName = users.username;
     const profilePhoto = users.profile_photo;
     IDlist.forEach((el) => {
       socket.emit("sendNotification", {
         date: new Date(),
         description: broadcastMessage,
-        title: `Heyya...! New Message in EventName by ${firstName}🔊`,
+        title: `Heyya...! New Message in Event ${eventName} by ${userName}🔊`,
         profile_photo: profilePhoto,
         user_id: el,
         token,
@@ -167,16 +177,11 @@ export default function App(props) {
         target_val: "event",
       });
     });
-    const config = {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
 
     var object = {
       event_id: id,
-      firstName,
+      userName,
+      eventName,
       userIds: IDlist,
       profile_photo: profilePhoto,
       target_val: "event",

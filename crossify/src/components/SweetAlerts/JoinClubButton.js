@@ -18,7 +18,6 @@ class SweetAlertModal extends Component {
       questions: this.props.question,
       answers: [],
     };
-    console.log(this.props);
   }
 
   hideAlert = () => {
@@ -40,7 +39,6 @@ class SweetAlertModal extends Component {
       token,
       club_id: this.state.club_id,
     };
-    console.log(send_data);
     const finaldata = await axios.post(
       "/api/club/AddClubMember",
       send_data,

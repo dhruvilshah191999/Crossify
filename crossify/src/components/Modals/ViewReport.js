@@ -32,7 +32,6 @@ class MyModal extends Component {
 
   getRejected = async () => {
     const token = localStorage.getItem("jwt");
-    console.log(this.state.data);
     const config = {
       method: "POST",
       header: {
@@ -74,7 +73,6 @@ class MyModal extends Component {
 
   sendMessage = async () => {
     const token = localStorage.getItem("jwt");
-    console.log(this.state.data);
     const config = {
       method: "POST",
       header: {
@@ -210,64 +208,56 @@ class MyModal extends Component {
 MyModal.defaultProps = {
   chats: [
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demopf,
       isManager: false,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demopf,
       isManager: true,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demopf,
       isManager: false,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demopf,
       isManager: true,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demopf,
       isManager: false,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demopf,
       isManager: true,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demopf,
       isManager: false,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demopf,

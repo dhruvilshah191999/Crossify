@@ -133,8 +133,6 @@ const NotificationDropdown = (props) => {
     }
   };
   const clickOnNotification = (el) => {
-    console.log("clicked..!");
-    console.log(el);
     if (el.target_val === "club") {
       history.push("/club/" + el.target_id);
     } else if (el.target_val === "event") {

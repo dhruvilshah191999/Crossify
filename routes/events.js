@@ -1314,7 +1314,7 @@ router.post('/user-interest-data', auth, async function (req, res, next) {
 });
 
 router.post('/deleteevent', async function (req, res, next) {
-  let {event_id} = req.body;
+  let { event_id } = req.body;
   var checks = event_details.deleteOne({
     _id: ObjectId(event_id),
   });
@@ -1334,5 +1334,25 @@ router.post('/deleteevent', async function (req, res, next) {
     }
   });
 });
-
+router.post('/getEventName', async function (req, res, next) {
+  var { id } = req.body;
+  try {
+    var event = await event_details.findOne({
+      _id: ObjectId(id),
+    });
+    if (event) {
+      var finaldata = {
+        is_error: false,
+        eventName: event.event_name,
+      };
+      return res.status(200).send(finaldata);
+    }
+  } catch (err) {
+    var error = {
+      is_error: true,
+      message: err.message,
+    };
+    return res.status(600).send(error);
+  }
+});
 module.exports = router;

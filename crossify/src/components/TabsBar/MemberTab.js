@@ -3,17 +3,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 var React = require("react");
 class Contact extends React.Component {
-  openModal = (user_id, name) => {
-    window.open("/profilepage/" + user_id);
-  };
-
   render() {
     return (
       <>
-        <div
-          className="flex items-center justify-between my-4"
-          onClick={() => this.openModal(this.props.user_id, this.props.name)}
-          style={{ cursor: "pointer" }}
+        <Link
+          className="flex items-center justify-between my-4 cursor-pointer"
+          to={`/profilepage/${this.props.user_id}`}
         >
           <div className="w-16">
             <img
@@ -47,7 +42,7 @@ class Contact extends React.Component {
           {/*<div className="text-red-400 mr-4">
             <MemberUserDropdown />
             </div>*/}
-        </div>
+        </Link>
         <hr className="boder-b-0 my-4" />
       </>
     );
@@ -111,7 +106,6 @@ class ContactList extends React.Component {
   renderSideMenu() {
     const mods = this.state.moderator;
     const mem = this.state.members;
-    console.log("Mods : " + mods);
     let section = [
       { name: "All", val: [...mods, ...mem] },
       { name: "Moderators", val: [...mods] },

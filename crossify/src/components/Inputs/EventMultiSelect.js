@@ -32,7 +32,6 @@ class App extends React.Component {
   };
   render() {
     const { objectArray, selectedValues } = this.state;
-    console.log(this.context);
     return (
       <>
         <Multiselect

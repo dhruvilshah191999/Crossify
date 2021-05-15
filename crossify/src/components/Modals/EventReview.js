@@ -38,7 +38,6 @@ class MyModal extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.state.event_data);
     const config = {
       method: "POST",
       header: {
@@ -82,13 +81,9 @@ class MyModal extends Component {
     var profile_photo = user.data.data.profile_photo;
     var eventData = this.state.event_data;
     var userId = eventData.oragnizer_id;
-    console.log(this.state.event_data);
     var club_id = this.state.clubId;
-    console.log(club_id);
     var club = await axios.post("/api/events/getclub", { club_id }, config);
-    console.log(club);
     var clubName = club.data.data.club_name;
-    console.log(userId);
     var eventName = this.state.event_data.event_name;
     var des = ` Your Request of Event ${eventName} in  ${clubName} club has been accepted by ${firstName}, BTW we need a pass 😉`;
     socket.emit("sendNotification", {
@@ -137,7 +132,6 @@ class MyModal extends Component {
     var profile_photo = user.data.data.profile_photo;
     var club_id = this.state.clubId;
     var club = await axios.post("/api/events/getclub", { club_id }, config);
-    console.log(club);
     var clubName = club.data.data.club_name;
     var userId = this.state.event_data.oragnizer_id;
     var eventName = this.state.event_data.event_name;
@@ -443,48 +437,42 @@ MyModal.defaultProps = {
 
   chats: [
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demobg,
       isManager: false,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demobg,
       isManager: true,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demobg,
       isManager: false,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demobg,
       isManager: true,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demobg,
       isManager: false,
     },
     {
-      msg:
-        "This Event is not apporiate in COVID situation so kindly take proper action.",
+      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
       time: "12:00 PM , 12 Feb 2021",
       owner: "Harshil Patel",
       photo: demobg,
