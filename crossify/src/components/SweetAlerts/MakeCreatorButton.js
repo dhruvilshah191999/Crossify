@@ -48,6 +48,9 @@ export default class MakeCreatorButton extends Component {
   };
 
   resignAndPromote = async (answer) => {
+    this.setState({
+      alert: null,
+    });
     if (answer !== "I FULLY RESIGN") {
       return;
     } else {

@@ -20,6 +20,7 @@ export default class SweetAlertModal extends Component {
   };
 
   confirmProcess = async () => {
+    this.setState({ alert: null });
     const config = {
       method: "POST",
       header: {

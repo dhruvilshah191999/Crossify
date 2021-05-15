@@ -30,6 +30,7 @@ export default class SweetAlertModal extends Component {
   };
 
   confirmProcess = async () => {
+    this.setState({ alert: null });
     const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
@@ -130,6 +131,7 @@ export default class SweetAlertModal extends Component {
   };
 
   resignAndPromote = async (answer) => {
+    this.setState({ alert: null });
     if (answer !== "RESIGN AND PROMOTE " + this.props.name) {
       notifyIncorrectInput();
       return;

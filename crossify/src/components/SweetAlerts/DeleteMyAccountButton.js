@@ -42,11 +42,13 @@ export default class DeleteMyAccount extends Component {
     });
   };
 
-  removeThisUser=async(answer)=> {
+  removeThisUser = async (answer) => {
+    this.setState({
+      alert: null,
+    });
     if (answer !== "DELETE") {
       return;
-    }
-    else {
+    } else {
       const token = localStorage.getItem("jwt");
       const config = {
         method: "POST",
@@ -57,11 +59,7 @@ export default class DeleteMyAccount extends Component {
       var object = {
         token,
       };
-      const finaldata = await axios.post(
-        "/api/deleteuser",
-        object,
-        config
-      );
+      const finaldata = await axios.post("/api/deleteuser", object, config);
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
       } else {
@@ -69,7 +67,7 @@ export default class DeleteMyAccount extends Component {
         window.location.replace("/");
       }
     }
-  }
+  };
   render() {
     return (
       <>

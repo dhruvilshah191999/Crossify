@@ -24,6 +24,7 @@ export default class SweetAlertModal extends Component {
     });
   };
   onRecievedInput = async () => {
+    this.setState({ alert: null });
     const config = {
       method: "POST",
       header: {
@@ -43,8 +44,8 @@ export default class SweetAlertModal extends Component {
     }
   };
   confirmProcess = () => {
-    this.props.handleRejection();
     this.setState({ alert: null });
+    this.props.handleRejection();
   };
   confirmArrival() {
     const getAlert = () => (

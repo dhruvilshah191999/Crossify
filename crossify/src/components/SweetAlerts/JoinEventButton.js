@@ -39,6 +39,9 @@ export default class SweetAlertModal extends Component {
   };
 
   onJoining = async () => {
+    this.setState({
+      alert: null,
+    });
     const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
@@ -63,7 +66,7 @@ export default class SweetAlertModal extends Component {
         console.log(finaldata.data.message);
       } else {
         this.setState({
-          alert: null,
+          // alert: null,
           isRegistered: finaldata.data.participated,
         });
         this.setState({ current: this.state.current + 1 });
@@ -87,6 +90,9 @@ export default class SweetAlertModal extends Component {
   };
 
   removeThisMember = async () => {
+    this.setState({
+      alert: null,
+    });
     const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
@@ -108,7 +114,7 @@ export default class SweetAlertModal extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      this.setState({ alert: null, isRegistered: finaldata.data.participated });
+      this.setState({ isRegistered: finaldata.data.participated });
       this.setState({ current: this.state.current - 1 });
     }
   };

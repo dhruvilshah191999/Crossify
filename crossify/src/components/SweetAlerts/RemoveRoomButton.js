@@ -18,6 +18,7 @@ export default class SweetAlertModal extends Component {
   };
 
   confirmProcess = async () => {
+    this.setState({ alert: null });
     const config = {
       method: "POST",
       header: {
@@ -35,7 +36,6 @@ export default class SweetAlertModal extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      this.setState({ alert: null });
       window.location.reload();
     }
   };
