@@ -17,8 +17,8 @@ export default class SweetAlertModal extends Component {
   };
 
   confirmProcess = () => {
-    this.props.handlePrivate();
     this.setState({ alert: null });
+    this.props.handlePrivate();
   };
   confirmArrival() {
     const getAlert = () => (

@@ -16,11 +16,12 @@ export default class SweetAlertModal extends Component {
   };
 
   onRecieveInput = (inputValue) => {
+    this.setState({ alert: null });
     inputValue = inputValue.trim();
     //todo do whatever you want to do with the input value
     this.props.handleBroadcast(inputValue);
     this.setState({
-      alert: null,
+      //  alert: null,
       question: inputValue,
     });
   };

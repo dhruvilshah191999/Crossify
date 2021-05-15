@@ -25,6 +25,9 @@ export default class SweetAlertModal extends Component {
   };
 
   confirmProcess = async () => {
+    this.setState({
+      alert: null,
+    });
     const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",

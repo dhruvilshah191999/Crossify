@@ -7,11 +7,11 @@ export default class DeleteMyClub extends Component {
     super(props);
     this.state = {
       alert: null,
-      club_id:this.props.club_id
+      club_id: this.props.club_id,
     };
   }
 
-  deleteAccount() {
+  deleteClub() {
     const getAlert = () => (
       <SweetAlert
         customClass="text-black"
@@ -25,7 +25,7 @@ export default class DeleteMyClub extends Component {
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
-        onConfirm={this.removeThisUser}
+        onConfirm={this.removeThisClub}
         onCancel={this.hideAlert}
         closeAnim={{ name: "hideSweetAlert", duration: 300 }}
       >
@@ -46,7 +46,10 @@ export default class DeleteMyClub extends Component {
     });
   };
 
-  removeThisUser=async(answer)=> {
+  removeThisClub = async (answer) => {
+    this.setState({
+      alert: null,
+    });
     if (answer !== "DELETE") {
       return;
     } else {
@@ -57,7 +60,7 @@ export default class DeleteMyClub extends Component {
         },
       };
       var object = {
-        club_id:this.state.club_id
+        club_id: this.state.club_id,
       };
       const finaldata = await axios.post(
         "/api/club/deleteclub",
@@ -70,13 +73,13 @@ export default class DeleteMyClub extends Component {
         window.location.replace("/");
       }
     }
-  }
+  };
   render() {
     return (
       <>
         <button
           className="text-red-500 font-semibold mb-4 text-sm"
-          onClick={() => this.deleteAccount()}
+          onClick={() => this.deleteClub()}
         >
           Delete this Club <i class="fas fa-chevron-right text-xs"></i>
         </button>

@@ -49,6 +49,9 @@ export default class DeleteMyEvent extends Component {
   };
 
   removeThisEvent=async (answer)=> {
+    this.setState({
+      alert: null,
+    });
     if (answer !== "DELETE") {
       return;
     }

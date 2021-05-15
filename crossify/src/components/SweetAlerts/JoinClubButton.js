@@ -27,6 +27,9 @@ class SweetAlertModal extends Component {
   };
 
   onJoining = async () => {
+    this.setState({
+      alert: null,
+    });
     const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
@@ -113,6 +116,9 @@ class SweetAlertModal extends Component {
   };
 
   onCancleRequest = async () => {
+    this.setState({
+      alert: null,
+    });
     const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",
@@ -138,6 +144,9 @@ class SweetAlertModal extends Component {
   };
 
   onRecievedInput = async () => {
+    this.setState({
+      alert: null,
+    });
     const token = localStorage.getItem("jwt");
     const config = {
       method: "POST",

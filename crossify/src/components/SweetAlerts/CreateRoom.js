@@ -20,6 +20,7 @@ export default class SweetAlertModal extends Component {
     });
   };
   onRecievedInput = async () => {
+    this.setState({ alert: null });
     this.props.parentCallback(true);
     const config = {
       method: "POST",
@@ -38,7 +39,7 @@ export default class SweetAlertModal extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
-      this.setState({ alert: null });
+      //this.setState({ alert: null });
       window.location.reload();
     }
   };

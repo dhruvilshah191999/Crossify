@@ -21,6 +21,7 @@ export default class SweetAlertModal extends Component {
   };
 
   onRecieveInput = async (inputValue) => {
+    this.setState({ alert: null });
     const token = localStorage.getItem("jwt");
     inputValue = inputValue.trim();
     const config = {
@@ -52,7 +53,7 @@ export default class SweetAlertModal extends Component {
         },
       });
       this.setState({
-        alert: null,
+        // alert: null,
         complain: inputValue,
       });
     }
