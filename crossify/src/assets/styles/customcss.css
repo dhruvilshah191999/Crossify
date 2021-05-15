@@ -134,7 +134,13 @@
 .hover\:bg-brightalpha:hover {
   background-color: #ff2957;
 }
+.text-likealpha {
+  color: #f82d59;
+}
 
+.bg-brightalpha {
+  background-color: #f43961;
+}
 .hover\:bg-gradient-alpha:hover {
   background-image: linear-gradient(
     134.6deg,
@@ -152,6 +158,9 @@
 
 .bg-orange-200 {
   background-color: #feebc8;
+}
+.text-lightalpha {
+  color: var(--color-lightalpha);
 }
 
 .bg-green-200 {
@@ -1813,6 +1822,10 @@ form .page .btns button.next {
 }
 .w-65 {
   width: 65%;
+}
+
+.tracking-lg {
+  letter-spacing: 2px;
 }
 
 .notification2 {

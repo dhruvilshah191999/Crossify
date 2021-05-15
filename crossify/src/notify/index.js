@@ -63,6 +63,22 @@ export const notifyWentWrong = () => {
   });
 };
 
+export const notifySomethingWentWrong = () => {
+  store.addNotification({
+    title: "Something went wrong",
+    message: "The Application faced an error.",
+    type: "danger",
+    insert: "top",
+    container: "bottom-right",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 3000,
+      // onScreen: true,
+    },
+  });
+};
+
 export const notifyDownload = () => {
   store.addNotification({
     title: "File Downloading Started... !",

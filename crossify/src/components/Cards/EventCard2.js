@@ -2,14 +2,13 @@ import Moment from "react-moment";
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "context/usercontext";
+import { store } from "react-notifications-component";
 import { useHistory } from "react-router-dom";
-import { notifyLiked, notifySomethingWentWrong } from "notify";
+import { notifyLiked } from "notify";
 import { motion } from "framer-motion";
 import ShareButton from "components/SweetAlerts/ShareButton";
 
 const EventCard = (props) => {
-  console.log(props);
-
   let history = useHistory();
   const { users } = useContext(UserContext);
   const [loginstate, setLogin] = useState(false);
@@ -26,9 +25,9 @@ const EventCard = (props) => {
       const b = users.fav_event.find((e) => e === props.data._id);
       if (b) {
         setLike(true);
-      }
+      };
     }
-  }, [props, token, users]);
+  }, [props,token,users]);
 
   const addlike = async (e) => {
     if (loginstate) {
@@ -49,7 +48,19 @@ const EventCard = (props) => {
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
-        notifySomethingWentWrong();
+        store.addNotification({
+          title: "Something went wrong",
+          message: "Cannot add to favourite",
+          type: "danger",
+          insert: "top",
+          container: "bottom-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 3000,
+            // onScreen: true,
+          },
+        });
       } else {
         notifyLiked();
         users.fav_event.push(props.data._id);
@@ -94,72 +105,33 @@ const EventCard = (props) => {
         maxWidth: 320,
       }}
     >
-      <div className="rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+      <div className="rounded overflow-hidden shadow-md hover:shadow-lg">
         <img
           src={props.data.photo}
           style={{ height: "210px", width: "100%" }}
           alt="eventPic"
         />
-        <div className="px-4 py-2">
-          {/* <div className="text-xs text-gray-600 font-semibold">
+        <div className="px-2 py-1">
+          <div className="text-xs text-gray-600 font-semibold">
             <i className="fas fa-user-shield"></i> : {props.data.club_name}
-           
-          </div> */}
+            {/* props.data.club_data[0].club_name */}
+          </div>
+          <div
+            className="text-xl  mt-1 font-semibold truncate leading-snug"
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => showEvents(props.data._id)}
+          >
+            {props.data.event_name}
+          </div>
           <div className="text-xs text-gray-600 flex flex-row mt-1 ">
-            <div className="truncate max-ch-30 capitalize">
-              <i className="fas fa-map-marker-alt mr-1 "></i>{" "}
-              {props.data.location} , {props.data.city}
-            </div>
-          </div>
-          <div className="flex">
-            <div>
-              <div
-                className="text-xl  mt-1 font-semibold truncate leading-snug cursor-pointer capitalize "
-                onClick={() => showEvents(props.data._id)}
-              >
-                {props.data.event_name}
-              </div>
-              <div className="text-sm text-gray-600 font-semibold">
-                <span className="font-normal">by</span> {props.data.club_name}
-              </div>
-              <div
-                className="text-xs  mt-2 text-gray-600 text-beta"
-                style={{ fontWeight: 550 }}
-              >
-                {props.data.tags.map((tag, index) => {
-                  if (index + 1 === props.data.tags.length) {
-                    return <span className="capitalize">{tag} </span>;
-                  }
-                  return <span className="capitalize">{tag} &bull; </span>;
-                })}
-              </div>
-            </div>
-            <div className="flex ml-auto mr-1 mt-1 flex-col fit-content items-center px-3 calendar-date">
-              <div className="text-alpha text-xl font-semibold">
-                <Moment format="DD" date={props.data.date}></Moment>
-              </div>
-              <div className="uppercase text-sm font-semibold tracking-lg text-gray-700">
-                <Moment format="MMM" date={props.data.date}></Moment>
-              </div>
-              <div
-                className="uppercase text-sm text-gray-600"
-                style={{ fontWeight: 500 }}
-              >
-                5:00{" "}
-              </div>
-            </div>
-          </div>
-
-          {/* <div className="text-xs text-gray-600 flex flex-row mt-1 ">
             <div className="truncate max-ch-30">
               <i className="fas fa-map-marker-alt "></i> : {props.data.location}
               ,{props.data.city},{props.data.state}
             </div>
-          </div> */}
-          <div className="flex  items-center ">
-            <div className=" flex flex-col"></div>
           </div>
-          {/* <div className="text-xs text-gray-600 flex flex-row mt-1">
+          <div className="text-xs text-gray-600 flex flex-row mt-1">
             <div>
               <i className="fas fa-calendar-day"></i> :{" "}
               {<Moment format="DD MMM YYYY" date={props.data.date}></Moment>}
@@ -168,7 +140,7 @@ const EventCard = (props) => {
               <i className="fas fa-hourglass-start"></i> :{" "}
               {<Moment format="hh:mm" date={props.data.date}></Moment>}
             </div>
-          </div> */}
+          </div>
           <div className="text-xs text-gray-600 flex flex-row mb-1 mt-1"></div>
 
           <div
@@ -178,8 +150,8 @@ const EventCard = (props) => {
             <motion.button
               className={
                 !like
-                  ? "text-likealpha bg-white shadow border border-solid  hover:bg-alpha hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  : "text-white bg-brightalpha shadow  hover:bg-white border border-solid hover:text-alpha active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  ? "text-red-500 bg-white shadow border border-solid  hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  : "text-white bg-red-500 shadow  hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               }
               type="button"
               style={loginstate ? {} : { cursor: "not-allowed" }}
