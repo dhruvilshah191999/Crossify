@@ -5,7 +5,7 @@ export const notifyCopied = () => {
     message: "Share the event with your friends ! ",
     type: "info",
     insert: "top",
-    container: "bottom-right",
+    container: "top-center",
     animationIn: ["animate__animated", "animate__fadeIn"],
     animationOut: ["animate__animated", "animate__fadeOut"],
     dismiss: {

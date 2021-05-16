@@ -141,7 +141,7 @@
   .event-side-container {
     width: 70%;
   }
-  */ .privacy-container {
+  .privacy-container {
     margin: 4rem 2rem;
   }
   .category-width {
@@ -256,7 +256,7 @@
   .event-image-div,
   .club-image-div {
     width: 95%;
-    margin-right: 30px;
+    margin-right: 10px;
   }
   .event-side-container {
     width: 55%;
@@ -279,7 +279,7 @@
   .event-image-div,
   .club-image-div {
     width: 95%;
-    margin-right: 30px;
+    margin-right: 10px;
   }
 
   .event-side-container,
@@ -304,7 +304,7 @@
   .event-image-div,
   .club-image-div {
     width: 95%;
-    margin-right: 50px;
+    margin-right: 10px;
   }
   .event-side-container,
   .club-side-container {

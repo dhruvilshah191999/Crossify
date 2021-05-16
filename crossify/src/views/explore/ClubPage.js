@@ -180,7 +180,7 @@ function ClubPage(props) {
         >
           <div className="flex flex-col flex-wrap mx-4">
             <div className="flex flex-col md:flex-row flex-wrap md:flex-nowrap mt-2 justify-between xs:items-center sm:items-center items-start flex-shrink-0">
-              <div className="my-2 club-image-div">
+              <div className="club-image-div">
                 <img
                   className="overflow-hidden object-contain rounded-lg club-image"
                   alt="club_background_photo"
