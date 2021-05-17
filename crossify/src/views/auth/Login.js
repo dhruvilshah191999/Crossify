@@ -212,7 +212,7 @@ function Login() {
             <div className="flex flex-wrap relative text-lg font-semibold">
               <div className="w-1/2">
                 <Link to="/auth/forgotpassword" className="text-gray-300">
-                  <small>Forgot password?</small>
+                  <small>Forgot password ?</small>
                 </Link>
               </div>
               <div className="w-1/2 text-right">

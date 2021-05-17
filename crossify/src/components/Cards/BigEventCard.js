@@ -31,10 +31,7 @@ const ResultWindow = (props) => {
           >
             {props.data.event_name}{" "}
           </div>
-          <div className="text-base font-semibold text-gray-600 tracking-wider">
-            {" "}
-            {moment(props.data.startdate).utc().format("LLL")}
-          </div>
+
           <div className=" text-gray-700 text-sm ">
             by{" "}
             <span className="font-semibold text-gray-800">
@@ -44,7 +41,7 @@ const ResultWindow = (props) => {
           <div className="text-sm mt-1 font-semibold text-alpha tracking-wider">
             {" "}
             <i className="fas fa-calendar-day mr-1 text-sm"></i>{" "}
-            {moment(props.data.date).format("LLL")}
+            {moment(props.data.startdate).format("LLL")}
           </div>
           <div className="tracking-tight text-sm font-semibold text-beta flex flex-wrap w-full">
             <div>

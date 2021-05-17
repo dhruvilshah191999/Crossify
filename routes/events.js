@@ -86,7 +86,7 @@ router.get("/get-event", async function (req, res, next) {
           photo: 1,
           event_name: 1,
           "club_data.club_name": 1,
-          date: 1,
+
           startdate: 1,
           _id: 1,
           club_id: 1,
@@ -213,8 +213,9 @@ router.post("/get-event-byuser", auth, async function (req, res, next) {
                 photo: 1,
                 event_name: 1,
                 "club_data.club_name": 1,
-                date: 1,
+
                 _id: 1,
+                startdate: 1,
                 club_id: 1,
                 description: 1,
                 tags: 1,
@@ -267,7 +268,7 @@ router.post("/get-event-byuser", auth, async function (req, res, next) {
             photo: 1,
             event_name: 1,
             "club_data.club_name": 1,
-            date: 1,
+            startdate: 1,
             _id: 1,
             club_id: 1,
             description: 1,
@@ -300,6 +301,7 @@ router.post("/get-event-byuser", auth, async function (req, res, next) {
             is_error: false,
             message: "Data Send",
           };
+          console.log(finaldata);
           return res.status(200).send(finaldata);
         }
       });
@@ -1083,7 +1085,7 @@ router.get("/get-interest-data", async function (req, res, next) {
           "event.event_name": 1,
           "club_data.club_name": 1,
           "club_data._id": 1,
-          "event.date": 1,
+          "event.startdate": 1,
           "event._id": 1,
           "event.club_id": 1,
           "event.description": 1,
@@ -1091,6 +1093,7 @@ router.get("/get-interest-data", async function (req, res, next) {
           "event.location": 1,
           "event.city": 1,
           "event.state": 1,
+
           "event.is_active": 1,
           "event.ending_date_registration": 1,
           category_name: 1,
@@ -1178,7 +1181,7 @@ router.post("/user-interest-data", auth, async function (req, res, next) {
             "event.event_name": 1,
             "club_data.club_name": 1,
             "club_data._id": 1,
-            "event.date": 1,
+            "event.startdate": 1,
             "event._id": 1,
             "event.club_id": 1,
             "event.description": 1,

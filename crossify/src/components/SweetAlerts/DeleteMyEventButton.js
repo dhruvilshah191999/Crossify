@@ -48,14 +48,13 @@ export default class DeleteMyEvent extends Component {
     });
   };
 
-  removeThisEvent=async (answer)=> {
+  removeThisEvent = async (answer) => {
     this.setState({
       alert: null,
     });
     if (answer !== "DELETE") {
       return;
-    }
-    else {
+    } else {
       const config = {
         method: "POST",
         header: {
@@ -63,7 +62,7 @@ export default class DeleteMyEvent extends Component {
         },
       };
       var object = {
-        event_id:this.state.event_id
+        event_id: this.state.event_id,
       };
       const finaldata = await axios.post(
         "/api/events/deleteevent",
@@ -76,7 +75,7 @@ export default class DeleteMyEvent extends Component {
         window.location.replace("/");
       }
     }
-  }
+  };
   render() {
     return (
       <>
@@ -84,7 +83,7 @@ export default class DeleteMyEvent extends Component {
           className="text-red-500 font-semibold mr-1"
           onClick={() => this.deleteAccount()}
         >
-          Cancel This Event <i class="fas fa-chevron-right text-xs"></i>
+          Cancel This Event <i className="fas fa-chevron-right text-xs"></i>
         </button>
 
         {this.state.alert}

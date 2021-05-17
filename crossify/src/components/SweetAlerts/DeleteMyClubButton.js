@@ -81,7 +81,7 @@ export default class DeleteMyClub extends Component {
           className="text-red-500 font-semibold mb-4 text-sm"
           onClick={() => this.deleteClub()}
         >
-          Delete this Club <i class="fas fa-chevron-right text-xs"></i>
+          Delete this Club <i className="fas fa-chevron-right text-xs"></i>
         </button>
 
         {this.state.alert}

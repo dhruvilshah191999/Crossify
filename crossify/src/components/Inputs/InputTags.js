@@ -21,7 +21,7 @@ export class InputTagsContainer extends Component {
   };
   render() {
     return (
-      <div class="flex flex-col">
+      <div className="flex flex-col">
         <div>
           <input
             type="text"
@@ -36,7 +36,7 @@ export class InputTagsContainer extends Component {
             <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-beta bg-lightbeta mr-1 mt-1">
               {el}
               <i
-                class="ml-1 fas fa-times cursor-pointer"
+                className="ml-1 fas fa-times cursor-pointer"
                 onClick={() => this.removeTag(index)}
               ></i>
             </span>

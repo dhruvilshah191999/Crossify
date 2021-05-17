@@ -215,8 +215,8 @@ export default function CardSettings() {
             </h6>
             <div className="flex flex-wrap">
               <div className="px-4 mt-6">
-                <div class="avatar-upload">
-                  <div class="avatar-edit">
+                <div className="avatar-upload">
+                  <div className="avatar-edit">
                     <input
                       type="file"
                       id="imageUpload"
@@ -224,7 +224,7 @@ export default function CardSettings() {
                       onChange={(e) => setPhoto(e.target.files[0])}
                     />
                     <label for="imageUpload">
-                      <i class="fas fa-pen ml-2  text-sm"></i>
+                      <i className="fas fa-pen ml-2  text-sm"></i>
                     </label>
                   </div>
                   <div className="avatar-preview">

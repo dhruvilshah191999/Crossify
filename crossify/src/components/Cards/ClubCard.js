@@ -115,7 +115,7 @@ const ClubCard = (props) => {
             style={{ fontSize: "11px" }}
           >
             {" "}
-            <i class="fas fa-door-open mr-1"></i>
+            <i className="fas fa-door-open mr-1"></i>
             {props.data.status} Club &nbsp;&bull;&nbsp;{" "}
             <i className="fas fa-user-friends mr-1"></i>
             {props.data.member_list.length}

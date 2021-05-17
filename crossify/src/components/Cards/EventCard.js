@@ -14,7 +14,7 @@ const EventCard = (props) => {
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const token = localStorage.getItem("jwt");
-  console.log(props.data);
+
   var datetoShow = moment(props.data.startdate).utc();
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);

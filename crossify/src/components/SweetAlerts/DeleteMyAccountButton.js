@@ -75,7 +75,8 @@ export default class DeleteMyAccount extends Component {
           className="text-red-500 font-semibold"
           onClick={() => this.deleteAccount()}
         >
-          Deactivate your account <i class="fas fa-chevron-right text-xs"></i>
+          Deactivate your account{" "}
+          <i className="fas fa-chevron-right text-xs"></i>
         </button>
 
         {this.state.alert}
