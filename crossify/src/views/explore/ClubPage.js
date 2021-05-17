@@ -73,9 +73,7 @@ function ClubPage(props) {
           setPublic(false);
           CheckRequestMember();
         }
-        setTimeout(() => {
-          setloading(true);
-        }, 1000);
+        setloading(true);
       }
     }
 
@@ -265,20 +263,16 @@ function ClubPage(props) {
                   //className={isAdmin ? "hidden" : "flex justify-center"}
                   className="flex justify-center"
                 >
-                  {loading ? (
-                    <JoinClubButton
-                      clubName={clubData.club_name}
-                      isPublic={isPublic}
-                      club_id={id}
-                      isJoin={isJoin}
-                      isMod={moderator}
-                      isAdmin={isAdmin}
-                      question={clubData.question}
-                      isRequest={isRequest}
-                    />
-                  ) : (
-                    ""
-                  )}{" "}
+                  <JoinClubButton
+                    clubName={clubData.club_name}
+                    isPublic={isPublic}
+                    club_id={id}
+                    isJoin={isJoin}
+                    isMod={moderator}
+                    isAdmin={isAdmin}
+                    question={clubData.question}
+                    isRequest={isRequest}
+                  />
                 </div>
               </div>
             </div>
