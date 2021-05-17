@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "context/usercontext";
 
-export default function ContextData() {
+export default function ContextData(props) {
   const {
     category_dispatch,
     event_dispatch,
@@ -17,6 +17,7 @@ export default function ContextData() {
     async function checkLogin() {
       if (!token) {
         islogin_dispatch({ type: "Login-Status", status: false });
+        props.handleIsLoading(true);
       } else {
         islogin_dispatch({ type: "Login-Status", status: true });
         try {
@@ -34,6 +35,7 @@ export default function ContextData() {
             window.localStorage.removeItem("jwt");
           } else {
             dispatch({ type: "ADD_USER", payload: res.data });
+            props.handleIsLoading(true);
           }
         } catch (error) {
           window.localStorage.removeItem("jwt");
