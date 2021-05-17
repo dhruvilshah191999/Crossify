@@ -1,4 +1,5 @@
 import Moment from "react-moment";
+import moment from "moment";
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "context/usercontext";
@@ -8,14 +9,12 @@ import { motion } from "framer-motion";
 import ShareButton from "components/SweetAlerts/ShareButton";
 
 const EventCard = (props) => {
-  console.log(props);
-
   let history = useHistory();
   const { users } = useContext(UserContext);
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const token = localStorage.getItem("jwt");
-
+  var datetoShow = moment(props.data.startdate).utc();
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);
   };
@@ -136,16 +135,16 @@ const EventCard = (props) => {
             </div>
             <div className="flex ml-auto mr-1 mt-1 flex-col fit-content items-center px-3 calendar-date">
               <div className="text-alpha text-xl font-semibold">
-                <Moment format="DD" date={props.data.date}></Moment>
+                <Moment format="DD" date={datetoShow}></Moment>
               </div>
               <div className="uppercase text-sm font-semibold tracking-lg text-gray-700">
-                <Moment format="MMM" date={props.data.date}></Moment>
+                <Moment format="MMM" date={datetoShow}></Moment>
               </div>
               <div
                 className="uppercase text-sm text-gray-600"
                 style={{ fontWeight: 500 }}
               >
-                5:00{" "}
+                <Moment format="LT" date={datetoShow}></Moment>{" "}
               </div>
             </div>
           </div>

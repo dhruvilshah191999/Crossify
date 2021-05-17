@@ -5,7 +5,7 @@ var category_details = require('../modules/interest_category');
 var event_details = require('../modules/event_details');
 var user_details = require('../modules/user_details');
 var club_details = require('../modules/club_details');
-const {ObjectID, ObjectId} = require('bson');
+const { ObjectID, ObjectId } = require('bson');
 const c = require('config');
 var router = express.Router();
 
@@ -51,7 +51,7 @@ router.get('/get-event', async function (req, res, next) {
       {
         $match: {
           is_active: true,
-          date: {$gt: today},
+          date: { $gt: today },
         },
       },
       {
@@ -60,6 +60,7 @@ router.get('/get-event', async function (req, res, next) {
           event_name: 1,
           'club_data.club_name': 1,
           date: 1,
+          startdate: 1,
           _id: 1,
           club_id: 1,
           description: 1,
@@ -74,7 +75,7 @@ router.get('/get-event', async function (req, res, next) {
         },
       },
       {
-        $sort: {date: -1},
+        $sort: { date: -1 },
       },
     ])
     .exec((err, data) => {
@@ -96,7 +97,7 @@ router.get('/get-event', async function (req, res, next) {
 });
 
 router.get('/get-club', async function (req, res, next) {
-  var records = club_details.find({is_active: true}).sort({date: -1});
+  var records = club_details.find({ is_active: true }).sort({ date: -1 });
   await records.exec((err, data) => {
     if (err) {
       var error = {
@@ -116,9 +117,9 @@ router.get('/get-club', async function (req, res, next) {
 });
 
 router.post('/get-tags', async function (req, res, nex) {
-  var {interest} = req.body;
+  var { interest } = req.body;
   let tag = [];
-  var tags = category_details.find({_id: {$in: interest}}, {tags: 1});
+  var tags = category_details.find({ _id: { $in: interest } }, { tags: 1 });
   await tags.exec((err, data) => {
     if (err) {
       var error = {
@@ -141,14 +142,8 @@ router.post('/get-tags', async function (req, res, nex) {
 });
 
 router.post('/', async function (req, res, nex) {
-  var {
-    interestarray,
-    distance,
-    startdate,
-    enddate,
-    latitude,
-    longitude,
-  } = req.body;
+  var { interestarray, distance, startdate, enddate, latitude, longitude } =
+    req.body;
   var query;
   var distancearray = [];
   const today =
@@ -180,8 +175,8 @@ router.post('/', async function (req, res, nex) {
         category_list: {
           $in: interest_array,
         },
-        startdate: {$gt: new Date(startingDate)},
-        date: {$lt: new Date(endingDate)},
+        startdate: { $gt: new Date(startingDate) },
+        date: { $lt: new Date(endingDate) },
       };
     } else if (startingDate === today && endingDate !== today) {
       query = {
@@ -189,7 +184,7 @@ router.post('/', async function (req, res, nex) {
         category_list: {
           $in: interest_array,
         },
-        date: {$lt: new Date(endingDate)},
+        date: { $lt: new Date(endingDate) },
       };
     } else if (startingDate !== today && endingDate === today) {
       query = {
@@ -197,7 +192,7 @@ router.post('/', async function (req, res, nex) {
         category_list: {
           $in: interest_array,
         },
-        startdate: {$gt: new Date(startingDate)},
+        startdate: { $gt: new Date(startingDate) },
       };
     } else {
       query = {
@@ -210,22 +205,22 @@ router.post('/', async function (req, res, nex) {
   } else {
     if (startingDate !== today && endingDate !== today) {
       query = {
-        startdate: {$gt: new Date(startingDate)},
-        date: {$lt: new Date(endingDate)},
+        startdate: { $gt: new Date(startingDate) },
+        date: { $lt: new Date(endingDate) },
         is_active: true,
       };
     } else if (startingDate === today && endingDate !== today) {
       query = {
-        date: {$lt: new Date(endingDate)},
+        date: { $lt: new Date(endingDate) },
         is_active: true,
       };
     } else if (startingDate !== today && endingDate === today) {
       query = {
-        startdate: {$gt: new Date(startingDate)},
+        startdate: { $gt: new Date(startingDate) },
         is_active: true,
       };
     } else {
-      query = {is_active: true};
+      query = { is_active: true };
     }
   }
 
@@ -262,7 +257,7 @@ router.post('/', async function (req, res, nex) {
         },
       },
       {
-        $sort: {date: -1},
+        $sort: { date: -1 },
       },
     ])
     .exec((err, data) => {
@@ -308,7 +303,7 @@ router.post('/', async function (req, res, nex) {
 });
 
 router.post('/search', async function (req, res, nex) {
-  var {search, location} = req.body;
+  var { search, location } = req.body;
   let categoryarray = [];
   if (
     (search == null || search == '') &&
@@ -319,9 +314,9 @@ router.post('/search', async function (req, res, nex) {
   async function getids() {
     var ids = category_details.find(
       {
-        category_name: {$regex: '.*' + search + '.*', $options: 'i'},
+        category_name: { $regex: '.*' + search + '.*', $options: 'i' },
       },
-      {_id: 1}
+      { _id: 1 }
     );
 
     await ids.exec((err, data) => {
@@ -362,16 +357,16 @@ router.post('/search', async function (req, res, nex) {
                 $options: 'i',
               },
             },
-            {category_list: {$in: categoryarray}},
+            { category_list: { $in: categoryarray } },
           ],
           is_active: true,
         };
       } else if (search === '' && location !== '') {
         tags = {
           $or: [
-            {location: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {city: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {state: {$regex: '.*' + location + '.*', $options: 'i'}},
+            { location: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { city: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { state: { $regex: '.*' + location + '.*', $options: 'i' } },
           ],
           is_active: true,
         };
@@ -384,10 +379,10 @@ router.post('/search', async function (req, res, nex) {
                 $options: 'i',
               },
             },
-            {location: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {city: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {state: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {category_list: {$in: categoryarray}},
+            { location: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { city: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { state: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { category_list: { $in: categoryarray } },
           ],
           is_active: true,
         };
@@ -425,7 +420,7 @@ router.post('/search', async function (req, res, nex) {
             },
           },
           {
-            $sort: {date: -1},
+            $sort: { date: -1 },
           },
         ])
         .exec((err, data) => {
@@ -449,7 +444,7 @@ router.post('/search', async function (req, res, nex) {
 });
 
 router.post('/searchclub', async function (req, res, nex) {
-  var {search, location} = req.body;
+  var { search, location } = req.body;
   let categoryarray = [];
 
   if (
@@ -462,11 +457,11 @@ router.post('/searchclub', async function (req, res, nex) {
     var ids = category_details.find(
       {
         $or: [
-          {category_name: {$regex: '.*' + search + '.*', $options: 'i'}},
-          {description: {$regex: '.*' + search + '.*', $options: 'i'}},
+          { category_name: { $regex: '.*' + search + '.*', $options: 'i' } },
+          { description: { $regex: '.*' + search + '.*', $options: 'i' } },
         ],
       },
-      {_id: 1}
+      { _id: 1 }
     );
 
     await ids.exec((err, data) => {
@@ -507,17 +502,17 @@ router.post('/searchclub', async function (req, res, nex) {
                 $options: 'i',
               },
             },
-            {description: {$regex: '.*' + search + '.*', $options: 'i'}},
-            {category_list: {$in: categoryarray}},
+            { description: { $regex: '.*' + search + '.*', $options: 'i' } },
+            { category_list: { $in: categoryarray } },
           ],
           is_active: true,
         });
       } else if (search === '' && location !== '') {
         tags = club_details.find({
           $or: [
-            {location: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {city: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {state: {$regex: '.*' + location + '.*', $options: 'i'}},
+            { location: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { city: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { state: { $regex: '.*' + location + '.*', $options: 'i' } },
           ],
           is_active: true,
         });
@@ -530,11 +525,11 @@ router.post('/searchclub', async function (req, res, nex) {
                 $options: 'i',
               },
             },
-            {description: {$regex: '.*' + search + '.*', $options: 'i'}},
-            {location: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {city: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {state: {$regex: '.*' + location + '.*', $options: 'i'}},
-            {category_list: {$in: categoryarray}},
+            { description: { $regex: '.*' + search + '.*', $options: 'i' } },
+            { location: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { city: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { state: { $regex: '.*' + location + '.*', $options: 'i' } },
+            { category_list: { $in: categoryarray } },
           ],
           is_active: true,
         });
@@ -560,7 +555,7 @@ router.post('/searchclub', async function (req, res, nex) {
 });
 
 router.post('/club', async function (req, res, nex) {
-  var {interestarray, distance, latitude, longitude, member} = req.body;
+  var { interestarray, distance, latitude, longitude, member } = req.body;
   var query;
   var distancearray = [];
   if (interestarray.length !== 0) {
@@ -581,7 +576,7 @@ router.post('/club', async function (req, res, nex) {
           tags: 1,
           _id: 1,
           status: 1,
-          countArray: {$size: '$member_list'},
+          countArray: { $size: '$member_list' },
         },
       },
       {
@@ -592,10 +587,10 @@ router.post('/club', async function (req, res, nex) {
           },
           $and: [
             {
-              countArray: {$gte: member[0]},
+              countArray: { $gte: member[0] },
             },
             {
-              countArray: {$lte: member[1]},
+              countArray: { $lte: member[1] },
             },
           ],
         },
@@ -617,7 +612,7 @@ router.post('/club', async function (req, res, nex) {
           tags: 1,
           _id: 1,
           status: 1,
-          countArray: {$size: '$member_list'},
+          countArray: { $size: '$member_list' },
         },
       },
       {
@@ -625,10 +620,10 @@ router.post('/club', async function (req, res, nex) {
           is_active: true,
           $and: [
             {
-              countArray: {$gte: member[0]},
+              countArray: { $gte: member[0] },
             },
             {
-              countArray: {$lte: member[1]},
+              countArray: { $lte: member[1] },
             },
           ],
         },

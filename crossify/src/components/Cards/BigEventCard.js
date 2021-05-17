@@ -51,7 +51,7 @@ const ResultWindow = (props) => {
           <div className="text-xl font-bold ">{props.data.event_name} </div>
           <div className="text-base font-semibold text-gray-600 tracking-wider">
             {" "}
-            {moment(props.data.date).format("LLL")}
+            {moment(props.data.startdate).utc().format("LLL")}
           </div>
           <div className="mt-1 tracking-tight text-sm font-semibold text-alpha ">
             <i className="fas fa-map-marker-alt text-sm"></i>{" "}
