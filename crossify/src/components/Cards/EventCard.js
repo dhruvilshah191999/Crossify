@@ -1,4 +1,5 @@
 import Moment from "react-moment";
+import moment from "moment";
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "context/usercontext";
@@ -13,7 +14,7 @@ const EventCard = (props) => {
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const token = localStorage.getItem("jwt");
-
+  var datetoShow = moment(props.data.startdate).utc();
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);
   };
@@ -21,7 +22,10 @@ const EventCard = (props) => {
   useEffect(() => {
     if (token) {
       setLogin(true);
-      const b = users.fav_event.find((e) => e === props.data._id);
+      const b =
+        (users.fav_event &&
+          users.fav_event.find((e) => e === props.data._id)) ||
+        false;
       if (b) {
         setLike(true);
       }
@@ -105,7 +109,7 @@ const EventCard = (props) => {
            
           </div> */}
           <div className="text-xs text-gray-600 flex flex-row mt-1 ">
-            <div className="truncate max-ch-30 capitalize">
+            <div className="truncate max-ch-30 ">
               <i className="fas fa-map-marker-alt mr-1 "></i>{" "}
               {props.data.location} , {props.data.city}
             </div>
@@ -113,7 +117,7 @@ const EventCard = (props) => {
           <div className="flex">
             <div>
               <div
-                className="text-xl  mt-1 font-semibold truncate leading-snug cursor-pointer capitalize "
+                className="text-xl  mt-1 font-semibold truncate leading-snug cursor-pointer  "
                 onClick={() => showEvents(props.data._id)}
               >
                 {props.data.event_name}
@@ -135,16 +139,16 @@ const EventCard = (props) => {
             </div>
             <div className="flex ml-auto mr-1 mt-1 flex-col fit-content items-center px-3 calendar-date">
               <div className="text-alpha text-xl font-semibold">
-                <Moment format="DD" date={props.data.date}></Moment>
+                <Moment format="DD" date={datetoShow}></Moment>
               </div>
               <div className="uppercase text-sm font-semibold tracking-lg text-gray-700">
-                <Moment format="MMM" date={props.data.date}></Moment>
+                <Moment format="MMM" date={datetoShow}></Moment>
               </div>
               <div
                 className="uppercase text-sm text-gray-600"
                 style={{ fontWeight: 500 }}
               >
-                5:00{" "}
+                <Moment format="LT" date={datetoShow}></Moment>{" "}
               </div>
             </div>
           </div>

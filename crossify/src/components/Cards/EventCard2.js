@@ -25,9 +25,9 @@ const EventCard = (props) => {
       const b = users.fav_event.find((e) => e === props.data._id);
       if (b) {
         setLike(true);
-      };
+      }
     }
-  }, [props,token,users]);
+  }, [props, token, users]);
 
   const addlike = async (e) => {
     if (loginstate) {
@@ -134,11 +134,16 @@ const EventCard = (props) => {
           <div className="text-xs text-gray-600 flex flex-row mt-1">
             <div>
               <i className="fas fa-calendar-day"></i> :{" "}
-              {<Moment format="DD MMM YYYY" date={props.data.date}></Moment>}
+              {
+                <Moment
+                  format="DD MMM YYYY"
+                  date={props.data.startdate}
+                ></Moment>
+              }
             </div>
             <div className="ml-auto">
               <i className="fas fa-hourglass-start"></i> :{" "}
-              {<Moment format="hh:mm" date={props.data.date}></Moment>}
+              {<Moment format="hh:mm" date={props.data.startdate}></Moment>}
             </div>
           </div>
           <div className="text-xs text-gray-600 flex flex-row mb-1 mt-1"></div>

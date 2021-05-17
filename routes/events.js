@@ -87,6 +87,7 @@ router.get("/get-event", async function (req, res, next) {
           event_name: 1,
           "club_data.club_name": 1,
           date: 1,
+          startdate: 1,
           _id: 1,
           club_id: 1,
           description: 1,
@@ -916,7 +917,6 @@ router.post("/get-profiles-of-events", async function (req, res, next) {
         };
         return res.status(500).send(error);
       } else {
-        console.log(data[0].user_details);
         const profilesList = data[0].user_details.map(
           ({ profile_photo, fname, lname, _id }) => {
             return {

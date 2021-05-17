@@ -175,7 +175,6 @@ export default function EventPage(props) {
         />
         <div className="flex flex-col md:mx-0 lg:mx-28">
           <div
-            onLoadStart={(e) => setTimeout(10000)}
             // style={{ minHeight: "" }}
             className="flex flex-col md:flex-row flex-nowrap  mt-16 justify-between xs:items-center sm:items-center items-start flex-shrink-0"
           >
@@ -187,7 +186,7 @@ export default function EventPage(props) {
               />
             </div>
 
-            <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container">
+            <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container ml-4">
               <div className="flex flex-row justify-between items-center">
                 <div className="flex flex-col items-center">
                   <div className="text-alpha text-xl font-semibold uppercase pl-1  pt-2">
@@ -199,7 +198,7 @@ export default function EventPage(props) {
                 </div>
                 <div>
                   <h1
-                    className="font-semibold text-2xl text-center ml-4"
+                    className="font-semibold text-2xl text-center ml-4 "
                     style={{ textTransform: "capitalize" }}
                   >
                     {eventdetails.event_name}
@@ -298,15 +297,15 @@ export default function EventPage(props) {
                   <motion.button
                     className={
                       !isLike
-                        ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        ? "w-full text-likealpha bg-white shadow border border-solid hover:bg-alpha hover:text-white active:bg-red-600  font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        : "w-full text-white bg-brightalpha shadow hover:bg-white border border-solid hover:text-alpha active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     }
                     type="button"
                     onClick={isLike ? (e) => deletelike(e) : (e) => addlike(e)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <i className="fas fa-heart"></i> Like
+                    <i className="fas fa-heart"></i> {isLike ? "Liked" : "Like"}
                   </motion.button>
                 </div>
                 &nbsp;

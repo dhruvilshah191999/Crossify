@@ -989,46 +989,59 @@ router.post('/WelcomeMail', async function (req, res, next) {
     transporter.sendMail(mailOptions, function (error) {
       if (error) {
         console.log(error);
-        callback(error);
+        //callback(error);
       }
     });
   });
   data.password = bcrypt.hashSync(data.password, 10);
-  var user = new user_details({
-    email: data.email,
-    fname: data.fname,
-    lname: data.lname,
-    password: data.password,
-    profile_photo: data.photo,
-    interest_id: objectIdArray,
-    username: data.username,
-    address: data.address,
-    birth_date: data.dob,
-    city: data.city,
-    state: data.state,
-    about_me: data.about_me,
-    occupation: data.occupation,
-    socialId: data.socialId,
-    generate_code: ObjectId(x),
-    latitude: data.latitude,
-    longitude: data.longitude,
-    pincode: data.pincode,
-  });
-  user.save((err, ans) => {
-    if (err) {
-      var error = {
-        is_error: true,
-        message: err.message,
-      };
-      return res.status(500).send(error);
-    } else {
-      var finaldata = {
-        is_error: false,
-        message: 'User Data Updated',
-      };
-      return res.status(200).send(finaldata);
-    }
-  });
+  var isUserExists = await user_details
+    .findOneAndDelete({ email: data.email })
+    .exec((err, suc) => {
+      if (err) {
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(500).send(error);
+      } else {
+        var user = new user_details({
+          email: data.email,
+          fname: data.fname,
+          lname: data.lname,
+          password: data.password,
+          profile_photo: data.photo,
+          interest_id: objectIdArray,
+          username: data.username,
+          address: data.address,
+          birth_date: data.dob,
+          city: data.city,
+          state: data.state,
+          about_me: data.about_me,
+          occupation: data.occupation,
+          socialId: data.socialId,
+          generate_code: ObjectId(x),
+          latitude: data.latitude,
+          longitude: data.longitude,
+          pincode: data.pincode,
+        });
+
+        user.save((err, ans) => {
+          if (err) {
+            var error = {
+              is_error: true,
+              message: err.message,
+            };
+            return res.status(500).send(error);
+          } else {
+            var finaldata = {
+              is_error: false,
+              message: 'User Data Updated',
+            };
+            return res.status(200).send(finaldata);
+          }
+        });
+      }
+    });
 });
 
 router.post('/ForgotMail', async function (req, res, next) {

@@ -14,15 +14,15 @@ export default function Landing() {
   let history = useHistory();
   const { search_dispatch, category, EventData, ClubData, InterestEventData } =
     useContext(UserContext);
-  const [loading, isLoading] = useState(false);
+  const [loading, isLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [location, setlocation] = useState("");
 
   useEffect(() => {
     async function setTime() {
       setTimeout(() => {
-        isLoading(true);
-      }, 400);
+        isLoading(false);
+      }, 1000);
     }
     setTime();
   }, []);
@@ -50,7 +50,7 @@ export default function Landing() {
     setlocation(newValue);
   };
 
-  if (loading) {
+  if (!loading) {
     return (
       <>
         <Navbar transparent />
@@ -295,8 +295,6 @@ export default function Landing() {
                     className="max-w-full rounded-lg shadow-lg text-center"
                     src={four_boys}
                     style={{ maxHeight: "600px" }}
-
-                    // src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                   />
                 </div>
                 <div className="w-full md:w-5/12 ml-auto mr-auto px-4">

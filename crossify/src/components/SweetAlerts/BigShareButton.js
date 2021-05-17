@@ -187,7 +187,7 @@ export default class SweetAlertModal extends Component {
     return (
       <>
         <motion.button
-          className="w-full text-blue-500 bg-white shadow border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          className="w-full text-beta bg-white shadow border border-solid  hover:bg-beta hover:text-white active:bg-blue-600 shadow hover:text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
           onClick={() => this.confirmArrival()}
           whileHover={{ scale: 1.02 }}

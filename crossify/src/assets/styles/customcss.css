@@ -138,6 +138,10 @@
   color: #f82d59;
 }
 
+.object-cover {
+  object-fit: cover;
+}
+
 .bg-brightalpha {
   background-color: #f43961;
 }

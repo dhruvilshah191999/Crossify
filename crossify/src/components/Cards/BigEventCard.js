@@ -31,6 +31,10 @@ const ResultWindow = (props) => {
           >
             {props.data.event_name}{" "}
           </div>
+          <div className="text-base font-semibold text-gray-600 tracking-wider">
+            {" "}
+            {moment(props.data.startdate).utc().format("LLL")}
+          </div>
           <div className=" text-gray-700 text-sm ">
             by{" "}
             <span className="font-semibold text-gray-800">
