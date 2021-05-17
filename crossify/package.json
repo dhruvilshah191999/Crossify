@@ -1,7 +1,7 @@
 {
-  "name": "notus-react",
+  "name": "crossify",
   "version": "1.0.0",
-  "description": "Notus React - A free Tailwind CSS and React UI Kit and Admin by Creative Tim.",
+  "description": "Crossify- Gather Your Interest",
   "repository": "https://github.com/creativetimofficial/notus-react",
   "license": "MIT",
   "dependencies": {

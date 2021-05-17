@@ -26,18 +26,22 @@ const ResultWindow = (props) => {
         <div className="leading-3" style={{ marginLeft: "1.25rem" }}>
           <div className="text-xl font-bold">{props.data.club_name} </div>
 
-          <div className=" text-sm font-semibold text-beta ">
-            <i className="fas fa-users"></i> {props.data.status} Group
+          <div className=" text-sm font-semibold text-beta mt-1">
+            <i className="fas fa-users mr-1"></i>
+            &nbsp;{props.data.status} Group
           </div>
           <div
             className="text-sm font-semibold text-alpha"
             style={{ width: "70%" }}
           >
-            <i className="fas fa-map-marker-alt"></i> {props.data.location},
+            <i className="fas fa-map-marker-alt mr-2 ml-1"></i>{" "}
             {props.data.city},{props.data.state}
           </div>
           <div className="text-sm font-semibold  text-gray-600 tracking-wider">
-            <i className="fas fa-calendar-day mr-1"></i>{" "}
+            <i
+              className="fas fa-calendar-day ml-1"
+              style={{ marginRight: "0.65rem" }}
+            ></i>
             {moment(props.data.date).format("DD MMM YYYY")}
           </div>
 

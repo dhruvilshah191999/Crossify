@@ -1,34 +1,13 @@
 /*eslint-disable*/
-import React, { useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
-import UserDropdown from "components/Dropdowns/UserDropdown.js";
+import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 // component
 import logo from "../../assets/logos/logo_light.png";
-import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
-import { UserContext } from "context/usercontext";
-import io from "socket.io-client";
-import urlObject from "../../config/default.json";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket", "polling", "flashsocket"],
-});
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
-  const [notification, setnotification] = React.useState(false);
-  const [userdrop, setuserdrop] = React.useState(false);
-  const { isLogin } = useContext(UserContext);
-  if (isLogin) {
-    socket.on("Notify", ({ date, description, title, report_id }) => {
-      var object = {
-        date: date,
-        description: description,
-        title: title,
-        report_id: report_id,
-      };
-    });
-  }
+
   return (
     <>
       <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-6 py-3 navbar-expand-lg bg-transparent">
@@ -86,7 +65,7 @@ export default function Navbar(props) {
                 </Link>
               </li>
 
-              <li className={isLogin ? "hidden " : " " + "flex items-center"}>
+              <li className="flex items-center">
                 <Link to="/auth/login">
                   <motion.button
                     className="bg-white hover:bg-offwhite text-gray-800 ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-2 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
@@ -98,7 +77,7 @@ export default function Navbar(props) {
                   </motion.button>
                 </Link>
               </li>
-              <li className={isLogin ? "hidden " : " " + "flex items-center"}>
+              <li className="flex items-center">
                 <Link to="/auth/register">
                   <motion.button
                     className="bg-lightalpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
@@ -109,22 +88,6 @@ export default function Navbar(props) {
                     <i className="fas fa-user-plus"></i> Sign Up
                   </motion.button>
                 </Link>
-              </li>
-
-              <li className={isLogin ? " " : "hidden " + "flex items-center "}>
-                <div className=" ml-2 lg:ml-0 ">
-                  {isLogin ? <NotificationDropdown /> : ""}
-                </div>
-              </li>
-
-              <li
-                className={
-                  isLogin ? " " : "hidden " + "flex items-center ml-2 lg:ml-0 "
-                }
-              >
-                <div className=" ml-3 mb-2 lg:ml-0 lg:mb-0  ">
-                  <UserDropdown />
-                </div>
               </li>
             </ul>
           </div>

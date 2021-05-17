@@ -8,8 +8,6 @@ import { motion } from "framer-motion";
 import ShareButton from "components/SweetAlerts/ShareButton";
 
 const EventCard = (props) => {
-  console.log(props);
-
   let history = useHistory();
   const { users } = useContext(UserContext);
   const [loginstate, setLogin] = useState(false);
@@ -77,6 +75,7 @@ const EventCard = (props) => {
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
+        notifySomethingWentWrong();
       } else {
         users.fav_event.pop(props.data._id);
         setLike(false);

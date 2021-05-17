@@ -1549,11 +1549,6 @@ div.sticky {
   background-color: #f4f4f4;
 }
 
-::selection {
-  color: #fff;
-  background: #d43f8d;
-}
-
 .container2 {
   width: 800px;
   background: #fff;

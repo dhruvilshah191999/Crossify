@@ -4,7 +4,6 @@ import { createPopper } from "@popperjs/core";
 import axios from "axios";
 import Moment from "moment";
 import { UserContext } from "context/usercontext";
-import demopf from "assets/img/pp1.jpg";
 import addNotification from "react-push-notification";
 import urlObject from "../../config/default.json";
 import io from "socket.io-client";
@@ -13,17 +12,7 @@ let socket = io(BackendURL, {
   transport: ["websocket", "polling", "flashsocket"],
 });
 
-const Setunread = (props) => {
-  var countUnread = 0;
-  props.data.forEach((el) => {
-    if (!el.isRead) {
-      countUnread++;
-    }
-  });
-  props.returnData(countUnread);
-  return <></>;
-};
-const NotificationDropdown = (props) => {
+const NotificationDropdown = () => {
   const [unread, setUnread] = useState(0);
   const [loading, setloding] = useState(false);
   const { users } = useContext(UserContext);
@@ -39,6 +28,13 @@ const NotificationDropdown = (props) => {
     setAnimationFinished(true);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      const unreadMsgs =
+        (users.inbox && users.inbox.filter((el) => !el.isRead).length) || 0;
+      setUnread(unreadMsgs);
+    }, 2000);
+  });
   useEffect(() => {
     async function fetchData() {
       setTimeout(() => {
@@ -141,9 +137,7 @@ const NotificationDropdown = (props) => {
       console.log("not anything");
     }
   };
-  const setUnreadData = (chilData) => {
-    setUnread(chilData);
-  };
+
   if (loading) {
     return (
       <>
@@ -157,7 +151,6 @@ const NotificationDropdown = (props) => {
           {" "}
           add{" "}
         </button> */}
-        <Setunread data={users.inbox || []} returnData={setUnreadData} />
         <div
           ref={notifyNow}
           className={
