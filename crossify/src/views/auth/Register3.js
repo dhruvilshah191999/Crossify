@@ -219,7 +219,7 @@ export default function Register5() {
 
                   {el.select ? (
                     <div className="overlay2">
-                      <i class="fas fa-check"></i>
+                      <i className="fas fa-check"></i>
                     </div>
                   ) : (
                     <div className="overlay cursor-pointer"></div>

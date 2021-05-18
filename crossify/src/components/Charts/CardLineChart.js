@@ -1,6 +1,5 @@
 import React from "react";
 import Chart from "chart.js";
-import NoPreview from "components/sections/NoPreview";
 
 export default function CardLineChart() {
   React.useEffect(() => {

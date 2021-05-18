@@ -73,9 +73,7 @@ function ClubPage(props) {
           setPublic(false);
           CheckRequestMember();
         }
-        setTimeout(() => {
-          setloading(true);
-        }, 1000);
+        setloading(true);
       }
     }
 
@@ -174,12 +172,12 @@ function ClubPage(props) {
         <div
           style={{
             marginTop: 65,
-            marginBottom: "3rem",
+
             backgroundColor: "#fafafa",
           }}
         >
-          <div className="flex flex-col flex-wrap mx-4">
-            <div className="flex flex-col md:flex-row flex-wrap md:flex-nowrap mt-2 justify-between xs:items-center sm:items-center items-start flex-shrink-0">
+          <div className="flex flex-col flex-wrap lg:mx-20">
+            <div className="flex flex-col md:flex-row flex-wrap md:flex-nowrap mt-2 justify-between xs:items-center sm:items-center items-start flex-shrink-0 ">
               <div className="club-image-div">
                 <img
                   className="overflow-hidden object-contain rounded-lg club-image"
@@ -228,8 +226,8 @@ function ClubPage(props) {
                     <motion.button
                       className={
                         !isLike
-                          ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          ? "w-full text-likealpha bg-white shadow border border-solid hover:bg-alpha hover:text-white active:bg-red-600  font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          : "w-full text-white bg-brightalpha shadow hover:bg-white border border-solid hover:text-alpha active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       }
                       type="button"
                       onClick={
@@ -265,24 +263,20 @@ function ClubPage(props) {
                   //className={isAdmin ? "hidden" : "flex justify-center"}
                   className="flex justify-center"
                 >
-                  {loading ? (
-                    <JoinClubButton
-                      clubName={clubData.club_name}
-                      isPublic={isPublic}
-                      club_id={id}
-                      isJoin={isJoin}
-                      isMod={moderator}
-                      isAdmin={isAdmin}
-                      question={clubData.question}
-                      isRequest={isRequest}
-                    />
-                  ) : (
-                    ""
-                  )}{" "}
+                  <JoinClubButton
+                    clubName={clubData.club_name}
+                    isPublic={isPublic}
+                    club_id={id}
+                    isJoin={isJoin}
+                    isMod={moderator}
+                    isAdmin={isAdmin}
+                    question={clubData.question}
+                    isRequest={isRequest}
+                  />
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded border mt-2 p-2">
+            <div className="bg-white rounded border mt-2 p-2 mb-8">
               <TabsBar
                 club_id={id}
                 description={clubData.description}

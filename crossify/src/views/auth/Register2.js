@@ -8,6 +8,7 @@ import CryptoJS from "crypto-js";
 import PulseLoader from "react-spinners/PulseLoader";
 import { Formik } from "formik";
 import $ from "jquery";
+import moment from "moment";
 
 export default function Register2() {
   let history = useHistory();
@@ -242,7 +243,7 @@ export default function Register2() {
                                 onChange={(e) => setPhoto(e.target.files[0])}
                               />
                               <label for="imageUpload">
-                                <i class="fas fa-pen ml-2  text-sm"></i>
+                                <i className="fas fa-pen ml-2  text-sm"></i>
                               </label>
                             </div>
                             <div
@@ -295,6 +296,7 @@ export default function Register2() {
                               id="reg-country"
                               type="date"
                               name="dob"
+                              max={moment(new Date()).format("YYYY-MM-DD")}
                               value={dob}
                               onChange={(e) => onChange(e)}
                               className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"

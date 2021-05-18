@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Member = (props) => {
-  console.log(props);
   return (
     //todo GOLU set profile link in this one
     <Link

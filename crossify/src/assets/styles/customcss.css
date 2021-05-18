@@ -138,6 +138,10 @@
   color: #f82d59;
 }
 
+.object-cover {
+  object-fit: cover;
+}
+
 .bg-brightalpha {
   background-color: #f43961;
 }
@@ -1547,11 +1551,6 @@ div.sticky {
 
 .addeventatc_dropdown .drop_markup {
   background-color: #f4f4f4;
-}
-
-::selection {
-  color: #fff;
-  background: #d43f8d;
 }
 
 .container2 {

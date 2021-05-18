@@ -99,7 +99,7 @@ export default class SweetAlertModal extends Component {
       <div>
         {this.state.isMember ? (
           <button className=" text-lg mr-2 " type="button">
-            <i class="fas fa-level-down-alt text-orange-500 text-lg"></i>
+            <i className="fas fa-level-down-alt text-orange-500 text-lg"></i>
           </button>
         ) : (
           <button

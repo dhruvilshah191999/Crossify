@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import ContextData from "./ContextData";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import GridLoader from "react-spinners/GridLoader";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
@@ -131,10 +132,25 @@ const Routing = () => {
 };
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const handleIsLoading = (childData) => {
+    setIsLoading(true);
+  };
   return (
     <BrowserRouter>
-      <ContextData />
-      <Routing />
+      <ContextData handleIsLoading={handleIsLoading} />
+      {isLoading ? (
+        <Routing />
+      ) : (
+        <>
+          <div
+            className="flex justify-center items-center"
+            style={{ height: "100vh" }}
+          >
+            <GridLoader color="#36D7B7" size={15} />
+          </div>
+        </>
+      )}
     </BrowserRouter>
   );
 }

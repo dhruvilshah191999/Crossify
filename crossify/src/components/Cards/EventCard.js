@@ -14,6 +14,7 @@ const EventCard = (props) => {
   const [loginstate, setLogin] = useState(false);
   const [like, setLike] = useState(false);
   const token = localStorage.getItem("jwt");
+
   var datetoShow = moment(props.data.startdate).utc();
   const showEvents = (event_id) => {
     history.push("/events/event=" + event_id);
@@ -22,7 +23,10 @@ const EventCard = (props) => {
   useEffect(() => {
     if (token) {
       setLogin(true);
-      const b = users.fav_event.find((e) => e === props.data._id);
+      const b =
+        (users.fav_event &&
+          users.fav_event.find((e) => e === props.data._id)) ||
+        false;
       if (b) {
         setLike(true);
       }
@@ -76,6 +80,7 @@ const EventCard = (props) => {
       );
       if (finaldata.data.is_error) {
         console.log(finaldata.data.message);
+        notifySomethingWentWrong();
       } else {
         users.fav_event.pop(props.data._id);
         setLike(false);
@@ -105,7 +110,7 @@ const EventCard = (props) => {
            
           </div> */}
           <div className="text-xs text-gray-600 flex flex-row mt-1 ">
-            <div className="truncate max-ch-30 capitalize">
+            <div className="truncate max-ch-30 ">
               <i className="fas fa-map-marker-alt mr-1 "></i>{" "}
               {props.data.location} , {props.data.city}
             </div>
@@ -113,7 +118,7 @@ const EventCard = (props) => {
           <div className="flex">
             <div>
               <div
-                className="text-xl  mt-1 font-semibold truncate leading-snug cursor-pointer capitalize "
+                className="text-xl  mt-1 font-semibold truncate leading-snug cursor-pointer  "
                 onClick={() => showEvents(props.data._id)}
               >
                 {props.data.event_name}

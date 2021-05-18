@@ -54,7 +54,11 @@ export default function Sidebar() {
           >
             <div className="flex flex-row items-center ">
               <div>
-                <img className="w-8 ml-4 inline-block pt-2 " src={logo} />
+                <img
+                  className="w-8 ml-4 inline-block pt-2 "
+                  src={logo}
+                  alt="brand"
+                />
               </div>
               <div>
                 <span className="font-semibold text-xl tracking-tight text-gray-600 px-2 ml-2">

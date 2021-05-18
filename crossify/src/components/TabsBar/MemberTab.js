@@ -145,8 +145,8 @@ class ContactList extends React.Component {
     let contacts = this.state.displayedContacts;
 
     return (
-      <div className="relative flex flex-row min-w-0 break-words w-full mb-6  rounded-lg  border-0">
-        <div className="w-1/3">
+      <div className="relative flex flex-col md:flex-row min-w-0 break-words w-full mb-6  rounded-lg  border-0">
+        <div className="w-full md:w-1/3">
           <ul className="ml-4 mr-4 rounded-lg ">
             <div className="p-4 font-semibold text-lg mx-3 border-b">
               Category
@@ -154,7 +154,7 @@ class ContactList extends React.Component {
             {this.renderSideMenu()}
           </ul>
         </div>
-        <div className="bg-white w-2/3 rounded px-6 shadow ml-auto">
+        <div className="bg-white w-full md:w-2/3 rounded px-6 shadow ml-auto">
           <div className="border-l-4 border-red-400 -ml-6 pl-6 flex items-center justify-between my-4">
             <div className="font-semibold text-gray-800">Member List</div>
           </div>

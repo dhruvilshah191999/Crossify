@@ -4,7 +4,6 @@ import Moment from "moment";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 import Navbar from "components/Navbars/ClubNavbar";
-import dance_cat from "assets/img/travel_cat.jpg";
 import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/SweetAlerts/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";
@@ -72,9 +71,7 @@ export default function EventPage(props) {
         ) {
           SetIsFull(true);
         }
-        setTimeout(() => {
-          setloading(true);
-        }, 500);
+        setloading(true);
       }
     }
 
@@ -175,7 +172,6 @@ export default function EventPage(props) {
         />
         <div className="flex flex-col md:mx-0 lg:mx-28">
           <div
-            onLoadStart={(e) => setTimeout(10000)}
             // style={{ minHeight: "" }}
             className="flex flex-col md:flex-row flex-nowrap  mt-16 justify-between xs:items-center sm:items-center items-start flex-shrink-0"
           >
@@ -187,7 +183,7 @@ export default function EventPage(props) {
               />
             </div>
 
-            <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container">
+            <div className="pt-2 px-2 lg:pt-4 flex flex-col event-side-container ml-4">
               <div className="flex flex-row justify-between items-center">
                 <div className="flex flex-col items-center">
                   <div className="text-alpha text-xl font-semibold uppercase pl-1  pt-2">
@@ -199,7 +195,7 @@ export default function EventPage(props) {
                 </div>
                 <div>
                   <h1
-                    className="font-semibold text-2xl text-center ml-4"
+                    className="font-semibold text-2xl text-center ml-4 "
                     style={{ textTransform: "capitalize" }}
                   >
                     {eventdetails.event_name}
@@ -298,15 +294,15 @@ export default function EventPage(props) {
                   <motion.button
                     className={
                       !isLike
-                        ? "w-full text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        : "w-full text-white bg-red-500 shadow hover:bg-white border border-solid border-red-500 hover:text-red-500 active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        ? "w-full text-likealpha bg-white shadow border border-solid hover:bg-alpha hover:text-white active:bg-red-600  font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        : "w-full text-white bg-brightalpha shadow hover:bg-white border border-solid hover:text-alpha active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     }
                     type="button"
                     onClick={isLike ? (e) => deletelike(e) : (e) => addlike(e)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <i className="fas fa-heart"></i> Like
+                    <i className="fas fa-heart"></i> {isLike ? "Liked" : "Like"}
                   </motion.button>
                 </div>
                 &nbsp;
@@ -319,34 +315,32 @@ export default function EventPage(props) {
                   ></BigShareButton>
                 </div>
               </div>
-              {loading && (
-                <div
-                  title="Add to Calendar"
-                  className="addeventatc mt-1  text-xs rounded-lg"
-                  style={{ fontSize: "smaller !important" }}
-                  data-styling="none"
-                >
-                  <span className="uppercase">
-                    <i className="far fa-calendar-plus text-base"></i> &nbsp;Add
-                    to Calendar
-                  </span>
-                  <span className="arrow">&nbsp;</span>
-                  <span className="start">{eventdetails.startdate}</span>
-                  <span className="end">{eventdetails.date}</span>
-                  <span className="timezone">Asia/Kolkata</span>
-                  <span className="title">{eventdetails.event_name}</span>
-                  <span className="description">
-                    {eventdetails.description}
-                  </span>
-                  <span className="location">
-                    {eventdetails.location +
-                      ", " +
-                      eventdetails.city +
-                      ", " +
-                      eventdetails.state}
-                  </span>
-                </div>
-              )}
+
+              <div
+                title="Add to Calendar"
+                className="addeventatc mt-1  text-xs rounded-lg"
+                style={{ fontSize: "smaller !important" }}
+                data-styling="none"
+              >
+                <span className="uppercase">
+                  <i className="far fa-calendar-plus text-base"></i> &nbsp;Add
+                  to Calendar
+                </span>
+                <span className="arrow">&nbsp;</span>
+                <span className="start">{eventdetails.startdate}</span>
+                <span className="end">{eventdetails.date}</span>
+                <span className="timezone">Asia/Kolkata</span>
+                <span className="title">{eventdetails.event_name}</span>
+                <span className="description">{eventdetails.description}</span>
+                <span className="location">
+                  {eventdetails.location +
+                    ", " +
+                    eventdetails.city +
+                    ", " +
+                    eventdetails.state}
+                </span>
+              </div>
+
               <div className="flex justify-center mt-2">
                 <JoinEventButton
                   eventid={eventdetails._id}
@@ -474,41 +468,3 @@ export default function EventPage(props) {
     );
   }
 }
-
-EventPage.defaultProps = {
-  eventName: "Exhibition Hack",
-  eventLocation: "Ghatlodia, Ahmedabad",
-  dateAndTime: "Saturday  Feb 14 13:45 (IST)",
-  hostedBy: "GreyHat Badshahs",
-  hostedByPrivacy: "Public",
-  hostedByImg: dance_cat,
-  eligibility: " Minimin age of person shoul be 18 years old.",
-  peopleGoing: 34,
-  description:
-    "My house is a super cozy and eclectically decorated craftsman style home with a fenced in backyard for pooches. Its situated in the historic Observatory Hill neighborhood of Pittsburgh.Its 100% a short term rental and no one lives there full time so its perfect for small get togethers, meetings and photo shoots.  Ive hosted a number of shoots and video productions as well as small intimate parties and meetings.  There is a stocked coffee station and plenty of parking on the street. I've spent years collecting decorations and furniture to create an inviting fun space. It's in a unique location that is just 4 miles from downtown and 2 miles to the stadiums. I’ve found that I can get anywhere in the area quickly from this spot. There are always plenty of Ubers/Lyfts available in minutes.",
-  day: 27,
-  month: "FEB",
-  qna: [
-    {
-      question: "What special about this ?",
-      answer: "Nothing",
-    },
-    {
-      question: "Is there any fees required ?",
-      answer: "No It's Free for all. Enjoy",
-    },
-    {
-      question: "How much people should I expect ?",
-      answer: "around 40-50 people usually present in this type of event.",
-    },
-  ],
-  tags: [
-    "Sports",
-    "Tech",
-    "Science",
-    "Computers",
-    "Programming",
-    "Coding",
-    "Hacking",
-  ],
-};

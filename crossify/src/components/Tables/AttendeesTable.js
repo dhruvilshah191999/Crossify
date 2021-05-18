@@ -127,7 +127,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
 export default function App(props) {
   const { id } = useParams();
-  const { users, EventData } = useContext(UserContext);
+  const { users } = useContext(UserContext);
   const getSelectedAndArrived = async (e) => {
     const IDlist = selectedFlatRows.map((el) => el.values.id);
     const config = {
