@@ -11,7 +11,7 @@ import io from "socket.io-client";
 import urlObject from "../../config/default.json";
 var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
-  transport: ["websocket", "polling", "flashsocket"],
+  transport: ["websocket"],
 });
 
 export default function Navbar(props) {

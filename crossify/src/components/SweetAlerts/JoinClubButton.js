@@ -56,6 +56,9 @@ class SweetAlertModal extends Component {
 
   removeThisMember = async () => {
     const token = localStorage.getItem("jwt");
+    this.setState({
+      alert: null,
+    });
     const config = {
       method: "POST",
       header: {
