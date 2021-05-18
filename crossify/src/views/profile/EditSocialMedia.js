@@ -14,7 +14,7 @@ function EditSocialMedia() {
     SetSformData({ ...SformData, [e.target.name]: e.target.value });
 
   useEffect(() => {
-  const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("jwt");
     async function fetchData() {
       const config = {
         method: "POST",
@@ -104,9 +104,6 @@ function EditSocialMedia() {
                   LinkedIn
                 </label>
                 <div className="relative flex w-full flex-wrap items-stretch">
-                  <span className="z-10 h-full leading-snug font-normal absolute text-center  absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                    <i className="fab fa-linkedin text-linkedin text-2xl"></i>
-                  </span>
                   <input
                     type="text"
                     placeholder="Example : www.linkedin.com/in/hackershil"
@@ -115,6 +112,9 @@ function EditSocialMedia() {
                     value={linkedin}
                     onChange={(e) => onChange(e)}
                   />
+                  <span className="absolute h-full leading-snug font-normal text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <i className="fab fa-linkedin text-linkedin text-2xl"></i>
+                  </span>
                 </div>
               </div>
               <div className="w-full lg:w-6/12 px-4">
@@ -125,9 +125,6 @@ function EditSocialMedia() {
                   Facebook
                 </label>
                 <div className="relative flex w-full flex-wrap items-stretch">
-                  <span className="z-10 h-full leading-snug font-normal absolute text-center text-blue-600 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                    <i className="fab fa-facebook-square text-2xl"></i>
-                  </span>
                   <input
                     type="text"
                     placeholder="Example : www.facebook.com/harshil.y.patel"
@@ -136,6 +133,9 @@ function EditSocialMedia() {
                     value={facebook}
                     onChange={(e) => onChange(e)}
                   />
+                  <span className="absolute h-full leading-snug font-normal text-center text-blue-600 bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <i className="fab fa-facebook-square text-2xl"></i>
+                  </span>
                 </div>
               </div>
               <div className="w-full lg:w-6/12 px-4">
@@ -146,9 +146,6 @@ function EditSocialMedia() {
                   Twitter
                 </label>
                 <div className="relative flex w-full flex-wrap items-stretch">
-                  <span className="z-10 h-full leading-snug font-normal absolute text-center text-blue-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                    <i className="fab fa-twitter text-2xl"></i>
-                  </span>
                   <input
                     type="text"
                     placeholder="Example : www.twitter.com/hackershil"
@@ -157,6 +154,9 @@ function EditSocialMedia() {
                     value={twitter}
                     onChange={(e) => onChange(e)}
                   />
+                  <span className="absolute h-full leading-snug font-normal text-center text-blue-400 bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <i className="fab fa-twitter text-2xl"></i>
+                  </span>
                 </div>
               </div>
               <div className="w-full lg:w-6/12 px-4">
@@ -167,12 +167,6 @@ function EditSocialMedia() {
                   Instagram
                 </label>
                 <div className="relative flex w-full flex-wrap items-stretch">
-                  <span className="z-10 h-full leading-snug font-normal absolute text-center  absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                    <i
-                      className="fab fa-instagram text-pink-500 text-2xl"
-                      style={{ color: "#bc2a8d" }}
-                    ></i>
-                  </span>
                   <input
                     type="text"
                     placeholder="Example : www.instagram.com/hackershil"
@@ -181,6 +175,12 @@ function EditSocialMedia() {
                     value={instagram}
                     onChange={(e) => onChange(e)}
                   />
+                  <span className="absolute h-full leading-snug font-normal text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <i
+                      className="fab fa-instagram text-pink-500 text-2xl"
+                      style={{ color: "#bc2a8d" }}
+                    ></i>
+                  </span>
                 </div>
               </div>
             </div>

@@ -119,7 +119,9 @@ function MyModal(props) {
             validate={() => {
               const errors = {};
               if (!event_name) {
-                errors.event_name = "Club name is required !";
+                errors.event_name = "Event name is required !";
+              } else if (event_name.length > 25) {
+                errors.event_name = "Event name is too long !";
               } else if (category.length === 0) {
                 errors.category = "Category is required !";
               } else if (!address) {
