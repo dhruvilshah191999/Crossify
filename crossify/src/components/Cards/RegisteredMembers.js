@@ -79,19 +79,20 @@ class RegisteredMembers extends Component {
               type="text"
               placeholder="Find your friends..."
               className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
-              classNAme="search"
+              className="search"
               onChange={this.searchHandler}
             />
           </div>
         </div>
 
         <div className="flex flex-row flex-wrap overflow-x-auto max-h-300-px mt-2 ">
-          {this.state.members.map((el) => {
+          {this.state.members.map((el, index) => {
             return (
               <Member
                 image={el.profile_photo}
                 name={el.name}
                 user_id={el.user_id}
+                key={index}
               />
             );
           })}

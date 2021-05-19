@@ -149,9 +149,10 @@ class MyModal extends Component {
             className="overflow-y"
             style={{ maxHeight: 320, overflowY: "scroll" }}
           >
-            {this.state.data.reports.map((el) => (
+            {this.state.data.reports.map((el, index) => (
               <ChatMessage
                 message={el.report}
+                key={index}
                 time={el.date}
                 username={
                   this.state.data.user_data[0].fname +

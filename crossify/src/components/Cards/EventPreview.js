@@ -186,8 +186,8 @@ export default function EventPreview(props) {
                     Tags
                   </div>
                   <div className="mt-1 text-lg text-gray-700 w-full lg:w-3/4 leading-relaxed">
-                    {eventdetails.tags.map((el) => (
-                      <Tag data={el}></Tag>
+                    {eventdetails.tags.map((el, index) => (
+                      <Tag data={el} key={index}></Tag>
                     ))}
                   </div>
                 </div>
@@ -243,9 +243,8 @@ export default function EventPreview(props) {
                               <p>{el.answer}</p>
                             </details>
                           );
-                        }
-                        else {
-                          return <></>
+                        } else {
+                          return <></>;
                         }
                       })
                     ) : (

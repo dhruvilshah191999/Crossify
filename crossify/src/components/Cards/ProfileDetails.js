@@ -200,8 +200,8 @@ class ProfileDetails extends Component {
             </div>
             <hr></hr>
             <div className="p-2 mt-1">
-              {this.state.tag.map((el) => (
-                <Tag data={el}></Tag>
+              {this.state.tag.map((el, index) => (
+                <Tag data={el} key={index}></Tag>
               ))}
             </div>
             <div className="text-2xl text-alpha p-2 mt-2 ">
@@ -236,8 +236,7 @@ ProfileDetails.defaultProps = {
     { club_name: "Decoy Boy", designation: "Member" },
   ],
   place: "Ahmedabad , GJ",
-  bio:
-    "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
+  bio: "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
 };
 
 export default ProfileDetails;

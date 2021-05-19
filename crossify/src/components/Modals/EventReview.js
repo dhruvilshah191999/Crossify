@@ -302,8 +302,8 @@ class MyModal extends Component {
                 <div className="text-gray-700  ">
                   {" "}
                   {this.state.loading
-                    ? this.state.event_data.tags.map((el) => (
-                        <Tag data={el}></Tag>
+                    ? this.state.event_data.tags.map((el, index) => (
+                        <Tag data={el} key={index}></Tag>
                       ))
                     : ""}
                 </div>
@@ -348,12 +348,13 @@ class MyModal extends Component {
                       className="overflow-y"
                       style={{ maxHeight: 320, overflowY: "scroll" }}
                     >
-                      {this.state.message.map((el) => (
+                      {this.state.message.map((el, index) => (
                         <ChatMessage
                           message={el.message}
                           time={el.date}
                           username={el.name}
                           profilePic={el.image}
+                          key={index}
                         />
                       ))}
                     </div>
