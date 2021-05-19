@@ -13,10 +13,12 @@ import ViewFeedback from "components/Modals/ViewFeedback";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import PulseLoader from "react-spinners/PulseLoader";
 import DeleteMyEvent from "components/SweetAlerts/DeleteMyEventButton";
+import MultipleSelect from "components/Inputs/MultiSelect";
 
 export default function GeneralSettings(props) {
   let history = useHistory();
   const { id } = useParams();
+  const [category, setCategory] = useState([]);
   const [status, setStatus] = useState("");
   const [loading, setloading] = useState(false);
   const [submitloading, setsubmitLoading] = useState(false);
@@ -58,6 +60,10 @@ export default function GeneralSettings(props) {
         event_name={event_name}
       />
     );
+  };
+
+  const handleCategory = (childData) => {
+    setCategory(childData);
   };
 
   const onChange = (e) =>
@@ -131,6 +137,9 @@ export default function GeneralSettings(props) {
         setlongitude(finaldata.data.event_data.longitude);
         setStateName(finaldata.data.event_data.state);
         setCityName(finaldata.data.event_data.city);
+        setCategory(finaldata.data.event_data.category_list);
+        console.log(finaldata.data.event_data.category_list);
+
         setTimeout(() => {
           setloading(true);
         }, 100);
@@ -138,7 +147,6 @@ export default function GeneralSettings(props) {
     }
     fetchData();
   }, [id]);
-
   const handleCallback = (childData) => {
     setlatitude(childData.lat);
     setlongitude(childData.lng);
@@ -560,10 +568,26 @@ export default function GeneralSettings(props) {
                             />
                           </div>
                         </div>
+                        {/* here */}
+                        <div className="w-full lg:w-12/12 px-4">
+                          <div className="relative w-full mb-3">
+                            <label
+                              className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                              htmlFor="grid-password"
+                            >
+                              Categories
+                            </label>
+                            <MultipleSelect
+                              selectedValues={category}
+                              parentCallback={handleCategory}
+                            ></MultipleSelect>
+                          </div>
+                        </div>
+                        {/* to here */}
                       </div>
                     </form>
                     <div className="px-4 mt-2 text-right">
-                      <DeleteMyEvent event_id={id}/>
+                      <DeleteMyEvent event_id={id} />
                     </div>
                   </div>
                 </div>

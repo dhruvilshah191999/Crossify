@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "components/Sidebar/ManageClubSidebar.js";
 import CardSettings from "components/Cards/CardSettings.js";
 import CardProfile from "components/Cards/CardProfile.js";
@@ -73,7 +73,7 @@ export default function Settings() {
             <CardSettings data={clubData} />
           </div>
           <div className="w-full lg:w-3/10 px-4">
-            <CardProfile clubData={clubData} count={count} club_id={id}/>
+            <CardProfile clubData={clubData} count={count} club_id={id} />
           </div>
         </div>
       ) : (
