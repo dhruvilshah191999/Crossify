@@ -137,9 +137,7 @@ export default function GeneralSettings(props) {
         setlongitude(finaldata.data.event_data.longitude);
         setStateName(finaldata.data.event_data.state);
         setCityName(finaldata.data.event_data.city);
-        setCategory(finaldata.data.event_data.category_list);
-        console.log(finaldata.data.event_data.category_list);
-
+        setCategory(finaldata.data.event_data.category_data);
         setTimeout(() => {
           setloading(true);
         }, 100);

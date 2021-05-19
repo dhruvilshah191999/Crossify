@@ -806,12 +806,13 @@ router.post('/event-details', async function (req, res, next) {
           from: 'category_details',
           localField: 'category_list',
           foreignField: '_id',
-          as: 'club_details',
+          as: 'category_data',
         },
       },
       {
         $match: {
-          _id: mongoose.Types.ObjectId(event_id),is_active: true,
+          _id: mongoose.Types.ObjectId(event_id),
+          is_active: true,
         },
       },
     ])
@@ -828,8 +829,6 @@ router.post('/event-details', async function (req, res, next) {
           is_error: false,
           message: 'Data Send',
         };
-        console.log("DATA");
-        console.log(finaldata);
         return res.status(200).send(finaldata);
       }
     });
