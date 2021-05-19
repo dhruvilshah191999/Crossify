@@ -765,19 +765,53 @@ router.post('/get-manage-club', auth, async function (req, res, next) {
 
 router.post('/event-details', async function (req, res, next) {
   let { event_id } = req.body;
+  // event_details
+  //   .aggregate([
+  //     {
+  //       $lookup: {
+  //         from: 'club_details',
+  //         localField: 'club_id',
+  //         foreignField: '_id',
+  //         as: 'club_details',
+  //       },
+  //     },
+  //     {
+  //       $match: {
+  //         _id: mongoose.Types.ObjectId(event_id),
+  //       },
+  //     },
+  //   ])
+  //   .exec(async (err, data) => {
+  //     if (err) {
+  //       var error = {
+  //         is_error: true,
+  //         message: err.message,
+  //       };
+  //       return res.status(500).send(error);
+  //     } else {
+  //       var finaldata = {
+  //         event_data: data[0],
+  //         is_error: false,
+  //         message: 'Data Send',
+  //       };
+  //       console.log(finaldata);
+  //       return res.status(200).send(finaldata);
+  //     }
+  //   });
+
   event_details
     .aggregate([
       {
         $lookup: {
-          from: 'club_details',
-          localField: 'club_id',
+          from: 'category_details',
+          localField: 'category_list',
           foreignField: '_id',
           as: 'club_details',
         },
       },
       {
         $match: {
-          _id: mongoose.Types.ObjectId(event_id),
+          _id: mongoose.Types.ObjectId(event_id),is_active: true,
         },
       },
     ])
@@ -794,6 +828,8 @@ router.post('/event-details', async function (req, res, next) {
           is_error: false,
           message: 'Data Send',
         };
+        console.log("DATA");
+        console.log(finaldata);
         return res.status(200).send(finaldata);
       }
     });
