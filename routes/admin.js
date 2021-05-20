@@ -1367,7 +1367,8 @@ router.post('/update-club', async (req, res) => {
     city,
     photo,
     question,
-    category
+    category,
+    tags
   } = req.body;
   let objectIdArray = category.map((s) => ObjectId(s._id));
   var club = club_details.updateOne(
@@ -1389,7 +1390,8 @@ router.post('/update-club', async (req, res) => {
       longitude,
       status: privacy,
       question,
-      category_list:objectIdArray
+      category_list: objectIdArray,
+      tags
     }
   );
   club.exec((err, data) => {

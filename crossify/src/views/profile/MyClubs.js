@@ -4,6 +4,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { UserContext } from "context/usercontext";
 import EmptyContainer from "components/sections/EmptyContainer";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const getSegment = (totalEvents, curIndex, eventPerPage) => {
   const end = curIndex * eventPerPage;
@@ -12,6 +13,7 @@ const getSegment = (totalEvents, curIndex, eventPerPage) => {
 };
 export default function MyClubs() {
   const { users } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [tabIndex, toggleTabIndex] = useState(1);
   const [likedClubs, setLikedClubs] = useState([]);
   const [manageClubs, setManageClubs] = useState([]);
@@ -213,7 +215,7 @@ export default function MyClubs() {
     );
   });
 
-  if (pagesManage.length === 0) {
+  if (pagesManage.length === 0 && !loading) {
     renderpagesManage =
       manageClubs.length !== 0 ? (
         <div
@@ -241,7 +243,7 @@ export default function MyClubs() {
         <EmptyContainer />
       );
   }
-  if (pagesLiked.length === 0) {
+  if (pagesLiked.length === 0 && !loading) {
     renderpagesLiked =
       likedClubs.length !== 0 ? (
         <div
@@ -269,7 +271,7 @@ export default function MyClubs() {
         <EmptyContainer />
       );
   }
-  if (pagesJoined.length === 0) {
+  if (pagesJoined.length === 0 && !loading) {
     renderpagesJoined =
       joinedClubs.length !== 0 ? (
         <div
@@ -364,10 +366,16 @@ export default function MyClubs() {
         setManageClubs(finaldata.data.data);
       }
     }
+    const getAllTheData = async () => {
+      setLoading(true);
+      await getData();
+      await getlikedata();
+      await getadmindata();
+      setLoading(false);
+    };
+    getAllTheData();
 
     getData();
-    getlikedata();
-    getadmindata();
   }, []);
 
   return (
@@ -423,26 +431,37 @@ export default function MyClubs() {
           />
         </div>
       </div>
-      <div>
-        <div className="ml-4 mt-10 bg-gray-200 flex flex-wrap flex-row">
-          {tabIndex === 2
-            ? renderjoinedClubs
-            : tabIndex === 0
-            ? renderlikedClubs
-            : renderfilteredManageClubs}
+      {loading ? (
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "63vh" }}
+        >
+          <ScaleLoader color="#825ee4" size={60} />
         </div>
-      </div>
-      <div className="py-2 justify-center flex">
-        <div className="block">
-          <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
-            {tabIndex === 1
-              ? renderpagesManage
+      ) : (
+        <div>
+          <div className="mt-10 bg-gray-200 flex flex-wrap gap-1 ">
+            {tabIndex === 2
+              ? renderjoinedClubs
               : tabIndex === 0
-              ? renderpagesLiked
-              : renderpagesJoined}
-          </ul>
+              ? renderlikedClubs
+              : renderfilteredManageClubs}
+          </div>
         </div>
-      </div>
+      )}
+      {loading || (
+        <div className="py-2 justify-center flex">
+          <div className="block">
+            <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
+              {tabIndex === 1
+                ? renderpagesManage
+                : tabIndex === 0
+                ? renderpagesLiked
+                : renderpagesJoined}
+            </ul>
+          </div>
+        </div>
+      )}
     </>
   );
 }

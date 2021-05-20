@@ -360,7 +360,7 @@ export default function EventPage(props) {
                   Description
                 </div>
                 <div className="mt-1 text-lg text-gray-700 lg:w-3/4 leading-relaxed">
-                  {eventdetails.description}
+                  <pre>{eventdetails.description}</pre>
                 </div>
               </div>
               <div className="flex flex-col lg:flex-row py-4">
@@ -368,7 +368,7 @@ export default function EventPage(props) {
                   Eligibility
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
-                  {eventdetails.eligibility}
+                  <pre>{eventdetails.eligibility}</pre>
                 </div>
               </div>
               <div className="flex flex-col lg:flex-row py-4">

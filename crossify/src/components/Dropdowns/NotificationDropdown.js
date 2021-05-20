@@ -227,6 +227,7 @@ const NotificationDropdown = () => {
                 users.inbox
                   .map((el, index) => (
                     <div
+                      key={index}
                       className={
                         el.isRead
                           ? "w-full flex p-2 pt-2 border-b2 pb-4 cursor-pointer"

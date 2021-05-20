@@ -124,7 +124,6 @@ const ClubCard = (props) => {
           <div
             className="text-xl mt-2 font-semibold truncate leading-snug max-ch-30 cursor-pointer"
             onClick={() => showClubs(props.data._id)}
-            style={{ lineHeight: "1.2rem" }}
           >
             {props.data.club_name}
           </div>

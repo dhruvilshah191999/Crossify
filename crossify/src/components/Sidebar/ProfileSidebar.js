@@ -100,7 +100,10 @@ export default function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
+              <li
+                className="items-center"
+                onClick={() => setCollapseShow("hidden")}
+              >
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -121,29 +124,11 @@ export default function Sidebar() {
                   &nbsp;Profile
                 </Link>
               </li>
-              <li className="items-center">
-                {/* <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/dashboard") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/admin/dashboard"
-                >
-                  <i
-                    className={
-                      "fas fa-tv mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/dashboard") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
-                  Dashboard
-                </Link> */}
-              </li>
 
-              <li className="items-center">
+              <li
+                className="items-center"
+                onClick={() => setCollapseShow("hidden")}
+              >
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -164,7 +149,10 @@ export default function Sidebar() {
                   Clubs
                 </Link>
               </li>
-              <li className="items-center">
+              <li
+                className="items-center"
+                onClick={() => setCollapseShow("hidden")}
+              >
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -194,7 +182,10 @@ export default function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
+              <li
+                className="items-center"
+                onClick={() => setCollapseShow("hidden")}
+              >
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -228,7 +219,10 @@ export default function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
+              <li
+                className="items-center"
+                onClick={() => setCollapseShow("hidden")}
+              >
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -252,7 +246,10 @@ export default function Sidebar() {
                   General
                 </Link>
               </li>
-              <li className="items-center">
+              <li
+                className="items-center"
+                onClick={() => setCollapseShow("hidden")}
+              >
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -277,7 +274,10 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              <li className="items-center">
+              <li
+                className="items-center"
+                onClick={() => setCollapseShow("hidden")}
+              >
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -302,7 +302,10 @@ export default function Sidebar() {
                   Social Media
                 </Link>
               </li>
-              <li className="items-center">
+              <li
+                className="items-center"
+                onClick={() => setCollapseShow("hidden")}
+              >
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +

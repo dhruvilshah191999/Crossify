@@ -7,7 +7,7 @@ const ClubView = (props) => {
   return (
     <div
       className=" rounded-lg shadow p-2 mr-4 hover:bg-gray-200"
-      style={{ flex: "1 1 50%", maxWidth: 350 }}
+      style={{ flex: "1 1 30%", maxWidth: 350 }}
     >
       <div className="flex flex-row">
         <div className="flex-shrink-0">
@@ -19,6 +19,7 @@ const ClubView = (props) => {
         </div>
         <div className="flex flex-col ">
           <div className="font-semibold text-lg">{props.club_name}</div>
+
           <div className="text-sm text-gray-700">{"Admin"}</div>
         </div>
       </div>

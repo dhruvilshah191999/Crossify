@@ -44,6 +44,7 @@ function Message(props) {
             <img
               src={props.profilePic}
               className="rounded-full cursor-pointer"
+              style={{ width: "2rem", height: "2rem" }}
               alt="profile"
               onClick={() => openModal(props.userId)}
             />
@@ -85,6 +86,7 @@ function Message(props) {
             <img
               src={props.profilePic}
               className="rounded-full cursor-pointer"
+              style={{ width: "2rem", height: "2rem" }}
               alt="profile"
               onClick={() => openModal(props.userId)}
             />
