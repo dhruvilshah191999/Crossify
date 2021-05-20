@@ -36,6 +36,7 @@ router.post('/general-update', async function (req, res, next) {
     ending_date,
     ending_time,
     ending_date_registration,
+    tags
   } = req.body;
   var startdate = new Date(starting_date + ' ' + starting_time);
   var date = new Date(ending_date + ' ' + ending_time);
@@ -56,6 +57,7 @@ router.post('/general-update', async function (req, res, next) {
       startdate,
       ending_date_registration,
       date,
+      tags
     }
   );
   await check.exec((error, data) => {
