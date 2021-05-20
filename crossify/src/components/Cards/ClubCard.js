@@ -124,7 +124,6 @@ const ClubCard = (props) => {
           <div
             className="text-xl mt-2 font-semibold truncate leading-snug max-ch-30 cursor-pointer"
             onClick={() => showClubs(props.data._id)}
-            style={{ lineHeight: "1.2rem" }}
           >
             {props.data.club_name}
           </div>
@@ -140,9 +139,17 @@ const ClubCard = (props) => {
           >
             {props.data.tags.map((tag, index) => {
               if (index + 1 === props.data.tags.length) {
-                return <span className="capitalize">{tag} </span>;
+                return (
+                  <span className="capitalize" key={index + 1}>
+                    {tag}{" "}
+                  </span>
+                );
               }
-              return <span className="capitalize">{tag} &bull; </span>;
+              return (
+                <span className="capitalize" key={index + 1}>
+                  {tag} &bull;{" "}
+                </span>
+              );
             })}
           </div>
           <div

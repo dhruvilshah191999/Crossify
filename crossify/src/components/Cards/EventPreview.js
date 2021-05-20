@@ -10,6 +10,7 @@ import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/SweetAlerts/JoinEventButton";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function EventPreview(props) {
@@ -55,6 +56,15 @@ export default function EventPreview(props) {
                 {" "}
                 Event Preview
               </h6>
+              <div>
+                <Link
+                  to={"/events/event=" + id}
+                  className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-2 ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  Go to Event
+                </Link>
+              </div>
             </div>
           </div>
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -243,9 +253,8 @@ export default function EventPreview(props) {
                               <p>{el.answer}</p>
                             </details>
                           );
-                        }
-                        else {
-                          return <></>
+                        } else {
+                          return <></>;
                         }
                       })
                     ) : (

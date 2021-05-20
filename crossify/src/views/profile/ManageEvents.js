@@ -6,7 +6,7 @@ export default function Tables() {
   const [data, setdata] = useState([]);
   const [loading, setloading] = useState(false);
   useEffect(() => {
-  const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("jwt");
     async function fetchData() {
       const config = {
         method: "POST",
@@ -36,22 +36,20 @@ export default function Tables() {
   }, []);
   if (loading) {
     return (
-      (
-        <>
-          <div className="flex flex-wrap mt-4">
-            <div className="w-full mb-12 px-4">
-              <ManageEventsTable finaldata={data} />
-            </div>
-            <div className="w-full mb-12 px-4"></div>
+      <>
+        <div className="flex flex-wrap mt-4">
+          <div className="w-full mb-12 px-4">
+            <ManageEventsTable finaldata={data} />
           </div>
-        </>
-      )
+          <div className="w-full mb-12 px-4"></div>
+        </div>
+      </>
     );
   } else {
     return (
       <div
         className="flex justify-center items-center"
-        style={{ height: "60vh" }}
+        style={{ height: "65vh" }}
       >
         <ScaleLoader color="#825ee4" size={60} />
       </div>

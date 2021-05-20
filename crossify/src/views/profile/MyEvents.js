@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { UserContext } from "context/usercontext";
 import EventCalendar from "components/Calendar/MyEventsCalendar";
 import EmptyContainer from "components/sections/EmptyContainer";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const getSegment = (totalEvents, curIndex, eventPerPage) => {
   const end = curIndex * eventPerPage;
@@ -13,6 +14,7 @@ const getSegment = (totalEvents, curIndex, eventPerPage) => {
 };
 export default function MyClubs() {
   const { users } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [tabIndex, toggleTabIndex] = useState(1);
   const [likedEvents, setlikedEvents] = useState([]);
   const [backEvents, setBackEvents] = useState([]);
@@ -21,7 +23,7 @@ export default function MyClubs() {
   const [backIndex, setBackIndex] = useState(1);
   const [upcomingIndex, setUpcomingIndex] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const eventPerPage = 3;
+  const eventPerPage = 6;
   const handleClickLiked = (event) => {
     setLikedIndex(Number(event.target.id));
   };
@@ -192,7 +194,7 @@ export default function MyClubs() {
     );
   });
 
-  if (pageNumbersOld.length === 0) {
+  if (pageNumbersOld.length === 0 && !loading) {
     renderPageNumbersOld =
       pastEvents.length !== 0 ? (
         <div
@@ -220,7 +222,7 @@ export default function MyClubs() {
         <EmptyContainer />
       );
   }
-  if (pageNumbersLiked.length === 0) {
+  if (pageNumbersLiked.length === 0 && !loading) {
     renderPageNumbersLiked =
       likedEvents.length !== 0 ? (
         <div
@@ -248,7 +250,7 @@ export default function MyClubs() {
         <EmptyContainer />
       );
   }
-  if (pageNumbersNew.length === 0) {
+  if (pageNumbersNew.length === 0 && !loading) {
     renderPageNumbersNew =
       newEvents.length !== 0 ? (
         <div
@@ -344,9 +346,14 @@ export default function MyClubs() {
       }
     }
 
-    getData();
-    getlikedata();
-    getpastdata();
+    const getAllTheData = async () => {
+      setLoading(true);
+      await getData();
+      await getlikedata();
+      await getpastdata();
+      setLoading(false);
+    };
+    getAllTheData();
   }, []);
 
   return (
@@ -402,26 +409,37 @@ export default function MyClubs() {
           />
         </div>
       </div>
-      <div>
-        <div className=" mt-10 bg-gray-200 flex flex-wrap flex-row gap-1">
-          {tabIndex === 2
-            ? renderUpcomingEvents
-            : tabIndex === 1
-            ? renderLikedEvents
-            : renderPastEvents}
+      {loading ? (
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "55vh" }}
+        >
+          <ScaleLoader color="#825ee4" size={60} />
         </div>
-      </div>
-      <div className="my-2 justify-center flex">
-        <div className="block">
-          <ul className="flex pl-0 rounded list-none flex-wrap">
-            {tabIndex === 0
-              ? renderPageNumbersOld
+      ) : (
+        <div>
+          <div className=" mt-10 bg-gray-200 flex flex-wrap flex-row gap-1">
+            {tabIndex === 2
+              ? renderUpcomingEvents
               : tabIndex === 1
-              ? renderPageNumbersLiked
-              : renderPageNumbersNew}
-          </ul>
+              ? renderLikedEvents
+              : renderPastEvents}
+          </div>
         </div>
-      </div>
+      )}
+      {loading || (
+        <div className="my-2 justify-center flex">
+          <div className="block">
+            <ul className="flex pl-0 rounded list-none flex-wrap">
+              {tabIndex === 0
+                ? renderPageNumbersOld
+                : tabIndex === 1
+                ? renderPageNumbersLiked
+                : renderPageNumbersNew}
+            </ul>
+          </div>
+        </div>
+      )}
       <hr className="mt-6 mb-6 border-b-1 border-gray-400" />
 
       {upcomingEvents.length > 0 && (

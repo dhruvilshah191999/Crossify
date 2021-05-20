@@ -66,6 +66,7 @@ class MemberProfileDetails extends Component {
     if (finaldata.data.is_error) {
       console.log(finaldata.data.message);
     } else {
+      console.log(finaldata.data.data);
       this.setState({
         profile: finaldata.data.data,
         tag: finaldata.data.tag,
@@ -211,8 +212,8 @@ class MemberProfileDetails extends Component {
           </div>
           <hr></hr>
           <div className="p-2 mt-1">
-            {this.state.tag.map((el) => (
-              <Tag data={el}></Tag>
+            {this.state.tag.map((el, index) => (
+              <Tag data={el} key={index}></Tag>
             ))}
           </div>
           <div
@@ -226,23 +227,20 @@ class MemberProfileDetails extends Component {
             <hr></hr>
           </div>
           <div className="p-2 mt-1 flex flex-wrap mb-2 mt-2 gap-1">
-            {this.state.club.map((el) => (
+            {this.state.club.map((el, index) => (
               <ClubView
+                key={index}
                 club_name={el.club_name}
                 club_img={el.profile_photo}
               ></ClubView>
             ))}
           </div>
-          <div
-            className={
-              this.state.question && this.state.question.length !== 0
-                ? "text-3xl text-alpha p-2 mt-2 "
-                : "hidden"
-            }
-          >
-            <i className="fas fa-clipboard-list "></i>&nbsp; Answer Sheet
-            <hr></hr>
-          </div>
+          {this.state.question && this.state.question.length !== 0 && (
+            <div className="text-3xl text-alpha p-2 mt-2 ">
+              <i className="fas fa-clipboard-list "></i>&nbsp; Answer Sheet{" "}
+              <hr></hr>
+            </div>
+          )}
           <div className="p-2 mt-1 flex flex-wrap flex-col">
             {this.state.question.map((el) =>
               el.club === this.props.club_id
@@ -269,8 +267,7 @@ MemberProfileDetails.defaultProps = {
     { club_name: "Decoy Boy", designation: "Member" },
   ],
   place: "Ahmedabad , GJ",
-  bio:
-    "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
+  bio: "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
   questionsAnswered: [
     {
       question: "Why do you want to join this club ?",

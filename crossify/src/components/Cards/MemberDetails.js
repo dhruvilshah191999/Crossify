@@ -7,7 +7,7 @@ const ClubView = (props) => {
   return (
     <div
       className=" rounded-lg shadow p-2 mr-4 hover:bg-gray-200"
-      style={{ flex: "1 1 50%", maxWidth: 350 }}
+      style={{ flex: "1 1 30%", maxWidth: 350 }}
     >
       <div className="flex flex-row">
         <div className="flex-shrink-0">
@@ -19,6 +19,7 @@ const ClubView = (props) => {
         </div>
         <div className="flex flex-col ">
           <div className="font-semibold text-lg">{props.club_name}</div>
+
           <div className="text-sm text-gray-700">{"Admin"}</div>
         </div>
       </div>
@@ -29,7 +30,13 @@ const ClubView = (props) => {
 class MemberDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = { user_id:this.props.user_id, profile: {}, tag: [], club: [], loading: false };
+    this.state = {
+      user_id: this.props.user_id,
+      profile: {},
+      tag: [],
+      club: [],
+      loading: false,
+    };
   }
 
   async componentDidMount() {
@@ -41,7 +48,7 @@ class MemberDetails extends Component {
       validateStatus: () => true,
     };
     var send_data = {
-      user_id:this.state.user_id,
+      user_id: this.state.user_id,
     };
     const finaldata = await axios.post(
       "/api/profile/MemberProfile",
@@ -235,8 +242,7 @@ MemberDetails.defaultProps = {
     { club_name: "Decoy Boy", designation: "Member" },
   ],
   place: "Ahmedabad , GJ",
-  bio:
-    "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
+  bio: "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
 };
 
 export default MemberDetails;

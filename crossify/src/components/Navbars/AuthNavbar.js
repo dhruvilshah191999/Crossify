@@ -1,12 +1,41 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 // component
 import logo from "../../assets/logos/logo_light.png";
 
+function useComponentVisible(initialIsVisible) {
+  const [navbarOpen, setNavbarOpen] = useState(initialIsVisible);
+  const ref = useRef(null);
+
+  const handleHideDropdown = (event) => {
+    if (event.key === "Escape") {
+      setNavbarOpen(false);
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setNavbarOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleHideDropdown, true);
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("keydown", handleHideDropdown, true);
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  });
+
+  return { ref, navbarOpen, setNavbarOpen };
+}
+
 export default function Navbar(props) {
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const { ref, navbarOpen, setNavbarOpen } = useComponentVisible(false);
+  // const [navbarOpen, setNavbarOpen] = React.useState(false);
 
   return (
     <>
@@ -41,6 +70,7 @@ export default function Navbar(props) {
               "lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none" +
               (navbarOpen ? " block rounded shadow-lg" : " hidden")
             }
+            ref={ref}
             id="example-navbar-warning"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
@@ -65,7 +95,10 @@ export default function Navbar(props) {
                 </Link>
               </li>
 
-              <li className="flex items-center">
+              <li
+                className="flex items-center"
+                onClick={() => setNavbarOpen(false)}
+              >
                 <Link to="/auth/login">
                   <motion.button
                     className="bg-white hover:bg-offwhite text-gray-800 ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-2 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
@@ -77,7 +110,10 @@ export default function Navbar(props) {
                   </motion.button>
                 </Link>
               </li>
-              <li className="flex items-center">
+              <li
+                className="flex items-center"
+                onClick={() => setNavbarOpen(false)}
+              >
                 <Link to="/auth/register">
                   <motion.button
                     className="bg-lightalpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"

@@ -177,7 +177,7 @@ function ClubPage(props) {
           }}
         >
           <div className="flex flex-col flex-wrap lg:mx-20">
-            <div className="flex flex-col md:flex-row flex-wrap md:flex-nowrap mt-2 justify-between xs:items-center sm:items-center items-start flex-shrink-0 ">
+            <div className="flex flex-col md:flex-row flex-wrap md:flex-nowrap mt-4 justify-between xs:items-center sm:items-center items-start flex-shrink-0 ">
               <div className="club-image-div">
                 <img
                   className="overflow-hidden object-contain rounded-lg club-image"
@@ -276,7 +276,7 @@ function ClubPage(props) {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded border mt-2 p-2 mb-8">
+            <div className="bg-white rounded border mt-4 p-2 mb-8">
               <TabsBar
                 club_id={id}
                 description={clubData.description}

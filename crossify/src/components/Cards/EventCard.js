@@ -132,9 +132,17 @@ const EventCard = (props) => {
               >
                 {props.data.tags.map((tag, index) => {
                   if (index + 1 === props.data.tags.length) {
-                    return <span className="capitalize">{tag} </span>;
+                    return (
+                      <span className="capitalize" key={index + 1}>
+                        {tag}{" "}
+                      </span>
+                    );
                   }
-                  return <span className="capitalize">{tag} &bull; </span>;
+                  return (
+                    <span className="capitalize" key={index + 1}>
+                      {tag} &bull;{" "}
+                    </span>
+                  );
                 })}
               </div>
             </div>

@@ -12,7 +12,7 @@ function ProfileClubCard(props) {
     if (b) {
       setcheck(true);
     }
-  },[props]);
+  }, [props]);
 
   const addlike = async (e) => {
     const config = {
@@ -63,7 +63,11 @@ function ProfileClubCard(props) {
   return (
     <div
       className="relative bg-white flex-shrink-0 hover:shadow-lg overflow-hidden border-b-4 border-blue-500 mx-2 mb-4 rounded shadow "
-      style={{ width: 310, marginLeft: "0.5rem", marginRight: "0.5rem" }}
+      style={{
+        flex: "1 1 30%",
+        maxWidth: "380px",
+        minWidth: "300px",
+      }}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.9 }}
     >
