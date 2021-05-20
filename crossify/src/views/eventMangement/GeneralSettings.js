@@ -143,7 +143,7 @@ export default function GeneralSettings(props) {
         setlongitude(finaldata.data.event_data.longitude);
         setStateName(finaldata.data.event_data.state);
         setCityName(finaldata.data.event_data.city);
-        setCategory(finaldata.data.event_data.category_list);
+        setCategory(finaldata.data.event_data.category_data);
         setTags(finaldata.data.event_data.tags);
 
         setTimeout(() => {

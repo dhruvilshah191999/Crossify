@@ -23,7 +23,7 @@ import io from "socket.io-client";
 import { UserContext } from "context/usercontext";
 var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
-  transport: ["websocket", "polling", "flashsocket"],
+  transport: ["websocket"],
 });
 
 function GlobalFilter({

@@ -5,8 +5,9 @@ import io from "socket.io-client";
 import axios from "axios";
 var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
-  transport: ["websocket", "polling", "flashsocket"],
+  transport: ["websocket"],
 });
+//flashsocket polling
 export default class RoomTab extends React.Component {
   state = {
     currentTab: 0,

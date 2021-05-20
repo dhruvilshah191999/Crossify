@@ -9,7 +9,7 @@ import urlObject from "../../config/default.json";
 import io from "socket.io-client";
 var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
-  transport: ["websocket", "polling", "flashsocket"],
+  transport: ["websocket"],
 });
 
 const NotificationDropdown = () => {
@@ -225,7 +225,7 @@ const NotificationDropdown = () => {
               </div>
               {users.inbox &&
                 users.inbox
-                  .map((el) => (
+                  .map((el, index) => (
                     <div
                       className={
                         el.isRead
@@ -233,6 +233,7 @@ const NotificationDropdown = () => {
                           : "w-full flex p-2 pt-2 bg-gray-200 border-b2 pb-4 cursor-pointer"
                       }
                       onClick={() => clickOnNotification(el)}
+                      key={index}
                     >
                       <div className="flex-shrink-0">
                         <img
