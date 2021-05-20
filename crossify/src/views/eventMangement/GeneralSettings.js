@@ -14,11 +14,13 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 import PulseLoader from "react-spinners/PulseLoader";
 import DeleteMyEvent from "components/SweetAlerts/DeleteMyEventButton";
 import MultipleSelect from "components/Inputs/MultiSelect";
+import { InputTagsContainer } from "../../components/Inputs/InputTags";
 
 export default function GeneralSettings(props) {
   let history = useHistory();
   const { id } = useParams();
   const [category, setCategory] = useState([]);
+  const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("");
   const [loading, setloading] = useState(false);
   const [submitloading, setsubmitLoading] = useState(false);
@@ -64,6 +66,10 @@ export default function GeneralSettings(props) {
 
   const handleCategory = (childData) => {
     setCategory(childData);
+  };
+
+  const handleUpdateTags = (tags) => {
+    setTags(tags);
   };
 
   const onChange = (e) =>
@@ -138,7 +144,7 @@ export default function GeneralSettings(props) {
         setStateName(finaldata.data.event_data.state);
         setCityName(finaldata.data.event_data.city);
         setCategory(finaldata.data.event_data.category_list);
-        console.log(finaldata.data.event_data.category_list);
+        setTags(finaldata.data.event_data.tags);
 
         setTimeout(() => {
           setloading(true);
@@ -205,8 +211,8 @@ export default function GeneralSettings(props) {
                 ending_time,
                 maximum_participants,
                 ending_date_registration: endregister_date,
+                tags,
               };
-
               const config = {
                 method: "POST",
                 header: {
@@ -581,6 +587,21 @@ export default function GeneralSettings(props) {
                               selectedValues={category}
                               parentCallback={handleCategory}
                             ></MultipleSelect>
+                          </div>
+                        </div>
+
+                        <div className="w-full lg:w-12/12 px-4">
+                          <div className="relative w-full mb-3">
+                            <label
+                              className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                              htmlFor="grid-password"
+                            >
+                              Tags
+                            </label>
+                            <InputTagsContainer
+                              tags={tags}
+                              handleUpdateTags={handleUpdateTags}
+                            />
                           </div>
                         </div>
                         {/* to here */}
