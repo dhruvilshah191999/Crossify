@@ -12,7 +12,7 @@ function ProfileClubCard(props) {
     if (b) {
       setcheck(true);
     }
-  },[props]);
+  }, [props]);
 
   const addlike = async (e) => {
     const config = {
@@ -123,11 +123,5 @@ function ProfileClubCard(props) {
     </div>
   );
 }
-
-ProfileClubCard.defaultProps = {
-  club_name: "Badshah Gang",
-  tags: ["Tech", "Science"],
-  place: "Ahmedabad , GJ",
-};
 
 export default ProfileClubCard;

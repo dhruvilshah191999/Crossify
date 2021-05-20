@@ -32,7 +32,7 @@ function ClubPage(props) {
   var { id } = useParams();
   const { category, users } = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setloading] = useState(false);
+  const [loading, setloading] = useState(true);
   const [isRequest, setRequest] = useState(false);
   const [moderator, setmoderator] = useState(false);
   const [isPublic, setPublic] = useState(true);
@@ -71,9 +71,9 @@ function ClubPage(props) {
         }
         if (finaldata.data.data[0].status === "Private") {
           setPublic(false);
-          CheckRequestMember();
+          await CheckRequestMember();
         }
-        setloading(true);
+        setloading(false);
       }
     }
 
@@ -160,7 +160,7 @@ function ClubPage(props) {
   const setUnreadData = (chilData) => {
     setLike(chilData);
   };
-  if (loading) {
+  if (!loading) {
     return (
       <>
         <Navbar />
@@ -306,19 +306,5 @@ function ClubPage(props) {
     );
   }
 }
-
-ClubPage.defaultProps = {
-  bgImage: demobg,
-  owner: "Harshil Patel",
-  profileImage: demopf,
-  noOfMembers: 45,
-  clubName: "GreyHat BadShah",
-  clubType: "Public",
-  loc: "Ahmedabad , India",
-  createdAt: "12 Feb 2012",
-  categories: ["Hacking", "CyberSecurity", "Tech"],
-  description:
-    "Grey hat hackers are a blend of both black hat and white hat activities. ... Often, grey hat hackers will look for vulnerabilities in a system without the owner's permission or knowledge. If issues are found, they will report them to the owner, sometimes requesting a small fee to fix the issue.",
-};
 
 export default ClubPage;

@@ -335,11 +335,3 @@ export default function EventTab(props) {
     </>
   );
 }
-
-// title should be max 45 words include whitespace
-EventTab.defaultProps = {
-  bgImage: Photo,
-  eventTitle: "Introduction To React.js",
-  eventTime: "Friday | August 14, 2020 | 6:30 PM",
-  eventParticipant: "100",
-};

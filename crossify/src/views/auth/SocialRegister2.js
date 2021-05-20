@@ -6,6 +6,7 @@ import { usePosition } from "use-position";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
 import { Formik } from "formik";
+import moment from "moment";
 
 export default function SocialRegister2() {
   let history = useHistory();
@@ -34,15 +35,8 @@ export default function SocialRegister2() {
     history.push("/auth/register");
   }
 
-  var {
-    address,
-    pincode,
-    password,
-    repassword,
-    dob,
-    about_me,
-    occupation,
-  } = formData;
+  var { address, pincode, password, repassword, dob, about_me, occupation } =
+    formData;
 
   var onUsernameChange = (e) => {
     setusername(e.target.value);
@@ -155,7 +149,7 @@ export default function SocialRegister2() {
                       email: decryptedData.email,
                       occupation,
                       photo: decryptedData.photo,
-                      socialId:decryptedData.socialId,
+                      socialId: decryptedData.socialId,
                       about_me,
                       fname: decryptedData.fname,
                       lname: decryptedData.lname,
@@ -264,6 +258,7 @@ export default function SocialRegister2() {
                           id="reg-country"
                           type="date"
                           name="dob"
+                          max={moment(new Date()).format("YYYY-MM-DD")}
                           value={dob}
                           onChange={(e) => onChange(e)}
                           className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"

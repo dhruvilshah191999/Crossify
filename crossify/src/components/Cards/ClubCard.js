@@ -140,9 +140,17 @@ const ClubCard = (props) => {
           >
             {props.data.tags.map((tag, index) => {
               if (index + 1 === props.data.tags.length) {
-                return <span className="capitalize" key={index}>{tag} </span>;
+                return (
+                  <span className="capitalize" key={index}>
+                    {tag}{" "}
+                  </span>
+                );
               }
-              return <span className="capitalize" key={index}>{tag} &bull; </span>;
+              return (
+                <span className="capitalize" key={index}>
+                  {tag} &bull;{" "}
+                </span>
+              );
             })}
           </div>
           <div
@@ -174,16 +182,6 @@ const ClubCard = (props) => {
       </div>
     </div>
   );
-};
-ClubCard.defaultProps = {
-  imgPath: defImg,
-  categories: ["Tech", "Sports"],
-  test: "hahhahah",
-  name: "GreyHat BadAngles",
-  privacy: "Public",
-  location: "Ahmedabad,IN",
-  members: 69,
-  eventCompoleted: 10,
 };
 
 export default ClubCard;

@@ -22,7 +22,7 @@ export default function Landing() {
       location: "",
     };
     search_dispatch({ type: "Add-Search", add: object });
-    history.push("/search");
+    history.push("/clubsearch");
   };
 
   const onSubmit = async (e) => {

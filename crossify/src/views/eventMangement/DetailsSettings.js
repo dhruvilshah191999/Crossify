@@ -248,15 +248,3 @@ export default class DetailsSettings extends React.Component {
     );
   }
 }
-DetailsSettings.defaultProps = {
-  club_name: "Badshah gang",
-  description: "je baat je baat",
-  tags: ["this", "that"],
-  rules: "There is one rule there is no rule at all.",
-  profile_photo: dummyPF,
-  location: "b-34 ganeshpark-1 ghatlodia ahmedabad",
-  max_members: 100,
-  joining_criteria: "have to be a good person",
-  category_list: ["Cricket", "Sports"],
-  privacy: "Public",
-};

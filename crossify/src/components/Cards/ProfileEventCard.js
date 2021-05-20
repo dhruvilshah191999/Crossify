@@ -136,17 +136,4 @@ function ProfileClubCard(props) {
     </>
   );
 }
-
-ProfileClubCard.defaultProps = {
-  data: {
-    club_name: "Badshah Gang",
-    tags: ["Tech", "Science"],
-    photo: "1.jpg",
-    place: "Ahmedabad , GJ",
-    date: "July 14",
-    photo1: "1.jpg",
-    duration: "8 PM to 11 PM",
-  },
-};
-
 export default ProfileClubCard;

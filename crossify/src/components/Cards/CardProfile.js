@@ -70,14 +70,3 @@ export default function CardProfile(props) {
     </>
   );
 }
-
-CardProfile.defaultProps = {
-  club_name: "Badshaho ki Gang",
-  profilePic: demopf,
-  memberSize: 40,
-  eventSize: 10,
-  channelSize: 2,
-  ownerName: "Harshil Patel",
-  location: "Ahmedabad , IN",
-  categoriesList: ["Sports", "Tech"],
-};

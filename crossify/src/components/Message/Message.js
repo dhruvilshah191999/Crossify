@@ -95,12 +95,4 @@ function Message(props) {
   }
 }
 
-Message.defaultProps = {
-  username: "hackershil",
-  message:
-    "Wow! Today is October 30th! Halloween is tomorrow already! Have you decided what you will be dressing up for Halloween yet, Sara?",
-  senttime: "9:12 AM",
-  profilePic: pp1,
-};
-
 export default Message;

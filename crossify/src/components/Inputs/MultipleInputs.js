@@ -73,7 +73,3 @@ class MultipleInputs extends Component {
 }
 
 export default MultipleInputs;
-
-MultipleInputs.defaultProps = {
-  questions: [""],
-};
