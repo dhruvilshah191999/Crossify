@@ -3,12 +3,7 @@ import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demopf from "assets/img/demopf.png";
 import ChatMessage from "components/Cards/ChatMessage";
 import axios from "axios";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
+import socket from "./../../utils/helper";
 Modal.defaultStyles = {};
 
 var customModalStyles = {

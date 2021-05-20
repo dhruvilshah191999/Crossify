@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
 import axios from "axios";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
+import socket from "./../../utils/helper";
 export default class SweetAlertModal extends Component {
   constructor(props) {
     super(props);

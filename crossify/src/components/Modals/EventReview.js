@@ -6,12 +6,7 @@ import demobg from "assets/img/demopf.png";
 import Tag from "components/Tag";
 import MapContainer from "components/Maps/ViewOnlyMap";
 import ChatMessage from "components/Cards/ChatMessage";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
+import socket from "./../../utils/helper";
 Modal.defaultStyles = {};
 
 var customModalStyles = {

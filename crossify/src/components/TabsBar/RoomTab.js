@@ -1,12 +1,8 @@
 import React from "react";
 import ChatMessage from "components/Message/Message";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
+import socket from "./../../utils/helper";
 import axios from "axios";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
+
 //flashsocket polling
 export default class RoomTab extends React.Component {
   state = {
@@ -201,22 +197,25 @@ export default class RoomTab extends React.Component {
           this.setState({ curRoomMsgs: msgs });
         }
       );
-    return msgs.map(({ message, username, profilePic, senttime, user_id }) => (
-      <ChatMessage
-        self={username === this.state.username}
-        message={message}
-        userId={user_id}
-        username={username}
-        profilePic={profilePic}
-        time={senttime}
-      />
-    ));
+    return msgs.map(
+      ({ message, username, profilePic, senttime, user_id }, index) => (
+        <ChatMessage
+          self={username === this.state.username}
+          key={index}
+          message={message}
+          userId={user_id}
+          username={username}
+          profilePic={profilePic}
+          time={senttime}
+        />
+      )
+    );
   };
 
   renderRoomList = () => {
     return this.state.rooms.map((el, index) => (
       <a
-        href={() => false}
+        key={index}
         onClick={() => {
           const val = this.state.database.roomsData[index].messages;
           this.setState({

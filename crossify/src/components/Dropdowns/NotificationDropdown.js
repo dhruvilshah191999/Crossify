@@ -5,17 +5,12 @@ import axios from "axios";
 import Moment from "moment";
 import { UserContext } from "context/usercontext";
 import addNotification from "react-push-notification";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
-
+import socket from "./../../utils/helper";
 const NotificationDropdown = () => {
   const [unread, setUnread] = useState(0);
   const [loading, setloding] = useState(false);
   const { users } = useContext(UserContext);
+  const [socketId, setSocketId] = useState(true);
   const token = localStorage.getItem("jwt");
   const [animationFinished, setAnimationFinished] = useState(true);
   const history = useHistory();
@@ -41,7 +36,8 @@ const NotificationDropdown = () => {
         setloding(true);
       }, 1000);
       var user_id = users._id;
-      socket.emit("open", { user_id });
+      if (socketId) socket.emit("open", { user_id });
+      setSocketId(false);
     }
     fetchData();
   }, [token]);

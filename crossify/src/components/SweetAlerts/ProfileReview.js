@@ -3,12 +3,7 @@ import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demobg from "assets/img/demopf.png";
 import axios from "axios";
 import EvaulateProfile from "components/Cards/MemberProfileDetails";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
+import socket from "./../../utils/helper";
 Modal.defaultStyles = {};
 
 var customModalStyles = {
