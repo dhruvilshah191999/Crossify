@@ -420,14 +420,14 @@ export default function EventPage(props) {
                           return (
                             <details>
                               <summary className="pt-0">{el.question}</summary>
-                              <p>{el.answer}</p>
+                              <pre>{el.answer}</pre>
                             </details>
                           );
                         }
                         return (
                           <details>
                             <summary>{el.question}</summary>
-                            <p>{el.answer}</p>
+                            <pre>{el.answer}</pre>
                           </details>
                         );
                       } else {

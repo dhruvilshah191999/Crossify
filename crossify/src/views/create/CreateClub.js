@@ -136,8 +136,8 @@ function CreateClub(props) {
                     errors.criteria = "Minimum 20 words are required";
                   } else if (!rules) {
                     errors.rules = "Rules are required !";
-                  } else if (rules.length < 20) {
-                    errors.rules = "Minimum 20 words are required";
+                  } else if (rules.length < 5) {
+                    errors.rules = "Minimum 5 words are required";
                   }
                   return errors;
                 }}

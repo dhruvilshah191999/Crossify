@@ -42,7 +42,6 @@ export default class DetailsSettings extends React.Component {
       this.setState({
         description: finaldata.data.event_data.description,
         eligibility: finaldata.data.event_data.eligibility,
-        tags: finaldata.data.event_data.tags,
         event_data: id,
       });
     }
@@ -220,22 +219,6 @@ export default class DetailsSettings extends React.Component {
                           onChange={this.onChange}
                           value={this.state.eligibility}
                         ></textarea>
-                      </div>
-                    </div>
-                    <div className="w-full lg:w-12/12 px-4">
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Tags
-                        </label>
-                        <InputTagsContainer
-                          tags={this.state.tags}
-                          handleUpdateTags={this.handleUpdateTags}
-                          onChange={this.onChange}
-                          name="tags"
-                        />
                       </div>
                     </div>
                   </div>

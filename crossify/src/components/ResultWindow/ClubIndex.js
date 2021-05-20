@@ -3,9 +3,6 @@ import BigClubCard from "components/Cards/BigClubCard";
 import MapWithClubs from "components/Maps/MapWithClubs";
 import ClipLoader from "react-spinners/ClipLoader";
 const ResultWindow2 = ({ getclub, loading }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
   return (
     <>
       <div className={loading ? "" : "flex  md:mt-10"}>
