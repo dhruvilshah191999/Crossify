@@ -206,8 +206,8 @@ class MemberDetails extends Component {
             </div>
             <hr></hr>
             <div className="p-2 mt-1">
-              {this.state.tag.map((el) => (
-                <Tag data={el}></Tag>
+              {this.state.tag.map((el, index) => (
+                <Tag data={el} key={index}></Tag>
               ))}
             </div>
             <div className="text-2xl text-alpha p-2 mt-2 ">

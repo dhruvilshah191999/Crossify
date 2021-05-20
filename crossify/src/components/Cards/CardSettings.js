@@ -10,6 +10,8 @@ import { Formik } from "formik";
 import Snackbar from "@material-ui/core/Snackbar";
 import PulseLoader from "react-spinners/PulseLoader";
 import Alert from "@material-ui/lab/Alert";
+import MultipleSelect from "../../components/Inputs/MultiSelect";
+import { InputTagsContainer } from "../../components/Inputs/InputTags";
 
 var vertical = "top";
 var horizontal = "center";
@@ -18,6 +20,8 @@ export default function CardSettings(props) {
   const showclubs = (club_id) => {
     history.push("/club/" + club_id);
   };
+  const [category, setCategory] = useState(props.data.category_data);
+  const [tags, setTags] = useState(props.data.tags);
   const [successStatus, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const [photo, setPhoto] = useState(null);
@@ -39,6 +43,14 @@ export default function CardSettings(props) {
 
   const handleQuestion = (childData) => {
     setquestion(childData);
+  };
+
+  const handleCategory = (childData) => {
+    setCategory(childData);
+  };
+
+  const handleUpdateTags = (tags) => {
+    setTags(tags);
   };
 
   const handleCallback = (childData) => {
@@ -126,6 +138,8 @@ export default function CardSettings(props) {
                   criteria,
                   photo: res.data.secure_url,
                   question: question1,
+                  category,
+                  tags,
                 };
                 try {
                   const config = {
@@ -168,6 +182,8 @@ export default function CardSettings(props) {
               criteria,
               photo: props.data.profile_photo,
               question: question1,
+              category,
+              tags,
             };
             try {
               const config = {
@@ -511,6 +527,38 @@ export default function CardSettings(props) {
                       ></UploadPic>
                     </div>
                   </div>
+                  {/* here */}
+                  <div className="w-full lg:w-12/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Categories
+                      </label>
+                      <MultipleSelect
+                        selectedValues={category}
+                        parentCallback={handleCategory}
+                      ></MultipleSelect>
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-12/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Tags
+                      </label>
+                      <InputTagsContainer
+                        tags={tags}
+                        handleUpdateTags={handleUpdateTags}
+                      />
+                    </div>
+                  </div>
+
+                  {/* to here */}
                 </div>
               </form>
             </div>

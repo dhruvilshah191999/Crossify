@@ -1092,29 +1092,70 @@ router.post('/getAllEvents', async function (req, res, next) {
 });
 
 router.post('/getClub', async function (req, res, next) {
-  var { club_id } = req.body;
-  club_details
-    .findOne({
-      _id: ObjectId(club_id),
-      is_active: true,
-    })
+   var { club_id } = req.body;
+  // club_details
+  //   .findOne({
+  //     _id: ObjectId(club_id),
+  //     is_active: true,
+  //   })
+  //   .exec((err, data) => {
+  //     if (err) {
+  //       var error = {
+  //         is_error: true,
+  //         message: err.message,
+  //       };
+  //       return res.status(500).send(error);
+  //     } else if (data) {
+  //       var finaldata = {
+  //         data: data,
+  //         is_error: false,
+  //         message: 'Data Send',
+  //       };
+  //       return res.status(200).send(finaldata);
+  //     } else {
+  //       var finaldata = {
+  //         data: {},
+  //         is_error: false,
+  //         message: 'Data Send',
+  //       };
+  //       console.log(finaldata);
+  //       return res.status(200).send(finaldata);
+  //     }
+  //   });
+  
+    club_details
+    .aggregate([
+      {
+        $lookup: {
+          from: 'category_details',
+          localField: 'category_list',
+          foreignField: '_id',
+          as: 'category_data',
+        },
+      },
+      {
+        $match: {
+          _id: ObjectId(club_id),
+          is_active: true,
+        },
+      },
+    ])
     .exec((err, data) => {
       if (err) {
         var error = {
           is_error: true,
           message: err.message,
         };
-        return res.status(500).send(error);
-      } else if (data) {
-        var finaldata = {
-          data: data,
-          is_error: false,
-          message: 'Data Send',
+        return res.status(600).send(error);
+      } else if (data.length === 0) {
+        var error = {
+          is_error: true,
+          message: 'Category Not Found',
         };
-        return res.status(200).send(finaldata);
+        return res.status(600).send(error);
       } else {
         var finaldata = {
-          data: {},
+          data: data[0],
           is_error: false,
           message: 'Data Send',
         };
@@ -1326,7 +1367,10 @@ router.post('/update-club', async (req, res) => {
     city,
     photo,
     question,
+    category,
+    tags
   } = req.body;
+  let objectIdArray = category.map((s) => ObjectId(s._id));
   var club = club_details.updateOne(
     {
       _id: ObjectId(club_id),
@@ -1346,6 +1390,8 @@ router.post('/update-club', async (req, res) => {
       longitude,
       status: privacy,
       question,
+      category_list: objectIdArray,
+      tags
     }
   );
   club.exec((err, data) => {

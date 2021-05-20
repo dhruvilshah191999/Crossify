@@ -217,8 +217,8 @@ function ClubPage(props) {
                   {Moment(clubData.date).format("DD MMM YYYY")}
                 </div>
                 <div className="p-1 my-2 leading-wide">
-                  {clubData.tags.map((el) => (
-                    <MyTag data={el}></MyTag>
+                  {clubData.tags.map((el, index) => (
+                    <MyTag data={el} key={index}></MyTag>
                   ))}
                 </div>
                 <div className="flex flex-row justify-center my-2">

@@ -48,10 +48,11 @@ export default function CardProfile(props) {
               {props.clubData.club_name}
             </h2>
             <div className="mb-2 text-gray-700 ">
-              {props.categoriesList.map((el) => (
-                <Tag data={el}></Tag>
+              {props.categoriesList.map((el, index) => (
+                <Tag data={el} key={index}></Tag>
               ))}
             </div>
+
             {/* <h5 className="text-sm">by </h5>
             <h3 className="text-md  leading-normal mb-2 text-gray-700 mb-2">
               {props.ownerName}
@@ -61,7 +62,7 @@ export default function CardProfile(props) {
               {props.clubData.city},{props.clubData.state}
             </div>
             <div>
-              <DeleteMyClub club_id={props.club_id}/>
+              <DeleteMyClub club_id={props.club_id} />
             </div>
           </div>
         </div>

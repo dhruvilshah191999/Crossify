@@ -7,7 +7,7 @@ import io from "socket.io-client";
 import { notifyIncorrectInput } from "notify";
 var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
-  transport: ["websocket", "polling", "flashsocket"],
+  transport: ["websocket"],
 });
 
 export default class SweetAlertModal extends Component {

@@ -376,8 +376,8 @@ export default function EventPage(props) {
                   Tags
                 </div>
                 <div className="mt-1 text-lg text-gray-700 w-3/4 leading-relaxed">
-                  {eventdetails.tags.map((el) => (
-                    <Tag name={el}></Tag>
+                  {eventdetails.tags.map((el, index) => (
+                    <Tag name={el} key={index}></Tag>
                   ))}
                 </div>
               </div>

@@ -234,13 +234,14 @@ export default function Landing() {
               </div>
               <div className="flex flex-row justify-around flex-wrap container p-4">
                 {" "}
-                {category.map((el) => {
+                {category.map((el, index) => {
                   return (
                     <motion.button
                       type="button"
                       className="rounded-lg shadow p-4 category-container mb-4 text-center hover:border-lightbeta hover:shadow-lg active:bg-superlightbeta active:text-white hover:bg-offwhite  hover:text-extrabeta font-semibold"
                       style={{ outline: "none" }}
                       whileHover={{ scale: 1.05 }}
+                      key={index}
                       whileTap={{ scale: 0.9 }}
                       onClick={() => SearchFilter(el.category_name)}
                     >

@@ -110,6 +110,8 @@ function CreateClub(props) {
                   const errors = {};
                   if (!club_name) {
                     errors.club_name = "Club name is required !";
+                  } else if (club_name.length > 25) {
+                    errors.club_name = "Club name is too long !";
                   } else if (category.length === 0) {
                     errors.category = "Category required !";
                   } else if (!address) {

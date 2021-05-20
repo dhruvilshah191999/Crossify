@@ -5,7 +5,7 @@ import urlObject from "../../config/default.json";
 import io from "socket.io-client";
 var BackendURL = urlObject.BackendURL;
 let socket = io(BackendURL, {
-  transport: ["websocket", "polling", "flashsocket"],
+  transport: ["websocket"],
 });
 
 export default class SweetAlertModal extends Component {
