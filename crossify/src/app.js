@@ -18,7 +18,6 @@ import Profile from "layouts/Profile.js";
 import ManageEvent from "layouts/ManageEvent.js";
 // views without layouts
 
-import Landing from "views/trash/Landing.js";
 // import Profile from "views/trash/Profile.js";
 import EventPage from "views/explore/EventPage";
 import Index from "views/Index.js";
@@ -67,7 +66,6 @@ const Routing = () => {
   var token = localStorage.getItem("jwt");
   return (
     <Switch>
-      <Route path="/landing" exact component={Landing} />
       <Route path="/" exact component={Index} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/clubsearch" exact component={ClubSearchPage} />

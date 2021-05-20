@@ -177,16 +177,3 @@ export default class DemoApp extends React.Component {
     alert(arg.dateStr);
   };
 }
-
-DemoApp.defaultProps = {
-  showEvents: [
-    {
-      event_name: "Coding Competition",
-      starting_date: "2021-03-23",
-      starting_time: "11:00:44",
-      ending_date: "2021-03-25",
-      ending_time: "11:00:00",
-      _id: "5ff29fb4a04b22d9c9ff9ec1",
-    },
-  ],
-};

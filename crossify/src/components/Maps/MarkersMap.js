@@ -145,7 +145,3 @@ class App extends React.Component {
   }
 }
 export default App;
-App.defaultProps = {
-  lat: 23.106517,
-  long: 72.59482,
-};

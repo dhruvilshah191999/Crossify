@@ -570,17 +570,4 @@ function CreateClub(props) {
     </>
   );
 }
-
-CreateClub.defaultProps = {
-  club_name: "Badshah gang",
-  description: "je baat je baat",
-  tags: ["this", "that"],
-  rules: "There is one rule there is no rule at all.",
-  profile_photo: dummyPF,
-  place: "Raj ka darbar",
-  max_members: 100,
-  joining_criteria: "have to be a good person",
-  category_list: ["Cricket", "Sports"],
-  privacy: "Public",
-};
 export default CreateClub;

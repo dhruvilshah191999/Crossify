@@ -182,15 +182,5 @@ const ClubCard = (props) => {
     </div>
   );
 };
-ClubCard.defaultProps = {
-  imgPath: defImg,
-  categories: ["Tech", "Sports"],
-  test: "hahhahah",
-  name: "GreyHat BadAngles",
-  privacy: "Public",
-  location: "Ahmedabad,IN",
-  members: 69,
-  eventCompoleted: 10,
-};
 
 export default ClubCard;

@@ -18,13 +18,8 @@ import BroadcastButton from "components/SweetAlerts/BroadcastButton";
 import ArrivedButton from "components/SweetAlerts/ArrivedButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 import moment from "moment";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
+import socket from "./../../utils/helper";
 import { UserContext } from "context/usercontext";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
 
 function GlobalFilter({
   preGlobalFilteredRows,

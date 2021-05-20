@@ -65,10 +65,7 @@
 //   }
 // }
 // export default App;
-// App.defaultProps = {
-//   lat: 23.106517,
-//   long: 72.59482,
-// };
+
 import React, { Component } from "react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import Keys from "config/default.json";

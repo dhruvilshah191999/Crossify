@@ -231,18 +231,4 @@ class MemberDetails extends Component {
   }
 }
 
-MemberDetails.defaultProps = {
-  fullname: "Harshil Patel",
-  username: "hackershil",
-  occupation: "Software Engineer",
-  joining_date: "Apr 2020",
-  tags: ["Football", "Fitness", "Sports", "Coding"],
-  clubs: [
-    { club_name: "Grey Hat badshah", designation: "Admin" },
-    { club_name: "Decoy Boy", designation: "Member" },
-  ],
-  place: "Ahmedabad , GJ",
-  bio: "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
-};
-
 export default MemberDetails;

@@ -256,34 +256,4 @@ class MemberProfileDetails extends Component {
   }
 }
 
-MemberProfileDetails.defaultProps = {
-  fullname: "Harshil Patel",
-  username: "hackershil",
-  occupation: "Software Engineer",
-  joining_date: "Apr 2020",
-  tags: ["Football", "Fitness", "Sports", "Coding"],
-  clubs: [
-    { club_name: "Grey Hat badshah", designation: "Admin" },
-    { club_name: "Decoy Boy", designation: "Member" },
-  ],
-  place: "Ahmedabad , GJ",
-  bio: "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
-  questionsAnswered: [
-    {
-      question: "Why do you want to join this club ?",
-      answer:
-        "Because I want to improve and grow in the field on web dev and I want to help and get helped from the other people which shares the same goal as me.",
-    },
-    {
-      question: "Which skillset you posses related to this club ?",
-      answer:
-        "I am great at managing events and elobrating and presenting technical info to the new comers and I posses great intrapersonal skill as well.",
-    },
-    {
-      question: "Any Achievement ?",
-      answer: "Rank 1220 in Global Finals of HackerCup 2020.",
-    },
-  ],
-};
-
 export default MemberProfileDetails;

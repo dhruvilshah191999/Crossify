@@ -3,12 +3,7 @@ import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import demopf from "assets/img/demopf.png";
 import ChatMessage from "components/Cards/ChatMessage";
 import axios from "axios";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
+import socket from "./../../utils/helper";
 Modal.defaultStyles = {};
 
 var customModalStyles = {
@@ -205,66 +200,5 @@ class MyModal extends Component {
     );
   }
 }
-
-MyModal.defaultProps = {
-  chats: [
-    {
-      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
-      time: "12:00 PM , 12 Feb 2021",
-      owner: "Harshil Patel",
-      photo: demopf,
-      isManager: false,
-    },
-    {
-      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
-      time: "12:00 PM , 12 Feb 2021",
-      owner: "Harshil Patel",
-      photo: demopf,
-      isManager: true,
-    },
-    {
-      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
-      time: "12:00 PM , 12 Feb 2021",
-      owner: "Harshil Patel",
-      photo: demopf,
-      isManager: false,
-    },
-    {
-      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
-      time: "12:00 PM , 12 Feb 2021",
-      owner: "Harshil Patel",
-      photo: demopf,
-      isManager: true,
-    },
-    {
-      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
-      time: "12:00 PM , 12 Feb 2021",
-      owner: "Harshil Patel",
-      photo: demopf,
-      isManager: false,
-    },
-    {
-      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
-      time: "12:00 PM , 12 Feb 2021",
-      owner: "Harshil Patel",
-      photo: demopf,
-      isManager: true,
-    },
-    {
-      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
-      time: "12:00 PM , 12 Feb 2021",
-      owner: "Harshil Patel",
-      photo: demopf,
-      isManager: false,
-    },
-    {
-      msg: "This Event is not apporiate in COVID situation so kindly take proper action.",
-      time: "12:00 PM , 12 Feb 2021",
-      owner: "Harshil Patel",
-      photo: demopf,
-      isManager: true,
-    },
-  ],
-};
 
 export default MyModal;

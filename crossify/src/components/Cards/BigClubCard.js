@@ -61,17 +61,4 @@ const ResultWindow = (props) => {
   );
 };
 
-ResultWindow.defaultProps = {
-  privacy: "Public", //todo GOLU ADD PRIVACY WITH CLUB
-  title: "Portrait Photography Workshop",
-  day: "SUN",
-  date: "JAN 2",
-  time: "9:00 AM",
-  duration: "2 hours",
-  location: "Ahmedabad , IN",
-  ownerGroup: "WeClicks Club",
-  description:
-    " This a beginner friendly Workshop where we introducted everyone to essential tips to get head start into becoming a Professional Portrait Photographer",
-};
-
 export default ResultWindow;
