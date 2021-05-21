@@ -92,7 +92,7 @@ export default function Register2() {
     <>
       <div className="container mx-auto px-4 h-full ">
         <div className="flex content-center items-center justify-center h-full">
-          <div className="w-full lg:w-6/12 px-4">
+          <div className="w-6/12 px-4 min-width">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300">
               <div className="rounded-t mb-0 px-6 py-6">
                 <div className="text-center mb-3">
@@ -231,8 +231,8 @@ export default function Register2() {
                     isSubmitting,
                   }) => (
                     <form>
-                      <div className="flex ">
-                        <div className="px-4 mt-6 flex justify-center w-4/12">
+                      <div className="flex xs:d-inline">
+                        <div className="px-4 mt-6 flex justify-center w-4/12 xs:w-full">
                           <div className="avatar-upload">
                             <div className="avatar-edit">
                               <input
