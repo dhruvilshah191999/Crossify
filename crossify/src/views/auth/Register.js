@@ -72,13 +72,13 @@ export default function Register() {
                   initialValues={formData}
                   validate={() => {
                     const errors = {};
-                    if (!fname) {
+                    if (!fname.trim()) {
                       errors.fname = "First name is required !";
                     }
-                    if (!lname) {
+                    if (!lname.trim()) {
                       errors.lname = "Last name is required !";
                     }
-                    if (!email) {
+                    if (!email.trim()) {
                       errors.email = "Email is Required !";
                     } else if (
                       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
@@ -87,14 +87,14 @@ export default function Register() {
                     } else if (checkemail) {
                       errors.email = "Email is already exists ! !";
                     }
-                    if (!password) {
+                    if (!password.trim()) {
                       errors.password = "Password is required !";
-                    } else if (password.length < 6) {
+                    } else if (password.trim().length < 6) {
                       errors.password = "Minimim 6 characters are required !";
                     }
-                    if (!repassword) {
+                    if (!repassword.trim()) {
                       errors.repassword = "Re enter your password !";
-                    } else if (password !== repassword) {
+                    } else if (password.trim() !== repassword.trim()) {
                       errors.repassword = "Password does not match !";
                     } else if (!checked) {
                       errors.checkbox =

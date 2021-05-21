@@ -141,15 +141,15 @@ function CreateClub(props) {
                   } else if (!description) {
                     errors.description = "Description is required !";
                   } else if (description.length < 20) {
-                    errors.description = "Minimum 20 words are required";
+                    errors.description = "Minimum 20 characters are required";
                   } else if (!criteria) {
                     errors.criteria = "Joining criteria is required !";
                   } else if (criteria.length < 20) {
-                    errors.criteria = "Minimum 20 words are required";
+                    errors.criteria = "Minimum 20 characters are required";
                   } else if (!rules) {
                     errors.rules = "Rules are required !";
                   } else if (rules.length < 5) {
-                    errors.rules = "Minimum 5 words are required";
+                    errors.rules = "Minimum 5 characters are required";
                   }
                   if (errors.length !== 0) {
                     setError(true);

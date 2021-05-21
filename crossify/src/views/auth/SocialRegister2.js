@@ -90,16 +90,19 @@ export default function SocialRegister2() {
                     const errors = {};
                     if (!username) {
                       errors.username = "Username is required !";
+                    } else if (!/^\w+$/.test(username)) {
+                      errors.username =
+                        "Username contains only alphanumeric and underscores !";
                     } else if (usernameStatus) {
                       errors.username = "Username is already exists !";
                     }
-                    if (!password) {
+                    if (!!password.trim()) {
                       errors.password = "Password is required !";
                     } else if (password.length < 6) {
                       errors.password = "Minimim 6 characters are required !";
-                    } else if (!repassword) {
+                    } else if (!repassword.trim()) {
                       errors.repassword = "Re-Password is required !";
-                    } else if (password !== repassword) {
+                    } else if (password.trim() !== repassword.trim()) {
                       errors.repassword = "Password does not match !";
                     }
                     if (!address) {
@@ -118,6 +121,8 @@ export default function SocialRegister2() {
                       errors.pincode = "Pin code is required !";
                     } else if (pincode.length !== 6) {
                       errors.pincode = "Pin code should be in 6 digits !!!";
+                    } else if (pincode < 100000) {
+                      errors.pincode = "Please enter valid pincode !!!";
                     }
                     if (!dob) {
                       errors.dob = "Date of Birth is required !";
@@ -128,7 +133,8 @@ export default function SocialRegister2() {
                     if (!about_me) {
                       errors.about_me = "About me is required !";
                     } else if (about_me.length < 30) {
-                      errors.about_me = "Minimum 30 words are required !!!";
+                      errors.about_me =
+                        "Minimum 30 characters are required !!!";
                     }
                     return errors;
                   }}

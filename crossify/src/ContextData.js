@@ -33,12 +33,14 @@ export default function ContextData(props) {
           const res = await axios.post("/api/auth", data, config);
           if (res.data.is_error) {
             window.localStorage.removeItem("jwt");
+            window.location.reload();
           } else {
             dispatch({ type: "ADD_USER", payload: res.data });
             props.handleIsLoading(true);
           }
         } catch (error) {
           window.localStorage.removeItem("jwt");
+          window.location.reload();
         }
       }
     }
