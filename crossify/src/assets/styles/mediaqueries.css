@@ -65,6 +65,9 @@
   .xs\:items-center {
     align-items: center;
   }
+  .xs\:d-inline {
+    display: inline;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 475px) {

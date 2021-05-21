@@ -13,7 +13,11 @@ import MultiSelect from "components/Inputs/MultiSelect";
 import UploadPic from "components/Inputs/UploadPic";
 import MultipleInputs from "components/Inputs/MultipleInputs";
 import { Formik } from "formik";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
+var vertical = "top";
+var horizontal = "center";
 function CreateClub(props) {
   let history = useHistory();
   const [tags, setTags] = useState([]);
@@ -21,6 +25,7 @@ function CreateClub(props) {
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
   const [submitloading, setsubmitLoading] = useState(false);
+  const [isError, setError] = useState(false);
   const [category, setCategory] = useState([]);
   const [newlatitude, setlatitude] = useState(23.106517);
   const [newlongitude, setlongitude] = useState(72.59482);
@@ -84,6 +89,13 @@ function CreateClub(props) {
     setPhoto(childData);
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setError(false);
+  };
+
   return (
     <>
       <Navbar></Navbar>
@@ -138,6 +150,9 @@ function CreateClub(props) {
                     errors.rules = "Rules are required !";
                   } else if (rules.length < 20) {
                     errors.rules = "Minimum 20 words are required";
+                  }
+                  if (errors.length !== 0) {
+                    setError(true);
                   }
                   return errors;
                 }}
@@ -219,6 +234,17 @@ function CreateClub(props) {
                     <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
                       Basic Information
                     </h6>
+
+                    <Snackbar
+                      anchorOrigin={{ vertical, horizontal }}
+                      open={isError}
+                      autoHideDuration={2000}
+                      onClose={handleClose}
+                    >
+                      <Alert onClose={handleClose}>
+                        "Please check errors in the form"
+                      </Alert>
+                    </Snackbar>
                     <div className="flex flex-wrap">
                       <div className="w-full lg:w-8/12 px-4">
                         <div className="relative w-full mb-3">

@@ -2104,3 +2104,7 @@ form .page .btns button.next {
   font-size: 11px;
   color: #777;
 }
+
+.min-width {
+  width: 500px;
+}
