@@ -2,7 +2,6 @@ const io = require('socket.io')();
 const club_ids = new Map();
 const connection = new Map();
 const socketIds = new Map();
-const onlineUsers = new Map();
 const socketapi = {
   io: io,
 };

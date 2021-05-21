@@ -7,7 +7,7 @@ const ClubView = (props) => {
   return (
     <div
       className=" rounded-lg shadow p-2 mr-4 hover:bg-gray-200"
-      style={{ flex: "1 1 50%", maxWidth: 350 }}
+      style={{ flex: "1 1 30%", maxWidth: 350 }}
     >
       <div className="flex flex-row">
         <div className="flex-shrink-0">
@@ -19,6 +19,7 @@ const ClubView = (props) => {
         </div>
         <div className="flex flex-col ">
           <div className="font-semibold text-lg">{props.club_name}</div>
+
           <div className="text-sm text-gray-700">{"Admin"}</div>
         </div>
       </div>
@@ -229,19 +230,5 @@ class MemberDetails extends Component {
     }
   }
 }
-
-MemberDetails.defaultProps = {
-  fullname: "Harshil Patel",
-  username: "hackershil",
-  occupation: "Software Engineer",
-  joining_date: "Apr 2020",
-  tags: ["Football", "Fitness", "Sports", "Coding"],
-  clubs: [
-    { club_name: "Grey Hat badshah", designation: "Admin" },
-    { club_name: "Decoy Boy", designation: "Member" },
-  ],
-  place: "Ahmedabad , GJ",
-  bio: "If you’re comparing sports management platforms, OpenSports is in a league of its own. OpenSports is the first 3-in-one web and app platform that features support for leagues, tournaments, pickup games (and even eSports!). OpenSports makes organization, management and registration effortless for admins and fun for players!",
-};
 
 export default MemberDetails;

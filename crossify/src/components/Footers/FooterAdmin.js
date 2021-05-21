@@ -9,13 +9,7 @@ export default function FooterAdmin() {
           <div className="flex flex-nowrap xxs:flex-wrap xxs:text-center items-center justify-between">
             <div className="w-full px-4">
               <div className="text-sm text-gray-600 font-semibold py-1">
-                Crossify by&nbsp;
-                <a
-                  href="https://www.creative-tim.com?ref=nr-footer-admin"
-                  className="text-gray-600 hover:text-gray-800 text-sm font-semibold py-1"
-                >
-                  TheDarkSlayers
-                </a>
+                Crossify by&nbsp; TheDarkSlayers
               </div>
             </div>
             <div className="w-full px-4">

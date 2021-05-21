@@ -18,12 +18,7 @@ import AcceptButton from "components/SweetAlerts/AcceptMemberButton";
 import RejectButton from "components/SweetAlerts/RejectMemberButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
 import EmptyTable from "components/sections/EmptyTable";
-import urlObject from "../../config/default.json";
-import io from "socket.io-client";
-var BackendURL = urlObject.BackendURL;
-let socket = io(BackendURL, {
-  transport: ["websocket"],
-});
+import socket from "./../../utils/helper";
 function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,

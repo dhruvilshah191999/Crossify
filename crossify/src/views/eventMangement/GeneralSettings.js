@@ -337,6 +337,20 @@ export default function GeneralSettings(props) {
                             </select>
                           </div>
                         </div>
+                        <div className="w-full lg:w-12/12 px-4">
+                          <div className="relative w-full mb-3">
+                            <label
+                              className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                              htmlFor="grid-password"
+                            >
+                              Category
+                            </label>
+                            <MultipleSelect
+                              selectedValues={category}
+                              parentCallback={handleCategory}
+                            ></MultipleSelect>
+                          </div>
+                        </div>
                       </div>
 
                       <hr className="mt-6 border-b-1 border-gray-400" />
@@ -575,20 +589,6 @@ export default function GeneralSettings(props) {
                           </div>
                         </div>
                         {/* here */}
-                        <div className="w-full lg:w-12/12 px-4">
-                          <div className="relative w-full mb-3">
-                            <label
-                              className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                              htmlFor="grid-password"
-                            >
-                              Categories
-                            </label>
-                            <MultipleSelect
-                              selectedValues={category}
-                              parentCallback={handleCategory}
-                            ></MultipleSelect>
-                          </div>
-                        </div>
 
                         <div className="w-full lg:w-12/12 px-4">
                           <div className="relative w-full mb-3">
@@ -627,15 +627,3 @@ export default function GeneralSettings(props) {
     </>
   );
 }
-GeneralSettings.defaultProps = {
-  club_name: "Badshah gang",
-  description: "je baat je baat",
-  tags: ["this", "that"],
-  rules: "There is one rule there is no rule at all.",
-  profile_photo: dummyPF,
-  place: "b-34 ganeshpark-1 ghatlodia ahmedabad",
-  max_members: 100,
-  joining_criteria: "have to be a good person",
-  category_list: ["Cricket", "Sports"],
-  privacy: "Public",
-};

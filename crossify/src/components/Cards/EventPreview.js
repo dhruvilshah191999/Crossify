@@ -10,6 +10,7 @@ import RegisteredMember from "components/Cards/RegisteredMembers";
 import JoinEventButton from "components/SweetAlerts/JoinEventButton";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function EventPreview(props) {
@@ -55,6 +56,15 @@ export default function EventPreview(props) {
                 {" "}
                 Event Preview
               </h6>
+              <div>
+                <Link
+                  to={"/events/event=" + id}
+                  className="bg-green-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-2 ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  Go to Event
+                </Link>
+              </div>
             </div>
           </div>
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -279,41 +289,3 @@ export default function EventPreview(props) {
     );
   }
 }
-EventPreview.defaultProps = {
-  eventName: "Exhibition Hack",
-  eventLocation: "Ghatlodia, Ahmedabad",
-  dateAndTime: "Saturday  Feb 14 13:45 (IST)",
-  photo: demopf,
-  hostedBy: "GreyHat Badshahs",
-  hostedByPrivacy: "Public",
-  hostedByImg: dance_cat,
-  eligibility: " Minimin age of person shoul be 18 years old.",
-  peopleGoing: 34,
-  description:
-    "My house is a super cozy and eclectically decorated craftsman style home with a fenced in backyard for pooches. Its situated in the historic Observatory Hill neighborhood of Pittsburgh.Its 100% a short term rental and no one lives there full time so its perfect for small get togethers, meetings and photo shoots.  Ive hosted a number of shoots and video productions as well as small intimate parties and meetings.  There is a stocked coffee station and plenty of parking on the street. I've spent years collecting decorations and furniture to create an inviting fun space. It's in a unique location that is just 4 miles from downtown and 2 miles to the stadiums. I’ve found that I can get anywhere in the area quickly from this spot. There are always plenty of Ubers/Lyfts available in minutes.",
-  day: 27,
-  month: "FEB",
-  faq: [
-    {
-      question: "What special about this ?",
-      answer: "Nothing",
-    },
-    {
-      question: "Is there any fees required ?",
-      answer: "No It's Free for all. Enjoy",
-    },
-    {
-      question: "How much people should I expect ?",
-      answer: "around 40-50 people usually present in this type of event.",
-    },
-  ],
-  tags: [
-    "Sports",
-    "Tech",
-    "Science",
-    "Computers",
-    "Programming",
-    "Coding",
-    "Hacking",
-  ],
-};

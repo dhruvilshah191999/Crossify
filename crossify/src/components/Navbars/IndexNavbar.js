@@ -1,18 +1,45 @@
 /*eslint-disable*/
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import { motion } from "framer-motion";
 // component
 
-import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
 import logo from "../../assets/logos/logo_light.png";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown";
 import { UserContext } from "context/usercontext";
-import { TextareaAutosize } from "@material-ui/core";
+
+function useComponentVisible(initialIsVisible) {
+  const [navbarOpen, setNavbarOpen] = useState(initialIsVisible);
+  const ref = useRef(null);
+
+  const handleHideDropdown = (event) => {
+    if (event.key === "Escape") {
+      setNavbarOpen(false);
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setNavbarOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleHideDropdown, true);
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("keydown", handleHideDropdown, true);
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  });
+
+  return { ref, navbarOpen, setNavbarOpen };
+}
 
 export default function Navbar(props) {
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const { ref, navbarOpen, setNavbarOpen } = useComponentVisible(false);
+  // const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [notification, setnotification] = React.useState(false);
   const [readNotification, setreadNotification] = React.useState(false);
   const [userdrop, setuserdrop] = React.useState(false);
@@ -44,16 +71,11 @@ export default function Navbar(props) {
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
               {/* <i className="text-white fas fa-bars"></i> */}
-              <i
-                className={
-                  navbarOpen
-                    ? "text-white fas fa-times"
-                    : "text-white fas fa-bars"
-                }
-              />
+              <i className="text-white fas fa-bars" />
             </button>
           </div>
           <div
+            ref={ref}
             className={
               "lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none" +
               (navbarOpen ? " block rounded shadow-lg" : " hidden")
@@ -90,46 +112,49 @@ export default function Navbar(props) {
                 </Link>
               </li>
 
-              <li className={isLogin ? "hidden " : " " + "flex items-center"}>
-                <Link to="/auth/login">
-                  <motion.button
-                    className="bg-white hover:bg-offwhite text-gray-800 ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-2 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
-                    type="button"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <i className="fas fa-sign-in-alt"></i> Log In
-                  </motion.button>
-                </Link>
-              </li>
-              <li className={isLogin ? "hidden " : " " + "flex items-center"}>
-                <Link to="/auth/register">
-                  <motion.button
-                    className="bg-alpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
-                    type="button"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <i className="fas fa-user-plus"></i> Sign Up
-                  </motion.button>
-                </Link>
-              </li>
+              {isLogin || (
+                <li className="flex items-center">
+                  <Link to="/auth/login">
+                    <motion.button
+                      className="bg-white hover:bg-offwhite text-gray-800 ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-2 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                      type="button"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <i className="fas fa-sign-in-alt"></i> Log In
+                    </motion.button>
+                  </Link>
+                </li>
+              )}
+              {isLogin || (
+                <li className="flex items-center">
+                  <Link to="/auth/register">
+                    <motion.button
+                      className="bg-alpha hover:bg-alpha text-white  ml-2 lg:ml-0  active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                      type="button"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <i className="fas fa-user-plus"></i> Sign Up
+                    </motion.button>
+                  </Link>
+                </li>
+              )}
+              {isLogin && (
+                <li className="flex items-center ">
+                  <div className=" ml-2 lg:ml-0 ">
+                    <NotificationDropdown />
+                  </div>
+                </li>
+              )}
 
-              <li className={isLogin ? "" : "hidden " + "flex items-center "}>
-                <div className=" ml-2 lg:ml-0 ">
-                  {isLogin ? <NotificationDropdown /> : ""}
-                </div>
-              </li>
-
-              <li
-                className={
-                  isLogin ? " " : "hidden " + "flex items-center ml-2 lg:ml-0 "
-                }
-              >
-                <div className=" ml-3 mb-2 lg:ml-0 lg:mb-0  ">
-                  <UserDropdown />
-                </div>
-              </li>
+              {isLogin && (
+                <li className="flex items-center ml-2 lg:ml-0 ">
+                  <div className=" ml-3 mb-2 lg:ml-0 lg:mb-0  ">
+                    <UserDropdown />
+                  </div>
+                </li>
+              )}
             </ul>
           </div>
         </div>

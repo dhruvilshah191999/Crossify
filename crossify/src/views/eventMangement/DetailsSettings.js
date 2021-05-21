@@ -42,7 +42,6 @@ export default class DetailsSettings extends React.Component {
       this.setState({
         description: finaldata.data.event_data.description,
         eligibility: finaldata.data.event_data.eligibility,
-        tags: finaldata.data.event_data.tags,
         event_data: id,
       });
     }
@@ -222,22 +221,6 @@ export default class DetailsSettings extends React.Component {
                         ></textarea>
                       </div>
                     </div>
-                    <div className="w-full lg:w-12/12 px-4">
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Tags
-                        </label>
-                        <InputTagsContainer
-                          tags={this.state.tags}
-                          handleUpdateTags={this.handleUpdateTags}
-                          onChange={this.onChange}
-                          name="tags"
-                        />
-                      </div>
-                    </div>
                   </div>
                 </form>
               </div>
@@ -248,15 +231,3 @@ export default class DetailsSettings extends React.Component {
     );
   }
 }
-DetailsSettings.defaultProps = {
-  club_name: "Badshah gang",
-  description: "je baat je baat",
-  tags: ["this", "that"],
-  rules: "There is one rule there is no rule at all.",
-  profile_photo: dummyPF,
-  location: "b-34 ganeshpark-1 ghatlodia ahmedabad",
-  max_members: 100,
-  joining_criteria: "have to be a good person",
-  category_list: ["Cricket", "Sports"],
-  privacy: "Public",
-};

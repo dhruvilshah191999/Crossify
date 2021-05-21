@@ -72,6 +72,7 @@ function ProfileClubCard(props) {
         style={{
           flex: "1 1 30%",
           maxWidth: "380px",
+          minWidth: "300px",
         }}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.9 }}
@@ -90,7 +91,7 @@ function ProfileClubCard(props) {
           <div className="float-right">
             {checklike ? (
               <motion.button
-                className="bg-red-500 text-white shadow border border-solid border-red-500 hover:text-red-500 hover:bg-white active:text-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                className="bg-red-500 text-white shadow border  hover:text-red-500 hover:bg-white active:text-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
                 onClick={(e) => deletelike(e)}
               >
@@ -98,7 +99,7 @@ function ProfileClubCard(props) {
               </motion.button>
             ) : (
               <motion.button
-                className="text-red-500 bg-white shadow border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                className="text-red-500 bg-white shadow border border-solid  hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
                 onClick={(e) => addlike(e)}
               >
@@ -136,17 +137,4 @@ function ProfileClubCard(props) {
     </>
   );
 }
-
-ProfileClubCard.defaultProps = {
-  data: {
-    club_name: "Badshah Gang",
-    tags: ["Tech", "Science"],
-    photo: "1.jpg",
-    place: "Ahmedabad , GJ",
-    date: "July 14",
-    photo1: "1.jpg",
-    duration: "8 PM to 11 PM",
-  },
-};
-
 export default ProfileClubCard;

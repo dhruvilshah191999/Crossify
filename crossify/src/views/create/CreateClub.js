@@ -148,8 +148,8 @@ function CreateClub(props) {
                     errors.criteria = "Minimum 20 words are required";
                   } else if (!rules) {
                     errors.rules = "Rules are required !";
-                  } else if (rules.length < 20) {
-                    errors.rules = "Minimum 20 words are required";
+                  } else if (rules.length < 5) {
+                    errors.rules = "Minimum 5 words are required";
                   }
                   if (errors.length !== 0) {
                     setError(true);
@@ -596,17 +596,4 @@ function CreateClub(props) {
     </>
   );
 }
-
-CreateClub.defaultProps = {
-  club_name: "Badshah gang",
-  description: "je baat je baat",
-  tags: ["this", "that"],
-  rules: "There is one rule there is no rule at all.",
-  profile_photo: dummyPF,
-  place: "Raj ka darbar",
-  max_members: 100,
-  joining_criteria: "have to be a good person",
-  category_list: ["Cricket", "Sports"],
-  privacy: "Public",
-};
 export default CreateClub;

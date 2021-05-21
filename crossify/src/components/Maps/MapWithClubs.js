@@ -149,7 +149,7 @@ export class MapContainer extends Component {
                 {this.state.selectedPlace.membersLen}
               </span>
               <span className="font-bold "> &bull; </span>
-              <span className="text-gray-700 font-semibold ml-1" >
+              <span className="text-gray-700 font-semibold ml-1">
                 {this.state.selectedPlace.isPublic} Club
               </span>
             </div>
@@ -160,45 +160,6 @@ export class MapContainer extends Component {
     );
   }
 }
-
-// MapContainer.defaultProps = {
-//   center: { lat: 23.106517, lng: 72.59482 },
-//   markers: [
-//     {
-//       name: "Business Hub",
-//       profile_photo: demopf,
-//       bookedSeats: 12,
-//       totalSeats: 40,
-//       date: "12 FEB 2021",
-//       pos: getLocation(x0, y0, radius),
-//     },
-//     {
-//       name: "Sports Hub",
-//       profile_photo: demopf,
-//       bookedSeats: 1,
-//       totalSeats: 60,
-//       date: "31 MAR 2021",
-//       pos: getLocation(x0, y0, radius),
-//     },
-//     {
-//       name: "Cooking Battle",
-//       profile_photo: demopf,
-//       bookedSeats: 312,
-//       totalSeats: 340,
-//       date: "23 APR 2021",
-//       pos: getLocation(x0, y0, radius),
-//     },
-//     {
-//       name: "IPL Aucition Hub",
-//       profile_photo: demopf,
-//       bookedSeats: 50,
-//       totalSeats: 50,
-//       date: "1 APR 2021",
-//       pos: getLocation(x0, y0, radius),
-//     },
-//   ],
-// };
-
 export default GoogleApiWrapper({
   apiKey: GOOGLE_MAPS_API,
   version: "3.38",

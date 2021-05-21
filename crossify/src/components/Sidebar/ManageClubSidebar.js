@@ -7,7 +7,6 @@ import axios from "axios";
 import logo from "assets/logos/logo_final.png";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
-
 export default function Sidebar() {
   const { id } = useParams();
   let history = useHistory();
