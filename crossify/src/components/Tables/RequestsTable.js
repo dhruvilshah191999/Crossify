@@ -119,8 +119,8 @@ const IndeterminateCheckbox = React.forwardRef(
 export default function App(props) {
   let history = useHistory();
   const [isLight, setIsLight] = useState(1);
-  const [clubId, setClubId] = useState(props.club_id);
-  const [userData, setuserData] = useState(props.data);
+  const clubId = props.club_id;
+  const userData = props.data;
   const getSelectedAndReject = async (e) => {
     const profilelist = selectedFlatRows.map((el) => el.values.id);
     const token = localStorage.getItem("jwt");

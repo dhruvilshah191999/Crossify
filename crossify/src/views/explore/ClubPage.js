@@ -9,8 +9,6 @@ import GridLoader from "react-spinners/GridLoader";
 import TabsBar from "components/TabsBar/TabsBar";
 import Navbar from "components/Navbars/ClubNavbar";
 import { UserContext } from "context/usercontext";
-import demopf from "assets/img/demobg.jpg";
-import demobg from "assets/img/demopf.png";
 import MyModal from "components/Modals/RequestForEvent";
 import MyTag from "components/Tag";
 import { notifyClubLiked, notifyWentWrong } from "notify";

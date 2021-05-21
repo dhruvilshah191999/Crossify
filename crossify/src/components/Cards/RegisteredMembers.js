@@ -78,8 +78,7 @@ class RegisteredMembers extends Component {
             <input
               type="text"
               placeholder="Find your friends..."
-              className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
-              className="search"
+              className="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10 search"
               onChange={this.searchHandler}
             />
           </div>

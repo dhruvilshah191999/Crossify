@@ -6,7 +6,6 @@ import City from "../auth/states-and-districts.json";
 import axios from "axios";
 import Sidebar from "components/Sidebar/ManageEventSidebar.js";
 import MapContainer from "components/Maps/MapCode";
-import dummyPF from "assets/img/demopf.png";
 import { Formik } from "formik";
 import { ModalManager } from "react-dynamic-modal";
 import ViewFeedback from "components/Modals/ViewFeedback";

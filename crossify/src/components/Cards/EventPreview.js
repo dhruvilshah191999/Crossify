@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import Moment from "moment";
 import Tag from "components/Tag";
 import { useParams } from "react-router";
-import dance_cat from "assets/img/travel_cat.jpg";
-import demopf from "assets/img/demopf.png";
 import MapContainer from "components/Maps/ViewOnlyMap";
 import AskQuestion from "components/SweetAlerts/AskQuestion";
 import RegisteredMember from "components/Cards/RegisteredMembers";

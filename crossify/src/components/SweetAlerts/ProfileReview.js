@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
-import demobg from "assets/img/demopf.png";
 import axios from "axios";
 import EvaulateProfile from "components/Cards/MemberProfileDetails";
 import socket from "./../../utils/helper";

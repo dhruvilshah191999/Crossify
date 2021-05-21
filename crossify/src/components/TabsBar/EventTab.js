@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import Photo from "assets/img/team-4-470x470.png";
 import axios from "axios";
 import ProfileEventClub from "components/Cards/ProfileEventCard";
 import EventCalendar from "components/Calendar/EventCalendar";

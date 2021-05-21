@@ -1,5 +1,4 @@
 import React from "react";
-import pp1 from "assets/img/pp1.jpg";
 import moment from "moment";
 
 function Message(props) {

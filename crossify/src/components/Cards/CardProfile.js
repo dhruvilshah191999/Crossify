@@ -1,5 +1,4 @@
 import React from "react";
-import demopf from "assets/img/profilepic.jpg";
 import Tag from "components/Tag";
 import DeleteMyClub from "components/SweetAlerts/DeleteMyClubButton";
 // components

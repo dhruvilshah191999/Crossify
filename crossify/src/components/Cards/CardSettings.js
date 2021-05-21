@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import dummyPF from "assets/img/demopf.png";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import MapContainer from "components/Maps/MapCode";

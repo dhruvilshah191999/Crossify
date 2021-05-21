@@ -2,8 +2,6 @@ import React from "react";
 import axios from "axios";
 import UploadPic from "components/Inputs/UploadPic";
 import Sidebar from "components/Sidebar/ManageEventSidebar.js";
-import dummyPF from "assets/img/demopf.png";
-import InputTagsContainer from "components/Inputs/InputTags";
 import PulseLoader from "react-spinners/PulseLoader";
 
 export default class DetailsSettings extends React.Component {

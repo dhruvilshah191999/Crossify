@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-import demopf from "assets/img/demopf.png";
 import currentPosIcon from "assets/img/marker.png";
-import { Link } from "react-router-dom";
 import moment from "moment";
 
 function generateRandomNumber() {

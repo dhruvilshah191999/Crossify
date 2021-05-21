@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import defImg from "../../assets/img/event_1.jpeg";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "context/usercontext";

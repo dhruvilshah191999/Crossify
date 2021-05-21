@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import axios from "axios";
 import Moment from "moment";
-import demobg from "assets/img/demopf.png";
 import Tag from "components/Tag";
 import MapContainer from "components/Maps/ViewOnlyMap";
 import ChatMessage from "components/Cards/ChatMessage";

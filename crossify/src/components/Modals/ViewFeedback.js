@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import axios from "axios";
-import demopf from "assets/img/demopf.png";
 import ChatMessage from "components/Cards/ChatMessage";
 
 Modal.defaultStyles = {};
