@@ -35,7 +35,7 @@ export default function CardProfile(props) {
                 </div>
                 <div className="lg:mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
-                    {props.channelSize}
+                    {props.clubData.channel_list.length}
                   </span>
                   <span className="text-sm text-gray-500">Channels</span>
                 </div>
@@ -47,8 +47,8 @@ export default function CardProfile(props) {
               {props.clubData.club_name}
             </h2>
             <div className="mb-2 text-gray-700 ">
-              {props.categoriesList.map((el, index) => (
-                <Tag data={el} key={index}></Tag>
+              {props.clubData.category_data.map((el, index) => (
+                <Tag data={el.category_name} key={index}></Tag>
               ))}
             </div>
 

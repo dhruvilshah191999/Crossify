@@ -36,7 +36,7 @@ router.post('/general-update', async function (req, res, next) {
     ending_date,
     ending_time,
     ending_date_registration,
-    tags
+    tags,
   } = req.body;
   var startdate = new Date(starting_date + ' ' + starting_time);
   var date = new Date(ending_date + ' ' + ending_time);
@@ -57,7 +57,7 @@ router.post('/general-update', async function (req, res, next) {
       startdate,
       ending_date_registration,
       date,
-      tags
+      tags,
     }
   );
   await check.exec((error, data) => {
@@ -323,17 +323,38 @@ router.post('/reject', async function (req, res, next) {
 });
 
 router.post('/answer', async function (req, res, next) {
-  var { event_id, question, answer } = req.body;
-  var check = event_details.updateOne(
-    { _id: ObjectId(event_id) },
-    {
-      $set: { 'faq.$[elem].status': 'answered', 'faq.$[elem].answer': answer },
-    },
-    {
-      multi: false,
-      arrayFilters: [{ 'elem.question': question }],
-    }
-  );
+  var { event_id, question, answer, is_new } = req.body;
+  var check;
+  if (is_new) {
+    var object = {
+      question,
+      askedby: 'owner',
+      answer,
+      date: new Date(),
+      status: 'answered',
+      privacy: 'public',
+    };
+    check = event_details.updateOne(
+      { _id: ObjectId(event_id) },
+      {
+        $push: { faq: object },
+      }
+    );
+  } else {
+    check = event_details.updateOne(
+      { _id: ObjectId(event_id) },
+      {
+        $set: {
+          'faq.$[elem].status': 'answered',
+          'faq.$[elem].answer': answer,
+        },
+      },
+      {
+        multi: false,
+        arrayFilters: [{ 'elem.question': question }],
+      }
+    );
+  }
   await check.exec((err, data) => {
     if (err) {
       var err = {

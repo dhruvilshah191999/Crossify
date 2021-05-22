@@ -9,14 +9,8 @@ export default class SweetAlertModal extends Component {
       alert: null,
       question: null,
       answer: null,
-      event_id: null,
-    };
-  }
-  componentDidMount() {
-    this.setState({
-      question: this.props.question || null,
       event_id: this.props.event_id,
-    });
+    };
   }
   hideAlert = () => {
     this.setState({
@@ -35,7 +29,7 @@ export default class SweetAlertModal extends Component {
       event_id: this.state.event_id,
       question: this.state.question,
       answer: this.state.answer,
-      is_new: false,
+      is_new: true,
     };
     const finaldata = await axios.post("/api/manage/answer", object, config);
     if (finaldata.data.is_error) {
@@ -53,18 +47,18 @@ export default class SweetAlertModal extends Component {
         customClass="text-black"
         success
         showCancel
-        confirmBtnText="Update"
+        confirmBtnText="Add"
         confirmBtnBsStyle="success"
         focusCancelBtn
         confirmBtnCssClass="text-base rounded px-4 py-2 bg-blue-500"
         confirmBtnStyle={{ color: "white" }}
         cancelBtnCssClass="text-base"
         cancelBtnBsStyle="default"
-        title="Edit Answer/Question"
+        title="Add Answer/Question"
         onConfirm={this.onRecievedInput}
         onCancel={this.hideAlert}
         type={"controlled"}
-        dependencies={[this.state.question]}
+        dependencies={[this.state.question, this.state.answer]}
       >
         <div>
           <form>
@@ -81,8 +75,10 @@ export default class SweetAlertModal extends Component {
                     rows="4"
                     type="text"
                     className="bg-gray-100 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue={this.state.question}
-                    readOnly={true}
+                    value={this.state.question}
+                    onChange={(e) => {
+                      this.setState({ question: e.target.value });
+                    }}
                   />
                 </div>
               </div>
@@ -97,7 +93,7 @@ export default class SweetAlertModal extends Component {
                   <textarea
                     rows="4"
                     className="bg-gray-100 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                    defaultValue={this.state.answer}
+                    value={this.state.answer}
                     onChange={(e) => {
                       this.setState({ answer: e.target.value });
                     }}
@@ -117,10 +113,14 @@ export default class SweetAlertModal extends Component {
   render() {
     return (
       <>
-        <button title="Arrived" onClick={() => this.confirmArrival()}>
-          <i className="fas fa-edit text-blue-500 text-lg focus:outline-none"></i>
+        <button
+          className="bg-green-500 text-white  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-4 ease-linear transition-all duration-150"
+          type="button"
+          title="Add Question"
+          onClick={() => this.confirmArrival()}
+        >
+          <i className="fas fa-plus"></i>
         </button>
-
         {this.state.alert}
       </>
     );

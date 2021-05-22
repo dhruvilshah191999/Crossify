@@ -28,7 +28,7 @@ const ResultWindow = (props) => {
 
           <div className=" text-sm font-semibold text-beta mt-1">
             <i className="fas fa-users mr-1"></i>
-            &nbsp;{props.data.status} Group
+            &nbsp;{props.data.status} Club
           </div>
           <div
             className="text-sm font-semibold text-alpha"

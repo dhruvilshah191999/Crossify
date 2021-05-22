@@ -410,29 +410,16 @@ export default function EventPage(props) {
                   className="mt-1 text-lg  lg:w-3/4 leading-relaxed"
                   style={{ overflowY: "auto", maxHeight: "400px" }}
                 >
-                  {eventdetails.faq.some(
-                    (cur) =>
-                      cur.privacy === "public" && cur.status === "answered"
-                  ) ? (
+                  {eventdetails.faq.length ? (
                     eventdetails.faq.map((el, i) => {
-                      if (el.privacy === "public" && el.status === "answered") {
-                        if (i === 0) {
-                          return (
-                            <details>
-                              <summary className="pt-0">{el.question}</summary>
-                              <pre>{el.answer}</pre>
-                            </details>
-                          );
-                        }
-                        return (
-                          <details>
-                            <summary>{el.question}</summary>
-                            <pre>{el.answer}</pre>
-                          </details>
-                        );
-                      } else {
-                        return <></>;
-                      }
+                      return (
+                        <details>
+                          <summary className={i === 0 ? "pt-0" : ""}>
+                            {el.question}
+                          </summary>
+                          <pre>{el.answer}</pre>
+                        </details>
+                      );
                     })
                   ) : (
                     <i> Nothing added Yet.</i>
