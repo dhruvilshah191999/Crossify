@@ -9,6 +9,10 @@ import City from "../../views/auth/states-and-districts.json";
 import InputTagsContainer from "components/Inputs/InputTags";
 import { Formik } from "formik";
 import moment from "moment";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+var vertical = "bottom";
+var horizontal = "center";
 
 Modal.defaultStyles = {};
 
@@ -26,6 +30,7 @@ function MyModal(props) {
   const [tags, setTags] = useState([]);
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
   const [category, setCategory] = useState([]);
   const [newlatitude, setlatitude] = useState(23.106517);
   const [newlongitude, setlongitude] = useState(72.59482);
@@ -91,6 +96,13 @@ function MyModal(props) {
 
   const handlePhotoCallback = (childData) => {
     setPhoto(childData);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setError(false);
   };
 
   const { onRequestClose } = props;
@@ -178,6 +190,14 @@ function MyModal(props) {
               } else if (!eligibility) {
                 errors.eligibility = "Eligibility is required !";
               }
+              if (
+                !(
+                  Object.keys(errors).length === 0 &&
+                  errors.constructor === Object
+                )
+              ) {
+                setError(true);
+              }
               return errors;
             }}
             onSubmit={async ({ setSubmitting }) => {
@@ -261,6 +281,16 @@ function MyModal(props) {
                 <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
                   Event Information
                 </h6>
+                <Snackbar
+                  anchorOrigin={{ vertical, horizontal }}
+                  open={isError}
+                  autoHideDuration={2000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="error">
+                    "Please check errors in the form"
+                  </Alert>
+                </Snackbar>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-8/12 px-4">
                     <div className="relative w-full mb-3">

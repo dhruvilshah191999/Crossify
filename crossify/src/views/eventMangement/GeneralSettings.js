@@ -14,6 +14,11 @@ import PulseLoader from "react-spinners/PulseLoader";
 import DeleteMyEvent from "components/SweetAlerts/DeleteMyEventButton";
 import MultipleSelect from "components/Inputs/MultiSelect";
 import { InputTagsContainer } from "../../components/Inputs/InputTags";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+
+var vertical = "top";
+var horizontal = "center";
 
 export default function GeneralSettings(props) {
   let history = useHistory();
@@ -22,6 +27,7 @@ export default function GeneralSettings(props) {
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("");
   const [loading, setloading] = useState(false);
+  const [isError, setError] = useState(false);
   const [submitloading, setsubmitLoading] = useState(false);
   const [latitude, setlatitude] = useState(23.106517);
   const [longitude, setlongitude] = useState(72.59482);
@@ -73,6 +79,13 @@ export default function GeneralSettings(props) {
 
   const onChange = (e) =>
     SetformData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setError(false);
+  };
 
   var districts = [];
   if (statename !== "") {
@@ -190,6 +203,14 @@ export default function GeneralSettings(props) {
               ) {
                 errors.maximum_participants = "Capacity is required !";
               }
+              if (
+                !(
+                  Object.keys(errors).length === 0 &&
+                  errors.constructor === Object
+                )
+              ) {
+                setError(true);
+              }
               return errors;
             }}
             onSubmit={async ({ setSubmitting }) => {
@@ -269,6 +290,18 @@ export default function GeneralSettings(props) {
                           <i className="fas fa-info-circle"></i>
                         </button>
                       </h6>
+
+                      <Snackbar
+                        anchorOrigin={{ vertical, horizontal }}
+                        open={isError}
+                        autoHideDuration={2000}
+                        onClose={handleClose}
+                      >
+                        <Alert onClose={handleClose} severity="error">
+                          "Please check errors in the form"
+                        </Alert>
+                      </Snackbar>
+
                       {submitloading ? (
                         <div align="center">
                           <PulseLoader color="#48bb78" size={10} />
