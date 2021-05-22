@@ -260,16 +260,29 @@ export default class SweetAlertModal extends Component {
             >
               <i className="fas fa-user-clock"></i> &nbsp;Join Waiting List
             </button>
+          ) : new Date(this.props.startdate).getTime() >
+            new Date().getTime() ? (
+            <div>
+              <motion.button
+                className="w-full h-12 hover:text-white hover:bg-lightalpha shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={this.state.readonly ? "" : () => this.successJoined()}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <i className="fas fa-user-plus "></i> Attend
+              </motion.button>
+            </div>
           ) : (
-            <motion.button
-              className="w-full h-12 hover:text-white hover:bg-lightalpha shadow border border-solid  bg-alpha text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              type="button"
-              onClick={this.state.readonly ? "" : () => this.successJoined()}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <i className="fas fa-user-plus "></i> Attend
-            </motion.button>
+            <div>
+              <button
+                className="w-full h-12 hover:text-white bg-lightalpha shadow border border-solid   text-white active:bg-lightalpha font-bold uppercase text-xs px-4 py-2 rounded-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                type="button"
+                disabled
+              >
+                <i className="fas fa-hourglass-start"></i>&nbsp; Already Started
+              </button>
+            </div>
           )}
 
           {this.state.alert}

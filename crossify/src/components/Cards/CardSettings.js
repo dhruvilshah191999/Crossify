@@ -23,7 +23,7 @@ export default function CardSettings(props) {
   const [tags, setTags] = useState(props.data.tags);
   const [successStatus, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
-  const [photo, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState(props.data.profile_photo);
   const [loading, setloading] = useState(false);
   const [privacy, setPrivacy] = useState(props.data.status);
   const [question1, setquestion] = useState(props.data.question);
@@ -109,7 +109,8 @@ export default function CardSettings(props) {
         }}
         onSubmit={async ({ setSubmitting }) => {
           setloading(true);
-          if (photo != null) {
+          console.log(typeof photo);
+          if (photo != null || typeof photo !== "string") {
             var url = "https://api.cloudinary.com/v1_1/crossify/image/upload/";
             var path = "Club/" + photo.name;
             var data = new FormData();
@@ -522,6 +523,7 @@ export default function CardSettings(props) {
                           defaultValue={this.props.dummyPF}
                         /> */}
                       <UploadPic
+                        file={photo}
                         parentCallback={handlePhotoCallback}
                       ></UploadPic>
                     </div>

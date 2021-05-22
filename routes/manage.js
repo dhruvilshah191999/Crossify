@@ -85,7 +85,7 @@ router.post('/general-update', async function (req, res, next) {
 });
 
 router.post('/details-update', async function (req, res, next) {
-  var { event_id, photo, description, eligibility, tags } = req.body;
+  var { event_id, photo, description, eligibility } = req.body;
   var check;
   if (photo != null) {
     check = event_details.updateOne(
@@ -96,7 +96,6 @@ router.post('/details-update', async function (req, res, next) {
         photo,
         description,
         eligibility,
-        tags,
       }
     );
   } else {
@@ -108,7 +107,6 @@ router.post('/details-update', async function (req, res, next) {
       {
         description,
         eligibility,
-        tags,
       }
     );
   }

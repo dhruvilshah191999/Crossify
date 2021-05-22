@@ -42,6 +42,7 @@ export default function EventPage(props) {
   const [isLike, setLike] = useState(false);
   const [eventdetails, Seteventsdetails] = useState({});
   const [checkevent, setevent] = useState(false);
+  const [isCompleted, setCompleted] = useState(false);
   const token = localStorage.getItem("jwt");
 
   useEffect(() => {
@@ -65,6 +66,12 @@ export default function EventPage(props) {
         console.log(finaldata.data.message);
       } else {
         Seteventsdetails(finaldata.data.event_data);
+        if (
+          new Date(finaldata.data.event_data.date).getTime() <
+          new Date().getTime()
+        ) {
+          setCompleted(true);
+        }
         if (
           finaldata.data.event_data.current_participants >=
           finaldata.data.event_data.maximum_participants
@@ -316,41 +323,52 @@ export default function EventPage(props) {
                 </div>
               </div>
 
-              <div
-                title="Add to Calendar"
-                className="addeventatc mt-1  text-xs rounded-lg"
-                style={{ fontSize: "smaller !important" }}
-                data-styling="none"
-              >
-                <span className="uppercase">
-                  <i className="far fa-calendar-plus text-base"></i> &nbsp;Add
-                  to Calendar
-                </span>
-                <span className="arrow">&nbsp;</span>
-                <span className="start">{eventdetails.startdate}</span>
-                <span className="end">{eventdetails.date}</span>
-                <span className="timezone">Asia/Kolkata</span>
-                <span className="title">{eventdetails.event_name}</span>
-                <span className="description">{eventdetails.description}</span>
-                <span className="location">
-                  {eventdetails.location +
-                    ", " +
-                    eventdetails.city +
-                    ", " +
-                    eventdetails.state}
-                </span>
-              </div>
+              {isCompleted || (
+                <div
+                  title="Add to Calendar"
+                  className="addeventatc mt-1  text-xs rounded-lg"
+                  style={{ fontSize: "smaller !important" }}
+                  data-styling="none"
+                >
+                  <span className="uppercase">
+                    <i className="far fa-calendar-plus text-base"></i> &nbsp;Add
+                    to Calendar
+                  </span>
+                  <span className="arrow">&nbsp;</span>
+                  <span className="start">{eventdetails.startdate}</span>
+                  <span className="end">{eventdetails.date}</span>
+                  <span className="timezone">Asia/Kolkata</span>
+                  <span className="title">{eventdetails.event_name}</span>
+                  <span className="description">
+                    {eventdetails.description}
+                  </span>
+                  <span className="location">
+                    {eventdetails.location +
+                      ", " +
+                      eventdetails.city +
+                      ", " +
+                      eventdetails.state}
+                  </span>
+                </div>
+              )}
 
-              <div className="flex justify-center mt-2">
-                <JoinEventButton
-                  eventid={eventdetails._id}
-                  current={eventdetails.current_participants}
-                  max={eventdetails.maximum_participants}
-                  check={checkevent}
-                  isInWaiting={isInWaiting}
-                  isFull={IsFull}
-                ></JoinEventButton>
-              </div>
+              {isCompleted ? (
+                <div className="flex justify-center uppercase mt-auto mb-4 text-complete border-green-500 font-semibold rounded-lg py-4">
+                  Completed
+                </div>
+              ) : (
+                <div className="flex justify-center mt-2">
+                  <JoinEventButton
+                    eventid={eventdetails._id}
+                    startdate={eventdetails.startdate}
+                    current={eventdetails.current_participants}
+                    max={eventdetails.maximum_participants}
+                    check={checkevent}
+                    isInWaiting={isInWaiting}
+                    isFull={IsFull}
+                  ></JoinEventButton>
+                </div>
+              )}
             </div>
           </div>
           <div className="mx-4 lg:mx-0 my-4">

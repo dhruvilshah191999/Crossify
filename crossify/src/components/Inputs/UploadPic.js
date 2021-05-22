@@ -10,6 +10,7 @@ class UploadPic extends React.Component {
       errorStatus: false,
       message: "",
     };
+    console.log("hello", this.state.file);
     this.handleChange = this.handleChange.bind(this);
   }
 
