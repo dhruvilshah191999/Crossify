@@ -11,6 +11,7 @@ import {
   usePagination,
 } from "react-table";
 import RejectButton from "components/SweetAlerts/RejectButton";
+import AddQnAButton from "components/SweetAlerts/AddQnAButton";
 import PrivateButton from "components/SweetAlerts/PrivateButton";
 import PublishButton from "components/SweetAlerts/PublishButton";
 import ToggleDarkMode from "components/Inputs/ToggleDarkMode";
@@ -363,6 +364,7 @@ export default function App(props) {
                   <PublishButton handlePublish={getSelectedAndPublish} />
                   <PrivateButton handlePrivate={getSelectedAndPrivate} />
                   <RejectButton handleRejection={getSelectedAndReject} />
+                  <AddQnAButton event_id={id} />
                 </div>
                 <div className="inline-block ml-2">
                   <ToggleDarkMode

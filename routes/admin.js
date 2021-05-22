@@ -1720,11 +1720,31 @@ router.post('/Addchannel', async function (req, res, next) {
     description,
   });
   data.save().then((data) => {
-    var finaldata = {
-      is_error: false,
-      message: 'Data Send',
-    };
-    return res.status(200).send(finaldata);
+    var final = club_details.update(
+      { _id: ObjectId(club_id) },
+      {
+        $push: {
+          channel_list: data._id,
+        },
+      }
+    )
+    .exec((err,succ)=>{
+      if(err){
+        var error = {
+          is_error: true,
+          message: err.message,
+        };
+        return res.status(600).send(error);
+      }
+      else{
+        var finaldata = {
+          is_error: false,
+          message: 'Data Send',
+        };
+        return res.status(200).send(finaldata);
+      }
+    })
+    
   });
 });
 

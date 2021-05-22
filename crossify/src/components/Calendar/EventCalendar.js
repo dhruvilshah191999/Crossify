@@ -1,4 +1,5 @@
 import React from "react";
+import { UserContext } from "./../../context/usercontext";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -77,6 +78,7 @@ export default class DemoApp extends React.Component {
     ModalManager.open(
       <RequestForEvent
         onRequestClose={() => true}
+        categoryList={this.props.categoryData}
         startDate={this.state.currentSelectionInfo.startStr}
         endDate={this.state.currentSelectionInfo.endStr}
         club_id={this.state.club_id}
@@ -87,7 +89,6 @@ export default class DemoApp extends React.Component {
   };
 
   selectedDates = (selectionInfo) => {
-    console.log(selectionInfo);
     const getAlert = () => (
       <SweetAlert
         customClass="text-black"

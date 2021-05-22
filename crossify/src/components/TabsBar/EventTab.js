@@ -9,7 +9,7 @@ import MapwithEvents from "components/Maps/EventsOfClubsMap";
 export default function EventTab(props) {
   const eventPerPage = 3;
   const [pastIndex, setpastIndex] = useState(1);
-  const { users } = useContext(UserContext);
+  const { users, category } = useContext(UserContext);
   const [upcomingIndex, setUpcomingIndex] = useState(1);
   const [tabIndex, toggleTabIndex] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -317,6 +317,7 @@ export default function EventTab(props) {
             </span>
             <EventCalendar
               EventData={rawUpcomingEvents}
+              categoryData={category}
               club_id={props.club_id}
               isAdmin={props.isAdmin}
             />

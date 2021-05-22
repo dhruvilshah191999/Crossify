@@ -147,7 +147,7 @@ function ClubPage(props) {
         onRequestClose={() => true}
         club_id={id}
         isAdmin={isAdmin}
-        category={category}
+        categoryList={category}
       />
     );
   };

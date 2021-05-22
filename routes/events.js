@@ -454,7 +454,7 @@ router.post('/event-details', async function (req, res, next) {
       } else {
         var arrayToAppend = [];
         data[0].faq.forEach((el) => {
-          if (el.privacy == 'public') {
+          if (el.privacy == 'public' && el.status == 'answered') {
             arrayToAppend.push(el);
           }
         });
@@ -954,7 +954,7 @@ router.post('/ask-question', auth, async function (req, res, next) {
     askedby: user_name,
     date: new Date(),
     status: 'pending',
-    privacy: 'public',
+    privacy: 'private',
   };
   var update = event_details.updateOne(
     { _id: ObjectId(event_id) },

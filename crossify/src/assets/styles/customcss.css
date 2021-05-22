@@ -228,7 +228,12 @@ pre {
 .hover\:bg-white:hover {
   background-color: #fff;
 }
-
+.border-green-500 {
+  border: 1px solid #48bb78;
+}
+.text-complete {
+  color: #1db954;
+}
 .hover\:bg-gray-200:hover {
   background-color: #fafafa;
 }

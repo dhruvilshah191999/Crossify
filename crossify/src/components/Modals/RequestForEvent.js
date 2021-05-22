@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Modal, ModalManager, Effect } from "react-dynamic-modal";
 import MultiSelect from "components/Inputs/EventMultiSelect";
 import axios from "axios";
+import { UserContext } from "context/usercontext";
 import MapContainer from "../Maps/AddMapCode";
 import { usePosition } from "use-position";
 import UploadPic from "components/Inputs/UploadPic";
@@ -25,7 +26,6 @@ var customModalStyles = {
     overlfow: "scroll", // <-- This tells the modal to scrol
   },
 };
-
 function MyModal(props) {
   const [tags, setTags] = useState([]);
   const [photo, setPhoto] = useState(null);
@@ -44,13 +44,12 @@ function MyModal(props) {
     description: "",
     eligibility: "",
     capacity: 0,
-    last_registraiton_date: null,
-    starting_date: props.startDate || null,
-    ending_date: props.endDate || null,
-    starting_time: null,
-    ending_time: null,
+    last_registraiton_date: "",
+    starting_date: props.startDate || "",
+    ending_date: props.endDate || "",
+    starting_time: "",
+    ending_time: "",
   });
-
   const {
     event_name,
     privacy,
@@ -76,6 +75,7 @@ function MyModal(props) {
   }
   let { latitude, longitude } = usePosition(true);
   useEffect(() => {
+    console.log(props.category);
     setTimeout(() => {
       setLoading(true);
     }, 100);
@@ -350,7 +350,7 @@ function MyModal(props) {
                       <MultiSelect
                         placeholder="Select your relevant Categories"
                         parentCallback={handleCategory}
-                        category={props.category}
+                        category={props.categoryList}
                       ></MultiSelect>
                     </div>
                     <p className="FormError">
