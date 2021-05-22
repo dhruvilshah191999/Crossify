@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Moment from "moment";
 import Tag from "components/Tag";
+import { Link } from "react-router-dom";
 
 const ClubView = (props) => {
   return (
@@ -10,16 +11,19 @@ const ClubView = (props) => {
       style={{ flex: "1 1 30%", maxWidth: 350 }}
     >
       <div className="flex flex-row">
-        <div className="flex-shrink-0">
-          <img
-            src={props.club_img}
-            alt="HostedClubImage"
-            className="rounded mini-club-image mr-4"
-          />
-        </div>
+        <Link to={`/club/${props.club_id}`}>
+          <div className="flex-shrink-0">
+            <img
+              src={props.club_img}
+              alt="HostedClubImage"
+              className="rounded mini-club-image mr-4"
+            />
+          </div>
+        </Link>
         <div className="flex flex-col ">
-          <div className="font-semibold text-lg">{props.club_name}</div>
-
+          <Link to={`/club/${props.club_id}`}>
+            <div className="font-semibold text-lg">{props.club_name}</div>
+          </Link>
           <div className="text-sm text-gray-700">{"Admin"}</div>
         </div>
       </div>
@@ -117,7 +121,8 @@ class MemberDetails extends Component {
               </div>
               <div className="flex">
                 <div className="text-gray-600 mt-1 inline-block text-lg flex-shrink-0">
-                  <i className="fas fa-map-marker-alt  "></i> {this.props.place}
+                  <i className="fas fa-map-marker-alt  "></i>{" "}
+                  {this.state.profile.city}, {this.state.profile.state}
                 </div>
               </div>
               <div
@@ -219,6 +224,7 @@ class MemberDetails extends Component {
                 <ClubView
                   club_name={el.club_name}
                   club_img={el.profile_photo}
+                  club_id={el.club_id}
                 ></ClubView>
               ))}
             </div>

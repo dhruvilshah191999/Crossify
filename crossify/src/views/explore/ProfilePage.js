@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "components/Navbars/ClubNavbar";
 import MemberDetails from "components/Cards/MemberDetails";
+import Footer from "components/Footers/FooterAdmin";
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +20,8 @@ class ProfilePage extends Component {
             </div>
           </div>
         </div>
+        <hr />
+        <Footer />
       </>
     );
   }
