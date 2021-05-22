@@ -150,7 +150,12 @@ function CreateClub(props) {
                   } else if (rules.length < 5) {
                     errors.rules = "Minimum 5 characters are required";
                   }
-                  if (errors.length !== 0) {
+                  if (
+                    !(
+                      Object.keys(errors).length === 0 &&
+                      errors.constructor === Object
+                    )
+                  ) {
                     setError(true);
                   }
                   return errors;
@@ -240,7 +245,7 @@ function CreateClub(props) {
                       autoHideDuration={2000}
                       onClose={handleClose}
                     >
-                      <Alert onClose={handleClose}>
+                      <Alert onClose={handleClose} severity="error">
                         "Please check errors in the form"
                       </Alert>
                     </Snackbar>
