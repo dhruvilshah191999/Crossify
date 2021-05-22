@@ -24,6 +24,7 @@ var customModalStyles = {
     transform: "translate(-50%, -50%)",
     height: "600px", // <-- This sets the height
     overlfow: "scroll", // <-- This tells the modal to scrol
+    position: "relative",
   },
 };
 function MyModal(props) {
@@ -281,16 +282,6 @@ function MyModal(props) {
                 <h6 className="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
                   Event Information
                 </h6>
-                <Snackbar
-                  anchorOrigin={{ vertical, horizontal }}
-                  open={isError}
-                  autoHideDuration={2000}
-                  onClose={handleClose}
-                >
-                  <Alert onClose={handleClose} severity="error">
-                    "Please check errors in the form"
-                  </Alert>
-                </Snackbar>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-8/12 px-4">
                     <div className="relative w-full mb-3">
@@ -721,6 +712,16 @@ function MyModal(props) {
                     </div>
                   </div>
                 </div>
+                <Snackbar
+                  anchorOrigin={{ vertical, horizontal }}
+                  open={isError}
+                  autoHideDuration={2000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="error">
+                    "Please check errors in the form"
+                  </Alert>
+                </Snackbar>
                 <div className="flex items-center justify-end">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

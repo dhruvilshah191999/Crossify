@@ -22,6 +22,7 @@ export default function CardSettings(props) {
   const [category, setCategory] = useState(props.data.category_data);
   const [tags, setTags] = useState(props.data.tags);
   const [successStatus, setSuccess] = useState(false);
+  const [isError, setError] = useState(false);
   const [message, setMessage] = useState("");
   const [photo, setPhoto] = useState(props.data.profile_photo);
   const [loading, setloading] = useState(false);
@@ -75,6 +76,7 @@ export default function CardSettings(props) {
       return;
     }
     setSuccess(false);
+    setError(false);
   };
 
   const { club_name, address, postalcode, description, criteria, rules } =
@@ -104,6 +106,11 @@ export default function CardSettings(props) {
             errors.criteria = "Joining criteria is required !";
           } else if (!rules) {
             errors.rules = "Rules are required !";
+          }
+          if (
+            !(Object.keys(errors).length === 0 && errors.constructor === Object)
+          ) {
+            setError(true);
           }
           return errors;
         }}
@@ -256,6 +263,16 @@ export default function CardSettings(props) {
               onClose={handleClose}
             >
               <Alert onClose={handleClose}>{message}</Alert>
+            </Snackbar>
+            <Snackbar
+              anchorOrigin={{ vertical, horizontal }}
+              open={isError}
+              autoHideDuration={2000}
+              onClose={handleClose}
+            >
+              <Alert onClose={handleClose} severity="error">
+                "Please check errors in the form"
+              </Alert>
             </Snackbar>
             <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
               <form>
