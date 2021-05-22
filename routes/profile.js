@@ -626,6 +626,7 @@ router.post('/member-admin', async function (req, res, next) {
         finaldata.message.push({
           profile_photo: element.profile_photo,
           club_name: element.club_name,
+          club_id:element._id
         });
       });
       return res.status(200).send(finaldata);
@@ -657,6 +658,7 @@ router.post('/get-photo-name', auth, async function (req, res, next) {
         finaldata.message.push({
           profile_photo: element.profile_photo,
           club_name: element.club_name,
+          club_id:element._id
         });
       });
       return res.status(200).send(finaldata);
