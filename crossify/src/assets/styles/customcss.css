@@ -1364,7 +1364,7 @@ div.sticky {
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
-
+  z-index: inherit;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
   padding: 10px 16px;
   outline: none;
