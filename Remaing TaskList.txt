@@ -1,12 +1,7 @@
 Navbar options in manage pages
 
 
-Auto suggestion in location search field
-Reduce mobile view margin and padding for index page
-Add social media link in footer
-add footer in club and event page
 change style of tabsbar
-Resend Verification functionality
 Change UI of Interest Select Step in Sign up
 Notification panel to add listen onclick to set isRead false for that event
 Make the Email such that it does not go in spam

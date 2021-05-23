@@ -7,6 +7,8 @@ import Key from "config/default.json";
 import CryptoJS from "crypto-js";
 import { Formik } from "formik";
 import moment from "moment";
+import zxcvbn from "zxcvbn";
+import { scoreTitles } from "constants/index";
 
 export default function SocialRegister2() {
   let history = useHistory();
@@ -16,6 +18,7 @@ export default function SocialRegister2() {
   const [usernameStatus, setUsername] = useState(false);
   const [username, setusername] = useState(null);
   const [cityname, setCityName] = useState("");
+  const [strength, setStrength] = useState(0);
   const [formData, setformData] = useState({
     address: "",
     pincode: "",
@@ -59,8 +62,17 @@ export default function SocialRegister2() {
       });
   };
   const onChange = (e) => {
+    if (e.target.name === "password") {
+      setStrength(zxcvbn(e.target.value).score);
+    }
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
+  const strengthClass = [
+    "strength-meter mt-2",
+    formData.password.length > 0 ? "visible" : "hidden",
+  ]
+    .join(" ")
+    .trim();
 
   var districts = [];
   if (statename !== "") {
@@ -96,10 +108,12 @@ export default function SocialRegister2() {
                     } else if (usernameStatus) {
                       errors.username = "Username is already exists !";
                     }
-                    if (!!password.trim()) {
+                    if (!password.trim()) {
                       errors.password = "Password is required !";
                     } else if (password.length < 6) {
                       errors.password = "Minimim 6 characters are required !";
+                    } else if (strength < 1) {
+                      errors.password = "Please use strong password.";
                     } else if (!repassword.trim()) {
                       errors.repassword = "Re-Password is required !";
                     } else if (password.trim() !== repassword.trim()) {
@@ -211,7 +225,33 @@ export default function SocialRegister2() {
                           htmlFor="reg-password"
                         >
                           Password
+                          {formData.password.length > 0 && (
+                            <div className="text-right inline-block ">
+                              {" "}
+                              :&nbsp;
+                              <span
+                                data-strength={strength}
+                                className="text-passstregth font-bold "
+                              >
+                                {scoreTitles[strength]}
+                              </span>
+                            </div>
+                          )}
                         </label>
+                        <p
+                          className="text-gray-600 mb-2"
+                          style={{ fontSize: "11px" }}
+                        >
+                          To conform with our Strong Password policy, you are
+                          required to use a sufficiently strong password.
+                          Password must be more than 6 characters.
+                        </p>
+                        <div className={strengthClass}>
+                          <div
+                            className="strength-meter-fill"
+                            data-strength={strength}
+                          ></div>
+                        </div>
                         <input
                           id="reg-password"
                           type="password"

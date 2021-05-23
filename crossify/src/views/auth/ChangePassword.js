@@ -4,6 +4,8 @@ import PulseLoader from "react-spinners/PulseLoader";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { Formik } from "formik";
+import zxcvbn from "zxcvbn";
+import { scoreTitles } from "constants/index";
 
 var vertical = "top";
 var horizontal = "center";
@@ -15,7 +17,7 @@ function ChangePassword() {
     new_password: "",
     confirm_new_password: "",
   });
-
+  const [strength, setStrength] = useState(0);
   const [errorStatus, setError] = useState(false);
   const [submitted, isSubmitting] = useState(false);
   const [successStatus, setSuccess] = useState(false);
@@ -28,10 +30,19 @@ function ChangePassword() {
     setError(false);
     setSuccess(false);
   };
+  const strengthClass = [
+    "strength-meter mt-2",
+    formData.new_password.length > 0 ? "visible" : "hidden",
+  ]
+    .join(" ")
+    .trim();
 
-  const onChange = (e) =>
+  const onChange = (e) => {
+    if (e.target.name === "new_password") {
+      setStrength(zxcvbn(e.target.value).score);
+    }
     setData({ ...formData, [e.target.name]: e.target.value });
-
+  };
   return (
     <div className="container mx-auto px-4 h-full">
       <Snackbar
@@ -85,6 +96,10 @@ function ChangePassword() {
                 } else if (password === new_password) {
                   errors.new_password =
                     "New password is same as old password !";
+                } else if (new_password.trim().length < 6) {
+                  errors.new_password = "Minimim 6 characters are required !";
+                } else if (strength < 1) {
+                  errors.new_password = "Please use strong password.";
                 }
                 if (!confirm_new_password) {
                   errors.confirm_new_password = "Confirm password required !";
@@ -183,8 +198,34 @@ function ChangePassword() {
                       className="block uppercase text-gray-700 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      New Password
+                      New Password{" "}
+                      {formData.new_password.length > 0 && (
+                        <div className="text-right inline-block ">
+                          {" "}
+                          :&nbsp;
+                          <span
+                            data-strength={strength}
+                            className="text-passstregth font-bold "
+                          >
+                            {scoreTitles[strength]}
+                          </span>
+                        </div>
+                      )}
                     </label>
+                    <p
+                      className="text-gray-600 mb-2"
+                      style={{ fontSize: "11px" }}
+                    >
+                      To conform with our Strong Password policy, you are
+                      required to use a sufficiently strong password. Password
+                      must be more than 6 characters.
+                    </p>
+                    <div className={strengthClass}>
+                      <div
+                        className="strength-meter-fill"
+                        data-strength={strength}
+                      ></div>
+                    </div>
                     <input
                       type="password"
                       className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"

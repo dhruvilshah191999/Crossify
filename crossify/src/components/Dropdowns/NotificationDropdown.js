@@ -9,7 +9,6 @@ import socket from "./../../utils/helper";
 const NotificationDropdown = () => {
   const [unread, setUnread] = useState(0);
   const [loading, setloding] = useState(false);
-  const contextObj = useContext(UserContext);
   const { users } = useContext(UserContext);
   const [socketId, setSocketId] = useState(true);
   const token = localStorage.getItem("jwt");

@@ -5,12 +5,14 @@ import Facebook from "./Facebook";
 import Google from "./Google";
 import Key from "config/default.json";
 import CryptoJS from "crypto-js";
+import zxcvbn from "zxcvbn";
 import { Formik } from "formik";
-
+import { scoreTitles } from "constants/index";
 export default function Register() {
   let history = useHistory();
   const [email, setEmail] = useState("");
   const [checkemail, setcheckEmail] = useState(false);
+  const [strength, setStrength] = useState(0);
   const [formData, SetFormData] = useState({
     password: "",
     repassword: "",
@@ -19,9 +21,12 @@ export default function Register() {
   });
   const { password, repassword, fname, lname } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
+    if (e.target.name === "password") {
+      setStrength(zxcvbn(e.target.value).score);
+    }
     SetFormData({ ...formData, [e.target.name]: e.target.value });
-
+  };
   const onEmailChange = (e) => {
     setEmail(e.target.value);
     const config = {
@@ -45,6 +50,12 @@ export default function Register() {
 
   const [checked, setChecked] = useState(false);
   const handleCheck = (e) => setChecked(!checked);
+  const strengthClass = [
+    "strength-meter mt-2",
+    formData.password.length > 0 ? "visible" : "hidden",
+  ]
+    .join(" ")
+    .trim();
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -91,6 +102,8 @@ export default function Register() {
                       errors.password = "Password is required !";
                     } else if (password.trim().length < 6) {
                       errors.password = "Minimim 6 characters are required !";
+                    } else if (strength < 1) {
+                      errors.password = "Please use strong password.";
                     }
                     if (!repassword.trim()) {
                       errors.repassword = "Re enter your password !";
@@ -201,18 +214,45 @@ export default function Register() {
                           className="block uppercase text-gray-700 text-xs font-bold mb-2"
                           htmlFor="reg-password"
                         >
-                          Password
+                          Password{" "}
+                          {formData.password.length > 0 && (
+                            <div className="text-right inline-block ">
+                              {" "}
+                              :&nbsp;
+                              <span
+                                data-strength={strength}
+                                className="text-passstregth font-bold "
+                              >
+                                {scoreTitles[strength]}
+                              </span>
+                            </div>
+                          )}
                         </label>
+                        <p
+                          className="text-gray-600 mb-2"
+                          style={{ fontSize: "11px" }}
+                        >
+                          To conform with our Strong Password policy, you are
+                          required to use a sufficiently strong password.
+                          Password must be more than 6 characters.
+                        </p>
+                        <div className={strengthClass}>
+                          <div
+                            className="strength-meter-fill"
+                            data-strength={strength}
+                          ></div>
+                        </div>
                         <input
                           id="reg-password"
                           type="password"
-                          className="px-3 py-3 placeholder-gray-500 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                          className="px-3 py-3 placeholder-gray-500 text-gray-700 mb-2 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
                           placeholder="Password"
                           name="password"
                           value={password}
                           onChange={(e) => onChange(e)}
                           onBlur={handleBlur}
                         />
+
                         <p className="FormError">
                           {errors.password &&
                             touched.password &&

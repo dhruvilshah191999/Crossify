@@ -16,6 +16,7 @@ export default function EventTab(props) {
   const [rawPastEvents, setpastEvents] = useState([]);
   const [rawUpcomingEvents, setupcomingEvents] = useState([]);
   const [loading, setloading] = useState(false);
+  const [viewMode, setViewMode] = useState(0);
   const handleClick = (event) => {
     setpastIndex(Number(event.target.id));
   };
@@ -254,84 +255,123 @@ export default function EventTab(props) {
   }, [props.club_id]);
   return (
     <>
-      <div className="flex   text-sm">
-        <div className="ml-8 mt-2">
-          <button
-            className={
-              tabIndex === 0
-                ? "bg-beta rounded-full py-2 px-4 text-white mr-2 outline-none "
-                : "rounded-full py-2 px-4  mr-2 outline-none hover:text-lightbeta"
-            }
-            onClick={() => toggleTabIndex(0)}
-          >
-            <i className="fas fa-history hover:"></i>&nbsp; Past Events
-          </button>
-
-          <button
-            className={
-              tabIndex === 1
-                ? "bg-beta rounded-full py-2 px-4 text-white mr-2 outline-none "
-                : "rounded-full py-2 px-4  mr-2 outline-none hover:text-lightbeta"
-            }
-            onClick={() => toggleTabIndex(1)}
-          >
-            {" "}
-            <i className="fas fa-glass-cheers hover:text-lightbeta"></i>&nbsp;
-            Upcoming
-          </button>
-        </div>{" "}
-        <div className="bg-white w-1/4 shadow  ml-auto mr-8 flex border border-beta rounded-lg">
-          <span className="w-auto flex justify-end items-center text-gray-500 p-2">
-            <i className="fas fa-search text-beta"></i>
-          </span>
-          <input
-            className="w-full rounded-lg py-2"
-            type="text"
-            placeholder="Search Event..."
-            onChange={searchHandler}
-          />
-        </div>
-      </div>
-      <div>
-        <div className="gap-1 mx-4 mt-10 flex flex-col flex-wrap lg:flex-row">
-          {tabIndex === 0 ? renderpastEvents : renderupcomingEvents}
-        </div>
-      </div>
-      {/* search bar */}
-
-      {/* pagination. maximum 6 items should be on 1 page. */}
-      <div className="py-2 justify-center flex">
-        <div className="block">
-          <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
-            {tabIndex === 0 ? renderPageNumbers : renderPageNumbers2}
-          </ul>
-        </div>
-      </div>
-      <hr className="mt-6 border-b-1 border-gray-400 mb-6" />
-      <div className="px-12 text-center">
-        {loading && (
-          <>
-            <span className="text-4xl font-semibold">
-              {" "}
-              Calendar View for Upcoming Events{" "}
-            </span>
-            <EventCalendar
-              EventData={rawUpcomingEvents}
-              categoryData={category}
-              club_id={props.club_id}
-              isAdmin={props.isAdmin}
-            />
-          </>
-        )}
-      </div>
-      <hr className="my-4" />
-      <div className="mt-8 text-center">
-        <span className="text-4xl my-4 font-semibold">
+      <div className="text-right mb-3 flex">
+        <div className="bg-gray-200 rounded-lg border text-lg  mr-8 flex justify-center ml-auto">
           {" "}
-          Map View for Upcoming Events{" "}
-        </span>
-        <MapwithEvents data={rawUpcomingEvents}></MapwithEvents>
+          <div className={viewMode === 0 ? "bg-white rounded-lg" : ""}>
+            <button
+              className="p-1 text-gray-700 mx-3 py-1 "
+              onClick={() => setViewMode(0)}
+            >
+              {" "}
+              <i class="fas fa-columns"></i> Card
+            </button>{" "}
+          </div>
+          <div className={viewMode === 1 ? "bg-white rounded-lg" : ""}>
+            <button
+              className="p-1 text-gray-700 mx-3 py-1"
+              onClick={() => setViewMode(1)}
+            >
+              {" "}
+              <i class="far fa-calendar-alt"></i> Calendar
+            </button>{" "}
+          </div>
+          <div className={viewMode === 2 ? "bg-white rounded-lg" : ""}>
+            <button
+              className="p-1 mx-3 text-gray-700 py-1"
+              onClick={() => setViewMode(2)}
+            >
+              {" "}
+              <i class="fas fa-map-marked-alt"></i> Maps
+            </button>
+          </div>
+        </div>
       </div>
+      {viewMode === 0 && (
+        <>
+          <div className="flex mt-1  text-sm">
+            <div className="ml-8 mt-2">
+              <button
+                className={
+                  tabIndex === 0
+                    ? "bg-beta rounded-full py-2 px-4 text-white mr-2 outline-none "
+                    : "rounded-full py-2 px-4  mr-2 outline-none hover:text-lightbeta"
+                }
+                onClick={() => toggleTabIndex(0)}
+              >
+                <i className="fas fa-history hover:"></i>&nbsp; Past Events
+              </button>
+
+              <button
+                className={
+                  tabIndex === 1
+                    ? "bg-beta rounded-full py-2 px-4 text-white mr-2 outline-none "
+                    : "rounded-full py-2 px-4  mr-2 outline-none hover:text-lightbeta"
+                }
+                onClick={() => toggleTabIndex(1)}
+              >
+                {" "}
+                <i className="fas fa-glass-cheers hover:text-lightbeta"></i>
+                &nbsp; Upcoming
+              </button>
+            </div>{" "}
+            <div className="bg-white w-1/4 shadow  ml-auto mr-8 flex border border-beta rounded-lg">
+              <span className="w-auto flex justify-end items-center text-gray-500 p-2">
+                <i className="fas fa-search text-beta"></i>
+              </span>
+              <input
+                className="w-full rounded-lg py-2"
+                type="text"
+                placeholder="Search Event..."
+                onChange={searchHandler}
+              />
+            </div>
+          </div>
+          <div>
+            <div className="gap-1 mx-4 mt-10 flex flex-col flex-wrap lg:flex-row">
+              {tabIndex === 0 ? renderpastEvents : renderupcomingEvents}
+            </div>
+          </div>
+          {/* search bar */}
+
+          {/* pagination. maximum 6 items should be on 1 page. */}
+          <div className="py-2 justify-center flex">
+            <div className="block">
+              <ul className="flex pl-0 mt-4 rounded list-none flex-wrap">
+                {tabIndex === 0 ? renderPageNumbers : renderPageNumbers2}
+              </ul>
+            </div>
+          </div>
+        </>
+      )}
+      {viewMode === 1 && (
+        <div className="px-12 text-center">
+          {loading && (
+            <>
+              {/* <span className="text-4xl font-semibold">
+                {" "}
+                Calendar View for Upcoming Events{" "}
+              </span> */}
+              <EventCalendar
+                EventData={rawUpcomingEvents}
+                categoryData={category}
+                club_id={props.club_id}
+                isAdmin={props.isAdmin}
+              />
+            </>
+          )}
+        </div>
+      )}
+
+      {viewMode === 2 && (
+        <div className=" text-center">
+          {/* <span className="text-4xl my-4 font-semibold">
+            {" "}
+            Map View for Upcoming Events{" "}
+          </span> */}
+          <MapwithEvents data={rawUpcomingEvents}></MapwithEvents>
+        </div>
+      )}
     </>
   );
 }
